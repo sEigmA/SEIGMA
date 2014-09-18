@@ -1,0 +1,240 @@
+# load necessary libraries
+require(dplyr)
+require(sp)
+require(maptools)
+require(rgeos)
+require(Hmisc)
+require(reshape2)
+
+## load map data
+MAmap <- readShapeSpatial("countymaps/COUNTIES_POLYM.shp")
+
+## load suicide data
+suidata <- read.csv(file="SASuicidedata.csv")[,-1]
+
+## set graph colors (special for colorblind people)
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
+                "#0072B2", "#D55E00", "#CC79A7")
+
+shinyServer(function(input, output) {
+  ## data is a reactive dataframe. currently not reacting to anything, but may be necessary in future
+  data <- reactive({
+    df <- suidata
+    df    
+  })
+  
+  ## create summary table
+  output$summary <- renderDataTable({
+    ## make reactive dataframe into regular dataframe
+    data <- data()
+    
+    ## if a user chooses Single Year, display only data from that year
+    if(input$timespan == "sing.yr"){
+      df <- subset(data, Year==input$year)
+    }
+    
+    ## if a user chooses Multiple Years, display data from all years in range
+    if(input$timespan == "mult.yrs"){
+      range <- seq(min(input$range), max(input$range), 1)
+      df <- c()
+      for(i in 1:length(range)){
+        bbb <- subset(data, Year==range[i])
+        df <- rbind.data.frame(df, bbb)
+      }
+    }
+    
+    ## make counties a vector based on input variable
+    if(!is.null(input$county))
+      counties <- input$county
+    ## if none selected, put all counties in vector
+    if(is.null(input$county))
+      counties <- names(table(suidata[,1]))[c(1:7, 9:12,14)]
+    
+    ## if the user checks the meanUS box or the meanMA box, add those to counties vector
+    if(input$meanUS){
+      if(input$meanMA){
+        counties <- c("US", "MA", counties) ## US and MA  
+      } else{
+        counties <- c("US", counties) ## US only
+      }
+    } else{
+      if(input$meanMA){
+        counties <- c("MA", counties) ## US only ## MA only
+      }
+    }
+    
+    ## create a dataframe consisting only of counties in vector
+    df2 <- c()
+      for(i in 1:length(counties)){
+        bbb <- subset(df, County==counties[i])
+        df2 <- rbind.data.frame(df2, bbb)
+      }
+    
+    ## make column names more pretty (i.e. no periods)
+    colnames(df2)[7:10] <- c("Crude Rate (per 100,000)", 
+                            "Crude Rate Lower Bound", 
+                            "Crude Rate Upper Bound", 
+                            "Crude Rate Standard Error")
+    
+    df2
+  }, options=list(bFilter=FALSE)) ## there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
+  
+  ## create the plot of the data
+  output$plot <- reactive({
+    ## make reactive dataframe into regular dataframe
+    data <- data()
+    
+    ## make counties a vector based on input variable
+    counties <- input$county
+    
+    ## put data into form that googleCharts understands (this unmelts the dataframe)
+    df <- dcast(data, Year ~ County, value.var="Crude.Rate")
+    
+    ## if no counties have been selected, just show the US average
+    if(is.null(input$county)){
+      g <- df %.%
+        select(Year, US)
+    }
+    
+    ## if counties are selected and MA or US mean boxes are selected, add those to dataframe
+    if(!is.null(input$county)){
+      if(input$meanMA)
+        counties <- c(counties, "MA")
+      if(input$meanUS)
+        counties <- c(counties, "US")
+      
+      g <- df[,c("Year", counties)]
+    }
+    
+    ## this outputs the google data to be used in the UI to create the dataframe
+    list(
+      data=googleDataTable(g))
+  })
+  
+  ## create the map of the data
+  output$map <- renderPlot({
+    ## make reactive dataframe into regular dataframe
+    data <- data()
+    
+    ## subset US data into own dataframe
+    US <- data[which(data$County=="US"),]
+    
+    ## subset MA data into own dataframe
+    MA <- data[which(data$County=="MA"),]
+    
+    ## take US and MA out of data
+    data <- subset(data, County!="MA")
+    data <- subset(data, County!="US")
+    
+    ## for single year maps...
+    if(input$timespan == "sing.yr"){
+      ## subset the data by the year selected
+      data <- subset(data, Year==input$year)
+      
+      ## set the color to ramp from white to one of the colorblind colors and grey representing NA
+      paint.brush <- colorRampPalette(colors=c("white", cbbPalette[6]))
+      map.colors <- c(paint.brush(n=6), "#999999")
+      
+      ## find  max and min values of the variable in the total data and make cuts based on those values
+      max.val <- max(suidata$Crude.Rate, na.rm=TRUE)
+      min.val <- min(suidata$Crude.Rate, na.rm=TRUE)
+      cuts <- seq(min.val, max.val, (max.val-min.val)/(length(map.colors)-1))
+      
+      ## assign colors to each entry in the data frame
+      color <- as.integer(cut2(data$Crude.Rate,cuts=cuts))
+      data <- cbind.data.frame(data,color)
+      data$color <- ifelse(is.na(data$color), length(map.colors), 
+                           data$color)
+      
+      ## find missing counties in data subset and assign NAs to all values
+      missing.counties <- setdiff(MAmap$COUNTY, toupper(data$County))
+      df <- data.frame(County=missing.counties, State="MA", Country="US", 
+                       Year=input$year, Suicides=NA, Population=NA, 
+                       Crude.Rate=NA, Crude.Rate.Lower.Bound=NA,
+                       Crude.Rate.Upper.Bound=NA, 
+                       Crude.Rate.Standard.Error=NA,
+                       color=length(map.colors))
+      
+      ## combine data subset with missing counties data
+      data <- rbind.data.frame(data, df)
+      MAmapA <- MAmap[match(toupper(data[,"County"]), MAmap$COUNTY),]
+      
+      ## layout the screen so that left 3/4 is for map and right 1/4 is for the legend
+      layout(matrix(1:2, ncol=2), width=c(3,1), height=c(1,1))
+      
+      ## plot map
+      plot(MAmapA, col=map.colors[data[,"color"]], border=gray(.85))
+      title(main=paste(input$year, "Crude Suicide Rate by County (per 100,000)"))
+      legend("bottom", legend="No Data Available", fill = map.colors[length(map.colors)])
+      legend_image <- as.raster(matrix(rev(map.colors[1:(length(map.colors)-1)]), ncol=1))
+      plot(c(0,2),c(0,1), type='n', axes=F, xlab='', ylab='', main='')
+      legend.label <- seq(round(min.val), round(max.val), l=5)
+      legend.label <- as.character(round(legend.label))
+      text(x=1.5, y=seq(0,1,l=5), labels=legend.label)
+      rasterImage(legend_image, 0, 0, 1, 1)
+    }
+    
+    ## for maps showing difference over multiple years
+    if(input$timespan == "mult.yrs"){
+      ## colors fade from one color to white to another color, with gray for NAs
+      paint.brush <- colorRampPalette(colors=c(cbbPalette[5], "white", cbbPalette[6]))
+      map.colors <- c(paint.brush(n=8), "#999999")
+      
+      ## find max and min values for each county
+      bound <- data %>%
+        group_by(County) %>%
+        summarise(max.val = max(Crude.Rate, na.rm=FALSE),
+                  min.val = min(Crude.Rate, na.rm=FALSE))
+      
+      ## find the difference between each county's max and min
+      bound$diff <- abs(bound$max.val - bound$min.val)
+      
+      ## set the max and min value (for the legend) at 95% of the largest difference
+      max.val <- quantile(bound$diff, .95, na.rm=TRUE)
+      min.val <- -1*max.val
+      
+      ## create dataframes for the max and min year of selected data
+      min.year <- min(input$range)
+      max.year <- max(input$range)
+      min.df <- subset(data, Year==min.year)
+      max.df <- subset(data, Year==max.year)
+      
+      ## merge data and take difference between the data of the min year and the max year
+      diff.df <- within(merge(min.df, max.df, by="County"),{
+        Difference <- Crude.Rate.y - Crude.Rate.x
+      })[,c("County", "Difference")]
+      
+      ## assign colors to each entry in the data frame
+      cuts <- seq(min.val, max.val, (max.val-min.val)/(length(map.colors)-1))
+      color <- as.integer(cut2(diff.df[,2],cuts=cuts))
+      diff.df <- cbind.data.frame(diff.df,color)
+      diff.df$color <- ifelse(is.na(diff.df$color), length(map.colors), diff.df$color)
+      
+      ## find missing counties in data subset and assign NAs to all values
+      missing.counties <- setdiff(MAmap$COUNTY, toupper(diff.df$County))
+      df <- data.frame(County=missing.counties, Difference=NA,
+                       color=length(map.colors))
+      
+      ## combine data subset with missing counties data
+      diff.df <- rbind.data.frame(diff.df, df)
+      MAmapA <- MAmap[match(toupper(diff.df[,"County"]), MAmap$COUNTY),]
+      
+      ## layout the screen so that left 3/4 is for map and right 1/4 is for the legend
+      layout(matrix(1:2, ncol=2), width=c(3,1), height=c(1,1))
+      
+      ## plot map
+      plot(MAmapA, col=map.colors[diff.df[,"color"]], border=gray(.85))
+      title(main=paste("Difference in Crude Suicide Rate", "\nbetween", min.year, "and", max.year, 
+                       "(per 100,000)"))
+      legend("bottom", legend="No Data Available", fill = map.colors[length(map.colors)])
+      legend_image <- as.raster(matrix(rev(map.colors[1:(length(map.colors)-1)]), ncol=1))
+      plot(c(0,2),c(0,1), type='n', axes=F, xlab='', ylab='', main='')
+      legend.label <- seq(round(min.val), round(max.val), l=5)
+      legend.label <- as.character(round(legend.label))
+      text(x=1.5, y=seq(0,1,l=5), labels=legend.label)
+      rasterImage(legend_image, 0, 0, 1, 1)
+    }
+    
+  })
+  
+})

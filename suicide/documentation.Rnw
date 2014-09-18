@@ -1,0 +1,53 @@
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+First, install the required packages.
+
+<<install>>=
+install.packages("sas7bdat")
+install.packages("dplyr")
+install.packages("shiny")
+install.packages("ggvis")
+install.packages("ggplot2")
+install.packages("sp")
+install.packages("maptools")
+install.packages("rgeos")
+install.packages("Hmisc")
+install.packages("reshape2")
+#install.packages("GISTools")
+install.packages("devtools")
+require(devtools)
+install_github('shinyapps', 'rstudio')
+
+require(sas7bdat)
+require(shiny)
+require(shinyapps)
+require(reshape2)
+require(dplyr)
+@
+
+Next, import SAS data and convert it into the csv to be used for the project.
+<<convert>>=
+## Load SAS data
+sas.data <- read.sas7bdat("ba001_01.sas7bdat")[,c(1:4, 6:11)]
+
+## Rename columns to something relevant
+colnames(sas.data)[3:10] <- c("Country", "Year", "Suicides", "Population", "Crude Rate", "Crude Rate Lower Bound", "Crude Rate Upper Bound", "Crude Rate Standard Error")
+
+## Set the country, state, and county names; we want the MA state data to have County = "MA", we want the US country data to have County and State = "US"
+sas.data$Country <- "US"
+sas.data$State <- ifelse(sas.data$State=="N/A", "US", "MA")
+sas.data$County <- ifelse(sas.data$County=="N/A", "MA", as.character(sas.data$County))
+sas.data$County <- ifelse(sas.data$State=="US", "US", as.character(sas.data$County))
+
+## Save data as CSV
+write.csv(sas.data, file="suicide/SASuicidedata.csv")
+
+## Can use this line to load up suicide data locally
+suidata <- read.csv("suicide/SASuicidedata.csv")[,-1]
+@
+
+Second, 
+\end{document}
