@@ -75,13 +75,16 @@ shinyUI(fluidPage(
       helpText("Created by Sophie E O'Brien and Stephen A Lauer"),
       
       ## email feedback link
-      helpText(a("Send us your comments or feedback!", href="mailto:slauer@schoolph.umass.edu", 
+      helpText(a("Send us your comments or feedback!", href="mailto:seigmateam@gmail.com", 
                  target="_blank")),
       
       ## data source citation
       helpText(a("Data Source: CDC Wonder", href="http://wonder.cdc.gov/wonder/help/cmf.html",
-                 target="_blank"))
+                 target="_blank")),
       
+      ## GitHub link
+      helpText(a("View our data and code on GitHub", 
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/suicide", target="_blank"))
     ),
     
     ## create main panel
