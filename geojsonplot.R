@@ -45,6 +45,7 @@ subdat<-SpatialPolygonsDataFrame(subdat, data=subdat_data)
 # ----- Write data to GeoJSON
 leafdat<-paste(downloaddir, "/", filename, ".geojson", sep="") 
 
+#--------This can only be done on a mac
 writeOGR(obj=subdat, dsn=leafdat, layer="", driver="GeoJSON")
 
 # ----- Create the cuts

@@ -1,3 +1,7 @@
+###############################
+## Preamble
+###############################
+
 ## load necessary libraries
 require(shiny)
 require(googleCharts)
