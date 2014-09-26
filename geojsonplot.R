@@ -8,7 +8,7 @@ library(sp)
 # note that this file is somewhat big so it might take a couple
 # of minutes to download
 url<-"http://www2.census.gov/geo/tiger/TIGER2010DP1/County_2010Census_DP1.zip"
-downloaddir<-"D:\\Users\\Emily\\Documents\\School\\Fall14\\SEIGMA"
+downloaddir <- getwd()
 destname<-"tiger.zip"
 download.file(url, destname)
 unzip(destname, exdir=downloaddir, junkpaths=TRUE)
