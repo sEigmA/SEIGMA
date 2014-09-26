@@ -27,9 +27,13 @@ subdat<-dat[substring(dat$GEOID10, 1, 2) == "25",]
 # ----- Transform to EPSG 4326 - WGS84 (required)
 subdat<-spTransform(subdat, CRS("+init=epsg:4326"))
 
+# ----- change name of field we will map
+names(subdat)[names(subdat) == "DP0010001"]<-"Population"
+names(subdat)[names(subdat) == "NAMELSAD10"]<-"Municipal"
+
 #Simplify shape file
 # ----- save the data slot
-subdat_data<-subdat@data[,c("GEOID10", "NAMELSAD10")]
+subdat_data<-subdat@data[,c("GEOID10", "Municipal", "Population")]
 
 # ----- simplification yields a SpatialPolygons class
 subdat<-gSimplify(subdat,tol=0.01, topologyPreserve=TRUE)
@@ -51,7 +55,7 @@ cuts[1]<-0 # ----- for this example make first cut zero
 
 
 # ----- Fields to include in the popup
-popup<-c("GEOID10", "Population")
+popup<-c("Municipal", "Population")
 
 
 # ----- Gradulated style based on an attribute
@@ -61,7 +65,7 @@ sty<-styleGrad(prop="Population", breaks=cuts, right=FALSE, style.par="col",
 
 # ----- Create the map and load into browser
 map<-leaflet(data=leafdat, dest=downloaddir, style=sty,
-             title="index", base.map="osm",
+             title="municipals", base.map="osm",
              incl.data=TRUE,  popup=popup)
 
 # ----- to look at the map you can use this code
