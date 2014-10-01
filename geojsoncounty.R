@@ -25,7 +25,7 @@ dat<-readOGR(downloaddir, filename)
 subdat<-dat[substring(dat$GEOID10, 1, 2) == "25",]
 
 # ----- Transform to EPSG 4326 - WGS84 (required)
-subdat<-spTransform(subdat,```x = ` CRS("+init=epsg:4326"))
+subdat<-spTransform(subdat,CRS("+init=epsg:4326"))
 
 # ----- change name of field we will map
 names(subdat)[names(subdat) == "DP0010001"]<-"Population"
@@ -46,7 +46,7 @@ save(subdat, file = "county_subdat.RData")
 
 ##Play with Leaflet
 # ----- Write data to GeoJSON
-leafdat<-paste(downloaddir, "/", filename, ".geojson", sep="") 
+leafdat<-"County_2010Census_DP1.geojson"
 
 #--------This can only be done on a mac
 writeOGR(obj=subdat, dsn=leafdat, layer="", driver="GeoJSON")
