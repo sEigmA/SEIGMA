@@ -41,6 +41,8 @@ subdat<-gSimplify(subdat,tol=0.01, topologyPreserve=TRUE)
 # ----- to write to geojson we need a SpatialPolygonsDataFrame
 subdat<-SpatialPolygonsDataFrame(subdat, data=subdat_data)
 
+save(subdat, file = "county_subdat.RData")
+
 
 ##Play with Leaflet
 # ----- Write data to GeoJSON
@@ -48,6 +50,9 @@ leafdat<-paste(downloaddir, "/", filename, ".geojson", sep="")
 
 #--------This can only be done on a mac
 writeOGR(obj=subdat, dsn=leafdat, layer="", driver="GeoJSON")
+
+###
+readOGR(dsn="County_2010Census_DP1.geojson", layer="OGRGeoJSON")
 
 # ----- Create the cuts
 cuts<-round(quantile(subdat$Population, probs = seq(0, 1, 0.20), na.rm = FALSE), 0)
