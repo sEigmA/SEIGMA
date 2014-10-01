@@ -51,9 +51,6 @@ leafdat<-"County_2010Census_DP1.geojson"
 #--------This can only be done on a mac
 writeOGR(obj=subdat, dsn=leafdat, layer="", driver="GeoJSON")
 
-###
-readOGR(dsn="County_2010Census_DP1.geojson", layer="OGRGeoJSON")
-
 # ----- Create the cuts
 cuts<-round(quantile(subdat$Population, probs = seq(0, 1, 0.20), na.rm = FALSE), 0)
 cuts[1]<-0 # ----- for this example make first cut zero
