@@ -21,7 +21,7 @@ cuts<-round(quantile(subdat$Population, probs = seq(0, 1, 0.20), na.rm = FALSE),
 cuts[1]<-0 # ----- for this example make first cut zero
 
 # ----- Fields to include in the popup
-popup<-c("Municipal", "Population")
+popup<-c("County", "Population")
 
 # ----- Gradulated style based on an attribute
 sty<-styleGrad(prop="Population", breaks=cuts, right=FALSE, style.par="col",
@@ -29,7 +29,7 @@ sty<-styleGrad(prop="Population", breaks=cuts, right=FALSE, style.par="col",
 
 # ----- Create the map and load into browser
 map<-leaflet(data=leafdat, dest=downloaddir, style=sty,
-             title="municipals", base.map="osm",
+             title="counties", base.map="osm",
              incl.data=TRUE,  popup=popup)
 
 # ----- to look at the map you can use this code
