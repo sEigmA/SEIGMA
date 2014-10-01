@@ -92,10 +92,10 @@
 
 		// popup
 		function onEachFeature(feature, layer) {
-			if (feature.properties &&  feature.properties.Municipal && feature.properties.Population) {
+			if (feature.properties &&  feature.properties.GEOID10 && feature.properties.Population) {
 				layer.bindPopup(
 					"<table>" +
-					"<tr class='oddrowcol'><td>Municipal: </td><td>"+feature.properties.Municipal+"</td></tr>" +
+					"<tr class='oddrowcol'><td>GEOID10: </td><td>"+feature.properties.GEOID10+"</td></tr>" +
 					"<tr class='evenrowcol'><td>Population: </td><td>"+feature.properties.Population+"</td></tr>" +
 					"</table>"
 				);

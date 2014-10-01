@@ -21,7 +21,7 @@ cuts<-round(quantile(subdat$Population, probs = seq(0, 1, 0.20), na.rm = FALSE),
 cuts[1]<-0 # ----- for this example make first cut zero
 
 # ----- Fields to include in the popup
-popup<-c("Municipal", "Population")
+popup<-c("GEOID10", "Population")
 
 # ----- Gradulated style based on an attribute
 sty<-styleGrad(prop="Population", breaks=cuts, right=FALSE, style.par="col",
