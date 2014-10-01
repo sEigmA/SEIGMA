@@ -12,6 +12,7 @@ library(rgeos) #for simplification
 library(sp)
 
 #----- Load in GeoJSON and Data files
+downloaddir <- getwd()
 leafdat<-"Muni_2010Census_DP1.geojson" 
 load("muni_subdat.RData")
 
