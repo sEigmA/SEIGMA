@@ -75,4 +75,3 @@ map<-leaflet(data=leafdat, dest=downloaddir, style=sty,
 browseURL(map)
 
 
-

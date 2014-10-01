@@ -14,7 +14,7 @@ download.file(url, destname)
 unzip(destname, exdir=downloaddir, junkpaths=TRUE)
 
 #bring the shapefile into R for a little formatting. 
-filename<-list.files(downloaddir, pattern=".shp", full.names=FALSE)
+filename<- "County_2010Census_DP1"
 filename<-gsub(".shp", "", filename)
 
 # ----- Read in shapefile (NAD83 coordinate system)
