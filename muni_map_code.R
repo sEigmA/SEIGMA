@@ -5,6 +5,12 @@
 #Modified: 10/1/14
 #################################
 
+#----- needed packages
+library(leafletR)
+library(rgdal) #for reading/writing geo files
+library(rgeos) #for simplification
+library(sp)
+
 #----- Load in GeoJSON and Data files
 leafdat<-"Muni_2010Census_DP1.geojson" 
 load("muni_subdat.RData")
