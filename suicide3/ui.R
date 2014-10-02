@@ -1,6 +1,7 @@
 require(shiny)
 require(googleCharts)
 require(leaflet)
+
 suidata <- read.csv(file="SASuicidedata.csv")[,-1]
 xlim <- list(
   min = min(suidata$Year)-1,
@@ -135,10 +136,11 @@ shinyUI(fluidPage(
                    tags$br(),
                    p("Crude Rate = Count / Population * 100,000", align="center")),
                    value="plot"),
-        tabPanel("Map", 
-                 leafletMap("map", width=725, height=500, 
-                            options=list(center = c(42.15, -71.75), zoom=8)),
-                 htmlOutput("details"), value="map"),
+        tabPanel("Map",
+                 leafletMap("map", width="100%", height=500, 
+                            options=list(center = c(42.15, -71.65), zoom=8)),
+                 htmlOutput("details"), 
+                 value="map"),
         tabPanel("More Info", 
                  p(strong("Variable Summary:"),
                    tags$br(),
