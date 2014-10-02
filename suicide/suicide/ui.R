@@ -6,23 +6,6 @@
 require(shiny)
 require(googleCharts)
 
-## load in the data
-suidata <- read.csv(file="SASuicidedata.csv")[,-1]
-
-## create maxs and mins for googleCharts
-xlim <- list(
-  min = min(suidata$Year)-1,
-  max = max(suidata$Year)+1
-)
-ylim <- list(
-  min = 0,
-  max = max(suidata$Crude.Rate, na.rm=T)+5
-)
-
-## set graph colors (special for colorblind people)
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
-                "#0072B2", "#D55E00", "#CC79A7")
-
 shinyUI(fluidPage(
   ## this starts the googleCharts engine
   googleChartsInit(),
@@ -98,6 +81,24 @@ shinyUI(fluidPage(
       
       ## create tabs
       tabsetPanel(
+        
+        ## plot map
+        tabPanel("Map", leafletMap("map", width="100%", height=500, 
+                                   options=list(center = c(42.15, -71.65), zoom=8)),
+                 htmlOutput("details"),
+                 
+                 ## add text about the variables
+                 p(strong("Variable Summary:")),
+                 tags$br(),
+                 p(strong("Suicides"),
+                   " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
+                 tags$br(),
+                 p(strong("Crude Rate"), 
+                   " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
+                 tags$br(),
+                 p(strong("Crude Rate = Count / Population * 100,000"), align="center"),
+                 value="map"),
+        
         ## summary tab
         tabPanel("Summary", 
                  dataTableOutput("summary"), value="summary", 
@@ -174,20 +175,7 @@ shinyUI(fluidPage(
                  p(strong("Crude Rate = Count / Population * 100,000"), align="center"),
         value="plot"),
       
-      ## plot map
-      tabPanel("Map", plotOutput("map"),
-               
-               ## add text about the variables
-               p(strong("Variable Summary:")),
-               tags$br(),
-               p(strong("Suicides"),
-                 " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
-               tags$br(),
-               p(strong("Crude Rate"), 
-                 " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
-               tags$br(),
-               p(strong("Crude Rate = Count / Population * 100,000"), align="center"),
-      value="map"),
+      
     
     tabPanel("More Info", 
              p(strong("Variable Summary:")),

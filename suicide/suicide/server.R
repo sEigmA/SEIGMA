@@ -6,31 +6,21 @@ require(rgeos)
 require(Hmisc)
 require(reshape2)
 
-## load map data
-MAmap <- readShapeSpatial("countymaps/COUNTIES_POLYM.shp")
-
-## load suicide data
-suidata <- read.csv(file="SASuicidedata.csv")[,-1]
-
-## set graph colors (special for colorblind people)
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
-                "#0072B2", "#D55E00", "#CC79A7")
-
-shinyServer(function(input, output) {
-  ## data is a reactive dataframe. currently not reacting to anything, but may be necessary in future
-  data <- reactive({
-    df <- suidata
-    df    
+shinyServer(function(input, output, session) {
+  ## suidf is a reactive dataframe. currently not reacting to anything, but may be necessary in future
+  suidf <- reactive({
+    suidf <- suidata
+    suidf    
   })
   
   ## create summary table
   output$summary <- renderDataTable({
     ## make reactive dataframe into regular dataframe
-    data <- data()
+    suidf <- suidf()
     
     ## if a user chooses Single Year, display only data from that year
     if(input$timespan == "sing.yr"){
-      df <- subset(data, Year==input$year)
+      df <- filter(suidf, Year==input$year)
     }
     
     ## if a user chooses Multiple Years, display data from all years in range
@@ -38,7 +28,7 @@ shinyServer(function(input, output) {
       range <- seq(min(input$range), max(input$range), 1)
       df <- c()
       for(i in 1:length(range)){
-        bbb <- subset(data, Year==range[i])
+        bbb <- subset(suidf, Year==range[i])
         df <- rbind.data.frame(df, bbb)
       }
     }
@@ -82,13 +72,13 @@ shinyServer(function(input, output) {
   ## create the plot of the data
   output$plot <- reactive({
     ## make reactive dataframe into regular dataframe
-    data <- data()
+    suidf <- suidf()
     
     ## make counties a vector based on input variable
     counties <- input$county
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
-    df <- dcast(data, Year ~ County, value.var="Crude.Rate")
+    df <- dcast(suidf, Year ~ County, value.var="Crude.Rate")
     
     ## if no counties have been selected, just show the US average
     if(is.null(input$county)){
@@ -114,22 +104,22 @@ shinyServer(function(input, output) {
   ## create the map of the data
   output$map <- renderPlot({
     ## make reactive dataframe into regular dataframe
-    data <- data()
+    suidf <- suidf()
     
     ## subset US data into own dataframe
-    US <- data[which(data$County=="US"),]
+    US <- suidf[which(suidf$County=="US"),]
     
     ## subset MA data into own dataframe
-    MA <- data[which(data$County=="MA"),]
+    MA <- suidf[which(suidf$County=="MA"),]
     
-    ## take US and MA out of data
-    data <- subset(data, County!="MA")
-    data <- subset(data, County!="US")
+    ## take US and MA out of suidf
+    suidf <- subset(suidf, County!="MA")
+    suidf <- subset(suidf, County!="US")
     
     ## for single year maps...
     if(input$timespan == "sing.yr"){
       ## subset the data by the year selected
-      data <- subset(data, Year==input$year)
+      data <- filter(data, Year==input$year)
       
       ## set the color to ramp from white to one of the colorblind colors and grey representing NA
       paint.brush <- colorRampPalette(colors=c("white", cbbPalette[6]))
