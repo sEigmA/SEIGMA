@@ -26,3 +26,27 @@ ylim <- list(
   max = max(suidata$Crude.Rate, na.rm=T)+5
 )
 
+## colors fade from one color to white to another color, with gray for NAs
+mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
+mmap.colors <- c(mpaint.brush(n=8), "#999999")
+
+## find max and min values for each county
+bound <- suidata %>%
+  group_by(County) %>%
+  summarise(max.val = max(Crude.Rate, na.rm=FALSE),
+            min.val = min(Crude.Rate, na.rm=FALSE))
+
+## find the difference between each county's max and min
+bound$diff <- abs(bound$max.val - bound$min.val)
+
+## set the max and min value (for the legend) at 95% of the largest difference
+mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
+mmin.val <- -1*mmax.val
+mcuts <- seq(mmin.val, mmax.val, (mmax.val-mmin.val)/(length(mmap.colors)-1))
+
+# Construct break ranges for displaying in the legend
+mcolorRanges <- data.frame(
+  from = head(mcuts, length(mcuts)-1),
+  to = tail(mcuts, length(mcuts)-1)
+)
+mcolorRanges <- rbind.data.frame(mcolorRanges, c(NA, NA))

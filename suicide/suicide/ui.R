@@ -64,6 +64,11 @@ shinyUI(fluidPage(
         )
       ),
       
+      conditionalPanel(
+        condition="input.tabs == 'map'",
+        actionButton("action", "Generate Map")
+      ),
+      
       ## in summary or plot, allow for county selection
       conditionalPanel(
         condition="input.tabs == 'summary' || input.tabs == 'plot'",
@@ -186,8 +191,22 @@ shinyUI(fluidPage(
       
         ## plot map
         tabPanel("Map", leafletMap("map", width="100%", height=500, 
-                                   options=list(center = c(42.15, -71.65), zoom=8)),
+                                   options=list(center = c(42.15, -71.65), zoom=7)),
                  htmlOutput("details"),
+                 
+#                  absolutePanel(
+#                    right = 30, top = 280, style = "", class = "floater",
+#                    tags$table(
+#                      mapply(function(from, to, color) {
+#                        tags$tr(
+#                          tags$td(tags$div(
+#                            style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+#                          )),
+#                          tags$td(from, "-", to)
+#                        )
+#                      }, mcolorRanges$from, mcolorRanges$to, mmap.colors, SIMPLIFY=FALSE)
+#                    )
+#                  ),
                  
                  ## add text about the variables
                  p(strong("Variable Summary:")),

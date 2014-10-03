@@ -159,7 +159,7 @@ shinyServer(function(input, output, session) {
       map.colors <- c(paint.brush(n=8), "#999999")
       
       ## find max and min values for each county
-      bound <- suidf %>%
+      bound <- suidata %>%
         group_by(County) %>%
         summarise(max.val = max(Crude.Rate, na.rm=FALSE),
                   min.val = min(Crude.Rate, na.rm=FALSE))
@@ -207,15 +207,7 @@ shinyServer(function(input, output, session) {
   
   ## the functions within observe are called when any of the inputs are called
   observe({
-    #   browser()
-    
-    ## when year is changed
-    is.null(input$year)
-    ## when a range of years are selected
-    is.null(input$range)
-    
     input$action
-    
     ## load in relevant map data
     suidf <- map_dat()
     
@@ -226,10 +218,22 @@ shinyServer(function(input, output, session) {
       x$features[[i]]$properties$Crude.Rate <- suidf$Crude.Rate[match(x$features[[i]]$properties$County, suidf$County)]
       x$features[[i]]$properties$style <- list(fillColor = suidf$color[match(x$features[[i]]$properties$County, suidf$County)], weight=1, color="#000000", fillOpacity=0.5)
     }
+    
+    #   browser()
+    isolate({
+    ## when year is changed
+    input$year
+    ## when a range of years are selected
+    input$range
+    input$tabs
+    
+    
     #     session$onFlushed(once=FALSE, function() {
     map$addGeoJSON(x)
-    # }
+     })
   })
+  
+
   
   values <- reactiveValues(selectedFeature=NULL)
   
