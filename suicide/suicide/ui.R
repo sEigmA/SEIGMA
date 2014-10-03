@@ -16,9 +16,30 @@ shinyUI(fluidPage(
   ## create sidebar
   sidebarLayout(
     sidebarPanel(
-      helpText("If using Internet Explorer, application only visible in version 10."),
-      tags$hr(),
       
+      conditionalPanel(
+        condition="input.tabs == 'summary'",
+        helpText('Please select a time span for which you are interested in seeing suicide data organized by county.  If you are interested in comparing multiple years, select "Multiple Years" and adjust the slider and select a range accordingly.'),
+        helpText('Next, if you are interested in a specific county or multiple counties select them; alternatively for data on all Massachusetts counties leave this selection blank.  To compare the data to the Massachusetts average or US average select the corresponding check box.  Please note that only consecutive year ranges can be selected.')
+      ),
+      
+      conditionalPanel(
+        condition="input.tabs == 'plot'",
+        helpText('Please select a county to analyze.  Multiple counties can be selected to compare the plots of crude suicide rate over time.  Select the Massachusetts and/or US average check boxes to compare county rates with the national and state averages.')
+      ),
+      
+      conditionalPanel(
+        condition="input.tabs == 'map'",
+        helpText('Please click on a county of interest to view crude suicide rate.  Select a year to view the suicide rate for that year. Select a range of years to view the difference in suicide rate over that timespan.  Please note that only consecutive year ranges can be selected.')
+      ),
+      
+      conditionalPanel(
+        condition="input.tabs == 'info'",
+        helpText('This tab contains more detailed information regarding the variables of interest, including formulae and calculations which were used to derive the crude suicide rate.')
+      ),
+      
+      tags$hr(),
+            
       ## in summary and map, allow for timespan selection
       conditionalPanel(
         condition="input.tabs == 'summary' || input.tabs == 'map'",
@@ -59,7 +80,7 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Sophie E O'Brien and Stephen A Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F Kiridly, Sophie E. O'Brien and Stephen A. Lauer"),
       
       ## email feedback link
       helpText(a("Send us your comments or feedback!", href="mailto:seigmateam@gmail.com", 
@@ -71,7 +92,9 @@ shinyUI(fluidPage(
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/suicide", target="_blank"))
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/suicide", target="_blank")),
+      
+      helpText("If using Internet Explorer, application only visible in version 10.")
     ),
     
     ## create main panel
@@ -81,28 +104,14 @@ shinyUI(fluidPage(
       
       ## create tabs
       tabsetPanel(
-        
-        ## plot map
-        tabPanel("Map", leafletMap("map", width="100%", height=500, 
-                                   options=list(center = c(42.15, -71.65), zoom=8)),
-                 htmlOutput("details"),
-                 
-                 ## add text about the variables
-                 p(strong("Variable Summary:")),
-                 tags$br(),
-                 p(strong("Suicides"),
-                   " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
-                 tags$br(),
-                 p(strong("Crude Rate"), 
-                   " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
-                 tags$br(),
-                 p(strong("Crude Rate = Count / Population * 100,000"), align="center"),
-                 value="map"),
+        tabPanel("About", 
+                 p(strong("The SEIGMA Suicide App"), "displays the crude suicide rate for Massachusetts by counties for a given year or multiple years from 1999 to 2011. Toggle between tabs to visualize the data differently. ", em("Summary"), "shows the source data in a table format. ", em("Plot"), "shows crude suicide rate over time per 100,000 in each county population, Massachusetts average and U.S. average. ", em("Map"), "visually displays crude suicide rate comparatively by county. ", em("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."), value="about"),
         
         ## summary tab
         tabPanel("Summary", 
                  dataTableOutput("summary"), value="summary", 
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
+        
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
@@ -175,7 +184,22 @@ shinyUI(fluidPage(
                  p(strong("Crude Rate = Count / Population * 100,000"), align="center"),
         value="plot"),
       
-      
+        ## plot map
+        tabPanel("Map", leafletMap("map", width="100%", height=500, 
+                                   options=list(center = c(42.15, -71.65), zoom=8)),
+                 htmlOutput("details"),
+                 
+                 ## add text about the variables
+                 p(strong("Variable Summary:")),
+                 tags$br(),
+                 p(strong("Suicides"),
+                   " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
+                 tags$br(),
+                 p(strong("Crude Rate"), 
+                   " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
+                 tags$br(),
+                 p(strong("Crude Rate = Count / Population * 100,000"), align="center"),
+                 value="map"),
     
     tabPanel("More Info", 
              p(strong("Variable Summary:")),
@@ -197,7 +221,7 @@ shinyUI(fluidPage(
              p(strong("Crude Rate Standard Error"),
                " - The relative standard error for Crude Rate. Even though Suicides represents the complete counts for each region, and thus are not subject to sampling error, they are subject to non-sampling errors in the registration process. This is calculated by:"),
              tags$br(),
-             p(strong("Crude Rate Standard Error = 100 / sqrt(Suicides)."), align="center")),
+             p(strong("Crude Rate Standard Error = 100 / sqrt(Suicides)."), align="center"), value="info"),
     id="tabs"
   )
 )

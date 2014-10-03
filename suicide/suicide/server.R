@@ -101,8 +101,8 @@ shinyServer(function(input, output, session) {
       data=googleDataTable(g))
   })
   
-  ## create the map of the data
-  output$map <- renderPlot({
+  map_dat <- reactive({
+    #   browser()
     ## make reactive dataframe into regular dataframe
     suidf <- suidf()
     
@@ -118,11 +118,9 @@ shinyServer(function(input, output, session) {
     
     ## for single year maps...
     if(input$timespan == "sing.yr"){
-      ## subset the data by the year selected
-      data <- filter(data, Year==input$year)
       
       ## set the color to ramp from white to one of the colorblind colors and grey representing NA
-      paint.brush <- colorRampPalette(colors=c("white", cbbPalette[6]))
+      paint.brush <- colorRampPalette(colors=c("white", "red"))
       map.colors <- c(paint.brush(n=6), "#999999")
       
       ## find  max and min values of the variable in the total data and make cuts based on those values
@@ -130,14 +128,18 @@ shinyServer(function(input, output, session) {
       min.val <- min(suidata$Crude.Rate, na.rm=TRUE)
       cuts <- seq(min.val, max.val, (max.val-min.val)/(length(map.colors)-1))
       
+      ## subset the data by the year selected
+      suidf <- filter(suidf, Year==input$year)
+      
       ## assign colors to each entry in the data frame
-      color <- as.integer(cut2(data$Crude.Rate,cuts=cuts))
-      data <- cbind.data.frame(data,color)
-      data$color <- ifelse(is.na(data$color), length(map.colors), 
-                           data$color)
+      color <- as.integer(cut2(suidf$Crude.Rate,cuts=cuts))
+      suidf <- cbind.data.frame(suidf,color)
+      suidf$color <- ifelse(is.na(suidf$color), length(map.colors), 
+                            suidf$color)
+      suidf$County <- paste(as.character(suidf$County), "County")
       
       ## find missing counties in data subset and assign NAs to all values
-      missing.counties <- setdiff(MAmap$COUNTY, toupper(data$County))
+      missing.counties <- setdiff(MAcounties, suidf$County)
       df <- data.frame(County=missing.counties, State="MA", Country="US", 
                        Year=input$year, Suicides=NA, Population=NA, 
                        Crude.Rate=NA, Crude.Rate.Lower.Bound=NA,
@@ -146,32 +148,18 @@ shinyServer(function(input, output, session) {
                        color=length(map.colors))
       
       ## combine data subset with missing counties data
-      data <- rbind.data.frame(data, df)
-      MAmapA <- MAmap[match(toupper(data[,"County"]), MAmap$COUNTY),]
-      
-      ## layout the screen so that left 3/4 is for map and right 1/4 is for the legend
-      layout(matrix(1:2, ncol=2), width=c(3,1), height=c(1,1))
-      
-      ## plot map
-      plot(MAmapA, col=map.colors[data[,"color"]], border=gray(.85))
-      title(main=paste(input$year, "Crude Suicide Rate by County (per 100,000)"))
-      legend("bottom", legend="No Data Available", fill = map.colors[length(map.colors)])
-      legend_image <- as.raster(matrix(rev(map.colors[1:(length(map.colors)-1)]), ncol=1))
-      plot(c(0,2),c(0,1), type='n', axes=F, xlab='', ylab='', main='')
-      legend.label <- seq(round(min.val), round(max.val), l=5)
-      legend.label <- as.character(round(legend.label))
-      text(x=1.5, y=seq(0,1,l=5), labels=legend.label)
-      rasterImage(legend_image, 0, 0, 1, 1)
+      suidf <- rbind.data.frame(suidf, df)
+      suidf$color <- map.colors[suidf$color]
+      return(suidf)
     }
     
-    ## for maps showing difference over multiple years
-    if(input$timespan == "mult.yrs"){
+    if(input$timespan=="mult.yrs"){
       ## colors fade from one color to white to another color, with gray for NAs
-      paint.brush <- colorRampPalette(colors=c(cbbPalette[5], "white", cbbPalette[6]))
+      paint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
       map.colors <- c(paint.brush(n=8), "#999999")
       
       ## find max and min values for each county
-      bound <- data %>%
+      bound <- suidf %>%
         group_by(County) %>%
         summarise(max.val = max(Crude.Rate, na.rm=FALSE),
                   min.val = min(Crude.Rate, na.rm=FALSE))
@@ -186,13 +174,15 @@ shinyServer(function(input, output, session) {
       ## create dataframes for the max and min year of selected data
       min.year <- min(input$range)
       max.year <- max(input$range)
-      min.df <- subset(data, Year==min.year)
-      max.df <- subset(data, Year==max.year)
+      min.df <- subset(suidf, Year==min.year)
+      max.df <- subset(suidf, Year==max.year)
       
       ## merge data and take difference between the data of the min year and the max year
       diff.df <- within(merge(min.df, max.df, by="County"),{
-        Difference <- Crude.Rate.y - Crude.Rate.x
-      })[,c("County", "Difference")]
+        Crude.Rate <- round(Crude.Rate.y - Crude.Rate.x, 3)
+      })[,c("County", "Crude.Rate")]
+      
+      diff.df$County <- paste(as.character(diff.df$County), "County")
       
       ## assign colors to each entry in the data frame
       cuts <- seq(min.val, max.val, (max.val-min.val)/(length(map.colors)-1))
@@ -201,30 +191,78 @@ shinyServer(function(input, output, session) {
       diff.df$color <- ifelse(is.na(diff.df$color), length(map.colors), diff.df$color)
       
       ## find missing counties in data subset and assign NAs to all values
-      missing.counties <- setdiff(MAmap$COUNTY, toupper(diff.df$County))
-      df <- data.frame(County=missing.counties, Difference=NA,
+      missing.counties <- setdiff(MAcounties, diff.df$County)
+      df <- data.frame(County=missing.counties, Crude.Rate=NA,
                        color=length(map.colors))
       
       ## combine data subset with missing counties data
       diff.df <- rbind.data.frame(diff.df, df)
-      MAmapA <- MAmap[match(toupper(diff.df[,"County"]), MAmap$COUNTY),]
-      
-      ## layout the screen so that left 3/4 is for map and right 1/4 is for the legend
-      layout(matrix(1:2, ncol=2), width=c(3,1), height=c(1,1))
-      
-      ## plot map
-      plot(MAmapA, col=map.colors[diff.df[,"color"]], border=gray(.85))
-      title(main=paste("Difference in Crude Suicide Rate", "\nbetween", min.year, "and", max.year, 
-                       "(per 100,000)"))
-      legend("bottom", legend="No Data Available", fill = map.colors[length(map.colors)])
-      legend_image <- as.raster(matrix(rev(map.colors[1:(length(map.colors)-1)]), ncol=1))
-      plot(c(0,2),c(0,1), type='n', axes=F, xlab='', ylab='', main='')
-      legend.label <- seq(round(min.val), round(max.val), l=5)
-      legend.label <- as.character(round(legend.label))
-      text(x=1.5, y=seq(0,1,l=5), labels=legend.label)
-      rasterImage(legend_image, 0, 0, 1, 1)
+      diff.df$color <- map.colors[diff.df$color]
+      return(diff.df)
     }
+  })
+  
+  ## draw leaflet map
+  map <- createLeafletMap(session, "map")
+  
+  ## the functions within observe are called when any of the inputs are called
+  observe({
+    #   browser()
     
+    ## when year is changed
+    is.null(input$year)
+    ## when a range of years are selected
+    is.null(input$range)
+    
+    input$action
+    
+    ## load in relevant map data
+    suidf <- map_dat()
+    
+    ## assign map to x
+    x <- MAmap
+    ## for each county in the map, attach the Crude Rate and colors associated
+    for(i in 1:length(x$features)){
+      x$features[[i]]$properties$Crude.Rate <- suidf$Crude.Rate[match(x$features[[i]]$properties$County, suidf$County)]
+      x$features[[i]]$properties$style <- list(fillColor = suidf$color[match(x$features[[i]]$properties$County, suidf$County)], weight=1, color="#000000", fillOpacity=0.5)
+    }
+    #     session$onFlushed(once=FALSE, function() {
+    map$addGeoJSON(x)
+    # }
+  })
+  
+  values <- reactiveValues(selectedFeature=NULL)
+  
+  observe({
+    evt <- input$map_click
+    if(is.null(evt))
+      return()
+    
+    isolate({
+      values$selectedFeature <- NULL
+    })
+  })
+  
+  observe({
+    evt <- input$map_geojson_click
+    if(is.null(evt))
+      return()
+    
+    isolate({
+      values$selectedFeature <- evt$properties
+    })
+  })
+  
+  output$details <- renderText({
+    if(is.null(values$selectedFeature))
+      return(NULL)
+    
+    as.character(tags$div(
+      tags$h3(values$selectedFeature$County),
+      tags$div(
+        "Crude Rate:",
+        values$selectedFeature$Crude.Rate)
+    ))
   })
   
 })

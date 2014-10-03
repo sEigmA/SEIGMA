@@ -25,3 +25,4 @@ ylim <- list(
   min = 0,
   max = max(suidata$Crude.Rate, na.rm=T)+5
 )
+
