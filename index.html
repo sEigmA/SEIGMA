@@ -3,50 +3,35 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640">
-
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     <title>SEIGMA by sEigmA</title>
   </head>
 
   <body>
-    <a id="forkme_banner" href="https://github.com/sEigmA/SEIGMA">View on GitHub</a>
-    <div class="shell">
+    <div id="container">
+      <div class="inner">
 
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>SEIGMA</h1>
-            <h2>Shiny Team Repository </h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
+        <header>
+          <h1>SEIGMA</h1>
+          <h2>Shiny Team Repository </h2>
+        </header>
 
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/sEigmA/SEIGMA/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/sEigmA/SEIGMA/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/sEigmA/SEIGMA/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/sEigmA/SEIGMA/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/sEigmA/SEIGMA" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
 
+        <hr>
 
-      <span class="banner-fix"></span>
-
-
-      <section id="main_content">
-        <p><img src="http://www.umass.edu/seigma/sites/default/files/SEIGMA-Logo-100pix%20height.jpg" alt=""></p>
+        <section id="main_content">
+          <p><img src="http://www.umass.edu/seigma/sites/default/files/SEIGMA-Logo-100pix%20height.jpg" alt=""></p>
 
 <h3>
 <a name="welcome-to-seigma-shiny-team-repo" class="anchor" href="#welcome-to-seigma-shiny-team-repo"><span class="octicon octicon-link"></span></a>Welcome to SEIGMA Shiny Team Repo.</h3>
@@ -64,7 +49,7 @@ $ git checkout gh-pages
 <p>The study will focus particularly on problem gambling, but will also examine a wide array of social and economic effects of expanded gambling in Massachusetts. In addition to SPHHS, other key members of the research team include the <a href="http://www.donahue.umassp.edu/">UMass Donahue Institute</a>, which will lead the economic and fiscal impact research, and NORC at the University of Chicago, which will lead primary data collection efforts for the SEIGMA study. Read more <a href="www.umass.edu/seigma/sites/default/files/GRAC%20Meeting%202013-08-01%28final%29.pdf">here</a>.</p>
 
 <h3>
-<a name="who-are-the-authors-and-contributors" class="anchor" href="#who-are-the-authors-and-contributors"><span class="octicon octicon-link"></span></a>Who are the authors and contributors</h3>
+<a name="who-are-the-authors-and-contributors" class="anchor" href="#who-are-the-authors-and-contributors"><span class="octicon octicon-link"></span></a>Who are the authors and contributors?</h3>
 
 <p>The SEIGMA Shiny team is composed of: Emily Ramos, Shiny Coordinator <a href="https://github.com/emikoroe" class="user-mention">@emikoroe</a>, Arvind Ramakrishnan, Shiny Developer <a href="https://github.com/arvindram12" class="user-mention">@arvindram12</a>, Jenna Kiridly, Shiny Evaluator <a href="https://github.com/jfk8889" class="user-mention">@jfk8889</a> and Stephen Lauer, Shiny Consultant <a href="https://github.com/salauer" class="user-mention">@salauer</a>. </p>
 
@@ -86,22 +71,15 @@ Email: <a href="mailto:seigmateam@gmail.com">seigmateam@gmail.com</a></p>
 <p>For all general SEIGMA inquiries, contact:
 Amanda Houpt
 Email: <a href="mailto:ahoupt@schoolph.umass.edu">ahoupt@schoolph.umass.edu</a></p>
-      </section>
+        </section>
 
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/sEigmA">sEigmA</a> can be found on <a href="https://github.com/sEigmA/SEIGMA">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
-      </footer>
+        <footer>
+          SEIGMA is maintained by <a href="https://github.com/sEigmA">sEigmA</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
 
+        
+      </div>
     </div>
-
-    
   </body>
 </html>
