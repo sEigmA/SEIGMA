@@ -19,27 +19,37 @@ shinyUI(fluidPage(
       
       conditionalPanel(
         condition="input.tabs == 'summary'",
+        h4("How to use this app:"),
         helpText('Please select a timespan for which you are interested in seeing suicide data organized by county.  If you are interested in comparing multiple years, select "Multiple Years" and adjust the slider and select a range accordingly.'),
         helpText('Next, if you are interested in a specific county or multiple counties select them; alternatively for data on all Massachusetts counties leave this selection blank.  To compare the data to the Massachusetts average or US average select the corresponding check box.  Please note that only consecutive year ranges can be selected.')
       ),
       
       conditionalPanel(
         condition="input.tabs == 'plot'",
+        h4("How to use this app:"),
         helpText('Please select a county to analyze.  Multiple counties can be selected to compare the plots of crude suicide rate over time.  Select the Massachusetts and/or US average check boxes to compare county rates with the national and state averages.')
       ),
       
       conditionalPanel(
         condition="input.tabs == 'map'",
-        helpText('Please click on "Generate Map" to show the map of crude suicide rates across Massachusetts for a particular timespan. When "Single Year" is selected, clicking on a county displays the crude suicide rate for that year. Select a "Multiple Years" is selected, clicking on a county displays the increase in crude suicide rate over that timespan.')
+        h4("How to use this app:"),
+        helpText('Please click on "Generate Map" to get started. When "Single Year" is selected, clicking on a county displays the crude suicide rate for that year. When "Multiple Years" is selected, clicking on a county displays the increase in crude suicide rate over that timespan.')
       ),
       
       conditionalPanel(
         condition="input.tabs == 'info'",
+        h4("How to use this app:"),
         helpText('This tab contains more detailed information regarding the variables of interest, including formulae and calculations which were used to derive the crude suicide rate.')
       ),
       
       tags$hr(),
-            
+      
+      conditionalPanel(
+        condition="input.tabs == 'map' && input.action == 0",
+        actionButton("action", "Generate Map"),
+        tags$hr()
+      ),
+      
       ## in summary and map, allow for timespan selection
       conditionalPanel(
         condition="input.tabs == 'summary' || input.tabs == 'map'",
@@ -64,12 +74,6 @@ shinyUI(fluidPage(
         )
       ),
       
-      conditionalPanel(
-        condition="input.tabs == 'map'",
-        tags$br(),
-        actionButton("action", "Generate Map")
-      ),
-      
       ## in summary or plot, allow for county selection
       conditionalPanel(
         condition="input.tabs == 'summary' || input.tabs == 'plot'",
@@ -89,8 +93,7 @@ shinyUI(fluidPage(
       helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F Kiridly, Sophie E. O'Brien and Stephen A. Lauer"),
       
       ## email feedback link
-      helpText(a("Send us your comments or feedback!", href="mailto:seigmateam@gmail.com", 
-                 target="_blank")),
+      helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
       helpText(a("Data Source: CDC Wonder", href="http://wonder.cdc.gov/wonder/help/cmf.html",
@@ -188,35 +191,38 @@ shinyUI(fluidPage(
                    " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
                  tags$br(),
                  p(strong("Crude Rate = Count / Population * 100,000"), align="center"),
-        value="plot"),
-      
+                 value="plot"),
+        
         ## plot map
         tabPanel("Map", leafletMap("map", width="100%", height=500, 
-                                   options=list(center = c(42.15, -71.65), zoom=7)),
+                                   options=list(center = c(42.15, -71.65), zoom=8,
+                                                maxBounds = list(list(41, -73.5), 
+                                                                 list(43, -70)))),
                  htmlOutput("details"),
-#                  absolutePanel(
-#                    right = 20, top = 200, width = 150, class = "floater",
-#                    
-#                    #h4("Crude Suicide Rate"),
-#                    uiOutput("details")
-#                  ),
+                 #                  absolutePanel(
+                 #                    right = 20, top = 200, width = 150, class = "floater",
+                 #                    
+                 #                    #h4("Crude Suicide Rate"),
+                 #                    uiOutput("details")
+                 #                  ),
                  
                  
-#                  absolutePanel(
-#                    right = 30, top = 280, style = "", class = "floater",
-#                    tags$table(
-#                      mapply(function(from, to, color) {
-#                        tags$tr(
-#                          tags$td(tags$div(
-#                            style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-#                          )),
-#                          tags$td(from, "-", to)
-#                        )
-#                      }, unlist(uiOutput("from")), unlist(uiOutput("to")), unlist(uiOutput("color")), SIMPLIFY=FALSE)
-#                    )
-#                  ),
+                 #                  absolutePanel(
+                 #                    right = 30, top = 280, style = "", class = "floater",
+                 #                    tags$table(
+                 #                      mapply(function(from, to, color) {
+                 #                        tags$tr(
+                 #                          tags$td(tags$div(
+                 #                            style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                 #                          )),
+                 #                          tags$td(from, "-", to)
+                 #                        )
+                 #                      }, unlist(uiOutput("from")), unlist(uiOutput("to")), unlist(uiOutput("color")), SIMPLIFY=FALSE)
+                 #                    )
+                 #                  ),
                  
                  ## add text about the variables
+                 tags$br(),
                  p(strong("Variable Summary:")),
                  tags$br(),
                  p(strong("Suicides"),
@@ -227,30 +233,32 @@ shinyUI(fluidPage(
                  tags$br(),
                  p(strong("Crude Rate = Count / Population * 100,000"), align="center"),
                  value="map"),
-    
-    tabPanel("More Info", 
-             p(strong("Variable Summary:")),
-             tags$br(),
-             p(strong("Suicides"),
-               " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
-             tags$br(),
-             p(strong("Crude Rate"), 
-               " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
-             tags$br(),
-             p(strong("Crude Rate = Count / Population * 100,000"), align="center"),
-             tags$br(),
-             p(strong("Crude Rate Lower Bound"),
-               " - 95% confidence interval lower bound based upon the Crude Rate Standard Error (see below)."),
-             tags$br(),
-             p(strong("Crude Rate Upper Bound"),
-               " - 95% confidence interval upper bound based upon the Crude Rate Standard Error (see below)."),
-             tags$br(),
-             p(strong("Crude Rate Standard Error"),
-               " - The relative standard error for Crude Rate. Even though Suicides represents the complete counts for each region, and thus are not subject to sampling error, they are subject to non-sampling errors in the registration process. This is calculated by:"),
-             tags$br(),
-             p(strong("Crude Rate Standard Error = 100 / sqrt(Suicides)."), align="center"), value="info"),
-    id="tabs"
+        
+        tabPanel("More Info", 
+                 p(strong("Variable Summary:")),
+                 tags$br(),
+                 p(strong("Suicides"),
+                   " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
+                 tags$br(),
+                 p(strong("Crude Rate"), 
+                   " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
+                 tags$br(),
+                 p(strong("Crude Rate = Count / Population * 100,000"), align="center"),
+                 tags$br(),
+                 p(strong("Crude Rate Lower Bound"),
+                   " - 95% confidence interval lower bound based upon the Crude Rate Standard Error (see below)."),
+                 tags$br(),
+                 p(strong("Crude Rate Upper Bound"),
+                   " - 95% confidence interval upper bound based upon the Crude Rate Standard Error (see below)."),
+                 tags$br(),
+                 p(strong("Crude Rate Standard Error"),
+                   " - The relative standard error for Crude Rate. Even though Suicides represents the complete counts for each region, and thus are not subject to sampling error, they are subject to non-sampling errors in the registration process. This is calculated by:"),
+                 tags$br(),
+                 p(strong("Crude Rate Standard Error = 100 / sqrt(Suicides)."), align="center"),
+                 ## email feedback link
+                 h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
+        id="tabs"
+      )
+    )
   )
-)
-)
 ))

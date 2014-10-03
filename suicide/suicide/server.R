@@ -239,8 +239,10 @@ shinyServer(function(input, output, session) {
   observe({
     input$action
     ## load in relevant map data
-    isolate({
+    
     suidf <- map_dat()
+    
+    isolate({
     
     ## assign map to x
     x <- MAmap
@@ -305,13 +307,14 @@ shinyServer(function(input, output, session) {
     if(is.null(values$selectedFeature))
       return(NULL)
     
-#     if(is.null(values$selectedFeature$Crude.Rate)){
-#       
-#     }
+    if(is.null(values$selectedFeature$Crude.Rate)){
+      return(as.character(tags$div(
+        tags$h4("Crude Suicide Rate in ", values$selectedFeature$County, "is not available for this timespan"))))
+    }
     
     if(input$timespan=="sing.yr"){
     return(as.character(tags$div(
-      tags$h3("Crude Suicide Rate in ", input$year),
+      tags$h3("Crude suicide rate in ", input$year),
       tags$h4(values$selectedFeature$County, ":",
         values$selectedFeature$Crude.Rate, "per 100,000 in population")
     )))}
