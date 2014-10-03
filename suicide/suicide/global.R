@@ -1,4 +1,6 @@
 require(RJSONIO)
+require(dplyr)
+require(leaflet)
 
 ## load map data
 # MAmap <- readShapeSpatial("countymaps/COUNTIES_POLYM.shp")
@@ -25,6 +27,20 @@ ylim <- list(
   min = 0,
   max = max(suidata$Crude.Rate, na.rm=T)+5
 )
+
+spaint.brush <- colorRampPalette(colors=c("white", "red"))
+smap.colors <- c(spaint.brush(n=6), "#999999")
+
+## find  max and min values of the variable in the total data and make cuts based on those values
+smax.val <- max(suidata$Crude.Rate, na.rm=TRUE)
+smin.val <- min(suidata$Crude.Rate, na.rm=TRUE)
+scuts <- seq(smin.val, smax.val, (smax.val-smin.val)/(length(smap.colors)-1))
+# Construct break ranges for displaying in the legend
+scolorRanges <- data.frame(
+  from = head(scuts, length(scuts)-1),
+  to = tail(scuts, length(scuts)-1)
+)
+scolorRanges <- rbind.data.frame(scolorRanges, c(NA, NA))
 
 ## colors fade from one color to white to another color, with gray for NAs
 mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))

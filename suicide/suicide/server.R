@@ -202,6 +202,36 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  output$from <- renderUI({
+    if(input$timespan=="sing.yr"){
+      return(list(scolorRanges$from))
+    }
+    if(input$timespan=="mult.yrs"){
+      return(list(mcolorRanges$from))
+    }
+    1
+  })
+  
+  output$to <- renderUI({
+    if(input$timespan=="sing.yr"){
+      return(list(scolorRanges$to))
+    }
+    if(input$timespan=="mult.yrs"){
+      return(list(mcolorRanges$to))
+    }
+    1
+  })
+  
+  output$color <- renderUI({
+    if(input$timespan=="sing.yr"){
+      return(list(smap.colors))
+    }
+    if(input$timespan=="mult.yrs"){
+      return(list(mmap.colors))
+    }
+    1
+  })
+  
   ## draw leaflet map
   map <- createLeafletMap(session, "map")
   
@@ -209,6 +239,7 @@ shinyServer(function(input, output, session) {
   observe({
     input$action
     ## load in relevant map data
+    isolate({
     suidf <- map_dat()
     
     ## assign map to x
@@ -216,19 +247,17 @@ shinyServer(function(input, output, session) {
     ## for each county in the map, attach the Crude Rate and colors associated
     for(i in 1:length(x$features)){
       x$features[[i]]$properties$Crude.Rate <- suidf$Crude.Rate[match(x$features[[i]]$properties$County, suidf$County)]
-      x$features[[i]]$properties$style <- list(fillColor = suidf$color[match(x$features[[i]]$properties$County, suidf$County)], weight=1, color="#000000", fillOpacity=0.5)
+      x$features[[i]]$properties$style <- list(fillColor = suidf$color[match(x$features[[i]]$properties$County, suidf$County)], weight=1, color="#000000", fillOpacity=0.7)
     }
     
     #   browser()
-    isolate({
-    ## when year is changed
-    input$year
-    ## when a range of years are selected
-    input$range
-    input$tabs
-    
-    
-    #     session$onFlushed(once=FALSE, function() {
+
+#     ## when year is changed
+#     input$year
+#     ## when a range of years are selected
+#     input$range
+        
+    ## session$onFlushed(once=FALSE, function() {
     map$addGeoJSON(x)
      })
   })
@@ -258,15 +287,41 @@ shinyServer(function(input, output, session) {
   })
   
   output$details <- renderText({
+    #browser()
+    if(input$action==0){
+      return(
+      as.character(tags$div(
+        tags$div(
+          h4("Generate Map and Choose a County"))
+      )))
+    }
+    
+    if(is.null(values$selectedFeature)){
+      return(as.character(tags$div(
+        tags$div(
+          h4("Choose a County"))
+      )))
+    }
     if(is.null(values$selectedFeature))
       return(NULL)
     
-    as.character(tags$div(
-      tags$h3(values$selectedFeature$County),
-      tags$div(
-        "Crude Rate:",
-        values$selectedFeature$Crude.Rate)
-    ))
+#     if(is.null(values$selectedFeature$Crude.Rate)){
+#       
+#     }
+    
+    if(input$timespan=="sing.yr"){
+    return(as.character(tags$div(
+      tags$h3("Crude Suicide Rate in ", input$year),
+      tags$h4(values$selectedFeature$County, ":",
+        values$selectedFeature$Crude.Rate, "per 100,000 in population")
+    )))}
+    
+    if(input$timespan=="mult.yrs"){
+      return(as.character(tags$div(
+        tags$h3("Difference in Crude Suicide Rate from ", min(input$range), " to ", max(input$range)),
+        tags$h4(values$selectedFeature$County, ":",
+                values$selectedFeature$Crude.Rate, "per 100,000 in population")
+      )))}
   })
   
 })

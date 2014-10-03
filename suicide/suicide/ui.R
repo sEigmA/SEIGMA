@@ -19,7 +19,7 @@ shinyUI(fluidPage(
       
       conditionalPanel(
         condition="input.tabs == 'summary'",
-        helpText('Please select a time span for which you are interested in seeing suicide data organized by county.  If you are interested in comparing multiple years, select "Multiple Years" and adjust the slider and select a range accordingly.'),
+        helpText('Please select a timespan for which you are interested in seeing suicide data organized by county.  If you are interested in comparing multiple years, select "Multiple Years" and adjust the slider and select a range accordingly.'),
         helpText('Next, if you are interested in a specific county or multiple counties select them; alternatively for data on all Massachusetts counties leave this selection blank.  To compare the data to the Massachusetts average or US average select the corresponding check box.  Please note that only consecutive year ranges can be selected.')
       ),
       
@@ -30,7 +30,7 @@ shinyUI(fluidPage(
       
       conditionalPanel(
         condition="input.tabs == 'map'",
-        helpText('Please click on a county of interest to view crude suicide rate.  Select a year to view the suicide rate for that year. Select a range of years to view the difference in suicide rate over that timespan.  Please note that only consecutive year ranges can be selected.')
+        helpText('Please click on "Generate Map" to show the map of crude suicide rates across Massachusetts for a particular timespan. When "Single Year" is selected, clicking on a county displays the crude suicide rate for that year. Select a "Multiple Years" is selected, clicking on a county displays the increase in crude suicide rate over that timespan.')
       ),
       
       conditionalPanel(
@@ -66,6 +66,7 @@ shinyUI(fluidPage(
       
       conditionalPanel(
         condition="input.tabs == 'map'",
+        tags$br(),
         actionButton("action", "Generate Map")
       ),
       
@@ -193,6 +194,13 @@ shinyUI(fluidPage(
         tabPanel("Map", leafletMap("map", width="100%", height=500, 
                                    options=list(center = c(42.15, -71.65), zoom=7)),
                  htmlOutput("details"),
+#                  absolutePanel(
+#                    right = 20, top = 200, width = 150, class = "floater",
+#                    
+#                    #h4("Crude Suicide Rate"),
+#                    uiOutput("details")
+#                  ),
+                 
                  
 #                  absolutePanel(
 #                    right = 30, top = 280, style = "", class = "floater",
@@ -204,7 +212,7 @@ shinyUI(fluidPage(
 #                          )),
 #                          tags$td(from, "-", to)
 #                        )
-#                      }, mcolorRanges$from, mcolorRanges$to, mmap.colors, SIMPLIFY=FALSE)
+#                      }, unlist(uiOutput("from")), unlist(uiOutput("to")), unlist(uiOutput("color")), SIMPLIFY=FALSE)
 #                    )
 #                  ),
                  
