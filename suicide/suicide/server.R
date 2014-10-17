@@ -319,7 +319,9 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
     if(input$timespan=="mult.yrs"){
       return(as.character(tags$div(
         tags$h4("Change in crude suicide rate from ", min(input$range), " to ", max(input$range), " in ", values$selectedFeature$County),
-        tags$h5(values$selectedFeature$Crude.Rate, "per 100,000 in population")
+        tags$h5("Increased by "[values$selectedFeature$Crude.Rate>=0],
+                "Decreased by"[values$selectedFeature$Crude.Rate<0],
+                abs(values$selectedFeature$Crude.Rate), "per 100,000 in population")
       )))}
   })
   
