@@ -44,7 +44,7 @@ scolorRanges <- rbind.data.frame(scolorRanges, c(NA, NA))
 
 ## colors fade from one color to white to another color, with gray for NAs
 mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
-mmap.colors <- c(mpaint.brush(n=8), "#999999")
+mmap.colors <- c(mpaint.brush(n=6), "#999999")
 
 ## find max and min values for each county
 bound <- suidata %>%

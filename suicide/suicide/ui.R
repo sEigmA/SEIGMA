@@ -1,5 +1,5 @@
 ###############################
-## Preamble
+### Preamble
 ###############################
 
 ## load necessary libraries
@@ -21,32 +21,28 @@ shinyUI(fluidPage(
         condition="input.tabs == 'summary'",
         h4("How to use this app:"),
         helpText('Please select a timespan for which you are interested in seeing suicide data organized by county.  If you are interested in comparing multiple years, select "Multiple Years" and adjust the slider and select a range accordingly.'),
-        helpText('Next, if you are interested in a specific county or multiple counties select them; alternatively for data on all Massachusetts counties leave this selection blank.  To compare the data to the Massachusetts average or US average select the corresponding check box.  Please note that only consecutive year ranges can be selected.')
+        helpText('Next, if you are interested in a specific county or multiple counties select them; alternatively for data on all Massachusetts counties leave this selection blank.  To compare the data to the Massachusetts average or US average select the corresponding check box.  Please note that only consecutive year ranges can be selected.'),
+        tags$hr()
       ),
       
       conditionalPanel(
         condition="input.tabs == 'plot'",
         h4("How to use this app:"),
-        helpText('Please select a county to analyze.  Multiple counties can be selected to compare the plots of crude suicide rate over time.  Select the Massachusetts and/or US average check boxes to compare county rates with the national and state averages.')
+        helpText('Please select a county to analyze.  Multiple counties can be selected to compare the plots of crude suicide rate over time.  Select the Massachusetts and/or US average check boxes to compare county rates with the national and state averages.'),
+        tags$hr()
       ),
       
       conditionalPanel(
         condition="input.tabs == 'map'",
         h4("How to use this app:"),
-        helpText('Please click on "Generate Map" to get started. When "Single Year" is selected, clicking on a county displays the crude suicide rate for that year. When "Multiple Years" is selected, clicking on a county displays the increase in crude suicide rate over that timespan.')
+        helpText('Please click on "Generate Map" to get started. When "Single Year" is selected, clicking on a county displays the crude suicide rate for that year. When "Multiple Years" is selected, clicking on a county displays the increase in crude suicide rate over that timespan.'),
+        tags$hr()
       ),
       
       conditionalPanel(
         condition="input.tabs == 'info'",
         h4("How to use this app:"),
-        helpText('This tab contains more detailed information regarding the variables of interest, including formulae and calculations which were used to derive the crude suicide rate.')
-      ),
-      
-      tags$hr(),
-      
-      conditionalPanel(
-        condition="input.tabs == 'map' && input.action == 0",
-        actionButton("action", "Generate Map"),
+        helpText('This tab contains more detailed information regarding the variables of interest, including formulae and calculations which were used to derive the crude suicide rate.'),
         tags$hr()
       ),
       
@@ -194,7 +190,14 @@ shinyUI(fluidPage(
                  value="plot"),
         
         ## plot map
-        tabPanel("Map", leafletMap("map", width="100%", height=500, 
+        tabPanel("Map",
+                 conditionalPanel(
+                   condition="input.tabs == 'map' && input.action == 0",
+                   actionButton("action", "Generate Map"),
+                   tags$hr()
+                 ),
+                 
+                 leafletMap("map", width="100%", height=500, 
                                    options=list(center = c(42.15, -71.65), zoom=8,
                                                 maxBounds = list(list(41, -73.5), 
                                                                  list(43, -70)))),
@@ -207,19 +210,27 @@ shinyUI(fluidPage(
                  #                  ),
                  
                  
-                 #                  absolutePanel(
-                 #                    right = 30, top = 280, style = "", class = "floater",
-                 #                    tags$table(
-                 #                      mapply(function(from, to, color) {
-                 #                        tags$tr(
-                 #                          tags$td(tags$div(
-                 #                            style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                 #                          )),
-                 #                          tags$td(from, "-", to)
-                 #                        )
-                 #                      }, unlist(uiOutput("from")), unlist(uiOutput("to")), unlist(uiOutput("color")), SIMPLIFY=FALSE)
-                 #                    )
-                 #                  ),
+#                  absolutePanel(
+#                    right = 400, top = 500, draggable=TRUE, style = "", class = "floater",
+#                    tags$table(
+#                      mapply(function(from, to, color) {
+#                        tags$tr(
+#                          tags$td(tags$div(
+#                            style = sprintf("width: 16px; height: 16px; background-color: %s;",
+#                                            color)
+#                          )),
+#                          tags$td(round(from, 2), "to", round(to, 2))
+#                        )
+#                      }, 
+#                      c(scolorRanges$from[uiOutput(time)=="sing.yr"], 
+#                               mcolorRanges$from[uiOutput(time)=="mult.yrs"]),
+#                      c(scolorRanges$to[uiOutput(time)=="sing.yr"], 
+#                               mcolorRanges$to[uiOutput(time)=="mult.yrs"]),
+#                      c(smap.colors[uiOutput(time)=="sing.yr"], 
+#                               mmap.colors[uiOutput(time)=="mult.yrs"]), 
+#                      SIMPLIFY=FALSE)
+#                    )
+#                  ),
                  
                  ## add text about the variables
                  tags$br(),

@@ -7,7 +7,7 @@ require(Hmisc)
 require(reshape2)
 
 shinyServer(function(input, output, session) {
-  ## suidf is a reactive dataframe. currently not reacting to anything, but may be necessary in future
+  ## suidf is a reactive dataframe. Necessary for when summary/plot/map have common input. Not in this project
   suidf <- reactive({
     suidf <- suidata
     suidf    
@@ -156,7 +156,7 @@ shinyServer(function(input, output, session) {
     if(input$timespan=="mult.yrs"){
       ## colors fade from one color to white to another color, with gray for NAs
       paint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
-      map.colors <- c(paint.brush(n=8), "#999999")
+      map.colors <- c(paint.brush(n=6), "#999999")
       
       ## find max and min values for each county
       bound <- suidata %>%
@@ -202,35 +202,74 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  output$from <- renderUI({
-    if(input$timespan=="sing.yr"){
-      return(list(scolorRanges$from))
-    }
-    if(input$timespan=="mult.yrs"){
-      return(list(mcolorRanges$from))
-    }
-    1
-  })
-  
-  output$to <- renderUI({
-    if(input$timespan=="sing.yr"){
-      return(list(scolorRanges$to))
-    }
-    if(input$timespan=="mult.yrs"){
-      return(list(mcolorRanges$to))
-    }
-    1
-  })
-  
-  output$color <- renderUI({
-    if(input$timespan=="sing.yr"){
-      return(list(smap.colors))
-    }
-    if(input$timespan=="mult.yrs"){
-      return(list(mmap.colors))
-    }
-    1
-  })
+#   output$from <- renderUI({
+#     if(input$timespan=="sing.yr"){
+#       return(list(scolorRanges$from))
+#     }
+#     if(input$timespan=="mult.yrs"){
+#       return(list(mcolorRanges$from))
+#     }
+#     1
+#   })
+#   
+#   output$to <- renderUI({
+#     if(input$timespan=="sing.yr"){
+#       return(list(scolorRanges$to))
+#     }
+#     if(input$timespan=="mult.yrs"){
+#       return(list(mcolorRanges$to))
+#     }
+#     1
+#   })
+#   
+#   output$color <- renderUI({
+#     if(input$timespan=="sing.yr"){
+#       return(list(smap.colors))
+#     }
+#     if(input$timespan=="mult.yrs"){
+#       return(list(mmap.colors))
+#     }
+#     1
+#   })
+
+
+values <- reactiveValues(selectedFeature=NULL, highlight=c())
+
+# observe({
+#   values$highlight <- input$map_shape_mouseover$id
+#   #browser()
+# })
+
+# # Dynamically render the box in the upper-right
+# output$countyInfo <- renderUI({
+#   
+#   if (is.null(values$highlight)) {
+#     return(tags$div("Hover over a county"))
+#   } else {
+#     # Get a properly formatted state name
+#     countyName <- names(MAcounties)[values$highlight]
+#     return(tags$div(
+#       tags$strong(countyName),
+#       tags$div(density[countyName], HTML("people/m<sup>2</sup>"))
+#     ))
+#   }
+# })
+
+# lastHighlighted <- c()
+# # When values$highlight changes, unhighlight the old state (if any) and
+# # highlight the new state
+# observe({
+# #   if (length(lastHighlighted) > 0)
+# #     drawStates(getStateName(lastHighlighted), FALSE)
+#   lastHighlighted <<- values$highlight
+#   
+#   if (is.null(values$highlight))
+#     return()
+#   
+#   isolate({
+#     drawStates(getStateName(values$highlight), TRUE)
+#   })
+# })
   
   ## draw leaflet map
   map <- createLeafletMap(session, "map")
@@ -238,36 +277,23 @@ shinyServer(function(input, output, session) {
   ## the functions within observe are called when any of the inputs are called
   observe({
     input$action
-    ## load in relevant map data
     
+    ## load in relevant map data
     suidf <- map_dat()
     
     isolate({
-    
     ## assign map to x
     x <- MAmap
     ## for each county in the map, attach the Crude Rate and colors associated
     for(i in 1:length(x$features)){
       x$features[[i]]$properties$Crude.Rate <- suidf$Crude.Rate[match(x$features[[i]]$properties$County, suidf$County)]
-      x$features[[i]]$properties$style <- list(fillColor = suidf$color[match(x$features[[i]]$properties$County, suidf$County)], weight=1, color="#000000", fillOpacity=0.7)
+      x$features[[i]]$properties$style <- list(fill=TRUE, fillColor = suidf$color[match(x$features[[i]]$properties$County, suidf$County)], weight=1, stroke=TRUE, opacity=1, color="#000000", fillOpacity=0.7)
     }
     
-    #   browser()
-
-#     ## when year is changed
-#     input$year
-#     ## when a range of years are selected
-#     input$range
-        
-    ## session$onFlushed(once=FALSE, function() {
-    map$addGeoJSON(x)
+    map$addGeoJSON(x) # draw map
      })
   })
-  
-
-  
-  values <- reactiveValues(selectedFeature=NULL)
-  
+ 
   observe({
     evt <- input$map_click
     if(is.null(evt))
@@ -287,9 +313,15 @@ shinyServer(function(input, output, session) {
       values$selectedFeature <- evt$properties
     })
   })
-  
+
+output$time <- renderUI({
+  browser()
+  if(input$timespan=="sing.yr")
+    return("sing.yr")
+  return("mult.yrs")
+})
+
   output$details <- renderText({
-    #browser()
     if(input$action==0){
       return(
       as.character(tags$div(
@@ -309,7 +341,7 @@ shinyServer(function(input, output, session) {
     
     if(is.null(values$selectedFeature$Crude.Rate)){
       return(as.character(tags$div(
-        tags$h4("Crude Suicide Rate in ", values$selectedFeature$County, "is not available for this timespan"))))
+        tags$h4("Crude suicide rate in ", values$selectedFeature$County, "is not available for this timespan"))))
     }
     
     if(input$timespan=="sing.yr"){
@@ -321,7 +353,7 @@ shinyServer(function(input, output, session) {
     
     if(input$timespan=="mult.yrs"){
       return(as.character(tags$div(
-        tags$h3("Difference in Crude Suicide Rate from ", min(input$range), " to ", max(input$range)),
+        tags$h3("Difference in crude suicide rate from ", min(input$range), " to ", max(input$range)),
         tags$h4(values$selectedFeature$County, ":",
                 values$selectedFeature$Crude.Rate, "per 100,000 in population")
       )))}
