@@ -244,18 +244,22 @@ shinyUI(fluidPage(
                             options=list(center = c(42.15, -71.65), zoom=8,
                                          maxBounds = list(list(41, -73.5), 
                                                           list(43, -70)))),
-                 htmlOutput("details"),
+                 
+                 conditionalPanel(
+                   condition="input.action != 0",
+                   absolutePanel(left=450, top=450, width=300, class="floater",
+                                 htmlOutput("details"))),
                  
                  conditionalPanel(
                    condition="input.tabs == 'map' && input.action == 0",
                    absolutePanel(right = 400, top = 300, class = "floater",
-                   actionButton("action", "Generate Map")
+                                 actionButton("action", "Generate Map")
                  )),
                  
                  conditionalPanel(
-                   condition="input.timespan == 'sing.yr'",
+                   condition="input.timespan == 'sing.yr' && input.action != 0",
                    absolutePanel(
-                     right = 0, top = 215, draggable=FALSE, style = "", 
+                     right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Single Year"),
                      tags$br(),
@@ -275,9 +279,9 @@ shinyUI(fluidPage(
                    )),
                  
                  conditionalPanel(
-                   condition="input.timespan == 'mult.yrs'",
+                   condition="input.timespan == 'mult.yrs' && input.action != 0",
                    absolutePanel(
-                     right = 0, top = 215, draggable=FALSE, style = "", 
+                     right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Multiple Year"),
                      tags$br(),
@@ -296,8 +300,10 @@ shinyUI(fluidPage(
                      )
                    )),
                  
+                 conditionalPanel(
+                   condition="input.action != 0",
                  absolutePanel(
-                   right = 400, top = 600, draggable=FALSE, style = "", 
+                   right = 350, top = 600, draggable=FALSE, style = "", 
                    class = "floater",
                    tags$table(
                      tags$tr(
@@ -307,7 +313,7 @@ shinyUI(fluidPage(
                          tags$td("Data not available")
                        )
                     )
-                 ),
+                 )),
 #                  
                  ## add text about the variables
                  tags$br(),

@@ -67,7 +67,7 @@ shinyServer(function(input, output, session) {
                             "Crude Rate Standard Error")
     
     df2
-  }, options=list(bFilter=FALSE)) ## there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
+  }, options=list(bFilter=FALSE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
   ## create the plot of the data
   output$plot <- reactive({
@@ -202,37 +202,6 @@ shinyServer(function(input, output, session) {
     }
   })
   
-#   output$from <- renderUI({
-#     if(input$timespan=="sing.yr"){
-#       return(list(scolorRanges$from))
-#     }
-#     if(input$timespan=="mult.yrs"){
-#       return(list(mcolorRanges$from))
-#     }
-#     1
-#   })
-#   
-#   output$to <- renderUI({
-#     if(input$timespan=="sing.yr"){
-#       return(list(scolorRanges$to))
-#     }
-#     if(input$timespan=="mult.yrs"){
-#       return(list(mcolorRanges$to))
-#     }
-#     1
-#   })
-#   
-#   output$color <- renderUI({
-#     if(input$timespan=="sing.yr"){
-#       return(list(smap.colors))
-#     }
-#     if(input$timespan=="mult.yrs"){
-#       return(list(mmap.colors))
-#     }
-#     1
-#   })
-
-
 values <- reactiveValues(selectedFeature=NULL, highlight=c())
 
 # observe({
@@ -319,18 +288,18 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
   })
 
   output$details <- renderText({
-    if(input$action==0){
-      return(
-      as.character(tags$div(
-        tags$div(
-          h4("Generate Map and Choose a County"))
-      )))
-    }
+#     if(input$action==0){
+#       return(
+#       as.character(tags$div(
+#         tags$div(
+#           h4("Generate Map and Choose a County"))
+#       )))
+#     }
     
     if(is.null(values$selectedFeature)){
       return(as.character(tags$div(
         tags$div(
-          h4("Choose a County"))
+          h4("Click on a County"))
       )))
     }
     if(is.null(values$selectedFeature))
@@ -338,21 +307,19 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
     
     if(is.null(values$selectedFeature$Crude.Rate)){
       return(as.character(tags$div(
-        tags$h4("Crude suicide rate in ", values$selectedFeature$County, "is not available for this timespan"))))
+        tags$h5("Crude suicide rate in ", values$selectedFeature$County, "is not available for this timespan"))))
     }
     
     if(input$timespan=="sing.yr"){
     return(as.character(tags$div(
-      tags$h3("Crude suicide rate in ", input$year),
-      tags$h4(values$selectedFeature$County, ":",
-        values$selectedFeature$Crude.Rate, "per 100,000 in population")
+      tags$h4(input$year, "crude suicide rate in ", values$selectedFeature$County),
+      tags$h5(values$selectedFeature$Crude.Rate, "per 100,000 in population")
     )))}
     
     if(input$timespan=="mult.yrs"){
       return(as.character(tags$div(
-        tags$h3("Difference in crude suicide rate from ", min(input$range), " to ", max(input$range)),
-        tags$h4(values$selectedFeature$County, ":",
-                values$selectedFeature$Crude.Rate, "per 100,000 in population")
+        tags$h4("Change in crude suicide rate from ", min(input$range), " to ", max(input$range), " in ", values$selectedFeature$County),
+        tags$h5(values$selectedFeature$Crude.Rate, "per 100,000 in population")
       )))}
   })
   
