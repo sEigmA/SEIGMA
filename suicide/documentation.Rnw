@@ -45,7 +45,7 @@ sas.data$County <- ifelse(sas.data$State=="US", "US", as.character(sas.data$Coun
 write.csv(sas.data, file="suicide/SASuicidedata.csv")
 
 ## Can use this line to load up suicide data locally
-suidata <- read.csv("suicide/SASuicidedata.csv")[,-1]
+suidata <- read.csv("suicide/suicide/SASuicidedata.csv")[,-1]
 @
 
 You are now ready to work on the app in ui.R and server.R

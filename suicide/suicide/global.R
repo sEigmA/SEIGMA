@@ -29,22 +29,22 @@ ylim <- list(
 )
 
 spaint.brush <- colorRampPalette(colors=c("white", "red"))
-smap.colors <- c(spaint.brush(n=6), "#999999")
+smap.colors <- c(spaint.brush(n=6))#, "#999999")
 
 ## find  max and min values of the variable in the total data and make cuts based on those values
 smax.val <- max(suidata$Crude.Rate, na.rm=TRUE)
 smin.val <- min(suidata$Crude.Rate, na.rm=TRUE)
-scuts <- seq(smin.val, smax.val, (smax.val-smin.val)/(length(smap.colors)-1))
+scuts <- seq(smin.val, smax.val, length.out = length(smap.colors)+1)
 # Construct break ranges for displaying in the legend
 scolorRanges <- data.frame(
   from = head(scuts, length(scuts)-1),
   to = tail(scuts, length(scuts)-1)
 )
-scolorRanges <- rbind.data.frame(scolorRanges, c(NA, NA))
+# scolorRanges <- rbind.data.frame(scolorRanges, c(NA, NA))
 
 ## colors fade from one color to white to another color, with gray for NAs
 mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
-mmap.colors <- c(mpaint.brush(n=6), "#999999")
+mmap.colors <- c(mpaint.brush(n=6))#, "#999999")
 
 ## find max and min values for each county
 bound <- suidata %>%
@@ -58,11 +58,11 @@ bound$diff <- abs(bound$max.val - bound$min.val)
 ## set the max and min value (for the legend) at 95% of the largest difference
 mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
 mmin.val <- -1*mmax.val
-mcuts <- seq(mmin.val, mmax.val, (mmax.val-mmin.val)/(length(mmap.colors)-1))
+mcuts <- seq(mmin.val, mmax.val, length.out = length(mmap.colors)+1)
 
 # Construct break ranges for displaying in the legend
 mcolorRanges <- data.frame(
   from = head(mcuts, length(mcuts)-1),
   to = tail(mcuts, length(mcuts)-1)
 )
-mcolorRanges <- rbind.data.frame(mcolorRanges, c(NA, NA))
+# mcolorRanges <- rbind.data.frame(mcolorRanges, c(NA, NA))

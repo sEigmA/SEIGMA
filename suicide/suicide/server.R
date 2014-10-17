@@ -287,7 +287,11 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
     ## for each county in the map, attach the Crude Rate and colors associated
     for(i in 1:length(x$features)){
       x$features[[i]]$properties$Crude.Rate <- suidf$Crude.Rate[match(x$features[[i]]$properties$County, suidf$County)]
-      x$features[[i]]$properties$style <- list(fill=TRUE, fillColor = suidf$color[match(x$features[[i]]$properties$County, suidf$County)], weight=1, stroke=TRUE, opacity=1, color="#000000", fillOpacity=0.7)
+      x$features[[i]]$properties$style <- list(
+        fill=TRUE, 
+        fillColor = suidf$color[match(x$features[[i]]$properties$County, 
+                                      suidf$County)], 
+        weight=1, stroke=TRUE, opacity=1, color="#000000", fillOpacity=0.7)
     }
     
     map$addGeoJSON(x) # draw map
@@ -313,13 +317,6 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
       values$selectedFeature <- evt$properties
     })
   })
-
-output$time <- renderUI({
-  browser()
-  if(input$timespan=="sing.yr")
-    return("sing.yr")
-  return("mult.yrs")
-})
 
   output$details <- renderText({
     if(input$action==0){

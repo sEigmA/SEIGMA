@@ -7,6 +7,48 @@ require(shiny)
 require(googleCharts)
 
 shinyUI(fluidPage(
+  HTML('<style type="text/css">
+       .action-button {
+       -moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+       -webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+       box-shadow:inset 0px 1px 0px 0px #54a3f7;
+       background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
+       background:-moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+       background:-webkit-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+       background:-o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+       background:-ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+       background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+       filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#007dc1", endColorstr="#0061a7",GradientType=0);
+       background-color:#007dc1;
+         -moz-border-radius:3px;
+       -webkit-border-radius:3px;
+       border-radius:3px;
+       border:1px solid #124d77;
+       display:inline-block;
+       cursor:pointer;
+       color:#ffffff;
+         font-family:arial;
+       font-size:13px;
+       padding:6px 24px;
+       text-decoration:none;
+       text-shadow:0px 1px 0px #154682;
+       }
+.action-button:hover {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));
+	background:-moz-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+	background:-webkit-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+	background:-o-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+	background:-ms-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#0061a7", endColorstr="#007dc1",GradientType=0);
+       background-color:#0061a7;
+         }
+.action-button:active {
+  position:relative;
+  top:1px;
+}
+
+       </style>'),
   ## this starts the googleCharts engine
   googleChartsInit(),
   
@@ -197,41 +239,71 @@ shinyUI(fluidPage(
                    tags$hr()
                  ),
                  
+                 # Add a little CSS to make the map background pure white
+                 tags$head(tags$style("
+    #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
+    .floater { background-color: white; padding: 8px; opacity: 0.85; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+  ")),
+                 
                  leafletMap("map", width="100%", height=500, 
-                                   options=list(center = c(42.15, -71.65), zoom=8,
-                                                maxBounds = list(list(41, -73.5), 
-                                                                 list(43, -70)))),
+                            options=list(center = c(42.15, -71.65), zoom=8,
+                                         maxBounds = list(list(41, -73.5), 
+                                                          list(43, -70)))),
                  htmlOutput("details"),
-                 #                  absolutePanel(
-                 #                    right = 20, top = 200, width = 150, class = "floater",
-                 #                    
-                 #                    #h4("Crude Suicide Rate"),
-                 #                    uiOutput("details")
-                 #                  ),
                  
+                 absolutePanel(
+                   right = 450, top = 420, draggable=FALSE, style = "", 
+                   class = "floater",
+                   strong("Single Year"),
+                   tags$br(),
+                   strong("Crude Suicide Rate"),
+                   tags$table(
+                     mapply(function(from, to, color) {
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                         )),
+                         tags$td(round(from, 2), "to", round(to, 2))
+                       )
+                     }, 
+                     scolorRanges$from, scolorRanges$to, smap.colors,
+                     SIMPLIFY=FALSE)
+                   )
+                 ),
                  
-#                  absolutePanel(
-#                    right = 400, top = 500, draggable=TRUE, style = "", class = "floater",
-#                    tags$table(
-#                      mapply(function(from, to, color) {
-#                        tags$tr(
-#                          tags$td(tags$div(
-#                            style = sprintf("width: 16px; height: 16px; background-color: %s;",
-#                                            color)
-#                          )),
-#                          tags$td(round(from, 2), "to", round(to, 2))
-#                        )
-#                      }, 
-#                      c(scolorRanges$from[uiOutput(time)=="sing.yr"], 
-#                               mcolorRanges$from[uiOutput(time)=="mult.yrs"]),
-#                      c(scolorRanges$to[uiOutput(time)=="sing.yr"], 
-#                               mcolorRanges$to[uiOutput(time)=="mult.yrs"]),
-#                      c(smap.colors[uiOutput(time)=="sing.yr"], 
-#                               mmap.colors[uiOutput(time)=="mult.yrs"]), 
-#                      SIMPLIFY=FALSE)
-#                    )
-#                  ),
+                 absolutePanel(
+                   right = 300, top = 420, draggable=FALSE, style = "", 
+                   class = "floater",
+                   strong("Multiple Year"),
+                   tags$br(),
+                   strong("Increase in CSR"),
+                   tags$table(
+                     mapply(function(from, to, color) {
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                         )),
+                         tags$td(round(from, 2), "to", round(to, 2))
+                       )
+                     }, 
+                     mcolorRanges$from, mcolorRanges$to, mmap.colors,
+                     SIMPLIFY=FALSE)
+                   )
+                 ),
                  
+                 absolutePanel(
+                   right = 375, top = 610, draggable=FALSE, style = "", 
+                   class = "floater",
+                   tags$table(
+                     tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                         )),
+                         tags$td("Data not available")
+                       )
+                    )
+                 ),
+#                  
                  ## add text about the variables
                  tags$br(),
                  p(strong("Variable Summary:")),
