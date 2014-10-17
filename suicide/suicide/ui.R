@@ -28,8 +28,8 @@ shinyUI(fluidPage(
        cursor:pointer;
        color:#ffffff;
          font-family:arial;
-       font-size:13px;
-       padding:6px 24px;
+       font-size:16px;
+       padding:12px 36px;
        text-decoration:none;
        text-shadow:0px 1px 0px #154682;
        }
@@ -233,11 +233,6 @@ shinyUI(fluidPage(
         
         ## plot map
         tabPanel("Map",
-                 conditionalPanel(
-                   condition="input.tabs == 'map' && input.action == 0",
-                   actionButton("action", "Generate Map"),
-                   tags$hr()
-                 ),
                  
                  # Add a little CSS to make the map background pure white
                  tags$head(tags$style("
@@ -251,48 +246,58 @@ shinyUI(fluidPage(
                                                           list(43, -70)))),
                  htmlOutput("details"),
                  
-                 absolutePanel(
-                   right = 550, top = 450, draggable=FALSE, style = "", 
-                   class = "floater",
-                   strong("Single Year"),
-                   tags$br(),
-                   strong("Crude Suicide Rate"),
-                   tags$table(
-                     mapply(function(from, to, color) {
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                         )),
-                         tags$td(round(from, 2), "to", round(to, 2))
-                       )
-                     }, 
-                     scolorRanges$from, scolorRanges$to, smap.colors,
-                     SIMPLIFY=FALSE)
-                   )
-                 ),
+                 conditionalPanel(
+                   condition="input.tabs == 'map' && input.action == 0",
+                   absolutePanel(right = 400, top = 300, class = "floater",
+                   actionButton("action", "Generate Map")
+                 )),
+                 
+                 conditionalPanel(
+                   condition="input.timespan == 'sing.yr'",
+                   absolutePanel(
+                     right = 0, top = 215, draggable=FALSE, style = "", 
+                     class = "floater",
+                     strong("Single Year"),
+                     tags$br(),
+                     strong("Crude Suicide Rate"),
+                     tags$table(
+                       mapply(function(from, to, color) {
+                         tags$tr(
+                           tags$td(tags$div(
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                           )),
+                           tags$td(round(from, 2), "to", round(to, 2))
+                         )
+                       }, 
+                       scolorRanges$from, scolorRanges$to, smap.colors,
+                       SIMPLIFY=FALSE)
+                     )
+                   )),
+                 
+                 conditionalPanel(
+                   condition="input.timespan == 'mult.yrs'",
+                   absolutePanel(
+                     right = 0, top = 215, draggable=FALSE, style = "", 
+                     class = "floater",
+                     strong("Multiple Year"),
+                     tags$br(),
+                     strong("Increase in CSR"),
+                     tags$table(
+                       mapply(function(from, to, color) {
+                         tags$tr(
+                           tags$td(tags$div(
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                           )),
+                           tags$td(round(from, 2), "to", round(to, 2))
+                         )
+                       }, 
+                       mcolorRanges$from, mcolorRanges$to, mmap.colors,
+                       SIMPLIFY=FALSE)
+                     )
+                   )),
                  
                  absolutePanel(
-                   right = 400, top = 450, draggable=FALSE, style = "", 
-                   class = "floater",
-                   strong("Multiple Year"),
-                   tags$br(),
-                   strong("Increase in CSR"),
-                   tags$table(
-                     mapply(function(from, to, color) {
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                         )),
-                         tags$td(round(from, 2), "to", round(to, 2))
-                       )
-                     }, 
-                     mcolorRanges$from, mcolorRanges$to, mmap.colors,
-                     SIMPLIFY=FALSE)
-                   )
-                 ),
-                 
-                 absolutePanel(
-                   right = 475, top = 640, draggable=FALSE, style = "", 
+                   right = 400, top = 600, draggable=FALSE, style = "", 
                    class = "floater",
                    tags$table(
                      tags$tr(
