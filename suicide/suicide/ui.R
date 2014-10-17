@@ -242,7 +242,7 @@ shinyUI(fluidPage(
                  # Add a little CSS to make the map background pure white
                  tags$head(tags$style("
     #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
-    .floater { background-color: white; padding: 8px; opacity: 0.85; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+    .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
   ")),
                  
                  leafletMap("map", width="100%", height=500, 
@@ -252,7 +252,7 @@ shinyUI(fluidPage(
                  htmlOutput("details"),
                  
                  absolutePanel(
-                   right = 450, top = 420, draggable=FALSE, style = "", 
+                   right = 550, top = 450, draggable=FALSE, style = "", 
                    class = "floater",
                    strong("Single Year"),
                    tags$br(),
@@ -272,7 +272,7 @@ shinyUI(fluidPage(
                  ),
                  
                  absolutePanel(
-                   right = 300, top = 420, draggable=FALSE, style = "", 
+                   right = 400, top = 450, draggable=FALSE, style = "", 
                    class = "floater",
                    strong("Multiple Year"),
                    tags$br(),
@@ -292,7 +292,7 @@ shinyUI(fluidPage(
                  ),
                  
                  absolutePanel(
-                   right = 375, top = 610, draggable=FALSE, style = "", 
+                   right = 475, top = 640, draggable=FALSE, style = "", 
                    class = "floater",
                    tags$table(
                      tags$tr(
