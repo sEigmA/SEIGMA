@@ -2,7 +2,7 @@
 ## Title: Suicide ui.R               ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Laur    ## 
+##            Kiridly, Steve Lauer   ## 
 ## Date Created:                     ##
 ## Date Modified: 10/22/2014         ##
 #######################################
