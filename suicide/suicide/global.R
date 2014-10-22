@@ -2,7 +2,7 @@
 ## Title: Suicide global.R           ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Laur    ## 
+##            Kiridly, Steve Lauer   ## 
 ## Date Created:                     ##
 ## Date Modified: 10/22/2014         ##
 #######################################
@@ -96,4 +96,3 @@ mcolorRanges <- data.frame(
   from = head(mcuts, length(mcuts)-1),
   to = tail(mcuts, length(mcuts)-1)
 )
-
