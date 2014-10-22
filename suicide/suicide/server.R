@@ -1,4 +1,4 @@
-# load necessary libraries
+## load necessary libraries
 require(dplyr)
 require(sp)
 require(maptools)
@@ -7,18 +7,18 @@ require(Hmisc)
 require(reshape2)
 
 shinyServer(function(input, output, session) {
-  ## suidf is a reactive dataframe. Necessary for when summary/plot/map have common input. Not in this project
+  ## suidf is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
   suidf <- reactive({
     suidf <- suidata
     suidf    
   })
   
-  ## create summary table
+  ## Create summary table
   output$summary <- renderDataTable({
-    ## make reactive dataframe into regular dataframe
+    ## Make reactive dataframe into regular dataframe
     suidf <- suidf()
     
-    ## if a user chooses Single Year, display only data from that year
+    ## if a user chooses Single Year, display only data from that year (dpylr)
     if(input$timespan == "sing.yr"){
       df <- filter(suidf, Year==input$year)
     }
@@ -66,10 +66,11 @@ shinyServer(function(input, output, session) {
                             "Crude Rate Upper Bound", 
                             "Crude Rate Standard Error")
     
-    df2
+    return(df2)
   }, options=list(bFilter=FALSE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
   ## create the plot of the data
+  ## for the Google charts plot
   output$plot <- reactive({
     ## make reactive dataframe into regular dataframe
     suidf <- suidf()
@@ -82,6 +83,7 @@ shinyServer(function(input, output, session) {
     
     ## if no counties have been selected, just show the US average
     if(is.null(input$county)){
+      ## %.% = then
       g <- df %.%
         select(Year, US)
     }
@@ -100,9 +102,12 @@ shinyServer(function(input, output, session) {
     list(
       data=googleDataTable(g))
   })
-  
+
+  ## Gets crazy  
   map_dat <- reactive({
-    #   browser()
+    
+    # browser()
+    ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
     suidf <- suidf()
     
@@ -119,23 +124,15 @@ shinyServer(function(input, output, session) {
     ## for single year maps...
     if(input$timespan == "sing.yr"){
       
-      ## set the color to ramp from white to one of the colorblind colors and grey representing NA
-      paint.brush <- colorRampPalette(colors=c("white", "red"))
-      map.colors <- c(paint.brush(n=6), "#999999")
-      
-      ## find  max and min values of the variable in the total data and make cuts based on those values
-      max.val <- max(suidata$Crude.Rate, na.rm=TRUE)
-      min.val <- min(suidata$Crude.Rate, na.rm=TRUE)
-      cuts <- seq(min.val, max.val, (max.val-min.val)/(length(map.colors)-1))
-      
       ## subset the data by the year selected
       suidf <- filter(suidf, Year==input$year)
       
       ## assign colors to each entry in the data frame
-      color <- as.integer(cut2(suidf$Crude.Rate,cuts=cuts))
+      color <- as.integer(cut2(suidf$Crude.Rate,cuts=scuts))
       suidf <- cbind.data.frame(suidf,color)
-      suidf$color <- ifelse(is.na(suidf$color), length(map.colors), 
+      suidf$color <- ifelse(is.na(suidf$color), length(smap.colors), 
                             suidf$color)
+      ## This line is important. Formats county name (ie Franklin County)
       suidf$County <- paste(as.character(suidf$County), "County")
       
       ## find missing counties in data subset and assign NAs to all values
@@ -145,31 +142,15 @@ shinyServer(function(input, output, session) {
                        Crude.Rate=NA, Crude.Rate.Lower.Bound=NA,
                        Crude.Rate.Upper.Bound=NA, 
                        Crude.Rate.Standard.Error=NA,
-                       color=length(map.colors))
+                       color=length(smap.colors))
       
       ## combine data subset with missing counties data
       suidf <- rbind.data.frame(suidf, df)
-      suidf$color <- map.colors[suidf$color]
+      suidf$color <- smap.colors[suidf$color]
       return(suidf)
     }
     
     if(input$timespan=="mult.yrs"){
-      ## colors fade from one color to white to another color, with gray for NAs
-      paint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
-      map.colors <- c(paint.brush(n=6), "#999999")
-      
-      ## find max and min values for each county
-      bound <- suidata %>%
-        group_by(County) %>%
-        summarise(max.val = max(Crude.Rate, na.rm=FALSE),
-                  min.val = min(Crude.Rate, na.rm=FALSE))
-      
-      ## find the difference between each county's max and min
-      bound$diff <- abs(bound$max.val - bound$min.val)
-      
-      ## set the max and min value (for the legend) at 95% of the largest difference
-      max.val <- quantile(bound$diff, .95, na.rm=TRUE)
-      min.val <- -1*max.val
       
       ## create dataframes for the max and min year of selected data
       min.year <- min(input$range)
@@ -185,25 +166,25 @@ shinyServer(function(input, output, session) {
       diff.df$County <- paste(as.character(diff.df$County), "County")
       
       ## assign colors to each entry in the data frame
-      cuts <- seq(min.val, max.val, (max.val-min.val)/(length(map.colors)-1))
-      color <- as.integer(cut2(diff.df[,2],cuts=cuts))
+      color <- as.integer(cut2(diff.df[,2],cuts=mcuts))
       diff.df <- cbind.data.frame(diff.df,color)
-      diff.df$color <- ifelse(is.na(diff.df$color), length(map.colors), diff.df$color)
+      diff.df$color <- ifelse(is.na(diff.df$color), length(mmap.colors), diff.df$color)
       
       ## find missing counties in data subset and assign NAs to all values
       missing.counties <- setdiff(MAcounties, diff.df$County)
       df <- data.frame(County=missing.counties, Crude.Rate=NA,
-                       color=length(map.colors))
+                       color=length(mmap.colors))
       
       ## combine data subset with missing counties data
       diff.df <- rbind.data.frame(diff.df, df)
-      diff.df$color <- map.colors[diff.df$color]
+      diff.df$color <- mmap.colors[diff.df$color]
       return(diff.df)
     }
   })
   
 values <- reactiveValues(selectedFeature=NULL, highlight=c())
 
+#############################################
 # observe({
 #   values$highlight <- input$map_shape_mouseover$id
 #   #browser()
@@ -239,27 +220,36 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
 #     drawStates(getStateName(values$highlight), TRUE)
 #   })
 # })
-  
+
+###########################################
+
   ## draw leaflet map
   map <- createLeafletMap(session, "map")
   
   ## the functions within observe are called when any of the inputs are called
+
+  ## Does nothing until called (done with action button)
   observe({
     input$action
     
     ## load in relevant map data
-    suidf <- map_dat()
+    map_dat <- map_dat()
     
+    ## All functions which are isolated, will not run until the above observe function is activated
     isolate({
-    ## assign map to x
+    ## Duplicate MAmap to x
     x <- MAmap
+    
     ## for each county in the map, attach the Crude Rate and colors associated
     for(i in 1:length(x$features)){
-      x$features[[i]]$properties$Crude.Rate <- suidf$Crude.Rate[match(x$features[[i]]$properties$County, suidf$County)]
+      ## Each feature is a county
+      x$features[[i]]$properties$Crude.Rate <- map_dat$Crude.Rate[match(x$features[[i]]$properties$County, map_dat$County)]
+      ## Style properties
       x$features[[i]]$properties$style <- list(
         fill=TRUE, 
-        fillColor = suidf$color[match(x$features[[i]]$properties$County, 
-                                      suidf$County)], 
+        ## Fill color has to be equal to the map_dat color and is matched by county
+        fillColor = map_dat$color[match(x$features[[i]]$properties$County, map_dat$County)], 
+        ## "#000000" = Black, "#999999"=Grey, 
         weight=1, stroke=TRUE, opacity=1, color="#000000", fillOpacity=0.7)
     }
     
@@ -268,6 +258,7 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
   })
  
   observe({
+    ## EVT = Mouse Click
     evt <- input$map_click
     if(is.null(evt))
       return()
@@ -286,36 +277,28 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
       values$selectedFeature <- evt$properties
     })
   })
-
+  ##  This function is what creates info box
   output$details <- renderText({
-#     if(input$action==0){
-#       return(
-#       as.character(tags$div(
-#         tags$div(
-#           h4("Generate Map and Choose a County"))
-#       )))
-#     }
-    
+  ## Before a county is clicked, display a message
     if(is.null(values$selectedFeature)){
       return(as.character(tags$div(
         tags$div(
           h4("Click on a County"))
       )))
     }
-    if(is.null(values$selectedFeature))
-      return(NULL)
-    
+  
+    ## If clicked county has no crude rate, display a message
     if(is.null(values$selectedFeature$Crude.Rate)){
       return(as.character(tags$div(
         tags$h5("Crude suicide rate in ", values$selectedFeature$County, "is not available for this timespan"))))
     }
-    
+    ## For a single year when county is clicked, display a message
     if(input$timespan=="sing.yr"){
     return(as.character(tags$div(
       tags$h4(input$year, "crude suicide rate in ", values$selectedFeature$County),
       tags$h5(values$selectedFeature$Crude.Rate, "per 100,000 in population")
     )))}
-    
+   ## For multiple years when county is clicked, display a message
     if(input$timespan=="mult.yrs"){
       return(as.character(tags$div(
         tags$h4("Change in crude suicide rate from ", min(input$range), " to ", max(input$range), " in ", values$selectedFeature$County),
