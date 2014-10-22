@@ -1,3 +1,12 @@
+#######################################
+## Title: Suicide server.R           ##
+## Author(s): Emily Ramos, Arvind    ##
+##            Ramakrishnan, Jenna    ##
+##            Kiridly, Steve Laur    ## 
+## Date Created:                     ##
+## Date Modified: 10/22/2014         ##
+#######################################
+
 ## load necessary libraries
 require(dplyr)
 require(sp)

@@ -1,6 +1,11 @@
-###############################
-### Preamble
-###############################
+#######################################
+## Title: Suicide ui.R               ##
+## Author(s): Emily Ramos, Arvind    ##
+##            Ramakrishnan, Jenna    ##
+##            Kiridly, Steve Laur    ## 
+## Date Created:                     ##
+## Date Modified: 10/22/2014         ##
+#######################################
 
 ## load necessary libraries
 require(shiny)

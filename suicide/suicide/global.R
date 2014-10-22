@@ -1,3 +1,12 @@
+#######################################
+## Title: Suicide global.R           ##
+## Author(s): Emily Ramos, Arvind    ##
+##            Ramakrishnan, Jenna    ##
+##            Kiridly, Steve Laur    ## 
+## Date Created:                     ##
+## Date Modified: 10/22/2014         ##
+#######################################
+
 ##First file run - Environment Setup
 
 require(RJSONIO)
