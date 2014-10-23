@@ -14,93 +14,61 @@ require(dplyr)
 require(leaflet)
 
 ## load map data
-MAmap_count <- fromJSON("County_2010Census_DP1.geojson")
-MAmap_munic <- fromJSON("Muni_2010Census_DP1.geojson")
+MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
+MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
-MAcounties <- c()
-for(i in 1:length(MAmap_count$features)){
-  MAcounties <- c(MAcounties, MAmap_count$features[[i]]$properties$County)
+MA_counties <- c()
+for(i in 1:length(MA_map_county$features)){
+  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
 }
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
-MAmunicipals <- c()
-for(i in 1:length(MAmap_munic$features)){
-  MAmunicipals <- c(MAmunicipals, MAmap_munic$features[[i]]$properties$NAMELSAD10)
+MA_municipals <- c()
+for(i in 1:length(MA_map_muni$features)){
+  MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
 
 ## Load formatted suicide data
 ## -1 eliminates first column [rows,columns]
-mardata <- read.csv(file="marriagedata.csv")[,-1]
+mar_data <- read.csv(file="marriagedata.csv")[,-1]
 
 ## Set graph colors (special for colorblind people)
+## In order: black, orange, light blue, green, yellow, dark blue, red, pink
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
                 "#0072B2", "#D55E00", "#CC79A7")
 
 ## Create maxs and mins for googleCharts/Plot tab
-xlim <- list(
-  min = min(mardata$year.range)-1,
-  max = max(mardata$year.range)+1
-)
 ylim <- list(
   min = 0,
-  
-  ##+5 = max percentage
   max = 100.00
 )
 
 
 ## Colors for a single-year legend
-spaint.brush <- colorRampPalette(colors=c("white", "red"))
-smap.colors <- c(spaint.brush(n=6), "#999999")
+paint_brush <- colorRampPalette(colors=c("white", cbbPalette[7]))
+map_colors <- c(paint_brush(n=6), "#999999")
 
 ## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-smax.val <- 100
-smin.val <- 0
+max_val <- 100
+min_val <- 0
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
+cuts <- seq(min_val, max_val, length.out = length(map_colors))
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
 ## head = scuts takes everything except for the last one, 
 ## tails = same thing opposite
 
-scolorRanges <- data.frame(
-  from = head(scuts, length(scuts)-1),
-  to = tail(scuts, length(scuts)-1)
-)
-
-## colors fade from one color to white to another color, with gray for NAs
-## m-prefix = multiple years
-mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
-mmap.colors <- c(mpaint.brush(n=8), "#999999")
-
-## find max and min (crude suicide rates) values for each county
-bound <- mardata %>%
-  group_by(Region) %>%
-  
-  ##n.rm=FALSE = needed 
-  summarise(max.val = 100.00, min.val = 0)
-
-## find the difference between each county's max and min
-bound$diff <- abs(bound$max.val - bound$min.val)
-
-## set the max and min value (for the legend) at 95% of the largest difference
-mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
-mmin.val <- -1*mmax.val
-mcuts <- seq(mmin.val, mmax.val, length.out = length(mmap.colors))
-
-# Construct break ranges for displaying in the legend
-
-mcolorRanges <- data.frame(
-  from = head(mcuts, length(mcuts)-1),
-  to = tail(mcuts, length(mcuts)-1)
+colorRanges <- data.frame(
+  from = head(cuts, length(cuts)-1),
+  to = tail(cuts, length(cuts)-1)
 )
