@@ -1,9 +1,9 @@
 #######################################
-## Title: Suicide ui.R               ##
+## Title: Marriage ui.R              ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Laur    ## 
-## Date Created:                     ##
+##            Kiridly, Steve Lauer   ## 
+## Date Created:  10/22/2014         ##
 ## Date Modified: 10/22/2014         ##
 #######################################
 

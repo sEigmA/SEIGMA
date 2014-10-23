@@ -89,6 +89,14 @@ write.csv(countydata, file="marriage/countydata.csv")
 write.csv(madata, file="marriage/madata.csv")
 write.csv(usdata, file="marriage/usdata.csv")
 write.csv(mardata3, file="marriage/marriagedata.csv")
+
+## Combining Gender
+mardata4 <- read.csv("marriagedata.csv")
+
+for(i in length(mardata4)){
+  pop <- 
+}
+
 @
 
 \end{document}

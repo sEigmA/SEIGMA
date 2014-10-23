@@ -1,9 +1,9 @@
 #######################################
-## Title: Suicide global.R           ##
+## Title: Marriage global.R          ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Laur    ## 
-## Date Created:                     ##
+##            Kiridly, Steve Lauer   ## 
+## Date Created:  10/22/2014         ##
 ## Date Modified: 10/22/2014         ##
 #######################################
 
@@ -14,19 +14,28 @@ require(dplyr)
 require(leaflet)
 
 ## load map data
-MAmap <- fromJSON("County_2010Census_DP1.geojson")
+MAmap_count <- fromJSON("County_2010Census_DP1.geojson")
+MAmap_munic <- fromJSON("Muni_2010Census_DP1.geojson")
 
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
 MAcounties <- c()
-for(i in 1:length(MAmap$features)){
-  MAcounties <- c(MAcounties, MAmap$features[[i]]$properties$County)
+for(i in 1:length(MAmap_count$features)){
+  MAcounties <- c(MAcounties, MAmap_count$features[[i]]$properties$County)
 }
+
+## Find order of municipals in geojson files
+## Each municipal is a separate feature
+MAmunicipals <- c()
+for(i in 1:length(MAmap_munic$features)){
+  MAmunicipals <- c(MAmunicipals, MAmap_munic$features[[i]]$properties$NAMELSAD10)
+}
+
 
 ## Load formatted suicide data
 ## -1 eliminates first column [rows,columns]
-suidata <- read.csv(file="SASuicidedata.csv")[,-1]
+mardata <- read.csv(file="marriagedata.csv")[,-1]
 
 ## Set graph colors (special for colorblind people)
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
@@ -34,7 +43,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
-  min = min(suidata$Year)-1,
+  min = min(suidata$Five.year.average)-1,
   max = max(suidata$Year)+1
 )
 ylim <- list(
