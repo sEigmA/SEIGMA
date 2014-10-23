@@ -1,9 +1,9 @@
 #######################################
-## Title: Suicide server.R           ##
+## Title: Marriage server.R          ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Laur    ## 
-## Date Created:                     ##
+##            Kiridly, Steve Lauer   ## 
+## Date Created:  10/22/2014         ##
 ## Date Modified: 10/22/2014         ##
 #######################################
 
@@ -16,20 +16,20 @@ require(Hmisc)
 require(reshape2)
 
 shinyServer(function(input, output, session) {
-  ## suidf is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
-  suidf <- reactive({
-    suidf <- suidata
-    suidf    
+  ## maridf is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
+  maridf <- reactive({
+    maridf <- maridata
+    maridf    
   })
   
   ## Create summary table
   output$summary <- renderDataTable({
     ## Make reactive dataframe into regular dataframe
-    suidf <- suidf()
+    maridf <- maridf()
     
     ## if a user chooses Single Year, display only data from that year (dpylr)
     if(input$timespan == "sing.yr"){
-      df <- filter(suidf, Year==input$year)
+      df <- filter(maridf, Year==input$year.range)
     }
     
     ## if a user chooses Multiple Years, display data from all years in range
@@ -37,17 +37,17 @@ shinyServer(function(input, output, session) {
       range <- seq(min(input$range), max(input$range), 1)
       df <- c()
       for(i in 1:length(range)){
-        bbb <- subset(suidf, Year==range[i])
+        bbb <- subset(maridf, Year==range[i])
         df <- rbind.data.frame(df, bbb)
       }
     }
     
     ## make counties a vector based on input variable
-    if(!is.null(input$county))
-      counties <- input$county
+    if(!is.null(input$region))
+      region <- input$region
     ## if none selected, put all counties in vector
-    if(is.null(input$county))
-      counties <- names(table(suidata[,1]))[c(1:7, 9:12,14)]
+    if(is.null(input$region))
+      regions <- names(table(maridata[,1]))[c(1:7, 9:12,14)]
     
     ## if the user checks the meanUS box or the meanMA box, add those to counties vector
     if(input$meanUS){
