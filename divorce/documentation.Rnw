@@ -29,74 +29,62 @@ require(reshape2)
 require(dplyr)
 
 ## load SAS data
-sas.data <- read.sas7bdat("ba002_01_5yr.sas7bdat")
+# sas.data <- read.sas7bdat("ba002_01_5yr.sas7bdat") # first time only
+# write.csv(sas.data, "raw_marriage_data.csv") # first time only
+sas.data <- read.csv("raw_marriage_data.csv")[-1,]
 
 ## give columns relevant titles
 column_titles <- read.csv("BA002_01_5yr_contents.csv", skip=1)
 colnames(sas.data)[5:127] <- as.character(column_titles$Label[1:123])
 
 ## find all columns that have to do with marriage
-mardata <- sas.data[,c(1:5, grep("MARITAL", colnames(sas.data)))]
+mar_data <- sas.data[,c(1:5, grep("MARITAL", colnames(sas.data)))]
 
 ## remove all "Margin of Error" columns
-mardata <- mardata[,-c(grep("Margin", colnames(mardata)))]
+mar_data <- mar_data[,-c(grep("Margin", colnames(mar_data)))]
 
 ## remove unnecessary characters from column names
-colnames(mardata)[5:27] <- substring(colnames(mardata[5:27]), first=13)
+colnames(mar_data)[5:27] <- substring(colnames(mar_data[5:27]), first=13)
 
 ## separate male and female columns
-maledata <- mardata[,c(1:16)]
-maledata$gender <- "Male"
-colnames(maledata)[6] <- "Population"
-femaledata <- mardata[,c(1:5, 17:27)]
-femaledata$gender <- "Female"
-colnames(femaledata)[6] <- "Population"
+male_data <- mar_data[,c(1:16)]
+male_data$Gender <- "Male"
+colnames(male_data)[6] <- "Population"
+female_data <- mar_data[,c(1:5, 17:27)]
+female_data$Gender <- "Female"
+colnames(female_data)[6] <- "Population"
 
 ## combine males and females as rows
-mardata2 <- rbind.data.frame(maledata, femaledata)
+mar_data2 <- rbind.data.frame(male_data, female_data)
+
+## Replace N/A's with "NA" to remove the slash.
+mar_data2$Region <- replace(mar_data2$Region,mar_data2$Region=="N/A", NA)
+mar_data2$County <- replace(mar_data2$County,mar_data2$County=="N/A", NA)
+mar_data2$State <- replace(mar_data2$State,mar_data2$State=="N/A", NA)
+mar_data2$Municipal <- replace(mar_data2$Municipal,mar_data2$Municipal=="N/A", NA)
+
+mar_data2$Region  <- ifelse(!is.na(mar_data2$Region),"United States","MA")
+mar_data2$Region  <- ifelse(!is.na(mar_data2$County),as.character(mar_data2$County),as.character(mar_data2$Region))
+mar_data2$Region  <- ifelse(!is.na(mar_data2$Municipal),as.character(mar_data2$Municipal),as.character(mar_data2$Region))
+
+mar_data2$Five_Year_Average <- as.numeric(substr(mar_data2$Five_Year_Average, 6, 9))
 
 ## save and reload to make factors into numeric (this is faster than the other methods)
-write.csv(mardata2, file="marriagedata.csv")
-mardata2 <- read.csv("marriagedata.csv")[,-1]
+write.csv(mar_data2, file="marriagedata.csv")
+mar_data2 <- read.csv("marriagedata.csv")[,-c(1:4)]
 
-## summarise male and female data into totals
-mardata3 <- summarise(group_by(mardata2, Municipal, County, State, Region, Five.year.average),
-                      Population = sum(Population),
-                      Never_Married = sum(Estimate..MARITAL.STATUS...Never.married),
-                      Now_Married = sum(Estimate..MARITAL.STATUS...Now.married..except.separated),
-                      Separated = sum(Estimate..MARITAL.STATUS...Separated),
-                      Widowed = sum(Estimate..MARITAL.STATUS...Widowed),
-                      Divorced = sum(Estimate..MARITAL.STATUS...Divorced))
+colnames(mar_data2)[4:13] <- c("Never_Married", "Never_Married_pct", "Now_Married", "Now_Married_pct",
+                               "Separated", "Separated_Pct", "Widowed", "Widowed_pct", "Divorced",
+                               "Divorced_pct")
 
 ## make proportions into percentages
-mardata3$Never_Married_Pct <- 100*mardata3$Never_Married/mardata3$Population
-mardata3$Now_Married_Pct <- 100*mardata3$Now_Married/mardata3$Population
-mardata3$Separated_Pct <- 100*mardata3$Separated/mardata3$Population
-mardata3$Widowed_Pct <- 100*mardata3$Widowed/mardata3$Population
-mardata3$Divorced_Pct <- 100*mardata3$Divorced/mardata3$Population
+mar_data2$Never_Married_Pct <- 100*mar_data2$Never_Married/mar_data2$Population
+mar_data2$Now_Married_Pct <- 100*mar_data2$Now_Married/mar_data2$Population
+mar_data2$Separated_Pct <- 100*mar_data2$Separated/mar_data2$Population
+mar_data2$Widowed_Pct <- 100*mar_data2$Widowed/mar_data2$Population
+mar_data2$Divorced_Pct <- 100*mar_data2$Divorced/mar_data2$Population
 
-## define final year to represent the five year average
-mardata3$Year <- substring(mardata3$Five.year.average, 6,9)
-
-## separate municipal, county, MA, and US data
-munidata <- filter(mardata3, Municipal != "N/A")
-countydata <- filter(mardata3, Municipal == "N/A" & County != "N/A")
-madata <- filter(mardata3, Municipal == "N/A" & County == "N/A" & State == "MA")
-usdata <- filter(mardata, Region == "United States")
-
-write.csv(munidata, file="marriage/munidata.csv")
-write.csv(countydata, file="marriage/countydata.csv")
-write.csv(madata, file="marriage/madata.csv")
-write.csv(usdata, file="marriage/usdata.csv")
-write.csv(mardata3, file="marriage/marriagedata.csv")
-
-## Combining Gender
-mardata4 <- read.csv("marriagedata.csv")
-
-for(i in length(mardata4)){
-  pop <- 
-}
-
+write.csv(mar_data2, file="marriage2/marriagedata.csv")
 @
 
 \end{document}
