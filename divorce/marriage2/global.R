@@ -43,14 +43,14 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
-  min = min(suidata$Five.year.average)-1,
-  max = max(suidata$Year)+1
+  min = min(marata$year.range)-1,
+  max = max(mardata$year.range)+1
 )
 ylim <- list(
   min = 0,
   
-  ##+5 = max crude rate plus a little extra
-  max = max(suidata$Crude.Rate, na.rm=T)+5
+  ##+5 = max percentage
+  max = 100.00
 )
 
 
@@ -58,11 +58,11 @@ ylim <- list(
 spaint.brush <- colorRampPalette(colors=c("white", "red"))
 smap.colors <- c(spaint.brush(n=6), "#999999")
 
-## For a single year data, we have a series of crude rate (split into quintiles).  Cuts are quintiles of the total data
+## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-smax.val <- max(suidata$Crude.Rate, na.rm=TRUE)
-smin.val <- min(suidata$Crude.Rate, na.rm=TRUE)
+smax.val <- 100
+smin.val <- 0
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
@@ -84,12 +84,12 @@ mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7])
 mmap.colors <- c(mpaint.brush(n=8), "#999999")
 
 ## find max and min (crude suicide rates) values for each county
-bound <- suidata %>%
-  group_by(County) %>%
+bound <- mardata %>%
+  group_by(Region) %>%
   
   ##n.rm=FALSE = needed 
-  summarise(max.val = max(Crude.Rate, na.rm=FALSE),
-            min.val = min(Crude.Rate, na.rm=FALSE))
+  summarise(max.val = 100.00),
+            min.val = 0)
 
 ## find the difference between each county's max and min
 bound$diff <- abs(bound$max.val - bound$min.val)
