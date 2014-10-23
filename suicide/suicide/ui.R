@@ -27,34 +27,34 @@ shinyUI(fluidPage(
        background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#007dc1", endColorstr="#0061a7",GradientType=0);
        background-color:#007dc1;
-         -moz-border-radius:3px;
+       -moz-border-radius:3px;
        -webkit-border-radius:3px;
        border-radius:3px;
        border:1px solid #124d77;
        display:inline-block;
        cursor:pointer;
        color:#ffffff;
-         font-family:arial;
+       font-family:arial;
        font-size:16px;
        padding:12px 36px;
        text-decoration:none;
        text-shadow:0px 1px 0px #154682;
        }
-.action-button:hover {
-  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));
-	background:-moz-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-	background:-webkit-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-	background:-o-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-	background:-ms-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#0061a7", endColorstr="#007dc1",GradientType=0);
+       .action-button:hover {
+       background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));
+       background:-moz-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+       background:-webkit-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+       background:-o-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+       background:-ms-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+       background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+       filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#0061a7", endColorstr="#007dc1",GradientType=0);
        background-color:#0061a7;
-         }
-.action-button:active {
-  position:relative;
-  top:1px;
-}
-
+       }
+       .action-button:active {
+       position:relative;
+       top:1px;
+       }
+       
        </style>'),
   ## this starts the googleCharts engine
   googleChartsInit(),
@@ -71,24 +71,37 @@ shinyUI(fluidPage(
         ## h4 created 4th largest header
         h4("How to use this app:"),
         ## Creates text
-        helpText('Please select a timespan for which you are interested in seeing suicide data organized by county.  If you are interested in comparing multiple years, select "Multiple Years" and adjust the slider and select a range accordingly.'),
-        helpText('Next, if you are interested in a specific county or multiple counties select them; alternatively for data on all Massachusetts counties leave this selection blank.  To compare the data to the Massachusetts average or US average select the corresponding check box.  Please note that only consecutive year ranges can be selected.'),
-        ## Creates horizontal line
-        tags$hr()
-      ),
+        p(strong(helpText('Please select a timespan for which you are interested in seeing suicide data organized by county.'))),
+        ##tags$ul and tags$li are to create bullet points using HTML  
+        tags$ul(
+          tags$li("If you are interested in comparing multiple years, select Multiple Years, adjust the slider, and select a range accordingly."),
+          tags$br(),
+          tags$li("If you are interested in a specific county or multiple counties select them by clicking on the box or typing them in."), 
+          p(strong('For data on all Massachusetts counties, leave this selection blank.')),
+          tags$li("To compare the data to the Massachusetts average or US average, select the corresponding check box."),
+          p(strong('Please note that only consecutive year ranges can be selected'))
+        )),
       
       ## Same concept
       conditionalPanel(
         condition="input.tabs == 'plot'",
         h4("How to use this app:"),
-        helpText('Please select a county to analyze.  Multiple counties can be selected to compare the plots of crude suicide rate over time.  Select the Massachusetts and/or US average check boxes to compare county rates with the national and state averages.'),
-        tags$hr()
+        p(strong(helpText('Please select a county to analyze.'))),
+        tags$ul(
+          tags$li("Multiple counties can be selected to compare the plots of crude suicide rate over time."),
+          tags$br(),
+          tags$li("Select the Massachusetts and/or US average check boxes to compare county rates with the national and state averages.")
+        )
       ),
       
       conditionalPanel(
         condition="input.tabs == 'map'",
         h4("How to use this app:"),
-        helpText('Please click on "Generate Map" to get started. When "Single Year" is selected, clicking on a county displays the crude suicide rate for that year. When "Multiple Years" is selected, clicking on a county displays the increase in crude suicide rate over that timespan.'),
+        p(strong(helpText('Please click on "Generate Map" to get started.'))),
+        tags$br(),
+        helpText('When "Single Year" is selected, clicking on a county displays the crude suicide rate for that year.'),
+        tags$br(),
+        helpText('When "Multiple Years" is selected, clicking on a county displays the increase in crude suicide rate over that timespan.'),
         tags$hr()
       ),
       
@@ -163,10 +176,10 @@ shinyUI(fluidPage(
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
-
-######### End of Sidebar  #########
     
-######### Start of Main Panel #####
+    ######### End of Sidebar  #########
+    
+    ######### Start of Main Panel #####
     
     mainPanel(
       ## put in logo for title
@@ -176,11 +189,26 @@ shinyUI(fluidPage(
       tabsetPanel(
         tabPanel("About", 
                  ## strong=bold, p=paragraph, em=emboss/italicised or bold italicized, 
-                 p(strong("The SEIGMA Suicide App"), "displays the crude suicide rate for Massachusetts by counties for a given year or multiple years from 1999 to 2011. Toggle between tabs to visualize the data differently. ", em("Summary"), "shows the source data in a table format. ", em("Plot"), "shows crude suicide rate over time per 100,000 in each county population, Massachusetts average and U.S. average. ", em("Map"), "visually displays crude suicide rate comparatively by county. ", em("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."), value="about"),
+                 p(strong("The SEIGMA Suicide App"), "displays the crude suicide rate for Massachusetts by counties for a given year or multiple years from 1999 to 2011. Toggle between tabs to visualize the data differently. ",
+                   tags$br(),
+                   ##tags$ul and tags$li are to create bullet points using HTML
+                   tags$ul(
+                     tags$li(em("Summary"), "shows the source data in a table format."),
+                     tags$li(em("Plot"), "shows crude suicide rate over time per 100,000 in each county population, Massachusetts average and U.S. average."),
+                     tags$li(em("Map"), "visually displays crude suicide rate comparatively by county."),
+                     tags$li(em("More Info"), "lists descriptions for the variables of interest, including formulas and calculations.")
+                   ))),
         
         ## summary tab
         tabPanel("Summary", 
-                 dataTableOutput("summary"), value="summary", 
+                 dataTableOutput("summary"),
+                 tags$br(),
+                 tags$ul(
+                   tags$li(p(strong(em('NA'),"-Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:")))
+                 ),
+                 tags$br(),
+                 p(strong("Crude Rate = Count / Population * 100,000"), align="center"),
+                 value="summary", 
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
         
         ## plot tab with google chart options
@@ -249,7 +277,7 @@ shinyUI(fluidPage(
                  ## breaks between paragraphs
                  tags$br(),
                  p(strong("Suicides"),
-                   " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
+                   " - Number of suicides for a specified region in a specific year.Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
                  tags$br(),
                  p(strong("Crude Rate"), 
                    " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
@@ -262,9 +290,9 @@ shinyUI(fluidPage(
                  
                  ## Add a little CSS to make the map background pure white
                  tags$head(tags$style("
-    #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
-    .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
-  ")),
+                                      #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
+                                      .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+                                      ")),
                  ## Map Creation
                  leafletMap("map", width="100%", height=500, 
                             options=list(center = c(42.15, -71.65), zoom=8, 
@@ -282,7 +310,7 @@ shinyUI(fluidPage(
                    ## within the map area, you can create an action button.  similar to initializing the legend but just putting a button instead.
                    absolutePanel(right = 400, top = 300, class = "floater",
                                  actionButton("action", "Generate Map")
-                 )),
+                   )),
                  
                  ## Single Year Legend
                  conditionalPanel(
@@ -333,19 +361,19 @@ shinyUI(fluidPage(
                  ## Data not available box
                  conditionalPanel(
                    condition="input.action != 0",
-                 absolutePanel(
-                   right = 350, top = 600, draggable=FALSE, style = "", 
-                   class = "floater",
-                   tags$table(
-                     tags$tr(
+                   absolutePanel(
+                     right = 350, top = 600, draggable=FALSE, style = "", 
+                     class = "floater",
+                     tags$table(
+                       tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
                          )),
                          tags$td("Data not available")
                        )
-                    )
-                 )),
-   
+                     )
+                   )),
+                 
                  ## Add text about the variables
                  tags$br(),
                  p(strong("Variable Summary:")),
@@ -384,7 +412,7 @@ shinyUI(fluidPage(
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
         id="tabs"
-      )
+                 )
+        )
     )
-  )
-))
+       ))
