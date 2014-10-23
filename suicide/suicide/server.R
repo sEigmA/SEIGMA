@@ -92,8 +92,8 @@ shinyServer(function(input, output, session) {
     
     ## if no counties have been selected, just show the US average
     if(is.null(input$county)){
-      ## %.% = then
-      g <- df %.%
+      ## %>% = then
+      g <- df %>%
         select(Year, US)
     }
     
