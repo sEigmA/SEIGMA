@@ -43,7 +43,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
-  min = min(marata$year.range)-1,
+  min = min(mardata$year.range)-1,
   max = max(mardata$year.range)+1
 )
 ylim <- list(
@@ -88,8 +88,7 @@ bound <- mardata %>%
   group_by(Region) %>%
   
   ##n.rm=FALSE = needed 
-  summarise(max.val = 100.00),
-            min.val = 0)
+  summarise(max.val = 100.00, min.val = 0)
 
 ## find the difference between each county's max and min
 bound$diff <- abs(bound$max.val - bound$min.val)
@@ -105,4 +104,3 @@ mcolorRanges <- data.frame(
   from = head(mcuts, length(mcuts)-1),
   to = tail(mcuts, length(mcuts)-1)
 )
-
