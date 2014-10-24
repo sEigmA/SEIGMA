@@ -73,7 +73,7 @@ ylim <- list(
 )
 
 ## Colors for a single-year legend
-paint_brush <- colorRampPalette(colors=c(cbbPalette[2], "white", cbbPalette[4]))
+paint_brush <- colorRampPalette(colors=c("white", cbbPalette[8]))
 map_colors <- c(paint_brush(n=4), "#999999")
 
 ## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages
@@ -191,28 +191,30 @@ plot_main_text <- p(strong("Variable Summary:"),
                     tags$br(),
                     strong("Crude Rate = Count / Population * 100,000", align="center"))
 
+font_size <- 14
+
 US_plot_options <- googleColumnChart("plot_US", width="100%", height="475px", options = list(
  ## set fonts
  fontName = "Source Sans Pro",
- fontSize = 12,
- 
+ fontSize = font_size,
+ title = "Marital Status Statistics for the United States",
  ## set axis titles, ticks, fonts, and ranges
  hAxis = list(
   title = "",
   textStyle = list(
-   fontSize = 12),
+   fontSize = font_size),
   titleTextStyle = list(
-   fontSize = 14,
+   fontSize = font_size+2,
    bold = TRUE,
    italic = FALSE)
  ),
  vAxis = list(
-  title = "% of US Population",
+  title = "% of Population",
   viewWindow = ylim,
   textStyle = list(
-   fontSize = 12),
+   fontSize = font_size),
   titleTextStyle = list(
-   fontSize = 14,
+   fontSize = font_size+2,
    bold = TRUE,
    italic = FALSE)
  ),
@@ -237,18 +239,16 @@ US_plot_options <- googleColumnChart("plot_US", width="100%", height="475px", op
  ## Hover text font stuff
  tooltip = list(
   textStyle = list(
-   fontSize = 14
+   fontSize = font_size
   )
  )
 ))
-
-font_size <- 14
 
 MA_plot_options <- googleColumnChart("plot_MA", width="100%", height="475px", options = list(
  ## set fonts
  fontName = "Source Sans Pro",
  fontSize = font_size,
- 
+ title = "Marital Status Statistics for Massachusetts",
  ## set axis titles, ticks, fonts, and ranges
  hAxis = list(
   title = "",
@@ -260,7 +260,7 @@ MA_plot_options <- googleColumnChart("plot_MA", width="100%", height="475px", op
    italic = FALSE)
  ),
  vAxis = list(
-  title = "% of MA Population",
+  title = "% of Population",
   viewWindow = ylim,
   textStyle = list(
    fontSize = font_size),
@@ -313,6 +313,7 @@ county_plot_options <- googleColumnChart("plot_county", width="100%", height="47
       italic = FALSE)
   ),
   vAxis = list(
+    title = "% of Population",
     viewWindow = ylim,
     textStyle = list(
       fontSize = font_size),
@@ -365,6 +366,7 @@ muni_plot_options <- googleColumnChart("plot_muni", width="100%", height="475px"
       italic = FALSE)
   ),
   vAxis = list(
+    title = "% of Population",
     viewWindow = ylim,
     textStyle = list(
       fontSize = font_size),

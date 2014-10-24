@@ -13,7 +13,7 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range 
     mar_df <- mar_data %>%
       filter(Five_Year_Range == input$year) %>%
-      select(1:4, Gender, Five_Year_Range, Population, Never_Married_Pct, Now_Married_Pct,
+      select(1:4, Gender, Five_Year_Range, Population, Never_Married_Pct, Married_Pct,
              Separated_Pct, Widowed_Pct, Divorced_Pct) %>%
       arrange(Region, Gender)
     ## Output reactive dataframe
@@ -77,7 +77,7 @@ shinyServer(function(input, output, session) {
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Now_Married_Pct", "Separated_Pct", 
+                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
                                             "Widowed_Pct", "Divorced_Pct"),
                            variable.name = "Marital_Status", value.name = "Population_Pct")
     
@@ -105,7 +105,7 @@ shinyServer(function(input, output, session) {
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Now_Married_Pct", "Separated_Pct", 
+                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
                                             "Widowed_Pct", "Divorced_Pct"),
                            variable.name = "Marital_Status", value.name = "Population_Pct")
     
@@ -135,7 +135,7 @@ shinyServer(function(input, output, session) {
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Now_Married_Pct", "Separated_Pct", 
+                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
                                             "Widowed_Pct", "Divorced_Pct"),
                            variable.name = "Marital_Status", value.name = "Population_Pct")
     
@@ -148,8 +148,7 @@ shinyServer(function(input, output, session) {
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
       data = googleDataTable(g), options = list(
-        vAxis = list(
-          title = paste("% of", munis[1], "Population"))))
+        title = paste("Marital Status Statisics for", munis[1])))
   })
   
   ## create the plot of the MA data
@@ -165,7 +164,7 @@ shinyServer(function(input, output, session) {
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Now_Married_Pct", "Separated_Pct", 
+                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
                                             "Widowed_Pct", "Divorced_Pct"),
                            variable.name = "Marital_Status", value.name = "Population_Pct")
     
@@ -178,8 +177,7 @@ shinyServer(function(input, output, session) {
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
       data = googleDataTable(g), options = list(
-        vAxis = list(
-          title = paste("% of", munis, "Population"))))
+        title = paste("Marital Status Statistics for", munis)))
   })
   
   ## set map colors
@@ -206,7 +204,7 @@ shinyServer(function(input, output, session) {
     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                              Region = missing_munis, Gender = input$map_gender, 
                              Five_Year_Range = input$year, Population = NA, Never_Married_Pct = NA,
-                             Now_Married_Pct = NA, Separated_Pct = NA, Widowed_Pct = NA, 
+                             Married_Pct = NA, Separated_Pct = NA, Widowed_Pct = NA, 
                              Divorced_Pct = NA, color=length(map_colors), opacity = 0)
     
     # combine data subset with missing counties data

@@ -1,4 +1,4 @@
-"","Municipal","County","State","Region","Five_Year_Range","Population","Never_Married","Never_Married_Pct","Now_Married","Now_Married_Pct","Separated","Separated_Pct","Widowed","Widowed_Pct","Divorced","Divorced_Pct","Gender"
+"","Municipal","County","State","Region","Five_Year_Range","Population","Never_Married","Never_Married_Pct","Married","Married_Pct","Separated","Separated_Pct","Widowed","Widowed_Pct","Divorced","Divorced_Pct","Gender"
 "1",NA,"NA County",NA,"United States","2006-2010",118264295,40461438,34.2,61745693,52.2,2137849,1.8,2977072,2.5,10942243,9.3,"Male"
 "2",NA,"NA County","MA","MA","2006-2010",2536607,951729,37.5,1287165,50.7,38976,1.5,66680,2.6,192057,7.6,"Male"
 "3",NA,"Barnstable County","MA","Barnstable County","2006-2010",87824,24359,27.7,51824,59,905,1,2896,3.3,7840,8.9,"Male"
