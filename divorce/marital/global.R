@@ -150,10 +150,22 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText('Please select the five-year range for which you are interested in seeing marital status data.'),
-  helpText('Next, you may choose to view the male rates or the female rates, or both, by leaving this selection blank. If you are interested in a specific municipality or multiple municipalities select them; alternatively for data on all Massachusetts counties leave this selection blank. To compare the data to the Massachusetts average or US average select the corresponding check box. Please note that all statistics are 5-year averages.'),
+  helpText(p(strong('Please select the five-year range for which you are interested in seeing marital status data.'))),
+  tags$br(),
+  tags$ul(
+      tags$li('View rates by: male or female (or both by leaving this selection blank)'),
+      tags$br(),
+      tags$li('Select one or multiple municipalities; leave blank for counties.'),
+      tags$br(,)
+      tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box'),
+      tags$br(),
+      tags$li(p(strong('Please note that all statistics are 5-year averages')))
+            
+  )
+  
+  
   ## Creates horizontal line
-  tags$hr()
+  ##tags$hr()
 )
 
 ## Same concept
@@ -178,7 +190,17 @@ info_side_text <- conditionalPanel(
   tags$hr()
 )
 
-about_main_text <- p(strong("The SEIGMA Marital Status App"), "displays the five-year average marital status percentages for Massachusetts by municipality. Toggle between tabs to visualize the data differently. ", em("Summary"), "shows the source data in a table format. ", em("Plot"), "compares a municipality to county, state, and national averages. ", em("Map"), "visually displays any of the marital status percentages comparatively by municipality ", em("More Info"), "lists descriptions for the variables of interest, including formulas and calculations.")
+about_main_text <- p(strong("The SEIGMA Marital Status App"), "displays the five-year average marital status percentages for Massachusetts by municipality.",
+  p(strong("Toggle between tabs to visualize the data differently.")),
+    tags$br(),
+    tags$ul(
+      tags$li(p(strong("Summary"), "shows the source data in a table format.")),
+      tags$li(p(strong("Plot"), "compares a municipality to county, state, and national averages.")),
+      tags$li(p(strong("Map"), "visually displays any of the marital status percentages comparatively by municipality")),
+      tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."))
+)
+)
+
 
 plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
