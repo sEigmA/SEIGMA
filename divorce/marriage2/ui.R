@@ -145,17 +145,14 @@ shinyUI(fluidPage(
                  ## make chart title here (otherwise not centered)
                  h4("Crude Suicide Rate Over Time (per 100,000 population)", align="center"),
                  ## make line chart
-                 googleLineChart("plot", width="100%", height="475px", options = list(
-                   
+                 googleColumnChart("plot_US", width="100%", height="475px", options = list(
                    ## set fonts
                    fontName = "Source Sans Pro",
                    fontSize = 14,
                    
                    ## set axis titles, ticks, fonts, and ranges
                    hAxis = list(
-                     title = "Year",
-                     format = "####",
-                     ticks = seq(1999, 2011, 2),
+                     title = "Marital Status",
                      textStyle = list(
                        fontSize = 14),
                      titleTextStyle = list(
@@ -164,7 +161,7 @@ shinyUI(fluidPage(
                        italic = FALSE)
                    ),
                    vAxis = list(
-                     title = "Crude Suicide Rate (per 100,000 population)",
+                     title = "Percentage of Population",
                      viewWindow = ylim,
                      textStyle = list(
                        fontSize = 14),
@@ -186,7 +183,7 @@ shinyUI(fluidPage(
                    ),
                    
                    ## set colors
-                   colors = cbbPalette,
+                   colors = cbbPalette[c(8,3)],
                    
                    ## set point size
                    pointSize = 3,

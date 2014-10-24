@@ -13,7 +13,8 @@ shinyServer(function(input, output, session) {
    ## Filter the data by the chosen Five Year Range 
    mar_df <- mar_data %>%
     filter(Five_Year_Range == input$year) %>%
-    select(Region, Gender, 2:13)
+    select(Region, Gender, Five_Year_Range, Population, Never_Married_Pct, Now_Married_Pct,
+           Separated_Pct, Widowed_Pct, Divorced_Pct)
    ## Output reactive dataframe
    mar_df    
   })
@@ -62,17 +63,26 @@ shinyServer(function(input, output, session) {
   
   ## create the plot of the data
   ## for the Google charts plot
-#   output$plot <- reactive({
-#     ## make reactive dataframe into regular dataframe
-#     mar_df <- mar_df()
-#     
-#     ## make counties a vector based on input variable
-#     counties <- input$county
-#     
-#     ## put data into form that googleCharts understands (this unmelts the dataframe)
-#     df <- dcast(suidf, Year ~ County, value.var="Crude.Rate")
-#     
-#     ## if no counties have been selected, just show the US average
+  output$plot_US <- reactive({
+    ## make reactive dataframe into regular dataframe
+    mar_df <- mar_df()
+    
+    ## make counties a vector based on input variable
+    munis <- "United States"
+    
+    plot_df <- mar_df %>%
+     filter(Region %in% munis)
+    
+    ## put data into form that googleCharts understands (this unmelts the dataframe)
+    melted_plot_df <- melt(plot_df, id.vars = "Gender", measure.vars = 5:9,
+                           variable.name = "Marital_Status", value.name = "Population_Pct")
+    
+    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
+                              value.var = "Population_Pct")
+    
+
+    
+    #     ## if no counties have been selected, just show the US average
 #     if(is.null(input$county)){
 #       ## %.% = then
 #       g <- df %.%
@@ -88,12 +98,12 @@ shinyServer(function(input, output, session) {
 #       
 #       g <- df[,c("Year", counties)]
 #     }
-#     
-#     ## this outputs the google data to be used in the UI to create the dataframe
-#     list(
-#       data=googleDataTable(g))
-#   })
-# 
+    
+    ## this outputs the google data to be used in the UI to create the dataframe
+    list(
+      data=googleDataTable(g))
+  })
+
 #   ## Gets crazy  
 #   map_dat <- reactive({
 #     
