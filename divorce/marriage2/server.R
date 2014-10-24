@@ -64,46 +64,57 @@ shinyServer(function(input, output, session) {
   ## create the plot of the data
   ## for the Google charts plot
   output$plot_US <- reactive({
-    ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
-    
-    ## make counties a vector based on input variable
-    munis <- "United States"
-    
-    plot_df <- mar_df %>%
-     filter(Region %in% munis)
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", measure.vars = 5:9,
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
-    
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-                              value.var = "Population_Pct")
-    
-
-    
-    #     ## if no counties have been selected, just show the US average
-#     if(is.null(input$county)){
-#       ## %.% = then
-#       g <- df %.%
-#         select(Year, US)
-#     }
-#     
-#     ## if counties are selected and MA or US mean boxes are selected, add those to dataframe
-#     if(!is.null(input$county)){
-#       if(input$meanMA)
-#         counties <- c(counties, "MA")
-#       if(input$meanUS)
-#         counties <- c(counties, "US")
-#       
-#       g <- df[,c("Year", counties)]
-#     }
-    
-    ## this outputs the google data to be used in the UI to create the dataframe
-    list(
-      data=googleDataTable(g))
+   ## make reactive dataframe into regular dataframe
+   mar_df <- mar_df()
+   
+   ## make counties a vector based on input variable
+   munis <- "United States"
+   
+   plot_df <- mar_df %>%
+    filter(Region %in% munis)
+   
+   ## put data into form that googleCharts understands (this unmelts the dataframe)
+   melted_plot_df <- melt(plot_df, id.vars = "Gender", measure.vars = 5:9,
+                          variable.name = "Marital_Status", value.name = "Population_Pct")
+   
+   g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
+              value.var = "Population_Pct")
+   
+   g$Marital_Status <- gsub("_", " ", g$Marital_Status)
+   g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
+   
+   ## this outputs the google data to be used in the UI to create the dataframe
+   list(
+    data=googleDataTable(g))
   })
-
+  
+  ## create the plot of the data
+  ## for the Google charts plot
+  output$plot_MA <- reactive({
+   ## make reactive dataframe into regular dataframe
+   mar_df <- mar_df()
+   
+   ## make counties a vector based on input variable
+   munis <- "MA"
+   
+   plot_df <- mar_df %>%
+    filter(Region %in% munis)
+   
+   ## put data into form that googleCharts understands (this unmelts the dataframe)
+   melted_plot_df <- melt(plot_df, id.vars = "Gender", measure.vars = 5:9,
+                          variable.name = "Marital_Status", value.name = "Population_Pct")
+   
+   g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
+              value.var = "Population_Pct")
+   
+   g$Marital_Status <- gsub("_", " ", g$Marital_Status)
+   g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
+   
+   ## this outputs the google data to be used in the UI to create the dataframe
+   list(
+    data=googleDataTable(g))
+  })
+  
 #   ## Gets crazy  
 #   map_dat <- reactive({
 #     

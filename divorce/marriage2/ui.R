@@ -18,7 +18,7 @@ shinyUI(fluidPage(
   
   ## Create sidebar
   sidebarLayout(
-    sidebarPanel(
+    sidebarPanel(width=3,
       ## Conditional panel means if the condition is met show all text below otherwise Don't!
       summary_side_text,
       
@@ -125,7 +125,7 @@ shinyUI(fluidPage(
     
 ######### Start of Main Panel #####
     
-    mainPanel(
+bootstrapPage(mainPanel(
       ## put in logo for title
       a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/"),
       
@@ -143,59 +143,14 @@ shinyUI(fluidPage(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Crude Suicide Rate Over Time (per 100,000 population)", align="center"),
-                 ## make line chart
-                 googleColumnChart("plot_US", width="100%", height="475px", options = list(
-                   ## set fonts
-                   fontName = "Source Sans Pro",
-                   fontSize = 14,
-                   
-                   ## set axis titles, ticks, fonts, and ranges
-                   hAxis = list(
-                     title = "Marital Status",
-                     textStyle = list(
-                       fontSize = 14),
-                     titleTextStyle = list(
-                       fontSize = 16,
-                       bold = TRUE,
-                       italic = FALSE)
-                   ),
-                   vAxis = list(
-                     title = "Percentage of Population",
-                     viewWindow = ylim,
-                     textStyle = list(
-                       fontSize = 14),
-                     titleTextStyle = list(
-                       fontSize = 16,
-                       bold = TRUE,
-                       italic = FALSE)
-                   ),
-                   
-                   ## set legend fonts
-                   legend = list(
-                     textStyle = list(
-                       fontSize=14)),
-                   
-                   ## set chart area padding
-                   chartArea = list(
-                     top = 50, left = 75,
-                     height = "75%", width = "70%"
-                   ),
-                   
-                   ## set colors
-                   colors = cbbPalette[c(8,3)],
-                   
-                   ## set point size
-                   pointSize = 3,
-                   
-                   ## set tooltip font size
-                   ## Hover text font stuff
-                   tooltip = list(
-                     textStyle = list(
-                       fontSize = 14
-                     )
-                   )
-                 )),
+                 h4("Marital Status ", align="center"),
+                 ## make a row to put two charts in
+                 div(class = "row",
+                     div(US_plot_options, class = "span6"),
+                     div(MA_plot_options, class = "span6")
+                     ),
+                 ## make column chart
+                 
                  
                  ## add text about the variables
                  p(strong("Variable Summary:")),
@@ -315,6 +270,6 @@ shinyUI(fluidPage(
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
         id="tabs"
       )
-    )
+    ))
   )
 ))
