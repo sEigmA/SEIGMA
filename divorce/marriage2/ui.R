@@ -7,54 +7,9 @@
 ## Date Modified: 10/22/2014         ##
 #######################################
 
-## load necessary libraries
-require(shiny)
-require(googleCharts)
-
 shinyUI(fluidPage(
   ## HTML to create generate map button
-  HTML('<style type="text/css">
-       .action-button {
-       -moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
-       -webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
-       box-shadow:inset 0px 1px 0px 0px #54a3f7;
-       background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
-       background:-moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-       background:-webkit-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-       background:-o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-       background:-ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-       background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
-       filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#007dc1", endColorstr="#0061a7",GradientType=0);
-       background-color:#007dc1;
-         -moz-border-radius:3px;
-       -webkit-border-radius:3px;
-       border-radius:3px;
-       border:1px solid #124d77;
-       display:inline-block;
-       cursor:pointer;
-       color:#ffffff;
-         font-family:arial;
-       font-size:16px;
-       padding:12px 36px;
-       text-decoration:none;
-       text-shadow:0px 1px 0px #154682;
-       }
-.action-button:hover {
-  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));
-	background:-moz-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-	background:-webkit-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-	background:-o-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-	background:-ms-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#0061a7", endColorstr="#007dc1",GradientType=0);
-       background-color:#0061a7;
-         }
-.action-button:active {
-  position:relative;
-  top:1px;
-}
-
-       </style>'),
+  gen_map_button,
   ## this starts the googleCharts engine
   googleChartsInit(),
   
@@ -65,16 +20,7 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(
       ## Conditional panel means if the condition is met show all text below otherwise Don't!
-      conditionalPanel(
-        condition="input.tabs == 'summary'",
-        ## h4 created 4th largest header
-        h4("How to use this app:"),
-        ## Creates text
-        helpText('Please select a timespan for which you are interested in seeing suicide data organized by county.  If you are interested in comparing multiple years, select "Multiple Years" and adjust the slider and select a range accordingly.'),
-        helpText('Next, if you are interested in a specific county or multiple counties select them; alternatively for data on all Massachusetts counties leave this selection blank.  To compare the data to the Massachusetts average or US average select the corresponding check box.  Please note that only consecutive year ranges can be selected.'),
-        ## Creates horizontal line
-        tags$hr()
-      ),
+      summary_side_text,
       
       ## Same concept
       conditionalPanel(
@@ -98,11 +44,36 @@ shinyUI(fluidPage(
         tags$hr()
       ),
       
+      ## in map, allow for variable selection
+      conditionalPanel(
+       condition="input.tabs == 'map'",
+       selectInput("var", "Select Variable of Interest",
+                   choices = list("Never Married" = "Never_Married_Pct", 
+                                  "Now Married Except Separated" = "Now_Married_Pct",
+                                  "Separated" = "Separated_Pct",
+                                  "Widowed" = "Widowed_Pct",
+                                  "Divorced" = "Divorced_Pct"))
+      ),
+      
       ## if single year is selected, select year. if multiple years are selected, choose range.
       ## Initializing a single slider
       selectInput("year", "Select Five Year Range",
                   choices = list("2006-2010" = 2010, "2007-2011" = 2011,
                                  "2008-2012" = 2012)),
+      
+      ## in summary, allow for gender selection
+      conditionalPanel(
+       condition="input.tabs == 'summary'",
+       selectInput("sum_gender", "Select Gender",
+                   choices = list("Female" = "Female", "Male" = "Male"), multiple=TRUE)
+      ),
+      
+      ## in map, allow for gender selection
+      conditionalPanel(
+       condition="input.tabs == 'map'",
+       selectInput("map_gender", "Select Gender",
+                   choices = list("Female", "Male"))
+      ),
       
       ## in summary or plot, allow for municipal selection
       conditionalPanel(
@@ -122,18 +93,18 @@ shinyUI(fluidPage(
                     ## Multiple allows for multi-county selection
                     multiple=TRUE)),
       
-      ## If a county is selected, show boxes that will compare to MA or US average
+      ## In summary, show boxes that will compare to MA or US average
       conditionalPanel(
         condition="input.tabs == 'summary'",
         ## False at the end means it starts off unchecked
-        checkboxInput("meanMA", "Compare to MA Average", FALSE),
-        checkboxInput("meanUS", "Compare to US Average", FALSE)
+        checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+        checkboxInput("US_mean", "Compare to US Average", FALSE)
       ),
       
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F Kiridly, Sophie E. O'Brien and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Sophie E. O'Brien and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
@@ -185,7 +156,6 @@ shinyUI(fluidPage(
                      title = "Year",
                      format = "####",
                      ticks = seq(1999, 2011, 2),
-                     viewWindow = xlim,
                      textStyle = list(
                        fontSize = 14),
                      titleTextStyle = list(
@@ -288,30 +258,7 @@ shinyUI(fluidPage(
                            tags$td(round(from, 2), "to", round(to, 2))
                          )
                        }, 
-                       scolorRanges$from, scolorRanges$to, smap.colors[-length(smap.colors)],
-                       SIMPLIFY=FALSE)
-                     )
-                   )),
-                 
-                 ## Multi Year Legend
-                 conditionalPanel(
-                   condition="input.timespan == 'mult.yrs' && input.action != 0",
-                   absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
-                     class = "floater",
-                     strong("Multiple Year"),
-                     tags$br(),
-                     strong("Increase in CSR"),
-                     tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(round(from, 2), "to", round(to, 2))
-                         )
-                       }, 
-                       mcolorRanges$from, mcolorRanges$to, mmap.colors[-length(mmap.colors)],
+                       colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
                        SIMPLIFY=FALSE)
                      )
                    )),

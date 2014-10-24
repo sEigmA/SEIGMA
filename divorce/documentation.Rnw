@@ -75,29 +75,11 @@ mar_data2$Five_Year_Range <- as.numeric(substr(mar_data2$Five_Year_Range, 6, 9))
 write.csv(mar_data2, file="marriagedata.csv")
 mar_data2 <- read.csv("marriagedata.csv")[,-c(1:4)]
 
-colnames(mar_data2)[4:13] <- c("Never_Married", "Never_Married_pct", "Now_Married", "Now_Married_pct",
-                               "Separated", "Separated_Pct", "Widowed", "Widowed_pct", "Divorced",
-                               "Divorced_pct")
-
-## make proportions into percentages
-mar_data2$Never_Married_Pct <- 100*mar_data2$Never_Married/mar_data2$Population
-mar_data2$Now_Married_Pct <- 100*mar_data2$Now_Married/mar_data2$Population
-mar_data2$Separated_Pct <- 100*mar_data2$Separated/mar_data2$Population
-mar_data2$Widowed_Pct <- 100*mar_data2$Widowed/mar_data2$Population
-mar_data2$Divorced_Pct <- 100*mar_data2$Divorced/mar_data2$Population
+colnames(mar_data2)[4:13] <- c("Never_Married", "Never_Married_Pct", "Now_Married", "Now_Married_Pct",
+                               "Separated", "Separated_Pct", "Widowed", "Widowed_Pct", "Divorced",
+                               "Divorced_Pct")
 
 write.csv(mar_data2, file="marriage2/marriagedata.csv")
-
-MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
-
-for(i in 1:length(MA_map_muni$features)){
-  MA_map_muni$features[[i]]$properties$NAMELSAD10 <- substr(MA_map_muni$features[[i]]$properties$NAMELSAD10, 1, nchar(MA_map_muni$features[[i]]$properties$NAMELSAD10)-5)
-}
-
-MA_municipals <- c()
-for(i in 1:length(MA_map_muni$features)){
-  MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
-}
 @
 
 \end{document}
