@@ -147,7 +147,9 @@ shinyServer(function(input, output, session) {
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
-      data=googleDataTable(g))
+      data = googleDataTable(g), options = list(
+        vAxis = list(
+          title = paste("% of", munis[1], "Population"))))
   })
   
   ## create the plot of the MA data
@@ -175,13 +177,15 @@ shinyServer(function(input, output, session) {
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
-      data=googleDataTable(g))
+      data = googleDataTable(g), options = list(
+        vAxis = list(
+          title = paste("% of", munis, "Population"))))
   })
   
   ## set map colors
   map_dat <- reactive({
     
-    browser()
+    #browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
     mar_df <- mar_df()
@@ -280,7 +284,9 @@ shinyServer(function(input, output, session) {
           ## Fill color has to be equal to the map_dat color and is matched by county
           fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
           ## "#000000" = Black, "#999999"=Grey, 
-          weight=1, stroke=TRUE, opacity=1, color="#000000", 
+          weight=1, stroke=TRUE, 
+          opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
+          color="#000000", 
           fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)])
       }
       
@@ -311,6 +317,11 @@ shinyServer(function(input, output, session) {
   ##  This function is what creates info box
   output$details <- renderText({
     
+    muni_name <- values$selectedFeature$NAMELSAD10
+    muni_value <- values$selectedFeature[input$var]
+    var_select <- gsub("_", " ", input$var)
+    var_select <- gsub("Pct", "", var_select)
+    
     ## Before a county is clicked, display a message
     if(is.null(values$selectedFeature)){
       return(as.character(tags$div(
@@ -322,13 +333,12 @@ shinyServer(function(input, output, session) {
     ## If clicked county has no crude rate, display a message
     if(is.null(values$selectedFeature[input$var])){
       return(as.character(tags$div(
-        tags$h5(input$var, " in ", values$selectedFeature$NAMELSAD10, 
-                "is not available for this timespan"))))
+        tags$h5(input$gender, var_select, "% in ", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4(input$year, input$var, " in ", values$selectedFeature$NAMELSAD10),
-      tags$h5(values$selectedFeature[input$var], "%")
+      tags$h4(input$map_gender, var_select, "% in ", muni_name, " for ", input$year),
+      tags$h5(muni_value, "%")
     ))
   })
   

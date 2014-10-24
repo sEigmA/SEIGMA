@@ -73,8 +73,8 @@ ylim <- list(
 )
 
 ## Colors for a single-year legend
-paint_brush <- colorRampPalette(colors=c("white", cbbPalette[7]))
-map_colors <- c(paint_brush(n=6), "#999999")
+paint_brush <- colorRampPalette(colors=c(cbbPalette[2], "white", cbbPalette[4]))
+map_colors <- c(paint_brush(n=4), "#999999")
 
 ## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
@@ -146,17 +146,52 @@ gen_map_button <- HTML('<style type="text/css">
                        </style>')
 
 summary_side_text <- conditionalPanel(
- condition="input.tabs == 'summary'",
- ## h4 created 4th largest header
- h4("How to use this app:"),
- ## Creates text
- helpText('Please select a timespan for which you are interested in seeing suicide data organized by county.  If you are interested in comparing multiple years, select "Multiple Years" and adjust the slider and select a range accordingly.'),
- helpText('Next, if you are interested in a specific county or multiple counties select them; alternatively for data on all Massachusetts counties leave this selection blank.  To compare the data to the Massachusetts average or US average select the corresponding check box.  Please note that only consecutive year ranges can be selected.'),
- ## Creates horizontal line
- tags$hr()
+  condition="input.tabs == 'summary'",
+  ## h4 created 4th largest header
+  h4("How to use this app:"),
+  ## Creates text
+  helpText('Please select the five-year range for which you are interested in seeing marital status data.'),
+  helpText('Next, you may choose to view the male rates or the female rates, or both, by leaving this selection blank. If you are interested in a specific municipality or multiple municipalities select them; alternatively for data on all Massachusetts counties leave this selection blank. To compare the data to the Massachusetts average or US average select the corresponding check box. Please note that all statistics are 5-year averages.'),
+  ## Creates horizontal line
+  tags$hr()
 )
 
-US_plot_options <- googleColumnChart("plot_US", width="80%", height="475px", options = list(
+## Same concept
+plot_side_text <- conditionalPanel(
+  condition="input.tabs == 'plot'",
+  h4("How to use this app:"),
+  helpText('Please select a municipality to analyze. For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages for females and males.'),
+  tags$hr()
+)
+
+map_side_text <- conditionalPanel(
+  condition="input.tabs == 'map'",
+  h4("How to use this app:"),
+  helpText('Please click on "Generate Map" to get started. Clicking on a municipality will display the variable of interest for the five-year range and gender that you selected.'),
+  tags$hr()
+)
+
+info_side_text <- conditionalPanel(
+  condition="input.tabs == 'info'",
+  h4("How to use this app:"),
+  helpText('This tab contains more detailed information regarding the variables of interest, including formulae and calculations which were used to derive the five-year averages.'),
+  tags$hr()
+)
+
+about_main_text <- p(strong("The SEIGMA Marital Status App"), "displays the five-year average marital status percentages for Massachusetts by municipality. Toggle between tabs to visualize the data differently. ", em("Summary"), "shows the source data in a table format. ", em("Plot"), "compares a municipality to county, state, and national averages. ", em("Map"), "visually displays any of the marital status percentages comparatively by municipality ", em("More Info"), "lists descriptions for the variables of interest, including formulas and calculations.")
+
+plot_main_text <- p(strong("Variable Summary:"),
+                    ## breaks between paragraphs
+                    tags$br(),
+                    strong("Suicides"),
+                    " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10.", 
+                    tags$br(),
+                    strong("Crude Rate"), 
+                    " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:",
+                    tags$br(),
+                    strong("Crude Rate = Count / Population * 100,000", align="center"))
+
+US_plot_options <- googleColumnChart("plot_US", width="100%", height="475px", options = list(
  ## set fonts
  fontName = "Source Sans Pro",
  fontSize = 12,
@@ -188,12 +223,12 @@ US_plot_options <- googleColumnChart("plot_US", width="80%", height="475px", opt
  
  ## set chart area padding
  chartArea = list(
-   top = 50, left = 100,
+   top = 50, left = 75,
   height = "75%", width = "70%"
  ),
  
  ## set colors
- colors = cbbPalette[c(2,3)],
+ colors = cbbPalette[c(8,3)],
  
  ## set point size
  pointSize = 3,
@@ -207,18 +242,20 @@ US_plot_options <- googleColumnChart("plot_US", width="80%", height="475px", opt
  )
 ))
 
+font_size <- 14
+
 MA_plot_options <- googleColumnChart("plot_MA", width="100%", height="475px", options = list(
  ## set fonts
  fontName = "Source Sans Pro",
- fontSize = 12,
+ fontSize = font_size,
  
  ## set axis titles, ticks, fonts, and ranges
  hAxis = list(
   title = "",
   textStyle = list(
-   fontSize = 12),
+   fontSize = font_size),
   titleTextStyle = list(
-   fontSize = 14,
+   fontSize = font_size+2,
    bold = TRUE,
    italic = FALSE)
  ),
@@ -226,9 +263,9 @@ MA_plot_options <- googleColumnChart("plot_MA", width="100%", height="475px", op
   title = "% of MA Population",
   viewWindow = ylim,
   textStyle = list(
-   fontSize = 12),
+   fontSize = font_size),
   titleTextStyle = list(
-   fontSize = 14,
+   fontSize = font_size+2,
    bold = TRUE,
    italic = FALSE)
  ),
@@ -236,17 +273,17 @@ MA_plot_options <- googleColumnChart("plot_MA", width="100%", height="475px", op
  ## set legend fonts
  legend = list(
   textStyle = list(
-   fontSize=14),
-  position = "in"),
+   fontSize=font_size),
+  position = "none"),
  
  ## set chart area padding
  chartArea = list(
-  top = 50, left = 75,
+  top = 50, left = 100,
   height = "75%", width = "70%"
  ),
  
  ## set colors
- colors = cbbPalette[c(2,3)],
+ colors = cbbPalette[c(8,3)],
  
  ## set point size
  pointSize = 3,
@@ -255,7 +292,7 @@ MA_plot_options <- googleColumnChart("plot_MA", width="100%", height="475px", op
  ## Hover text font stuff
  tooltip = list(
   textStyle = list(
-   fontSize = 14
+   fontSize = font_size
   )
  )
 ))
@@ -263,25 +300,24 @@ MA_plot_options <- googleColumnChart("plot_MA", width="100%", height="475px", op
 county_plot_options <- googleColumnChart("plot_county", width="100%", height="475px", options = list(
   ## set fonts
   fontName = "Source Sans Pro",
-  fontSize = 12,
+  fontSize = font_size,
   
   ## set axis titles, ticks, fonts, and ranges
   hAxis = list(
     title = "",
     textStyle = list(
-      fontSize = 12),
+      fontSize = font_size),
     titleTextStyle = list(
-      fontSize = 14,
+      fontSize = font_size+2,
       bold = TRUE,
       italic = FALSE)
   ),
   vAxis = list(
-    title = "% of County Population",
     viewWindow = ylim,
     textStyle = list(
-      fontSize = 12),
+      fontSize = font_size),
     titleTextStyle = list(
-      fontSize = 14,
+      fontSize = font_size+2,
       bold = TRUE,
       italic = FALSE)
   ),
@@ -289,7 +325,59 @@ county_plot_options <- googleColumnChart("plot_county", width="100%", height="47
   ## set legend fonts
   legend = list(
     textStyle = list(
-      fontSize=14),
+      fontSize=font_size),
+    position = "in"),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 75,
+    height = "75%", width = "70%"
+  ),
+  
+  ## set colors
+  colors = cbbPalette[c(8,3)],
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = font_size
+    )
+  )
+))
+
+muni_plot_options <- googleColumnChart("plot_muni", width="100%", height="475px", options = list(
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = font_size,
+  
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "",
+    textStyle = list(
+      fontSize = font_size),
+    titleTextStyle = list(
+      fontSize = font_size,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    viewWindow = ylim,
+    textStyle = list(
+      fontSize = font_size),
+    titleTextStyle = list(
+      fontSize = font_size+2,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    textStyle = list(
+      fontSize=font_size),
     position = "none"),
   
   ## set chart area padding
@@ -299,7 +387,7 @@ county_plot_options <- googleColumnChart("plot_county", width="100%", height="47
   ),
   
   ## set colors
-  colors = cbbPalette[c(2,3)],
+  colors = cbbPalette[c(8,3)],
   
   ## set point size
   pointSize = 3,
@@ -308,60 +396,7 @@ county_plot_options <- googleColumnChart("plot_county", width="100%", height="47
   ## Hover text font stuff
   tooltip = list(
     textStyle = list(
-      fontSize = 14
-    )
-  )
-))
-
-muni_plot_options <- googleColumnChart("plot_muni", width="100%", height="475px", options = list(
-  ## set fonts
-  fontName = "Source Sans Pro",
-  fontSize = 12,
-  
-  ## set axis titles, ticks, fonts, and ranges
-  hAxis = list(
-    title = "",
-    textStyle = list(
-      fontSize = 12),
-    titleTextStyle = list(
-      fontSize = 14,
-      bold = TRUE,
-      italic = FALSE)
-  ),
-  vAxis = list(
-    title = "% of Municipal Population",
-    viewWindow = ylim,
-    textStyle = list(
-      fontSize = 12),
-    titleTextStyle = list(
-      fontSize = 14,
-      bold = TRUE,
-      italic = FALSE)
-  ),
-  
-  ## set legend fonts
-  legend = list(
-    textStyle = list(
-      fontSize=14),
-    position = "none"),
-  
-  ## set chart area padding
-  chartArea = list(
-    top = 50, left = 75,
-    height = "75%", width = "70%"
-  ),
-  
-  ## set colors
-  colors = cbbPalette[c(2,3)],
-  
-  ## set point size
-  pointSize = 3,
-  
-  ## set tooltip font size
-  ## Hover text font stuff
-  tooltip = list(
-    textStyle = list(
-      fontSize = 14
+      fontSize = font_size
     )
   )
 ))
