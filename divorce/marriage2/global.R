@@ -258,3 +258,109 @@ MA_plot_options <- googleColumnChart("plot_MA", width="100%", height="475px", op
   )
  )
 ))
+
+county_plot_options <- googleColumnChart("plot_county", width="100%", height="475px", options = list(
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = 12,
+  
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "",
+    textStyle = list(
+      fontSize = 12),
+    titleTextStyle = list(
+      fontSize = 14,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    title = "% of County Population",
+    viewWindow = ylim,
+    textStyle = list(
+      fontSize = 12),
+    titleTextStyle = list(
+      fontSize = 14,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    textStyle = list(
+      fontSize=14),
+    position = "none"),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 100,
+    height = "75%", width = "70%"
+  ),
+  
+  ## set colors
+  colors = cbbPalette[c(2,3)],
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = 14
+    )
+  )
+))
+
+muni_plot_options <- googleColumnChart("plot_muni", width="100%", height="475px", options = list(
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = 12,
+  
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "",
+    textStyle = list(
+      fontSize = 12),
+    titleTextStyle = list(
+      fontSize = 14,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    title = "% of Municipal Population",
+    viewWindow = ylim,
+    textStyle = list(
+      fontSize = 12),
+    titleTextStyle = list(
+      fontSize = 14,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    textStyle = list(
+      fontSize=14),
+    position = "none"),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 75,
+    height = "75%", width = "70%"
+  ),
+  
+  ## set colors
+  colors = cbbPalette[c(2,3)],
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = 14
+    )
+  )
+))

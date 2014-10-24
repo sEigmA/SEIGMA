@@ -69,13 +69,15 @@ mar_data2$Region  <- ifelse(!is.na(mar_data2$County), paste(mar_data2$County, "C
                             mar_data2$Region)
 mar_data2$Region  <- ifelse(!is.na(mar_data2$Municipal),as.character(mar_data2$Municipal),as.character(mar_data2$Region))
 
+mar_data2$County <- paste(mar_data2$County, "County")
+
 mar_data2$Five_Year_Range <- as.numeric(substr(mar_data2$Five_Year_Range, 6, 9))
 
 ## save and reload to make factors into numeric (this is faster than the other methods)
 write.csv(mar_data2, file="marriagedata.csv")
-mar_data2 <- read.csv("marriagedata.csv")[,-c(1:4)]
+mar_data2 <- read.csv("marriagedata.csv")[,-c(1)]
 
-colnames(mar_data2)[4:13] <- c("Never_Married", "Never_Married_Pct", "Now_Married", "Now_Married_Pct",
+colnames(mar_data2)[7:16] <- c("Never_Married", "Never_Married_Pct", "Now_Married", "Now_Married_Pct",
                                "Separated", "Separated_Pct", "Widowed", "Widowed_Pct", "Divorced",
                                "Divorced_Pct")
 

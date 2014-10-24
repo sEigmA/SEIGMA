@@ -75,7 +75,7 @@ shinyUI(fluidPage(
                    choices = list("Female", "Male"))
       ),
       
-      ## in summary or plot, allow for municipal selection
+      ## in summary, allow for municipal selection
       conditionalPanel(
         condition="input.tabs == 'summary'",
         ## Select input = List
@@ -89,9 +89,7 @@ shinyUI(fluidPage(
         condition="input.tabs == 'plot'",
         ## Select input = List
         selectInput("plot_muni", "Select Municipality", 
-                    choices = MA_municipals,
-                    ## Multiple allows for multi-county selection
-                    multiple=TRUE)),
+                    choices = MA_municipals)),
       
       ## In summary, show boxes that will compare to MA or US average
       conditionalPanel(
@@ -149,7 +147,10 @@ bootstrapPage(mainPanel(
                      div(US_plot_options, class = "span6"),
                      div(MA_plot_options, class = "span6")
                      ),
-                 ## make column chart
+                 div(class = "row",
+                     div(county_plot_options, class = "span6"),
+                     div(muni_plot_options, class = "span6")
+                 ),
                  
                  
                  ## add text about the variables
