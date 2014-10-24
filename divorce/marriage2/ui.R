@@ -57,9 +57,12 @@ shinyUI(fluidPage(
       
       ## if single year is selected, select year. if multiple years are selected, choose range.
       ## Initializing a single slider
+      conditionalPanel(
+        condition="input.tabs == 'summary' || input.tabs == 'plot' || input.tabs == 'map'",
       selectInput("year", "Select Five Year Range",
                   choices = list("2006-2010" = 2010, "2007-2011" = 2011,
-                                 "2008-2012" = 2012)),
+                                 "2008-2012" = 2012))
+      ),
       
       ## in summary, allow for gender selection
       conditionalPanel(

@@ -41,13 +41,13 @@ for(i in 1:length(MA_map_muni$features)){
   MA_map_muni$features[[i]]$properties$NAMELSAD10 <- substr(MA_map_muni$features[[i]]$properties$NAMELSAD10, 1, nchar(MA_map_muni$features[[i]]$properties$NAMELSAD10)-5)
 }
 
-MA_municipals <- c()
+MA_municipals_map <- c()
 for(i in 1:length(MA_map_muni$features)){
-  MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
+  MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals %in% mar_data$Region)
-leftover_munis <- MA_municipals[idx_leftovers]
+idx_leftovers <- which(!MA_municipals_map %in% mar_data$Region)
+leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
   substr(leftover_munis[i], 1, nchar(leftover_munis[i])-5)
@@ -58,6 +58,7 @@ for(i in 1:length(MA_map_muni$features)){
  MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 idx_leftovers2 <- which(!MA_municipals %in% mar_data$Region)
+leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
