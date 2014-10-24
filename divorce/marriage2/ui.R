@@ -11,7 +11,6 @@
 require(shiny)
 require(googleCharts)
 
-
 shinyUI(fluidPage(
   ## HTML to create generate map button
   HTML('<style type="text/css">
@@ -60,7 +59,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Suicide Shiny App"),
+  titlePanel("", windowTitle = "SEIGMA: Marital Status Shiny App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -99,50 +98,37 @@ shinyUI(fluidPage(
         tags$hr()
       ),
       
-      ## in summary and map, allow for timespan selection
-      conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'map'",
-        ## Select input = Drop down list of timespan (variable name on server side) 
-        selectInput("timespan", "Select Timespan",
-                    list("Single Year" = "sing.yr",
-                         "Multiple Years" = "mult.yrs"))
-      ),
+      ## if single year is selected, select year. if multiple years are selected, choose range.
+      ## Initializing a single slider
+      selectInput("year", "Select Five Year Range",
+                  choices = list("2006-2010" = 2010, "2007-2011" = 2011,
+                                 "2008-2012" = 2012)),
       
-      ## if single year is selected, select year. if                  multiple years are selected, choose range.
+      ## in summary or plot, allow for municipal selection
       conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'map'",
-        conditionalPanel(
-          condition="input.timespan == 'sing.yr'",
-          
-          ## Initializing a single slider
-          sliderInput("year", "Select Year",
-                      min=1999, max=2011, value=2011,
-                      format="####")),
-        conditionalPanel(
-          ## Initializes a multi-year slider (range)
-          condition="input.timespan == 'mult.yrs'",
-          ## Slider starts from 2010-2011
-          sliderInput("range", "Select Years",
-                      min=1999, max=2011, value=c(2010,2011),
-                      format="####")
-        )
-      ),
-      
-      ## in summary or plot, allow for county selection
-      conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'plot'",
+        condition="input.tabs == 'summary'",
         ## Select input = List
-        selectInput("county", "Select County", 
-                    names(table(suidata[,1]))[c(1:7, 9:12,14)], 
+        selectInput("sum_muni", "Select Municipality", 
+                    choices = MA_municipals,
+                    ## Multiple allows for multi-county selection
+                    multiple=TRUE)),
+      
+      ## in plot, allow for municipal selection
+      conditionalPanel(
+        condition="input.tabs == 'plot'",
+        ## Select input = List
+        selectInput("plot_muni", "Select Municipality", 
+                    choices = MA_municipals,
                     ## Multiple allows for multi-county selection
                     multiple=TRUE)),
       
       ## If a county is selected, show boxes that will compare to MA or US average
       conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'plot' && input.county != null",
+        condition="input.tabs == 'summary'",
         ## False at the end means it starts off unchecked
         checkboxInput("meanMA", "Compare to MA Average", FALSE),
-        checkboxInput("meanUS", "Compare to US Average", FALSE)),
+        checkboxInput("meanUS", "Compare to US Average", FALSE)
+      ),
       
       tags$hr(),
       

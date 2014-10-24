@@ -11,7 +11,6 @@
 
 require(RJSONIO)
 require(dplyr)
-require(leaflet)
 
 ## load map data
 MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
@@ -27,6 +26,10 @@ for(i in 1:length(MA_map_county$features)){
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
+for(i in 1:length(MA_map_muni$features)){
+  MA_map_muni$features[[i]]$properties$NAMELSAD10 <- substr(MA_map_muni$features[[i]]$properties$NAMELSAD10, 1, nchar(MA_map_muni$features[[i]]$properties$NAMELSAD10)-5)
+}
+
 MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
   MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
@@ -45,9 +48,8 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
   min = 0,
-  max = 100.00
+  max = 100
 )
-
 
 ## Colors for a single-year legend
 paint_brush <- colorRampPalette(colors=c("white", cbbPalette[7]))

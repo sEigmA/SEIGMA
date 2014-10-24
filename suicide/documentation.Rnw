@@ -18,6 +18,8 @@ install.packages("reshape2")
 install.packages("devtools")
 require(devtools)
 devtools::install_github("rstudio/shinyapps")
+devtools::install_github("jcheng5/googleCharts")
+devtools::install_github('leaflet-shiny', 'jcheng5')
 
 require(sas7bdat)
 require(shiny)
