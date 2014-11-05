@@ -258,7 +258,7 @@ US_plot_options <- googleColumnChart("plot_US", width="100%", height="475px", op
  
  ## set legend fonts
  legend = list(
-  position = "none"),
+  position = "in"),
  
  ## set chart area padding
  chartArea = list(
@@ -311,7 +311,7 @@ MA_plot_options <- googleColumnChart("plot_MA", width="100%", height="475px", op
  legend = list(
   textStyle = list(
    fontSize=font_size),
-  position = "none"),
+  position = "in"),
  
  ## set chart area padding
  chartArea = list(
@@ -417,7 +417,7 @@ muni_plot_options <- googleColumnChart("plot_muni", width="100%", height="475px"
   legend = list(
     textStyle = list(
       fontSize=font_size),
-    position = "none"),
+    position = "in"),
   
   ## set chart area padding
   chartArea = list(
