@@ -99,18 +99,24 @@ shinyUI(fluidPage(
         h4("How to use this app:"),
         p(strong(helpText('Please click on "Generate Map" to get started.'))),
         tags$br(),
-        helpText('When "Single Year" is selected, clicking on a county displays the crude suicide rate for that year.'),
-        tags$br(),
-        helpText('When "Multiple Years" is selected, clicking on a county displays the increase in crude suicide rate over that timespan.'),
-        tags$hr()
+        tags$ul(
+          tags$li('When "Single Year" is selected, clicking on a county displays the crude suicide rate for that year.'),
+        tags$li('When "Multiple Years" is selected, clicking on a county displays the increase in crude suicide rate over that timespan.')
+        )
       ),
+      
       
       conditionalPanel(
         condition="input.tabs == 'info'",
         h4("How to use this app:"),
-        helpText('This tab contains more detailed information regarding the variables of interest, including formulae and calculations which were used to derive the crude suicide rate.'),
-        tags$hr()
-      ),
+        helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))),
+  tags$br(),
+  tags$ul(
+  tags$li('formulae'),
+  tags$li('calculations to derive the crude suicide rate.')
+  )
+  ),
+  
       
       ## in summary and map, allow for timespan selection
       conditionalPanel(

@@ -156,7 +156,7 @@ summary_side_text <- conditionalPanel(
       tags$li('View rates by: male or female (or both by leaving this selection blank)'),
       tags$br(),
       tags$li('Select one or multiple municipalities; leave blank for counties.'),
-      tags$br(,)
+      tags$br(),
       tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box'),
       tags$br(),
       tags$li(p(strong('Please note that all statistics are 5-year averages')))
@@ -172,23 +172,38 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  helpText('Please select a municipality to analyze. For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages for females and males.'),
+p(strong('Please select a municipality to analyze.')),
+           tags$br(),
+  tags$ul(
+    tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages for females and males.')
+    ))
+          
   tags$hr()
-)
+
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText('Please click on "Generate Map" to get started. Clicking on a municipality will display the variable of interest for the five-year range and gender that you selected.'),
+  helpText(p(strong('Please click on "Generate Map" to get started'))),
+  tags$br(),
+  tags$ul(
+    tags$li('Clicking on a municipality will display the variable of interest for the five-year range and gender that you selected.')
+    ))
+
   tags$hr()
-)
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText('This tab contains more detailed information regarding the variables of interest, including formulae and calculations which were used to derive the five-year averages.'),
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))),
+           tags$br(),
+  tags$ul(
+    tags$li('formulae'),
+    tags$li('calculations to derive the five-year averages.')
+      ))
+           
   tags$hr()
-)
+
 
 about_main_text <- p(strong("The SEIGMA Marital Status App"), "displays the five-year average marital status percentages for Massachusetts by municipality.",
   p(strong("Toggle between tabs to visualize the data differently.")),
