@@ -216,7 +216,7 @@ bootstrapPage(mainPanel(
                  " - Number of people within each marital status category for a specific region over a specified five year range. No data for any municipality indicates that data cannot be displayed because the number of cases is too small. This calculated by:"), 
                   tags$br(),
 
-                p(strong("Marital Rate= Total number in marital group for five year range/ Total Population * 100,000"), 
+                p(strong("Marital Rate= Total in marital group for five year range/ Total Population * 100,000"), 
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
