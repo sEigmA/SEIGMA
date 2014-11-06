@@ -13,9 +13,8 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range 
     inc_df <- inc_data %>%
       filter(Five_Year_Range == input$year) %>%
-      select(1:4, Gender, Five_Year_Range, Population, Never_Married_Pct, Married_Pct,
-             Separated_Pct, Widowed_Pct, Divorced_Pct) %>%
-      arrange(Region, Gender)
+      select(1:4, Five_Year_Range, Median_Household_Income, Margin_Error_Median) %>%
+      arrange(Region)
     ## Output reactive dataframe
     inc_df    
   })
@@ -24,13 +23,6 @@ shinyServer(function(input, output, session) {
   output$summary <- renderDataTable({
     ## Make reactive dataframe into regular dataframe
     inc_df <- inc_df()
-    
-    ## make gender a vector based on input variable
-    if(!is.null(input$sum_gender))
-      genders <- input$sum_gender
-    ## if none selected, put all genders in vector
-    if(is.null(input$sum_gender))
-      genders <- c("Female", "Male")
     
     ## make municipals a vector based on input variable
     if(!is.null(input$sum_muni))
@@ -54,11 +46,10 @@ shinyServer(function(input, output, session) {
     
     ## create a dataframe consisting only of counties in vector
     inc_df <- inc_df %>%
-      filter(Gender %in% genders, Region %in% munis) %>%
+      filter(Region %in% munis) %>%
       select(4:length(colnames(inc_df)))
     
     colnames(inc_df) <- gsub("_", " ", colnames(inc_df))
-    colnames(inc_df) <- gsub("Pct", "%", colnames(inc_df))
     
     return(inc_df)
   }, options=list(bFilter=FALSE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
