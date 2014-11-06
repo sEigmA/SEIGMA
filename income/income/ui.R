@@ -1,10 +1,10 @@
 #######################################
-## Title: Income ui.R              ##
+## Title: Income ui.R                ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/5/2014         ##
-## Date Modified: 11/5/2014         ##
+## Date Created:  11/5/2014          ##
+## Date Modified: 11/6/2014          ##
 #######################################
 
 shinyUI(fluidPage(
@@ -14,7 +14,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Income Status Shiny App"),
+  titlePanel("", windowTitle = "SEIGMA: Household Income Shiny App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -30,18 +30,7 @@ shinyUI(fluidPage(
       
       ## in map, allow for variable selection
       
-#############  Commented this out for Income  ##########      
-#       conditionalPanel(
-#        condition="input.tabs == 'map'",
-#        selectInput("var", "Select Variable of Interest",
-#                    choices = list("Never Married" = "Never_Married_Pct", 
-#                                   "Now Married Except Separated" = "Now_Married_Pct",
-#                                   "Separated" = "Separated_Pct",
-#                                   "Widowed" = "Widowed_Pct",
-#                                   "Divorced" = "Divorced_Pct"))
-#       ),
-      
-      ## if single year is selected, select year. if multiple years are selected, choose range.
+      ## Choose range for year.
       ## Initializing a single slider
       conditionalPanel(
         condition="input.tabs == 'summary' || input.tabs == 'plot' || input.tabs == 'map'",
@@ -50,20 +39,7 @@ shinyUI(fluidPage(
                                  "2007-2011" = "2007-2011"))
       ),
       
-#       ## in summary, allow for gender selection
-#       conditionalPanel(
-#        condition="input.tabs == 'summary'",
-#        selectInput("sum_gender", "Select Gender",
-#                    choices = list("Female" = "Female", "Male" = "Male"), multiple=TRUE)
-#       ),
-#       
-      ## in map, allow for gender selection
-#       conditionalPanel(
-#        condition="input.tabs == 'map'",
-#        selectInput("map_gender", "Select Gender",
-#                    choices = list("Female", "Male"))
-#       ),
-      
+
       ## in summary, allow for municipal selection
       conditionalPanel(
         condition="input.tabs == 'summary'",
@@ -130,7 +106,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Median household income in the past 12 months (inflation-adjusted dollars) Income Status of the Population by Region", align="center"),
+                 h4("Average Annual Median Household Income (inflation-adjusted dollars) of Population by Region Over Five Year Period", align="center"),
                  ## make a row to put two charts in
                  div(class = "row",
                      div(muni_plot_options, class = "span6"),
@@ -214,11 +190,11 @@ bootstrapPage(mainPanel(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                  p(strong("Median Income Rates"),
-                 " - Number of people within each income status category for a specific region over a specified five year range. No data for any municipality indicates that data cannot be displayed because the number of cases is too small. This calculated by:"), 
+                  p(strong("Median Household Income (inflation-adjusted dollars"),
+                 " - text here"), 
                   tags$br(),
 
-                p(strong("Median Income = ******"),align="center"), 
+                p(strong("Median Household Income = ******"),align="center"), 
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),

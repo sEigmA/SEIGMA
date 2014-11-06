@@ -1,10 +1,10 @@
 #######################################
-## Title: Income global.R          ##
+## Title: Income global.R            ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/5/2014         ##
-## Date Modified: 11/5/2014         ##
+## Date Created:  11/5/2014          ##
+## Date Modified: 11/6/2014          ##
 #######################################
 
 ##First file run - Environment Setup
