@@ -8,7 +8,7 @@
 #######################################
 
 shinyServer(function(input, output, session) {
-  ## mar_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
+  ## inc_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
   inc_df <- reactive({
     ## Filter the data by the chosen Five Year Range 
     inc_df <- inc_data %>%
@@ -66,113 +66,113 @@ shinyServer(function(input, output, session) {
     plot_df <- inc_df %>%
       filter(Region %in% munis)
     
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
-                                            "Widowed_Pct", "Divorced_Pct"),
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
-    
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_Pct")
-    
-    g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
-    
-    ## this outputs the google data to be used in the UI to create the dataframe
-    list(
-      data=googleDataTable(g))
-  })
-  
-  ## create the plot of the MA data
-  output$plot_MA <- reactive({
-    ## make reactive dataframe into regular dataframe
-    inc_df <- inc_df()
-    
-    ## make counties a vector based on input variable
-    munis <- "MA"
-    
-    plot_df <- inc_df %>%
-      filter(Region %in% munis)
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
-                                            "Widowed_Pct", "Divorced_Pct"),
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
-    
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_Pct")
-    
-    g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
-    
-    ## this outputs the google data to be used in the UI to create the dataframe
-    list(
-      data=googleDataTable(g))
-  })
-  
-  ## create the plot of the County MA data
-  output$plot_county <- reactive({
-    ## make reactive dataframe into regular dataframe
-    inc_df <- inc_df()
-    
-    ## find the county of the municipal
-    county <- inc_df$County[which(inc_df$Municipal==input$plot_muni)]
-    ## make counties a vector based on input variable
-    munis <- inc_df$Region[match(county, inc_df$Region)]
-    
-    plot_df <- inc_df %>%
-      filter(Region %in% munis)
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
-                                            "Widowed_Pct", "Divorced_Pct"),
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
-    
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_Pct")
-    
-    g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
-    
-    ## this outputs the google data to be used in the UI to create the dataframe
-    list(
-      data = googleDataTable(g), options = list(
-        title = paste("Marital Status Statisics for", munis[1])))
-  })
-  
-  ## create the plot of the MA data
-  output$plot_muni <- reactive({
-    ## make reactive dataframe into regular dataframe
-    inc_df <- inc_df()
-    
-    ## make counties a vector based on input variable
-    munis <- input$plot_muni
-    
-    plot_df <- inc_df %>%
-      filter(Region %in% munis)
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
-                                            "Widowed_Pct", "Divorced_Pct"),
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
-    
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_Pct")
-    
-    g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
-    
-    ## this outputs the google data to be used in the UI to create the dataframe
-    list(
-      data = googleDataTable(g), options = list(
-        title = paste("Marital Status Statistics for", munis)))
-  })
+#     ## put data into form that googleCharts understands (this unmelts the dataframe)
+#     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
+#                            measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
+#                                             "Widowed_Pct", "Divorced_Pct"),
+#                            variable.name = "Marital_Status", value.name = "Population_Pct")
+#     
+#     g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
+#                value.var = "Population_Pct")
+#     
+#     g$Marital_Status <- gsub("_", " ", g$Marital_Status)
+#     g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
+#     
+#     ## this outputs the google data to be used in the UI to create the dataframe
+#     list(
+#       data=googleDataTable(g))
+#   })
+#   
+#   ## create the plot of the MA data
+#   output$plot_MA <- reactive({
+#     ## make reactive dataframe into regular dataframe
+#     inc_df <- inc_df()
+#     
+#     ## make counties a vector based on input variable
+#     munis <- "MA"
+#     
+#     plot_df <- inc_df %>%
+#       filter(Region %in% munis)
+#     
+#     ## put data into form that googleCharts understands (this unmelts the dataframe)
+#     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
+#                            measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
+#                                             "Widowed_Pct", "Divorced_Pct"),
+#                            variable.name = "Marital_Status", value.name = "Population_Pct")
+#     
+#     g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
+#                value.var = "Population_Pct")
+#     
+#     g$Marital_Status <- gsub("_", " ", g$Marital_Status)
+#     g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
+#     
+#     ## this outputs the google data to be used in the UI to create the dataframe
+#     list(
+#       data=googleDataTable(g))
+#   })
+#   
+#   ## create the plot of the County MA data
+#   output$plot_county <- reactive({
+#     ## make reactive dataframe into regular dataframe
+#     inc_df <- inc_df()
+#     
+#     ## find the county of the municipal
+#     county <- inc_df$County[which(inc_df$Municipal==input$plot_muni)]
+#     ## make counties a vector based on input variable
+#     munis <- inc_df$Region[match(county, inc_df$Region)]
+#     
+#     plot_df <- inc_df %>%
+#       filter(Region %in% munis)
+#     
+#     ## put data into form that googleCharts understands (this unmelts the dataframe)
+#     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
+#                            measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
+#                                             "Widowed_Pct", "Divorced_Pct"),
+#                            variable.name = "Marital_Status", value.name = "Population_Pct")
+#     
+#     g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
+#                value.var = "Population_Pct")
+#     
+#     g$Marital_Status <- gsub("_", " ", g$Marital_Status)
+#     g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
+#     
+#     ## this outputs the google data to be used in the UI to create the dataframe
+#     list(
+#       data = googleDataTable(g), options = list(
+#         title = paste("Marital Status Statisics for", munis[1])))
+#   })
+#   
+#   ## create the plot of the MA data
+#   output$plot_muni <- reactive({
+#     ## make reactive dataframe into regular dataframe
+#     inc_df <- inc_df()
+#     
+#     ## make counties a vector based on input variable
+#     munis <- input$plot_muni
+#     
+#     plot_df <- inc_df %>%
+#       filter(Region %in% munis)
+#     
+#     ## put data into form that googleCharts understands (this unmelts the dataframe)
+#     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
+#                            measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
+#                                             "Widowed_Pct", "Divorced_Pct"),
+#                            variable.name = "Marital_Status", value.name = "Population_Pct")
+#     
+#     g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
+#                value.var = "Population_Pct")
+#     
+#     g$Marital_Status <- gsub("_", " ", g$Marital_Status)
+#     g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
+#     
+#     ## this outputs the google data to be used in the UI to create the dataframe
+#     list(
+#       data = googleDataTable(g), options = list(
+#         title = paste("Marital Status Statistics for", munis)))
+#   })
   
 
-#################################### MAP CREATION ####################
+#####################################MAP CREATION##############
 
   ## set map colors
   map_dat <- reactive({
@@ -184,7 +184,7 @@ shinyServer(function(input, output, session) {
     
     ## take US, MA, and counties out of map_dat
     map_dat <- inc_df %>%
-      filter(!is.na(Municipal), Gender == input$map_gender)
+      filter(!is.na(Municipal))
     
     ## assign colors to each entry in the data frame
     color <- as.integer(cut2(map_dat[,input$var],cuts=cuts))
@@ -196,10 +196,9 @@ shinyServer(function(input, output, session) {
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                             Region = missing_munis, Gender = input$map_gender, 
-                             Five_Year_Range = input$year, Population = NA, Never_Married_Pct = NA,
-                             Married_Pct = NA, Separated_Pct = NA, Widowed_Pct = NA, 
-                             Divorced_Pct = NA, color=length(map_colors), opacity = 0)
+                             Region = missing_munis, Five_Year_Range = input$year, 
+                             Median_Household_Income = NA, Margin_Error_Median = NA,
+                             color=length(map_colors), opacity = 0)
     
     # combine data subset with missing counties data
     map_dat <- rbind.data.frame(map_dat, missing_df)

@@ -19,14 +19,13 @@ require(shiny)
 require(googleCharts)
 require(leaflet)
 require(RJSONIO)
+require(rCharts)
 
 ## load map data
 MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted Income status data
-
-##### Using marital status data to run the app for the time being
 ## -1 eliminates first column [rows,columns]
 inc_data <- read.csv(file="incomedata.csv")[,-1]
 
@@ -48,7 +47,7 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% mar_data$Region)
+idx_leftovers <- which(!MA_municipals_map %in% inc_data$Region)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
@@ -59,7 +58,7 @@ MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
  MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
-idx_leftovers2 <- which(!MA_municipals %in% mar_data$Region)
+idx_leftovers2 <- which(!MA_municipals %in% inc_data$Region)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
@@ -71,7 +70,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
   min = 0,
-  max = 100
+  max = max(inc_data$Median_Household_Income)
 )
 
 ## Colors for a single-year legend
@@ -81,7 +80,7 @@ map_colors <- c(paint_brush(n=4), "#999999")
 ## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-max_val <- 100
+max_val <- max(inc_data$Median_Household_Income)
 min_val <- 0
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
@@ -287,7 +286,7 @@ MA_plot_options <- googleColumnChart("plot_MA", width="100%", height="475px", op
  ## set fonts
  fontName = "Source Sans Pro",
  fontSize = font_size,
- title = "Marital Status Statistics for Massachusetts",
+ title = "Median Household Income Statistics for Massachusetts",
  ## set axis titles, ticks, fonts, and ranges
  hAxis = list(
   title = "",
