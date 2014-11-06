@@ -1,29 +1,29 @@
 #######################################
-## Title: Income server.R          ##
+## Title: Income server.R            ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/5/2014         ##
-## Date Modified: 11/5/2014         ##
+## Date Created:  11/5/2014          ##
+## Date Modified: 11/5/2014          ##
 #######################################
 
 shinyServer(function(input, output, session) {
   ## mar_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
-  mar_df <- reactive({
+  inc_df <- reactive({
     ## Filter the data by the chosen Five Year Range 
-    mar_df <- mar_data %>%
+    inc_df <- inc_data %>%
       filter(Five_Year_Range == input$year) %>%
       select(1:4, Gender, Five_Year_Range, Population, Never_Married_Pct, Married_Pct,
              Separated_Pct, Widowed_Pct, Divorced_Pct) %>%
       arrange(Region, Gender)
     ## Output reactive dataframe
-    mar_df    
+    inc_df    
   })
   
   ## Create summary table
   output$summary <- renderDataTable({
     ## Make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    inc_df <- inc_df()
     
     ## make gender a vector based on input variable
     if(!is.null(input$sum_gender))
@@ -53,26 +53,26 @@ shinyServer(function(input, output, session) {
     }
     
     ## create a dataframe consisting only of counties in vector
-    mar_df <- mar_df %>%
+    inc_df <- inc_df %>%
       filter(Gender %in% genders, Region %in% munis) %>%
-      select(4:length(colnames(mar_df)))
+      select(4:length(colnames(inc_df)))
     
-    colnames(mar_df) <- gsub("_", " ", colnames(mar_df))
-    colnames(mar_df) <- gsub("Pct", "%", colnames(mar_df))
+    colnames(inc_df) <- gsub("_", " ", colnames(inc_df))
+    colnames(inc_df) <- gsub("Pct", "%", colnames(inc_df))
     
-    return(mar_df)
+    return(inc_df)
   }, options=list(bFilter=FALSE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
   ## create the plot of the data
   ## for the Google charts plot
   output$plot_US <- reactive({
     ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    inc_df <- inc_df()
     
     ## make counties a vector based on input variable
     munis <- "United States"
     
-    plot_df <- mar_df %>%
+    plot_df <- inc_df %>%
       filter(Region %in% munis)
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
@@ -95,12 +95,12 @@ shinyServer(function(input, output, session) {
   ## create the plot of the MA data
   output$plot_MA <- reactive({
     ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    inc_df <- inc_df()
     
     ## make counties a vector based on input variable
     munis <- "MA"
     
-    plot_df <- mar_df %>%
+    plot_df <- inc_df %>%
       filter(Region %in% munis)
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
@@ -123,14 +123,14 @@ shinyServer(function(input, output, session) {
   ## create the plot of the MA data
   output$plot_county <- reactive({
     ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    inc_df <- inc_df()
     
     ## find the county of the municipal
-    county <- mar_df$County[which(mar_df$Municipal==input$plot_muni)]
+    county <- inc_df$County[which(inc_df$Municipal==input$plot_muni)]
     ## make counties a vector based on input variable
-    munis <- mar_df$Region[match(county, mar_df$Region)]
+    munis <- inc_df$Region[match(county, inc_df$Region)]
     
-    plot_df <- mar_df %>%
+    plot_df <- inc_df %>%
       filter(Region %in% munis)
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
@@ -154,12 +154,12 @@ shinyServer(function(input, output, session) {
   ## create the plot of the MA data
   output$plot_muni <- reactive({
     ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    inc_df <- inc_df()
     
     ## make counties a vector based on input variable
     munis <- input$plot_muni
     
-    plot_df <- mar_df %>%
+    plot_df <- inc_df %>%
       filter(Region %in% munis)
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
@@ -186,10 +186,10 @@ shinyServer(function(input, output, session) {
     #browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    inc_df <- inc_df()
     
     ## take US, MA, and counties out of map_dat
-    map_dat <- mar_df %>%
+    map_dat <- inc_df %>%
       filter(!is.na(Municipal), Gender == input$map_gender)
     
     ## assign colors to each entry in the data frame

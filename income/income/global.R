@@ -28,7 +28,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ##### Using marital status data to run the app for the time being
 ## -1 eliminates first column [rows,columns]
-mar_data <- read.csv(file="marriagedata.csv")[,-1]
+inc_data <- read.csv(file="incomedata.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
