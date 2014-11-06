@@ -111,7 +111,7 @@ shinyServer(function(input, output, session) {
       data=googleDataTable(g))
   })
   
-  ## create the plot of the MA data
+  ## create the plot of the County MA data
   output$plot_county <- reactive({
     ## make reactive dataframe into regular dataframe
     inc_df <- inc_df()
@@ -171,6 +171,9 @@ shinyServer(function(input, output, session) {
         title = paste("Marital Status Statistics for", munis)))
   })
   
+
+#################################### MAP CREATION ####################
+
   ## set map colors
   map_dat <- reactive({
     
