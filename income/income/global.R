@@ -152,16 +152,16 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in seeing income data.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in viewing median household income data.'))),
   tags$br(),
   tags$ul(
 #       tags$li('View rates by: male or female (or both by leaving this selection blank)'),
 #       tags$br(),
-      tags$li('Select one or multiple municipalities; leave blank for counties.'),
+      tags$li('Select one or multiple municipalities; for counties leave blank.'),
       tags$br(),
       tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box'),
       tags$br(),
-      tags$li(p(strong('Please note that all statistics are 5-year averages')))
+      tags$li(p(strong('Please note that all statistics are 5-year medians')))
             
   )
   
@@ -174,10 +174,10 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select a municipality to analyze.')),
+p(strong('Please select a municipality to analyze median house hold income  accross Municipatlity, County, Massachusetts, and the US.')),
            tags$br(),
   tags$ul(
-    tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages/(medians?)')
+    tags$li('For a five-year period, compare the median house hold income for the municipality of your choice to the national, state, and county median.')
     ))
           
   tags$hr()
@@ -207,7 +207,7 @@ info_side_text <- conditionalPanel(
   tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Income Status App"), "displays the five-year(?) median incomes for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Income Status App"), "displays the five-year  median incomes for Massachusetts by municipality.",
   p(strong("Toggle between tabs to visualize the data differently.")),
     tags$br(),
     tags$ul(
