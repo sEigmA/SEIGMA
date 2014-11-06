@@ -199,11 +199,11 @@ shinyUI(fluidPage(
                    tags$br(),
                    ##tags$ul and tags$li are to create bullet points using HTML
                    tags$ul(
-                     tags$li(em("Summary"), "shows the source data in a table format."),
-                     tags$li(em("Plot"), "shows crude suicide rate over time per 100,000 in each county population, Massachusetts average and U.S. average."),
-                     tags$li(em("Map"), "visually displays crude suicide rate comparatively by county."),
-                     tags$li(em("More Info"), "lists descriptions for the variables of interest, including formulas and calculations.")
-                   ))),
+                     tags$li(p(strong("Summary"), "shows the source data in a table format.")),
+                     tags$li(p(strong("Plot"), "shows crude suicide rate over time per 100,000 in each county population, Massachusetts average and U.S. average.")),
+                     tags$li(p(strong("Map"), "visually displays crude suicide rate comparatively by county.")),
+                     tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations.")
+                   )))),
         
         ## summary tab
         tabPanel("Summary", 
