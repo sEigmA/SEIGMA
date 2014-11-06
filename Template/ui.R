@@ -1,5 +1,5 @@
 #######################################
-## Title: Suicide ui.R               ##
+## Title: Template ui.R               ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 

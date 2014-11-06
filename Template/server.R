@@ -1,5 +1,5 @@
 #######################################
-## Title: Suicide server.R           ##
+## Title: Template server.R           ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
