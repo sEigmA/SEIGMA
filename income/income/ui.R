@@ -190,11 +190,11 @@ bootstrapPage(mainPanel(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                  p(strong("Median Household Income (inflation-adjusted dollars"),
-                 " - Average annual median household income over a five year period for each municipality"), 
+                  p(strong("Median Household Income  (MHI)"),
+                 " :Average annual median household income in inflation-adjusted dollars over a five year period for each municipality"), 
                   tags$br(),
 
-                p(strong("Median Household Income = Average median household income yearly increase over a five year period/ total population by region*100,000"),align="center"), 
+                p(strong("MHI Over Five Years = (Average MHI Yearly Increase/ Tot. Pop. by Region)*100,000"),align="center"), 
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
