@@ -157,7 +157,7 @@ summary_side_text <- conditionalPanel(
   tags$ul(
 #       tags$li('View rates by: male or female (or both by leaving this selection blank)'),
 #       tags$br(),
-      tags$li('Select one or multiple municipalities; for counties leave blank.'),
+      tags$li('Select one or multiple municipalities.'),
       tags$br(),
       tags$li('To compare median data to the Massachusetts median or US median, select the corresponding check box'),
       tags$br(),
@@ -175,7 +175,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select a municipality to analyze median household income  accross municipatlity, county, Massachusetts, and the US.')),
+p(strong('Please select a municipality to analyze median household income  across municipatlity, county, Massachusetts, and the US.')),
            tags$br(),
   tags$ul(
     tags$li('For a five-year period, compare the median household income for the municipality of your choice to the national, state, and county median.')
@@ -213,7 +213,7 @@ about_main_text <- p(strong("The SEIGMA Income Status App"), "displays the five-
     tags$ul(
       tags$li(p(strong("Summary"), "shows source data in table format.")),
       tags$li(p(strong("Plot"), "compares any municipality's median to county, state, and national medians.")),
-      tags$li(p(strong("Map"), "visually displays income status comparatively by municipality")),
+      tags$li(p(strong("Map"), "visually displaysmedian household income comparatively by municipality")),
       tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including, formulae and calculations"))
   )
 )
@@ -225,8 +225,7 @@ plot_main_text <- p(strong("Variable Summary:"),
                     tags$br(),
                     p(strong("Median Household income"),
                     " - Average annual median household income over a five year period for each municipality."), 
-                    tags$br(),
-                    p(strong(" Median Household Income= Average median household income yearly increase over a five year period/ total population by region*100,000")))
+        
               
 
 font_size <- 14
