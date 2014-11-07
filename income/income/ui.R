@@ -108,14 +108,57 @@ bootstrapPage(mainPanel(
                  ## make chart title here (otherwise not centered)
                  h4("Average Annual Median Household Income (Inflation-Adjusted Dollars) of Population by Region Over Five Year Period", align="center"),
                  ## make a row to put two charts in
-                 div(class = "row",
-                     div(muni_plot_options, class = "span6"),
-                     div(county_plot_options, class = "span6")
-                     ),
-                 div(class = "row",
-                     div(MA_plot_options, class = "span6"),
-                     div(US_plot_options, class = "span6")
-                 ),
+                 
+                 googleColumnChart("plot", width="100%", height="475px", options = list(
+                   ## set fonts
+                   fontName = "Source Sans Pro",
+                   fontSize = font_size,
+                   title = "Income Status Statistics for the United States",
+                   ## set axis titles, ticks, fonts, and ranges
+                   hAxis = list(
+                     title = "",
+                     textStyle = list(
+                       fontSize = font_size),
+                     titleTextStyle = list(
+                       fontSize = font_size+2,
+                       bold = TRUE,
+                       italic = FALSE)
+                   ),
+                   vAxis = list(
+                     title = "% of Population",
+                     viewWindow = ylim,
+                     textStyle = list(
+                       fontSize = font_size),
+                     titleTextStyle = list(
+                       fontSize = font_size+2,
+                       bold = TRUE,
+                       italic = FALSE)
+                   ),
+                   
+                   ## set legend fonts
+                   legend = list(
+                     position = "in"),
+                   
+                   ## set chart area padding
+                   chartArea = list(
+                     top = 50, left = 75,
+                     height = "75%", width = "70%"
+                   ),
+                   
+                   ## set colors
+                   colors = cbbPalette,
+                   
+                   ## set point size
+                   pointSize = 3,
+                   
+                   ## set tooltip font size
+                   ## Hover text font stuff
+                   tooltip = list(
+                     textStyle = list(
+                       fontSize = font_size
+                     )
+                   )
+                 )),
                  ## add text about the variables
 #                  plot_main_text,
                  value="plot"),

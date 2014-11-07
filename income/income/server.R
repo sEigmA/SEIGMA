@@ -56,15 +56,25 @@ shinyServer(function(input, output, session) {
   
   ## create the plot of the data
   ## for the Google charts plot
-  output$plot_US <- reactive({
+  output$plot <- reactive({
+#     browser()
     ## make reactive dataframe into regular dataframe
     inc_df <- inc_df()
     
+    county <- as.character(inc_df$County[which(inc_df$Municipal==input$plot_muni)])
+    
     ## make counties a vector based on input variable
-    munis <- "United States"
+    munis <- c(input$plot_muni, county, "MA", "United States")
     
     plot_df <- inc_df %>%
-      filter(Region %in% munis)
+      filter(Region %in% munis) %>%
+      select(Region, Median_Household_Income)
+    
+    g <- plot_df
+    
+        list(
+          data=googleDataTable(g))
+    
     
 #     ## put data into form that googleCharts understands (this unmelts the dataframe)
 #     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
