@@ -187,7 +187,7 @@ shinyServer(function(input, output, session) {
       filter(!is.na(Municipal))
     
     ## assign colors to each entry in the data frame
-    color <- as.integer(cut2(map_dat[,input$var],cuts=cuts))
+    color <- as.integer(cut2(map_dat[,"Median_Household_Income"],cuts=cuts))
     map_dat <- cbind.data.frame(map_dat, color)
     map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors), 
                             map_dat$color)
@@ -263,12 +263,12 @@ shinyServer(function(input, output, session) {
     isolate({
       ## Duplicate MAmap to x
       x <- MA_map_muni
-      
+      browser()
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a county
-        x$features[[i]]$properties[input$var] <- 
-          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), input$var]
+        x$features[[i]]$properties["Median_Houshold_Income"] <- 
+          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Median_Houshold_Income"]
         ## Style properties
         x$features[[i]]$properties$style <- list(
           fill=TRUE, 
@@ -309,9 +309,7 @@ shinyServer(function(input, output, session) {
   output$details <- renderText({
     
     muni_name <- values$selectedFeature$NAMELSAD10
-    muni_value <- values$selectedFeature[input$var]
-    var_select <- gsub("_", " ", input$var)
-    var_select <- gsub("Pct", "", var_select)
+    muni_value <- values$selectedFeature["Median_Household_Income"]
     
     ## Before a county is clicked, display a message
     if(is.null(values$selectedFeature)){
@@ -322,14 +320,14 @@ shinyServer(function(input, output, session) {
     }
     
     ## If clicked county has no crude rate, display a message
-    if(is.null(values$selectedFeature[input$var])){
+    if(is.null(values$selectedFeature["Median_Household_Income"])){
       return(as.character(tags$div(
-        tags$h5(input$gender, var_select, "% in ", muni_name, "is not available for this timespan"))))
+        tags$h5("Median Household Income in ", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4(input$map_gender, var_select, "% in ", muni_name, " for ", input$year),
-      tags$h5(muni_value, "%")
+      tags$h4("Median Household Income in ", muni_name, " for ", input$year),
+      tags$h5("$",muni_value)
     ))
   })
   
