@@ -155,7 +155,7 @@ summary_side_text <- conditionalPanel(
   tags$ul(
       tags$li('View rates by: male or female (or both by leaving this selection blank)'),
       tags$br(),
-      tags$li('Select one or multiple municipalities; leave blank for counties.'),
+      tags$li('Select one or multiple municipalities.'),
       tags$br(),
       tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box'),
       tags$br(),
