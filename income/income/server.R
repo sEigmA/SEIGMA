@@ -263,12 +263,12 @@ shinyServer(function(input, output, session) {
     isolate({
       ## Duplicate MAmap to x
       x <- MA_map_muni
-      browser()
+ #     browser()
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a county
-        x$features[[i]]$properties["Median_Houshold_Income"] <- 
-          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Median_Houshold_Income"]
+        x$features[[i]]$properties["Median_Household_Income"] <- 
+          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Median_Household_Income"]
         ## Style properties
         x$features[[i]]$properties$style <- list(
           fill=TRUE, 
