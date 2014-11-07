@@ -106,7 +106,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Average Annual Median Household Income (inflation-adjusted dollars) of Population by Region Over Five Year Period", align="center"),
+                 h4("Average Annual Median Household Income (Inflation-Adjusted Dollars) of Population by Region Over Five Year Period", align="center"),
                  ## make a row to put two charts in
                  div(class = "row",
                      div(muni_plot_options, class = "span6"),
