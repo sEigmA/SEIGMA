@@ -47,4 +47,9 @@ inc_data3 <- read.csv("incomedata.csv")[,-c(1)]
 
 colnames(inc_data3)[c(5,7:8)] <- c("Five_Year_Range", "Median_Household_Income", "Margin_Error_Median")
 
-write.csv(inc_data3, file="income/incomedata.csv")
+#Organizing Region
+inc_data4 <- inc_data3[order(inc_data3$Region),]
+inc_data4 <- inc_data4[c(1:684, 689:1253, 1260:1468, 685:688, 1254:1259),]
+
+
+write.csv(inc_data4, file="income/incomedata.csv")
