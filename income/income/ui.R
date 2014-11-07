@@ -125,7 +125,7 @@ bootstrapPage(mainPanel(
                        italic = FALSE)
                    ),
                    vAxis = list(
-                     title = "Median Household Income (Inflation-Adjusted Dollars)",
+                     title = "Median Household Income",
                      viewWindow = ylim,
                      textStyle = list(
                        fontSize = font_size),
@@ -137,7 +137,7 @@ bootstrapPage(mainPanel(
                    
                    ## set legend fonts
                    legend = list(
-                     position = "right"),
+                     position = "none"),
                    
                    ## set chart area padding
                    chartArea = list(
@@ -149,7 +149,7 @@ bootstrapPage(mainPanel(
                      role = c("domain", "data", "style")),
                    
                    ## set colors
-                   colors = cbbPalette[2:5],
+                   colors = cbbPalette[4:8],
                    
                    ## set point size
                    pointSize = 3,
