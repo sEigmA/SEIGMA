@@ -43,7 +43,7 @@ shinyServer(function(input, output, session) {
         munis <- c("MA", munis) ## US only ## MA only
       }
     }
-    
+    #     browser( )
     ## create a dataframe consisting only of counties in vector
     inc_df <- inc_df %>%
       filter(Region %in% munis) %>%
@@ -51,10 +51,11 @@ shinyServer(function(input, output, session) {
     
     colnames(inc_df) <- gsub("_", " ", colnames(inc_df))
     
-    
+    inc_df[,3] <- prettyNum(inc_df[,3], big.mark=",")
+    inc_df[,4] <- prettyNum(inc_df[,4], big.mark=",")
     
     return(inc_df)
-  }, options = list(searching = FALSE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
+  }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
   ## create the plot of the data
   ## for the Google charts plot
@@ -76,13 +77,13 @@ shinyServer(function(input, output, session) {
     plot_df <- inc_df[muni_index,] %>%
       select(Region, Median_Household_Income)
     
-       list(
-          data=googleDataTable(plot_df))
-   })
+    list(
+      data=googleDataTable(plot_df))
+  })
   
-
-#####################################MAP CREATION##############
-
+  
+  #####################################MAP CREATION##############
+  
   ## set map colors
   map_dat <- reactive({
     
@@ -172,7 +173,7 @@ shinyServer(function(input, output, session) {
     isolate({
       ## Duplicate MAmap to x
       x <- MA_map_muni
- #     browser()
+      #     browser()
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a county

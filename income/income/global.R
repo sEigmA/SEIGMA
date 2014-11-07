@@ -208,12 +208,12 @@ info_side_text <- conditionalPanel(
   tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Income Status App"), "displays the five-year median incomes for Massachusetts by municipality.Toggle between tabs to visualize the data differently.",
+about_main_text <- p(strong("The SEIGMA Income Status App"), "displays the five-year median incomes for Massachusetts by municipality. Toggle between tabs to visualize the data differently.",
     tags$br(),
     tags$ul(
       tags$li(p(strong("Summary"), "shows source data in table format.")),
       tags$li(p(strong("Plot"), "compares any municipality's median to county, state, and national medians.")),
-      tags$li(p(strong("Map"), "visually displaysmedian household income comparatively by municipality")),
+      tags$li(p(strong("Map"), "visually displays median household income comparatively by municipality")),
       tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including, formulae and calculations"))
   )
 )
