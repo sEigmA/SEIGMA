@@ -206,7 +206,8 @@ bootstrapPage(mainPanel(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
-                           tags$td("$", round(from), "to", "$", round(to))
+                           tags$td("$", prettyNum(round(from), big.mark = ","), "to", "$", 
+                                   prettyNum(round(to), big.mark = ","), align = "right")
                          )
                        }, 
                        colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
