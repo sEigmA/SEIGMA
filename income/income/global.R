@@ -158,25 +158,26 @@ summary_side_text <- conditionalPanel(
 #       tags$br(),
       tags$li('Select one or multiple municipalities; for counties leave blank.'),
       tags$br(),
-      tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box'),
+      tags$li('To compare data to the Massachusetts median or US median select the corresponding check box'),
       tags$br(),
       tags$li(p(strong('Please note that all statistics are 5-year medians')))
             
   )
+)
   
   
   ## Creates horizontal line
   ##tags$hr()
-)
+
 
 ## Same concept
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select a municipality to analyze median house hold income  accross Municipatlity, County, Massachusetts, and the US.')),
+p(strong('Please select a municipality to analyze median household income  accross municipatlity, county, Massachusetts, and the US.')),
            tags$br(),
   tags$ul(
-    tags$li('For a five-year period, compare the median house hold income for the municipality of your choice to the national, state, and county median.')
+    tags$li('For a five-year period, compare the median household income for the municipality of your choice to the national, state, and county median.')
     ))
           
   tags$hr()
@@ -188,7 +189,7 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please click on "Generate Map" to get started'))),
   tags$br(),
   tags$ul(
-    tags$li('Clicking on a municipality will display the variable of interest for the five-year range that you selected.')
+    tags$li('Clicking on a municipality will display the median house hold income for the five-year range that you selected.')
     ))
 
   tags$hr()
@@ -196,38 +197,36 @@ map_side_text <- conditionalPanel(
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))),
+  helpText(p(strong('This tab contains more detailed information regarding the variables of intrest, including:'))),
            tags$br(),
   tags$ul(
     tags$li('Formulae'),
-    tags$li('Calculations to derive the five-year (medians?).')
+    tags$li('Calculations to derive the five-year median.')
       ))
            
   tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Income Status App"), "displays the five-year  median incomes for Massachusetts by municipality.",
-  p(strong("Toggle between tabs to visualize the data differently.")),
+about_main_text <- p(strong("The SEIGMA Income Status App"), "displays the five-year median incomes for Massachusetts by municipality.Toggle between tabs to visualize the data differently.",
     tags$br(),
     tags$ul(
-      tags$li(p(strong("Summary"), "shows source data in tabular format.")),
-      tags$li(p(strong("Plot"), "compares a municipality to county, state, and national averages.")),
-      tags$li(p(strong("Map"), "visually displays any of the income status comparatively by municipality")),
-      tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."))
+      tags$li(p(strong("Summary"), "shows source data in table format.")),
+      tags$li(p(strong("Plot"), "compares any municipality to county, state, and national medians.")),
+      tags$li(p(strong("Map"), "visually displays income status comparatively by municipality")),
+      tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including, formuals and calculations"))
+  )
 )
-)
+tags$hr()
 
 
 plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
-                    strong("Suicides"),
-                    " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10.", 
+                    p(strong("Median Household income"),
+                    " - Average annual median household income over a five year period for each municipality."), 
                     tags$br(),
-                    strong("Crude Rate"), 
-                    " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:",
-                    tags$br(),
-                    strong("Crude Rate = Count / Population * 100,000", align="center"))
+                    p(strong(" Median Household Income= Average median household income yearly increase over a five year period/ total population by region*100,000", align= "center")),
+              
 
 font_size <- 14
 
