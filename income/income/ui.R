@@ -211,26 +211,14 @@ bootstrapPage(mainPanel(
                          )
                        }, 
                        colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE)
+                       SIMPLIFY=FALSE),
+                       tags$td(tags$div(
+                         style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                       )),
+                       tags$td("Data not available", align = "right")
                      )
                    )),
                  
-                 ## Data not available box
-                 conditionalPanel(
-                   condition="input.action != 0",
-                 absolutePanel(
-                   right = 350, top = 600, draggable=FALSE, style = "", 
-                   class = "floater",
-                   tags$table(
-                     tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not available")
-                       )
-                    )
-                 )),
-   
 #                plot_main_text,
                  value="map"),
         

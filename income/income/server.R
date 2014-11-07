@@ -87,7 +87,6 @@ shinyServer(function(input, output, session) {
   ## set map colors
   map_dat <- reactive({
     
-    #browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
     inc_df <- inc_df()
@@ -110,8 +109,15 @@ shinyServer(function(input, output, session) {
                              Median_Household_Income = NA, Margin_Error_Median = NA,
                              color=length(map_colors), opacity = 0)
     
+    na_munis <- setdiff(MA_municipals_map, map_dat$Region)
+    na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
+                             Region = na_munis, Five_Year_Range = input$year, 
+                             Median_Household_Income = NA, Margin_Error_Median = NA,
+                             color=length(map_colors), opacity = 0.7)
+    
+    
     # combine data subset with missing counties data
-    map_dat <- rbind.data.frame(map_dat, missing_df)
+    map_dat <- rbind.data.frame(map_dat, missing_df, na_df)
     map_dat$color <- map_colors[map_dat$color]
     return(map_dat)
   })
@@ -225,12 +231,12 @@ shinyServer(function(input, output, session) {
           h4("Click on a town or city"))
       )))
     }
-    
+#     browser()
     muni_name <- values$selectedFeature$NAMELSAD10
     muni_value <- prettyNum(values$selectedFeature["Median_Household_Income"], big.mark = ",")
     
     ## If clicked county has no crude rate, display a message
-    if(is.null(values$selectedFeature["Median_Household_Income"])){
+    if(muni_value == "NULL"){
       return(as.character(tags$div(
         tags$h5("Median Household Income in ", muni_name, "is not available for this timespan"))))
     }
