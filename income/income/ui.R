@@ -106,7 +106,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Average Annual Median Household Income (inflation-adjusted dollars) of Population by Region Over Five Year Period", align="center"),
+                 h4("Average Annual Median Household Income (Inflation-Adjusted Dollars) of Population by Region Over Five Year Period", align="center"),
                  ## make a row to put two charts in
                  div(class = "row",
                      div(muni_plot_options, class = "span6"),
@@ -184,17 +184,17 @@ bootstrapPage(mainPanel(
                     )
                  )),
    
-#                  plot_main_text,
+#                plot_main_text,
                  value="map"),
         
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
                   p(strong("Median Household Income (inflation-adjusted dollars"),
-                 " - text here"), 
+                 " - Average annual median household income over a five year period for each municipality"), 
                   tags$br(),
 
-                p(strong("Median Household Income = ******"),align="center"), 
+                p(strong("Median Household Income = Average median household income yearly increase over a five year period/ total population by region*100,000"),align="center"), 
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),

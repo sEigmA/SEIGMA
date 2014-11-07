@@ -158,7 +158,7 @@ summary_side_text <- conditionalPanel(
 #       tags$br(),
       tags$li('Select one or multiple municipalities; for counties leave blank.'),
       tags$br(),
-      tags$li('To compare data to the Massachusetts median or US median select the corresponding check box'),
+      tags$li('To compare median data to the Massachusetts median or US median, select the corresponding check box'),
       tags$br(),
       tags$li(p(strong('Please note that all statistics are 5-year medians')))
             
@@ -211,9 +211,9 @@ about_main_text <- p(strong("The SEIGMA Income Status App"), "displays the five-
     tags$br(),
     tags$ul(
       tags$li(p(strong("Summary"), "shows source data in table format.")),
-      tags$li(p(strong("Plot"), "compares any municipality to county, state, and national medians.")),
+      tags$li(p(strong("Plot"), "compares any municipality's median to county, state, and national medians.")),
       tags$li(p(strong("Map"), "visually displays income status comparatively by municipality")),
-      tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including, formuals and calculations"))
+      tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including, formulae and calculations"))
   )
 )
 tags$hr()
@@ -225,7 +225,7 @@ plot_main_text <- p(strong("Variable Summary:"),
                     p(strong("Median Household income"),
                     " - Average annual median household income over a five year period for each municipality."), 
                     tags$br(),
-                    p(strong(" Median Household Income= Average median household income yearly increase over a five year period/ total population by region*100,000", align= "center")))
+                    p(strong(" Median Household Income= Average median household income yearly increase over a five year period/ total population by region*100,000")))
               
 
 font_size <- 14
