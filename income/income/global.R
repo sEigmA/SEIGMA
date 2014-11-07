@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  11/5/2014          ##
-## Date Modified: 11/6/2014          ##
+## Date Modified: 11/7/2014          ##
 #######################################
 
 ##First file run - Environment Setup
@@ -20,6 +20,7 @@ require(googleCharts)
 require(leaflet)
 require(RJSONIO)
 require(rCharts)
+require(tidyr)
 
 ## load map data
 MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
