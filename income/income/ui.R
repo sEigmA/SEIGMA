@@ -113,7 +113,7 @@ bootstrapPage(mainPanel(
                    ## set fonts
                    fontName = "Source Sans Pro",
                    fontSize = font_size,
-                   title = "Income Status Statistics for the United States",
+                   title = "",
                    ## set axis titles, ticks, fonts, and ranges
                    hAxis = list(
                      title = "",
@@ -125,7 +125,7 @@ bootstrapPage(mainPanel(
                        italic = FALSE)
                    ),
                    vAxis = list(
-                     title = "% of Population",
+                     title = "Median Household Income (Inflation-Adjusted Dollars)",
                      viewWindow = ylim,
                      textStyle = list(
                        fontSize = font_size),
@@ -137,7 +137,7 @@ bootstrapPage(mainPanel(
                    
                    ## set legend fonts
                    legend = list(
-                     position = "in"),
+                     position = "right"),
                    
                    ## set chart area padding
                    chartArea = list(
@@ -145,8 +145,11 @@ bootstrapPage(mainPanel(
                      height = "75%", width = "70%"
                    ),
                    
+                   domain = list(
+                     role = c("domain", "data", "style")),
+                   
                    ## set colors
-                   colors = cbbPalette,
+                   colors = cbbPalette[2:5],
                    
                    ## set point size
                    pointSize = 3,

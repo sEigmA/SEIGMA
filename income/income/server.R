@@ -68,9 +68,12 @@ shinyServer(function(input, output, session) {
     
     plot_df <- inc_df %>%
       filter(Region %in% munis) %>%
-      select(Region, Median_Household_Income)
+      select(Region, Five_Year_Range, Median_Household_Income)
     
-    g <- plot_df
+#     browser()
+    g <- spread(plot_df, Region, Median_Household_Income)
+    
+#     g <- cbind.data.frame(Region = munis, g)
     
         list(
           data=googleDataTable(g))
