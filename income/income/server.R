@@ -169,7 +169,7 @@ shinyServer(function(input, output, session) {
 #     list(
 #       data = googleDataTable(g), options = list(
 #         title = paste("Marital Status Statistics for", munis)))
-#   })
+   })
   
 
 #####################################MAP CREATION##############
