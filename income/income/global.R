@@ -225,3 +225,5 @@ plot_main_text <- p(strong("Variable Summary:"),
                     tags$br(),
                     p(strong("Median Household income"),
                     " - Average annual median household income over a five year period for each municipality."))
+
+font_size <- 14
