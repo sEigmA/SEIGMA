@@ -33,7 +33,7 @@ shinyUI(fluidPage(
        condition="input.tabs == 'map'",
        selectInput("var", "Select Variable of Interest",
                    choices = list("Never Married" = "Never_Married_Pct", 
-                                  "Now Married Except Separated" = "Now_Married_Pct",
+                                  "Married" = "Married_Pct",
                                   "Separated" = "Separated_Pct",
                                   "Widowed" = "Widowed_Pct",
                                   "Divorced" = "Divorced_Pct"))
@@ -169,7 +169,7 @@ bootstrapPage(mainPanel(
                                  actionButton("action", "Generate Map")
                  )),
                  
-                 ## Single Year Legend
+                 ## Legend
                  conditionalPanel(
                    condition="input.action != 0",
                    absolutePanel(
@@ -182,29 +182,20 @@ bootstrapPage(mainPanel(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
-                           tags$td(round(from, 2), "to", round(to, 2))
+                           tags$td(prettyNum(round(from, 2)), "% to", 
+                                   prettyNum(round(to, 2)), "%", align = "right")
                          )
                        }, 
                        colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE)
-                     )
-                   )),
-                 
-                 ## Data not available box
-                 conditionalPanel(
-                   condition="input.action != 0",
-                 absolutePanel(
-                   right = 350, top = 600, draggable=FALSE, style = "", 
-                   class = "floater",
-                   tags$table(
-                     tags$tr(
+                       SIMPLIFY=FALSE),
+                       tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
                          )),
-                         tags$td("Data not available")
+                         tags$td("Data not available", align = "right")
                        )
-                    )
-                 )),
+                     )
+                   )),
    
 #                  plot_main_text,
                  value="map"),

@@ -73,9 +73,13 @@ shinyServer(function(input, output, session) {
     for(i in 1:length(munis)){
       muni_index[i] <- match(munis[i], inc_df$Region)
     }
-    
+#     browser()
     plot_df <- inc_df[muni_index,] %>%
       select(Region, Median_Household_Income)
+    
+    colnames(plot_df) <- gsub("_", " ", colnames(plot_df))
+    
+#     plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
     
     list(
       data=googleDataTable(plot_df))
