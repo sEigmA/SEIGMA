@@ -193,7 +193,7 @@ bootstrapPage(mainPanel(
                                  actionButton("action", "Generate Map")
                  )),
                  
-                 ## Single Year Legend
+                 ## Legend
                  conditionalPanel(
                    condition="input.action != 0",
                    absolutePanel(

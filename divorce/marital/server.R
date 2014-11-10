@@ -61,7 +61,7 @@ shinyServer(function(input, output, session) {
     colnames(mar_df) <- gsub("Pct", "%", colnames(mar_df))
     
     return(mar_df)
-  }, options=list(bFilter=FALSE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
+  }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
   ## create the plot of the data
   ## for the Google charts plot
