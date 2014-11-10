@@ -1,5 +1,5 @@
 #######################################
-## Title: Marriage ui.R              ##
+## Title: Marital ui.R              ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 

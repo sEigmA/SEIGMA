@@ -1,5 +1,5 @@
 #######################################
-## Title: Marriage global.R          ##
+## Title: Marital global.R          ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 

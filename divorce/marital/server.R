@@ -1,5 +1,5 @@
 #######################################
-## Title: Marriage server.R          ##
+## Title: Marital server.R          ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
@@ -315,11 +315,6 @@ shinyServer(function(input, output, session) {
   ##  This function is what creates info box
   output$details <- renderText({
     
-    muni_name <- values$selectedFeature$NAMELSAD10
-    muni_value <- values$selectedFeature[input$var]
-    var_select <- gsub("_", " ", input$var)
-    var_select <- gsub("Pct", "", var_select)
-    
     ## Before a county is clicked, display a message
     if(is.null(values$selectedFeature)){
       return(as.character(tags$div(
@@ -327,6 +322,11 @@ shinyServer(function(input, output, session) {
           h4("Click on a town or city"))
       )))
     }
+    
+    muni_name <- values$selectedFeature$NAMELSAD10
+    muni_value <- values$selectedFeature[input$var]
+    var_select <- gsub("_", " ", input$var)
+    var_select <- gsub("Pct", "", var_select)
     
     ## If clicked county has no crude rate, display a message
     if(is.null(values$selectedFeature[input$var])){
