@@ -76,7 +76,7 @@ shinyServer(function(input, output, session) {
                             "Crude Rate Standard Error")
     
     return(df2)
-  }, options=list(bFilter=FALSE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
+  }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, these make them pretty
   
   ## create the plot of the data
   ## for the Google charts plot

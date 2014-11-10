@@ -46,8 +46,8 @@ ylim <- list(
 
 
 ## Colors for a single-year legend
-spaint.brush <- colorRampPalette(colors=c("white", "red"))
-smap.colors <- c(spaint.brush(n=6), "#999999")
+spaint.brush <- colorRampPalette(colors=c("white", "red3"))
+smap.colors <- c(spaint.brush(n=5), "#999999")
 
 ## For a single year data, we have a series of crude rate (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
@@ -57,7 +57,8 @@ smin.val <- min(suidata$Crude.Rate, na.rm=TRUE)
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
+# scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
+scuts <- quantile(suidata$Crude.Rate, probs = seq(0, 1, length.out = length(smap.colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
@@ -72,7 +73,7 @@ scolorRanges <- data.frame(
 ## colors fade from one color to white to another color, with gray for NAs
 ## m-prefix = multiple years
 mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
-mmap.colors <- c(mpaint.brush(n=8), "#999999")
+mmap.colors <- c(mpaint.brush(n=6), "#999999")
 
 ## find max and min (crude suicide rates) values for each county
 bound <- suidata %>%
