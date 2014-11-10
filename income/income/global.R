@@ -180,9 +180,6 @@ p(strong('Please select a municipality to analyze median household income  acros
   tags$ul(
     tags$li('For a five-year period, compare the median household income for the municipality of your choice to the national, state, and county median.')
     ))
-          
-  tags$hr()
-
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
@@ -193,19 +190,11 @@ map_side_text <- conditionalPanel(
     tags$li('Clicking on a municipality will display the median house hold income for the five-year range that you selected.')
     ))
 
-  tags$hr()
-
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of intrest, including:'))),
-           tags$br(),
-  tags$ul(
-    tags$li('Formulae'),
-    tags$li('Calculations to derive the five-year median.')
-      ))
-           
-  tags$hr()
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
+ 
 
 
 about_main_text <- p(strong("The SEIGMA Income Status App"), "displays the five-year median incomes for Massachusetts by municipality. Toggle between tabs to visualize the data differently.",
@@ -217,7 +206,6 @@ about_main_text <- p(strong("The SEIGMA Income Status App"), "displays the five-
       tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including, formulae and calculations"))
   )
 )
-tags$hr()
 
 
 plot_main_text <- p(strong("Variable Summary:"),
