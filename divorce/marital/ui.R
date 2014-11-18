@@ -96,7 +96,7 @@ shinyUI(fluidPage(
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: CDC Wonder", href="http://wonder.cdc.gov/wonder/help/cmf.html",
+      helpText(a("Data Source: American Community Survey", href="http://www.census.gov/acs/www/",
                  target="_blank")),
       
       ## GitHub link
