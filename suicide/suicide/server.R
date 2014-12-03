@@ -24,6 +24,7 @@ shinyServer(function(input, output, session) {
   
   ## Create summary table
   output$summary <- renderDataTable({
+    
     ## Make reactive dataframe into regular dataframe
     suidf <- suidf()
     
@@ -72,10 +73,10 @@ shinyServer(function(input, output, session) {
       }
     
     ## make column names more pretty (i.e. no periods)
-    colnames(df2)[7:10] <- c("Age Adjusted Rate (per 100,000)", 
+    colnames(df2)[7:11] <- c("Age Adjusted Rate (per 100,000)", 
                             "Age Adjusted Rate Lower Bound", 
                             "Age Adjusted Rate Upper Bound", 
-                            "Age Adjusted Rate Standard Error")
+                            "Age Adjusted Rate Standard Error", "Crude Rate (per 100,000  )")
     
     return(df2)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, these make them pretty
@@ -83,6 +84,8 @@ shinyServer(function(input, output, session) {
   ## create the plot of the data
   ## for the Google charts plot
   output$plot <- reactive({
+    browser()
+  
     ## make reactive dataframe into regular dataframe
     suidf <- suidf()
     
