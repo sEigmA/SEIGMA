@@ -27,6 +27,11 @@ for(i in 1:length(MAmap$features)){
 ## Load formatted suicide data
 ## -1 eliminates first column [rows,columns]
 suidata <- read.csv(file="SASuicidedata_Updated.csv")[,-1]
+# suidata$Age.Adjusted.Rate <- as.numeric(suidata$Age.Adjusted.Rate)
+# suidata$Age.Adjusted.Rate.Lower.Bound <- as.numeric(suidata$Age.Adjusted.Rate.Lower.Bound)
+# suidata$Age.Adjusted.Rate.Upper.Bound <- as.numeric(suidata$Age.Adjusted.Rate.Upper.Bound)
+# suidata$Age.Adjusted.Rate.Standard.Error <- as.numeric(suidata$Age.Adjusted.Rate.Standard.Error)
+
 
 ## Set graph colors (special for colorblind people)
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
@@ -58,7 +63,7 @@ smin.val <- min(suidata$Age.Adjusted.Rate, na.rm=TRUE)
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
 # scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
-scuts <- quantile(suidata$Crude.Rate, probs = seq(0, 1, length.out = length(smap.colors)), na.rm=TRUE)
+scuts <- quantile(suidata$Age.Adjusted.Rate, probs = seq(0, 1, length.out = length(smap.colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame

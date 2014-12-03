@@ -36,6 +36,8 @@ shinyServer(function(input, output, session) {
     if(input$timespan == "mult.yrs"){
       range <- seq(min(input$range), max(input$range), 1)
       df <- c()
+      
+####**********RBIND.Data.frame -DO Not Match
       for(i in 1:length(range)){
         bbb <- subset(suidf, Year==range[i])
         df <- rbind.data.frame(df, bbb)
@@ -312,8 +314,8 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
       return(as.character(tags$div(
         tags$h4("Change in crude suicide rate from ", min(input$range), " to ", max(input$range), " in ", values$selectedFeature$County),
         tags$h5("Increased by "[values$selectedFeature$Age.Adjusted.Rate>=0],
-                "Decreased by"[values$selectedFeature$Crude.Rate<0],
-                abs(values$selectedFeature$Crude.Rate), "per 100,000 in population")
+                "Decreased by"[values$selectedFeature$Age.Adjusted.Rate<0],
+                abs(values$selectedFeature$Age.Adjusted.Rate), "per 100,000 in population")
       )))}
   })
   
