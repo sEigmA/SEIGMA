@@ -155,7 +155,7 @@ shinyServer(function(input, output, session) {
                        Year=input$year, Suicides=NA, Population=NA, 
                        Age.Adjusted.Rate=NA, Age.Adjusted.Rate.Lower.Bound=NA,
                        Age.Adjusted.Rate.Upper.Bound=NA, 
-                       Age.Adjusted.Rate.Standard.Error=NA,
+                       Age.Adjusted.Rate.Standard.Error=NA,Crude.Rate=NA,
                        color=length(smap.colors))
       
       ## combine data subset with missing counties data
