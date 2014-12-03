@@ -70,10 +70,10 @@ shinyServer(function(input, output, session) {
       }
     
     ## make column names more pretty (i.e. no periods)
-    colnames(df2)[7:10] <- c("Crude Rate (per 100,000)", 
-                            "Crude Rate Lower Bound", 
-                            "Crude Rate Upper Bound", 
-                            "Crude Rate Standard Error")
+    colnames(df2)[7:10] <- c("Age Adjusted Rate (per 100,000)", 
+                            "Age Adjusted Rate Lower Bound", 
+                            "Age Adjusted Rate Upper Bound", 
+                            "Age Adjusted Rate Standard Error")
     
     return(df2)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, these make them pretty
@@ -88,7 +88,7 @@ shinyServer(function(input, output, session) {
     counties <- input$county
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
-    df <- dcast(suidf, Year ~ County, value.var="Crude.Rate")
+    df <- dcast(suidf, Year ~ County, value.var="Age.Adjusted.Rate")
     
     ## if no counties have been selected, just show the US average
     if(is.null(input$county)){
@@ -137,7 +137,7 @@ shinyServer(function(input, output, session) {
       suidf <- filter(suidf, Year==input$year)
       
       ## assign colors to each entry in the data frame
-      color <- as.integer(cut2(suidf$Crude.Rate,cuts=scuts))
+      color <- as.integer(cut2(suidf$Age.Adjusted.Rate,cuts=scuts))
       suidf <- cbind.data.frame(suidf,color)
       suidf$color <- ifelse(is.na(suidf$color), length(smap.colors), 
                             suidf$color)
@@ -148,9 +148,9 @@ shinyServer(function(input, output, session) {
       missing.counties <- setdiff(MAcounties, suidf$County)
       df <- data.frame(County=missing.counties, State="MA", Country="US", 
                        Year=input$year, Suicides=NA, Population=NA, 
-                       Crude.Rate=NA, Crude.Rate.Lower.Bound=NA,
-                       Crude.Rate.Upper.Bound=NA, 
-                       Crude.Rate.Standard.Error=NA,
+                       Age.Adjusted.Rate=NA, Age.Adjusted.Rate.Lower.Bound=NA,
+                       Age.Adjusted.Rate.Upper.Bound=NA, 
+                       Age.Adjusted.Rate.Standard.Error=NA,
                        color=length(smap.colors))
       
       ## combine data subset with missing counties data
@@ -169,8 +169,8 @@ shinyServer(function(input, output, session) {
       
       ## merge data and take difference between the data of the min year and the max year
       diff.df <- within(merge(min.df, max.df, by="County"),{
-        Crude.Rate <- round(Crude.Rate.y - Crude.Rate.x, 3)
-      })[,c("County", "Crude.Rate")]
+        Age.Adjusted.Rate <- round(Age.Adjusted.Rate.y - Age.Adjusted.Rate.x, 3)
+      })[,c("County", "Age.Adjusted.Rate")]
       
       diff.df$County <- paste(as.character(diff.df$County), "County")
       
@@ -181,7 +181,7 @@ shinyServer(function(input, output, session) {
       
       ## find missing counties in data subset and assign NAs to all values
       missing.counties <- setdiff(MAcounties, diff.df$County)
-      df <- data.frame(County=missing.counties, Crude.Rate=NA,
+      df <- data.frame(County=missing.counties, Age.Adjusted.Rate=NA,
                        color=length(mmap.colors))
       
       ## combine data subset with missing counties data
@@ -252,7 +252,7 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
     ## for each county in the map, attach the Crude Rate and colors associated
     for(i in 1:length(x$features)){
       ## Each feature is a county
-      x$features[[i]]$properties$Crude.Rate <- map_dat$Crude.Rate[match(x$features[[i]]$properties$County, map_dat$County)]
+      x$features[[i]]$properties$Age.Adjusted.Rate <- map_dat$Age.Adjusted.Rate[match(x$features[[i]]$properties$County, map_dat$County)]
       ## Style properties
       x$features[[i]]$properties$style <- list(
         fill=TRUE, 
@@ -297,21 +297,21 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
     }
   
     ## If clicked county has no crude rate, display a message
-    if(is.null(values$selectedFeature$Crude.Rate)){
+    if(is.null(values$selectedFeature$Age.Adjusted.Rate)){
       return(as.character(tags$div(
-        tags$h5("Crude suicide rate in ", values$selectedFeature$County, "is not available for this timespan"))))
+        tags$h5("Age Adjusted suicide rate in ", values$selectedFeature$County, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
     if(input$timespan=="sing.yr"){
     return(as.character(tags$div(
       tags$h4(input$year, "crude suicide rate in ", values$selectedFeature$County),
-      tags$h5(values$selectedFeature$Crude.Rate, "per 100,000 in population")
+      tags$h5(values$selectedFeature$Age.Adjusted.Rate, "per 100,000 in population")
     )))}
    ## For multiple years when county is clicked, display a message
     if(input$timespan=="mult.yrs"){
       return(as.character(tags$div(
         tags$h4("Change in crude suicide rate from ", min(input$range), " to ", max(input$range), " in ", values$selectedFeature$County),
-        tags$h5("Increased by "[values$selectedFeature$Crude.Rate>=0],
+        tags$h5("Increased by "[values$selectedFeature$Age.Adjusted.Rate>=0],
                 "Decreased by"[values$selectedFeature$Crude.Rate<0],
                 abs(values$selectedFeature$Crude.Rate), "per 100,000 in population")
       )))}

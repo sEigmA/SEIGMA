@@ -26,7 +26,7 @@ for(i in 1:length(MAmap$features)){
 
 ## Load formatted suicide data
 ## -1 eliminates first column [rows,columns]
-suidata <- read.csv(file="SASuicidedata.csv")[,-1]
+suidata <- read.csv(file="SASuicidedata_Updated.csv")[,-1]
 
 ## Set graph colors (special for colorblind people)
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
@@ -41,7 +41,7 @@ ylim <- list(
   min = 0,
   
   ##+5 = max crude rate plus a little extra
-  max = max(suidata$Crude.Rate, na.rm=T)+5
+  max = max(suidata$Age.Adjusted.Rate, na.rm=T)+5
 )
 
 
@@ -52,8 +52,8 @@ smap.colors <- c(spaint.brush(n=5), "#999999")
 ## For a single year data, we have a series of crude rate (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-smax.val <- max(suidata$Crude.Rate, na.rm=TRUE)
-smin.val <- min(suidata$Crude.Rate, na.rm=TRUE)
+smax.val <- max(suidata$Age.Adjusted.Rate, na.rm=TRUE)
+smin.val <- min(suidata$Age.Adjusted.Rate, na.rm=TRUE)
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
@@ -80,8 +80,8 @@ bound <- suidata %>%
   group_by(County) %>%
   
   ##n.rm=FALSE = needed 
-  summarise(max.val = max(Crude.Rate, na.rm=FALSE),
-            min.val = min(Crude.Rate, na.rm=FALSE))
+  summarise(max.val = max(Age.Adjusted.Rate, na.rm=FALSE),
+            min.val = min(Age.Adjusted.Rate, na.rm=FALSE))
 
 ## find the difference between each county's max and min
 bound$diff <- abs(bound$max.val - bound$min.val)
