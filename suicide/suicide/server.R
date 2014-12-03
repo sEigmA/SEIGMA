@@ -84,7 +84,7 @@ shinyServer(function(input, output, session) {
   ## create the plot of the data
   ## for the Google charts plot
   output$plot <- reactive({
-    browser()
+#     browser()
   
     ## make reactive dataframe into regular dataframe
     suidf <- suidf()
