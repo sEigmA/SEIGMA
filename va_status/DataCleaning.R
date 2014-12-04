@@ -40,13 +40,13 @@ va_data2$Five_Year_Average <- va_data2[,5]
 va_data2$Five_Year_Average <- as.numeric(substr(va_data2$Five_Year_Average, 6, 9))
 
 #sorting
-va_data3 <- va_data2[,c(1:6, 9, 11, 13)]
+va_data3 <- va_data2[,c(1:6, 9, 11:13)]
 
 ## save and reload to make factors into numeric (this is faster than the other methods)
 write.csv(va_data3, file="vetstatusdata.csv")
 va_data3 <- read.csv("vetstatusdata.csv")[,-c(1)]
 
-colnames(va_data3)[c(5:8)] <- c("Five_Year_Range", "Civilian_Pop", "Vet_Pop", "Percent_Vet")
+colnames(va_data3)[c(5:9)] <- c("Five_Year_Range", "Civilian_Pop", "Vet_Pop", "Percent_Vet", "Margin_Error_Percent")
 
 #Organizing Region
 va_data4 <- va_data3[order(va_data3$Region),]
