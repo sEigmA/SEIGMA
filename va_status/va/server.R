@@ -1,36 +1,28 @@
 #######################################
-## Title: Marital server.R          ##
+## Title: Veteran server.R           ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  10/22/2014         ##
-## Date Modified: 10/22/2014         ##
+## Date Created:  11/5/2014          ##
+## Date Modified: 11/7/2014          ##
 #######################################
 
 shinyServer(function(input, output, session) {
-  ## mar_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
-  mar_df <- reactive({
+  ## va_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
+  va_df <- reactive({
     ## Filter the data by the chosen Five Year Range 
-    mar_df <- mar_data %>%
+    va_df <- va_data %>%
       filter(Five_Year_Range == input$year) %>%
-      select(1:4, Gender, Five_Year_Range, Population, Never_Married_Pct, Married_Pct,
-             Separated_Pct, Widowed_Pct, Divorced_Pct) %>%
-      arrange(Region, Gender)
+      select(1:4, Percent_Vet)
+    
     ## Output reactive dataframe
-    mar_df    
+    va_df    
   })
   
   ## Create summary table
   output$summary <- renderDataTable({
     ## Make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
-    
-    ## make gender a vector based on input variable
-    if(!is.null(input$sum_gender))
-      genders <- input$sum_gender
-    ## if none selected, put all genders in vector
-    if(is.null(input$sum_gender))
-      genders <- c("Female", "Male")
+    va_df <- va_df()
     
     ## make municipals a vector based on input variable
     if(!is.null(input$sum_muni))
@@ -51,149 +43,64 @@ shinyServer(function(input, output, session) {
         munis <- c("MA", munis) ## US only ## MA only
       }
     }
-    
+    #     browser( )
     ## create a dataframe consisting only of counties in vector
-    mar_df <- mar_df %>%
-      filter(Gender %in% genders, Region %in% munis) %>%
-      select(4:length(colnames(mar_df)))
+    va_df <- va_df %>%
+      filter(Region %in% munis) %>%
+      select(4:length(colnames(va_df)))
     
-    colnames(mar_df) <- gsub("_", " ", colnames(mar_df))
-    colnames(mar_df) <- gsub("Pct", "%", colnames(mar_df))
+    colnames(va_df) <- gsub("_", " ", colnames(va_df))
     
-    return(mar_df)
-  }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
+    va_df[,3] <- prettyNum(va_df[,3], big.mark=",")
+    va_df[,4] <- prettyNum(va_df[,4], big.mark=",")
+    
+    return(va_df)
+  }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
   ## create the plot of the data
   ## for the Google charts plot
-  output$plot_US <- reactive({
+  output$plot <- reactive({
     ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    va_df <- va_df()
+    
+    county <- as.character(va_df$County[which(va_df$Municipal==input$plot_muni)])
     
     ## make counties a vector based on input variable
-    munis <- "United States"
+    munis <- c(input$plot_muni, county, "MA", "United States")
     
-    plot_df <- mar_df %>%
-      filter(Region %in% munis)
+    muni_index <- c()
     
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
-                                            "Widowed_Pct", "Divorced_Pct"),
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
+    for(i in 1:length(munis)){
+      muni_index[i] <- match(munis[i], va_df$Region)
+    }
+#     browser()
+    plot_df <- va_df[muni_index,] %>%
+      select(Region, Percent_Vet)
     
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_Pct")
+    colnames(plot_df) <- gsub("_", " ", colnames(plot_df))
     
-    g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
+#     plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
     
-    ## this outputs the google data to be used in the UI to create the dataframe
     list(
-      data=googleDataTable(g))
+      data=googleDataTable(plot_df))
   })
   
-  ## create the plot of the MA data
-  output$plot_MA <- reactive({
-    ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
-    
-    ## make counties a vector based on input variable
-    munis <- "MA"
-    
-    plot_df <- mar_df %>%
-      filter(Region %in% munis)
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
-                                            "Widowed_Pct", "Divorced_Pct"),
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
-    
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_Pct")
-    
-    g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
-    
-    ## this outputs the google data to be used in the UI to create the dataframe
-    list(
-      data=googleDataTable(g))
-  })
   
-  ## create the plot of the MA data
-  output$plot_county <- reactive({
-    ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
-    
-    ## find the county of the municipal
-    county <- mar_df$County[which(mar_df$Municipal==input$plot_muni)]
-    ## make counties a vector based on input variable
-    munis <- mar_df$Region[match(county, mar_df$Region)]
-    
-    plot_df <- mar_df %>%
-      filter(Region %in% munis)
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
-                                            "Widowed_Pct", "Divorced_Pct"),
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
-    
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_Pct")
-    
-    g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
-    
-    ## this outputs the google data to be used in the UI to create the dataframe
-    list(
-      data = googleDataTable(g), options = list(
-        title = paste("Marital Status Statisics for", munis[1])))
-  })
-  
-  ## create the plot of the MA data
-  output$plot_muni <- reactive({
-    ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
-    
-    ## make counties a vector based on input variable
-    munis <- input$plot_muni
-    
-    plot_df <- mar_df %>%
-      filter(Region %in% munis)
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
-                                            "Widowed_Pct", "Divorced_Pct"),
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
-    
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_Pct")
-    
-    g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
-    
-    ## this outputs the google data to be used in the UI to create the dataframe
-    list(
-      data = googleDataTable(g), options = list(
-        title = paste("Marital Status Statistics for", munis)))
-  })
+  ###################MAP CREATION##############
   
   ## set map colors
   map_dat <- reactive({
     
-    #browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    va_df <- va_df()
     
     ## take US, MA, and counties out of map_dat
-    map_dat <- mar_df %>%
-      filter(!is.na(Municipal), Gender == input$map_gender)
+    map_dat <- va_df %>%
+      filter(!is.na(Municipal))
     
     ## assign colors to each entry in the data frame
-    color <- as.integer(cut2(map_dat[,input$var],cuts=cuts))
+    color <- as.integer(cut2(map_dat[,"Percent_Vet"],cuts=cuts))
     map_dat <- cbind.data.frame(map_dat, color)
     map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors), 
                             map_dat$color)
@@ -202,13 +109,17 @@ shinyServer(function(input, output, session) {
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                             Region = missing_munis, Gender = input$map_gender, 
-                             Five_Year_Range = input$year, Population = NA, Never_Married_Pct = NA,
-                             Married_Pct = NA, Separated_Pct = NA, Widowed_Pct = NA, 
-                             Divorced_Pct = NA, color=length(map_colors), opacity = 0)
-    
+                             Region = missing_munis, Five_Year_Range = input$year, 
+                             Percent_Vet = NA, Margin_Error_Percent = NA
+                             color=length(map_colors), opacity = 0)
+    na_munis <- setdiff(MA_municipals_map, map_dat$Region)
+    na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
+                             Region = na_munis, Five_Year_Range = input$year, 
+                             Percent_Vet = NA, Margin_Error_Percent = NA,
+                             color=length(map_colors), opacity = 0.7)
+        
     # combine data subset with missing counties data
-    map_dat <- rbind.data.frame(map_dat, missing_df)
+    map_dat <- rbind.data.frame(map_dat, missing_df, na_df)
     map_dat$color <- map_colors[map_dat$color]
     return(map_dat)
   })
@@ -270,12 +181,12 @@ shinyServer(function(input, output, session) {
     isolate({
       ## Duplicate MAmap to x
       x <- MA_map_muni
-      
+      #     browser()
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a county
-        x$features[[i]]$properties[input$var] <- 
-          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), input$var]
+        x$features[[i]]$properties["Percent_Vet"] <- 
+          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Percent_Vet"]
         ## Style properties
         x$features[[i]]$properties$style <- list(
           fill=TRUE, 
@@ -322,20 +233,18 @@ shinyServer(function(input, output, session) {
           h4("Click on a town or city"))
       )))
     }
-    
+#     browser()
     muni_name <- values$selectedFeature$NAMELSAD10
-    muni_value <- values$selectedFeature[input$var]
-    var_select <- gsub("_", " ", input$var)
-    var_select <- gsub("Pct", "", var_select)
+    muni_value <- prettyNum(values$selectedFeature["Percent_Vet"], big.mark = ",")
     
     ## If clicked county has no crude rate, display a message
-    if(is.null(values$selectedFeature[input$var])){
+    if(muni_value == "NULL"){
       return(as.character(tags$div(
-        tags$h5(input$gender, var_select, "% in ", muni_name, "is not available for this timespan"))))
+        tags$h5("Percentage of Veterans in", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4(input$map_gender, var_select, "% in ", muni_name, " for ", input$year),
+      tags$h4("Percentage of Veterans in", muni_name, " for ", input$year),
       tags$h5(muni_value, "%")
     ))
   })

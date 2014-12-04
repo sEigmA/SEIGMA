@@ -1,10 +1,10 @@
 #######################################
-## Title: Income ui.R                ##
+## Title: Marital ui.R              ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/5/2014          ##
-## Date Modified: 11/7/2014          ##
+## Date Created:  10/22/2014         ##
+## Date Modified: 10/22/2014         ##
 #######################################
 
 shinyUI(fluidPage(
@@ -14,7 +14,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Household Income Shiny App"),
+  titlePanel("", windowTitle = "SEIGMA: Marital Status Shiny App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -29,17 +29,26 @@ shinyUI(fluidPage(
       info_side_text,
       
       ## in map, allow for variable selection
+      conditionalPanel(
+       condition="input.tabs == 'map'",
+       selectInput("var", "Select Variable of Interest",
+                   choices = list("Did Not Complete High School" = "Inc_HS_Pct", 
+                                  "High School" = "HS_Pct",
+                                  "Some College" = "Some_College_Pct",
+                                  "Bachelors" = "Bachelors_Pct",
+                                  "Masters" = "Masters_Pct",
+                                  "PhD" = "PhD_Pct"))
+      ),
       
-      ## Choose range for year.
+      ## if single year is selected, select year. if multiple years are selected, choose range.
       ## Initializing a single slider
       conditionalPanel(
         condition="input.tabs == 'summary' || input.tabs == 'plot' || input.tabs == 'map'",
       selectInput("year", "Select Five Year Range",
-                  choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                 "2007-2011" = "2007-2011"))
+                  choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                 "2008-2012" = "2008-2012"))
       ),
       
-
       ## in summary, allow for municipal selection
       conditionalPanel(
         condition="input.tabs == 'summary'",
@@ -67,19 +76,19 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Sophie E. O'Brien and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: CDC Wonder", href="http://wonder.cdc.gov/wonder/help/cmf.html",
+      helpText(a("Data Source: American Community Survey", href="http://www.census.gov/acs/www/",
                  target="_blank")),
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/income", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/suicide", target="_blank")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -106,62 +115,8 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Average Annual Median Household Income (Inflation-Adjusted Dollars) of Population by Region Over Five Year Period", align="center"),
-                 ## make a row to put two charts in
-                 
-                 googleColumnChart("plot", width="100%", height="475px", options = list(
-                   ## set fonts
-                   fontName = "Source Sans Pro",
-                   fontSize = font_size,
-                   title = "",
-                   ## set axis titles, ticks, fonts, and ranges
-                   hAxis = list(
-                     title = "",
-                     textStyle = list(
-                       fontSize = font_size),
-                     titleTextStyle = list(
-                       fontSize = font_size+2,
-                       bold = TRUE,
-                       italic = FALSE)
-                   ),
-                   vAxis = list(
-                     title = "Median Household Income",
-                     viewWindow = ylim,
-                     textStyle = list(
-                       fontSize = font_size),
-                     titleTextStyle = list(
-                       fontSize = font_size+2,
-                       bold = TRUE,
-                       italic = FALSE)
-                   ),
-                   
-                   ## set legend fonts
-                   legend = list(
-                     position = "none"),
-                   
-                   ## set chart area padding
-                   chartArea = list(
-                     top = 50, left = 75,
-                     height = "75%", width = "70%"
-                   ),
-                   
-                   domain = list(
-                     role = c("domain", "data", "style")),
-                   
-                   ## set colors
-                   colors = cbbPalette[4:8],
-                   
-                   ## set point size
-                   pointSize = 3,
-                   
-                   ## set tooltip font size
-                   ## Hover text font stuff
-                   tooltip = list(
-                     textStyle = list(
-                       fontSize = font_size
-                     )
-                   )
-                 )),
+                 h4("Marital Status as a Percentage of the Population by Region and Gender", align="center"),
+                 plot_options,
                  ## add text about the variables
 #                  plot_main_text,
                  value="plot"),
@@ -206,40 +161,32 @@ bootstrapPage(mainPanel(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
-                           tags$td("$", prettyNum(round(from), big.mark = ","), "to", "$", 
-                                   prettyNum(round(to), big.mark = ","), align = "right")
+                           tags$td(prettyNum(round(from, 2)), "% to", 
+                                   prettyNum(round(to, 2)), "%", align = "right")
                          )
                        }, 
                        colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
                        SIMPLIFY=FALSE),
-                       tags$td(tags$div(
-                         style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                       )),
-                       tags$td("Data not available", align = "right")
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                         )),
+                         tags$td("Data not available", align = "right")
+                       )
                      )
                    )),
-                 
-#                plot_main_text,
+   
+#                  plot_main_text,
                  value="map"),
         
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                 tags$ul(
-                   tags$li(p(strong("Median household income"), "provides a clear trend to assess resident's income overtime. Annual data for median household income was collected for a ten-year time series, from 2002- 2012, the latest data available.  Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
-                   tags$br(),
-                   tags$li(p(strong("Median Household Income  (MHI)"),
-                             " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality")),
-                   tags$br(),
-                   tags$li("When analyzing data sets per municipality five- year sets are used because estimates for smaller regions require a larger sample size than can be provided by single year data.")
-                   ),
-                 tags$br(),
-                 p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),
-                 
-                 
-                 
-              
-                  
+                  p(strong("Marital Rates"),
+                 " - Number of people within each marital status category for a specific region over a specified five year range. No data for any municipality indicates that data cannot be displayed because the number of cases is too small. This calculated by:"), 
+                  tags$br(),
+
+                p(strong("Marital Rate= Total in marital group for five year range/ Total Population * 100,000"),align="center"), 
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
