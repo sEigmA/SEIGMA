@@ -1,10 +1,10 @@
 #######################################
-## Title: Marital global.R          ##
+## Title: Veteran global.R           ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  10/22/2014         ##
-## Date Modified: 10/22/2014         ##
+## Date Created:  11/20/2014         ##
+## Date Modified: 12/4/2014          ##
 #######################################
 
 ##First file run - Environment Setup
