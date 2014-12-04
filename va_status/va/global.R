@@ -148,16 +148,15 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in seeing marital status data.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in viewing verteran status percentage.'))),
   tags$br(),
   tags$ul(
-      tags$li('View rates by: male or female (or both by leaving this selection blank)'),
-      tags$br(),
+   #   tags$li('View rates by: male or female (or both by leaving this selection blank)'),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box'),
-      tags$br(),
-      tags$li(p(strong('Please note that all statistics are 5-year averages')))
+      tags$li('To compare the data to the Massachusetts percentage or US percentage select the corresponding check box'),
+    
+   #   tags$li(p(strong('Please note that all statistics are 5-year averages')))
             
   )
   
@@ -170,10 +169,10 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select a municipality to analyze.')),
+p(strong('Please select a municipality to analyze verteran status percentage.')),
            tags$br(),
   tags$ul(
-    tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages for females and males.')
+    tags$li('For a given five-year period, you can compare the verteran status percentage to the national, state, and county percentages.')
     ))
           
   tags$hr()
