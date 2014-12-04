@@ -1,10 +1,10 @@
 #######################################
-## Title: Income global.R            ##
+## Title: Marital global.R          ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/5/2014          ##
-## Date Modified: 11/7/2014          ##
+## Date Created:  10/22/2014         ##
+## Date Modified: 10/22/2014         ##
 #######################################
 
 ##First file run - Environment Setup
@@ -19,16 +19,14 @@ require(shiny)
 require(googleCharts)
 require(leaflet)
 require(RJSONIO)
-require(rCharts)
-require(tidyr)
 
 ## load map data
 MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
-## Load formatted Income status data
+## Load formatted marital status data
 ## -1 eliminates first column [rows,columns]
-inc_data <- read.csv(file="incomedata.csv")[,-1]
+edu_data <- read.csv(file="educationdata.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
@@ -48,7 +46,7 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% inc_data$Region)
+idx_leftovers <- which(!MA_municipals_map %in% mar_data$Region)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
@@ -59,7 +57,7 @@ MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
  MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
-idx_leftovers2 <- which(!MA_municipals %in% inc_data$Region)
+idx_leftovers2 <- which(!MA_municipals %in% mar_data$Region)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
@@ -71,17 +69,17 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
   min = 0,
-  max = max(inc_data$Median_Household_Income)
+  max = 100
 )
 
 ## Colors for a single-year legend
 paint_brush <- colorRampPalette(colors=c("white", "red3"))
-map_colors <- c(paint_brush(n=5), "#999999")
+map_colors <- c(paint_brush(n=4), "#999999")
 
-##Cuts are quintiles of the total data
+## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-max_val <- max(inc_data$Median_Household_Income)
+max_val <- 100
 min_val <- 0
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
@@ -152,34 +150,36 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in viewing median household income data.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in seeing marital status data.'))),
   tags$br(),
   tags$ul(
-#       tags$li('View rates by: male or female (or both by leaving this selection blank)'),
-#       tags$br(),
+      tags$li('View rates by: male or female (or both by leaving this selection blank)'),
+      tags$br(),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('To compare median data to the Massachusetts median or US median, select the corresponding check box'),
+      tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box'),
       tags$br(),
-      tags$li(p(strong('Please note that all statistics are 5-year medians')))
+      tags$li(p(strong('Please note that all statistics are 5-year averages')))
             
   )
-)
   
   
   ## Creates horizontal line
   ##tags$hr()
-
+)
 
 ## Same concept
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select a municipality to analyze median household income  across municipatlity, county, Massachusetts, and the US.')),
+p(strong('Please select a municipality to analyze.')),
            tags$br(),
   tags$ul(
-    tags$li('For a five-year period, compare the median household income for the municipality of your choice to the national, state, and county median.')
+    tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages for females and males.')
     ))
+          
+  tags$hr()
+
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
@@ -187,31 +187,98 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please click on "Generate Map" to get started'))),
   tags$br(),
   tags$ul(
-    tags$li('Clicking on a municipality will display the median house hold income for the five-year range that you selected.')
+    tags$li('Clicking on a municipality will display the variable of interest for the five-year range and gender that you selected.')
     ))
+
+  tags$hr()
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
- 
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))),
+           tags$br(),
+  tags$ul(
+    tags$li('formulae'),
+    tags$li('calculations to derive the five-year averages.')
+      ))
+           
+  tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Income Status App"), "displays the five-year median incomes for Massachusetts by municipality. Toggle between tabs to visualize the data differently.",
+about_main_text <- p(strong("The SEIGMA Marital Status App"), "displays the five-year average marital status percentages for Massachusetts by municipality.",
+  p(strong("Toggle between tabs to visualize the data differently.")),
     tags$br(),
     tags$ul(
-      tags$li(p(strong("Summary"), "shows source data in table format.")),
-      tags$li(p(strong("Plot"), "compares any municipality's median to county, state, and national medians.")),
-      tags$li(p(strong("Map"), "visually displays median household income comparatively by municipality")),
-      tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including, formulae and calculations"))
-  )
+      tags$li(p(strong("Summary"), "shows the source data in a table format.")),
+      tags$li(p(strong("Plot"), "compares a municipality to county, state, and national averages.")),
+      tags$li(p(strong("Map"), "visually displays any of the marital status percentages comparatively by municipality")),
+      tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."))
+)
 )
 
 
 plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
-                    p(strong("Median Household income"),
-                    " - Average annual median household income over a five year period for each municipality."))
+                    strong("Suicides"),
+                    " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10.", 
+                    tags$br(),
+                    strong("Crude Rate"), 
+                    " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:",
+                    tags$br(),
+                    strong("Crude Rate = Count / Population * 100,000", align="center"))
 
 font_size <- 14
+
+plot_options <- googleColumnChart("plot", width="100%", height="100%", options = list(
+ ## set fonts
+ fontName = "Source Sans Pro",
+ fontSize = font_size,
+ title = "",
+ ## set axis titles, ticks, fonts, and ranges
+ hAxis = list(
+  title = "",
+  textStyle = list(
+   fontSize = font_size),
+  titleTextStyle = list(
+   fontSize = font_size+2,
+   bold = TRUE,
+   italic = FALSE)
+ ),
+ vAxis = list(
+  title = "% of Population",
+  viewWindow = ylim,
+  textStyle = list(
+   fontSize = font_size),
+  titleTextStyle = list(
+   fontSize = font_size+2,
+   bold = TRUE,
+   italic = FALSE)
+ ),
+ 
+ ## set legend fonts
+ legend = list(
+  textStyle = list(
+   fontSize=font_size),
+  position = "in"),
+ 
+ ## set chart area padding
+ chartArea = list(
+  top = 50, left = 100,
+  height = "75%", width = "70%"
+ ),
+ 
+ ## set colors
+ colors = cbbPalette[c(8,3)],
+ 
+ ## set point size
+ pointSize = 3,
+ 
+ ## set tooltip font size
+ ## Hover text font stuff
+ tooltip = list(
+  textStyle = list(
+   fontSize = font_size
+  )
+ )
+))
