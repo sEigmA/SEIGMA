@@ -53,3 +53,4 @@ inc_data4 <- inc_data4[c(1:684, 689:1253, 1260:1468, 685:688, 1254:1259),]
 
 
 write.csv(inc_data4, file="income/incomedata.csv")
+
