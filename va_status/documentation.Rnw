@@ -1,0 +1,87 @@
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+First, convert sas7bdat data into something smaller, with columns 17, 28, 30, 32, 34, 40. Combine schools within municipalities.
+
+<<1>>=
+install.packages("sas7bdat")
+install.packages("dplyr")
+install.packages("shiny")
+install.packages("ggplot2")
+install.packages("sp")
+install.packages("maptools")
+install.packages("rgeos")
+install.packages("Hmisc")
+install.packages("reshape2")
+#install.packages("GISTools")
+install.packages("devtools")
+
+require(devtools)
+install_github('shinyapps', 'rstudio')
+install_github("rstudio/shinyapps")
+install_github("jcheng5/googleCharts")
+install_github('leaflet-shiny', 'jcheng5')
+
+
+require(sas7bdat)
+require(shiny)
+require(shinyapps)
+require(reshape2)
+require(dplyr)
+
+## load SAS data
+sas.data <- read.sas7bdat("ba002_01_5yr.sas7bdat")
+
+## give columns relevant titles
+column_titles <- read.csv("BA002_01_5yr_contents.csv", skip=1)
+colnames(sas.data)[5:127] <- as.character(column_titles$Label[1:123])
+
+## find all columns that have to do with marriage
+mar_data <- sas.data[,c(1:5, grep("MARITAL", colnames(sas.data)))]
+
+## remove all "Margin of Error" columns
+mar_data <- mar_data[,-c(grep("Margin", colnames(mar_data)))]
+
+## remove unnecessary characters from column names
+colnames(mar_data)[5:27] <- substring(colnames(mar_data[5:27]), first=13)
+
+## separate male and female columns
+male_data <- mar_data[,c(1:16)]
+male_data$Gender <- "Male"
+colnames(male_data)[6] <- "Population"
+female_data <- mar_data[,c(1:5, 17:27)]
+female_data$Gender <- "Female"
+colnames(female_data)[6] <- "Population"
+
+## combine males and females as rows
+mar_data2 <- rbind.data.frame(male_data, female_data)
+
+## Replace N/A's with "NA" to remove the slash.
+mar_data2$Region <- replace(mar_data2$Region,mar_data2$Region=="N/A", NA)
+mar_data2$County <- replace(mar_data2$County,mar_data2$County=="N/A", NA)
+mar_data2$State <- replace(mar_data2$State,mar_data2$State=="N/A", NA)
+mar_data2$Municipal <- replace(mar_data2$Municipal,mar_data2$Municipal=="N/A", NA)
+
+mar_data2$Region  <- ifelse(!is.na(mar_data2$Region), "United States", "MA")
+mar_data2$Region  <- ifelse(!is.na(mar_data2$County), paste(mar_data2$County, "County"),
+                            mar_data2$Region)
+mar_data2$Region  <- ifelse(!is.na(mar_data2$Municipal),as.character(mar_data2$Municipal),as.character(mar_data2$Region))
+
+mar_data2$County <- paste(mar_data2$County, "County")
+
+mar_data2$Five_Year_Range <- as.numeric(substr(mar_data2$Five_Year_Range, 6, 9))
+
+## save and reload to make factors into numeric (this is faster than the other methods)
+write.csv(mar_data2, file="marriagedata.csv")
+mar_data2 <- read.csv("marriagedata.csv")[,-c(1)]
+
+colnames(mar_data2)[7:16] <- c("Never_Married", "Never_Married_Pct", "Now_Married", "Now_Married_Pct",
+                               "Separated", "Separated_Pct", "Widowed", "Widowed_Pct", "Divorced",
+                               "Divorced_Pct")
+
+write.csv(mar_data2, file="marriage2/marriagedata.csv")
+@
+
+\end{document}
