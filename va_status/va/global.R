@@ -26,7 +26,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted marital status data
 ## -1 eliminates first column [rows,columns]
-mar_data <- read.csv(file="marriagedata.csv")[,-1]
+va_data <- read.csv(file="vetstatusdata.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
@@ -46,7 +46,7 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% mar_data$Region)
+idx_leftovers <- which(!MA_municipals_map %in% va_data$Region)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
@@ -57,14 +57,13 @@ MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
  MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
-idx_leftovers2 <- which(!MA_municipals %in% mar_data$Region)
+idx_leftovers2 <- which(!MA_municipals %in% va_data$Region)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
-                "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
@@ -95,7 +94,6 @@ colorRanges <- data.frame(
   from = head(cuts, length(cuts)-1),
   to = tail(cuts, length(cuts)-1)
 )
-
 
 #############################
 ### Large Text Block Area ###
