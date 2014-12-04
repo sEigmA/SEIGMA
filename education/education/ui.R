@@ -1,10 +1,10 @@
 #######################################
-## Title: Marital ui.R              ##
+## Title: Education ui.R              ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  10/22/2014         ##
-## Date Modified: 10/22/2014         ##
+## Date Created:  12/4/14            ##
+## Date Modified: 12/4/14            ##
 #######################################
 
 shinyUI(fluidPage(
@@ -14,7 +14,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Marital Status Shiny App"),
+  titlePanel("", windowTitle = "SEIGMA: Educational Status Shiny App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -36,6 +36,7 @@ shinyUI(fluidPage(
                                   "High School" = "HS_Pct",
                                   "Some College" = "Some_College_Pct",
                                   "Bachelors" = "Bachelors_Pct",
+                                  "Associates" = "Associates_Pct",
                                   "Masters" = "Masters_Pct",
                                   "PhD" = "PhD_Pct"))
       ),
@@ -88,7 +89,7 @@ shinyUI(fluidPage(
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/suicide", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education", target="_blank")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -115,7 +116,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Marital Status as a Percentage of the Population by Region and Gender", align="center"),
+                 h4("Edcuational Status as a Percentage of the Population by Region and Gender", align="center"),
                  plot_options,
                  ## add text about the variables
 #                  plot_main_text,
@@ -182,11 +183,11 @@ bootstrapPage(mainPanel(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                  p(strong("Marital Rates"),
-                 " - Number of people within each marital status category for a specific region over a specified five year range. No data for any municipality indicates that data cannot be displayed because the number of cases is too small. This calculated by:"), 
+                  p(strong("Edcuation Rates"),
+                 " - Number of people within each educational status category for a specific region over a specified five year range. No data for any municipality indicates that data cannot be displayed because the number of cases is too small. This calculated by:"), 
                   tags$br(),
 
-                p(strong("Marital Rate= Total in marital group for five year range/ Total Population * 100,000"),align="center"), 
+                p(strong("Education Rate= Total in education group for five year range/ Total Population * 100,000"),align="center"), 
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),

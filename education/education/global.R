@@ -1,10 +1,10 @@
 #######################################
-## Title: Marital global.R          ##
+## Title: Education global.R          ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  10/22/2014         ##
-## Date Modified: 10/22/2014         ##
+## Date Created:  12/4/14            ##
+## Date Modified: 12/4/14            ##
 #######################################
 
 ##First file run - Environment Setup
@@ -150,14 +150,14 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in seeing marital status data.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in seeing education status data.'))),
   tags$br(),
   tags$ul(
-      tags$li('View rates by: male or female (or both by leaving this selection blank)'),
+ ##N/A from marital     tags$li('View rates by: male or female (or both by leaving this selection blank)'),
       tags$br(),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box'),
+      tags$li('To compare the data to the Massachusetts or United States average, select the corresponding check box'),
       tags$br(),
       tags$li(p(strong('Please note that all statistics are 5-year averages')))
             
@@ -175,7 +175,7 @@ plot_side_text <- conditionalPanel(
 p(strong('Please select a municipality to analyze.')),
            tags$br(),
   tags$ul(
-    tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages for females and males.')
+    tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages.')
     ))
           
   tags$hr()
@@ -187,7 +187,7 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please click on "Generate Map" to get started'))),
   tags$br(),
   tags$ul(
-    tags$li('Clicking on a municipality will display the variable of interest for the five-year range and gender that you selected.')
+    tags$li('Clicking on a municipality will display the (educational status) variable of interest for the five-year range and gender that you selected.')
     ))
 
   tags$hr()
@@ -205,13 +205,13 @@ info_side_text <- conditionalPanel(
   tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Marital Status App"), "displays the five-year average marital status percentages for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Education Status App"), "displays the five-year average educational status percentages for Massachusetts by municipality.",
   p(strong("Toggle between tabs to visualize the data differently.")),
     tags$br(),
     tags$ul(
       tags$li(p(strong("Summary"), "shows the source data in a table format.")),
       tags$li(p(strong("Plot"), "compares a municipality to county, state, and national averages.")),
-      tags$li(p(strong("Map"), "visually displays any of the marital status percentages comparatively by municipality")),
+      tags$li(p(strong("Map"), "visually displays any of the educational status percentages comparatively by municipality")),
       tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."))
 )
 )
@@ -220,13 +220,13 @@ about_main_text <- p(strong("The SEIGMA Marital Status App"), "displays the five
 plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
-                    strong("Suicides"),
-                    " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10.", 
+                    strong("Placeholder-Suicides"),
+                    " Placeholder Text", 
                     tags$br(),
-                    strong("Crude Rate"), 
-                    " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:",
+                    strong("Place Holder"), 
+                    " - Place-holder Text :",
                     tags$br(),
-                    strong("Crude Rate = Count / Population * 100,000", align="center"))
+                    strong("Educational Status Equation Placeholder", align="center"))
 
 font_size <- 14
 
