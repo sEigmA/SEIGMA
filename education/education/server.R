@@ -20,7 +20,7 @@ shinyServer(function(input, output, session) {
   
   ## Create summary table
   output$summary <- renderDataTable({
-#     browser()
+    #     browser()
     ## Make reactive dataframe into regular dataframe
     edu_df <- edu_df()
     
@@ -51,16 +51,16 @@ shinyServer(function(input, output, session) {
     
     colnames(edu_df) <- c("Region", "Five Year Range", "Population over 25", "Population Margin of Error",
                           "% High School Graduate or Greater", "High School Margin of Error", 
-                          "% Bachelor's Degree or Higher", "Bachelor's Margin of Error",
+                          "% Bachelor's Degree or Greater", "Bachelor's Margin of Error",
                           "% Graduate or Professional Degree", "Graduate Margin of Error")
-     
+    
     return(edu_df)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
   ## create the plot of the data
   ## for the Google charts plot
   output$plot <- reactive({
-#         browser()
+#     browser()
     ## make reactive dataframe into regular dataframe
     edu_df <- edu_df()
     
@@ -75,14 +75,14 @@ shinyServer(function(input, output, session) {
     for(i in 1:length(munis)){
       muni_index[i] <- match(munis[i], edu_df$Region)
     }
-
+    
     munis_df <- edu_df[muni_index,]
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_munis_df <- melt(munis_df, id.vars = "Region", 
-                           measure.vars = c("HS_Pct", "Bachelors_Pct", "Grad_Pct"),
-                           variable.name = "Education_Attainment",
-                           value.name = "Population_Pct")
+                            measure.vars = c("HS_Pct", "Bachelors_Pct", "Grad_Pct"),
+                            variable.name = "Education_Attainment",
+                            value.name = "Population_Pct")
     
     levels(melted_munis_df$Region)[1:4] <- munis
     
@@ -92,7 +92,9 @@ shinyServer(function(input, output, session) {
     g <- dcast(plot_df, Education_Attainment ~ Region, 
                value.var = "Population_Pct")
     
-    g$Education_Attainment <- gsub("_", " ", g$Education_Attainment)
+    g$Education_Attainment <- c("High School Graduate or Greater",
+                                "Bachelor's Degree or Greater",
+                                "Graduate or Professional Degree")
     g$Education_Attainment <- gsub("Pct", "", g$Education_Attainment)
     
     ## this outputs the google data to be used in the UI to create the dataframe
