@@ -154,7 +154,8 @@ summary_side_text <- conditionalPanel(
    #   tags$li('View rates by: male or female (or both by leaving this selection blank)'),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('To compare the data to the Massachusetts percentage or US percentage select the corresponding check box'),
+      tags$li('To compare the data to the Massachusetts percentage or US percentage select the corresponding check box')
+      
     
    #   tags$li(p(strong('Please note that all statistics are 5-year averages')))
             
@@ -193,13 +194,13 @@ info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))),
-           tags$br(),
+           tags$br()
   #tags$ul(
    # tags$li('formulae'),
     #tags$li('calculations to derive the five-year averages.')
-      ))
+       )#)
            
-  tags$hr()
+#   tags$hr()
 
 
 about_main_text <- p(strong("The SEIGMA Veteran Status App"), "displays the five-year percentage range of veteran status for Massachusetts by municipality.",

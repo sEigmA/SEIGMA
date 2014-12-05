@@ -110,7 +110,7 @@ shinyServer(function(input, output, session) {
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                              Region = missing_munis, Five_Year_Range = input$year, 
-                             Percent_Vet = NA, Margin_Error_Percent = NA
+                             Percent_Vet = NA, Margin_Error_Percent = NA,
                              color=length(map_colors), opacity = 0)
     na_munis <- setdiff(MA_municipals_map, map_dat$Region)
     na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
