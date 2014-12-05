@@ -69,8 +69,13 @@ shinyServer(function(input, output, session) {
     ## make counties a vector based on input variable
     munis <- c(input$plot_muni, county, "MA", "United States")
     
-    plot_df <- edu_df %>%
-      filter(Region %in% munis)
+    muni_index <- c()
+    
+    for(i in 1:length(munis)){
+      muni_index[i] <- match(munis[i], edu_df$Region)
+    }
+    browser()
+    plot_df <- edu_df[muni_index,]
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_plot_df <- melt(plot_df, id.vars = "Region", 

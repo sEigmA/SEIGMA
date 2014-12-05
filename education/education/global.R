@@ -176,10 +176,7 @@ plot_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
     tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages.')
-  ))
-
-tags$hr()
-
+    ))
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
@@ -266,7 +263,7 @@ plot_options <- googleColumnChart("plot", width="100%", height="475px",
                                     ## set chart area padding
                                     chartArea = list(
                                       top = 50, left = 100,
-                                      height = "75%", width = "70%"
+                                      height = "75%", width = "65%"
                                     ),
                                     
                                     ## set colors
