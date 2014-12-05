@@ -154,35 +154,24 @@ summary_side_text <- conditionalPanel(
   helpText(p(strong('Please select the five-year range for which you are interested in viewing educational status percentages.'))),
   tags$br(),
   tags$ul(
-
-
-      tags$br(),
-      tags$li('Select one or multiple municipalities.'),
-      tags$br(),
-      tags$li('To compare the data to the Massachusetts or United States average, select the corresponding check box'),
-      tags$br(),
-      tags$li('Sort the data in ascending and descending order by clicking the column or variable title')
-    
-     
-            
-
+    tags$br(),
+    tags$li('Select one or multiple municipalities.'),
+    tags$br(),
+    tags$li('To compare the data to the Massachusetts or United States average, select the corresponding check box'),
+    tags$br(),
+    tags$li('Sort the data in ascending and descending order by clicking the column or variable title')
   )
-  
-  
-  ## Creates horizontal line
-  ##
 )
 
 ## Same concept
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-
-p(strong('Please select a municipality to analyze educational status percentages.')),
-           tags$br(),
+  p(strong('Please select a municipality to analyze educational status percentages.')),
+  tags$br(),
   tags$ul(
     tags$li('For a given five-year period, you can compare the educational status percentage to the national, state, and county percentages.')
-    ))
+  ))
 
 
 map_side_text <- conditionalPanel(
@@ -191,32 +180,24 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please click on "Generate Map" to get started'))),
   tags$br(),
   tags$ul(
-
+    
     tags$li('Clicking on a municipality will display the educational status percentage for the five-year range that you selected.')
-    ))
-
-  
-
-
+  ))
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))),
-
-           
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))))
 
 about_main_text <- p(strong("The SEIGMA Education Status App"), "displays the five-year average educational status percentages for Massachusetts by municipality.",
-  p(strong("Toggle between tabs to visualize the data differently.")),
-    tags$br(),
-    tags$ul(
-      tags$li(p(strong("Summary"), "shows the source data in a table format.")),
-      tags$li(p(strong("Plot"), "compares the educational status percentages for each municipality to county, state, and national averages.")),
-      tags$li(p(strong("Map"), "visually displays any of the educational status percentages comparatively by municipality")),
-      tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."))
-)
-)
-
+                     p(strong("Toggle between tabs to visualize the data differently.")),
+                     tags$br(),
+                     tags$ul(
+                       tags$li(p(strong("Summary"), "shows the source data in a table format.")),
+                       tags$li(p(strong("Plot"), "compares the educational status percentages for each municipality to county, state, and national averages.")),
+                       tags$li(p(strong("Map"), "visually displays any of the educational status percentages comparatively by municipality")),
+                       tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."))
+                     ))
 
 plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
