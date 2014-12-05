@@ -35,10 +35,9 @@ shinyUI(fluidPage(
       conditionalPanel(
         condition="input.tabs == 'summary' || input.tabs == 'plot' || input.tabs == 'map'",
       selectInput("year", "Select Five Year Range",
-                  choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                 "2007-2011" = "2007-2011"))
+                  choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                 "2008-2012"))
       ),
-      
 
       ## in summary, allow for municipal selection
       conditionalPanel(
@@ -112,15 +111,15 @@ bootstrapPage(mainPanel(
                  googleColumnChart("plot", width="100%", height="475px", options = list(
                    ## set fonts
                    fontName = "Source Sans Pro",
-                   fontSize = font_size,
+                   fontSize = 14,
                    title = "",
                    ## set axis titles, ticks, fonts, and ranges
                    hAxis = list(
                      title = "",
                      textStyle = list(
-                       fontSize = font_size),
+                       fontSize = 14),
                      titleTextStyle = list(
-                       fontSize = font_size+2,
+                       fontSize = 14+2,
                        bold = TRUE,
                        italic = FALSE)
                    ),
@@ -128,9 +127,9 @@ bootstrapPage(mainPanel(
                      title = "Percentage of Civilian Veterans",
                      viewWindow = ylim,
                      textStyle = list(
-                       fontSize = font_size),
+                       fontSize = 14),
                      titleTextStyle = list(
-                       fontSize = font_size+2,
+                       fontSize = 14+2,
                        bold = TRUE,
                        italic = FALSE)
                    ),
@@ -149,7 +148,7 @@ bootstrapPage(mainPanel(
                      role = c("domain", "data", "style")),
                    
                    ## set colors
-                   colors = cbbPalette[4:8],
+                   colors = c("#b87333", "black"),
                    
                    ## set point size
                    pointSize = 3,
@@ -158,7 +157,7 @@ bootstrapPage(mainPanel(
                    ## Hover text font stuff
                    tooltip = list(
                      textStyle = list(
-                       fontSize = font_size
+                       fontSize = 14
                      )
                    )
                  )),
@@ -206,8 +205,8 @@ bootstrapPage(mainPanel(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
-                           tags$td("$", prettyNum(round(from), big.mark = ","), "to", "$", 
-                                   prettyNum(round(to), big.mark = ","), align = "right")
+                           tags$td(prettyNum(round(from), big.mark = ","), "%", "to", 
+                                   prettyNum(round(to), big.mark = ","), "%", align = "right")
                          )
                        }, 
                        colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],

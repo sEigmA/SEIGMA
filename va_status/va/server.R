@@ -10,10 +10,11 @@
 shinyServer(function(input, output, session) {
   ## va_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
   va_df <- reactive({
+#     browser()
     ## Filter the data by the chosen Five Year Range 
     va_df <- va_data %>%
       filter(Five_Year_Range == input$year) %>%
-      select(1:4, Percent_Vet)
+      select(1:4, Percent_Vet, Margin_Error_Percent)
     
     ## Output reactive dataframe
     va_df    
@@ -51,9 +52,6 @@ shinyServer(function(input, output, session) {
     
     colnames(va_df) <- gsub("_", " ", colnames(va_df))
     
-    va_df[,3] <- prettyNum(va_df[,3], big.mark=",")
-    va_df[,4] <- prettyNum(va_df[,4], big.mark=",")
-    
     return(va_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
@@ -90,7 +88,7 @@ shinyServer(function(input, output, session) {
   
   ## set map colors
   map_dat <- reactive({
-    
+#     browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
     va_df <- va_df()
@@ -109,12 +107,12 @@ shinyServer(function(input, output, session) {
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                             Region = missing_munis, Five_Year_Range = input$year, 
+                             Region = missing_munis,
                              Percent_Vet = NA, Margin_Error_Percent = NA,
                              color=length(map_colors), opacity = 0)
     na_munis <- setdiff(MA_municipals_map, map_dat$Region)
     na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
-                             Region = na_munis, Five_Year_Range = input$year, 
+                             Region = na_munis,
                              Percent_Vet = NA, Margin_Error_Percent = NA,
                              color=length(map_colors), opacity = 0.7)
         
