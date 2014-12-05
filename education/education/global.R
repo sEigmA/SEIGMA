@@ -178,7 +178,7 @@ p(strong('Please select a municipality to analyze.')),
     tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages.')
     ))
           
-  tags$hr()
+
 
 
 map_side_text <- conditionalPanel(
