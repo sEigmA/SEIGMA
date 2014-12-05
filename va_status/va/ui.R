@@ -225,15 +225,16 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Civilian Veteran Percentage"), "provides a clear trend ...fill in here...")),
-                   tags$br(),
-                   tags$li(p(strong("Median Household Income  (MHI)"),
-                             " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality")),
-                   tags$br(),
-                   tags$li("When analyzing data sets per municipality five- year sets are used because estimates for smaller regions require a larger sample size than can be provided by single year data.")
-                   ),
-                 tags$br(),
-                 p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),
+                   tags$li(p(strong("Civilian Veteran Percentage"), "data collected over a five- year range will measure and track changes over time,  enabling us to provide descriptive statistics at the state and
+municipal level."))))
+                   #tags$br(),
+                  # tags$li(p(strong("Median Household Income  (MHI)"),
+                  #           " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality")),
+                 #  tags$br(),
+                  # tags$li("When analyzing data sets per municipality five- year sets are used because estimates for smaller regions require a larger sample size than can be provided by single year data.")
+                   
+                 #tags$br(),
+                # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),
                  
                  
                  

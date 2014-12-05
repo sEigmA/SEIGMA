@@ -150,16 +150,16 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in seeing education status data.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in seeing education status percentages.'))),
   tags$br(),
   tags$ul(
  ##N/A from marital     tags$li('View rates by: male or female (or both by leaving this selection blank)'),
       tags$br(),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('To compare the data to the Massachusetts or United States average, select the corresponding check box'),
+      tags$li('To compare educaion status percenatges to the Massachusetts or United States percentage, select the corresponding check box'),
       tags$br(),
-      tags$li(p(strong('Please note that all statistics are 5-year averages')))
+      tags$li(p(strong('The data can be sorted in ascending and descending order by clicking the column or variable')))
             
   )
   
