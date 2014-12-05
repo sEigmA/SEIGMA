@@ -76,6 +76,8 @@ shinyServer(function(input, output, session) {
       muni_index[i] <- match(munis[i], edu_df$Region)
     }
     
+    edu_df$Region <- factor(edu_df$Region, levels = c(munis, as.character(edu_df$Region)[-muni_index]))
+    
     munis_df <- edu_df[muni_index,]
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
@@ -95,7 +97,6 @@ shinyServer(function(input, output, session) {
     g$Education_Attainment <- c("High School Graduate or Greater",
                                 "Bachelor's Degree or Greater",
                                 "Graduate or Professional Degree")
-    g$Education_Attainment <- gsub("Pct", "", g$Education_Attainment)
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
