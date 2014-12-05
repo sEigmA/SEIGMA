@@ -20,6 +20,7 @@ shinyServer(function(input, output, session) {
   
   ## Create summary table
   output$summary <- renderDataTable({
+#     browser()
     ## Make reactive dataframe into regular dataframe
     edu_df <- edu_df()
     
@@ -48,9 +49,11 @@ shinyServer(function(input, output, session) {
       filter(Region %in% munis) %>%
       select(4:length(colnames(edu_df)))
     
-    colnames(edu_df) <- gsub("_", " ", colnames(edu_df))
-    colnames(edu_df) <- gsub("Pct", "%", colnames(edu_df))
-    
+    colnames(edu_df) <- c("Region", "Five Year Range", "Population over 25", "Population Margin of Error",
+                          "% High School Graduate or Greater", "High School Margin of Error", 
+                          "% Bachelor's Degree or Higher", "Bachelor's Margin of Error",
+                          "% Graduate or Professional Degree", "Graduate Margin of Error")
+     
     return(edu_df)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
