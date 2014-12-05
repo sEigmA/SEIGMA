@@ -35,12 +35,8 @@ edu_data2$Region  <- ifelse(!is.na(edu_data2$Municipal),as.character(edu_data2$M
 
 edu_data2$County <- paste(edu_data2$County, "County")
 
-#Five Year Average Variable
-edu_data2$Five_Year_Average <- edu_data2[,5]
-edu_data2$Five_Year_Average <- as.numeric(substr(edu_data2$Five_Year_Average, 6, 9))
-
 #sorting
-edu_data3 <- edu_data2[,c(1:7,35,36,39,40,43,44,45)]
+edu_data3 <- edu_data2[,c(1:7,35,36,39,40,43,44)]
 
 ## save and reload to make factors into numeric (this is faster than the other methods)
 write.csv(edu_data3, file="edudata.csv")
@@ -50,6 +46,10 @@ colnames(edu_data3)[c(5:13)] <- c("Five_Year_Range", "Pop_25", "Margin_Error_Pop
 
 #Organizing Region
 edu_data4 <- edu_data3[order(edu_data3$Region),]
-edu_data4 <- edu_data4[c(1:684, 689:1253, 1260:1468, 685:688, 1254:1259),]
+# Put MA and US at end of data set
+idx_edu_MA <- which(edu_data4$Region == "MA")
+idx_edu_US <- which(edu_data4$Region == "United States")
+edu_data4 <- rbind.data.frame(edu_data4[-c(idx_edu_MA, idx_edu_US),], edu_data4[idx_edu_US,],
+                              edu_data4[idx_edu_MA,])
 
 write.csv(edu_data4, file="education/edudata.csv")

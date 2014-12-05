@@ -26,7 +26,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted marital status data
 ## -1 eliminates first column [rows,columns]
-edu_data <- read.csv(file="educationdata.csv")[,-1]
+edu_data <- read.csv(file="edudata.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
@@ -46,18 +46,18 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% mar_data$Region)
+idx_leftovers <- which(!MA_municipals_map %in% edu_data$Region)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
- MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
-  substr(leftover_munis[i], 1, nchar(leftover_munis[i])-5)
+  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
+    substr(leftover_munis[i], 1, nchar(leftover_munis[i])-5)
 }
 
 MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
- MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
+  MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
-idx_leftovers2 <- which(!MA_municipals %in% mar_data$Region)
+idx_leftovers2 <- which(!MA_municipals %in% edu_data$Region)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
@@ -69,7 +69,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
   min = 0,
-  max = 100
+  max = 120
 )
 
 ## Colors for a single-year legend
@@ -153,14 +153,14 @@ summary_side_text <- conditionalPanel(
   helpText(p(strong('Please select the five-year range for which you are interested in seeing education status data.'))),
   tags$br(),
   tags$ul(
- ##N/A from marital     tags$li('View rates by: male or female (or both by leaving this selection blank)'),
-      tags$br(),
-      tags$li('Select one or multiple municipalities.'),
-      tags$br(),
-      tags$li('To compare the data to the Massachusetts or United States average, select the corresponding check box'),
-      tags$br(),
-      tags$li(p(strong('Please note that all statistics are 5-year averages')))
-            
+    ##N/A from marital     tags$li('View rates by: male or female (or both by leaving this selection blank)'),
+    tags$br(),
+    tags$li('Select one or multiple municipalities.'),
+    tags$br(),
+    tags$li('To compare the data to the Massachusetts or United States average, select the corresponding check box'),
+    tags$br(),
+    tags$li(p(strong('Please note that all statistics are 5-year averages')))
+    
   )
   
   
@@ -172,13 +172,13 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select a municipality to analyze.')),
-           tags$br(),
+  p(strong('Please select a municipality to analyze.')),
+  tags$br(),
   tags$ul(
     tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages.')
-    ))
-          
-  tags$hr()
+  ))
+
+tags$hr()
 
 
 map_side_text <- conditionalPanel(
@@ -188,32 +188,32 @@ map_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
     tags$li('Clicking on a municipality will display the (educational status) variable of interest for the five-year range and gender that you selected.')
-    ))
+  ))
 
-  tags$hr()
+tags$hr()
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))),
-           tags$br(),
+  tags$br(),
   tags$ul(
     tags$li('formulae'),
     tags$li('calculations to derive the five-year averages.')
-      ))
-           
-  tags$hr()
+  ))
+
+tags$hr()
 
 
 about_main_text <- p(strong("The SEIGMA Education Status App"), "displays the five-year average educational status percentages for Massachusetts by municipality.",
-  p(strong("Toggle between tabs to visualize the data differently.")),
-    tags$br(),
-    tags$ul(
-      tags$li(p(strong("Summary"), "shows the source data in a table format.")),
-      tags$li(p(strong("Plot"), "compares a municipality to county, state, and national averages.")),
-      tags$li(p(strong("Map"), "visually displays any of the educational status percentages comparatively by municipality")),
-      tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."))
-)
+                     p(strong("Toggle between tabs to visualize the data differently.")),
+                     tags$br(),
+                     tags$ul(
+                       tags$li(p(strong("Summary"), "shows the source data in a table format.")),
+                       tags$li(p(strong("Plot"), "compares a municipality to county, state, and national averages.")),
+                       tags$li(p(strong("Map"), "visually displays any of the educational status percentages comparatively by municipality")),
+                       tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."))
+                     )
 )
 
 
@@ -230,55 +230,56 @@ plot_main_text <- p(strong("Variable Summary:"),
 
 font_size <- 14
 
-plot_options <- googleColumnChart("plot", width="100%", height="100%", options = list(
- ## set fonts
- fontName = "Source Sans Pro",
- fontSize = font_size,
- title = "",
- ## set axis titles, ticks, fonts, and ranges
- hAxis = list(
-  title = "",
-  textStyle = list(
-   fontSize = font_size),
-  titleTextStyle = list(
-   fontSize = font_size+2,
-   bold = TRUE,
-   italic = FALSE)
- ),
- vAxis = list(
-  title = "% of Population",
-  viewWindow = ylim,
-  textStyle = list(
-   fontSize = font_size),
-  titleTextStyle = list(
-   fontSize = font_size+2,
-   bold = TRUE,
-   italic = FALSE)
- ),
- 
- ## set legend fonts
- legend = list(
-  textStyle = list(
-   fontSize=font_size),
-  position = "in"),
- 
- ## set chart area padding
- chartArea = list(
-  top = 50, left = 100,
-  height = "75%", width = "70%"
- ),
- 
- ## set colors
- colors = cbbPalette[c(8,3)],
- 
- ## set point size
- pointSize = 3,
- 
- ## set tooltip font size
- ## Hover text font stuff
- tooltip = list(
-  textStyle = list(
-   fontSize = font_size
-  )
- )
-))
+plot_options <- googleColumnChart("plot", width="100%", height="475px", 
+                                  options = list(
+                                    ## set fonts
+                                    fontName = "Source Sans Pro",
+                                    fontSize = font_size,
+                                    title = "",
+                                    ## set axis titles, ticks, fonts, and ranges
+                                    hAxis = list(
+                                      title = "",
+                                      textStyle = list(
+                                        fontSize = font_size),
+                                      titleTextStyle = list(
+                                        fontSize = font_size+2,
+                                        bold = TRUE,
+                                        italic = FALSE)
+                                    ),
+                                    vAxis = list(
+                                      title = "% of Population",
+                                      viewWindow = ylim,
+                                      textStyle = list(
+                                        fontSize = font_size),
+                                      titleTextStyle = list(
+                                        fontSize = font_size+2,
+                                        bold = TRUE,
+                                        italic = FALSE)
+                                    ),
+                                    
+                                    ## set legend fonts
+                                    legend = list(
+                                      textStyle = list(
+                                        fontSize=font_size),
+                                      position = "right"),
+                                    
+                                    ## set chart area padding
+                                    chartArea = list(
+                                      top = 50, left = 100,
+                                      height = "75%", width = "70%"
+                                    ),
+                                    
+                                    ## set colors
+                                    colors = cbbPalette[c(2:8)],
+                                    
+                                    ## set point size
+                                    pointSize = 3,
+                                    
+                                    ## set tooltip font size
+                                    ## Hover text font stuff
+                                    tooltip = list(
+                                      textStyle = list(
+                                        fontSize = font_size
+                                      )
+                                    )
+                                  ))

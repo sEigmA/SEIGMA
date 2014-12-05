@@ -11,11 +11,11 @@ shinyServer(function(input, output, session) {
   ## edu_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
   edu_df <- reactive({
     ## Filter the data by the chosen Five Year Range 
-    edu_df <- mar_data %>%
+    edu_df <- edu_data %>%
       filter(Five_Year_Range == input$year) %>%
-      select(1:4, Gender, Five_Year_Range, Population, Inc_HS_Pct, HS_Pct,
-             Some_College_Pct, Bachelors_Pct, Masters_Pct, PhD_Pct) %>%
-      arrange(Region, Gender)
+      select(1:3, Region, Five_Year_Range, Pop_25, Margin_Error_Pop, HS_Pct, Margin_Error_HS,
+             Bachelors_Pct, Margin_Error_Bach, Grad_Pct, Margin_Error_Grad) %>%
+      arrange(Region)
     ## Output reactive dataframe
     edu_df    
   })
@@ -59,22 +59,22 @@ shinyServer(function(input, output, session) {
   ## create the plot of the data
   ## for the Google charts plot
   output$plot <- reactive({
+#     browser()
     ## make reactive dataframe into regular dataframe
     edu_df <- edu_df()
     
     ## find the county of the municipal
-    county <- edu_df$County[match(input$plot_muni, edu_df$Municipal)]
+    county <- as.character(edu_df$County[match(input$plot_muni, edu_df$Municipal)])
     
     ## make counties a vector based on input variable
-    munis <- c(input$plot_muni, county, "MA", "US")
+    munis <- c(input$plot_muni, county, "MA", "United States")
     
     plot_df <- edu_df %>%
       filter(Region %in% munis)
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_plot_df <- melt(plot_df, id.vars = "Region", 
-                           measure.vars = c("Inc_HS_Pct", "HS_Pct", "Some_College_Pct", 
-                                            "Bachelors_Pct", "Masters_Pct", "PhD_Pct"),
+                           measure.vars = c("HS_Pct", "Bachelors_Pct", "Grad_Pct"),
                            variable.name = "Education_Attainment",
                            value.name = "Population_Pct")
     
@@ -93,14 +93,14 @@ shinyServer(function(input, output, session) {
   ## set map colors
   map_dat <- reactive({
     
-    #browser()
+#     browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
     edu_df <- edu_df()
     
     ## take US, MA, and counties out of map_dat
     map_dat <- edu_df %>%
-      filter(!is.na(Municipal))
+      filter(!is.na(Region))
     
     ## assign colors to each entry in the data frame
     color <- as.integer(cut2(map_dat[,input$var],cuts=cuts))
@@ -108,15 +108,13 @@ shinyServer(function(input, output, session) {
     map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors), 
                             map_dat$color)
     map_dat$opacity <- 0.7
-    
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
-    missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                             Region = missing_munis,
-                             Five_Year_Range = input$year, Population = NA, 
-                             Inc_HS_Pct = NA,
-                             HS_Pct = NA, Some_College_Pct = NA, Bachelor_Pct = NA, 
-                             Masters_Pct = NA, PhD_Pct = NA, color=length(map_colors), 
+    missing_df <- data.frame(Municipal = NA, County = NA, State = NA, Region = missing_munis,
+                             Five_Year_Range = input$year, Pop_25 = NA, Margin_Error_Pop = NA,
+                             HS_Pct = NA, Margin_Error_HS = NA, Bachelors_Pct = NA,
+                             Margin_Error_Bach = NA, 
+                             Grad_Pct = NA, Margin_Error_Grad = NA, color=length(map_colors), 
                              opacity = 0)
     
     # combine data subset with missing counties data
