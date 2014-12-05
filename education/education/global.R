@@ -180,8 +180,6 @@ p(strong('Please select a municipality to analyze educational status percentages
     tags$li('For a given five-year period, you can compare the educational status percentage to the national, state, and county percentages.')
     ))
 
-  
-
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
