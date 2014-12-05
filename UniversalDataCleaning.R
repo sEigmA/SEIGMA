@@ -8,6 +8,7 @@
 #######################################
 
 library(dplyr)
+library(sas7bdat)
 
 data_cleaning <- function(file_name = "ba002_01_5yr.sas7bdat", contents_file = "BA002_01_5yr_contents.csv",
                           variable = "VETERAN STATUS", id_cols = 1:5,
@@ -16,15 +17,14 @@ data_cleaning <- function(file_name = "ba002_01_5yr.sas7bdat", contents_file = "
     stop("Please set working directory to folder with data to be cleaned")
   
   ## load data from SAS
-  if(substring(file_name, last = 8) == "sas7bdat"){
-    library(sas7bdat)
-    sas_data <- read.sas7bdat(file_name)
-  }
+  #   if(substring(file_name, last = 8) == "sas7bdat"){
+  dirty_data <- read.sas7bdat(file_name)
+  #   }
   
-  ## load data from CSV
-  if(substring(file_name, last = 3) == "csv"){
-    dirty_data <- read.csv(file_name, na.strings = "N/A")
-  }
+  #   ## load data from CSV
+  #   if(substring(file_name, last = 3) == "csv"){
+  #     dirty_data <- read.csv(file_name, na.strings = "N/A")
+  #   }
   
   clean_df <- dirty_data
   
@@ -48,8 +48,19 @@ data_cleaning <- function(file_name = "ba002_01_5yr.sas7bdat", contents_file = "
   ## Add "County" to the end of each County name
   clean_df$County <- paste(clean_df$County, "County")
   
-  ## grab only columns involving veterans status
-  var_cols <- grep(variable, x = colnames(clean_df))
+  ## grab only columns involving variable of interest status
+  if(variable == "all"){
+    var_cols <- seq(1, length(colnames(clean_df)))[-id_cols]
+  }
+  
+  if(class(variable) == "integer"){
+    var_cols <- variable
+  }
+  
+  if(variable != "all" && class(variable) != "integer"){
+    var_cols <- grep(variable, x = colnames(clean_df))
+  }
+  
   clean_var_df <- clean_df %>%
     select(id_cols, var_cols) %>%
     arrange(Region)

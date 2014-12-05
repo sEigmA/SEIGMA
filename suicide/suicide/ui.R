@@ -210,7 +210,7 @@ shinyUI(fluidPage(
                  dataTableOutput("summary"),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong(em('Blank Spaces'),"-Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:")))
+                   tags$li(p(strong(em('Blank Spaces')," - Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:")))
                  ),
                  tags$br(),
                  p(strong("Age-Adjusted Rate = Count / Population * 100,000"), align="center"),
