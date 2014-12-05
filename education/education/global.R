@@ -19,6 +19,7 @@ require(shiny)
 require(googleCharts)
 require(leaflet)
 require(RJSONIO)
+# require(tidyr)
 
 ## load map data
 MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
@@ -176,7 +177,7 @@ plot_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
     tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages.')
-    ))
+  ))
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",

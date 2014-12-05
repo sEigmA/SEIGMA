@@ -13,8 +13,6 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range 
     edu_df <- edu_data %>%
       filter(Five_Year_Range == input$year) %>%
-      select(1:3, Region, Five_Year_Range, Pop_25, Margin_Error_Pop, HS_Pct, Margin_Error_HS,
-             Bachelors_Pct, Margin_Error_Bach, Grad_Pct, Margin_Error_Grad) %>%
       arrange(Region)
     ## Output reactive dataframe
     edu_df    
@@ -59,7 +57,7 @@ shinyServer(function(input, output, session) {
   ## create the plot of the data
   ## for the Google charts plot
   output$plot <- reactive({
-#     browser()
+#         browser()
     ## make reactive dataframe into regular dataframe
     edu_df <- edu_df()
     
@@ -74,16 +72,21 @@ shinyServer(function(input, output, session) {
     for(i in 1:length(munis)){
       muni_index[i] <- match(munis[i], edu_df$Region)
     }
-    browser()
-    plot_df <- edu_df[muni_index,]
+
+    munis_df <- edu_df[muni_index,]
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Region", 
+    melted_munis_df <- melt(munis_df, id.vars = "Region", 
                            measure.vars = c("HS_Pct", "Bachelors_Pct", "Grad_Pct"),
                            variable.name = "Education_Attainment",
                            value.name = "Population_Pct")
     
-    g <- dcast(melted_plot_df, Education_Attainment ~ Region, 
+    levels(melted_munis_df$Region)[1:4] <- munis
+    
+    plot_df <- melted_munis_df %>%
+      arrange(Region)
+    
+    g <- dcast(plot_df, Education_Attainment ~ Region, 
                value.var = "Population_Pct")
     
     g$Education_Attainment <- gsub("_", " ", g$Education_Attainment)
@@ -91,14 +94,13 @@ shinyServer(function(input, output, session) {
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
-      data = googleDataTable(g), options = list(
-        title = paste0("Education Attainment Statistics for ", munis[1], ", ", munis[2], ", Massachusetts, and the United States")))
+      data = googleDataTable(g))
   })
   
   ## set map colors
   map_dat <- reactive({
     
-#     browser()
+    #     browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
     edu_df <- edu_df()

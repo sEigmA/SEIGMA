@@ -112,7 +112,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Edcuational Status as a Percentage of the Population by Region and Gender", align="center"),
+                 h4("Edcuational Status as a Percentage of the Population by Region", align="center"),
                  plot_options,
                  ## add text about the variables
 #                  plot_main_text,
