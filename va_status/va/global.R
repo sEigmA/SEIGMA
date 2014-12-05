@@ -184,7 +184,7 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please click on "Generate Map" to get started'))),
   tags$br(),
   tags$ul(
-    tags$li('Clicking on a municipality will display the veteran status percentage for the five-year range that you selected.')
+    tags$li('Clicking on a municipality will display the civilian veteran status percentage for the five-year range that you selected.')
     ))
 
   tags$hr()
@@ -202,13 +202,13 @@ info_side_text <- conditionalPanel(
 #   tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Veteran Status App"), "displays the five-year percentage range of veteran status for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Veteran Status App"), "displays the five-year percentage range of civilian veteran status for Massachusetts by municipality.",
   p(strong("Toggle between tabs to visualize the data differently.")),
     tags$br(),
     tags$ul(
       tags$li(p(strong("Summary"), "shows the source data in a table format.")),
-      tags$li(p(strong("Plot"), "compares municipality veteran status percentages to county, state, and national percentages.")),
-      tags$li(p(strong("Map"), "visually displays any of the veteran status percentages comparatively by municipality")),
+      tags$li(p(strong("Plot"), "compares municipality civilian veteran status percentages to county, state, and national percentages.")),
+      tags$li(p(strong("Map"), "visually displays any of the civilian veteran status percentages comparatively by municipality")),
       tags$li(p(strong("More Info"), "lists descriptions for the variables of interest."))
 )
 )
