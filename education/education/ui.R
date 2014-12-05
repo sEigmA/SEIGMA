@@ -112,7 +112,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Edcuational Status as a Percentage of the Population by Region", align="center"),
+                 h4("Educational Status as a Percentage of the Population by Region", align="center"),
                  plot_options,
                  ## add text about the variables
 #                  plot_main_text,
@@ -179,11 +179,11 @@ bootstrapPage(mainPanel(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                  p(strong("Edcuation Rates"),
+                  p(strong("Education Rates"),
                  " - Number of people within each educational status category for a specific region over a specified five year range. No data for any municipality indicates that data cannot be displayed because the number of cases is too small. This calculated by:"), 
                   tags$br(),
 
-                p(strong("Education Rate= Total in education group for five year range/ Total Population * 100,000"),align="center"), 
+                p(strong("Education Rate = Total in education group for five year range/ Total Population * 100,000"),align="center"), 
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
