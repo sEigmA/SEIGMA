@@ -20,7 +20,7 @@ colnames(edu)[5:127] <- as.character(column_titles$Label[1:123])
 ## remove unnecessary characters from column names
 colnames(edu)[5:127] <- substring(colnames(edu[5:127]), first=12)
 
-edu_data <- edu[,c(1:5, 121:127)]
+edu_data <- edu[,c(1:5, 82:120)]
 
 ## Replace N/A's with "NA" to remove the slash.
 edu_data2 <- edu_data
@@ -40,16 +40,16 @@ edu_data2$Five_Year_Average <- edu_data2[,5]
 edu_data2$Five_Year_Average <- as.numeric(substr(edu_data2$Five_Year_Average, 6, 9))
 
 #sorting
-edu_data3 <- edu_data2[,c(1:6, 9, 11, 13)]
+edu_data3 <- edu_data2[,c(1:7,35,36,39,40,43,44,45)]
 
 ## save and reload to make factors into numeric (this is faster than the other methods)
-write.csv(edu_data3, file="vetstatusdata.csv")
-edu_data3 <- read.csv("vetstatusdata.csv")[,-c(1)]
+write.csv(edu_data3, file="edudata.csv")
+edu_data3 <- read.csv("edudata.csv")[,-c(1)]
 
-colnames(edu_data3)[c(5:8)] <- c("Five_Year_Range", "Civilian_Pop", "Vet_Pop", "Percent_Vet")
+colnames(edu_data3)[c(5:13)] <- c("Five_Year_Range", "Pop_25", "Margin_Error_Pop", "Grad_Pct", "Margin_Error_Grad", "HS_Pct", "Margin_Error_HS", "Bachelors_Pct", "Margin_Error_Bach")
 
 #Organizing Region
 edu_data4 <- edu_data3[order(edu_data3$Region),]
 edu_data4 <- edu_data4[c(1:684, 689:1253, 1260:1468, 685:688, 1254:1259),]
 
-write.csv(edu_data4, file="edu/vetstatusdata.csv")
+write.csv(edu_data4, file="education/edudata.csv")
