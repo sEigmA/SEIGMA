@@ -32,13 +32,9 @@ shinyUI(fluidPage(
       conditionalPanel(
        condition="input.tabs == 'map'",
        selectInput("var", "Select Variable of Interest",
-                   choices = list("Did Not Complete High School" = "Inc_HS_Pct", 
-                                  "High School" = "HS_Pct",
-                                  "Some College" = "Some_College_Pct",
-                                  "Bachelors" = "Bachelors_Pct",
-                                  "Associates" = "Associates_Pct",
-                                  "Masters" = "Masters_Pct",
-                                  "PhD" = "PhD_Pct"))
+                   choices = list("High School Diploma or Higher" = "HS_Pct", 
+                                  "Bachelors Degree or Higher" = "Bachelors_Pct",
+                                  "Graduate or Professional Degree" = "Grad_Pct"))
       ),
       
       ## if single year is selected, select year. if multiple years are selected, choose range.
@@ -116,7 +112,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Edcuational Status as a Percentage of the Population by Region and Gender", align="center"),
+                 h4("Educational Status as a Percentage of the Population by Region", align="center"),
                  plot_options,
                  ## add text about the variables
 #                  plot_main_text,
@@ -183,11 +179,11 @@ bootstrapPage(mainPanel(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                  p(strong("Edcuation Rates"),
+                  p(strong("Education Rates"),
                  " - Number of people within each educational status category for a specific region over a specified five year range. No data for any municipality indicates that data cannot be displayed because the number of cases is too small. This calculated by:"), 
                   tags$br(),
 
-                p(strong("Education Rate= Total in education group for five year range/ Total Population * 100,000"),align="center"), 
+                p(strong("Education Rate = Total in education group for five year range/ Total Population * 100,000"),align="center"), 
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),

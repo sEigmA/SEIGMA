@@ -68,7 +68,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2"
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
   min = 0,
-  max = 30
+  max = max(va_data$Percent_Vet) + 5
 )
 
 ## Colors for a single-year legend

@@ -14,7 +14,7 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range 
     va_df <- va_data %>%
       filter(Five_Year_Range == input$year) %>%
-      select(1:4, Percent_Vet, Margin_Error_Percent)
+      select(1:4, Civilian_Pop, Vet_Pop, Percent_Vet, Margin_Error_Percent)
     
     ## Output reactive dataframe
     va_df    
@@ -44,15 +44,16 @@ shinyServer(function(input, output, session) {
         munis <- c("MA", munis) ## US only ## MA only
       }
     }
-    #     browser( )
+    
     ## create a dataframe consisting only of counties in vector
-    va_df <- va_df %>%
+    sum_df <- va_df %>%
       filter(Region %in% munis) %>%
       select(4:length(colnames(va_df)))
     
-    colnames(va_df) <- gsub("_", " ", colnames(va_df))
+    colnames(sum_df) <- c("Region", "Civilian Over 18 Population", "Civilian Veteran Population", 
+                         "Civilain Veteran Percentage", "Margin of Error")
     
-    return(va_df)
+    return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
   ## create the plot of the data
@@ -107,12 +108,12 @@ shinyServer(function(input, output, session) {
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                             Region = missing_munis,
+                             Region = missing_munis, Civilian_Pop = NA, Vet_Pop = NA,
                              Percent_Vet = NA, Margin_Error_Percent = NA,
                              color=length(map_colors), opacity = 0)
     na_munis <- setdiff(MA_municipals_map, map_dat$Region)
     na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
-                             Region = na_munis,
+                             Region = na_munis, Civilian_Pop = NA, Vet_Pop = NA,
                              Percent_Vet = NA, Margin_Error_Percent = NA,
                              color=length(map_colors), opacity = 0.7)
         
