@@ -192,7 +192,7 @@ map_side_text <- conditionalPanel(
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))),
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.')))
          
   #tags$ul(
    # tags$li('formulae'),
