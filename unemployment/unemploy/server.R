@@ -1,29 +1,47 @@
 #######################################
-## Title: Veteran server.R           ##
+## Title: Unemploy server.R          ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/5/2014          ##
-## Date Modified: 11/7/2014          ##
+## Date Created:  01/07/2015         ##
+## Date Modified: 01/07/2015         ##
 #######################################
 
 shinyServer(function(input, output, session) {
-  ## va_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
-  va_df <- reactive({
-#     browser()
-    ## Filter the data by the chosen Five Year Range 
-    va_df <- va_data %>%
-      filter(Five_Year_Range == input$year) %>%
-      select(1:4, Civilian_Pop, Vet_Pop, Percent_Vet, Margin_Error_Percent)
+# unemp_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
+  unemp_df <- reactive({
+
+    ## Filter the data by the chosen Year 
+    unemp_df <- unemp_data %>%
+      filter(Year == input$year) %>%
+      select(1:4, 6:9)
     
     ## Output reactive dataframe
-    va_df    
+    unemp_df    
   })
   
   ## Create summary table
   output$summary <- renderDataTable({
     ## Make reactive dataframe into regular dataframe
-    va_df <- va_df()
+    unemp_df <- unemp_df()
+    
+    ## if a user chooses Single Year, display only data from that year (dpylr)
+    if(input$timespan == "sing.yr"){
+      df <- filter(unemp_df, Year==input$year)
+    }
+    
+    ## if a user chooses Multiple Years, display data from all years in range
+    if(input$timespan == "mult.yrs"){
+      range <- seq(min(input$range), max(input$range), 1)
+      df <- c()
+      
+      ####**********RBIND.Data.frame -DO Not Match
+      for(i in 1:length(range)){
+        bbb <- subset(unemp_df, Year==range[i])
+        df <- rbind.data.frame(df, bbb)
+      }
+    }
+    
     
     ## make municipals a vector based on input variable
     if(!is.null(input$sum_muni))
@@ -46,23 +64,58 @@ shinyServer(function(input, output, session) {
     }
     
     ## create a dataframe consisting only of counties in vector
-    sum_df <- va_df %>%
+    sum_df <- unemp_df %>%
       filter(Region %in% munis) %>%
-      select(4:length(colnames(va_df)))
+      select(4:length(colnames(unemp_df)))
     
-    colnames(sum_df) <- c("Region", "Civilian Over 18 Population", "Civilian Veteran Population", 
-                         "Civilain Veteran Percentage", "Margin of Error")
+    colnames(sum_df) <- c("Region", "Unemployment Rate", "Number Unemployed", "Number Employed", "Number in Labor Force")
     
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
+##############################################  
+  
   ## create the plot of the data
+    ## for the Google charts plot
+  output$plot <- reactive({
+    ## make reactive dataframe into regular dataframe
+    unemp_df <- unemp_df()
+    
+    ## make region a vector based on input variable
+    munis <- input$munis
+    
+    ## put data into form that googleCharts understands (this unmelts the dataframe)
+    df <- dcast(unemp_df, Year ~ munis, value.var="Unemployment.Rate.Avg")
+    
+    ## if no counties have been selected, just show the US average
+    if(is.null(input$region)){
+      ## %>% = then
+      g <- df %>%
+        select(Year, US)
+    }
+    
+    ## if counties are selected and MA or US mean boxes are selected, add those to dataframe
+    if(!is.null(input$munis)){
+      if(input$meanMA)
+        munis <- c(munis, "MA")
+      if(input$meanUS)
+        munis <- c(munis, "US")
+      
+      g <- df[,c("Year", munis)]
+    }
+    
+    ## this outputs the google data to be used in the UI to create the dataframe
+    list(
+      data=googleDataTable(g))
+  })
+  
+#################################################  
   ## for the Google charts plot
   output$plot <- reactive({
     ## make reactive dataframe into regular dataframe
-    va_df <- va_df()
+    unemp_df <- unemp_df()
     
-    county <- as.character(va_df$County[which(va_df$Municipal==input$plot_muni)])
+    county <- as.character(unemp_df$County[which(unemp_df$Municipal==input$plot_muni)])
     
     ## make counties a vector based on input variable
     munis <- c(input$plot_muni, county, "MA", "United States")
@@ -70,10 +123,10 @@ shinyServer(function(input, output, session) {
     muni_index <- c()
     
     for(i in 1:length(munis)){
-      muni_index[i] <- match(munis[i], va_df$Region)
+      muni_index[i] <- match(munis[i], unemp_df$Region)
     }
-#     browser()
-    plot_df <- va_df[muni_index,] %>%
+    
+    plot_df <- unemp_df[muni_index,] %>%
       select(Region, Percent_Vet)
     
     colnames(plot_df) <- gsub("_", " ", colnames(plot_df))
@@ -83,19 +136,17 @@ shinyServer(function(input, output, session) {
     list(
       data=googleDataTable(plot_df))
   })
-  
-  
+    
   ###################MAP CREATION##############
   
   ## set map colors
   map_dat <- reactive({
-#     browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
-    va_df <- va_df()
+    unemp_df <- unemp_df()
     
     ## take US, MA, and counties out of map_dat
-    map_dat <- va_df %>%
+    map_dat <- unemp_df %>%
       filter(!is.na(Municipal))
     
     ## assign colors to each entry in the data frame

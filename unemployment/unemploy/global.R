@@ -1,13 +1,13 @@
 #######################################
-## Title: Veteran global.R           ##
+## Title: Unemploy global.R          ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/20/2014         ##
-## Date Modified: 12/4/2014          ##
+## Date Created:  01/07/2015         ##
+## Date Modified: 01/07/2015         ##
 #######################################
 
-##First file run - Environment Setup
+## First file run - Environment Setup
 ## load necessary libraries
 require(dplyr)
 require(sp)
@@ -19,14 +19,15 @@ require(shiny)
 require(googleCharts)
 require(leaflet)
 require(RJSONIO)
+#require(tidyr)
 
 ## load map data
 MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
-## Load formatted marital status data
+## Load formatted unemp data
 ## -1 eliminates first column [rows,columns]
-va_data <- read.csv(file="vetstatusdata.csv")[,-1]
+unemp_data <- read.csv(file="unempdata.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
@@ -46,51 +47,92 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% va_data$Region)
+idx_leftovers <- which(!MA_municipals_map %in% unemp_data$Region)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
- MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
-  substr(leftover_munis[i], 1, nchar(leftover_munis[i])-5)
+  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
+    substr(leftover_munis[i], 1, nchar(leftover_munis[i])-5)
 }
 
 MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
- MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
+  MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
-idx_leftovers2 <- which(!MA_municipals %in% va_data$Region)
+idx_leftovers2 <- which(!MA_municipals %in% unemp_data$Region)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
+                "#0072B2", "#D55E00", "#CC79A7")
 
 ## Create maxs and mins for googleCharts/Plot tab
+xlim <- list(
+  min = min(unemp_data$Year)-1,
+  max = max(unemp_data$Year)+1
+)
 ylim <- list(
   min = 0,
-  max = max(va_data$Percent_Vet) + 5
+  ##+5 = max rate plus a little extra
+  max = max(unemp_data$Unemployment.Rate.Avg, na.rm=T)+5
 )
 
-## Colors for a single-year legend
-paint_brush <- colorRampPalette(colors=c("white", "#b87333"))
-map_colors <- c(paint_brush(n=4), "#999999")
+#################################################################
 
-## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages
+## Colors for a single-year legend
+spaint.brush <- colorRampPalette(colors=c("white", "red3"))
+smap.colors <- c(spaint.brush(n=5), "#999999")
+
+## For a single year data, we have a series of rates (split into quintiles).  Cuts are quintiles of the total data 
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
+
+smax.val <- max(unemp_data$Unemployment.Rate.Avg, na.rm=TRUE)
+smin.val <- min(unemp_data$Unemployment.Rate.Avg, na.rm=TRUE)
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-cuts <- quantile(va_data$Percent_Vet, probs = seq(0, 1, length.out = length(map_colors)), na.rm=T)
+# scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
+scuts <- quantile(unemp_data$Unemployment.Rate.Avg, probs = seq(0, 1, length.out = length(smap.colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
 ## head = scuts takes everything except for the last one, 
 ## tails = same thing opposite
 
-colorRanges <- data.frame(
-  from = head(cuts, length(cuts)-1),
-  to = tail(cuts, length(cuts)-1)
+scolorRanges <- data.frame(
+  from = head(scuts, length(scuts)-1),
+  to = tail(scuts, length(scuts)-1)
 )
+
+## colors fade from one color to white to another color, with gray for NAs
+## m-prefix = multiple years
+mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
+mmap.colors <- c(mpaint.brush(n=6), "#999999")
+
+## find max and min (crude rates) values for each region
+bound <- unemp_data %>%
+  group_by(Region) %>%
+  
+  ##n.rm=FALSE = needed 
+  summarise(max.val = max(Unemployment.Rate.Avg, na.rm=FALSE),
+            min.val = min(Unemployment.Rate.Avg, na.rm=FALSE))
+
+## find the difference between each region's max and min
+bound$diff <- abs(bound$max.val - bound$min.val)
+
+## set the max and min value (for the legend) at 95% of the largest difference
+mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
+mmin.val <- -1*mmax.val
+mcuts <- seq(mmin.val, mmax.val, length.out = length(mmap.colors))
+
+# Construct break ranges for displaying in the legend
+
+mcolorRanges <- data.frame(
+  from = head(mcuts, length(mcuts)-1),
+  to = tail(mcuts, length(mcuts)-1)
+)
+
 
 #############################
 ### Large Text Block Area ###
@@ -145,37 +187,29 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in viewing civilian veteran status percentages.'))),
+
+  helpText(p(strong('Please select the five-year range for which you are interested in viewing educational status percentages.'))),
   tags$br(),
   tags$ul(
-   #   tags$li('View rates by: male or female (or both by leaving this selection blank)'),
-      tags$li('Select one or multiple municipalities.'),
-      tags$br(),
-      tags$li('To compare the data to the Massachusetts percentage or US percentage select the corresponding check box'),
-      tags$br(),
-      tags$li('The data can be sorted in ascending and descending order by clicking the column or variable')
+    tags$br(),
+    tags$li('Select one or multiple municipalities.'),
+    tags$br(),
+    tags$li('To compare the data to the Massachusetts or United States average, select the corresponding check box'),
+    tags$br(),
+    tags$li('Sort the data in ascending and descending order by clicking the column or variable title')
+
   )
-    
-   #   tags$li(p(strong('Please note that all statistics are 5-year averages')))
-            
-  
-  
-  
-  ## Creates horizontal line
-  ##tags$hr()
 )
 
 ## Same concept
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select a municipality to analyze civilian veteran status percentages.')),
-           tags$br(),
+  p(strong('Please select a municipality to analyze educational status percentages.')),
+  tags$br(),
   tags$ul(
-    tags$li('For a given five-year period, you can compare the civilian veteran status percentage to the national, state, and county percentages.')
-    ))
-          
-
+    tags$li('For a given five-year period, you can compare the educational status percentage to the national, state, and county percentages.')
+  ))
 
 
 map_side_text <- conditionalPanel(
@@ -184,43 +218,88 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please click on "Generate Map" to get started'))),
   tags$br(),
   tags$ul(
-    tags$li('Clicking on a municipality will display the civilian veteran status percentage for the five-year range that you selected.')
-    ))
-
-
+    
+    tags$li('Clicking on a municipality will display the educational status percentage for the five-year range that you selected.')
+  ))
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.')))
-         
-  #tags$ul(
-   # tags$li('formulae'),
-    #tags$li('calculations to derive the five-year averages.')
-       )#)
-           
-#   tags$hr()
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))))
 
-
-about_main_text <- p(strong("The SEIGMA Veteran Status App"), "displays the five-year percentage range of civilian veteran status for Massachusetts by municipality.",
-  p(strong("Toggle between tabs to visualize the data differently.")),
-    tags$br(),
-    tags$ul(
-      tags$li(p(strong("Summary"), "shows the source data in a table format.")),
-      tags$li(p(strong("Plot"), "compares municipality civilian veteran status percentages to county, state, and national percentages.")),
-      tags$li(p(strong("Map"), "visually displays any of the civilian veteran status percentages comparatively by municipality")),
-      tags$li(p(strong("More Info"), "lists descriptions for the variables of interest."))
-)
-)
-
+about_main_text <- p(strong("The SEIGMA Education Status App"), "displays the five-year average educational status percentages for Massachusetts by municipality.",
+                     p(strong("Toggle between tabs to visualize the data differently.")),
+                     tags$br(),
+                     tags$ul(
+                       tags$li(p(strong("Summary"), "shows the source data in a table format.")),
+                       tags$li(p(strong("Plot"), "compares the educational status percentages for each municipality to county, state, and national averages.")),
+                       tags$li(p(strong("Map"), "visually displays any of the educational status percentages comparatively by municipality")),
+                       tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."))
+                     ))
 
 plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
-                    strong("Suicides"),
-                    " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10.", 
+                    strong("Placeholder-Var Summary"),
+                    " Placeholder Text", 
                     tags$br(),
-                    strong("Crude Rate"), 
-                    " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:",
+                    strong("Place Holder"), 
+                    " - Place-holder Text :",
                     tags$br(),
-                    strong("Crude Rate = Count / Population * 100,000", align="center"))
+                    strong("Educational Status Equation Placeholder", align="center"))
+
+font_size <- 14
+
+plot_options <- googleColumnChart("plot", width="100%", height="475px", 
+                                  options = list(
+                                    ## set fonts
+                                    fontName = "Source Sans Pro",
+                                    fontSize = font_size,
+                                    title = "",
+                                    ## set axis titles, ticks, fonts, and ranges
+                                    hAxis = list(
+                                      title = "",
+                                      textStyle = list(
+                                        fontSize = font_size),
+                                      titleTextStyle = list(
+                                        fontSize = font_size+2,
+                                        bold = TRUE,
+                                        italic = FALSE)
+                                    ),
+                                    vAxis = list(
+                                      title = "% of Population",
+                                      viewWindow = ylim,
+                                      textStyle = list(
+                                        fontSize = font_size),
+                                      titleTextStyle = list(
+                                        fontSize = font_size+2,
+                                        bold = TRUE,
+                                        italic = FALSE)
+                                    ),
+                                    
+                                    ## set legend fonts
+                                    legend = list(
+                                      textStyle = list(
+                                        fontSize=font_size),
+                                      position = "right"),
+                                    
+                                    ## set chart area padding
+                                    chartArea = list(
+                                      top = 50, left = 100,
+                                      height = "75%", width = "65%"
+                                    ),
+                                    
+                                    ## set colors
+                                    colors = cbbPalette[c(2:8)],
+                                    
+                                    ## set point size
+                                    pointSize = 3,
+                                    
+                                    ## set tooltip font size
+                                    ## Hover text font stuff
+                                    tooltip = list(
+                                      textStyle = list(
+                                        fontSize = font_size
+                                      )
+                                    )
+                                  ))
