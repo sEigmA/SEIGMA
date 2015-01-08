@@ -127,7 +127,7 @@ shinyUI(fluidPage(
                          "Multiple Years" = "mult.yrs"))
       ),
       
-      ## if single year is selected, select year. if                  multiple years are selected, choose range.
+      ## if single year is selected, select year. if multiple years are selected, choose range.
       conditionalPanel(
         condition="input.tabs == 'summary' || input.tabs == 'map'",
         conditionalPanel(
@@ -135,7 +135,7 @@ shinyUI(fluidPage(
           
           ## Initializing a single slider
           sliderInput("year", "Select Year",
-                      min=1999, max=2012, value=2012,
+                      min=197, max=2012, value=2012,
                       format="####")),
         conditionalPanel(
           ## Initializes a multi-year slider (range)

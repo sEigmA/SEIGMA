@@ -1,10 +1,10 @@
 #######################################
-## Title: Veteran ui.R               ##
+## Title: Unemployment ui.R          ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/5/2014          ##
-## Date Modified: 11/7/2014          ##
+## Date Created:  01/08/2015         ##
+## Date Modified: 01/08/2015         ##
 #######################################
 
 shinyUI(fluidPage(
@@ -14,7 +14,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Veteran Status Shiny App"),
+  titlePanel("", windowTitle = "SEIGMA: Unemployment Rate Shiny App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -33,10 +33,22 @@ shinyUI(fluidPage(
       ## Choose range for year.
       ## Initializing a single slider
       conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'plot' || input.tabs == 'map'",
-      selectInput("year", "Select Five Year Range",
-                  choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                 "2008-2012"))
+        condition="input.tabs == 'summary' || input.tabs == 'map'",
+        conditionalPanel(
+          condition="input.timespan == 'sing.yr'",
+          
+          ## Initializing a single slider
+          sliderInput("year", "Select Year",
+                      min=1976, max=2012, value=2012,
+                      format="####")),
+        conditionalPanel(
+          ## Initializes a multi-year slider (range)
+          condition="input.timespan == 'mult.yrs'",
+          ## Slider starts from 2010-2012
+          sliderInput("range", "Select Years",
+                      min=1976, max=2012, value=c(2010,2012),
+                      format="####")
+        )
       ),
 
       ## in summary, allow for municipal selection
@@ -55,9 +67,9 @@ shinyUI(fluidPage(
         selectInput("plot_muni", "Select Municipality", 
                     choices = MA_municipals)),
       
-      ## In summary, show boxes that will compare to MA or US average
+      ## In summary and plot, show boxes that will compare to MA or US average
       conditionalPanel(
-        condition="input.tabs == 'summary'",
+        condition="input.tabs == 'summary'|| input.tabs == 'plot'",
         ## False at the end means it starts off unchecked
         checkboxInput("MA_mean", "Compare to MA Average", FALSE),
         checkboxInput("US_mean", "Compare to US Average", FALSE)
@@ -77,8 +89,8 @@ shinyUI(fluidPage(
                  target="_blank")),
       
       ## GitHub link
-      helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/income", target="_blank")),
+      helpText(a("View the data and code on GitHub", 
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/unemployment", target="_blank")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -105,38 +117,43 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Percent of Civilian Veterans for the population (civilians over 18) by Region Over Five Year Period", align="center"),
+                 h4("Annual Average Unemployment Rate by Region", align="center"),
                  ## make a row to put two charts in
                  
-                 googleColumnChart("plot", width="100%", height="475px", options = list(
+                 googleLineChart("plot", width="100%", height="475px", options = list(
+                   
                    ## set fonts
                    fontName = "Source Sans Pro",
                    fontSize = 14,
-                   title = "",
+                   
                    ## set axis titles, ticks, fonts, and ranges
                    hAxis = list(
-                     title = "",
+                     title = "Year",
+                     format = "####",
+                     ticks = seq(1976, 2012, 2),
+                     viewWindow = xlim,
                      textStyle = list(
                        fontSize = 14),
                      titleTextStyle = list(
-                       fontSize = 14+2,
+                       fontSize = 16,
                        bold = TRUE,
                        italic = FALSE)
                    ),
                    vAxis = list(
-                     title = "Percentage of Civilian Veterans",
+                     title = "Annual Average Unemployment Rate",
                      viewWindow = ylim,
                      textStyle = list(
                        fontSize = 14),
                      titleTextStyle = list(
-                       fontSize = 14+2,
+                       fontSize = 16,
                        bold = TRUE,
                        italic = FALSE)
                    ),
                    
                    ## set legend fonts
                    legend = list(
-                     position = "none"),
+                     textStyle = list(
+                       fontSize=14)),
                    
                    ## set chart area padding
                    chartArea = list(
@@ -144,11 +161,8 @@ bootstrapPage(mainPanel(
                      height = "75%", width = "70%"
                    ),
                    
-                   domain = list(
-                     role = c("domain", "data", "style")),
-                   
                    ## set colors
-                   colors = c("#b87333", "black"),
+                   colors = cbbPalette,
                    
                    ## set point size
                    pointSize = 3,
@@ -192,29 +206,59 @@ bootstrapPage(mainPanel(
                                  actionButton("action", "Generate Map")
                  )),
                  
-                 ## Legend
+                 ## Single Year Legend
                  conditionalPanel(
-                   condition="input.action != 0",
+                   condition="input.timespan == 'sing.yr' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-#                      strong("Crude Suicide Rate"),
+                     strong("Single Year"),
+                     tags$br(),
+                     strong("Annual Average Unemployment Rate"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
-                           tags$td(prettyNum(round(from), big.mark = ","), "%", "to", 
-                                   prettyNum(round(to), big.mark = ","), "%", align = "right")
+                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
                          )
                        }, 
-                       colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
+                       scolorRanges$from, scolorRanges$to, smap.colors[-length(smap.colors)],
                        SIMPLIFY=FALSE),
-                       tags$td(tags$div(
-                         style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                       )),
-                       tags$td("Data not available", align = "right")
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                         )),
+                         tags$td("Data not available", align = "right")))
+                   )),
+                 
+                 ## Multi Year Legend
+                 conditionalPanel(
+                   condition="input.timespan == 'mult.yrs' && input.action != 0",
+                   absolutePanel(
+                     right = 30, top = 215, draggable=FALSE, style = "", 
+                     class = "floater",
+                     strong("Multiple Year"),
+                     tags$br(),
+                     strong("Increase in CSR"),
+                     tags$table(
+                       mapply(function(from, to, color) {
+                         tags$tr(
+                           tags$td(
+                             tags$div(
+                               style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                             )),
+                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
+                         )
+                       }, 
+                       mcolorRanges$from, mcolorRanges$to, mmap.colors[-length(mmap.colors)],
+                       SIMPLIFY=FALSE),
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                         )),
+                         tags$td("Data not available", align = "right"))
                      )
                    )),
                  
@@ -225,8 +269,7 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Civilian Veteran Percentage"), "data collected over a five- year range will measure and track changes over time,  enabling us to provide descriptive statistics at the state and
-municipal level."))),
+                   tags$li(p(strong("Annual Average Unemployment Rate"), ""))),
                    #tags$br(),
                   # tags$li(p(strong("Median Household Income  (MHI)"),
                   #           " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality")),

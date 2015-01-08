@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  01/07/2015         ##
-## Date Modified: 01/07/2015         ##
+## Date Modified: 01/08/2015         ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -110,32 +110,32 @@ shinyServer(function(input, output, session) {
   })
   
 #################################################  
-  ## for the Google charts plot
-  output$plot <- reactive({
-    ## make reactive dataframe into regular dataframe
-    unemp_df <- unemp_df()
-    
-    county <- as.character(unemp_df$County[which(unemp_df$Municipal==input$plot_muni)])
-    
-    ## make counties a vector based on input variable
-    munis <- c(input$plot_muni, county, "MA", "United States")
-    
-    muni_index <- c()
-    
-    for(i in 1:length(munis)){
-      muni_index[i] <- match(munis[i], unemp_df$Region)
-    }
-    
-    plot_df <- unemp_df[muni_index,] %>%
-      select(Region, Percent_Vet)
-    
-    colnames(plot_df) <- gsub("_", " ", colnames(plot_df))
-    
-#     plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
-    
-    list(
-      data=googleDataTable(plot_df))
-  })
+#   ## for the Google charts plot
+#   output$plot <- reactive({
+#     ## make reactive dataframe into regular dataframe
+#     unemp_df <- unemp_df()
+#     
+#     county <- as.character(unemp_df$County[which(unemp_df$Municipal==input$plot_muni)])
+#     
+#     ## make counties a vector based on input variable
+#     munis <- c(input$plot_muni, county, "MA", "United States")
+#     
+#     muni_index <- c()
+#     
+#     for(i in 1:length(munis)){
+#       muni_index[i] <- match(munis[i], unemp_df$Region)
+#     }
+#     
+#     plot_df <- unemp_df[muni_index,] %>%
+#       select(Region, Percent_Vet)
+#     
+#     colnames(plot_df) <- gsub("_", " ", colnames(plot_df))
+#     
+# #   plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
+#     
+#     list(
+#       data=googleDataTable(plot_df))
+#   })
     
   ###################MAP CREATION##############
   
@@ -148,9 +148,51 @@ shinyServer(function(input, output, session) {
     ## take US, MA, and counties out of map_dat
     map_dat <- unemp_df %>%
       filter(!is.na(Municipal))
-    
+######################################################    
+    ## for single year maps...
+    if(input$timespan == "sing.yr"){
+      
+      ## subset the data by the year selected
+      unemp_df <- filter(unemp_df, Year==input$year)
+      
+      ## assign colors to each entry in the data frame
+      color <- as.integer(cut2(unemp_df$Unemployment.Rate.Avg,cuts=scuts))
+      unemp_df <- cbind.data.frame(unemp_df,color)
+      unemp_df$color <- ifelse(is.na(unemp_df$color), length(smap.colors), 
+                               unemp_df$color)
+#       ## This line is important. Formats county name (ie Franklin County)
+#       suidf$County <- paste(as.character(suidf$County), "County")
+      
+      ## find missing counties in data subset and assign NAs to all values
+      missing.munis <- setdiff(MAmunis, unemp_df$Municipal)
+      df <- data.frame(Municipal=missing.munis, County=County, State="MA", Country="US", 
+                       Year=input$year, Unemployment.Rate.Avg=NA, No.Unemployed.Avg=NA, 
+                       No. Employed.Avg=NA, No.Labor.Avg=NA,
+                       color=length(smap.colors))
+      
+      ## combine data subset with missing counties data
+      unemp_df <- rbind.data.frame(unemp_df, df)
+      unemp_df$color <- smap.colors[unemp_df$color]
+      return(unemp_df)
+    } 
+
+if(input$timespan=="mult.yrs"){
+  
+  ## create dataframes for the max and min year of selected data
+  min.year <- min(input$range)
+  max.year <- max(input$range)
+  min.df <- subset(unemp_df, Year==min.year)
+  max.df <- subset(unemp_df, Year==max.year)
+  
+  ## merge data and take difference between the data of the min year and the max year
+  diff.df <- within(merge(min.df, max.df, by="Municipal"),{
+    Unemployment.Rate.Avg <- round(Unemployment.Rate.Avg.y - Unemployment.Rate.Avg.x, 3)
+  })[,c("Municipal", "Unemployment.Rate.Avg")]
+  
+  diff.df$Municipal <- paste(as.character(diff.df$Municipal), "Municipal")
+  
     ## assign colors to each entry in the data frame
-    color <- as.integer(cut2(map_dat[,"Percent_Vet"],cuts=cuts))
+    color <- as.integer(cut2(map_dat[,"Unemployment.Rate.Avg"],cuts=cuts))
     map_dat <- cbind.data.frame(map_dat, color)
     map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors), 
                             map_dat$color)
@@ -159,14 +201,15 @@ shinyServer(function(input, output, session) {
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                             Region = missing_munis, Civilian_Pop = NA, Vet_Pop = NA,
-                             Percent_Vet = NA, Margin_Error_Percent = NA,
+                             Region = missing_munis, Unemployment.Rate.Avg = NA, 
+                             No.Unemployed.Avg = NA, No.Employed.Avg = NA, 
+                             No.Labor.Avg = NA,
                              color=length(map_colors), opacity = 0)
     na_munis <- setdiff(MA_municipals_map, map_dat$Region)
     na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
-                             Region = na_munis, Civilian_Pop = NA, Vet_Pop = NA,
-                             Percent_Vet = NA, Margin_Error_Percent = NA,
-                             color=length(map_colors), opacity = 0.7)
+                             Region = na_munis, Unemployment.Rate.Avg = NA, 
+                             No.Unemployed.Avg = NA, No.Employed.Avg = NA, 
+                             No.Labor.Avg = NA, color=length(map_colors), opacity = 0.7)
         
     # combine data subset with missing counties data
     map_dat <- rbind.data.frame(map_dat, missing_df, na_df)
@@ -235,8 +278,8 @@ shinyServer(function(input, output, session) {
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a county
-        x$features[[i]]$properties["Percent_Vet"] <- 
-          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Percent_Vet"]
+        x$features[[i]]$properties["Unemployment.Rate.Avg"] <- 
+          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Unemployment.Rate.Avg"]
         ## Style properties
         x$features[[i]]$properties$style <- list(
           fill=TRUE, 
@@ -283,19 +326,18 @@ shinyServer(function(input, output, session) {
           h4("Click on a town or city"))
       )))
     }
-#     browser()
     muni_name <- values$selectedFeature$NAMELSAD10
-    muni_value <- prettyNum(values$selectedFeature["Percent_Vet"], big.mark = ",")
+    muni_value <- prettyNum(values$selectedFeature["Unemployment.Rate.Avg"], big.mark = ",")
     
     ## If clicked county has no crude rate, display a message
     if(muni_value == "NULL"){
       return(as.character(tags$div(
-        tags$h5("Percentage of Veterans in", muni_name, "is not available for this timespan"))))
+        tags$h5("Average Rate of Unemployment for", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4("Percentage of Veterans in", muni_name, " for ", input$year),
-      tags$h5(muni_value, "%")
+      tags$h4("Average Rate of Unemployment for", muni_name, " for ", input$year),
+      tags$h5(muni_value)
     ))
   })
   
