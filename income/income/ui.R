@@ -226,10 +226,10 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Median household income"), "provides a clear trend to assess resident's income overtime. Annual data for median household income was collected for a ten-year time series, from 2002- 2012, the latest data available.  Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
+                   tags$li(p(strong("Median household income"), "provides a clear trend to assess resident's household income overtime. Annual data for median household income was collected for a ten-year time series, from 2002- 2012, the latest data available.  Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
                    tags$br(),
                    tags$li(p(strong("Median Household Income  (MHI)"),
-                             " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality")),
+                             " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality.")),
                    tags$br(),
                    tags$li("When analyzing data sets per municipality five- year sets are used because estimates for smaller regions require a larger sample size than can be provided by single year data.")
                    ),

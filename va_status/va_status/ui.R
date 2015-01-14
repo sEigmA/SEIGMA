@@ -225,7 +225,7 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Civilian Veteran Percentage"), "data collected over a five- year range will measure and track changes over time,  enabling us to provide descriptive statistics at the state and
+                   tags$li(p(strong("Civilian Veteran Percentage"), "data collected over a five- year range measure and track changes over time,  enabling us to provide descriptive statistics at the state and
 municipal level."))),
                    #tags$br(),
                   # tags$li(p(strong("Median Household Income  (MHI)"),

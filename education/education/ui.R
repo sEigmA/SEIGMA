@@ -179,8 +179,8 @@ bootstrapPage(mainPanel(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                  p(strong("Education Rates"),
-                 " - Number of people within each educational status category for a specific region over a specified five year range. No data for any municipality indicates that data cannot be displayed because the number of cases is too small. This calculated by:"), 
+                  p(strong("Educational Attainment Rates"),
+                 " - Number of people within each educational attainment category for a region over a specified five year range. When no data for a municipality is displayed, this indicates the number of cases is too small to accurately calculate a rate. This calculated by:"), 
                   tags$br(),
 
                 p(strong("Education Rate = Total in education group for five year range/ Total Population * 100,000"),align="center"), 

@@ -153,13 +153,13 @@ summary_side_text <- conditionalPanel(
   helpText(p(strong('Please select the five-year range for which you are interested in seeing marital status data.'))),
   tags$br(),
   tags$ul(
-      tags$li('View rates by: male or female (or both by leaving this selection blank)'),
+      tags$li('View rates by selecting male or female. To veiw both leave this selection blank.'),
       tags$br(),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box'),
+      tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box.'),
       tags$br(),
-      tags$li(p(strong('Please note that all statistics are 5-year averages')))
+      tags$li(p(strong('Please note that all statistics are 5-year averages.')))
             
   )
   
@@ -184,7 +184,7 @@ p(strong('Please select a municipality to analyze.')),
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please click on "Generate Map" to get started'))),
+  helpText(p(strong('Please click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
     tags$li('Clicking on a municipality will display the variable of interest for the five-year range and gender that you selected.')
@@ -198,21 +198,21 @@ info_side_text <- conditionalPanel(
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))),
            tags$br(),
   tags$ul(
-    tags$li('formulae'),
-    tags$li('calculations to derive the five-year averages.')
+    tags$li('Formulae.'),
+    tags$li('Calculations to derive the five-year averages.')
       ))
            
   tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Marital Status App"), "displays the five-year average marital status percentages for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Marital Status App"), "Displays the five-year average marital status for Massachusetts by municipality.",
   p(strong("Toggle between tabs to visualize the data differently.")),
     tags$br(),
     tags$ul(
-      tags$li(p(strong("Summary"), "shows the source data in a table format.")),
-      tags$li(p(strong("Plot"), "compares a municipality to county, state, and national averages.")),
-      tags$li(p(strong("Map"), "visually displays any of the marital status percentages comparatively by municipality")),
-      tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."))
+      tags$li(p(strong("Summary"), "shows the source data in table format.")),
+      tags$li(p(strong("Plot"), "compares a municipality's average marital status to county, state, and national averages.")),
+      tags$li(p(strong("Map"), "visually displays average marital status by municipality.")),
+      tags$li(p(strong("More Info"), "describes marital status including formulas and calculations."))
 )
 )
 

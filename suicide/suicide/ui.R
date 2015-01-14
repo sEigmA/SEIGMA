@@ -195,14 +195,14 @@ shinyUI(fluidPage(
       tabsetPanel(
         tabPanel("About", 
                  ## strong=bold, p=paragraph, em=emboss/italicised or bold italicized, 
-                 p(strong("The SEIGMA Suicide App"), "displays the age-adjusted suicide rate for Massachusetts by counties for a given year or multiple years from 1999 to 2012. Toggle between tabs to visualize the data differently. ",
+                 p(strong("The SEIGMA Suicide App"), "displays the age-adjusted suicide rate for Massachusetts by county for a given year or multiple years. Toggle between tabs to visualize the data differently. ",
                    tags$br(),
                    ##tags$ul and tags$li are to create bullet points using HTML
                    tags$ul(
-                     tags$li(p(strong("Summary"), "shows the source data in a table format.")),
-                     tags$li(p(strong("Plot"), "shows age-adjusted suicide rate over time per 100,000 in each county population, Massachusetts average and U.S. average.")),
-                     tags$li(p(strong("Map"), "visually displays age-adjusted suicide rate comparatively by county.")),
-                     tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations.")
+                     tags$li(p(strong("Summary"), "shows the source data in  table format.")),
+                     tags$li(p(strong("Plot"), "compares the age-adjusted suicide rate over time per 100,000 to county, state, and national averages.")),
+                     tags$li(p(strong("Map"), "visually displays age-adjusted suicide rate by county.")),
+                     tags$li(p(strong("More Info"), "describes the age- adjusted suicicde rate, including formulas and calculations.")
                      )))),
         
         ## summary tab
@@ -283,7 +283,7 @@ shinyUI(fluidPage(
                  ## breaks between paragraphs
                  tags$br(),
                  p(strong("Suicides"),
-                   " - Number of suicides for a specified region in a specific year.Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
+                   " - Number of suicides for a region during a specified year.Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
                  tags$br(),
                  p(strong("Age-Adjusted Rate"), 
                    " - Age-Adjusted rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
@@ -379,7 +379,7 @@ shinyUI(fluidPage(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  p(strong("Suicides"),
-                   " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
+                   " - Number of suicides for a region during a specified year.Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
                  tags$br(),
                  p(strong("Age-Adjusted Rate"), 
                    " - Age-Adjusted rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
@@ -391,7 +391,7 @@ shinyUI(fluidPage(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  p(strong("Suicides"),
-                   " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
+                   " - Number of suicides for a region during a specified year.Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
                  tags$br(),
                  p(strong("Age Adjusted Rate"), 
                    " - Age Adjusted rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),

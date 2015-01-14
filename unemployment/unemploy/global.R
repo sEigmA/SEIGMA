@@ -188,15 +188,15 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
 
-  helpText(p(strong('Please select the five-year range for which you are interested in viewing educational status percentages.'))),
+  helpText(p(strong('Please select the timespan for which you are interested in viewing the annual average unemployment rate.'))),
   tags$br(),
   tags$ul(
     tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To compare the data to the Massachusetts or United States average, select the corresponding check box'),
+    tags$li('To compare the annual average unemployment rate to the Massachusetts or national rates, select the corresponding box.'),
     tags$br(),
-    tags$li('Sort the data in ascending and descending order by clicking the column or variable title')
+    tags$li('Sort annual average umemployment rates in ascending and descending order by clicking the column or variable title.')
 
   )
 )
@@ -205,21 +205,21 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select a municipality to analyze educational status percentages.')),
+  p(strong('Please select a municipality to analyze annual average unemployment rates, do not slecet more than ten municipalities at a time.')),
   tags$br(),
   tags$ul(
-    tags$li('For a given five-year period, you can compare the educational status percentage to the national, state, and county percentages.')
+    tags$li('For a given timespan, you can compare average annual unemployment rates to the national, state, and county rates.')
   ))
 
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please click on "Generate Map" to get started'))),
+  helpText(p(strong('Please click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
     
-    tags$li('Clicking on a municipality will display the educational status percentage for the five-year range that you selected.')
+    tags$li('Clicking on a municipality will display average annual unemployment status rates for the time period you selected.')
   ))
 
 info_side_text <- conditionalPanel(
@@ -227,26 +227,23 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))))
 
-about_main_text <- p(strong("The SEIGMA Education Status App"), "displays the five-year average educational status percentages for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Annual Average Unemployment Rate App"), "displays the average annual unemployment rate for Massachusetts by municipality.",
                      p(strong("Toggle between tabs to visualize the data differently.")),
                      tags$br(),
                      tags$ul(
-                       tags$li(p(strong("Summary"), "shows the source data in a table format.")),
-                       tags$li(p(strong("Plot"), "compares the educational status percentages for each municipality to county, state, and national averages.")),
-                       tags$li(p(strong("Map"), "visually displays any of the educational status percentages comparatively by municipality")),
-                       tags$li(p(strong("More Info"), "lists descriptions for the variables of interest, including formulas and calculations."))
+                       tags$li(p(strong("Summary"), "shows the source data in table format.")),
+                       tags$li(p(strong("Plot"), "compares average annual unemployment rate for each municipality to county, state, and national rates.")),
+                       tags$li(p(strong("Map"), "visually displays annual average unemployment rates comparatively by municipality")),
+                       tags$li(p(strong("More Info"), "describes annual average unemployment rates, including formulas and calculations."))
                      ))
 
 plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
-                    strong("Placeholder-Var Summary"),
-                    " Placeholder Text", 
+                    strong("Annual Avergage Unemployment Rate-"),
+                    " Average annual unemployment rates account for workers who have lost their jobs and are looking for new ones.  This excludes people who are not looking for work.  The unemployment rate is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey.  Municipality unemployment rates were gathered form a secition of thr BLS and CPS called the Local Areas Unemployment Statistics Series.", 
                     tags$br(),
-                    strong("Place Holder"), 
-                    " - Place-holder Text :",
-                    tags$br(),
-                    strong("Educational Status Equation Placeholder", align="center"))
+                    strong("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf", align="center"))
 
 font_size <- 14
 

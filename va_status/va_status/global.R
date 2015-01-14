@@ -151,9 +151,9 @@ summary_side_text <- conditionalPanel(
    #   tags$li('View rates by: male or female (or both by leaving this selection blank)'),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('To compare the data to the Massachusetts percentage or US percentage select the corresponding check box'),
+      tags$li('To compare civilian veteran status percentage to the Massachusetts or US percentage select the corresponding box.'),
       tags$br(),
-      tags$li('The data can be sorted in ascending and descending order by clicking the column or variable')
+      tags$li('Civilian veteran status percenatges can be sorted in ascending and descending order by clicking the column or variable.')
   )
     
    #   tags$li(p(strong('Please note that all statistics are 5-year averages')))
@@ -172,7 +172,7 @@ plot_side_text <- conditionalPanel(
 p(strong('Please select a municipality to analyze civilian veteran status percentages.')),
            tags$br(),
   tags$ul(
-    tags$li('For a given five-year period, you can compare the civilian veteran status percentage to the national, state, and county percentages.')
+    tags$li('For a given five-year period, you can compare civilian veteran status percentages to the national, state, and county percentages.')
     ))
           
 
@@ -181,7 +181,7 @@ p(strong('Please select a municipality to analyze civilian veteran status percen
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please click on "Generate Map" to get started'))),
+  helpText(p(strong('Please click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
     tags$li('Clicking on a municipality will display the civilian veteran status percentage for the five-year range that you selected.')
@@ -192,7 +192,7 @@ map_side_text <- conditionalPanel(
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.')))
+  helpText(p(strong('This tab contains more detailed information regarding the variable of interest.')))
          
   #tags$ul(
    # tags$li('formulae'),
@@ -202,14 +202,14 @@ info_side_text <- conditionalPanel(
 #   tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Veteran Status App"), "displays the five-year percentage range of civilian veteran status for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Civilian Veteran Status App"), "displays the five-year percentage of civilian veteran status for Massachusetts by municipality.",
   p(strong("Toggle between tabs to visualize the data differently.")),
     tags$br(),
     tags$ul(
-      tags$li(p(strong("Summary"), "shows the source data in a table format.")),
-      tags$li(p(strong("Plot"), "compares municipality civilian veteran status percentages to county, state, and national percentages.")),
-      tags$li(p(strong("Map"), "visually displays any of the civilian veteran status percentages comparatively by municipality")),
-      tags$li(p(strong("More Info"), "lists descriptions for the variables of interest."))
+      tags$li(p(strong("Summary"), "shows the source data in table format.")),
+      tags$li(p(strong("Plot"), "compares civilian veteran status percentages for each municipality to county, state, and national percentages.")),
+      tags$li(p(strong("Map"), "visually displays civilian veteran status percentage by municipality.")),
+      tags$li(p(strong("More Info"), "describes civilian veteran status percentage."))
 )
 )
 
