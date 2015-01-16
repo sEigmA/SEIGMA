@@ -3,8 +3,8 @@
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  1/5/2014          ##
-## Date Modified: 1/7/2014          ##
+## Date Created:  1/5/2015          ##
+## Date Modified: 1/7/2015          ##
 #######################################
 
 shinyUI(fluidPage(
@@ -14,7 +14,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Monthly Employment Shiny App"),
+  titlePanel("", windowTitle = "SEIGMA: Average Monthly Employment Shiny App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -119,63 +119,124 @@ bootstrapPage(mainPanel(
                  ## make chart title here (otherwise not centered)
                  h4("Average Monthly Employment of Population by Municipality each Year", align="center"),
                  ## make a row to put two charts in
-                 
-                 googleColumnChart("plot", width="100%", height="475px", options = list(
-                   ## set fonts
-                   fontName = "Source Sans Pro",
-                   fontSize = font_size,
-                   title = "",
-                   ## set axis titles, ticks, fonts, and ranges
-                   hAxis = list(
-                     title = "",
-                     textStyle = list(
-                       fontSize = font_size),
-                     titleTextStyle = list(
-                       fontSize = font_size+2,
-                       bold = TRUE,
-                       italic = FALSE)
-                   ),
-                   vAxis = list(
-                     title = "Average Monthly Employment",
-                     viewWindow = ylim,
-                     textStyle = list(
-                       fontSize = font_size),
-                     titleTextStyle = list(
-                       fontSize = font_size+2,
-                       bold = TRUE,
-                       italic = FALSE)
-                   ),
-                   
-                   ## set legend fonts
-                   legend = list(
-                     position = "none"),
-                   
-                   ## set chart area padding
-                   chartArea = list(
-                     top = 50, left = 75,
-                     height = "75%", width = "70%"
-                   ),
-                   
-                   domain = list(
-                     role = c("domain", "data", "style")),
-                   
-                   ## set colors
-                   colors = cbbPalette[4:8],
-                   
-                   ## set point size
-                   pointSize = 3,
-                   
-                   ## set tooltip font size
-                   ## Hover text font stuff
-                   tooltip = list(
-                     textStyle = list(
-                       fontSize = font_size
-                     )
-                   )
-                 )),
+
+                
+          googleLineChart("plot", width="100%", height="475px", options = list(
+            
+            ## set fonts
+            fontName = "Source Sans Pro",
+            fontSize = 14,
+            
+            ## set axis titles, ticks, fonts, and ranges
+            hAxis = list(
+              title = "Year",
+              format = "####",
+              ticks = seq(2001, 2012, 2),
+              viewWindow = xlim,
+              textStyle = list(
+                fontSize = 14),
+              titleTextStyle = list(
+                fontSize = 16,
+                bold = TRUE,
+                italic = FALSE)
+            ),
+            vAxis = list(
+              title = "Average Monthly Employment",
+              viewWindow = ylim,
+              textStyle = list(
+                fontSize = 14),
+              titleTextStyle = list(
+                fontSize = 16,
+                bold = TRUE,
+                italic = FALSE)
+            ),
+            
+            ## set legend fonts
+            legend = list(
+              textStyle = list(
+                fontSize=14)),
+            
+            ## set chart area padding
+            chartArea = list(
+              top = 50, left = 75,
+              height = "75%", width = "70%"
+            ),
+            
+            ## set colors
+            colors = cbbPalette,
+            
+            ## set point size
+            pointSize = 3,
+            
+            ## set tooltip font size
+            ## Hover text font stuff
+            tooltip = list(
+              textStyle = list(
+                fontSize = 14
+              )
+            )
+          )),
+
+
+
+
+#                  googleColumnChart("plot", width="100%", height="475px", options = list(
+#                    ## set fonts
+#                    fontName = "Source Sans Pro",
+#                    fontSize = font_size,
+#                    title = "",
+#                    ## set axis titles, ticks, fonts, and ranges
+#                    hAxis = list(
+#                      title = "",
+#                      textStyle = list(
+#                        fontSize = font_size),
+#                      titleTextStyle = list(
+#                        fontSize = font_size+2,
+#                        bold = TRUE,
+#                        italic = FALSE)
+#                    ),
+#                    vAxis = list(
+#                      title = "Average Monthly Employment",
+#                      viewWindow = ylim,
+#                      textStyle = list(
+#                        fontSize = font_size),
+#                      titleTextStyle = list(
+#                        fontSize = font_size+2,
+#                        bold = TRUE,
+#                        italic = FALSE)
+#                    ),
+#                    
+#                    ## set legend fonts
+#                    legend = list(
+#                      position = "none"),
+#                    
+#                    ## set chart area padding
+#                    chartArea = list(
+#                      top = 50, left = 75,
+#                      height = "75%", width = "70%"
+#                    ),
+#                    
+#                    domain = list(
+#                      role = c("domain", "data", "style")),
+#                    
+#                    ## set colors
+#                    colors = cbbPalette[4:8],
+#                    
+#                    ## set point size
+#                    pointSize = 3,
+#                    
+#                    ## set tooltip font size
+#                    ## Hover text font stuff
+#                    tooltip = list(
+#                      textStyle = list(
+#                        fontSize = font_size
+#                      )
+#                    )
+#                  )),
                  ## add text about the variables
-#                  plot_main_text,
-                 value="plot"),
+                
+                plot_main_text,
+                  value="plot"),
         
         ## plot map
         tabPanel("Map",
@@ -218,7 +279,7 @@ bootstrapPage(mainPanel(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
                            tags$td("$", prettyNum(round(from), big.mark = ","), "to", "$", 
-                                   prettyNum(round(to), big.mark = ","), align = "right")
+                           prettyNum(round(to), big.mark = ","), align = "right")
                          )
                        }, 
                        colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
@@ -228,7 +289,7 @@ bootstrapPage(mainPanel(
                        )),
                        tags$td("Data not available", align = "right")
                      )
-                   )),
+  )),
                  
 #                plot_main_text,
                  value="map"),
@@ -237,21 +298,18 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Average Monthly Employment"), "provides a clear trend to assess a municipality's monthly employment on a year-to-year basis. Annual data for average monthly employment was collected for a twelve-year time series, from 2001-2012, the latest data available.  Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.(not true from this dataset)")),
+                 tags$li(p(strong("Average Monthly Employment"), "provides a clear trend to assess a municipality's monthly employment on a year-to-year basis. Annual data for average monthly employment was collected for a twelve-year time series, from 2001-2012, the latest data available.  Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.(not true from this dataset)")),
                    tags$br(),
                    tags$li(p(strong("Average Monthly Employment  (AME)"),
-                             " : Average Average Monthly Employment figures over a yearly periodfor each municipality")),
+                             " : Average Monthly Employment figures over a yearly period for each municipality")),
                    tags$br(),
               ##     tags$li("When analyzing data sets per municipality five- year sets are used because estimates for smaller regions require a larger sample size than can be provided by single year data.")
                    ),
             ##     tags$br(),
                  p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),
-                 
-                 
-                 
-              
-                  
-                 
+                              
+                              
+                                 
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
         id="tabs"
@@ -259,3 +317,5 @@ bootstrapPage(mainPanel(
     ))
   )
 ))
+
+
