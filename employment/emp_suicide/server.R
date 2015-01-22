@@ -12,7 +12,7 @@ shinyServer(function(input, output, session) {
   
   emp_df <- reactive({
     ## Filter the data by the chosen Year 
-    emp_df <- empdata ## %>%
+    emp_df <- emp_data ## %>%
       
     ##  filter(Year == input$year) %>%
     ##  select(1:4, 6:9)

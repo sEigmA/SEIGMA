@@ -26,7 +26,7 @@ require(RJSONIO)
 
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
-empdata <- read.csv(file="employmentdata2.csv")[,-1]
+emp_data <- read.csv(file="employmentdata2.csv")[,-1]
 
 
 ## Find order of counties in geojson files
@@ -66,13 +66,13 @@ MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Load formatted suicide data
 ## -1 eliminates first column [rows,columns]
-empdata <- read.csv(file="employmentdata2.csv")[,-1]
+emp_data <- read.csv(file="employmentdata2.csv")[,-1]
 
 
-# empdata$Average_Monthly_Employment <- as.numeric(empdata$Average_Monthly_Employment)
-# empdata$Average_Monthly_Employment.Lower.Bound <- as.numeric(empdata$Average_Monthly_Employment.Lower.Bound)
-# empdata$Average_Monthly_Employment.Upper.Bound <- as.numeric(empdata$Average_Monthly_Employment.Upper.Bound)
-# empdata$Average_Monthly_Employment.Standard.Error <- as.numeric(empdata$Average_Monthly_Employment.Standard.Error)
+# emp_data$Average_Monthly_Employment <- as.numeric(emp_data$Average_Monthly_Employment)
+# emp_data$Average_Monthly_Employment.Lower.Bound <- as.numeric(emp_data$Average_Monthly_Employment.Lower.Bound)
+# emp_data$Average_Monthly_Employment.Upper.Bound <- as.numeric(emp_data$Average_Monthly_Employment.Upper.Bound)
+# emp_data$Average_Monthly_Employment.Standard.Error <- as.numeric(emp_data$Average_Monthly_Employment.Standard.Error)
 
 
 
@@ -82,14 +82,14 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
-  min = min(empdata$Year)-1,
-  max = max(empdata$Year)+1
+  min = min(emp_data$Year)-1,
+  max = max(emp_data$Year)+1
 )
 ylim <- list(
   min = 0,
   
   ##+5 = max Avg monthly employment plus a little extra
-  max = max(empdata$Average_Monthly_Employment, na.rm=T)+5
+  max = max(emp_data$Average_Monthly_Employment, na.rm=T)+5
 )
 
 ####################################################
@@ -101,13 +101,13 @@ smap.colors <- c(spaint.brush(n=5), "#999999")
 ## For a single year data, we have a series of crude rate (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-smax.val <- max(empdata$Average_Monthly_Employment, na.rm=TRUE)
-smin.val <- min(empdata$Average_Monthly_Employment, na.rm=TRUE)
+smax.val <- max(emp_data$Average_Monthly_Employment, na.rm=TRUE)
+smin.val <- min(emp_data$Average_Monthly_Employment, na.rm=TRUE)
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
 # scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
-scuts <- quantile(empdata$Average_Monthly_Employment, probs = seq(0, 1, length.out = length(smap.colors)), na.rm=TRUE)
+scuts <- quantile(emp_data$Average_Monthly_Employment, probs = seq(0, 1, length.out = length(smap.colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
@@ -125,7 +125,7 @@ mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7])
 mmap.colors <- c(mpaint.brush(n=6), "#999999")
 
 ## find max and min (crude suicide rates) values for each county
-bound <- empdata %>%
+bound <- emp_data %>%
  group_by(Region) %>%
   
   ##n.rm=FALSE = needed 
