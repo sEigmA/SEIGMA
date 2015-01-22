@@ -72,6 +72,7 @@ shinyServer(function(input, output, session){
   ## create the plot of the data
     ## for the Google charts plot
   output$plot <- reactive({
+    browser()
     ## make reactive dataframe into regular dataframe
     unemp_df <- unemp_df()
     
