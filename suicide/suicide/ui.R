@@ -61,7 +61,7 @@ shinyUI(fluidPage(
   
   ## blank title, but put in a special title for window tab
   titlePanel("", windowTitle = "SEIGMA: Suicide Shiny App"),
-  
+   browser()
   ## Create sidebar
   sidebarLayout(
     sidebarPanel(
@@ -104,7 +104,7 @@ shinyUI(fluidPage(
           tags$li('When "Multiple Years" is selected, clicking on a county displays the increase in age-adjusted suicide rate over that timespan.')
         )
       ),
-      
+   #   browser() 
       
       conditionalPanel(
         condition="input.tabs == 'info'",

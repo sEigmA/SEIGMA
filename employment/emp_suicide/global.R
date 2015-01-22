@@ -47,7 +47,7 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% unemp_data$Region)
+idx_leftovers <- which(!MA_municipals_map %in% emp_data$Region)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
   MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
@@ -58,7 +58,7 @@ MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
   MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
-idx_leftovers2 <- which(!MA_municipals %in% unemp_data$Region)
+idx_leftovers2 <- which(!MA_municipals %in% emp_data$Region)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 

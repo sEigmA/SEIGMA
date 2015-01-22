@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:                     ##
-## Date Modified: 12/3/2014 AR      ##
+## Date Modified: 12/3/2014 AR       ##
 #######################################
 
 ## load necessary libraries
@@ -81,10 +81,12 @@ shinyServer(function(input, output, session) {
     return(df2)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, these make them pretty
   
+  
+
   ## create the plot of the data
   ## for the Google charts plot
   output$plot <- reactive({
-#     browser()
+    # browser()
   
     ## make reactive dataframe into regular dataframe
     suidf <- suidf()
