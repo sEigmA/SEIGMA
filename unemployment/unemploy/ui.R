@@ -29,15 +29,22 @@ shinyUI(fluidPage(
       info_side_text,
       
       ## in map, allow for variable selection
+      ## in summary and map, allow for timespan selection
+      conditionalPanel(
+        condition="input.tabs == 'summary' || input.tabs == 'map'",
+        ## Select input = Drop down list of timespan (variable name on server side) 
+        selectInput("timespan", "Select Timespan",
+                    list("Single Year" = "sing.yr",
+                         "Multiple Years" = "mult.yrs"))
+      ),
       
-      ## Choose range for year.
-      ## Initializing a single slider
+      ## if single year is selected, select year. if multiple years are selected, choose range.
       conditionalPanel(
         condition="input.tabs == 'summary' || input.tabs == 'map'",
         conditionalPanel(
           condition="input.timespan == 'sing.yr'",
-          
-          ## Initializing a single slider
+        
+        ## Initializing a single slider
           sliderInput("year", "Select Year",
                       min=1976, max=2012, value=2012,
                       format="####")),
@@ -277,17 +284,12 @@ bootstrapPage(mainPanel(
                   # tags$li("When analyzing data sets per municipality five- year sets are used because estimates for smaller regions require a larger sample size than can be provided by single year data.")
                    
                  #tags$br(),
-                # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),
-                 
-                 
-                 
-              
-                  
+                # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),                  
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
         id="tabs"
-      )
-    ))
+      ) #ends tableset panel
+    ))#end bootstrap page
   )
 ))

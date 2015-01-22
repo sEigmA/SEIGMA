@@ -7,15 +7,10 @@
 ## Date Modified: 01/08/2015         ##
 #######################################
 
-shinyServer(function(input, output, session) {
+shinyServer(function(input, output, session){
 # unemp_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
-  unemp_df <- reactive({
-
-    ## Filter the data by the chosen Year 
-    unemp_df <- unemp_data %>%
-      filter(Year == input$year) %>%
-      select(1:4, 6:9)
-    
+ unemp_df <- reactive({
+   unemp_df <- unemp_data    
     ## Output reactive dataframe
     unemp_df    
   })
@@ -41,7 +36,6 @@ shinyServer(function(input, output, session) {
         df <- rbind.data.frame(df, bbb)
       }
     }
-    
     
     ## make municipals a vector based on input variable
     if(!is.null(input$sum_muni))
@@ -108,36 +102,8 @@ shinyServer(function(input, output, session) {
     list(
       data=googleDataTable(g))
   })
-  
-#################################################  
-#   ## for the Google charts plot
-#   output$plot <- reactive({
-#     ## make reactive dataframe into regular dataframe
-#     unemp_df <- unemp_df()
-#     
-#     county <- as.character(unemp_df$County[which(unemp_df$Municipal==input$plot_muni)])
-#     
-#     ## make counties a vector based on input variable
-#     munis <- c(input$plot_muni, county, "MA", "United States")
-#     
-#     muni_index <- c()
-#     
-#     for(i in 1:length(munis)){
-#       muni_index[i] <- match(munis[i], unemp_df$Region)
-#     }
-#     
-#     plot_df <- unemp_df[muni_index,] %>%
-#       select(Region, Percent_Vet)
-#     
-#     colnames(plot_df) <- gsub("_", " ", colnames(plot_df))
-#     
-# #   plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
-#     
-#     list(
-#       data=googleDataTable(plot_df))
-#   })
-    
-  ###################MAP CREATION##############
+      
+###################MAP CREATION##############
   
   ## set map colors
   map_dat <- reactive({
@@ -148,10 +114,13 @@ shinyServer(function(input, output, session) {
     ## take US, MA, and counties out of map_dat
     map_dat <- unemp_df %>%
       filter(!is.na(Municipal))
+    
+
+    
 ######################################################    
     ## for single year maps...
     if(input$timespan == "sing.yr"){
-      
+#      browser()
       ## subset the data by the year selected
       unemp_df <- filter(unemp_df, Year==input$year)
       
@@ -167,7 +136,7 @@ shinyServer(function(input, output, session) {
       missing.munis <- setdiff(MAmunis, unemp_df$Municipal)
       df <- data.frame(Municipal=missing.munis, County=County, State="MA", Country="US", 
                        Year=input$year, Unemployment.Rate.Avg=NA, No.Unemployed.Avg=NA, 
-                       No. Employed.Avg=NA, No.Labor.Avg=NA,
+                       No.Employed.Avg=NA, No.Labor.Avg=NA,
                        color=length(smap.colors))
       
       ## combine data subset with missing counties data
@@ -215,48 +184,9 @@ if(input$timespan=="mult.yrs"){
     map_dat <- rbind.data.frame(map_dat, missing_df, na_df)
     map_dat$color <- map_colors[map_dat$color]
     return(map_dat)
-  })
+  }
   
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
-  
-  #############################################
-  # observe({
-  #   values$highlight <- input$map_shape_mouseover$id
-  #   #browser()
-  # })
-  
-  # # Dynamically render the box in the upper-right
-  # output$countyInfo <- renderUI({
-  #   
-  #   if (is.null(values$highlight)) {
-  #     return(tags$div("Hover over a county"))
-  #   } else {
-  #     # Get a properly formatted state name
-  #     countyName <- names(MAcounties)[values$highlight]
-  #     return(tags$div(
-  #       tags$strong(countyName),
-  #       tags$div(density[countyName], HTML("people/m<sup>2</sup>"))
-  #     ))
-  #   }
-  # })
-  
-  # lastHighlighted <- c()
-  # # When values$highlight changes, unhighlight the old state (if any) and
-  # # highlight the new state
-  # observe({
-  # #   if (length(lastHighlighted) > 0)
-  # #     drawStates(getStateName(lastHighlighted), FALSE)
-  #   lastHighlighted <<- values$highlight
-  #   
-  #   if (is.null(values$highlight))
-  #     return()
-  #   
-  #   isolate({
-  #     drawStates(getStateName(values$highlight), TRUE)
-  #   })
-  # })
-  
-  ###########################################
   
   ## draw leaflet map
   map <- createLeafletMap(session, "map")
@@ -339,6 +269,6 @@ if(input$timespan=="mult.yrs"){
       tags$h4("Average Rate of Unemployment for", muni_name, " for ", input$year),
       tags$h5(muni_value)
     ))
+   })
   })
-  
 })
