@@ -77,27 +77,24 @@ shinyServer(function(input, output, session){
     unemp_df <- unemp_df()
     
     ## make region a vector based on input variable
-    munis <- input$munis
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    df <- dcast(unemp_df, Year ~ munis, value.var="Unemployment.Rate.Avg")
-    
-    ## if no counties have been selected, just show the US average
-    if(is.null(input$region)){
-      ## %>% = then
-      g <- df %>%
-        select(Year, US)
-    }
+    munis <- input$plot_muni
     
     ## if counties are selected and MA or US mean boxes are selected, add those to dataframe
-    if(!is.null(input$munis)){
+    if(!is.null(input$plot_muni)){
       if(input$meanMA)
-        munis <- c(munis, "MA")
+        munis <- c(plot_muni, "MA")
       if(input$meanUS)
-        munis <- c(munis, "US")
-      
-      g <- df[,c("Year", munis)]
+        munis <- c(munis, "United States")
     }
+    
+    ## if no counties have been selected, just show the US average
+    if(is.null(input$plot_muni)){
+      ## make region a vector based on input variable
+      munis <- "United States"
+    }
+
+    ## put data into form that googleCharts understands (this unmelts the dataframe)
+    g <- dcast(unemp_df, Year ~ munis, value.var="Unemployment.Rate.Avg")
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(

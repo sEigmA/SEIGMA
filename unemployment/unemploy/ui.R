@@ -47,14 +47,15 @@ shinyUI(fluidPage(
         ## Initializing a single slider
           sliderInput("year", "Select Year",
                       min=1976, max=2012, value=2012,
-                      format="####")),
+        sep="")
+        ),
         conditionalPanel(
           ## Initializes a multi-year slider (range)
           condition="input.timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("range", "Select Years",
                       min=1976, max=2012, value=c(2010,2012),
-                      format="####")
+                      sep="")
         )
       ),
 
@@ -72,7 +73,7 @@ shinyUI(fluidPage(
         condition="input.tabs == 'plot'",
         ## Select input = List
         selectInput("plot_muni", "Select Municipality", 
-                    choices = MA_municipals)),
+                    choices = MA_municipals, multiple=TRUE)),
       
       ## In summary and plot, show boxes that will compare to MA or US average
       conditionalPanel(
