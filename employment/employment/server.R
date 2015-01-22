@@ -1,10 +1,10 @@
 #######################################
-## Title: Employment server.R            ##
+## Title: Employment server.R        ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  1/5/2014          ##
-## Date Modified: 1/7/2014          ##
+## Date Created:  1/5/2015           ##
+## Date Modified: 1/7/2015           ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -12,7 +12,7 @@ shinyServer(function(input, output, session) {
   emp_df <- reactive({
     ## Filter the data by the chosen Five Year Range 
     emp_df <- emp_data %>%
-      filter(Year == input$year) %>%
+      filter(Year == input$Year) %>%
       select(1:4, Average_Monthly_Employment)
     
     ## Output reactive dataframe
@@ -32,41 +32,48 @@ shinyServer(function(input, output, session) {
       munis <- MA_municipals
     
     ## if the user checks the meanUS box or the meanMA box, add those to counties vector
-    if(input$US_mean){
-      if(input$MA_mean){
-        munis <- c("United States", "MA", munis) ## US and MA  
-      } else{
-        munis <- c("United States", munis) ## US only
-      }
-    } else{
-      if(input$MA_mean){
-        munis <- c("MA", munis) ## US only ## MA only
-      }
-    }
+    
+    ##  Not available in this dataset
+    
+#     if(input$US_mean){
+#       if(input$MA_mean){
+#         munis <- c("United States", "MA", munis) ## US and MA  
+#       } else{
+#         munis <- c("United States", munis) ## US only
+#       }
+#     } else{
+#       if(input$MA_mean){
+#         munis <- c("MA", munis) ## US only ## MA only
+#       }
+#     }
     #     browser( )
-    ## create a dataframe consisting only of counties in vector
+    ## create a dataframe consisting only of municipaliities in vector
     emp_df <- emp_df %>%
       filter(Region %in% munis) %>%
       select(4:length(colnames(emp_df)))
     
-    colnames(emp_df) <- gsub("_", " ", colnames(emp_df))
-    
+  ##  Look here
+  colnames(emp_df) <- gsub("_", " ", colnames(emp_df))
+
+####Look here    
     emp_df[,3] <- prettyNum(emp_df[,3], big.mark=",")
     emp_df[,4] <- prettyNum(emp_df[,4], big.mark=",")
     
     return(emp_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
+###############Plot###############
+
   ## create the plot of the data
   ## for the Google charts plot
   output$plot <- reactive({
     ## make reactive dataframe into regular dataframe
     emp_df <- emp_df()
     
-    county <- as.character(emp_df$County[which(emp_df$Municipal==input$plot_muni)])
+    #county <- as.character(emp_df$County[which(emp_df$Municipal==input$plot_muni)])
     
-    ## make counties a vector based on input variable
-    munis <- c(input$plot_muni, county, "MA", "United States")
+    ## make municipalities a vector based on input variable
+    munis <- c(input$plot_muni, "MA", "United States")
     
     muni_index <- c()
     
@@ -108,15 +115,15 @@ shinyServer(function(input, output, session) {
     
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
-    missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                             Region = missing_munis, Five_Year_Range = input$year, 
-                             Average_Monthly_Employment = NA, Margin_Error_Median = NA,
+    missing_df <- data.frame(Municipal = missing_munis, State = "MA", 
+                             Region = missing_munis, Year = input$Year, 
+                             Average_Monthly_Employment = NA,
                              color=length(map_colors), opacity = 0)
     
     na_munis <- setdiff(MA_municipals_map, map_dat$Region)
-    na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
-                             Region = na_munis, Five_Year_Range = input$year, 
-                            Average_Monthly_Employment = NA, Margin_Error_Median = NA,
+    na_df <- data.frame(Municipal = na_munis, State = "MA", 
+                            Region = na_munis, Year = input$Year, 
+                            Average_Monthly_Employment = NA,
                              color=length(map_colors), opacity = 0.7)
     
     
@@ -237,16 +244,17 @@ shinyServer(function(input, output, session) {
     }
 #     browser()
     muni_name <- values$selectedFeature$NAMELSAD10
-    muni_value <- prettyNum(values$selectedFeature["Median_Household_Income"], big.mark = ",")
+    muni_value <- prettyNum(values$selectedFeature["Average_Monthly_Employment"], big.mark = ",")
     
     ## If clicked county has no crude rate, display a message
     if(muni_value == "NULL"){
       return(as.character(tags$div(
-        tags$h5("Median Household Income in ", muni_name, "is not available for this timespan"))))
+        tags$h5("Average Monthly Employment in ", muni_name, "is not available for this timespan"))))
     }
+
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4("Median Household Income in ", muni_name, " for ", input$year),
+      tags$h4("Average Monthly Employment in ", muni_name, " for ", input$Year),
       tags$h5("$",muni_value)
     ))
   })

@@ -3,8 +3,8 @@
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  1/5/2014          ##
-## Date Modified: 1/7/2014          ##
+## Date Created:  1/5/2015          ##
+## Date Modified: 1/7/2015          ##
 #######################################
 
 ##First file run - Environment Setup
@@ -23,6 +23,7 @@ require(rCharts)
 require(tidyr)
 
 ## load map data
+##County is not necessary for this app
 MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
@@ -32,10 +33,12 @@ emp_data <- read.csv(file="employmentdata2.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
-MA_counties <- c()
-for(i in 1:length(MA_map_county$features)){
-  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-}
+## No county data
+# 
+# MA_counties <- c()
+# for(i in 1:length(MA_map_county$features)){
+#   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
+# }
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -69,6 +72,10 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
                 "#0072B2", "#D55E00", "#CC79A7")
 
 ## Create maxs and mins for googleCharts/Plot tab
+xlim <- list(
+  min = min(emp_data$Year)-1,
+  max = max(emp_data$Year)+1
+)
 ylim <- list(
   min = 0,
   max = max(emp_data$Average_Monthly_Employment)
@@ -158,7 +165,7 @@ summary_side_text <- conditionalPanel(
 #       tags$li('View rates by: male or female (or both by leaving this selection blank)'),
 #       tags$br(),
       tags$li('Select one or multiple municipalities.'),
-      tags$br(),
+      tags$br()
       # tags$li('To compare median data to the Massachusetts median or US median, select the corresponding check box'),
       # tags$br(),
       # tags$li(p(strong('Please note that all statistics are 5-year medians')))
@@ -184,6 +191,7 @@ p(strong('Please select a municipality to analyze average monthly employment by 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
+
   helpText(p(strong('Please click on "Generate Map" to get started'))),
   tags$br(),
   tags$ul(
