@@ -1,5 +1,5 @@
 #######################################
-## Title: Employment server.R          ##
+## Title: Employment server.R        ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
