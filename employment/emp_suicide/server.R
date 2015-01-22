@@ -9,12 +9,13 @@
 
 shinyServer(function(input, output, session) {
   # emp_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
+  
   emp_df <- reactive({
-    
     ## Filter the data by the chosen Year 
-    emp_df <- empdata %>%
-      filter(Year == input$year) %>%
-      select(1:4, 6:9)
+    emp_df <- empdata ## %>%
+      
+    ##  filter(Year == input$year) %>%
+    ##  select(1:4, 6:9)
     
     ## Output reactive dataframe
     emp_df    
@@ -34,6 +35,7 @@ shinyServer(function(input, output, session) {
     if(input$timespan == "mult.yrs"){
       range <- seq(min(input$range), max(input$range), 1)
       df <- c()
+      
       
       ####**********RBIND.Data.frame -DO Not Match
       for(i in 1:length(range)){
@@ -66,48 +68,95 @@ shinyServer(function(input, output, session) {
     ## create a dataframe consisting only of counties in vector
     sum_df <- emp_df %>%
       filter(Region %in% munis) %>%
-      select(4:length(colnames(emp_df)))
+      select(Region, Year, Average_Monthly_Employment)
     
-    colnames(sum_df) <- c("Municipal", "State", "Year", "Region", "Industry Title", "Average Monthly Employment")
+    colnames(sum_df) <- c("Region","Year","Average Monthly Employment")
     
     return(sum_df)
-  }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
+  }, options = list(searching = FALSE, orderClasses = TRUE)) 
+  
+  # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
+  
   
   ##############################################  
+  
   
   ## create the plot of the data
   ## for the Google charts plot
   output$plot <- reactive({
+    browser()
     ## make reactive dataframe into regular dataframe
-    emp_df <- emp_df()
+    unemp_df <- unemp_df()
     
     ## make region a vector based on input variable
-    munis <- input$munis
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    df <- dcast(emp_df, Year ~ munis, value.var="Average_Monthly_Employment")
-    
-    ## if no counties have been selected, just show the US average
-    if(is.null(input$region)){
-      ## %>% = then
-      g <- df %>%
-        select(Year, US)
-    }
+    munis <- input$plot_muni
     
     ## if counties are selected and MA or US mean boxes are selected, add those to dataframe
-    if(!is.null(input$munis)){
+    if(!is.null(input$plot_muni)){
       if(input$meanMA)
-        munis <- c(munis, "MA")
+        munis <- c(plot_muni, "MA")
       if(input$meanUS)
-        munis <- c(munis, "US")
-      
-      g <- df[,c("Year", munis)]
+        munis <- c(munis, "United States")
     }
+    
+    ## if no counties have been selected, just show the US average
+    if(is.null(input$plot_muni)){
+      ## make region a vector based on input variable
+      munis <- "United States"
+    }
+    
+    ## put data into form that googleCharts understands (this unmelts the dataframe)
+    g <- dcast(unemp_df, Year ~ munis, value.var="Average_Monthly_Employment")
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
       data=googleDataTable(g))
   })
+#   
+#    
+#   
+#   ## create the plot of the data
+#   ## for the Google charts plot
+#   output$plot <- reactive({
+#     browser()
+#     ## make reactive dataframe into regular dataframe
+#     emp_df <- emp_df()
+#     
+#     ##
+#     
+#     if(input$meanMA)
+#       munis <-  c(plot_muni, "MA")
+#     ##browser()
+#     
+#     ## make region a vector based on input variable
+#     munis <- c(munis, "United States")
+#     ## input$plot_muni
+#     
+#     ## put data into form that googleCharts understands (this unmelts the dataframe)
+#     g <- dcast(emp_df, Year ~ munis, value.var="Average_Monthly_Employment")
+#     
+#     ## if no counties have been selected, just show the US average
+#     
+#     if(is.null(input$region)){
+#       ## %>% = then
+#       g <- df %>%
+#         select(Year, US)
+#     }
+#     
+#     ## if counties are selected and MA or US mean boxes are selected, add those to dataframe
+#     if(!is.null(input$munis)){
+#       if(input$meanMA)
+#         munis <- c(munis, "MA")
+#       if(input$meanUS)
+#         munis <- c(munis, "US")
+#       
+#       g <- df[,c("Year", munis)]
+#     }
+#     
+#     ## this outputs the google data to be used in the UI to create the dataframe
+#     list(
+#       data=googleDataTable(g))
+#   })
   
   #################################################  
   #   ## for the Google charts plot
@@ -137,6 +186,11 @@ shinyServer(function(input, output, session) {
   #       data=googleDataTable(plot_df))
   #   })
   
+
+
+
+
+
   ###################MAP CREATION##############
   
   ## set map colors
@@ -148,6 +202,8 @@ shinyServer(function(input, output, session) {
     ## take US, MA, and counties out of map_dat
     map_dat <- emp_df %>%
       filter(!is.na(Municipal))
+    
+    
     ######################################################    
     ## for single year maps...
     if(input$timespan == "sing.yr"){
@@ -175,7 +231,8 @@ shinyServer(function(input, output, session) {
       return(emp_df)
     } 
     
-    if(input$timespan=="mult.yrs"){
+
+if(input$timespan=="mult.yrs"){
       
       ## create dataframes for the max and min year of selected data
       min.year <- min(input$range)
@@ -210,7 +267,7 @@ shinyServer(function(input, output, session) {
       map_dat <- rbind.data.frame(map_dat, missing_df, na_df)
       map_dat$color <- map_colors[map_dat$color]
       return(map_dat)
-    })
+    }
   
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
   
@@ -273,8 +330,7 @@ shinyServer(function(input, output, session) {
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a county
-        x$features[[i]]$properties["Average_Monthly_Employment"] <- 
-          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Average_Monthly_Employment"]
+        x$features[[i]]$properties["Average_Monthly_Employment"] <- map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Average_Monthly_Employment"]
         ## Style properties
         x$features[[i]]$properties$style <- list(
           fill=TRUE, 
@@ -337,3 +393,4 @@ shinyServer(function(input, output, session) {
   })
   
   })
+})

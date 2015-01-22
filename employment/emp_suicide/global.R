@@ -8,28 +8,38 @@
 #######################################
 
 ##First file run - Environment Setup
-
-require(RJSONIO)
+## load necessary libraries
 require(dplyr)
+require(sp)
+require(maptools)
+require(rgeos)
+require(Hmisc)
+require(reshape2)
+require(shiny)
+require(googleCharts)
 require(leaflet)
+require(RJSONIO)
+#require(tidyr)
 
 ## load map data
-MAmap <- fromJSON("County_2010Census_DP1.geojson")
+#MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 
+MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
+empdata <- read.csv(file="employmentdata2.csv")[,-1]
 
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
-MA_counties <- c()
-for(i in 1:length(MA_map_county$features)){
-  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-}
+#MA_counties <- c()
+#for(i in 1:length(MA_map_county$features)){
+#  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
+#}
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
 for(i in 1:length(MA_map_muni$features)){
-  MA_mapg_muni$features[[i]]$properties$NAMELSAD10 <- substr(MA_map_muni$features[[i]]$properties$NAMELSAD10, 1, nchar(MA_map_muni$features[[i]]$properties$NAMELSAD10)-5)
+  MA_map_muni$features[[i]]$properties$NAMELSAD10 <- substr(MA_map_muni$features[[i]]$properties$NAMELSAD10, 1, nchar(MA_map_muni$features[[i]]$properties$NAMELSAD10)-5)
 }
 
 MA_municipals_map <- c()
@@ -57,10 +67,13 @@ MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 ## Load formatted suicide data
 ## -1 eliminates first column [rows,columns]
 empdata <- read.csv(file="employmentdata2.csv")[,-1]
+
+
 # empdata$Average_Monthly_Employment <- as.numeric(empdata$Average_Monthly_Employment)
 # empdata$Average_Monthly_Employment.Lower.Bound <- as.numeric(empdata$Average_Monthly_Employment.Lower.Bound)
 # empdata$Average_Monthly_Employment.Upper.Bound <- as.numeric(empdata$Average_Monthly_Employment.Upper.Bound)
 # empdata$Average_Monthly_Employment.Standard.Error <- as.numeric(empdata$Average_Monthly_Employment.Standard.Error)
+
 
 
 ## Set graph colors (special for colorblind people)
@@ -79,6 +92,7 @@ ylim <- list(
   max = max(empdata$Average_Monthly_Employment, na.rm=T)+5
 )
 
+####################################################
 
 ## Colors for a single-year legend
 spaint.brush <- colorRampPalette(colors=c("white", "red3"))
@@ -112,7 +126,7 @@ mmap.colors <- c(mpaint.brush(n=6), "#999999")
 
 ## find max and min (crude suicide rates) values for each county
 bound <- empdata %>%
-  group_by(County) %>%
+ group_by(Region) %>%
   
   ##n.rm=FALSE = needed 
   summarise(max.val = max(Average_Monthly_Employment, na.rm=FALSE),
@@ -189,7 +203,7 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
   
-  helpText(p(strong('Please select the timespan for which you are interested in viewing the annual average monthly employment.'))),
+  helpText(p(strong('Please select the timespan for which you are interested in viewing average annual monthly employment.'))),
   tags$br(),
   tags$ul(
     tags$br(),
@@ -209,7 +223,7 @@ plot_side_text <- conditionalPanel(
   p(strong('Please select a municipality to analyze annual average monthly employments, do not slecet more than ten municipalities at a time.')),
   tags$br(),
   tags$ul(
-    tags$li('For a given timespan, you can compare average monthly employment numbers to the national, state, and county rates.')
+  tags$li('For a given timespan, you can compare average monthly employment numbers to the national, state, and county rates.')
   ))
 
 
@@ -247,7 +261,7 @@ plot_main_text <- p(strong("Variable Summary:"),
 
 font_size <- 14
 
-plot_options <- googleColumnChart("plot", width="100%", height="475px", 
+plot_options <- googleLineChart("plot", width="100%", height="475px", 
                                   options = list(
                                     ## set fonts
                                     fontName = "Source Sans Pro",
