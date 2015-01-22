@@ -159,7 +159,7 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the year or range for which you are interested in viewing average  monthly employment data.'))),
+  helpText(p(strong('Please select the year or range for which you are interested in viewing average annual employment rates.'))),
   tags$br(),
   tags$ul(
 #       tags$li('View rates by: male or female (or both by leaving this selection blank)'),
