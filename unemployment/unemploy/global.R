@@ -2,7 +2,7 @@
 ## Title: Unemploy global.R          ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
+##            Kiridly, Steve Lauer   ##
 ## Date Created:  01/07/2015         ##
 ## Date Modified: 01/07/2015         ##
 #######################################
@@ -14,12 +14,12 @@ require(sp)
 require(maptools)
 require(rgeos)
 require(Hmisc)
-require(reshape2)
+# require(reshape2)
 require(shiny)
 require(googleCharts)
 require(leaflet)
 require(RJSONIO)
-#require(tidyr)
+require(tidyr)
 
 ## load map data
 MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
@@ -50,7 +50,7 @@ for(i in 1:length(MA_map_muni$features)){
 idx_leftovers <- which(!MA_municipals_map %in% unemp_data$Region)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
-  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
+  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <-
     substr(leftover_munis[i], 1, nchar(leftover_munis[i])-5)
 }
 
@@ -64,7 +64,7 @@ MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
                 "#0072B2", "#D55E00", "#CC79A7")
 
 ## Create maxs and mins for googleCharts/Plot tab
@@ -84,7 +84,7 @@ ylim <- list(
 spaint.brush <- colorRampPalette(colors=c("white", "red3"))
 smap.colors <- c(spaint.brush(n=5), "#999999")
 
-## For a single year data, we have a series of rates (split into quintiles).  Cuts are quintiles of the total data 
+## For a single year data, we have a series of rates (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
 smax.val <- max(unemp_data$Unemployment.Rate.Avg, na.rm=TRUE)
@@ -97,7 +97,7 @@ scuts <- quantile(unemp_data$Unemployment.Rate.Avg, probs = seq(0, 1, length.out
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
-## head = scuts takes everything except for the last one, 
+## head = scuts takes everything except for the last one,
 ## tails = same thing opposite
 
 scolorRanges <- data.frame(
@@ -113,8 +113,8 @@ mmap.colors <- c(mpaint.brush(n=6), "#999999")
 ## find max and min (crude rates) values for each region
 bound <- unemp_data %>%
   group_by(Region) %>%
-  
-  ##n.rm=FALSE = needed 
+
+  ##n.rm=FALSE = needed
   summarise(max.val = max(Unemployment.Rate.Avg, na.rm=FALSE),
             min.val = min(Unemployment.Rate.Avg, na.rm=FALSE))
 
@@ -179,7 +179,7 @@ gen_map_button <- HTML('<style type="text/css">
                        position:relative;
                        top:1px;
                        }
-                       
+
                        </style>')
 
 summary_side_text <- conditionalPanel(
@@ -218,7 +218,7 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
-    
+
     tags$li('Clicking on a municipality will display average annual unemployment status rates for the time period you selected.')
   ))
 
@@ -241,13 +241,13 @@ plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
                     strong("Annual Avergage Unemployment Rate-"),
-                    " Average annual unemployment rates account for workers who have lost their jobs and are looking for new ones.  This excludes people who are not looking for work.  The unemployment rate is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey.  Municipality unemployment rates were gathered form a secition of thr BLS and CPS called the Local Areas Unemployment Statistics Series.", 
+                    " Average annual unemployment rates account for workers who have lost their jobs and are looking for new ones.  This excludes people who are not looking for work.  The unemployment rate is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey.  Municipality unemployment rates were gathered form a secition of thr BLS and CPS called the Local Areas Unemployment Statistics Series.",
                     tags$br(),
                     strong("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf", align="center"))
 
 font_size <- 14
 
-plot_options <- googleColumnChart("plot", width="100%", height="475px", 
+plot_options <- googleColumnChart("plot", width="100%", height="475px",
                                   options = list(
                                     ## set fonts
                                     fontName = "Source Sans Pro",
@@ -273,25 +273,25 @@ plot_options <- googleColumnChart("plot", width="100%", height="475px",
                                         bold = TRUE,
                                         italic = FALSE)
                                     ),
-                                    
+
                                     ## set legend fonts
                                     legend = list(
                                       textStyle = list(
                                         fontSize=font_size),
                                       position = "right"),
-                                    
+
                                     ## set chart area padding
                                     chartArea = list(
                                       top = 50, left = 100,
                                       height = "75%", width = "65%"
                                     ),
-                                    
+
                                     ## set colors
                                     colors = cbbPalette[c(2:8)],
-                                    
+
                                     ## set point size
                                     pointSize = 3,
-                                    
+
                                     ## set tooltip font size
                                     ## Hover text font stuff
                                     tooltip = list(
