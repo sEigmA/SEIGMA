@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ##
 ## Date Created:  01/07/2015         ##
-## Date Modified: 01/08/2015         ##
+## Date Modified: 01/28/2015         ##
 #######################################
 
 shinyServer(function(input, output, session){
@@ -116,12 +116,10 @@ shinyServer(function(input, output, session){
     map_dat <- unemp_df %>%
       filter(!is.na(Municipal))
 
-
-
 ######################################################
     ## for single year maps...
     if(input$timespan == "sing.yr"){
-     browser()
+#     browser()
       ## subset the data by the year selected
       unemp_df <- filter(unemp_df, Year==input$year)
 
