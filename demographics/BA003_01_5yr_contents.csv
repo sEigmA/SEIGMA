@@ -1,0 +1,135 @@
+Alphabetic List of Variables and Attributes,,,,,,
+#,Variable,Type,Len,Format,Informat,Label
+5,BA003_001,Char,9,,,BA003_001 : Five Year Average
+6,BA003_002,Char,19,$19.00 ,$19.00 ,BA003_002 : Id
+7,BA003_003,Char,10,$10.00 ,$10.00 ,BA003_003 : Id2
+8,BA003_004,Char,67,$67.00 ,$67.00 ,BA003_004 : Geography
+9,BA003_005,Char,48,$48.00 ,$48.00 ,BA003_005 : Estimate; SEX AND AGE - Total population
+10,BA003_006,Char,55,$55.00 ,$55.00 ,BA003_006 : Estimate Margin of Error; SEX AND AGE - Total population
+11,BA003_007,Char,56,$56.00 ,$56.00 ,BA003_007 : Percent Margin of Error; SEX AND AGE - Total population
+12,BA003_008,Char,55,$55.00 ,$55.00 ,BA003_008 : Estimate; SEX AND AGE - Male
+13,BA003_009,Char,62,$62.00 ,$62.00 ,BA003_009 : Estimate Margin of Error; SEX AND AGE - Male
+14,BA003_010,Char,56,$56.00 ,$56.00 ,BA003_010 : Percent; SEX AND AGE - Male
+15,BA003_011,Char,63,$63.00 ,$63.00 ,BA003_011 : Percent Margin of Error; SEX AND AGE - Male
+16,BA003_012,Char,57,$57.00 ,$57.00 ,BA003_012 : Estimate; SEX AND AGE - Female
+17,BA003_013,Char,64,$64.00 ,$64.00 ,BA003_013 : Estimate Margin of Error; SEX AND AGE - Female
+18,BA003_014,Char,58,$58.00 ,$58.00 ,BA003_014 : Percent; SEX AND AGE - Female
+19,BA003_015,Char,65,$65.00 ,$65.00 ,BA003_015 : Percent Margin of Error; SEX AND AGE - Female
+20,BA003_016,Char,64,$64.00 ,$64.00 ,BA003_016 : Estimate; SEX AND AGE - Under 5 years
+21,BA003_017,Char,71,$71.00 ,$71.00 ,BA003_017 : Estimate Margin of Error; SEX AND AGE - Under 5 years
+22,BA003_018,Char,65,$65.00 ,$65.00 ,BA003_018 : Percent; SEX AND AGE - Under 5 years
+23,BA003_019,Char,72,$72.00 ,$72.00 ,BA003_019 : Percent Margin of Error; SEX AND AGE - Under 5 years
+24,BA003_020,Char,63,$63.00 ,$63.00 ,BA003_020 : Estimate; SEX AND AGE - 5 to 9 years
+25,BA003_021,Char,70,$70.00 ,$70.00 ,BA003_021 : Estimate Margin of Error; SEX AND AGE - 5 to 9 years
+26,BA003_022,Char,64,$64.00 ,$64.00 ,BA003_022 : Percent; SEX AND AGE - 5 to 9 years
+27,BA003_023,Char,71,$71.00 ,$71.00 ,BA003_023 : Percent Margin of Error; SEX AND AGE - 5 to 9 years
+28,BA003_024,Char,65,$65.00 ,$65.00 ,BA003_024 : Estimate; SEX AND AGE - 10 to 14 years
+29,BA003_025,Char,72,$72.00 ,$72.00 ,BA003_025 : Estimate Margin of Error; SEX AND AGE - 10 to 14 years
+30,BA003_026,Char,66,$66.00 ,$66.00 ,BA003_026 : Percent; SEX AND AGE - 10 to 14 years
+31,BA003_027,Char,73,$73.00 ,$73.00 ,BA003_027 : Percent Margin of Error; SEX AND AGE - 10 to 14 years
+32,BA003_028,Char,65,$65.00 ,$65.00 ,BA003_028 : Estimate; SEX AND AGE - 15 to 19 years
+33,BA003_029,Char,72,$72.00 ,$72.00 ,BA003_029 : Estimate Margin of Error; SEX AND AGE - 15 to 19 years
+34,BA003_030,Char,66,$66.00 ,$66.00 ,BA003_030 : Percent; SEX AND AGE - 15 to 19 years
+35,BA003_031,Char,73,$73.00 ,$73.00 ,BA003_031 : Percent Margin of Error; SEX AND AGE - 15 to 19 years
+36,BA003_032,Char,65,$65.00 ,$65.00 ,BA003_032 : Estimate; SEX AND AGE - 20 to 24 years
+37,BA003_033,Char,72,$72.00 ,$72.00 ,BA003_033 : Estimate Margin of Error; SEX AND AGE - 20 to 24 years
+38,BA003_034,Char,66,$66.00 ,$66.00 ,BA003_034 : Percent; SEX AND AGE - 20 to 24 years
+39,BA003_035,Char,73,$73.00 ,$73.00 ,BA003_035 : Percent Margin of Error; SEX AND AGE - 20 to 24 years
+40,BA003_036,Char,65,$65.00 ,$65.00 ,BA003_036 : Estimate; SEX AND AGE - 25 to 34 years
+41,BA003_037,Char,72,$72.00 ,$72.00 ,BA003_037 : Estimate Margin of Error; SEX AND AGE - 25 to 34 years
+42,BA003_038,Char,66,$66.00 ,$66.00 ,BA003_038 : Percent; SEX AND AGE - 25 to 34 years
+43,BA003_039,Char,73,$73.00 ,$73.00 ,BA003_039 : Percent Margin of Error; SEX AND AGE - 25 to 34 years
+44,BA003_040,Char,65,$65.00 ,$65.00 ,BA003_040 : Estimate; SEX AND AGE - 35 to 44 years
+45,BA003_041,Char,72,$72.00 ,$72.00 ,BA003_041 : Estimate Margin of Error; SEX AND AGE - 35 to 44 years
+46,BA003_042,Char,66,$66.00 ,$66.00 ,BA003_042 : Percent; SEX AND AGE - 35 to 44 years
+47,BA003_043,Char,73,$73.00 ,$73.00 ,BA003_043 : Percent Margin of Error; SEX AND AGE - 35 to 44 years
+48,BA003_044,Char,65,$65.00 ,$65.00 ,BA003_044 : Estimate; SEX AND AGE - 45 to 54 years
+49,BA003_045,Char,72,$72.00 ,$72.00 ,BA003_045 : Estimate Margin of Error; SEX AND AGE - 45 to 54 years
+50,BA003_046,Char,66,$66.00 ,$66.00 ,BA003_046 : Percent; SEX AND AGE - 45 to 54 years
+51,BA003_047,Char,73,$73.00 ,$73.00 ,BA003_047 : Percent Margin of Error; SEX AND AGE - 45 to 54 years
+52,BA003_048,Char,65,$65.00 ,$65.00 ,BA003_048 : Estimate; SEX AND AGE - 55 to 59 years
+53,BA003_049,Char,72,$72.00 ,$72.00 ,BA003_049 : Estimate Margin of Error; SEX AND AGE - 55 to 59 years
+54,BA003_050,Char,66,$66.00 ,$66.00 ,BA003_050 : Percent; SEX AND AGE - 55 to 59 years
+55,BA003_051,Char,73,$73.00 ,$73.00 ,BA003_051 : Percent Margin of Error; SEX AND AGE - 55 to 59 years
+56,BA003_052,Char,65,$65.00 ,$65.00 ,BA003_052 : Estimate; SEX AND AGE - 60 to 64 years
+57,BA003_053,Char,72,$72.00 ,$72.00 ,BA003_053 : Estimate Margin of Error; SEX AND AGE - 60 to 64 years
+58,BA003_054,Char,66,$66.00 ,$66.00 ,BA003_054 : Percent; SEX AND AGE - 60 to 64 years
+59,BA003_055,Char,73,$73.00 ,$73.00 ,BA003_055 : Percent Margin of Error; SEX AND AGE - 60 to 64 years
+60,BA003_056,Char,65,$65.00 ,$65.00 ,BA003_056 : Estimate; SEX AND AGE - 65 to 74 years
+61,BA003_057,Char,72,$72.00 ,$72.00 ,BA003_057 : Estimate Margin of Error; SEX AND AGE - 65 to 74 years
+62,BA003_058,Char,66,$66.00 ,$66.00 ,BA003_058 : Percent; SEX AND AGE - 65 to 74 years
+63,BA003_059,Char,73,$73.00 ,$73.00 ,BA003_059 : Percent Margin of Error; SEX AND AGE - 65 to 74 years
+64,BA003_060,Char,65,$65.00 ,$65.00 ,BA003_060 : Estimate; SEX AND AGE - 75 to 84 years
+65,BA003_061,Char,72,$72.00 ,$72.00 ,BA003_061 : Estimate Margin of Error; SEX AND AGE - 75 to 84 years
+66,BA003_062,Char,66,$66.00 ,$66.00 ,BA003_062 : Percent; SEX AND AGE - 75 to 84 years
+67,BA003_063,Char,73,$73.00 ,$73.00 ,BA003_063 : Percent Margin of Error; SEX AND AGE - 75 to 84 years
+68,BA003_064,Char,68,$68.00 ,$68.00 ,BA003_064 : Estimate; SEX AND AGE - 85 years and over
+69,BA003_065,Char,75,$75.00 ,$75.00 ,BA003_065 : Estimate Margin of Error; SEX AND AGE - 85 years and over
+70,BA003_066,Char,69,$69.00 ,$69.00 ,BA003_066 : Percent; SEX AND AGE - 85 years and over
+71,BA003_067,Char,76,$76.00 ,$76.00 ,BA003_067 : Percent Margin of Error; SEX AND AGE - 85 years and over
+72,BA003_068,Char,69,$69.00 ,$69.00 ,BA003_068 : Estimate; SEX AND AGE - Median age (years)
+73,BA003_069,Char,76,$76.00 ,$76.00 ,BA003_069 : Estimate Margin of Error; SEX AND AGE - Median age (years)
+74,BA003_070,Char,70,$70.00 ,$70.00 ,BA003_070 : Percent; SEX AND AGE - Median age (years)
+75,BA003_071,Char,77,$77.00 ,$77.00 ,BA003_071 : Percent Margin of Error; SEX AND AGE - Median age (years)
+76,BA003_072,Char,68,$68.00 ,$68.00 ,BA003_072 : Estimate; SEX AND AGE - 18 years and over
+77,BA003_073,Char,75,$75.00 ,$75.00 ,BA003_073 : Estimate Margin of Error; SEX AND AGE - 18 years and over
+78,BA003_074,Char,76,$76.00 ,$76.00 ,BA003_074 : Percent Margin of Error; SEX AND AGE - 18 years and over
+79,BA003_075,Char,75,$75.00 ,$75.00 ,BA003_075 : Estimate; SEX AND AGE - 18 years and over - Male
+80,BA003_076,Char,82,$82.00 ,$82.00 ,BA003_076 : Estimate Margin of Error; SEX AND AGE - 18 years and over - Male
+81,BA003_077,Char,76,$76.00 ,$76.00 ,BA003_077 : Percent; SEX AND AGE - 18 years and over - Male
+82,BA003_078,Char,83,$83.00 ,$83.00 ,BA003_078 : Percent Margin of Error; SEX AND AGE - 18 years and over - Male
+83,BA003_079,Char,77,$77.00 ,$77.00 ,BA003_079 : Estimate; SEX AND AGE - 18 years and over - Female
+84,BA003_080,Char,84,$84.00 ,$84.00 ,BA003_080 : Estimate Margin of Error; SEX AND AGE - 18 years and over - Female
+85,BA003_081,Char,78,$78.00 ,$78.00 ,BA003_081 : Percent; SEX AND AGE - 18 years and over - Female
+86,BA003_082,Char,85,$85.00 ,$85.00 ,BA003_082 : Percent Margin of Error; SEX AND AGE - 18 years and over - Female
+87,BA003_083,Char,68,$68.00 ,$68.00 ,BA003_083 : Estimate; SEX AND AGE - 65 years and over
+88,BA003_084,Char,75,$75.00 ,$75.00 ,BA003_084 : Estimate Margin of Error; SEX AND AGE - 65 years and over
+89,BA003_085,Char,76,$76.00 ,$76.00 ,BA003_085 : Percent Margin of Error; SEX AND AGE - 65 years and over
+90,BA003_086,Char,75,$75.00 ,$75.00 ,BA003_086 : Estimate; SEX AND AGE - 65 years and over - Male
+91,BA003_087,Char,82,$82.00 ,$82.00 ,BA003_087 : Estimate Margin of Error; SEX AND AGE- 65 years and over - Male
+92,BA003_088,Char,76,$76.00 ,$76.00 ,BA003_088 : Percent; SEX AND AGE- 65 years and over - Male
+93,BA003_089,Char,83,$83.00 ,$83.00 ,BA003_089 : Percent Margin of Error; SEX AND AGE - 65 years and over - Male
+94,BA003_090,Char,77,$77.00 ,$77.00 ,BA003_090 : Estimate; SEX AND AGE- 65 years and over - Female
+95,BA003_091,Char,84,$84.00 ,$84.00 ,BA003_091 : Estimate Margin of Error; SEX AND AGE - 65 years and over - Female
+96,BA003_092,Char,78,$78.00 ,$78.00 ,BA003_092 : Percent; SEX AND AGE - 65 years and over - Female
+97,BA003_093,Char,85,$85.00 ,$85.00 ,BA003_093 : Percent Margin of Error; SEX AND AGE - 65 years and over - Female
+98,BA003_094,Char,102,$102.00 ,$102.00 ,BA003_094 : Estimate; RACE - White
+99,BA003_095,Char,109,$109.00 ,$109.00 ,BA003_095 : Estimate Margin of Error; RACE - White
+100,BA003_096,Char,103,$103.00 ,$103.00 ,BA003_096 : Percent; RACE - White
+101,BA003_097,Char,110,$110.00 ,$110.00 ,BA003_097 : Percent Margin of Error; RACE - White
+102,BA003_098,Char,122,$122.00 ,$122.00 ,BA003_098 : Estimate; RACE - Black or African American
+103,BA003_099,Char,129,$129.00 ,$129.00 ,BA003_099 : Estimate Margin of Error; RACE - Black or African American
+104,BA003_100,Char,123,$123.00 ,$123.00 ,BA003_100 : Percent; RACE - Black or African American
+105,BA003_101,Char,130,$130.00 ,$130.00 ,BA003_101 : Percent Margin of Error; RACE - Black or African American
+106,BA003_102,Char,130,$130.00 ,$130.00 ,BA003_102 : Estimate; RACE - American Indian and Alaska Native
+107,BA003_103,Char,137,$137.00 ,$137.00 ,BA003_103 : Estimate Margin of Error; RACE - American Indian and Alaska Native
+108,BA003_104,Char,131,$131.00 ,$131.00 ,BA003_104 : Percent; RACE - American Indian and Alaska Native
+109,BA003_105,Char,138,$138.00 ,$138.00 ,BA003_105 : Percent Margin of Error; RACE - American Indian and Alaska Native
+110,BA003_106,Char,102,$102.00 ,$102.00 ,BA003_106 : Estimate; RACE - Asian
+111,BA003_107,Char,109,$109.00 ,$109.00 ,BA003_107 : Estimate Margin of Error; RACE - Asian
+112,BA003_108,Char,103,$103.00 ,$103.00 ,BA003_108 : Percent; RACE - Asian
+113,BA003_109,Char,110,$110.00 ,$110.00 ,BA003_109 : Percent Margin of Error; RACE - Asian
+114,BA003_110,Char,139,$139.00 ,$139.00 ,BA003_110 : Estimate; RACE - Native Hawaiian and Other Pacific Islander
+115,BA003_111,Char,146,$146.00 ,$146.00 ,BA003_111 : Estimate Margin of Error; RACE - Native Hawaiian and Other Pacific Islander
+116,BA003_112,Char,140,$140.00 ,$140.00 ,BA003_112 : Percent; RACE - Native Hawaiian and Other Pacific Islander
+117,BA003_113,Char,147,$147.00 ,$147.00 ,BA003_113 : Percent Margin of Error; RACE - Native Hawaiian and Other Pacific Islander
+118,BA003_114,Char,112,$112.00 ,$112.00 ,BA003_114 : Estimate; RACE - Some other race
+119,BA003_115,Char,119,$119.00 ,$119.00 ,BA003_115 : Estimate Margin of Error; RACE - Some other race
+120,BA003_116,Char,113,$113.00 ,$113.00 ,BA003_116 : Percent; RACE - Some other race
+121,BA003_117,Char,120,$120.00 ,$120.00 ,BA003_117 : Percent Margin of Error; RACE - Some other race
+122,BA003_118,Char,99,$99.00 ,$99.00 ,BA003_118 : Estimate; HISPANIC OR LATINO AND RACE - Hispanic or Latino (of any race)
+123,BA003_119,Char,106,$106.00 ,$106.00 ,BA003_119 : Estimate Margin of Error; HISPANIC OR LATINO AND RACE - Hispanic or Latino (of any race)
+124,BA003_120,Char,100,$100.00 ,$100.00 ,BA003_120 : Percent; HISPANIC OR LATINO AND RACE - Hispanic or Latino (of any race)
+125,BA003_121,Char,107,$107.00 ,$107.00 ,BA003_121 : Percent Margin of Error; HISPANIC OR LATINO AND RACE - Hispanic or Latino (of any race)
+126,BA003_122,Char,89,$89.00 ,$89.00 ,BA003_122 : Estimate; HISPANIC OR LATINO AND RACE - Not Hispanic or Latino
+127,BA003_123,Char,96,$96.00 ,$96.00 ,BA003_123 : Estimate Margin of Error; HISPANIC OR LATINO AND RACE - Not Hispanic or Latino
+128,BA003_124,Char,90,$90.00 ,$90.00 ,BA003_124 : Percent; HISPANIC OR LATINO AND RACE - Not Hispanic or Latino
+129,BA003_125,Char,97,$97.00 ,$97.00 ,BA003_125 : Percent Margin of Error; HISPANIC OR LATINO AND RACE - Not Hispanic or Latino
+130,BA003_126,Char,109,$109.00 ,$109.00 ,BA003_126 : Estimate; HISPANIC OR LATINO AND RACE - Not Hispanic or Latino - Two or more races
+131,BA003_127,Char,116,$116.00 ,$116.00 ,BA003_127 : Estimate Margin of Error; HISPANIC OR LATINO AND RACE - Not Hispanic or Latino - Two or more races
+132,BA003_128,Char,110,$110.00 ,$110.00 ,BA003_128 : Percent; HISPANIC OR LATINO AND RACE - Not Hispanic or Latino - Two or more races
+133,BA003_129,Char,117,$117.00 ,$117.00 ,BA003_129 : Percent Margin of Error; HISPANIC OR LATINO AND RACE - Not Hispanic or Latino - Two or more races
+2,County,Char,18,,,County
+1,Municipal,Char,21,,,Municipal
+4,Region,Char,60,,,Region
+3,State,Char,3,,,State
