@@ -89,11 +89,6 @@ shinyUI(fluidPage(
                  tags$hr(),
                    
                    
-                   
-                   
-                   
-                   
-                   
                    #                      condition="timespan == 'sing.yr'",
 #                      
 #                      ## Initializing a single slider

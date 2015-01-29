@@ -22,19 +22,16 @@ require(RJSONIO)
 #require(tidyr)
 
 ## load map data
-#MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
-
+MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
-
 emp_data <- read.csv(file="employmentdata2.csv")[,-1]
-
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
 #MA_counties <- c()
-#for(i in 1:length(MA_map_county$features)){
-#  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-#}
+for(i in 1:length(MA_map_county$features)){
+  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
+}
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -54,25 +51,15 @@ for(i in 1:length(leftover_munis)){
     substr(leftover_munis[i], 1, nchar(leftover_munis[i])-5)
 }
 
+
 MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
   MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
+
 idx_leftovers2 <- which(!MA_municipals %in% emp_data$Region)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
-
-
-
-## Load formatted suicide data
-## -1 eliminates first column [rows,columns]
-emp_data <- read.csv(file="employmentdata2.csv")[,-1]
-
-
-# emp_data$Average_Monthly_Employment <- as.numeric(emp_data$Average_Monthly_Employment)
-# emp_data$Average_Monthly_Employment.Lower.Bound <- as.numeric(emp_data$Average_Monthly_Employment.Lower.Bound)
-# emp_data$Average_Monthly_Employment.Upper.Bound <- as.numeric(emp_data$Average_Monthly_Employment.Upper.Bound)
-# emp_data$Average_Monthly_Employment.Standard.Error <- as.numeric(emp_data$Average_Monthly_Employment.Standard.Error)
 
 
 
@@ -261,7 +248,7 @@ plot_main_text <- p(strong("Variable Summary:"),
 
 font_size <- 14
 
-plot_options <- googleLineChart("plot", width="100%", height="475px", 
+plot_options <- googleColumnChart("plot", width="100%", height="475px", 
                                   options = list(
                                     ## set fonts
                                     fontName = "Source Sans Pro",
