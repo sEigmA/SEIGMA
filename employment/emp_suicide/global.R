@@ -28,7 +28,7 @@ emp_data <- read.csv(file="employmentdata2.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
-#MA_counties <- c()
+MA_counties <- c()
 for(i in 1:length(MA_map_county$features)){
   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
 }
