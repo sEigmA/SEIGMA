@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ##
 ## Date Created:  01/07/2015         ##
-## Date Modified: 01/28/2015         ##
+## Date Modified: 01/07/2015         ##
 #######################################
 
 ## First file run - Environment Setup
@@ -22,19 +22,19 @@ require(RJSONIO)
 require(tidyr)
 
 ## load map data
-#MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
+MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted unemp data
 ## -1 eliminates first column [rows,columns]
 unemp_data <- read.csv(file="unempdata.csv")[,-1]
 
-# ## Find order of counties in geojson files
-# ## Each county is a separate feature
-# MA_counties <- c()
-# for(i in 1:length(MA_map_county$features)){
-#   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-# }
+## Find order of counties in geojson files
+## Each county is a separate feature
+MA_counties <- c()
+for(i in 1:length(MA_map_county$features)){
+  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
+}
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -42,7 +42,6 @@ for(i in 1:length(MA_map_muni$features)){
   MA_map_muni$features[[i]]$properties$NAMELSAD10 <- substr(MA_map_muni$features[[i]]$properties$NAMELSAD10, 1, nchar(MA_map_muni$features[[i]]$properties$NAMELSAD10)-5)
 }
 
-#All of the municipal names
 MA_municipals_map <- c()
 for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
