@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ##
 ## Date Created:  01/07/2015         ##
-## Date Modified: 01/28/2015         ##
+## Date Modified: 01/29/2015         ##
 #######################################
 
 shinyServer(function(input, output, session){
@@ -58,11 +58,11 @@ shinyServer(function(input, output, session){
     }
     
     ## create a dataframe consisting only of counties in vector
-    sum_df <- unemp_df %>%
-      filter(z %in% munis) %>%
-      select(4:length(colnames(unemp_df)))
+    sum_df <- df %>%
+      filter(Region %in% munis) %>%
+      select(4:length(colnames(df)))
     
-    colnames(sum_df) <- c("Region", "Unemployment Rate", "Number Unemployed", "Number Employed", "Number in Labor Force")
+    colnames(sum_df) <- c("Region","Year", "Unemployment Rate", "Number Unemployed", "Number Employed", "Number in Labor Force")
     
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
@@ -114,7 +114,7 @@ shinyServer(function(input, output, session){
     
     ## take US, MA, and counties out of map_dat
     map_dat <- unemp_df %>%
-      filter(!is.na(Municipal))
+      filter(!is.na(Municipal)) 
     
     ######################################################
     
@@ -135,7 +135,7 @@ shinyServer(function(input, output, session){
       #       suidf$County <- paste(as.character(suidf$County), "County")
       
       ## find missing counties in data subset and assign NAs to all values
-      missing.munis <- setdiff(MA_municipals, unemp_df$Municipal)
+      missing.munis <- setdiff(leftover_munis_map, unemp_df$Municipal)
       if(length(missing.munis) > 0){
         df <- data.frame(Municipal=missing.munis, County="County", State="MA", Region=missing.munis,
                          Year=input$year, Unemployment.Rate.Avg=NA, No.Unemployed.Avg=NA,
@@ -214,17 +214,17 @@ shinyServer(function(input, output, session){
       for(i in 1:length(x$features)){
         ## Each feature is a county
          x$features[[i]]$properties["Unemployment.Rate.Avg"] <-
-          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Unemployment.Rate.Avg"]
+          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal), "Unemployment.Rate.Avg"]
         ## Style properties
         x$features[[i]]$properties$style <- list(
           fill=TRUE,
           ## Fill color has to be equal to the map_dat color and is matched by county
-          fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)],
+          fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)],
           ## "#000000" = Black, "#999999"=Grey,
           weight=1, stroke=TRUE,
-          opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)],
+          opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)],
           color="#000000",
-          fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)])
+          fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)])
       }
       
       map$addGeoJSON(x) # draw map
