@@ -86,7 +86,7 @@ shinyServer(function(input, output, session) {
   output$plot <- reactive({
     browser()
     ## make reactive dataframe into regular dataframe
-    unemp_df <- unemp_df()
+    emp_df <- emp_df()
     
     ## make region a vector based on input variable
     munis <- input$plot_muni
@@ -95,6 +95,7 @@ shinyServer(function(input, output, session) {
     if(!is.null(input$plot_muni)){
       if(input$meanMA)
         munis <- c(plot_muni, "MA")
+      
       if(input$meanUS)
         munis <- c(munis, "United States")
     }
@@ -102,12 +103,18 @@ shinyServer(function(input, output, session) {
     ## if no counties have been selected, just show the US average
     if(is.null(input$plot_muni)){
       ## make region a vector based on input variable
-      munis <- "United States"
+      munis <- "MA"
     }
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
-    g <- dcast(unemp_df, Year ~ munis, value.var="Average_Monthly_Employment")
+   # g <- dcast(emp_df, Year ~ munis, value.var="Average_Monthly_Employment")
     
+   g <- emp_df %>%
+     filter(Region %in% munis) %>%
+     select( Region, Year, Average_Monthly_Employment) %>%
+     spread(Region, Average_Monthly_Employment)
+   
+   
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
       data=googleDataTable(g))
@@ -221,7 +228,7 @@ shinyServer(function(input, output, session) {
       
       ## find missing counties in data subset and assign NAs to all values
       missing.munis <- setdiff(MAmunis, emp_df$Municipal)
-      df <- data.frame(Municipal=missing.munis, County=County, State="MA", Country="US", 
+      df <- data.frame(Municipal=missing.munis, Region=missing.munis, State="MA", Country="US", 
                        Year=input$year, Average_Monthly_Employment=NA,
                        color=length(smap.colors))
       
@@ -269,6 +276,8 @@ if(input$timespan=="mult.yrs"){
       return(map_dat)
     }
   
+  })
+
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
   
   #############################################
@@ -393,4 +402,3 @@ if(input$timespan=="mult.yrs"){
   })
   
   })
-})
