@@ -61,7 +61,7 @@ shinyUI(fluidPage(
   
   ## blank title, but put in a special title for window tab
   titlePanel("", windowTitle = "SEIGMA: Suicide Shiny App"),
-   browser()
+ #  browser()
   ## Create sidebar
   sidebarLayout(
     sidebarPanel(
