@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    #r#
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  01/08/2015         ##
-## Date Modified: 01/15/2015         ##
+## Date Modified: 02/5/2015         ##
 #######################################
 
 shinyUI(fluidPage(
@@ -78,59 +78,19 @@ shinyUI(fluidPage(
                    selectInput("plot_muni", "Select Municipality", 
                                choices = MA_municipals, multiple=TRUE)),
                  
-                 ## In summary and plot, show boxes that will compare to MA or US average
-                 conditionalPanel(
-                   condition="input.tabs == 'summary'|| input.tabs == 'plot'",
-                   ## False at the end means it starts off unchecked
-                   checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-                   checkboxInput("US_mean", "Compare to US Average", FALSE)
-                 ),
-                 
-                 tags$hr(),
-                   
-                   
-                   #                      condition="timespan == 'sing.yr'",
-#                      
-#                      ## Initializing a single slider
-#                      sliderInput("year", "Select Year",
-#                                  min=2001, max=2012, value=2012,
-#                                  format="####")),
-#                    conditionalPanel(
-#                      ## Initializes a multi-year slider (range)
-#                      condition="input.timespan == 'mult.yrs'",
-#                      ## Slider starts from 2010-2012
-#                      sliderInput("range", "Select Years",
-#                                  min=2001, max=2012, value=c(2010,2012),
-#                                  format="####")
-#                    )
-#                  ),
-#                  
-#                  ## in summary, allow for municipal selection
-#                  conditionalPanel(
-#                    condition="input.tabs == 'summary'",
-#                    ## Select input = List
-#                    selectInput("sum_muni", "Select Municipality", 
-#                                choices = MA_municipals,
-#                                ## Multiple allows for multi-county selection
-#                                multiple=TRUE)),
-#                  
-#                  ## in plot, allow for municipal selection
-#                  conditionalPanel(
-#                    condition="input.tabs == 'plot'",
-#                    ## Select input = List
-#                    selectInput("plot_muni", "Select Municipality", 
-#                                choices = MA_municipals)),
-#                  
-#                  ## In summary and plot, show boxes that will compare to MA or US average
+#                 No US/MA data available in this dataset 
+                  ## In summary and plot, show boxes that will compare to MA or US average
 #                  conditionalPanel(
 #                    condition="input.tabs == 'summary'|| input.tabs == 'plot'",
 #                    ## False at the end means it starts off unchecked
-#                  ##  checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-#               ##     checkboxInput("US_mean", "Compare to US Average", FALSE)
+#                    checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+#                    checkboxInput("US_mean", "Compare to US Average", FALSE)
 #                  ),
-#                  
-#                  tags$hr(),
                  
+                 tags$hr(),
+                   
+              
+               
                  ## author line
                  helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
                  
