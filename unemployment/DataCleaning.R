@@ -60,6 +60,8 @@ idx_unemp_MA <- which(unemp_data4$Region == "MA")
 idx_unemp_US <- which(unemp_data4$Region == "United States")
 unemp_data4 <- rbind.data.frame(unemp_data4[idx_unemp_US,], unemp_data4[idx_unemp_MA,], unemp_data4[-c(idx_unemp_MA, idx_unemp_US),])
 
+
+##Eliminating unnecessary data read from CDC - not required for most other datasets
 unemp_data4 <- unemp_data4[-c(1:759),]
   
 ## save data
