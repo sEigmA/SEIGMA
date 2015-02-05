@@ -99,12 +99,12 @@ shinyServer(function(input, output, session) {
 #     }
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
-    # g <- dcast(emp_df, Year ~ munis, value.var="Average_Monthly_Employment")
+     g <- dcast(emp_df, Year ~ munis, value.var="Average_Monthly_Employment")
     
-    g <- emp_df %>%
-      filter(Municipal %in% munis) %>%
-      select( Municipal, Year, Average_Monthly_Employment) %>%
-      spread(Municipal, Average_Monthly_Employment)
+#     g <- emp_df %>%
+#       filter(Municipal %in% munis) %>%
+#       select( Municipal, Year, Average_Monthly_Employment) %>%
+#       spread(Municipal, Average_Monthly_Employment)
     
     
     ## this outputs the google data to be used in the UI to create the dataframe
@@ -265,7 +265,7 @@ shinyServer(function(input, output, session) {
   ##  This function is what creates info box
   
   output$details <- renderText({
-    
+
     ## Before a county is clicked, display a message
     if(is.null(values$selectedFeature)){
       return(as.character(tags$div(
@@ -291,9 +291,9 @@ shinyServer(function(input, output, session) {
     ))
     }
     if(input$timespan=="mult.yrs"){
-      
+
       as.character(tags$div(
-        tags$h4("Average Monthly Employment for", muni_name, " for ", input$range),
+        tags$h4("Average Monthly Employment for", muni_name, " for ", input$range[1], "to",input$range[2]),
         tags$h5(muni_value)
       ))
     }

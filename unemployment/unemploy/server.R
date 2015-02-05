@@ -152,7 +152,7 @@ shinyServer(function(input, output, session){
     ######################################MULTIPLE YEARS
     
     if(input$timespan=="mult.yrs"){
- #     browser()
+      #     browser()
       ## create dataframes for the max and min year of selected data
       min.year <- min(input$range)
       max.year <- max(input$range)
@@ -189,7 +189,7 @@ shinyServer(function(input, output, session){
       diff.df <- rbind.data.frame(diff.df, df)
       diff.df$color <- mmap.colors[diff.df$color]
       return(diff.df)
-     }
+    }
   })
   
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
@@ -202,7 +202,7 @@ shinyServer(function(input, output, session){
   ## Does nothing until called (done with action button)
   observe({
     input$action
-
+    
     ## load in relevant map data
     map_dat <- map_dat()
     
@@ -213,7 +213,7 @@ shinyServer(function(input, output, session){
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a county
-         x$features[[i]]$properties["Unemployment.Rate.Avg"] <-
+        x$features[[i]]$properties["Unemployment.Rate.Avg"] <-
           map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal), "Unemployment.Rate.Avg"]
         ## Style properties
         x$features[[i]]$properties$style <- list(
@@ -270,9 +270,19 @@ shinyServer(function(input, output, session){
         tags$h5("Average Rate of Unemployment for", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
-    as.character(tags$div(
-      tags$h4("Average Rate of Unemployment for", muni_name, " for ", input$year),
-      tags$h5(muni_value)
-    ))
+    if(input$timespan=="sing.yr"){
+      
+      as.character(tags$div(
+        tags$h4("Average Monthly Employment for", muni_name, " for ", input$year),
+        tags$h5(muni_value, "%")
+      ))
+    }
+    if(input$timespan=="mult.yrs"){
+      
+      as.character(tags$div(
+        tags$h4("Average Monthly Employment for", muni_name, " for ", input$range[1], "to",input$range[2]),
+        tags$h5(muni_value, "%")
+      ))
+    }
   })
 })
