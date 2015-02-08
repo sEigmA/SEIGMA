@@ -150,7 +150,7 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in seeing marital status data.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in seeing marital status estimates.'))),
   tags$br(),
   tags$ul(
       tags$li('View rates by selecting male or female. To veiw both leave this selection blank.'),
@@ -172,7 +172,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select a municipality to analyze.')),
+p(strong('Please select the five- year range and municipality for which you are interested in viewing marital status.')),
            tags$br(),
   tags$ul(
     tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages for females and males.')
@@ -184,7 +184,7 @@ p(strong('Please select a municipality to analyze.')),
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please click on "Generate Map" to get started.'))),
+  helpText(p(strong("Please select a variable of interest, a five-year range, a gender, and click on 'Generate Map' to get started."))),
   tags$br(),
   tags$ul(
     tags$li('Clicking on a municipality will display the variable of interest for the five-year range and gender that you selected.')
@@ -195,23 +195,23 @@ map_side_text <- conditionalPanel(
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))),
-           tags$br(),
-  tags$ul(
-    tags$li('Formulae.'),
-    tags$li('Calculations to derive the five-year averages.')
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))),
+         tags$br(),
+ tags$ul(
+   tags$li('Formulae.'),
+  tags$li('Calculations to derive the five-year averages.')
       ))
            
   tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Marital Status App"), "Displays the five-year average marital status for Massachusetts by municipality.",
-  p(strong("Toggle between tabs to visualize the data differently.")),
+about_main_text <- p(strong("The SEIGMA Marital Status App"), "Displays the five-year estimates of marital status for Massachusetts by municipality.",
+  p(strong("Click on different tabs to see the data in different formats.")),
     tags$br(),
     tags$ul(
-      tags$li(p(strong("Summary"), "shows the source data in table format.")),
-      tags$li(p(strong("Plot"), "compares a municipality's average marital status to county, state, and national averages.")),
-      tags$li(p(strong("Map"), "visually displays average marital status by municipality.")),
+      tags$li(p(strong("Summary"), "shows the data in table format.")),
+      tags$li(p(strong("Plot"), "compares a municipality's marital status estimate to county, state, and national estimates.")),
+      tags$li(p(strong("Map"), "visually displays marital status estimates by municipality.")),
       tags$li(p(strong("More Info"), "describes marital status including formulas and calculations."))
 )
 )

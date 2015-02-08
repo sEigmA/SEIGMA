@@ -89,7 +89,7 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Sophie E. O'Brien and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, Sophie E. O'Brien, and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
@@ -101,7 +101,7 @@ shinyUI(fluidPage(
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/suicide", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/marital/marital", target="_blank")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -204,10 +204,11 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                   p(strong("Marital Rates"),
-                 " - Number of people within each marital status category for a region over a specified five year range. When 'no data' is displayed for any municipality this indicates that the number of cases is too small. This calculated by:"), 
+                 " - Number of people within each marital status category for a region over a specified five year range. When the number of people in a particular marital status category is too small, data cannot be displayed."), 
                   tags$br(),
 
-                p(strong("Marital Rate= Total in marital status category for five year range/ Total Population * 100,000"),align="center"), 
+                p(strong("Five-Year Estimate"),
+                  "-Survey information collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, large geographic regions also benefit from increased sample, as this results in more precise estimates."),
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),

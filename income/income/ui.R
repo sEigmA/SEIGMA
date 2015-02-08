@@ -67,14 +67,14 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Sophie E. O'Brien and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, Sophie E. O'Brien and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: CDC Wonder", href="http://wonder.cdc.gov/wonder/help/cmf.html",
+      helpText(a("Data Source: American Community Survey", href="http://www.census.gov/acs/www/",
                  target="_blank")),
       
       ## GitHub link
@@ -106,7 +106,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Average Annual Median Household Income (Inflation-Adjusted Dollars) of Population by Region Over Five Year Period", align="center"),
+                 h4("Median Household Income (Inflation-Adjusted Dollars) by Region", align="center"),
                  ## make a row to put two charts in
                  
                  googleColumnChart("plot", width="100%", height="475px", options = list(
