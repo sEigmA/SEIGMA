@@ -226,15 +226,15 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Median household income"), "provides a clear trend to assess resident's household income overtime. Annual data for median household income was collected for a ten-year time series, from 2002- 2012, the latest data available.  Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
+                   tags$li(p(strong("Average Annual Household Income"), "This includes the income of the householder and all other individuals ages 15 and over. Average annual household income provides a clear trend to assess resident's household income overtime. Annual data for median household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
                    tags$br(),
-                   tags$li(p(strong("Median Household Income  (MHI)"),
-                             " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality.")),
+                   tags$li(p(strong("Median"),"This represents the middle value or the average of the two middle values (if 'n' is  even) in an ordered list of 'n' data values.  The median divides the distribution of average annual household income into two equal parts; half that fall below the median for average household income and half that fall above the average annual household income.")),
                    tags$br(),
-                   tags$li("When analyzing data sets per municipality five- year sets are used because estimates for smaller regions require a larger sample size than can be provided by single year data.")
+                   tags$li(p(strong("Five- Year Percentages"),"Survey information collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, large geographic regions also benefit from increased sample, as this results in more precise estimates.")
+                   )
                    ),
-                 tags$br(),
-                 p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),
+                 #tags$br(),
+                # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),
                  
                  
                  
@@ -243,8 +243,7 @@ bootstrapPage(mainPanel(
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
-        id="tabs"
-      )
+        id="tabs"   
     ))
-  )
+  ))
 ))

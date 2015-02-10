@@ -201,7 +201,7 @@ info_side_text <- conditionalPanel(
 
 about_main_text <- p(strong("The SEIGMA Household Income Status App"), "displays the five-year median incomes of households in Massachusetts by municipality.",
     tags$br(),
-    p(strong("Click on different tabs to view the data in different formats."))
+    p(strong("Click on different tabs to view the data in different formats.")),
     tags$ul(
       tags$li(p(strong("Summary"), "shows the source data in table format.")),
       tags$li(p(strong("Plot"), "compares municipality's median household income to county, state, and national medians.")),
@@ -209,6 +209,7 @@ about_main_text <- p(strong("The SEIGMA Household Income Status App"), "displays
       tags$li(p(strong("More Info"), "describes median household income, including, formulas and calculations."))
   )
 )
+
 
 
 plot_main_text <- p(strong("Variable Summary:"),
