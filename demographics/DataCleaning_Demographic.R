@@ -5,7 +5,7 @@
 ##            Kiridly, Steve Lauer   ##
 ##            Xuelian, Li            ##
 ## Date Created:  01/29/2015         ##
-## Date Modified: 01/29/2015         ##
+## Date Modified: 02/15/2015         ##
 #######################################
 
 require(sas7bdat)
@@ -21,8 +21,9 @@ colnames(Demographic)[5:133] <- as.character(column_titles$Label[1:129])
 colnames(Demographic)[5:133] <- substring(colnames(Demographic[5:133]), first=12)
 colnames(Demographic)[5:133]<-gsub("; SEX AND AGE", "", colnames(Demographic[5:133]))
 
-##Choose cloumn we need(Percentage of Age and Sex, Race, Ethnicity)
-Dem_data<-Demographic[,c(1:5,9,76,81,85,87,92,96,100,104,108,112,116,120,124,128,132)]
+##Choose cloumn we need(Percentage of Age(38-71) and Sex(18,19), Race, Ethnicity(100-129))
+Dem_data<-Demographic[,c(1:5,9,18,19,38,39,42,43,46,47,50,51,54,55,58,59,62,63,66,67, 70,71,100,101,104,105,108,109,112,113,116,117,120,121,
+                         124,125,128,129)]
 
 ## Replace N/A's with "NA" to remove the slash.
 Dem_data2<-Dem_data
@@ -33,16 +34,28 @@ Dem_data2$Region  <- ifelse(!is.na(Dem_data2$Region), "United States", "MA")
 Dem_data2$Region  <- ifelse(!is.na(Dem_data2$County), Dem_data2$County, Dem_data2$Region)
 Dem_data2$Region  <- ifelse(!is.na(Dem_data2$Municipal),as.character(Dem_data2$Municipal),as.character(Dem_data2$Region))
 
-## Five_Year_Average
+##Rename the columns
 Dem_data3<-Dem_data2
-Dem_data3$Five_Year_Average<-Dem_data3[,5]
-Dem_data3$Five_Year_Average1<-as.numeric(substr(Dem_data3$Five_Year_Average, 1, 4))
-Dem_data3$Five_Year_Average2<-as.numeric(substr(Dem_data3$Five_Year_Average, 6, 9))
+colnames(Dem_data3)[5:42] <- c("Five_Year_Range","Total_Population","Femal_Pct", "Margin_Error_Femal",
+                               "20_24_Pct","Margin_Error_20_24_Pct","25_34_Pct", "Margin_Error_25_34_Pct",
+                               "35_44_Pct", "Margin_Error_35_44_Pct","45_54_Pct", "Margin_Error_45_54_Pct",
+                               "55_59_Pct", "Margin_Error_55_59_Pct","60_64_Pct", "Margin_Error_60_64_Pct",
+                               "65_74_Pct", "Margin_Error_65_74_Pct","75_84_Pct", "Margin_Error_75_84_Pct",
+                               "85+_Pct", "Margin_Error_85+_Pct","White_Pct","Margin_Error_White_Pct",
+                               "Black_Pct","Margin_Error_Black_Pct","Indian_Pct","Margin_Error_Indian_Pct",
+                               "Asian_Pct","Margin_Error_Asian_Pct","Hawaiian_Pct","Margin_Error_Hawaiian_Pct",
+                               "Others_Pct","Margin_Error_Others_Pct","Hispanic_Pct","Margin_Error_Hispanic_Pct",
+                               "Not_Hispanic_Pct", "Margin_Error_Not_Hispanic_Pct")
 
 #Organizing Region
-Dem_data4<-Dem_data3[-(1:16),]
+Dem_data4 <- Dem_data3[!is.na(Dem_data3$Municipal),]
 Dem_data4<-Dem_data4[order(Dem_data4$Region),]
-Dem_data5<-rbind(Dem_data3[1:16,], Dem_data4 )
-colnames(Dem_data5)[5:24]<-gsub("Estimate -", "", colnames(Dem_data5[5:24]))
+idx_MA <- which(Dem_data3$Region == "MA")
+idx_US <- which(Dem_data3$Region == "United States")
+Dem_data5 <- rbind.data.frame(Dem_data3[idx_US,],Dem_data3[idx_MA,], Dem_data4)
+
+Dem_data6<-Dem_data5[,c(1:30,33,34,39:42)]
+
+write.csv(Dem_data6, file="demographics/demodata.csv")
 
 
