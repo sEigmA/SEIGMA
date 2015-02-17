@@ -2,7 +2,7 @@
 ## Title: Employment global.R           ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
+##            Kiridly, Steve Lauer   ##
 ## Date Created:                     ##
 ## Date Modified: 12/3/2014 AR      ##
 #######################################
@@ -19,7 +19,7 @@ require(shiny)
 require(googleCharts)
 require(leaflet)
 require(RJSONIO)
-#require(tidyr)
+require(tidyr)
 
 ## load map data
 #MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
@@ -40,7 +40,7 @@ for(i in 1:length(MA_map_muni$features)){
 idx_leftovers <- which(!MA_municipals_map %in% emp_data$Municipal)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
-  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
+  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <-
     substr(leftover_munis[i], 1, nchar(leftover_munis[i])-5)
 }
 
@@ -58,7 +58,7 @@ MA_municipals <- sort(MA_municipals)
 
 
 ## Set graph colors (special for colorblind people)
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
                 "#0072B2", "#D55E00", "#CC79A7")
 
 ## Create maxs and mins for googleCharts/Plot tab
@@ -68,7 +68,7 @@ xlim <- list(
 )
 ylim <- list(
   min = min(emp_data$Average_Monthly_Employment, na.rm=T)-5,
-  
+
   ##+5 = max Avg monthly employment plus a little extra
   max = max(emp_data$Average_Monthly_Employment, na.rm=T)+5
 )
@@ -92,7 +92,7 @@ scuts <- quantile(emp_data$Average_Monthly_Employment, probs = seq(0, 1, length.
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
-## head = scuts takes everything except for the last one, 
+## head = scuts takes everything except for the last one,
 ## tails = same thing opposite
 
 scolorRanges <- data.frame(
@@ -108,8 +108,8 @@ mmap.colors <- c(mpaint.brush(n=6), "#999999")
 ## find max and min (crude suicide rates) values for each county
 bound <- emp_data %>%
  group_by(Municipal) %>%
-  
-  ##n.rm=FALSE = needed 
+
+  ##n.rm=FALSE = needed
   summarise(max.val = max(Average_Monthly_Employment, na.rm=FALSE),
             min.val = min(Average_Monthly_Employment, na.rm=FALSE))
 
@@ -175,7 +175,7 @@ gen_map_button <- HTML('<style type="text/css">
                        position:relative;
                        top:1px;
                        }
-                       
+
                        </style>')
 
 summary_side_text <- conditionalPanel(
@@ -183,7 +183,7 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  
+
   helpText(p(strong('Please select the timespan for which you are interested in viewing average annual monthly employment.'))),
   tags$br(),
   tags$ul(
@@ -193,7 +193,7 @@ summary_side_text <- conditionalPanel(
     tags$li('To compare the annual average monthly employment to the Massachusetts or national rates, select the corresponding box.'),
     tags$br(),
     tags$li('Sort annual average monthly employment data in ascending and descending order by clicking the column or variable title.')
-    
+
   )
 )
 
@@ -214,7 +214,7 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
-    
+
     tags$li('Clicking on a municipality will display average monthly employment numbers for the time period you selected.')
   ))
 
@@ -236,13 +236,13 @@ plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
                     strong("Annual Average Monthly Employment-"),
-                    " Info about Avg. Monthly Employment.", 
+                    " Info about Avg. Monthly Employment.",
                     tags$br(),
                     strong("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf", align="center"))
 
 font_size <- 14
 
-plot_options <- googleColumnChart("plot", width="100%", height="475px", 
+plot_options <- googleColumnChart("plot", width="100%", height="475px",
                                   options = list(
                                     ## set fonts
                                     fontName = "Source Sans Pro",
@@ -268,25 +268,25 @@ plot_options <- googleColumnChart("plot", width="100%", height="475px",
                                         bold = TRUE,
                                         italic = FALSE)
                                     ),
-                                    
+
                                     ## set legend fonts
                                     legend = list(
                                       textStyle = list(
                                         fontSize=font_size),
                                       position = "right"),
-                                    
+
                                     ## set chart area padding
                                     chartArea = list(
                                       top = 50, left = 100,
                                       height = "75%", width = "65%"
                                     ),
-                                    
+
                                     ## set colors
                                     colors = cbbPalette[c(2:8)],
-                                    
+
                                     ## set point size
                                     pointSize = 3,
-                                    
+
                                     ## set tooltip font size
                                     ## Hover text font stuff
                                     tooltip = list(
