@@ -86,7 +86,7 @@ shinyUI(fluidPage(
       conditionalPanel(
         condition="input.tabs == 'plot'",
         h4("How to use this app:"),
-        p(strong(helpText('Please select a county to analyze.'))),
+        p(strong(helpText('Please select the county or counties for which you are interested in viewing suicide rates.'))),
         tags$ul(
           tags$li("Multiple counties can be selected to compare the plots of age-adjusted suicide rate over time."),
           tags$br(),
@@ -109,7 +109,7 @@ shinyUI(fluidPage(
       conditionalPanel(
         condition="input.tabs == 'info'",
         h4("How to use this app:"),
-        helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))),
+        helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))),
         tags$br(),
         tags$ul(
           tags$li('formulae'),
@@ -166,7 +166,7 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F Kiridly, Sophie E. O'Brien and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F Kiridly, Xuelian Li, Sophie E. O'Brien and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
@@ -195,8 +195,9 @@ shinyUI(fluidPage(
       tabsetPanel(
         tabPanel("About", 
                  ## strong=bold, p=paragraph, em=emboss/italicised or bold italicized, 
-                 p(strong("The SEIGMA Suicide App"), "displays the age-adjusted suicide rate for Massachusetts by county for a given year or multiple years. Toggle between tabs to visualize the data differently. ",
+                 p(strong("The SEIGMA Suicide App"), "displays the age-adjusted suicide rate for Massachusetts by county for a given year or multiple years from 1999-2012.",
                    tags$br(),
+                   p(strong("Click on different tabs to see the data in different formats.")),
                    ##tags$ul and tags$li are to create bullet points using HTML
                    tags$ul(
                      tags$li(p(strong("Summary"), "shows the source data in  table format.")),
@@ -283,10 +284,10 @@ shinyUI(fluidPage(
                  ## breaks between paragraphs
                  tags$br(),
                  p(strong("Suicides"),
-                   " - Number of suicides for a region during a specified year.Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
+                   " - Number of suicides for a region during a specified year. For some counties, data may not appear only for certain years, resulting in shortened or broken line.  This occurs when the number of deaths is less than 10 in order to maintian confidentiality."), 
                  tags$br(),
                  p(strong("Age-Adjusted Rate"), 
-                   " - Age-Adjusted rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
+                   " - a standard population is used in order to eliminate the effects of differences in age between two or more populations being compared.  A 'standard population' is created to which we apply both the age specific suicide rates from the early period and the age specific suicide rates from the later period. By applying suicide rates from both periods to a single standard population, we elimiate the possibility that observed differences could have resulted from age differences within the population. This is calculated by:"),
                  tags$br(),
                  p(strong("Age Adjusted Rate = Count / Population * 100,000"), align="center"),
                  value="plot"),
@@ -375,16 +376,16 @@ shinyUI(fluidPage(
                    )),
                  
                  ## Add text about the variables
-                 tags$br(),
-                 p(strong("Variable Summary:")),
-                 tags$br(),
-                 p(strong("Suicides"),
-                   " - Number of suicides for a region during a specified year.Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
-                 tags$br(),
-                 p(strong("Age-Adjusted Rate"), 
-                   " - Age-Adjusted rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
-                 tags$br(),
-                 p(strong("Age-Adjusted Rate = Count / Population * 100,000"), align="center"),
+                # tags$br(),
+                 #p(strong("Variable Summary:")),
+                 #tags$br(),
+                 #p(strong("Suicides"),
+                  # " - Number of suicides for a region during a specified year.Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
+                 #tags$br(),
+                 #p(strong("Age-Adjusted Rate"), 
+                  # " - Age-Adjusted rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
+                 #tags$br(),
+                 #p(strong("Age-Adjusted Rate = Count / Population * 100,000"), align="center"),
                  value="map"),
         
         tabPanel("More Info", 
@@ -405,7 +406,7 @@ shinyUI(fluidPage(
                    " - 95% confidence interval upper bound based upon the Age-Adjusted Rate Standard Error (see below)."),
                  tags$br(),
                  p(strong("Age Adjusted Rate Standard Error"),
-                   " - The relative standard error for Age-Adjusted Rate. Even though Suicides represents the complete counts for each region, and thus are not subject to sampling error, they are subject to non-sampling errors in the registration process. This is calculated by:"),
+                   " - The relative standard error for Age-Adjusted Rate. The number of suicides represents the complete counts for each region and are not suject to sampling error.  However, they are sucbject to non-sampling errors. This is calculated by:"),
                  tags$br(),
                  p(strong("Age Adjusted Rate Standard Error = 100 / sqrt(Suicides)."), align="center"),
                  

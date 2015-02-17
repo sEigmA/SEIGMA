@@ -169,35 +169,35 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select a municipality to analyze educational attainment percentages.')),
+  p(strong('Please select the five- year range and municipality for which you are interested in viewing educational attainment.')),
   tags$br(),
   tags$ul(
-    tags$li('For a given five-year period, you can compare the educational attainment percentage to the national, state, and county percentages.')
+    tags$li("For a given five-year period, you can compare a municipality's percentage of educational attainment to the county, state, and national average.")
   ))
 
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please click on "Generate Map" to get started.'))),
+  helpText(p(strong("Please select a variable of interest and five- year range, and click on 'Generate Map' to get started."))),
   tags$br(),
   tags$ul(
     
-    tags$li('Clicking on a municipality will display the educational status percentage for the five-year range that you selected.')
+    tags$li('Clicking on a municipality will display the educational attainment percentage for the five-year range that you selected.')
   ))
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))))
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
 about_main_text <- p(strong("The SEIGMA Education Status App"), "displays the five-year average educational attainment percentages for Massachusetts by municipality.",
-                     p(strong("Toggle between tabs to visualize the data differently.")),
+                     p(strong("Click on different tabs to see the data in different formats.")),
                      tags$br(),
                      tags$ul(
-                       tags$li(p(strong("Summary"), "shows the source data in table format.")),
+                       tags$li(p(strong("Summary"), "shows the data in table format.")),
                        tags$li(p(strong("Plot"), "compares the educational attainment percentages for each municipality to county, state, and national averages.")),
-                       tags$li(p(strong("Map"), "visually displays educational attainment percentages comparatively by municipality.")),
+                       tags$li(p(strong("Map"), "visually displays educational attainment percentages by municipality.")),
                        tags$li(p(strong("More Info"), "describes educational attainment, including formulas and calculations."))
                      ))
 

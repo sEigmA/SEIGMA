@@ -22,16 +22,9 @@ require(RJSONIO)
 #require(tidyr)
 
 ## load map data
-MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
+#MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
-emp_data <- read.csv(file="employmentdata2.csv")[,-1]
-
-## Find order of counties in geojson files
-## Each county is a separate feature
-MA_counties <- c()
-for(i in 1:length(MA_map_county$features)){
-  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-}
+emp_data <- read.csv(file="empdata.csv")[,-1]
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -44,7 +37,7 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% emp_data$Region)
+idx_leftovers <- which(!MA_municipals_map %in% emp_data$Municipal)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
   MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
@@ -57,9 +50,10 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers2 <- which(!MA_municipals %in% emp_data$Region)
+idx_leftovers2 <- which(!MA_municipals %in% emp_data$Municipal)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
-MA_municipals <- sort(MA_municipals[-idx_leftovers2])
+MA_municipals <- sort(MA_municipals)
+
 
 
 
@@ -73,7 +67,7 @@ xlim <- list(
   max = max(emp_data$Year)+1
 )
 ylim <- list(
-  min = 0,
+  min = min(emp_data$Average_Monthly_Employment, na.rm=T)-5,
   
   ##+5 = max Avg monthly employment plus a little extra
   max = max(emp_data$Average_Monthly_Employment, na.rm=T)+5
@@ -113,14 +107,14 @@ mmap.colors <- c(mpaint.brush(n=6), "#999999")
 
 ## find max and min (crude suicide rates) values for each county
 bound <- emp_data %>%
- group_by(Region) %>%
+ group_by(Municipal) %>%
   
   ##n.rm=FALSE = needed 
   summarise(max.val = max(Average_Monthly_Employment, na.rm=FALSE),
             min.val = min(Average_Monthly_Employment, na.rm=FALSE))
 
 ## find the difference between each county's max and min
-bound$diff <- abs(bound$max.val - bound$min.val)
+bound$diff <- (bound$max.val - bound$min.val)
 
 ## set the max and min value (for the legend) at 95% of the largest difference
 mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)

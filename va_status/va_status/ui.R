@@ -66,19 +66,19 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xeulian Li, and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: CDC Wonder", href="http://wonder.cdc.gov/wonder/help/cmf.html",
+      helpText(a("Data Source: American Community Survey", href="http://www.census.gov/topics/population/veterans/surveys.html",
                  target="_blank")),
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/income", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/va_status/va_status", target="_blank")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -105,7 +105,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Percent of Civilian Veterans for the population (civilians over 18) by Region Over Five Year Period", align="center"),
+                 h4("Civilian Veteran's Status by Region Over a Five-Year Period", align="center"),
                  ## make a row to put two charts in
                  
                  googleColumnChart("plot", width="100%", height="475px", options = list(
@@ -225,8 +225,12 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Civilian Veteran Percentage"), "data collected over a five- year range measure and track changes over time,  enabling us to provide descriptive statistics at the state and
-municipal level."))),
+                   tags$li(p(strong("Veteran Status"), "Peoples with active duty military service and or service in the military Reserves or National Guard.")),
+                   tags$br(),
+                 tags$li(p(strong("Civilian Veterans"), "Men and women who have served for any period of time, but are no longer on active duty.  People who served in the National Guard or Reserves are classified as veterans only if they were called to active duty.")),
+                 tags$br(),
+                 tags$li(p(strong("Five-Year Estimates"), "Survey information collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, large geographic regions also benefit from increased sample, as this results in more precise estimates." ))),
+                 
                    #tags$br(),
                   # tags$li(p(strong("Median Household Income  (MHI)"),
                   #           " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality")),

@@ -145,15 +145,15 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in viewing civilian veteran status percentages.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in viewing the estimate of civilian veterans.'))),
   tags$br(),
   tags$ul(
    #   tags$li('View rates by: male or female (or both by leaving this selection blank)'),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('To compare civilian veteran status percentage to the Massachusetts or US percentage select the corresponding box.'),
+      tags$li('To compare the data to the Massachusetts percentage or US percentage select the corresponding check box below.'),
       tags$br(),
-      tags$li('Civilian veteran status percenatges can be sorted in ascending and descending order by clicking the column or variable.')
+      tags$li('Civilian veteran status estimates can be sorted in ascending and descending order by clicking the column or variable.')
   )
     
    #   tags$li(p(strong('Please note that all statistics are 5-year averages')))
@@ -169,10 +169,10 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select a municipality to analyze civilian veteran status percentages.')),
+p(strong('Please select the municipality for which you are interested in viewing the five year estimate of civilian veterans.')),
            tags$br(),
   tags$ul(
-    tags$li('For a given five-year period, you can compare civilian veteran status percentages to the national, state, and county percentages.')
+    tags$li('For the five-year ranges below, you can compare the estimate of civilian veterans in a municipality to the national, state, and county estimates.')
     ))
           
 
@@ -181,7 +181,7 @@ p(strong('Please select a municipality to analyze civilian veteran status percen
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please click on "Generate Map" to get started.'))),
+  helpText(p(strong('Please select a five- year range and click on Generate Map to get started.'))),
   tags$br(),
   tags$ul(
     tags$li('Clicking on a municipality will display the civilian veteran status percentage for the five-year range that you selected.')
@@ -202,14 +202,14 @@ info_side_text <- conditionalPanel(
 #   tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Civilian Veteran Status App"), "displays the five-year percentage of civilian veteran status for Massachusetts by municipality.",
-  p(strong("Toggle between tabs to visualize the data differently.")),
+about_main_text <- p(strong("The SEIGMA Civilian Veteran Status App"), "displays the percentage of veterans in Massachusetts' municipalities over a five-year period.",
+  p(strong("Click on different tabs to see the data in different formats.")),
     tags$br(),
     tags$ul(
       tags$li(p(strong("Summary"), "shows the source data in table format.")),
-      tags$li(p(strong("Plot"), "compares civilian veteran status percentages for each municipality to county, state, and national percentages.")),
-      tags$li(p(strong("Map"), "visually displays civilian veteran status percentage by municipality.")),
-      tags$li(p(strong("More Info"), "describes civilian veteran status percentage."))
+      tags$li(p(strong("Plot"), "compares civilian veteran status municipaliticy estimates to county, state, and national estimates.")),
+      tags$li(p(strong("Map"), "visually displays civilian veteran status estimates by municipality.")),
+      tags$li(p(strong("More Info"), "describes civilian veteran status estimates."))
 )
 )
 

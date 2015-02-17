@@ -73,19 +73,19 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey", href="http://www.census.gov/acs/www/",
+      helpText(a("Data Source: American Community Survey", href="http://www.census.gov/acs/www/Downloads/methodology/content_test/P2b_Educational_Attainment.pdf",
                  target="_blank")),
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education/education", target="_blank")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -112,7 +112,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Educational Status as a Percentage of the Population by Region", align="center"),
+                 h4("Educational Attainment by Region", align="center"),
                  plot_options,
                  ## add text about the variables
 #                  plot_main_text,
@@ -179,11 +179,13 @@ bootstrapPage(mainPanel(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                  p(strong("Educational Attainment Rates"),
-                 " - Number of people within each educational attainment category for a region over a specified five year range. When no data for a municipality is displayed, this indicates the number of cases is too small to accurately calculate a rate. This calculated by:"), 
-                  tags$br(),
-
-                p(strong("Education Rate = Total in education group for five year range/ Total Population * 100,000"),align="center"), 
+                 tags$ul(
+                  tags$li(p(strong("Educational Attainment Rates"),
+                 " - The number of people with each level of educational attainment for a specific region over a specific five-year period of time. Educational attainment data was collected form individuals 18 years and over. Respondants were classified according to the highest degree or highest level of school completed. When a municipaility is missing data, this indicates that data cannot be displayed because the number of people is too small.")), 
+                 tags$br(),
+                 tags$li(p(strong("Five-Year Estimates"), "Survey information collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, large geographic regions also benefit from increased sample, as this results in more precise estimates." ))),
+                 
+                
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),

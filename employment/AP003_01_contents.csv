@@ -1,0 +1,31 @@
+Alphabetic List of Variables and Attributes,,,,,,
+#,Variable,Type,Len,Format,Informat,Label
+4,AP003_001,Char,6,$6.00 ,$6.00 ,AP003_001: Six Digit Code Assigned to Given Geography
+5,AP003_002,Char,23,$23.00 ,$23.00 ,AP003_002: Geographic Area Name
+6,AP003_003,Char,6,$6.00 ,$6.00 ,AP003_003: NAICS Code
+7,AP003_004,Char,40,$40.00 ,$40.00 ,AP003_004: Industry Title
+8,AP003_005,Num,8,,,AP003_005: Average Monthly Employment
+9,AP003_006,Num,8,,,AP003_006: Average Weekly Wage
+10,AP003_007,Char,2,$2.00 ,$2.00 ,AP003_007: 00 Indicates Annual Data
+11,AP003_008,Char,2,$2.00 ,$2.00 ,AP003_008: 00 Indicates All Ownership Type; 50 Indicates Private Ownership
+12,AP003_009,Num,8,,,AP003_009: Number of Employer Establishments in the Industry (reporting units)
+13,AP003_010,Num,8,,,AP003_010: Employment for January
+14,AP003_011,Num,8,,,AP003_011: Employment for February
+15,AP003_012,Num,8,,,AP003_012: Employment for March
+16,AP003_013,Num,8,,,AP003_013: Employment for April
+17,AP003_014,Num,8,,,AP003_014: Employment for May
+18,AP003_015,Num,8,,,AP003_015: Employment for June
+19,AP003_016,Num,8,,,AP003_016: Employment for July
+20,AP003_017,Num,8,,,AP003_017: Employment for August
+21,AP003_018,Num,8,,,AP003_018: Employment for September
+22,AP003_019,Num,8,,,AP003_019: Employment for October
+23,AP003_020,Num,8,,,AP003_020: Employment for November
+24,AP003_021,Num,8,,,AP003_021: Employment for December
+25,AP003_022,Num,8,,,AP003_022: Total Wages Paid to All Workers in the Industry
+26,AP003_023,Char,21,$21.00 ,$21.00 ,AP003_023: NAICS Domain Title
+27,AP003_024,Char,35,$35.00 ,$35.00 ,AP003_024: NAICS Supersector Title
+28,AP003_025,Char,6,$6.00 ,$6.00 ,AP003_025: Column to Order Titles and Sectors Properly
+29,AP003_026,Char,1,$1.00 ,$1.00 ,AP003_026: NAICS Hierarchical Level
+3,C_year,Char,4,$4.00 ,$4.00 ,Calender Year
+1,Municipal,Char,21,,,Municipal
+2,State,Char,3,,,State
