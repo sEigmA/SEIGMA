@@ -249,7 +249,7 @@ bootstrapPage(mainPanel(
                      class = "floater",
                      strong("Multiple Year"),
                      tags$br(),
-                     strong("Increase in CSR"),
+                     strong("Change in Unemployment Rate"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
