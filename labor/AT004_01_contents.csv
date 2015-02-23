@@ -1,0 +1,14 @@
+Alphabetic List of Variables and Attributes,,,,,,
+#,Variable,Type,Len,Format,Informat,Label
+6,AT004_001,Char,14,$14.00 ,$14.00 ,AT004_001: Period
+7,AT004_002,Char,64,$64.00 ,$64.00 ,AT004_002: Geographic Label
+8,AT004_003,Num,8,,,AT004_003: Unemployment Rate
+9,AT004_004,Num,8,,,AT004_004: Number of Unemployed
+10,AT004_005,Num,8,,,AT004_005: Number of Employed
+11,AT004_006,Num,8,,,AT004_006: Number in Labor Force
+12,AT004_007,Char,86,$86.00 ,$86.00 ,AT004_007: Footnote Label
+5,C_year,Char,4,,,Calender Year
+2,County,Char,18,$10.00 ,$10.00 ,County
+1,Municipal,Char,21,$21.00 ,$21.00 ,Municipal
+4,Region,Char,60,,,Region
+3,State,Char,3,,,State
