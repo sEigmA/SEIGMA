@@ -46,16 +46,18 @@ colnames(Dem_data3)[5:42] <- c("Five_Year_Range","Total_Population","Femal_Pct",
                                "Asian_Pct","Margin_Error_Asian_Pct","Hawaiian_Pct","Margin_Error_Hawaiian_Pct",
                                "Others_Pct","Margin_Error_Others_Pct","Hispanic_Pct","Margin_Error_Hispanic_Pct",
                                "Not_Hispanic_Pct", "Margin_Error_Not_Hispanic_Pct")
+#exclude Indian, Hawaiian and others
+Dem_data4<-Dem_data3[,c(1:30,33,34,39:42)]
+write.csv(Dem_data4, file="demographics/demodata.csv",row.names=FALSE)
 
 #Organizing Region
-Dem_data4 <- Dem_data3[!is.na(Dem_data3$Municipal),]
-Dem_data4<-Dem_data4[order(Dem_data4$Region),]
-idx_MA <- which(Dem_data3$Region == "MA")
-idx_US <- which(Dem_data3$Region == "United States")
-Dem_data5 <- rbind.data.frame(Dem_data3[idx_US,],Dem_data3[idx_MA,], Dem_data4)
+Dem_data5 <- Dem_data4[!is.na(Dem_data4$County),]
+Dem_data5<-Dem_data5[order(Dem_data5$Region),]
+idx_MA <- which(Dem_data4$Region == "MA")
+idx_US <- which(Dem_data4$Region == "United States")
+Dem_data6 <- rbind.data.frame(Dem_data4[idx_US,],Dem_data4[idx_MA,], Dem_data5)
 
-Dem_data6<-Dem_data5[,c(1:30,33,34,39:42)]
 
-write.csv(Dem_data6, file="demographics/demodata.csv")
+write.csv(Dem_data6, file="demographics/demodata1.csv",row.names=FALSE)
 
 
