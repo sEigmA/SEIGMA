@@ -1,4 +1,6 @@
 
+##Creating the Map
+
 require(maps)
 require(ggplot2)
 
@@ -8,6 +10,7 @@ require(ggmap)
 map("state", "MASSACHUSETTS")
 data(us.cities)
 
+##Obtaining Problem Gambling Data
 pgdat <- read.csv(file="Problem_Gambling_data.csv")[,]
 head(pgdat)
 
