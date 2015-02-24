@@ -85,7 +85,7 @@ shinyUI(fluidPage(
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education/education", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education", target="_blank")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -112,7 +112,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Educational Attainment by Region",input$year, align="center"),
+                 h4("Educational Attainment by Region Over Selected Five Year Period", align="center"),
                  plot_options,
                  ## add text about the variables
 #                  plot_main_text,
