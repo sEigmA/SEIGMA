@@ -1,10 +1,10 @@
 #######################################
-## Title: Employment ui.R          ##
+## Title: Employment ui.R            ##
 ## Author(s): Emily Ramos, Arvind    ##
-##            Ramakrishnan, Jenna    #r#
+##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  01/08/2015         ##
-## Date Modified: 02/5/2015         ##
+## Date Modified: 02/24/2015 ER      ##
 #######################################
 
 shinyUI(fluidPage(

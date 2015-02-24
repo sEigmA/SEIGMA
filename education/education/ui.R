@@ -1,10 +1,10 @@
 #######################################
-## Title: Education ui.R              ##
+## Title: Education ui.R             ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  12/4/14            ##
-## Date Modified: 12/4/14            ##
+## Date Modified: 02/24/15  ER       ##
 #######################################
 
 shinyUI(fluidPage(
@@ -73,7 +73,7 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
@@ -112,11 +112,17 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Educational Attainment by Region", align="center"),
+                 h4("Educational Attainment by Region",input$year, align="center"),
                  plot_options,
                  ## add text about the variables
 #                  plot_main_text,
                  value="plot"),
+# conditionalPanel(
+#   condition="input.tabs == 'plot' && input.action == 0",
+#   ## within the map area, you can create an action button.  similar to initializing the legend but just putting a button instead.
+#   absolutePanel(right = 400, top = 300, class = "floater",
+#                 actionButton("action", "Generate Plot")
+#   ))),
         
         ## plot map
         tabPanel("Map",
