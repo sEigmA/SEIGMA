@@ -214,7 +214,6 @@ shinyUI(fluidPage(
                    tags$li(p(strong(em('Blank Spaces')," - Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:")))
                  ),
                  tags$br(),
-                 p(strong("Age-Adjusted Rate = Count / Population * 100,000"), align="center"),
                  value="summary", 
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
         
@@ -280,16 +279,11 @@ shinyUI(fluidPage(
                  )),
                  
                  ## add text about the variables
-                 p(strong("Variable Summary:")),
+               
                  ## breaks between paragraphs
-                 tags$br(),
-                 p(strong("Suicides"),
+                 p(strong("Broken Lines"),
                    " - Number of suicides for a region during a specified year. For some counties, data may not appear only for certain years, resulting in shortened or broken line.  This occurs when the number of deaths is less than 10 in order to maintian confidentiality."), 
                  tags$br(),
-                 p(strong("Age-Adjusted Rate"), 
-                   " - a standard population is used in order to eliminate the effects of differences in age between two or more populations being compared.  A 'standard population' is created to which we apply both the age specific suicide rates from the early period and the age specific suicide rates from the later period. By applying suicide rates from both periods to a single standard population, we elimiate the possibility that observed differences could have resulted from age differences within the population. This is calculated by:"),
-                 tags$br(),
-                 p(strong("Age Adjusted Rate = Count / Population * 100,000"), align="center"),
                  value="plot"),
         
         ## plot map
