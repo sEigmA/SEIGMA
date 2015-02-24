@@ -25,8 +25,9 @@ labor <- labor[,-c(7, 12)]
 
 #Keep only Annual average for the year
 labor_data <- labor[which(labor$Period=="Annual Average"),]
+##9168 observations
 
-write.csv(labor_data, file="labordata2.csv")
+write.csv(labor_data, file="labordatawithnas.csv")
 
 ## Replace N/A's with "NA" to remove the slash.
 labor_data2 <- labor_data
@@ -59,7 +60,7 @@ labor_data4 <- labor_data3 %>%
 idx_labor_MA <- which(labor_data4$Region == "MA")
 idx_labor_US <- which(labor_data4$Region == "United States")
 labor_data4 <- rbind.data.frame(labor_data4[idx_labor_US,], labor_data4[idx_labor_MA,], labor_data4[-c(idx_labor_MA, idx_labor_US),])
-
+View(labor_data4)
 
 ##Eliminating unnecessary data read from CDC - not required for most other datasets
 labor_data4 <- labor_data4[-c(1:759),]
