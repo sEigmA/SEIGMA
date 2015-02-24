@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:                     ##
-## Date Modified: 12/3/2014 AR      ##
+## Date Modified: 02/24/15 ER        ##
 #######################################
 
 ## load necessary libraries
@@ -61,7 +61,7 @@ shinyUI(fluidPage(
   
   ## blank title, but put in a special title for window tab
   titlePanel("", windowTitle = "SEIGMA: Suicide Shiny App"),
- #  browser()
+  #  browser()
   ## Create sidebar
   sidebarLayout(
     sidebarPanel(
@@ -104,7 +104,7 @@ shinyUI(fluidPage(
           tags$li('When "Multiple Years" is selected, clicking on a county displays the increase in age-adjusted suicide rate over that timespan.')
         )
       ),
-   #   browser() 
+      #   browser() 
       
       conditionalPanel(
         condition="input.tabs == 'info'",
@@ -135,14 +135,14 @@ shinyUI(fluidPage(
           
           ## Initializing a single slider
           sliderInput("year", "Select Year",
-                      min=197, max=2012, value=2012,
+                      min=1999, max=2012, value=2012, sep="",
                       format="####")),
         conditionalPanel(
           ## Initializes a multi-year slider (range)
           condition="input.timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("range", "Select Years",
-                      min=1999, max=2012, value=c(2010,2012),
+                      min=1999, max=2012, value=c(2010,2012), sep="",
                       format="####")
         )
       ),
@@ -166,7 +166,7 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F Kiridly, Xuelian Li, Sophie E. O'Brien and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Sophie E. O'Brien and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
@@ -214,14 +214,13 @@ shinyUI(fluidPage(
                    tags$li(p(strong(em('Blank Spaces')," - Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:")))
                  ),
                  tags$br(),
-                 p(strong("Age-Adjusted Rate = Count / Population * 100,000"), align="center"),
                  value="summary", 
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
         
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Age-Adjusted Suicide Rate Over Time (per 100,000 population)", align="center"),
+                 h4("Age-Adjusted Suicide Rate Over Time (per 100,000 population) for", align="center"),
                  ## make line chart
                  googleLineChart("plot", width="100%", height="475px", options = list(
                    
@@ -280,16 +279,11 @@ shinyUI(fluidPage(
                  )),
                  
                  ## add text about the variables
-                 p(strong("Variable Summary:")),
+               
                  ## breaks between paragraphs
-                 tags$br(),
-                 p(strong("Suicides"),
+                 p(strong("Broken Lines"),
                    " - Number of suicides for a region during a specified year. For some counties, data may not appear only for certain years, resulting in shortened or broken line.  This occurs when the number of deaths is less than 10 in order to maintian confidentiality."), 
                  tags$br(),
-                 p(strong("Age-Adjusted Rate"), 
-                   " - a standard population is used in order to eliminate the effects of differences in age between two or more populations being compared.  A 'standard population' is created to which we apply both the age specific suicide rates from the early period and the age specific suicide rates from the later period. By applying suicide rates from both periods to a single standard population, we elimiate the possibility that observed differences could have resulted from age differences within the population. This is calculated by:"),
-                 tags$br(),
-                 p(strong("Age Adjusted Rate = Count / Population * 100,000"), align="center"),
                  value="plot"),
         
         ## plot map
@@ -301,11 +295,9 @@ shinyUI(fluidPage(
                                       .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
                                       ")),
                  ## Map Creation
-                 leafletMap("map", width="100%", height=500, 
-                            options=list(center = c(42.15, -71.65), zoom=8, 
-                                         ##Bounds for the map for when zoomed in on mass
-                                         maxBounds = list(list(41, -73.5), 
-                                                          list(43, -70)))),
+                 leafletMap("map", width="100%", height=500,  options=list(center = c(42.15, -71.65), zoom=8, 
+                                                                           ##Bounds for the map for when zoomed in on mass
+                                                                           maxBounds = list(list(41, -73.5), list(43, -70)))),
                  ## Info Box 
                  conditionalPanel(
                    condition="input.action != 0",
@@ -376,14 +368,14 @@ shinyUI(fluidPage(
                    )),
                  
                  ## Add text about the variables
-                # tags$br(),
+                 # tags$br(),
                  #p(strong("Variable Summary:")),
                  #tags$br(),
                  #p(strong("Suicides"),
-                  # " - Number of suicides for a region during a specified year.Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
+                 # " - Number of suicides for a region during a specified year.Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
                  #tags$br(),
                  #p(strong("Age-Adjusted Rate"), 
-                  # " - Age-Adjusted rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
+                 # " - Age-Adjusted rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
                  #tags$br(),
                  #p(strong("Age-Adjusted Rate = Count / Population * 100,000"), align="center"),
                  value="map"),
@@ -413,7 +405,7 @@ shinyUI(fluidPage(
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
         id="tabs"
-                 )
-        )
+      )
     )
-       ))
+  )
+))

@@ -1,10 +1,10 @@
 #######################################
-## Title: Education global.R          ##
+## Title: Education global.R         ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  12/4/14            ##
-## Date Modified: 12/4/14            ##
+## Date Created:  12/04/14           ##
+## Date Modified: 02/24/15           ##
 #######################################
 
 ##First file run - Environment Setup
@@ -22,7 +22,7 @@ require(RJSONIO)
 # require(tidyr)
 
 ## load map data
-MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
+#MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted marital status data

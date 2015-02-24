@@ -30,7 +30,6 @@ shinyServer(function(input, output, session){
       range <- seq(min(input$range), max(input$range), 1)
       df <- c()
       
-      ####**********RBIND.Data.frame -DO Not Match
       for(i in 1:length(range)){
         bbb <- subset(unemp_df, Year==range[i])
         df <- rbind.data.frame(df, bbb)
@@ -72,6 +71,7 @@ shinyServer(function(input, output, session){
   ## create the plot of the data
   ## for the Google charts plot
   output$plot <- reactive({
+ #   browser() 
     #     browser()
     ## make reactive dataframe into regular dataframe
     unemp_df <- unemp_df()
@@ -87,12 +87,12 @@ shinyServer(function(input, output, session){
         munis <- c(munis, "United States")
     }
     
-    ## if no counties have been selected, just show the US average
+    ## if no counties have been selected, just show the MA average
     if(is.null(input$plot_muni)){
       ## make region a vector based on input variable
       munis <- "MA"
     }
-    
+
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     g <- unemp_df %>%
       filter(Region %in% munis) %>%
@@ -116,7 +116,7 @@ shinyServer(function(input, output, session){
     map_dat <- unemp_df %>%
       filter(!is.na(Municipal)) 
     
-    ######################################################
+  ######################################################
     
     ## for single year maps...
     if(input$timespan == "sing.yr"){
@@ -212,7 +212,7 @@ shinyServer(function(input, output, session){
       x <- MA_map_muni
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
-        ## Each feature is a county
+        ## Each feature is a Muni
         x$features[[i]]$properties["Unemployment.Rate.Avg"] <-
           map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal), "Unemployment.Rate.Avg"]
         ## Style properties
