@@ -1,10 +1,10 @@
 #######################################
-## Title: Education ui.R              ##
+## Title: Education ui.R             ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  12/4/14            ##
-## Date Modified: 12/4/14            ##
+## Date Modified: 02/24/15  ER       ##
 #######################################
 
 shinyUI(fluidPage(
@@ -85,7 +85,7 @@ shinyUI(fluidPage(
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education/education", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education", target="_blank")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -112,11 +112,17 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Educational Attainment by Region", align="center"),
+                 h4("Educational Attainment by Region Over Selected Five Year Period", align="center"),
                  plot_options,
                  ## add text about the variables
 #                  plot_main_text,
                  value="plot"),
+# conditionalPanel(
+#   condition="input.tabs == 'plot' && input.action == 0",
+#   ## within the map area, you can create an action button.  similar to initializing the legend but just putting a button instead.
+#   absolutePanel(right = 400, top = 300, class = "floater",
+#                 actionButton("action", "Generate Plot")
+#   ))),
         
         ## plot map
         tabPanel("Map",

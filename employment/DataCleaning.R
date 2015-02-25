@@ -1,5 +1,5 @@
 #######################################
-## Title: employment Data Cleaning ##
+## Title: employment Data Cleaning   ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 

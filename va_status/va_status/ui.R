@@ -78,7 +78,7 @@ shinyUI(fluidPage(
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/va_status/va_status", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/va_status", target="_blank")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -105,7 +105,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Civilian Veteran's Status by Region Over a Five-Year Period", align="center"),
+                 h4("Civilian Veteran's Status by Region Over Selected Five Year Period", align="center"),
                  ## make a row to put two charts in
                  
                  googleColumnChart("plot", width="100%", height="475px", options = list(

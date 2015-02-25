@@ -3,8 +3,8 @@
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/5/2014          ##
-## Date Modified: 11/7/2014          ##
+## Date Created:  11/05/2014         ##
+## Date Modified: 02/24/2014 ER      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -106,7 +106,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Median Household Income (Inflation-Adjusted Dollars) by Region", align="center"),
+                 h4("Median Household Income (Inflation-Adjusted Dollars) by Region Over Selected Five Year Period", align="center"),
                  ## make a row to put two charts in
                  
                  googleColumnChart("plot", width="100%", height="475px", options = list(
