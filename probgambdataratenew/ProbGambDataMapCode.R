@@ -8,14 +8,14 @@ require(ggmap)
 
 
 
-data(us.cities)
+##data(us.cities)
 
 ##Obtaining Problem Gambling Data
 pgdat <- read.csv(file="Problem_Gambling_data.csv")[,]
 head(pgdat)
 
-dat <- pgdat[c(1:14),c(1,7)]
-dat
+#dat <- pgdat[c(1:14),c(1,7)]
+dat <-pgdat
 
 
 #data(unemp)
@@ -74,13 +74,12 @@ mafips
 # Plot unemployment by country
 colors = c("#F1EEF6", "#D4B9DA", "#C994C7", "#DF65B0", "#DD1C77", 
            "#980043")
-head(unemp)
 
 
 dat$colorBuckets <- as.numeric(cut(dat$Problem.Gambling.Rate, c(0.39, 0.625, 1.25, 2.4, 3.30)))
 colorsmatched <- dat$colorBuckets[match(mafips$fips, dat$fips)]
 
-
+par(mar=c(2,2,0,0))
 map("county", "MASSACHUSETTS", col = colors[colorsmatched], fill = TRUE, resolution = 0, 
     lty = 0, projection = "polyconic")
 ## Loading required package: mapproj
@@ -91,14 +90,16 @@ map("county","MASSACHUSETTS", col = "black", fill = FALSE, add = TRUE, lty = 1, 
 par(mar=c(4,4.5,2,1))
 par(oma=c(0,0,0,0))
 title("
-      Problem Gambling Rate 
+      Problem Gambling Rates 
       by County in 2014")
 
 #leg.txt <- c("<2%", "2-4%", "4-6%", "6-8%", "8-10%", ">10%")
 leg.txt <- c("0.40-0.625%", "0.625-1.25%","1.25-2.40", "2.40-3.30%")
 
-par(mar=c(1,2,,0))
+par(mar=c(1,2,0,0))
 legend("bottomleft", leg.txt, horiz = FALSE, fill = colors,title="
        Rate by quantile")
  
+dev.copy(jpeg,filename="MassCountyProbGambRatesMap.jpg");
+dev.off ();
 
