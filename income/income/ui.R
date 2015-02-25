@@ -67,14 +67,14 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, Sophie E. O'Brien and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey", href="http://www.census.gov/acs/www/",
+      helpText(a("Data Source: American Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1903&prodType=table",
                  target="_blank")),
       
       ## GitHub link
@@ -226,11 +226,13 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Average Annual Household Income"), "This includes the income of the householder and all other individuals ages 15 and over. Average annual household income provides a clear trend to assess resident's household income overtime. Annual data for median household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
+                   tags$li(p(strong("Average Annual Household Income"), "-This includes the income of the household and all other individuals ages 15 and over. Average annual household income provides a clear trend to assess residents' household income overtime. Annual data for median household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
                    tags$br(),
-                   tags$li(p(strong("Median"),"This represents the middle value or the average of the two middle values (if 'n' is  even) in an ordered list of 'n' data values.  The median divides the distribution of average annual household income into two equal parts; half that fall below the median for average household income and half that fall above the average annual household income.")),
+                   tags$li(p(strong("Infaltion Adjusted Dollars"), "-An adjusted value of currency used to compare dollar values from one period to another. Due to inflation, the purchasing power of the dollar changes over time, so in order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values.")),
                    tags$br(),
-                   tags$li(p(strong("Five- Year Percentages"),"Survey information collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, large geographic regions also benefit from increased sample, as this results in more precise estimates.")
+                   tags$li(p(strong("Median"),"-The median divides the distribution of average annual household income into two equal parts; half that fall below the median for average household income and half that fall above the average annual household income.")),
+                   tags$br(),
+                   tags$li(p(strong("Five- Year Percentages"),"-Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions.")
                    )
                    ),
                  #tags$br(),

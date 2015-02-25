@@ -191,7 +191,7 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Education Status App"), "displays the five-year average educational attainment percentages for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Educational Status App"), "displays the five-year average educational attainment percentages for Massachusetts by municipality.",
                      p(strong("Click on different tabs to see the data in different formats.")),
                      tags$br(),
                      tags$ul(
