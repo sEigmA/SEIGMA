@@ -1,10 +1,10 @@
 #######################################
-## Title: Education server.R          ##
+## Title: Education server.R         ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  12/4/14            ##
-## Date Modified: 12/4/14            ##
+## Date Modified: 02/24/15  ER       ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -71,8 +71,7 @@ shinyServer(function(input, output, session) {
     munis <- c(input$plot_muni, county, "MA", "United States")
     
     muni_index <- c()
-    
-    for(i in 1:length(munis)){
+        for(i in 1:length(munis)){
       muni_index[i] <- match(munis[i], edu_df$Region)
     }
     
@@ -102,6 +101,8 @@ shinyServer(function(input, output, session) {
     list(
       data = googleDataTable(g))
   })
+
+##########################################################
   
   ## set map colors
   map_dat <- reactive({

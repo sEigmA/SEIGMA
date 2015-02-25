@@ -1,10 +1,10 @@
 #######################################
-## Title: Education ui.R              ##
+## Title: Education ui.R             ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  12/4/14            ##
-## Date Modified: 12/4/14            ##
+## Date Modified: 02/24/15  ER       ##
 #######################################
 
 shinyUI(fluidPage(
@@ -73,19 +73,19 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey", href="http://www.census.gov/acs/www/Downloads/methodology/content_test/P2b_Educational_Attainment.pdf",
+      helpText(a("Data Source: American Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1501&prodType=table",
                  target="_blank")),
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education/education", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education", target="_blank")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -112,11 +112,17 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Educational Attainment by Region", align="center"),
+                 h4("Educational Attainment by Region Over Selected Five Year Period", align="center"),
                  plot_options,
                  ## add text about the variables
 #                  plot_main_text,
                  value="plot"),
+# conditionalPanel(
+#   condition="input.tabs == 'plot' && input.action == 0",
+#   ## within the map area, you can create an action button.  similar to initializing the legend but just putting a button instead.
+#   absolutePanel(right = 400, top = 300, class = "floater",
+#                 actionButton("action", "Generate Plot")
+#   ))),
         
         ## plot map
         tabPanel("Map",
@@ -181,9 +187,9 @@ bootstrapPage(mainPanel(
                  tags$br(),
                  tags$ul(
                   tags$li(p(strong("Educational Attainment Rates"),
-                 " - The number of people with each level of educational attainment for a specific region over a specific five-year period of time. Educational attainment data was collected form individuals 18 years and over. Respondants were classified according to the highest degree or highest level of school completed. When a municipaility is missing data, this indicates that data cannot be displayed because the number of people is too small.")), 
+                 " - The number of people with each level of educational attainment for a specific region over a specific five-year period of time. Educational attainment data were collected from individuals 18 years and over. Respondents were classified according to highest level of school completed. When a municipaility is missing data, this indicates that data cannot be displayed because the number of people is too small.")), 
                  tags$br(),
-                 tags$li(p(strong("Five-Year Estimates"), "Survey information collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, large geographic regions also benefit from increased sample, as this results in more precise estimates." ))),
+                 tags$li(p(strong("Five-Year Estimates"), "-Survey information is collected everyday of the year and then aggregated over a specific time period,in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible for larger municipalities." ))),
                  
                 
                  

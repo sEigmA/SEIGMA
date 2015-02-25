@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  12/04/14           ##
-## Date Modified: 02/24/15           ##
+## Date Modified: 02/24/15  ER       ##
 #######################################
 
 ##First file run - Environment Setup
@@ -31,10 +31,10 @@ edu_data <- read.csv(file="edudata.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
-MA_counties <- c()
-for(i in 1:length(MA_map_county$features)){
-  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-}
+#MA_counties <- c()
+#for(i in 1:length(MA_map_county$features)){
+#  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
+#}
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -191,7 +191,7 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Education Status App"), "displays the five-year average educational attainment percentages for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Educational Status App"), "displays the five-year average educational attainment percentages for Massachusetts by municipality.",
                      p(strong("Click on different tabs to see the data in different formats.")),
                      tags$br(),
                      tags$ul(

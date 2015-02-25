@@ -3,8 +3,8 @@
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/5/2014          ##
-## Date Modified: 11/7/2014          ##
+## Date Created:  11/05/2014         ##
+## Date Modified: 02/24/2014 ER      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -23,7 +23,7 @@ require(rCharts)
 require(tidyr)
 
 ## load map data
-MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
+#MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted Income status data
@@ -32,10 +32,10 @@ inc_data <- read.csv(file="incomedata.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
-MA_counties <- c()
-for(i in 1:length(MA_map_county$features)){
-  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-}
+# MA_counties <- c()
+# for(i in 1:length(MA_map_county$features)){
+#   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
+# }
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
