@@ -14,11 +14,10 @@ require(ggmap)
 pgdat <- read.csv(file="Problem_Gambling_data.csv")[,]
 head(pgdat)
 
-#dat <- pgdat[c(1:14),c(1,7)]
 dat <-pgdat
 
 
-#data(unemp)
+
 data(county.fips)
 ## This gives a fips code for the mass counties
 mafips <- county.fips[c(1186:1199),]
@@ -47,7 +46,7 @@ quants
 ##mafips <-  substring(colnames(county.fips$[6:12]), first=12)
 
 # Plot unemployment by country
-colors = c("#F1EEF6", "#D4B9DA", "#C994C7", "#DF65B0", "#DD1C77", "#980043")
+#colors = c("#F1EEF6", "#D4B9DA", "#C994C7", "#DF65B0", "#DD1C77", "#980043")
 
 
 
@@ -72,8 +71,7 @@ mafips
 #data(county.fips)
 
 # Plot unemployment by country
-colors = c("#F1EEF6", "#D4B9DA", "#C994C7", "#DF65B0", "#DD1C77", 
-           "#980043")
+colors = c("lightskyblue1","steelblue3", "royalblue", "navy")
 
 
 dat$colorBuckets <- as.numeric(cut(dat$Problem.Gambling.Rate, c(0.39, 0.625, 1.25, 2.4, 3.30)))
@@ -87,19 +85,49 @@ map("county", "MASSACHUSETTS", col = colors[colorsmatched], fill = TRUE, resolut
 # Add border around each State
 map("county","MASSACHUSETTS", col = "black", fill = FALSE, add = TRUE, lty = 1, lwd = 0.2, 
     projection = "polyconic")
+
+
+
+
+
+### Add Text to each County
+# 
+# # Get County Data
+# m <- map('county', 'MASSACHUSETTS', plot=FALSE)
+# names(m)
+# m$names   # State,County names
+# # The names appear to be in alphabetical order by state, e.g.:
+# 
+# # Show county names on map
+# map.text('county', 'massachusetts', proj='bonne', param=45)
+# 
+# # Show county indices on map
+# map.text('county', 'massachusetts', proj='bonne', param=45, 
+#          labels=paste(1:length(m$names))
+# 
+# #or perhaps
+# map.text('county', 'massachusetts', proj='bonne', param=45, 
+#          labels=paste(1:length(m$names)), col=1:length(m$names))
+# 
+# map.text("county","MASSACHUSETTS", exact=FALSE, labels=mafips$polyname,add=TRUE, move=TRUE)
+
+
+
+
 par(mar=c(4,4.5,2,1))
 par(oma=c(0,0,0,0))
-title("
-      Problem Gambling Rates 
-      by County in 2014")
+title("Problem Gambling Rates by County in 2014")
+
+
+
 
 #leg.txt <- c("<2%", "2-4%", "4-6%", "6-8%", "8-10%", ">10%")
-leg.txt <- c("0.40-0.625%", "0.625-1.25%","1.25-2.40", "2.40-3.30%")
+leg.txt <- c("0.40-0.625%", "0.625-1.25%","1.25-2.40%", "2.40-3.30%")
 
 par(mar=c(1,2,0,0))
 legend("bottomleft", leg.txt, horiz = FALSE, fill = colors,title="
        Rate by quantile")
- 
-dev.copy(jpeg,filename="MassCountyProbGambRatesMap.jpg");
+
+dev.copy(jpeg,filename="MassCountyProbGambRatesMap_steelblues.jpg");
 dev.off ();
 
