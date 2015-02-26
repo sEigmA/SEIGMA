@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  10/22/2014         ##
-## Date Modified: 10/22/2014         ##
+## Date Modified: 02/25/2015  ER     ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -198,8 +198,8 @@ shinyServer(function(input, output, session) {
       
       ## subset the data by the var selected
 #      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Married_Pct)
-      marmap_dat <- select(map_dat, Region, Gender, Five_Year_Range, Population, Married_Pct
-                           )     
+      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Married_Pct)
+      
       ## assign colors to each entry in the data frame
       
       color <- as.integer(cut2(marmap_dat[,input$var],cuts=marcuts))
@@ -224,7 +224,7 @@ shinyServer(function(input, output, session) {
     if(input$var == "Never_Married_Pct"){
       
       ## subset the data by the var selected
-      nevmap_dat <- select(map_dat, Region, Gender, Five_Year_Range, Population, Never_Married_Pct)
+      nevmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Never_Married_Pct)
       
       ## assign colors to each entry in the data frame
       
@@ -250,7 +250,7 @@ shinyServer(function(input, output, session) {
     if(input$var == "Separated_Pct"){
       
       ## subset the data by the var selected
-      sepmap_dat <- select(map_dat, Region, Gender, Five_Year_Range, Population, Separated_Pct)
+      sepmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Separated_Pct)
       
       ## assign colors to each entry in the data frame
       
@@ -274,7 +274,7 @@ shinyServer(function(input, output, session) {
     if(input$var == "Widowed_Pct"){
       
       ## subset the data by the year selected
-      widmap_dat <- select(map_dat,  Region, Gender, Five_Year_Range, Population, Widowed_Pct)
+      widmap_dat <- select(map_dat,  Municipal, County, State, Region, Gender, Five_Year_Range, Population, Widowed_Pct)
       
       ## assign colors to each entry in the data frame
       
@@ -299,7 +299,7 @@ shinyServer(function(input, output, session) {
     if(input$var == "Divorced_Pct"){
       
       ## subset the data by the year selected
-      divmap_dat <- select(map_dat, Region, Gender, Five_Year_Range, Population, Divorced_Pct)
+      divmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Divorced_Pct)
       
       ## assign colors to each entry in the data frame
       
@@ -400,7 +400,7 @@ shinyServer(function(input, output, session) {
     isolate({
       ## Duplicate MAmap to x
       x <- MA_map_muni
-      
+
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a county

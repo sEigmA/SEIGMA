@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  11/5/2014          ##
-## Date Modified: 11/7/2014          ##
+## Date Modified: 02/25/2015 ER      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -198,7 +198,7 @@ bootstrapPage(mainPanel(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-#                      strong("Crude Suicide Rate"),
+                     strong("Veteran Status"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(

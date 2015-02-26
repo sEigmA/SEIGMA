@@ -199,7 +199,7 @@ bootstrapPage(mainPanel(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-#                      strong("Crude Suicide Rate"),
+                      strong("Avg Annual Household Income"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(

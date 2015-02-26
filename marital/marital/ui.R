@@ -177,7 +177,7 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                     #strong("Married"),
+                     strong("Marital Status Rate"),
                      tags$br(),
                      #strong("Age Adjusted Suicide Rate"),
                      tags$table(
@@ -186,7 +186,7 @@ shinyUI(fluidPage(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
-                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
+                           tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
                          )
                        }, 
                        marcolorRanges$from, marcolorRanges$to, map_colors[-length(map_colors)],
@@ -204,7 +204,7 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                     #strong("Married"),
+                     strong("Marital Status Rate"),
                      tags$br(),
                      #strong("Age Adjusted Suicide Rate"),
                      tags$table(
@@ -213,7 +213,7 @@ shinyUI(fluidPage(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
-                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
+                           tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
                          )
                        }, 
                        nevcolorRanges$from, nevcolorRanges$to, map_colors[-length(map_colors)],
@@ -231,7 +231,7 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                     #strong("Married"),
+                     strong("Marital Status Rate"),
                      tags$br(),
                      #strong("Age Adjusted Suicide Rate"),
                      tags$table(
@@ -240,7 +240,7 @@ shinyUI(fluidPage(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
-                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
+                           tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
                          )
                        }, 
                        sepcolorRanges$from, sepcolorRanges$to, map_colors[-length(map_colors)],
@@ -259,7 +259,7 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                     #                     strong("Married"),
+                     strong("Marital Status Rate"),
                      tags$br(),
                      #strong("Age Adjusted Suicide Rate"),
                      tags$table(
@@ -268,7 +268,7 @@ shinyUI(fluidPage(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
-                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
+                           tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
                          )
                        }, 
                        widcolorRanges$from, widcolorRanges$to, map_colors[-length(map_colors)],
@@ -286,7 +286,7 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                     #    strong("Married"),
+                     strong("Marital Status Rate"),
                      tags$br(),
                      #strong("Age Adjusted Suicide Rate"),
                      tags$table(
@@ -295,7 +295,7 @@ shinyUI(fluidPage(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
-                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
+                           tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
                          )
                        }, 
                        divcolorRanges$from, divcolorRanges$to, map_colors[-length(map_colors)],
