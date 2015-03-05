@@ -1,28 +1,28 @@
 #######################################
-## Title: Unemploy server.R          ##
+## Title: Labor server.R             ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ##
-## Date Created:  01/07/2015         ##
-## Date Modified: 01/29/2015         ##
-#######################################
+## Date Created:  02/27/2015         ##
+## Date Modified: 03/05/2015         ##
+#############################-##########
 
 shinyServer(function(input, output, session){
-  # unemp_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
-  unemp_df <- reactive({
-    unemp_df <- unemp_data
+  # labor_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
+  labor_df <- reactive({
+    labor_df <- labor_data
     ## Output reactive dataframe
-    unemp_df
+    labor_df
   })
   
   ## Create summary table
   output$summary <- renderDataTable({
     ## Make reactive dataframe into regular dataframe
-    unemp_df <- unemp_df()
+    labor_df <- labor_df()
     
     ## if a user chooses Single Year, display only data from that year (dpylr)
     if(input$timespan == "sing.yr"){
-      df <- filter(unemp_df, Year==input$year)
+      df <- filter(labor_df, Year==input$year)
     }
     
     ## if a user chooses Multiple Years, display data from all years in range
@@ -32,7 +32,7 @@ shinyServer(function(input, output, session){
       
       ####**********RBIND.Data.frame -DO Not Match
       for(i in 1:length(range)){
-        bbb <- subset(unemp_df, Year==range[i])
+        bbb <- subset(labor_df, Year==range[i])
         df <- rbind.data.frame(df, bbb)
       }
     }
@@ -74,7 +74,7 @@ shinyServer(function(input, output, session){
   output$plot <- reactive({
     #     browser()
     ## make reactive dataframe into regular dataframe
-    unemp_df <- unemp_df()
+    labor_df <- labor_df()
     
     ## make region a vector based on input variable
     munis <- input$plot_muni
@@ -94,10 +94,10 @@ shinyServer(function(input, output, session){
     }
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
-    g <- unemp_df %>%
+    g <- labor_df %>%
       filter(Region %in% munis) %>%
-      select(Year, Region, Unemployment.Rate.Avg) %>%
-      spread(Region, Unemployment.Rate.Avg)
+      select(Year, Region, No.Labor.Avg) %>%
+      spread(Region, No.Labor.Avg)
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
@@ -110,10 +110,10 @@ shinyServer(function(input, output, session){
   map_dat <- reactive({
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
-    unemp_df <- unemp_df()
+    labor_df <- labor_df()
     
     ## take US, MA, and counties out of map_dat
-    map_dat <- unemp_df %>%
+    map_dat <- labor_df %>%
       filter(!is.na(Municipal)) 
     
     ######################################################
@@ -122,20 +122,20 @@ shinyServer(function(input, output, session){
     if(input$timespan == "sing.yr"){
       #     browser()
       ## subset the data by the year selected
-      unemp_df <- filter(unemp_df, Year==input$year)
+      labor_df <- filter(labor_df, Year==input$year)
       
       ## assign colors to each entry in the data frame
-      color <- as.integer(cut2(unemp_df$Unemployment.Rate.Avg, cuts=scuts))
-      unemp_df <- cbind.data.frame(unemp_df, color)
-      unemp_df$color <- ifelse(is.na(unemp_df$color), length(smap.colors),
-                               unemp_df$color)
-      unemp_df$opacity = 0.7
+      color <- as.integer(cut2(labor_df$No.Labor.Avg, cuts=scuts))
+      labor_df <- cbind.data.frame(labor_df, color)
+      labor_df$color <- ifelse(is.na(labor_df$color), length(smap.colors),
+                               labor_df$color)
+      labor_df$opacity = 0.7
       
       #       ## This line is important. Formats county name (ie Franklin County)
       #       suidf$County <- paste(as.character(suidf$County), "County")
       
       ## find missing counties in data subset and assign NAs to all values
-      missing.munis <- setdiff(leftover_munis_map, unemp_df$Municipal)
+      missing.munis <- setdiff(leftover_munis_map, labor_df$Municipal)
       if(length(missing.munis) > 0){
         df <- data.frame(Municipal=missing.munis, County="County", State="MA", Region=missing.munis,
                          Year=input$year, Unemployment.Rate.Avg=NA, No.Unemployed.Avg=NA,
@@ -143,10 +143,10 @@ shinyServer(function(input, output, session){
                          color=length(smap.colors), opacity = 0)
         
         ## combine data subset with missing counties data
-        unemp_df <- rbind.data.frame(unemp_df, df)
+        labor_df <- rbind.data.frame(labor_df, df)
       }
-      unemp_df$color <- smap.colors[unemp_df$color]
-      return(unemp_df)
+      labor_df$color <- smap.colors[labor_df$color]
+      return(labor_df)
     }
     
     ######################################MULTIPLE YEARS
@@ -156,13 +156,13 @@ shinyServer(function(input, output, session){
       ## create dataframes for the max and min year of selected data
       min.year <- min(input$range)
       max.year <- max(input$range)
-      min.df <- subset(unemp_df, Year==min.year)
-      max.df <- subset(unemp_df, Year==max.year)
+      min.df <- subset(labor_df, Year==min.year)
+      max.df <- subset(labor_df, Year==max.year)
       
       ## merge data and take difference between the data of the min year and the max year
       diff.df <- within(merge(min.df, max.df, by="Municipal"),{
-        Unemployment.Rate.Avg <- round(Unemployment.Rate.Avg.y - Unemployment.Rate.Avg.x, 3)
-      })[,c("Municipal", "Unemployment.Rate.Avg")]
+        No.Labor.Avg <- round(No.Labor.Avg.Y - No.Labor.Avg.x, 3)
+      })[,c("Municipal", "No.Labor.Avg")]
       
       #diff.df$Municipal <- paste(as.character(diff.df$Municipal), "Municipal")
       
@@ -173,7 +173,7 @@ shinyServer(function(input, output, session){
       diff.df$opacity <- 0.7
       # 
       #             ## assign colors to each entry in the data frame
-      #             color <- as.integer(cut2(map_dat[,"Unemployment.Rate.Avg"], cuts=mcuts))
+      #             color <- as.integer(cut2(map_dat[,"No.Labor.Avg"], cuts=mcuts))
       #             map_dat <- cbind.data.frame(map_dat, color)
       #             map_dat$color <- ifelse(is.na(map_dat$color), length(mmap.colors),
       #                                     map_dat$color)
@@ -181,7 +181,7 @@ shinyServer(function(input, output, session){
       
       ## find missing munis in data subset and assign NAs to all values
       missing.munis <- setdiff(leftover_munis_map, diff.df$Municipal)
-      df <- data.frame(Municipal=missing.munis, Unemployment.Rate.Avg=NA,
+      df <- data.frame(Municipal=missing.munis, No.Labor.Avg=NA,
                        color=length(mmap.colors))
       df$opacity <- 0
       
@@ -213,8 +213,8 @@ shinyServer(function(input, output, session){
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a county
-        x$features[[i]]$properties["Unemployment.Rate.Avg"] <-
-          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal), "Unemployment.Rate.Avg"]
+        x$features[[i]]$properties["No.Labor.Avg"] <-
+          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal), "No.Labor.Avg"]
         ## Style properties
         x$features[[i]]$properties$style <- list(
           fill=TRUE,
@@ -262,7 +262,7 @@ shinyServer(function(input, output, session){
       )))
     }
     muni_name <- values$selectedFeature$NAMELSAD10
-    muni_value <- prettyNum(values$selectedFeature["Unemployment.Rate.Avg"], big.mark = ",")
+    muni_value <- prettyNum(values$selectedFeature["No.Labor.Avg"], big.mark = ",")
     
     ## If clicked county has no crude rate, display a message
     if(muni_value == "NULL"){

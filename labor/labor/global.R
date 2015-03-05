@@ -1,10 +1,10 @@
 #######################################
-## Title: Unemploy global.R          ##
+## Title: Labor global.R             ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ##
-## Date Created:  01/07/2015         ##
-## Date Modified: 01/07/2015         ##
+## Date Created:  02/27/2015         ##
+## Date Modified: 03/05/2015         ##
 #######################################
 
 ## First file run - Environment Setup
@@ -27,7 +27,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted unemp data
 ## -1 eliminates first column [rows,columns]
-unemp_data <- read.csv(file="unempdata.csv")[,-1]
+labor_data <- read.csv(file="labordata.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
@@ -47,7 +47,7 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% unemp_data$Region)
+idx_leftovers <- which(!MA_municipals_map %in% labor_data$Region)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
   MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <-
@@ -58,7 +58,7 @@ MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
   MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
-idx_leftovers2 <- which(!MA_municipals %in% unemp_data$Region)
+idx_leftovers2 <- which(!MA_municipals %in% labor_data$Region)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
@@ -69,31 +69,31 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
-  min = min(unemp_data$Year)-1,
-  max = max(unemp_data$Year)+1
+  min = min(labor_data$Year)-1,
+  max = max(labor_data$Year)+1
 )
 ylim <- list(
   min = 0,
   ##+5 = max rate plus a little extra
-  max = max(unemp_data$Unemployment.Rate.Avg, na.rm=T)+5
+  max = max(labor_data$No.Labor.Avg, na.rm=T)+5
 )
 
 #################################################################
 
 ## Colors for a single-year legend
-spaint.brush <- colorRampPalette(colors=c("white", "red3"))
+spaint.brush <- colorRampPalette(colors=c("white", "royalblue4"))
 smap.colors <- c(spaint.brush(n=5), "#999999")
 
 ## For a single year data, we have a series of rates (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-smax.val <- max(unemp_data$Unemployment.Rate.Avg, na.rm=TRUE)
-smin.val <- min(unemp_data$Unemployment.Rate.Avg, na.rm=TRUE)
+smax.val <- max(labor_data$No.Labor.Avg, na.rm=TRUE)
+smin.val <- min(labor_data$No.Labor.Avg, na.rm=TRUE)
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
 # scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
-scuts <- quantile(unemp_data$Unemployment.Rate.Avg, probs = seq(0, 1, length.out = length(smap.colors)), na.rm=TRUE)
+scuts <- quantile(labor_data$No.Labor.Avg, probs = seq(0, 1, length.out = length(smap.colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
@@ -111,12 +111,12 @@ mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7])
 mmap.colors <- c(mpaint.brush(n=6), "#999999")
 
 ## find max and min (crude rates) values for each region
-bound <- unemp_data %>%
+bound <- labor_data %>%
   group_by(Region) %>%
 
   ##n.rm=FALSE = needed
-  summarise(max.val = max(Unemployment.Rate.Avg, na.rm=FALSE),
-            min.val = min(Unemployment.Rate.Avg, na.rm=FALSE))
+  summarise(max.val = max(No.Labor.Avg, na.rm=FALSE),
+            min.val = min(No.Labor.Avg, na.rm=FALSE))
 
 ## find the difference between each region's max and min
 bound$diff <- abs(bound$max.val - bound$min.val)
@@ -188,15 +188,15 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
 
-  helpText(p(strong('Please select the timespan for which you are interested in viewing the annual average unemployment rate.'))),
+  helpText(p(strong('Please select the timespan for which you are interested in viewing the labor force.'))),
   tags$br(),
   tags$ul(
     tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To compare the annual average unemployment rate to the Massachusetts or national rates, select the corresponding box.'),
+    tags$li('To compare the annual average labor force to the Massachusetts or national rates, select the corresponding box.'),
     tags$br(),
-    tags$li('Sort annual average umemployment rates in ascending and descending order by clicking the column or variable title.')
+    tags$li('Sort annual average labor force numbers in ascending and descending order by clicking the column or variable title.')
 
   )
 )
@@ -205,10 +205,10 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select a municipality to analyze annual average unemployment rates, do not slecet more than ten municipalities at a time.')),
+  p(strong('Please select a municipality to analyze annual average labors, do not slecet more than ten municipalities at a time.')),
   tags$br(),
   tags$ul(
-    tags$li('For a given timespan, you can compare average annual unemployment rates to the national, state, and county rates.')
+    tags$li('For a given timespan, you can compare average annual labors to the national, state, and county rates.')
   ))
 
 
@@ -227,21 +227,21 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))))
 
-about_main_text <- p(strong("The SEIGMA Annual Average Unemployment Rate App"), "displays the average annual unemployment rate for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Annual Average labor App"), "displays the average annual labor for Massachusetts by municipality.",
                      p(strong("Toggle between tabs to visualize the data differently.")),
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the source data in table format.")),
-                       tags$li(p(strong("Plot"), "compares average annual unemployment rate for each municipality to county, state, and national rates.")),
-                       tags$li(p(strong("Map"), "visually displays annual average unemployment rates comparatively by municipality")),
-                       tags$li(p(strong("More Info"), "describes annual average unemployment rates, including formulas and calculations."))
+                       tags$li(p(strong("Plot"), "compares average annual labor for each municipality to county, state, and national rates.")),
+                       tags$li(p(strong("Map"), "visually displays annual average labors comparatively by municipality")),
+                       tags$li(p(strong("More Info"), "describes annual average labors, including formulas and calculations."))
                      ))
 
 plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
-                    strong("Annual Avergage Unemployment Rate-"),
-                    " Average annual unemployment rates account for workers who have lost their jobs and are looking for new ones.  This excludes people who are not looking for work.  The unemployment rate is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey.  Municipality unemployment rates were gathered form a secition of thr BLS and CPS called the Local Areas Unemployment Statistics Series.",
+                    strong("Annual Avergage labor-"),
+                    " Average annual labors account for workers who have lost their jobs and are looking for new ones.  This excludes people who are not looking for work.  The labor is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey.  Municipality labors were gathered form a secition of thr BLS and CPS called the Local Areas Unemployment Statistics Series.",
                     tags$br(),
                     strong("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf", align="center"))
 

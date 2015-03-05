@@ -1,10 +1,10 @@
 #######################################
-## Title: Unemployment ui.R          ##
+## Title: Labor ui.R                 ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  01/08/2015         ##
-## Date Modified: 01/08/2015         ##
+## Date Created:  02/27/2015         ##
+## Date Modified: 03/05/2015         ##
 #######################################
 
 shinyUI(fluidPage(
@@ -14,7 +14,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Unemployment Rate Shiny App"),
+  titlePanel("", windowTitle = "SEIGMA: Labor Force Average Shiny App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -98,7 +98,7 @@ shinyUI(fluidPage(
       
       ## GitHub link
       helpText(a("View the data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/unemployment", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/labor", target="_blank")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -125,7 +125,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Annual Average Unemployment Rate by Region", align="center"),
+                 h4("Annual Average Labor by Region", align="center"),
                  ## make a row to put two charts in
                  
                  googleLineChart("plot", width="100%", height="475px", options = list(
@@ -148,7 +148,7 @@ bootstrapPage(mainPanel(
                        italic = FALSE)
                    ),
                    vAxis = list(
-                     title = "Annual Average Unemployment Rate",
+                     title = "Annual Average Labor Force Participation",
                      viewWindow = ylim,
                      textStyle = list(
                        fontSize = 14),
@@ -222,7 +222,7 @@ bootstrapPage(mainPanel(
                      class = "floater",
                      strong("Single Year"),
                      tags$br(),
-                     strong("Annual Average Unemployment Rate"),
+                     strong("Annual Average Labor"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -249,7 +249,7 @@ bootstrapPage(mainPanel(
                      class = "floater",
                      strong("Multiple Year"),
                      tags$br(),
-                     strong("Change in Unemployment Rate"),
+                     strong("Change in Labor"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -277,7 +277,7 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Annual Average Unemployment Rate"), ""))),
+                   tags$li(p(strong("Annual Average Labor Rate"), ""))),
                    #tags$br(),
                   # tags$li(p(strong("Median Household Income  (MHI)"),
                   #           " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality")),

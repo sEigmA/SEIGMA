@@ -11,7 +11,7 @@ require(sas7bdat)
 require(dplyr)
 
 ## load SAS data
-labor <- read.sas7bdat("at004_01.sas7bdat")
+labor <- read.sas7bdat("AT004_01.sas7bdat")
 
 ## give columns relevant titles
 column_titles <- read.csv("AT004_01_contents.csv", skip=1)
@@ -21,7 +21,7 @@ colnames(labor)[6:12] <- as.character(column_titles$Label[1:7])
 colnames(labor)[6:12] <- substring(colnames(labor[6:12]), first=12)
 
 ## grab only columns needed
-labor <- labor[,-c(7, 12)]
+labor <- labor[,-c(8, 12)]
 
 #Keep only Annual average for the year
 labor_data <- labor[which(labor$Period=="Annual Average"),]
@@ -50,7 +50,7 @@ labor_data3 <- labor_data2[,-6]
 write.csv(labor_data3, file="labordata.csv")
 labor_data3 <- read.csv("labordata.csv")[,-c(1)]
 
-colnames(labor_data3)[c(5:9)] <- c("Year", "Unemployment Rate Avg", "No Unemployed Avg", "No Employed Avg", "No Labor Avg")
+colnames(labor_data3)[c(5:9)] <- c("Year", "Unemployment Rate Avg", "No Unemployed Avg", "No Employed Avg", "Labor Avg")
 
 #Organizing by Region
 labor_data4 <- labor_data3 %>%
