@@ -27,7 +27,7 @@ labor <- labor[,-c(8, 12)]
 labor_data <- labor[which(labor$Period=="Annual Average"),]
 ##9168 observations
 
-write.csv(labor_data, file="labordatawithnas.csv")
+#write.csv(labor_data, file="labordatawithnas.csv")
 
 ## Replace N/A's with "NA" to remove the slash.
 labor_data2 <- labor_data
@@ -47,7 +47,7 @@ labor_data2$County <- paste(labor_data2$County, "County")
 labor_data3 <- labor_data2[,-6]
 
 ## save and reload to make factors into numeric (this is faster than the other methods)
-write.csv(labor_data3, file="labordata.csv")
+#write.csv(labor_data3, file="labordata.csv")
 labor_data3 <- read.csv("labordata.csv")[,-c(1)]
 
 colnames(labor_data3)[c(5:9)] <- c("Year", "Unemployment Rate Avg", "No Unemployed Avg", "No Employed Avg", "Labor Avg")
@@ -66,4 +66,5 @@ View(labor_data4)
 labor_data4 <- labor_data4[-c(1:759),]
   
 ## save data
-write.csv(labor_data4, file="labor/labordata.csv")
+write.csv(labor_data4, file="labordata.csv")
+#write.csv(labor_data4, file="labor/labordata.csv")
