@@ -161,7 +161,7 @@ shinyServer(function(input, output, session){
       
       ## merge data and take difference between the data of the min year and the max year
       diff.df <- within(merge(min.df, max.df, by="Municipal"),{
-        No.Labor.Avg <- round(No.Labor.Avg.Y - No.Labor.Avg.x, 3)
+        No.Labor.Avg <- round(No.Labor.Avg.y- No.Labor.Avg.x, 3)
       })[,c("Municipal", "No.Labor.Avg")]
       
       #diff.df$Municipal <- paste(as.character(diff.df$Municipal), "Municipal")
