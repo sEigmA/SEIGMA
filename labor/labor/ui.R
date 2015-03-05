@@ -46,7 +46,7 @@ shinyUI(fluidPage(
         
         ## Initializing a single slider
           sliderInput("year", "Select Year",
-                      min=1976, max=2012, value=2012,
+                      min=1990, max=2012, value=2012,
         sep="")
         ),
         conditionalPanel(
@@ -54,7 +54,7 @@ shinyUI(fluidPage(
           condition="input.timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("range", "Select Years",
-                      min=1976, max=2012, value=c(2010,2012),
+                      min=1990, max=2012, value=c(2010,2012),
                       sep="")
         )
       ),
@@ -76,12 +76,12 @@ shinyUI(fluidPage(
                     choices = MA_municipals, multiple=TRUE)),
       
       ## In summary and plot, show boxes that will compare to MA or US average
-      conditionalPanel(
-        condition="input.tabs == 'summary'|| input.tabs == 'plot'",
-        ## False at the end means it starts off unchecked
-        checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-        checkboxInput("US_mean", "Compare to US Average", FALSE)
-      ),
+#       conditionalPanel(
+#         condition="input.tabs == 'summary'|| input.tabs == 'plot'",
+#         ## False at the end means it starts off unchecked
+#         checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+#         checkboxInput("US_mean", "Compare to US Average", FALSE)
+#       ),
       
       tags$hr(),
       

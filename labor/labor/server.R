@@ -45,17 +45,17 @@ shinyServer(function(input, output, session){
       munis <- MA_municipals
     
     ## if the user checks the meanUS box or the meanMA box, add those to counties vector
-    if(input$US_mean){
-      if(input$MA_mean){
-        munis <- c("United States", "MA", munis) ## US and MA
-      } else{
-        munis <- c("United States", munis) ## US only
-      }
-    } else{
-      if(input$MA_mean){
-        munis <- c("MA", munis) ## US only ## MA only
-      }
-    }
+#     if(input$US_mean){
+#       if(input$MA_mean){
+#         munis <- c("United States", "MA", munis) ## US and MA
+#       } else{
+#         munis <- c("United States", munis) ## US only
+#       }
+#     } else{
+#       if(input$MA_mean){
+#         munis <- c("MA", munis) ## US only ## MA only
+#       }
+#     }
     
     ## create a dataframe consisting only of counties in vector
     sum_df <- df %>%
@@ -200,7 +200,7 @@ shinyServer(function(input, output, session){
   ## the functions within observe are called when any of the inputs are called
   
   ## Does nothing until called (done with action button)
-  observe({
+  observe({ 
     input$action
     
     ## load in relevant map data
