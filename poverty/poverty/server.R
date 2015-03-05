@@ -10,7 +10,7 @@
 shinyServer(function(input, output, session) {
   ## labor_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
   labor_df <- reactive({
-#     browser()
+    #     browser()
     ## Filter the data by the chosen Five Year Range 
     labor_df <- labor %>%
       filter(Five_Year_Range == input$year) %>%
@@ -51,7 +51,7 @@ shinyServer(function(input, output, session) {
       select(4:length(colnames(labor_df)))
     
     colnames(sum_df) <- c("Region", "Total Population", "Population Below Poverty Level", 
-                         "Percent Below Poverty Level", "Margin of Error")
+                          "Percent Below Poverty Level", "Margin of Error")
     
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
@@ -72,13 +72,13 @@ shinyServer(function(input, output, session) {
     for(i in 1:length(munis)){
       muni_index[i] <- match(munis[i], labor_df$Region)
     }
-#     browser()
+    #     browser()
     plot_df <- labor_df[muni_index,] %>%
       select(Region, Percent_Pov)
     
     colnames(plot_df) <- gsub("_", " ", colnames(plot_df))
     
-#     plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
+    #     plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
     
     list(
       data=googleDataTable(plot_df))
@@ -89,7 +89,7 @@ shinyServer(function(input, output, session) {
   
   ## set map colors
   map_dat <- reactive({
-#     browser()
+    #     browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
     labor_df <- labor_df()
@@ -113,10 +113,10 @@ shinyServer(function(input, output, session) {
                              color=length(map_colors), opacity = 0)
     na_munis <- setdiff(MA_municipals_map, map_dat$Region)
     na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
-                             Region = na_munis, Total_Pop = NA, Pov_Pop = NA,
-                             Percent_Pov = NA, Margin_Error_Percent = NA,
-                             color=length(map_colors), opacity = 0.7)
-        
+                        Region = na_munis, Total_Pop = NA, Pov_Pop = NA,
+                        Percent_Pov = NA, Margin_Error_Percent = NA,
+                        color=length(map_colors), opacity = 0.7)
+    
     # combine data subset with missing counties data
     map_dat <- rbind.data.frame(map_dat, missing_df, na_df)
     map_dat$color <- map_colors[map_dat$color]
@@ -124,7 +124,7 @@ shinyServer(function(input, output, session) {
   })
   
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
-   
+  
   ## draw leaflet map
   map <- createLeafletMap(session, "map")
   
@@ -193,7 +193,7 @@ shinyServer(function(input, output, session) {
           h4("Click on a town or city"))
       )))
     }
-#     browser()
+    #     browser()
     muni_name <- values$selectedFeature$NAMELSAD10
     muni_value <- prettyNum(values$selectedFeature["Percent_Pov"], big.mark = ",")
     

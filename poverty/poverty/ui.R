@@ -148,7 +148,7 @@ bootstrapPage(mainPanel(
                      role = c("domain", "data", "style")),
                    
                    ## set colors
-                   colors = c("#b87333", "black"),
+                   colors = c("purple", "black"),
                           
                           ## set point size
                           pointSize = 3,
