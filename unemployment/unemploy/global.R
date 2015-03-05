@@ -22,7 +22,7 @@ require(RJSONIO)
 require(tidyr)
 
 ## load map data
-MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
+#MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted unemp data
@@ -31,10 +31,10 @@ unemp_data <- read.csv(file="unempdata.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
-MA_counties <- c()
-for(i in 1:length(MA_map_county$features)){
-  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-}
+# MA_counties <- c()
+# for(i in 1:length(MA_map_county$features)){
+#   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
+# }
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -122,7 +122,10 @@ bound <- unemp_data %>%
 bound$diff <- abs(bound$max.val - bound$min.val)
 
 ## set the max and min value (for the legend) at 95% of the largest difference
-mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
+mmax.val <- max(bound$diff)
+
+#mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
+
 mmin.val <- -1*mmax.val
 mcuts <- seq(mmin.val, mmax.val, length.out = length(mmap.colors))
 
