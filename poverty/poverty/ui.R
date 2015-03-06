@@ -66,14 +66,14 @@ shinyUI(fluidPage(
                  tags$hr(),
                  
                  ## author line
-                 helpText("Created by Emily R. Ramos, Xuelian Li, Arvind Ramakrishnan and Jenna F. Kiridly"),
+                 helpText("Created by Emily R. Ramos, Xuelian Li, Arvind Ramakrishnan, and Jenna F. Kiridly"),
       
       ## email feedback link
       ## To develop a link in HTML
      helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S2101&prodType=table",
+      helpText(a("Data Source: American Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1701&prodType=table",
                  target="_blank")),
       
       ## GitHub link
@@ -225,9 +225,8 @@ bootstrapPage(mainPanel(
            p(strong("Variable Summary:")),
            tags$br(),
            tags$ul(
-             tags$li(p(strong("Veteran Status"), "-People with active duty military service and or service in the military Reserves or National Guard.")),
-             tags$br(),
-             tags$li(p(strong("Civilian Veterans"), "-Men and women who have served for any period of time, but are no longer on active duty.  People who served in the National Guard or Reserves are classified as veterans only if they were called to active duty.")),
+             tags$li(p(strong("Poverty Status"), "-To determine a person's poverty status, one compares the person’s total family income in the last 12 months with the poverty threshold appropriate for that person's family size and composition. If the total income of that person's family is less than the threshold appropriate for that family, then the person is considered below the poverty level. Poverty is defined at the family level and not the household level, the poverty status of
+the household is determined by the poverty status of the householder.")),
              tags$br(),
              tags$li(p(strong("Five-Year Estimates"), "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates, are possible for larger municipalities." ))),
            

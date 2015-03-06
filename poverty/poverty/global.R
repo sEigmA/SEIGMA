@@ -145,15 +145,15 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in viewing the estimate of civilian veterans.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in viewing the poverty rate.'))),
   tags$br(),
   tags$ul(
    #   tags$li('View rates by: male or female (or both by leaving this selection blank)'),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('To compare the data to the Massachusetts percentage or US percentage select the corresponding check box below.'),
+      tags$li('For the five year ranges below, you can compare the rate of poverty in a municipality to national, state, and county rates.'),
       tags$br(),
-      tags$li('Civilian veteran status estimates can be sorted in ascending and descending order by clicking the column or variable.')
+      tags$li('Poverty rates can be sorted in ascending and descending order by clicking the column or variable.')
   )
     
    #   tags$li(p(strong('Please note that all statistics are 5-year averages')))
@@ -169,10 +169,10 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select the municipality for which you are interested in viewing the five year estimate of civilian veterans.')),
+p(strong('Please select the municipality for which you are interested in viewing the five year estimate of poverty rate.')),
            tags$br(),
   tags$ul(
-    tags$li('For the five-year ranges below, you can compare the estimate of civilian veterans in a municipality to the national, state, and county estimates.')
+    tags$li('For the five-year ranges below, you can compare the estimate of poverty rate in a municipality to the national, state, and county rates.')
     ))
           
 
@@ -184,7 +184,7 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please select a five- year range and click on Generate Map to get started.'))),
   tags$br(),
   tags$ul(
-    tags$li('Clicking on a municipality will display the civilian veteran status percentage for the five-year range that you selected.')
+    tags$li('Clicking on a municipality will display the poverty rate for the five-year range that you selected.')
     ))
 
 
@@ -202,14 +202,14 @@ info_side_text <- conditionalPanel(
 #   tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Civilian Veteran Status App"), "displays the percentage of veterans in Massachusetts' municipalities over a five-year period.",
+about_main_text <- p(strong("The SEIGMA Poverty App"), "displays the poverty rate in Massachusetts' municipalities over a five-year period.",
   p(strong("Click on different tabs to see the data in different formats.")),
     tags$br(),
     tags$ul(
       tags$li(p(strong("Summary"), "shows the source data in table format.")),
-      tags$li(p(strong("Plot"), "compares civilian veteran status municipaliticy estimates to county, state, and national estimates.")),
-      tags$li(p(strong("Map"), "visually displays civilian veteran status estimates by municipality.")),
-      tags$li(p(strong("More Info"), "describes civilian veteran status estimates."))
+      tags$li(p(strong("Plot"), "compares municipaliticy poverty rates to county, state, and national rates.")),
+      tags$li(p(strong("Map"), "visually displays poverty rates by municipality.")),
+      tags$li(p(strong("More Info"), "describes poverty rates."))
 )
 )
 

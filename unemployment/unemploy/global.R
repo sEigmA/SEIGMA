@@ -230,7 +230,7 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Annual Average Unemployment Rate App"), "displays the average annual unemployment rate for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Annual Average Unemployment Rate App"), "displays the average unemployment rate in Massachusetts' municipalities annually.",
                      p(strong("Click on different tabs to see the data in different forms.")),
                      tags$br(),
                      tags$ul(

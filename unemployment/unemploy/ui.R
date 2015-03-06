@@ -86,14 +86,14 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, and Jenna F. Kiridly"),
       
       ## email feedback link
       ## To develop a link in HTML
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: CDC Wonder", href="http://wonder.cdc.gov/wonder/help/cmf.html",
+      helpText(a("Data Source: Amercian Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S2301&prodType=table",
                  target="_blank")),
       
       ## GitHub link
@@ -277,12 +277,20 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Annual Average Unemployment Rate"), ""))),
-                   #tags$br(),
-                  # tags$li(p(strong("Median Household Income  (MHI)"),
-                  #           " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality")),
-                 #  tags$br(),
-                  # tags$li("When analyzing data sets per municipality five- year sets are used because estimates for smaller regions require a larger sample size than can be provided by single year data.")
+    
+                   tags$li(p(strong("Annual Average Unemployment"),
+                            " -Average annual unemployment rates account for workers who have lost their jobs and are looking for new ones.  This excludes people who are not looking for work.  The unemployment rate is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey.  Municipality unemployment rates were gathered form a secition of thr BLS and CPS called the Local Areas Unemployment Statistics Series.")),
+                   tags$br(),
+                   tags$li(p(strong("Umemployed"),
+"-All civilians 16 years old and over are classified as unemployed if they were not at work during the reference week, were actively looking for work during the last 4 weeks, and were available to start a job. Also included as unemployed are civilians who did not work at all during the reference week,were waiting to be called back to a job from which they had been laid off, and were available
+for work except for temporary illness.")),
+                  tags$br(),
+                  tags$li(p(strong('Unemployment Rate'),
+                            "-The unemployment rate represents the number of unemployed
+people as a percentage of the civilian labor force. For example, if the civilian labor force
+equals 100 people and 7 people are unemployed, then the unemployment rate would be 7
+percent."))),
+
                    
                  #tags$br(),
                 # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),                  
@@ -290,7 +298,6 @@ bootstrapPage(mainPanel(
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
         id="tabs"
-      ) #ends tableset panel
+      )) #ends tableset panel
     ))#end bootstrap page
-  )
 ))

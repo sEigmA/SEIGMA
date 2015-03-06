@@ -188,15 +188,15 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
 
-  helpText(p(strong('Please select the timespan for which you are interested in viewing the labor force.'))),
+  helpText(p(strong('Please select the years for which you are interested in viewing the labor force participation rate'))),
   tags$br(),
   tags$ul(
     tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To compare the annual average labor force to the Massachusetts or national rates, select the corresponding box.'),
+    tags$li('To compare the labor force participation rate to the Massachusetts or national rate, select the corresponding box.'),
     tags$br(),
-    tags$li('Sort annual average labor force numbers in ascending and descending order by clicking the column or variable title.')
+    tags$li('Sort the labor force participation rate in ascending and descending order by clicking the column or variable title.')
 
   )
 )
@@ -205,36 +205,36 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select a municipality to analyze annual average labors, do not slecet more than ten municipalities at a time.')),
+  p(strong('Please select a municipality to analyze labor force participation rates, do not slecet more than ten municipalities at a time.')),
   tags$br(),
   tags$ul(
-    tags$li('For a given timespan, you can compare average annual labors to the national, state, and county rates.')
+    tags$li('For a given timespan, you can compare labor force participation rates to the national, state, and county rates.')
   ))
 
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please click on "Generate Map" to get started.'))),
+  helpText(p(strong('Please select a yearly range and click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
 
-    tags$li('Clicking on a municipality will display average annual unemployment status rates for the time period you selected.')
+    tags$li('Clicking on a municipality will display labor force participation rates for the time period you selected.')
   ))
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))))
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Annual Average labor App"), "displays the average annual labor for Massachusetts by municipality.",
-                     p(strong("Toggle between tabs to visualize the data differently.")),
+about_main_text <- p(strong("The SEIGMA Labor Force Participation App"), "displays the labor force participation rate in Massachusetts' municipalities annually.",
+                     p(strong("Click on different tabs to see the data in different forms.")),
                      tags$br(),
                      tags$ul(
-                       tags$li(p(strong("Summary"), "shows the source data in table format.")),
-                       tags$li(p(strong("Plot"), "compares average annual labor for each municipality to county, state, and national rates.")),
-                       tags$li(p(strong("Map"), "visually displays annual average labors comparatively by municipality")),
-                       tags$li(p(strong("More Info"), "describes annual average labors, including formulas and calculations."))
+                       tags$li(p(strong("Summary"), "shows the data in table format.")),
+                       tags$li(p(strong("Plot"), "compares labor force participation rates for each municipality to county, state, and national rates.")),
+                       tags$li(p(strong("Map"), "visually displays labor force participation rates by municipality")),
+                       tags$li(p(strong("More Info"), "describes labor force participation rates, including formulas and calculations."))
                      ))
 
 plot_main_text <- p(strong("Variable Summary:"),
