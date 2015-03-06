@@ -99,7 +99,7 @@ shinyUI(fluidPage(
                  helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
                  
                  ## data source citation
-                 helpText(a("Data Source: CDC Wonder", href="http://wonder.cdc.gov/wonder/help/cmf.html",
+                 helpText(a("Data Source: American Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S2303&prodType=table",
                             target="_blank")),
                  
                  ## GitHub link
@@ -286,11 +286,13 @@ shinyUI(fluidPage(
                  tags$br(),
                  tags$ul(
                    tags$li(p(strong("Annual Average Monthly Employment Data"), ""))),
-                 #tags$br(),
-                 # tags$li(p(strong("Median Household Income  (MHI)"),
-                 #           " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality")),
-                 #  tags$br(),
-                 # tags$li("When analyzing data sets per municipality five- year sets are used because estimates for smaller regions require a larger sample size than can be provided by single year data.")
+                 tags$br(),
+                  tags$li(p(strong("Employed"),
+                           " - all civilians 16 years old and over who worked during the reference week as paid employees, worked in their own business, worked on a farm or family business, worked for 15 hours or more as unpaid workers on a family farm or business, or those who had a job but were absent due to illness, bad weather, vacation, or personal reasons.  Exluded from this category are people whose only activity consisted of work around the house or unpaid volunteer work for religious, charitable, or similar organizations. ")),
+                  tags$br(),
+                 tags$li((p(strong("Annual Average"),
+                            "-The annual average number of employees is calculated by first calculating the total number of employees paid for all periods. Count all employees that you paid at any time during the year and include full-time, part-time, temporary, seasonal, salaried, and hourly workers. Note that pay periods could be monthly, weekly, bi-weekly, etc. Next, divide the total number of employees by the number of pay periods your establishment had in the calender year."))),
+                        
                  
                  #tags$br(),
                  # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),

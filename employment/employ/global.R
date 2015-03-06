@@ -201,7 +201,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the years and municipality for which you are interested in viewing annual average monthly employment. Do not select more than ten municipalities at a time.')),
+  p(strong('Please select the municipality for which you are interested in viewing annual average monthly employment. Do not select more than ten municipalities at a time.')),
   tags$br(),
   tags$ul(
   tags$li("For a yearly range, you can compare a municipalitiy's average monthly employment to the country, state, and national average.")
@@ -228,7 +228,8 @@ about_main_text <- p(strong("The SEIGMA Employment App"), "displays the monthly 
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the source data in table format.")),
-                       tags$li(p(strong("Map"), "compares municipality's monthly employment average to county, state, and national averages.")),
+                       tags$li(p(strong("Plot"), "compares monthly employment averages for each municipality to county, state, and national averages.")),
+                       tags$li(p(strong("Map"), "visually displays monthly employment average by municipality.")),
                        tags$li(p(strong("More Info"), "describes annual average monthly employment, including, formulas and calculations."))
                      ))
 
