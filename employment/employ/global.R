@@ -185,7 +185,7 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
 
-  helpText(p(strong('Please select the timespan for which you are interested in viewing average annual monthly employment.'))),
+  helpText(p(strong('Please select the years for which you are interested in viewing annual average monthly employment.'))),
   tags$br(),
   tags$ul(
     tags$br(),
@@ -193,7 +193,7 @@ summary_side_text <- conditionalPanel(
     tags$br(),
     tags$li('To compare the annual average monthly employment to the Massachusetts or national rates, select the corresponding box.'),
     tags$br(),
-    tags$li('Sort annual average monthly employment data in ascending and descending order by clicking the column or variable title.')
+    tags$li('Sort annual average monthly employment data in ascending and descending order by clicking on the column or variable title.')
 
   )
 )
@@ -202,35 +202,36 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select a municipality to analyze annual average monthly employments, do not slecet more than ten municipalities at a time.')),
+  p(strong('Please select the municipality for which you are interested in viewing annual average monthly employment. Do not select more than ten municipalities at a time.')),
   tags$br(),
   tags$ul(
-  tags$li('For a given timespan, you can compare average monthly employment numbers to the national, state, and county rates.')
+  tags$li("For a yearly range, you can compare a municipalitiy's average monthly employment to the country, state, and national average.")
   ))
 
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please click on "Generate Map" to get started.'))),
+  helpText(p(strong("Please select a yearly range, and click on 'Generate Map' to get started"))),
   tags$br(),
   tags$ul(
 
-    tags$li('Clicking on a municipality will display average monthly employment numbers for the time period you selected.')
+    tags$li('Clicking on a municipality will display the monthly employment average for the years you selected.')
   ))
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))))
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Annual average monthly employment App"), "displays the average monthly employment numbers for Massachusetts by municipality.",
-                     p(strong("Toggle between tabs to visualize the data differently.")),
+about_main_text <- p(strong("The SEIGMA Employment App"), "displays the monthly employment average in Massachusetts' municipalities annually.",
+                     p(strong("Click on different tabs to view the data in different formats.")),
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the source data in table format.")),
-                       tags$li(p(strong("Map"), "visually displays annual average monthly employment numbers as compared by municipality")),
-                       tags$li(p(strong("More Info"), "describes  average monthly employment numbers, including formulas and calculations."))
+                       tags$li(p(strong("Plot"), "compares monthly employment averages for each municipality to county, state, and national averages.")),
+                       tags$li(p(strong("Map"), "visually displays monthly employment average by municipality.")),
+                       tags$li(p(strong("More Info"), "describes annual average monthly employment, including, formulas and calculations."))
                      ))
 
 plot_main_text <- p(strong("Variable Summary:"),

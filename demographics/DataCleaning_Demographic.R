@@ -1,11 +1,11 @@
 #######################################
 ## Title: Demographic Data Cleaning  ##
-## Author(s): Emily Ramos, Arvind    ##
+## Author(s): Xuelian Li,  Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ##
-##            Xuelian, Li            ##
+##            Kiridly, Emily Ramos,  ##
+##                                   ##
 ## Date Created:  01/29/2015         ##
-## Date Modified: 02/15/2015         ##
+## Date Modified: 02/27/2015         ##
 #######################################
 
 require(sas7bdat)
@@ -22,7 +22,7 @@ colnames(Demographic)[5:133] <- substring(colnames(Demographic[5:133]), first=12
 colnames(Demographic)[5:133]<-gsub("; SEX AND AGE", "", colnames(Demographic[5:133]))
 
 ##Choose cloumn we need(Percentage of Age(38-71) and Sex(18,19), Race, Ethnicity(100-129))
-Dem_data<-Demographic[,c(1:5,9,18,19,38,39,42,43,46,47,50,51,54,55,58,59,62,63,66,67, 70,71,100,101,104,105,108,109,112,113,116,117,120,121,
+Dem_data<-Demographic[,c(1:5,9,14,15,18,19,38,39,42,43,46,47,50,51,54,55,58,59,62,63,66,67, 70,71,100,101,104,105,108,109,112,113,116,117,120,121,
                          124,125,128,129)]
 
 ## Replace N/A's with "NA" to remove the slash.
@@ -36,7 +36,7 @@ Dem_data2$Region  <- ifelse(!is.na(Dem_data2$Municipal),as.character(Dem_data2$M
 
 ##Rename the columns
 Dem_data3<-Dem_data2
-colnames(Dem_data3)[5:42] <- c("Five_Year_Range","Total_Population","Femal_Pct", "Margin_Error_Femal",
+colnames(Dem_data3)[5:44] <- c("Five_Year_Range","Total_Population","Male_Pct", "Margin_Error_Male","Femal_Pct", "Margin_Error_Femal",
                                "20_24_Pct","Margin_Error_20_24_Pct","25_34_Pct", "Margin_Error_25_34_Pct",
                                "35_44_Pct", "Margin_Error_35_44_Pct","45_54_Pct", "Margin_Error_45_54_Pct",
                                "55_59_Pct", "Margin_Error_55_59_Pct","60_64_Pct", "Margin_Error_60_64_Pct",
@@ -47,7 +47,7 @@ colnames(Dem_data3)[5:42] <- c("Five_Year_Range","Total_Population","Femal_Pct",
                                "Others_Pct","Margin_Error_Others_Pct","Hispanic_Pct","Margin_Error_Hispanic_Pct",
                                "Not_Hispanic_Pct", "Margin_Error_Not_Hispanic_Pct")
 #exclude Indian, Hawaiian and others
-Dem_data4<-Dem_data3[,c(1:30,33,34,39:42)]
+Dem_data4<-Dem_data3[,c(1:32,35,36,41:44)]
 write.csv(Dem_data4, file="demographics/demodata.csv",row.names=FALSE)
 
 #Organizing Region

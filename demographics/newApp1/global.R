@@ -1,10 +1,10 @@
 #######################################
-## Title: Poverty global.R           ##
-## Author(s): Emily Ramos, Arvind    ##
+## Title: Demographics global.R      ##
+## Author(s): Xuelian Li, Arvind     ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
-## Date Created:  02/20/2015         ##
-## Date Modified: 03/05/2014 ER      ##
+##            Kiridly, Emily Ramos   ## 
+## Date Created:  02/28/2015         ##
+## Date Modified: 03/05/2015 XL      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -21,19 +21,23 @@ require(leaflet)
 require(RJSONIO)
 
 ## load map data
-#MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
+MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted marital status data
 ## -1 eliminates first column [rows,columns]
-labor <- read.csv(file="povratedata.csv")[,-1]
-
+Dem_data <- read.csv(file="demodata.csv")
+colnames(Dem_data)[11:28] <- c("20-24_Pct","Margin_Error_20-24_Pct","25-34_Pct", "Margin_Error_25-34_Pct",
+                               "35-44_Pct", "Margin_Error_35-44_Pct","45-54_Pct", "Margin_Error_45-54_Pct",
+                               "55-59_Pct", "Margin_Error_55-59_Pct","60-64_Pct", "Margin_Error_60-64_Pct",
+                               "65-74_Pct", "Margin_Error_65-74_Pct","75-84_Pct", "Margin_Error_75-84_Pct",
+                               "85+Pct", "Margin_Error_85+_Pct")
 ## Find order of counties in geojson files
 ## Each county is a separate feature
-# MA_counties <- c()
-# for(i in 1:length(MA_map_county$features)){
-#   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-# }
+MA_counties <- c()
+for(i in 1:length(MA_map_county$features)){
+   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
+ }
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -46,7 +50,7 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% labor$Region)
+idx_leftovers <- which(!MA_municipals_map %in% Dem_data$Region)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
@@ -57,30 +61,34 @@ MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
  MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
-idx_leftovers2 <- which(!MA_municipals %in% labor$Region)
+idx_leftovers2 <- which(!MA_municipals %in% Dem_data$Region)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", 
+                "#0072B2", "#D55E00", "#CC79A7", "#000000")
 
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
-  min = min(labor$Percent_Pov) - 5,
-  max = max(labor$Percent_Pov) + 5
+  min = 0,
+  max = 110
 )
 
-## Colors for a single-year legend
-paint_brush <- colorRampPalette(colors=c("white", "purple"))
+## Colors for a five-year legend
+paint_brush <- colorRampPalette(colors=c("white", "red3"))
 map_colors <- c(paint_brush(n=4), "#999999")
 
-## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages
+
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
+
+max_val <- 100
+min_val <- 0
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-cuts <- quantile(labor$Percent_Pov, probs = seq(0, 1, length.out = length(map_colors)), na.rm=T)
+cuts <- seq(min_val, max_val, length.out = length(map_colors))
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
@@ -91,6 +99,10 @@ colorRanges <- data.frame(
   from = head(cuts, length(cuts)-1),
   to = tail(cuts, length(cuts)-1)
 )
+
+
+
+
 
 #############################
 ### Large Text Block Area ###
@@ -145,20 +157,18 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in viewing the poverty rate.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in seeing marital status estimates.'))),
   tags$br(),
   tags$ul(
-   #   tags$li('View rates by: male or female (or both by leaving this selection blank)'),
+      tags$li('View rates by selecting male or female. To veiw both leave this selection blank.'),
+      tags$br(),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('For the five year ranges below, you can compare the rate of poverty in a municipality to national, state, and county rates.'),
+      tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box.'),
       tags$br(),
-      tags$li('Poverty rates can be sorted in ascending and descending order by clicking the column or variable.')
-  )
-    
-   #   tags$li(p(strong('Please note that all statistics are 5-year averages')))
+      tags$li(p(strong('Please note that all statistics are 5-year averages.')))
             
-  
+  )
   
   
   ## Creates horizontal line
@@ -169,47 +179,47 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select the municipality for which you are interested in viewing the five year estimate of poverty rate.')),
+p(strong('Please select the five- year range and municipality for which you are interested in viewing marital status.')),
            tags$br(),
   tags$ul(
-    tags$li('For the five-year ranges below, you can compare the estimate of poverty rate in a municipality to the national, state, and county rates.')
+    tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages for females and males.')
     ))
           
-
+  tags$hr()
 
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please select a five- year range and click on Generate Map to get started.'))),
+  helpText(p(strong("Please select a variable of interest, a five-year range, a gender, and click on 'Generate Map' to get started."))),
   tags$br(),
   tags$ul(
-    tags$li('Clicking on a municipality will display the poverty rate for the five-year range that you selected.')
+    tags$li('Clicking on a municipality will display the variable of interest for the five-year range and gender that you selected.')
     ))
 
-
+  tags$hr()
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variable of interest.')))
-         
-  #tags$ul(
-   # tags$li('formulae'),
-    #tags$li('calculations to derive the five-year averages.')
-       )#)
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))),
+         tags$br(),
+ tags$ul(
+   tags$li('Formulae.'),
+  tags$li('Calculations to derive the five-year averages.')
+      ))
            
-#   tags$hr()
+  tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Poverty App"), "displays the poverty rate in Massachusetts' municipalities over a five-year period.",
+about_main_text <- p(strong("The SEIGMA Marital Status App"), "Displays the five-year estimates of marital status for Massachusetts by municipality.",
   p(strong("Click on different tabs to see the data in different formats.")),
     tags$br(),
     tags$ul(
-      tags$li(p(strong("Summary"), "shows the source data in table format.")),
-      tags$li(p(strong("Plot"), "compares municipaliticy poverty rates to county, state, and national rates.")),
-      tags$li(p(strong("Map"), "visually displays poverty rates by municipality.")),
-      tags$li(p(strong("More Info"), "describes poverty rates."))
+      tags$li(p(strong("Summary"), "shows the data in table format.")),
+      tags$li(p(strong("Plot"), "compares a municipality's marital status estimate to county, state, and national estimates.")),
+      tags$li(p(strong("Map"), "visually displays marital status estimates by municipality.")),
+      tags$li(p(strong("More Info"), "describes marital status including formulas and calculations."))
 )
 )
 
@@ -224,3 +234,62 @@ plot_main_text <- p(strong("Variable Summary:"),
                     " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:",
                     tags$br(),
                     strong("Crude Rate = Count / Population * 100,000", align="center"))
+
+font_size <- 14
+
+plot_options <- googleColumnChart("plot", width="100%", height="475px", options = list(
+ ## set fonts
+ fontName = "Source Sans Pro",
+ fontSize = font_size,
+ title = "",
+ ## set axis titles, ticks, fonts, and ranges
+ hAxis = list(
+  title = "",
+  textStyle = list(
+   fontSize = font_size),
+  titleTextStyle = list(
+   fontSize = font_size+2,
+   bold = TRUE,
+   italic = FALSE)
+ ),
+ vAxis = list(
+  title = "% of Population",
+  viewWindow = ylim,
+  textStyle = list(
+   fontSize = font_size),
+  titleTextStyle = list(
+   fontSize = font_size+2,
+   bold = TRUE,
+   italic = FALSE)
+ ),
+ 
+ ## set legend fonts
+ legend = list(
+  position = "in"),
+ 
+ ## set chart area padding
+ chartArea = list(
+   top = 50, left = 75,
+  height = "75%", width = "70%"
+ ),
+ 
+ ## set colors
+ colors = cbbPalette[c(1:8)],
+ 
+ ## set point size
+ pointSize = 3,
+ 
+ ## set tooltip font size
+ ## Hover text font stuff
+ tooltip = list(
+  textStyle = list(
+   fontSize = font_size
+  )
+ ),
+ 
+ ## stacked column
+ isStacked= TRUE
+))
+
+
+ 

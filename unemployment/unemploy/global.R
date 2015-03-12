@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ##
 ## Date Created:  01/07/2015         ##
-## Date Modified: 01/07/2015         ##
+## Date Modified: 03/05/2015  ER     ##
 #######################################
 
 ## First file run - Environment Setup
@@ -22,7 +22,7 @@ require(RJSONIO)
 require(tidyr)
 
 ## load map data
-MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
+#MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted unemp data
@@ -31,10 +31,10 @@ unemp_data <- read.csv(file="unempdata.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
-MA_counties <- c()
-for(i in 1:length(MA_map_county$features)){
-  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-}
+# MA_counties <- c()
+# for(i in 1:length(MA_map_county$features)){
+#   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
+# }
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -122,7 +122,10 @@ bound <- unemp_data %>%
 bound$diff <- abs(bound$max.val - bound$min.val)
 
 ## set the max and min value (for the legend) at 95% of the largest difference
-mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
+mmax.val <- max(bound$diff)
+
+#mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
+
 mmin.val <- -1*mmax.val
 mcuts <- seq(mmin.val, mmax.val, length.out = length(mmap.colors))
 
@@ -188,7 +191,7 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
 
-  helpText(p(strong('Please select the timespan for which you are interested in viewing the annual average unemployment rate.'))),
+  helpText(p(strong('Please select the years for which you are interested in viewing the annual average unemployment rate.'))),
   tags$br(),
   tags$ul(
     tags$br(),
@@ -215,7 +218,7 @@ plot_side_text <- conditionalPanel(
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please click on "Generate Map" to get started.'))),
+  helpText(p(strong('Please select a yearly range and click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
 
@@ -225,15 +228,15 @@ map_side_text <- conditionalPanel(
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest, including:'))))
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Annual Average Unemployment Rate App"), "displays the average annual unemployment rate for Massachusetts by municipality.",
-                     p(strong("Toggle between tabs to visualize the data differently.")),
+about_main_text <- p(strong("The SEIGMA Annual Average Unemployment Rate App"), "displays the average unemployment rate in Massachusetts' municipalities annually.",
+                     p(strong("Click on different tabs to see the data in different forms.")),
                      tags$br(),
                      tags$ul(
-                       tags$li(p(strong("Summary"), "shows the source data in table format.")),
+                       tags$li(p(strong("Summary"), "shows the data in table format.")),
                        tags$li(p(strong("Plot"), "compares average annual unemployment rate for each municipality to county, state, and national rates.")),
-                       tags$li(p(strong("Map"), "visually displays annual average unemployment rates comparatively by municipality")),
+                       tags$li(p(strong("Map"), "visually displays annual average unemployment rates by municipality")),
                        tags$li(p(strong("More Info"), "describes annual average unemployment rates, including formulas and calculations."))
                      ))
 
