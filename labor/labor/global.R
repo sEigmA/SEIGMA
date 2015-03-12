@@ -64,7 +64,7 @@ MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
-cbbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
                 "#0072B2", "#D55E00", "#CC79A7")
 
 ## Create maxs and mins for googleCharts/Plot tab
@@ -108,7 +108,7 @@ scolorRanges <- data.frame(
 ## colors fade from one color to white to another color, with gray for NAs
 ## m-prefix = multiple years
 mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
-mmap.colors <- c(mpaint.brush(n=6), "grey")
+mmap.colors <- c(mpaint.brush(n=6), "#999999")
 
 ## find max and min (crude rates) values for each region
 bound <- labor_data %>%
@@ -122,8 +122,7 @@ bound <- labor_data %>%
 bound$diff <- abs(bound$max.val - bound$min.val)
 
 ## set the max and min value (for the legend) at 95% of the largest difference
-#mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
-mmax.val <- max(bound$diff)
+mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
 mmin.val <- -1*mmax.val
 mcuts <- seq(mmin.val, mmax.val, length.out = length(mmap.colors))
 

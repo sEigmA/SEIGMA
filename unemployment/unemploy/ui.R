@@ -2,9 +2,9 @@
 ## Title: Unemployment ui.R          ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
+##            Kiridly, Xuelian       ## 
 ## Date Created:  01/08/2015         ##
-## Date Modified: 01/08/2015         ##
+## Date Modified: 03/12/2015  ER     ##
 #######################################
 
 shinyUI(fluidPage(
@@ -86,7 +86,9 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos and Arvind Ramakrishnan, Jenna F. Kiridly, Xeulian Li"),
+
+      helpText("Created by Emily R. Ramos, Xuelian Li, Arvind Ramakrishnan, and Jenna F. Kiridly"),
+
       
       ## email feedback link
       ## To develop a link in HTML

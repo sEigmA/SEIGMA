@@ -44,18 +44,18 @@ shinyServer(function(input, output, session){
     if(is.null(input$sum_muni))
       munis <- MA_municipals
     
-    # if the user checks the meanUS box or the meanMA box, add those to counties vector
-    if(input$US_mean){
-      if(input$MA_mean){
-        munis <- c("United States", "MA", munis) ## US and MA
-      } else{
-        munis <- c("United States", munis) ## US only
-      }
-    } else{
-      if(input$MA_mean){
-        munis <- c("MA", munis) ## US only ## MA only
-      }
-    }
+    ## if the user checks the meanUS box or the meanMA box, add those to counties vector
+#     if(input$US_mean){
+#       if(input$MA_mean){
+#         munis <- c("United States", "MA", munis) ## US and MA
+#       } else{
+#         munis <- c("United States", munis) ## US only
+#       }
+#     } else{
+#       if(input$MA_mean){
+#         munis <- c("MA", munis) ## US only ## MA only
+#       }
+#     }
     
     ## create a dataframe consisting only of counties in vector
     sum_df <- df %>%
@@ -267,21 +267,21 @@ shinyServer(function(input, output, session){
     ## If clicked county has no crude rate, display a message
     if(muni_value == "NULL"){
       return(as.character(tags$div(
-        tags$h5("Average labor for ", muni_name, "is not available for this timespan"))))
+        tags$h5("Average Rate of Unemployment for", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
     if(input$timespan=="sing.yr"){
       
       as.character(tags$div(
-        tags$h4("Average Monthly Labor for", muni_name, " for ", input$year),
-        tags$h5(muni_value, "")
+        tags$h4("Average Monthly Employment for", muni_name, " for ", input$year),
+        tags$h5(muni_value, "%")
       ))
     }
     if(input$timespan=="mult.yrs"){
       
       as.character(tags$div(
         tags$h4("Average Monthly Employment for", muni_name, " for ", input$range[1], "to",input$range[2]),
-        tags$h5(muni_value, "")
+        tags$h5(muni_value, "%")
       ))
     }
   })

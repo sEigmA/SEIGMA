@@ -203,10 +203,6 @@ g <- emp_df %>%
 
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
 
-
-
-  ###########################################
-
   ## draw leaflet map
   map <- createLeafletMap(session, "map")
 
@@ -237,7 +233,7 @@ g <- emp_df %>%
           ## "#000000" = Black, "#999999"=Grey,
           weight=1, stroke=TRUE,
           opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)],
-          color="#999999",
+          color="#000000",
           fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)])
       }
 
