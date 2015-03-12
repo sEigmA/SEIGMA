@@ -2,7 +2,7 @@
 ## Title: Labor ui.R                 ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
+##            Kiridly, Xuelian Li    ## 
 ## Date Created:  02/27/2015         ##
 ## Date Modified: 03/05/2015         ##
 #######################################

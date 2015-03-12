@@ -24,7 +24,7 @@ shinyServer(function(input, output, session) {
     ## Make reactive dataframe into regular dataframe
     Dem_df <- Dem_df()
     
-      ## make municipals a vector based on input variable
+    ## make municipals a vector based on input variable
     if(!is.null(input$sum_muni))
       munis <- input$sum_muni
     ## if none selected, put all municipals in vector
@@ -98,24 +98,24 @@ shinyServer(function(input, output, session) {
       select(4, sel_col_num)
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
-#     melted_munis_df <- melt(munis_df, id.vars = "Region", 
-#                             measure.vars = c(colnames(munis_df)[-1]),
-#                             variable.name = input$radio,
-#                             value.name = "Population_Pct")
-#     
-#     levels(melted_munis_df$Region)[1:4] <- munis
-#     
-#     plot_df <- melted_munis_df %>%
-#       arrange(Region)
-#     
-#     g <- dcast(plot_df, Age ~ Region, 
-#                value.var = "Population_Pct")
+    #     melted_munis_df <- melt(munis_df, id.vars = "Region", 
+    #                             measure.vars = c(colnames(munis_df)[-1]),
+    #                             variable.name = input$radio,
+    #                             value.name = "Population_Pct")
+    #     
+    #     levels(melted_munis_df$Region)[1:4] <- munis
+    #     
+    #     plot_df <- melted_munis_df %>%
+    #       arrange(Region)
+    #     
+    #     g <- dcast(plot_df, Age ~ Region, 
+    #                value.var = "Population_Pct")
     
-        
+    
     list(
       data = googleDataTable(munis_df), options = list(title=paste(input$radio, "as a Percentage of the Population by Region ", 
                                                                    "over selected five years ", input$year)))
-  
+    
   })
   ## set map colors
   map_dat <- reactive({
@@ -126,9 +126,9 @@ shinyServer(function(input, output, session) {
     ## take US, MA, and counties out of map_dat
     Dem_dat <- Dem_df %>%
       filter(!is.na(Municipal) )
-  
+    
     col_sel_num1<-which( colnames(Dem_dat)==input$var )
-  
+    
     ## subset the data by the var selected
     #      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Married_Pct)
     map_dat <- select(Dem_dat,c(1:6,col_sel_num1))
@@ -138,7 +138,7 @@ shinyServer(function(input, output, session) {
     color <- as.integer(cut2(map_dat[,input$var],cuts=cuts))
     map_dat <- cbind.data.frame(map_dat, color)
     map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors), 
-                               map_dat$color)
+                            map_dat$color)
     map_dat$opacity <- 0.7
     
     ## find missing counties in data subset and assign NAs to all values
@@ -151,94 +151,94 @@ shinyServer(function(input, output, session) {
     map_dat <- rbind.data.frame(map_dat, missing_df)
     map_dat$color <- map_colors[map_dat$color]
     return(map_dat)
-    })
+  })
   
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
   ## draw leaflet map
-    map <- createLeafletMap(session, "map")
-    
-    ## the functions within observe are called when any of the inputs are called
-    
-    ## Does nothing until called (done with action button)
-    observe({
-      input$action
-      
-      ## load in relevant map data
-      map_dat <- map_dat()
-      
-      ## All functions which are isolated, will not run until the above observe function is activated
-      isolate({
-        ## Duplicate MAmap to x
-        x <- MA_map_muni
-        
-        ## for each county in the map, attach the Crude Rate and colors associated
-        for(i in 1:length(x$features)){
-          ## Each feature is a county
-          x$features[[i]]$properties[input$var] <- 
-            map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), input$var]
-          ## Style properties
-          x$features[[i]]$properties$style <- list(
-            fill=TRUE, 
-            ## Fill color has to be equal to the map_dat color and is matched by county
-            fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
-            ## "#000000" = Black, "#999999"=Grey, 
-            weight=1, stroke=TRUE, 
-            opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
-            color="#000000", 
-            fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)])
-        }
-        
-        map$addGeoJSON(x) # draw map
-      })
-    })
-    
-    observe({
-      ## EVT = Mouse Click
-      evt <- input$map_click
-      if(is.null(evt))
-        return()
-      
-      isolate({
-        values$selectedFeature <- NULL
-      })
-    })
-    
-    observe({
-      evt <- input$map_geojson_click
-      if(is.null(evt))
-        return()
-      
-      isolate({
-        values$selectedFeature <- evt$properties
-      })
-    })
-    ##  This function is what creates info box
-    output$details <- renderText({
-      
-      ## Before a county is clicked, display a message
-      if(is.null(values$selectedFeature)){
-        return(as.character(tags$div(
-          tags$div(
-            h4("Click on a town or city"))
-        )))
-      }
-      
-      muni_name <- values$selectedFeature$NAMELSAD10
-      muni_value <- values$selectedFeature[input$var]
-      var_select <- gsub("_", " ", input$var)
-      var_select <- gsub("Pct", "", var_select)
-      
-      ## If clicked county has no crude rate, display a message
-      if(is.null(values$selectedFeature[input$var])){
-        return(as.character(tags$div(
-          tags$h5(var_select, "% in ", muni_name, "is not available for this timespan"))))
-      }
-      ## For a single year when county is clicked, display a message
-      as.character(tags$div(
-        tags$h4(var_select, "% in ", muni_name, " for ", input$year),
-        tags$h5(muni_value, "%")
-      ))
-    })
-  ##########################################################
-  })  
+  map <- createLeafletMap(session, "map")
+ # browser()
+  ## the functions within observe are called when any of the inputs are called
   
+  ## Does nothing until called (done with action button)
+  observe({
+    input$action
+    
+    ## load in relevant map data
+    map_dat <- map_dat()
+    
+    ## All functions which are isolated, will not run until the above observe function is activated
+    isolate({
+      ## Duplicate MAmap to x
+      x <- MA_map_muni
+      
+      ## for each county in the map, attach the Crude Rate and colors associated
+      for(i in 1:length(x$features)){
+        ## Each feature is a county
+        x$features[[i]]$properties[input$var] <- 
+          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), input$var]
+        ## Style properties
+        x$features[[i]]$properties$style <- list(
+          fill=TRUE, 
+          ## Fill color has to be equal to the map_dat color and is matched by county
+          fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
+          ## "#000000" = Black, "#999999"=Grey, 
+          weight=1, stroke=TRUE, 
+          opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
+          color="#000000", 
+          fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)])
+      }
+      
+      map$addGeoJSON(x) # draw map
+    })
+  })
+  
+  observe({
+    ## EVT = Mouse Click
+    evt <- input$map_click
+    if(is.null(evt))
+      return()
+    
+    isolate({
+      values$selectedFeature <- NULL
+    })
+  })
+  
+  observe({
+    evt <- input$map_geojson_click
+    if(is.null(evt))
+      return()
+    
+    isolate({
+      values$selectedFeature <- evt$properties
+    })
+  })
+  ##  This function is what creates info box
+  output$details <- renderText({
+    
+    ## Before a county is clicked, display a message
+    if(is.null(values$selectedFeature)){
+      return(as.character(tags$div(
+        tags$div(
+          h4("Click on a town or city"))
+      )))
+    }
+    
+    muni_name <- values$selectedFeature$NAMELSAD10
+    muni_value <- values$selectedFeature[input$var]
+    var_select <- gsub("_", " ", input$var)
+    var_select <- gsub("Pct", "", var_select)
+    
+    ## If clicked county has no crude rate, display a message
+    if(is.null(values$selectedFeature[input$var])){
+      return(as.character(tags$div(
+        tags$h5(var_select, "% in ", muni_name, "is not available for this timespan"))))
+    }
+    ## For a single year when county is clicked, display a message
+    as.character(tags$div(
+      tags$h4(var_select, "% in ", muni_name, " for ", input$year),
+      tags$h5(muni_value, "%")
+    ))
+  })
+  ##########################################################
+})  
+
