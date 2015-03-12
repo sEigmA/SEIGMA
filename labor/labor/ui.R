@@ -86,7 +86,7 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Xeulian Li"),
+      helpText("Created by Arvind Ramakrishnan, Jenna F. Kiridly, Xeulian Li, Emily R. Ramos"),
       
       ## email feedback link
       ## To develop a link in HTML
@@ -229,7 +229,11 @@ bootstrapPage(mainPanel(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
-                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
+                          
+                           tags$td(prettyNum(round(from), big.mark = ","), "to", 
+                                   prettyNum(round(to), big.mark = ","), align = "right")
+                           
+                          #  tags$td(round(from, 2), "to", round(to, 2), align = "right")
                          )
                        }, 
                        scolorRanges$from, scolorRanges$to, smap.colors[-length(smap.colors)],
@@ -257,7 +261,8 @@ bootstrapPage(mainPanel(
                              tags$div(
                                style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                              )),
-                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
+                           tags$td(prettyNum(round(from), big.mark = ","), "to", 
+                                   prettyNum(round(to), big.mark = ","), align = "right")
                          )
                        }, 
                        mcolorRanges$from, mcolorRanges$to, mmap.colors[-length(mmap.colors)],

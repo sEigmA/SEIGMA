@@ -237,7 +237,7 @@ g <- emp_df %>%
           ## "#000000" = Black, "#999999"=Grey,
           weight=1, stroke=TRUE,
           opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)],
-          color="#000000",
+          color="#999999",
           fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)])
       }
 
