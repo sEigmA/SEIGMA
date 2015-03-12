@@ -34,89 +34,6 @@ shinyUI(
                                  choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                                 "2008-2012" = "2008-2012")
                      ),
-<<<<<<< HEAD
-          radioButtons("radio", "Catigorical variables",
-                       c("Age" = "Age", "Gender" = "Gender",
-                         "Race" = "Race","Ethnicity" ="Ethnicity"),
-                       selected="Age")
-        ),
-    
-        ## in summary, allow for municipal selection
-        conditionalPanel(
-          condition="input.tabs == 'summary'",
-          ## Select input = List
-          selectInput("sum_muni", "Select Municipality", 
-                      choices = MA_municipals,
-                      ## Multiple allows for multi-county selection
-                      multiple=TRUE)
-        ),
-    
-        ## in plot, allow for municipal selection
-        conditionalPanel(
-          condition="input.tabs == 'plot'",
-          ## Select input = List
-          selectInput("plot_muni", "Select Municipality", 
-                      choices = MA_municipals)
-        ),
-    
-        ## In summary, show boxes that will compare to MA or US average
-        conditionalPanel(
-          condition="input.tabs == 'summary'",
-          ## False at the end means it starts off unchecked
-          checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-          checkboxInput("US_mean", "Compare to US Average", FALSE)
-        ),
-    
-        ## in map, allow for variable selection
-        conditionalPanel(
-          condition="input.tabs == 'map'&& input.radio =='Age'",
-          selectInput("var", "Select Variable of Interest",
-                  choices = list("20-40"="20_24_Pct", "25-34"="25_34_Pct", "35-44"="35_44_Pct",
-                                  "45-54"="45_54_Pct", "55-59"="55_59_Pct","60-64"="60_64_Pct",
-                                  "65-74"="65_74_Pct", "75-84"="75_84_Pct", "over 85"="85+_Pct"),
-                  selected = "20_24_Pct")
-          ),
-        
-          conditionalPanel(
-            condition="input.tabs == 'map'&& input.radio =='Gender'",
-            selectInput("var", "Select Variable of Interest",
-                        choices = list("Male"="Male_Pct", "Femal"="Femal_Pct"),
-                        selected = "Femal_Pct")
-          ),
-        
-          conditionalPanel(
-            condition="input.tabs == 'map'&& input.radio =='Race'",
-            selectInput("var", "Select Variable of Interest",
-                        choices = list("Percent White"="White_Pct", "Percent Black"="Black_Pct", "Percent Asian"="Asian_Pct")
-            )
-          ),
-        
-          conditionalPanel(
-            condition="input.tabs == 'map'&& input.radio =='Ethnicity'",
-            selectInput("var", "Select Variable of Interest",
-                        choices = list("Hispanic or Latino"="Hispanic_Pct", "not Hispanic or Latino"="Not_Hispanic_Pct"),
-                        selected = "Not_Hispanic_Pct")
-          ),
-      
-        tags$hr(),
-  
-        ## author line
-        helpText("Created by Xeulian Li, Arvind Ramakrishnan, Jenna F. Kiridly and Emily R. Ramos"),
-  
-        ## email feedback link
-        ## To develop a link in HTML
-        helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
-  
-        ## data source citation
-        helpText(a("Data Source: American Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1501&prodType=table",
-                   target="_blank")),
-        
-        ## GitHub link
-        helpText(a("View our data and code on GitHub", 
-                   href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education", target="_blank")),
-        
-        helpText("If using Internet Explorer, application only visible in version 10.")
-
                      radioButtons("radio", "Catigorical variables",
                                   c("Age" = "Age", "Gender" = "Gender",
                                     "Race" = "Race","Ethnicity" ="Ethnicity"),
@@ -203,12 +120,7 @@ shinyUI(
                               href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education", target="_blank")),
 
                    helpText("If using Internet Explorer, application only visible in version 10.")
-<<<<<<< HEAD:demographics/newApp1/ui.R
->>>>>>> 695ae702ac52bec431050c3fbf521b3746fb7ecd
-      ),    
-=======
       ),
->>>>>>> 7b71853d89ffea2f80017e1e8ed1f3b9a675f6e7:demographics/demographics/ui.R
       ######### End of Sidebar  #########
 
       ######### Start of Main Panel #####
