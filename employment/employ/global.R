@@ -58,7 +58,7 @@ MA_municipals <- sort(MA_municipals)
 
 
 ## Set graph colors (special for colorblind people)
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
+cbbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
                 "#0072B2", "#D55E00", "#CC79A7")
 
 ## Create maxs and mins for googleCharts/Plot tab
@@ -77,7 +77,7 @@ ylim <- list(
 
 ## Colors for a single-year legend
 spaint.brush <- colorRampPalette(colors=c("white", "red3"))
-smap.colors <- c(spaint.brush(n=5), "#999999")
+smap.colors <- c(spaint.brush(n=5), "grey")
 
 ## For a single year data, we have a series of crude rate (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
@@ -103,7 +103,7 @@ scolorRanges <- data.frame(
 ## colors fade from one color to white to another color, with gray for NAs
 ## m-prefix = multiple years
 mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
-mmap.colors <- c(mpaint.brush(n=6), "#999999")
+mmap.colors <- c(mpaint.brush(n=6), "grey")
 
 ## find max and min (crude suicide rates) values for each county
 bound <- emp_data %>%
@@ -117,7 +117,8 @@ bound <- emp_data %>%
 bound$diff <- (bound$max.val - bound$min.val)
 
 ## set the max and min value (for the legend) at 95% of the largest difference
-mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
+#mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
+mmax.val <- max(bound$diff)
 mmin.val <- -1*mmax.val
 mcuts <- seq(mmin.val, mmax.val, length.out = length(mmap.colors))
 

@@ -75,13 +75,13 @@ shinyUI(fluidPage(
         selectInput("plot_muni", "Select Municipality", 
                     choices = MA_municipals, multiple=TRUE)),
       
-      ## In summary and plot, show boxes that will compare to MA or US average
-#       conditionalPanel(
-#         condition="input.tabs == 'summary'|| input.tabs == 'plot'",
-#         ## False at the end means it starts off unchecked
-#         checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-#         checkboxInput("US_mean", "Compare to US Average", FALSE)
-#       ),
+      # In summary and plot, show boxes that will compare to MA or US average
+      conditionalPanel(
+        condition="input.tabs == 'summary'|| input.tabs == 'plot'",
+        ## False at the end means it starts off unchecked
+        checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+        checkboxInput("US_mean", "Compare to US Average", FALSE)
+      ),
       
       tags$hr(),
       
@@ -249,7 +249,7 @@ bootstrapPage(mainPanel(
                      class = "floater",
                      strong("Multiple Year"),
                      tags$br(),
-                     strong("Change in Labor"),
+                     strong("Difference in Labor "),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(

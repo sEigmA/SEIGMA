@@ -257,7 +257,7 @@ shinyUI(fluidPage(
                      class = "floater",
                      strong("Multiple Year"),
                      tags$br(),
-                     strong("Increase in CSR"),
+                     strong("Increase in Employment"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
