@@ -198,7 +198,7 @@ bootstrapPage(mainPanel(
              absolutePanel(
                right = 30, top = 215, draggable=FALSE, style = "", 
                class = "floater",
-               strong("Poverty"),
+               strong("Poverty Rate"),
                tags$table(
                  mapply(function(from, to, color) {
                    tags$tr(

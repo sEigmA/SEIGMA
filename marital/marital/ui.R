@@ -1,10 +1,10 @@
 #######################################
-## Title: Marital ui.R              ##
+## Title: Marital ui.R               ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  10/22/2014         ##
-## Date Modified: 10/22/2014         ##
+## Date Modified: 03/12/2015  ER     ##
 #######################################
 
 shinyUI(fluidPage(
@@ -177,9 +177,8 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Marital Status Rate"),
+                     strong("Percent Married"),
                      tags$br(),
-                     #strong("Age Adjusted Suicide Rate"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -204,7 +203,7 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Marital Status Rate"),
+                     strong("Percent Never Married"),
                      tags$br(),
                      #strong("Age Adjusted Suicide Rate"),
                      tags$table(
@@ -231,7 +230,7 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Marital Status Rate"),
+                     strong("Percent Separated"),
                      tags$br(),
                      #strong("Age Adjusted Suicide Rate"),
                      tags$table(
@@ -259,7 +258,7 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Marital Status Rate"),
+                     strong("Percent Widowed"),
                      tags$br(),
                      #strong("Age Adjusted Suicide Rate"),
                      tags$table(
@@ -286,7 +285,7 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Marital Status Rate"),
+                     strong("Percent Divorced"),
                      tags$br(),
                      #strong("Age Adjusted Suicide Rate"),
                      tags$table(
@@ -306,36 +305,6 @@ shinyUI(fluidPage(
                          )),
                          tags$td("Data not available", align = "right")))
                    )),
-                 
-                 #                  ## Legend
-                 #                  conditionalPanel(
-                 #                    condition="input.action != 0",
-                 #                    absolutePanel(
-                 #                      right = 30, top = 215, draggable=FALSE, style = "", 
-                 #                      class = "floater",
-                 # #                      strong("Crude Suicide Rate"),
-                 #                      tags$table(
-                 #                        mapply(function(from, to, color) {
-                 #                          tags$tr(
-                 #                            tags$td(tags$div(
-                 #                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                 #                            )),
-                 #                            tags$td(prettyNum(round(from, 2)), "% to", 
-                 #                                    prettyNum(round(to, 2)), "%", align = "right")
-                 #                          )
-                 #                        }, 
-                 #                        colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
-                 #                        SIMPLIFY=FALSE),
-                 #                        tags$tr(
-                 #                          tags$td(tags$div(
-                 #                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                 #                          )),
-                 #                          tags$td("Data not available", align = "right")
-                 #                        )
-                 #                      )
-                 #                    )),
-                 
-                 #                  plot_main_text,
                  value="map"),
         
         tabPanel("More Info", 

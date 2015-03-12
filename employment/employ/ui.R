@@ -2,9 +2,9 @@
 ## Title: Employment ui.R            ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
+##            Kiridly, Xuelian Li    ## 
 ## Date Created:  01/08/2015         ##
-## Date Modified: 02/24/2015 ER      ##
+## Date Modified: 03/12/2015 ER      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -92,7 +92,7 @@ shinyUI(fluidPage(
               
                
                  ## author line
-                 helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, and Jenna F. Kiridly"),
+                 helpText("Created by Emily R. Ramos, Xuelian Li, Arvind Ramakrishnan, and Jenna F. Kiridly"),
                  
                  ## email feedback link
                  ## To develop a link in HTML
@@ -230,7 +230,7 @@ shinyUI(fluidPage(
                      class = "floater",
                      strong("Single Year"),
                      tags$br(),
-                     strong("Annual Average Monthly Employment Data"),
+                     strong("Annual Average Monthly Employment"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -257,7 +257,7 @@ shinyUI(fluidPage(
                      class = "floater",
                      strong("Multiple Year"),
                      tags$br(),
-                     strong("Increase in CSR"),
+                     strong("Annual Average Monthly Employment"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
