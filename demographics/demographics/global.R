@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Emily Ramos   ## 
 ## Date Created:  02/28/2015         ##
-## Date Modified: 03/05/2015 XL      ##
+## Date Modified: 03/12/2015 XL      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -67,8 +67,8 @@ MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
-cbbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", 
-                "#0072B2", "#D55E00", "#CC79A7", "#000000")
+cbbPalette <- c("cyan","darkviolet","deeppink", "blue","green","yellow","darkorange","red",
+                "darksalmon") 
 
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
@@ -274,7 +274,7 @@ plot_options <- googleColumnChart("plot", width="100%", height="475px", options 
  ),
  
  ## set colors
- colors = cbbPalette[c(1:8)],
+ colors = cbbPalette[c(1:9)],
  
  ## set point size
  pointSize = 3,
