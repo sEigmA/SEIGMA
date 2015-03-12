@@ -86,7 +86,7 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Arvind Ramakrishnan, Jenna F. Kiridly, Xeulian Li, Emily R. Ramos"),
+      helpText("Created by Emily R. Ramos and Arvind Ramakrishnan, Jenna F. Kiridly, Xeulian Li"),
       
       ## email feedback link
       ## To develop a link in HTML

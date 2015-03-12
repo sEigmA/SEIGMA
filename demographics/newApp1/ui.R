@@ -100,7 +100,7 @@ shinyUI(
         tags$hr(),
   
         ## author line
-        helpText("Created by Arvind Ramakrishnan, Jenna F. Kiridly, Xeulian Li, Emily R. Ramos"),
+        helpText("Created by Xeulian Li, Arvind Ramakrishnan, Jenna F. Kiridly and Emily R. Ramos"),
   
         ## email feedback link
         ## To develop a link in HTML
