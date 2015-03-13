@@ -70,7 +70,7 @@ shinyUI(
                    conditionalPanel(
                      condition="input.tabs == 'map'&& input.radio =='Age'",
                      selectInput("var_age", "Select Variable of Interest",
-                                 choices = list("20-40"="20-24_Pct",
+                                 choices = list("20-24"="20-24_Pct",
                                                 "25-34"="25-34_Pct",
                                                 "35-44"="35-44_Pct",
                                                 "45-54"="45-54_Pct",
