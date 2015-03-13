@@ -77,27 +77,43 @@ ylim <- list(
 )
 
 ## Colors for a five-year legend
-paint_brush <- colorRampPalette(colors=c("white", "red3"))
-map_colors <- c(paint_brush(n=4), "#999999")
+paint_brush <- colorRampPalette(colors=c("white", "red4"))
+map_colors <- c(paint_brush(n=5), "#999999")
 
 
-## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
-
-max_val <- 100
-min_val <- 0
+## Cuts based on Age range 
+agemax.val <- 30
+agemin.val <- 0
+agecuts <- seq(agemin.val, agemax.val, length.out = length(map_colors))
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-cuts <- seq(min_val, max_val, length.out = length(map_colors))
+## Cuts based on Gender range
+genmax.val <- max(c(max(Dem_data$Female_Pct, na.rm=TRUE),max(Dem_data$Male_Pct, na.rm=TRUE)))
+genmin.val <- min(c(min(Dem_data$Female_Pct, na.rm=TRUE),min(Dem_data$Male_Pct, na.rm=TRUE)))
+gencuts <- seq(genmin.val, genmax.val, length.out = length(map_colors))
+
+racemax.val <- 100
+racemin.val <- 0
+racecuts <- seq(racemin.val, racemax.val, length.out = length(map_colors))
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
 ## head = scuts takes everything except for the last one, 
 ## tails = same thing opposite
+agecolorRanges <- data.frame(
+  from = head(agecuts, length(agecuts)-1),
+  to = tail(agecuts, length(agecuts)-1)
+)
 
-colorRanges <- data.frame(
-  from = head(cuts, length(cuts)-1),
-  to = tail(cuts, length(cuts)-1)
+gencolorRanges <- data.frame(
+  from = head(gencuts, length(gencuts)-1),
+  to = tail(gencuts, length(gencuts)-1)
+)
+
+racecolorRanges <- data.frame(
+  from = head(racecuts, length(racecuts)-1),
+  to = tail(racecuts, length(racecuts)-1)
 )
 
 
