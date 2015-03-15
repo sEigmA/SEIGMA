@@ -46,9 +46,11 @@ emp_data3 <- read.csv("empdata.csv")[,-c(1)]
 colnames(emp_data3)[c(1:3)] <- c("Municipal" , "Year" , "Average_Monthly_Employment")
 
 
+
 #Organizing by Region
 emp_data4 <- emp_data3 %>%
   arrange(Municipal)
+
 
 ## save data
 write.csv(emp_data4, file="employ/empdata.csv")

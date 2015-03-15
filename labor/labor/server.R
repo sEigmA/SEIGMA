@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ##
 ## Date Created:  02/27/2015         ##
-## Date Modified: 03/05/2015         ##
+## Date Modified: 03/14/2015         ##
 #############################-##########
 
 shinyServer(function(input, output, session){
@@ -267,21 +267,21 @@ shinyServer(function(input, output, session){
     ## If clicked county has no crude rate, display a message
     if(muni_value == "NULL"){
       return(as.character(tags$div(
-        tags$h5("Average Rate of Unemployment for", muni_name, "is not available for this timespan"))))
+        tags$h5("Labor for", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
     if(input$timespan=="sing.yr"){
       
       as.character(tags$div(
-        tags$h4("Average Monthly Employment for", muni_name, " for ", input$year),
-        tags$h5(muni_value, "%")
+        tags$h4("Labor for", muni_name, " for ", input$year),
+        tags$h5(muni_value)
       ))
     }
     if(input$timespan=="mult.yrs"){
       
       as.character(tags$div(
-        tags$h4("Average Monthly Employment for", muni_name, " for ", input$range[1], "to",input$range[2]),
-        tags$h5(muni_value, "%")
+        tags$h4("Labor for", muni_name, " for ", input$range[1], "to",input$range[2]),
+        tags$h5(muni_value)
       ))
     }
   })
