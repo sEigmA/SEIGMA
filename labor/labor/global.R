@@ -22,7 +22,7 @@ require(RJSONIO)
 require(tidyr)
 
 ## load map data
-MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
+#MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted unemp data
@@ -31,10 +31,10 @@ labor_data <- read.csv(file="labordata.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
-MA_counties <- c()
-for(i in 1:length(MA_map_county$features)){
-  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-}
+#MA_counties <- c()
+#for(i in 1:length(MA_map_county$features)){
+#  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
+#}
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -113,7 +113,7 @@ mmap.colors <- c(mpaint.brush(n=6), "#999999")
 ## find max and min (crude rates) values for each region
 bound <- labor_data %>%
   group_by(Region) %>%
-
+  
   ##n.rm=FALSE = needed
   summarise(max.val = max(No.Labor.Avg, na.rm=FALSE),
             min.val = min(No.Labor.Avg, na.rm=FALSE))
@@ -140,8 +140,8 @@ mcolorRanges <- data.frame(
 
 ## Generate map button
 gen_map_button <- HTML('<style type="text/css">
-       .action-button {
-       -moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+                       .action-button {
+                       -moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
                        -webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
                        box-shadow:inset 0px 1px 0px 0px #54a3f7;
                        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
@@ -179,7 +179,7 @@ gen_map_button <- HTML('<style type="text/css">
                        position:relative;
                        top:1px;
                        }
-
+                       
                        </style>')
 
 summary_side_text <- conditionalPanel(
@@ -187,7 +187,7 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-
+  
   helpText(p(strong('Please select the years for which you are interested in viewing the labor force participation rate'))),
   tags$br(),
   tags$ul(
@@ -197,7 +197,7 @@ summary_side_text <- conditionalPanel(
     tags$li('To compare the labor force participation rate to the Massachusetts or national rate, select the corresponding box.'),
     tags$br(),
     tags$li('Sort the labor force participation rate in ascending and descending order by clicking the column or variable title.')
-
+    
   )
 )
 
@@ -218,7 +218,7 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please select a yearly range and click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
-
+    
     tags$li('Clicking on a municipality will display labor force participation rates for the time period you selected.')
   ))
 
@@ -273,25 +273,25 @@ plot_options <- googleColumnChart("plot", width="100%", height="475px",
                                         bold = TRUE,
                                         italic = FALSE)
                                     ),
-
+                                    
                                     ## set legend fonts
                                     legend = list(
                                       textStyle = list(
                                         fontSize=font_size),
                                       position = "right"),
-
+                                    
                                     ## set chart area padding
                                     chartArea = list(
                                       top = 50, left = 100,
                                       height = "75%", width = "65%"
                                     ),
-
+                                    
                                     ## set colors
                                     colors = cbbPalette[c(2:8)],
-
+                                    
                                     ## set point size
                                     pointSize = 3,
-
+                                    
                                     ## set tooltip font size
                                     ## Hover text font stuff
                                     tooltip = list(

@@ -45,17 +45,17 @@ shinyServer(function(input, output, session){
       munis <- MA_municipals
     
     ## if the user checks the meanUS box or the meanMA box, add those to counties vector
-#     if(input$US_mean){
-#       if(input$MA_mean){
-#         munis <- c("United States", "MA", munis) ## US and MA
-#       } else{
-#         munis <- c("United States", munis) ## US only
-#       }
-#     } else{
-#       if(input$MA_mean){
-#         munis <- c("MA", munis) ## US only ## MA only
-#       }
-#     }
+    #     if(input$US_mean){
+    #       if(input$MA_mean){
+    #         munis <- c("United States", "MA", munis) ## US and MA
+    #       } else{
+    #         munis <- c("United States", munis) ## US only
+    #       }
+    #     } else{
+    #       if(input$MA_mean){
+    #         munis <- c("MA", munis) ## US only ## MA only
+    #       }
+    #     }
     
     ## create a dataframe consisting only of counties in vector
     sum_df <- df %>%
@@ -80,18 +80,18 @@ shinyServer(function(input, output, session){
     munis <- input$plot_muni
     
     ## if counties are selected and MA or US mean boxes are selected, add those to dataframe
-    if(!is.null(input$plot_muni)){
-      if(input$MA_mean)
-        munis <- c(munis, "MA")
-      if(input$US_mean)
-        munis <- c(munis, "United States")
-    }
-    
-    ## if no counties have been selected, just show the US average
-    if(is.null(input$plot_muni)){
-      ## make region a vector based on input variable
-      munis <- "MA"
-    }
+    #     if(!is.null(input$plot_muni)){
+    #       if(input$MA_mean)
+    #         munis <- c(munis, "MA")
+    #       if(input$US_mean)
+    #         munis <- c(munis, "United States")
+    #     }
+    #     
+    #     ## if no counties have been selected, just show the US average
+    #     if(is.null(input$plot_muni)){
+    #       ## make region a vector based on input variable
+    #       munis <- "MA"
+    #     }
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     g <- labor_df %>%
