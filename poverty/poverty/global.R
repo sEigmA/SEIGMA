@@ -172,7 +172,7 @@ plot_side_text <- conditionalPanel(
 p(strong('Please select the municipality for which you are interested in viewing the five year estimate of poverty rate.')),
            tags$br(),
   tags$ul(
-    tags$li('For the five-year ranges below, you can compare the estimate of poverty rate in a municipality to the national, state, and county rates.')
+    tags$li('For the five-year ranges below, you can compare the poverty rate in a municipality to the national, state, and county rates.')
     ))
           
 
