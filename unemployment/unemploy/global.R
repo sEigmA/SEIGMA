@@ -191,15 +191,15 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
 
-  helpText(p(strong('Please select the years for which you are interested in viewing the annual average unemployment rate.'))),
+  helpText(p(strong('Please select the years for which you are interested in viewing the annual unemployment estimate.'))),
   tags$br(),
   tags$ul(
     tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To compare the annual average unemployment rate to the Massachusetts or national rates, select the corresponding box.'),
+    tags$li('To compare the annual unemployment estimate to the Massachusetts or national estimate, select the corresponding box.'),
     tags$br(),
-    tags$li('Sort annual average umemployment rates in ascending and descending order by clicking the column or variable title.')
+    tags$li('Sort the annual umemployment estimate in ascending and descending order by clicking the column or variable title.')
 
   )
 )
@@ -208,10 +208,10 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select a municipality to analyze annual average unemployment rates, do not slecet more than ten municipalities at a time.')),
+  p(strong('Please select a municipality to analyze the annual unemployment estimate, do not slecet more than ten municipalities at a time.')),
   tags$br(),
   tags$ul(
-    tags$li('For a given timespan, you can compare average annual unemployment rates to the national, state, and county rates.')
+    tags$li('For a given timespan, you can compare the annual unemployment estimate to the national, state, and county estimate.')
   ))
 
 
@@ -222,7 +222,7 @@ map_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
 
-    tags$li('Clicking on a municipality will display average annual unemployment status rates for the time period you selected.')
+    tags$li('Clicking on a municipality will display the annual unemployment estimate for the time period you selected.')
   ))
 
 info_side_text <- conditionalPanel(
@@ -230,14 +230,14 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Annual Average Unemployment Rate App"), "displays the average unemployment rate in Massachusetts' municipalities annually.",
+about_main_text <- p(strong("The SEIGMA Unemployment App"), "displays the unemployment estimates in Massachusetts' municipalities annually.",
                      p(strong("Click on different tabs to see the data in different forms.")),
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
-                       tags$li(p(strong("Plot"), "compares average annual unemployment rate for each municipality to county, state, and national rates.")),
-                       tags$li(p(strong("Map"), "visually displays annual average unemployment rates by municipality")),
-                       tags$li(p(strong("More Info"), "describes annual average unemployment rates, including formulas and calculations."))
+                       tags$li(p(strong("Plot"), "compares the annual unemployment estimate for each municipality to county, state, and national estimate.")),
+                       tags$li(p(strong("Map"), "visually displays the annual unemployment estimate by municipality")),
+                       tags$li(p(strong("More Info"), "describes the annual unemployment estimate, including formulas and calculations."))
                      ))
 
 plot_main_text <- p(strong("Variable Summary:"),

@@ -173,16 +173,16 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in seeing marital status estimates.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in viewing the demographic estimate.'))),
   tags$br(),
   tags$ul(
-      tags$li('View rates by selecting male or female. To veiw both leave this selection blank.'),
+      tags$li('View the estimate for age, gender, race, or ethnicity by selecting the appropriate box below.'),
       tags$br(),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box.'),
+      tags$li('For the five year ranges below, you can compare the demographic estimate in a municipality to national, state, and county estimate.'),
       tags$br(),
-      tags$li(p(strong('Please note that all statistics are 5-year averages.')))
+      tags$li(p(strong('The demographic estimate can be sorted in ascending and descending order by clicking the column or variable.')))
             
   )
   
@@ -195,10 +195,12 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select the five- year range and municipality for which you are interested in viewing marital status.')),
+p(strong('Please select the municipality and five year range for which you are interested in viewing the estimate of age, gender, race, or ethinicity.')),
            tags$br(),
   tags$ul(
-    tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages for females and males.')
+    tags$li('View the estimate for age, gender, race, or ethnicity by selecting the appropriate box below.'),
+    tags$br(),
+    tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county estimate for age, gender, race, and ethnicity.')
     ))
           
   tags$hr()
@@ -207,9 +209,13 @@ p(strong('Please select the five- year range and municipality for which you are 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong("Please select a variable of interest, a five-year range, a gender, and click on 'Generate Map' to get started."))),
+  helpText(p(strong("Please select a five- year range and click on Generate Map to get started."))),
   tags$br(),
   tags$ul(
+    tags$li('View the estimate for age, gender, race, or ethnicity by selecting the appropriate box below.'),
+    tags$br(),
+    tags$li('Select the variable of interest for age, gender, race, or ethnicity by selecting either an age range, gender, race, or ethnicity from the drop down list below.'),
+    tags$br(),
     tags$li('Clicking on a municipality will display the variable of interest for the five-year range and gender that you selected.')
     ))
 
@@ -218,24 +224,24 @@ map_side_text <- conditionalPanel(
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))),
-         tags$br(),
- tags$ul(
-   tags$li('Formulae.'),
-  tags$li('Calculations to derive the five-year averages.')
-      ))
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.')))
+        # tags$br(),
+ #tags$ul(
+   #tags$li('Formulae.'),
+  #tags$li('Calculations to derive the five-year estimates.')
+      )#)
            
-  tags$hr()
+  #tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Marital Status App"), "Displays the five-year estimates of marital status for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Demographics App"), "displays demogrpahic estimates in Massachusetts' municipalities over a five-year period.",
   p(strong("Click on different tabs to see the data in different formats.")),
     tags$br(),
     tags$ul(
       tags$li(p(strong("Summary"), "shows the data in table format.")),
-      tags$li(p(strong("Plot"), "compares a municipality's marital status estimate to county, state, and national estimates.")),
-      tags$li(p(strong("Map"), "visually displays marital status estimates by municipality.")),
-      tags$li(p(strong("More Info"), "describes marital status including formulas and calculations."))
+      tags$li(p(strong("Plot"), "compares a municipality's demogrpahic estimates to county, state, and national estimate.")),
+      tags$li(p(strong("Map"), "visually displays demographic estimates by municipality.")),
+      tags$li(p(strong("More Info"), "describes demographic estimates including formulas and calculations."))
 )
 )
 

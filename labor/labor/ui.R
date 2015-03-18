@@ -14,7 +14,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Labor Force Average Shiny App"),
+  titlePanel("", windowTitle = "SEIGMA: Labor Force App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -93,7 +93,7 @@ shinyUI(fluidPage(
                  helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
                  
                  ## data source citation
-                 helpText(a("Data Source: American Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S2303&prodType=table",
+                 helpText(a("Data Source: Bureau of Labor Statistics", href="http://www.bls.gov/lau/data.htm",
                             target="_blank")),
                  
                  ## GitHub link
@@ -285,8 +285,9 @@ shinyUI(fluidPage(
                    tags$li(p(strong("Labor Force"),
                              "-All people classified in the civilian labor force plus members of the U.S.Armed Forces who are on active duty. People excluded from this are mainly students, homemakers, retired workers,seasonal workers not looking for work,institutionalized people, and people doing only incidental unpaid family work  for less than 15 hours.")),
                    tags$br(),
-                   tags$li(p(strong("Labor Force Participation Rate"),
-                             "-The labor force participation rate represents the proportion of the population that is in the labor force. For example, if there are 100 people in the population and 64 of them are in the labor force, then the labor force participation rate for the population 16 years and over would be 64 percent"))),
+                   tags$li((p(strong('Bureau of Labor Statistics'),
+                              "-This data was collected from the Bureau of Labor Statistics (BLS). It's helpful to note that the BLS is subject to annual revision revised to reflect new population controls from the Census Bureau, updated input data, and re-estimation.  Links to the data source will be updated when new data is available.")))
+                 ),
                  
                  #tags$br(),
                  # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),                  
