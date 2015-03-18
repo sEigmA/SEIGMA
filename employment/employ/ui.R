@@ -2,9 +2,9 @@
 ## Title: Employment ui.R            ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
+##            Kiridly, Xuelian Li    ## 
 ## Date Created:  01/08/2015         ##
-## Date Modified: 02/24/2015 ER      ##
+## Date Modified: 03/14/2015 AR      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -92,7 +92,8 @@ shinyUI(fluidPage(
               
                
                  ## author line
-                 helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, and Jenna F. Kiridly"),
+
+                 helpText("Created by Arvind Ramakrishnan, Jenna F. Kiridly, Xeulian Li and Emily R. Ramos"),
                  
                  ## email feedback link
                  ## To develop a link in HTML
@@ -230,14 +231,15 @@ shinyUI(fluidPage(
                      class = "floater",
                      strong("Single Year"),
                      tags$br(),
-                     strong("Annual Average Monthly Employment Data"),
+                     strong("Annual Average Monthly Employment"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                            )),
-                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
+                           tags$td(prettyNum(round(from), big.mark = ","), "to", 
+                                   prettyNum(round(to), big.mark = ","), align = "right")
                          )
                        }, 
                        scolorRanges$from, scolorRanges$to, smap.colors[-length(smap.colors)],
@@ -257,7 +259,7 @@ shinyUI(fluidPage(
                      class = "floater",
                      strong("Multiple Year"),
                      tags$br(),
-                     strong("Increase in CSR"),
+                     strong("Annual Average Monthly Employment"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -265,7 +267,8 @@ shinyUI(fluidPage(
                              tags$div(
                                style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
                              )),
-                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
+                           tags$td(prettyNum(round(from), big.mark = ","), "to", 
+                                   prettyNum(round(to), big.mark = ","), align = "right")
                          )
                        }, 
                        mcolorRanges$from, mcolorRanges$to, mmap.colors[-length(mmap.colors)],

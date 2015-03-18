@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:                     ##
-## Date Modified: 02/24/15 ER        ##
+## Date Modified: 03/12/15 ER        ##
 #######################################
 
 ## load necessary libraries
@@ -346,7 +346,7 @@ shinyUI(fluidPage(
                      class = "floater",
                      strong("Multiple Year"),
                      tags$br(),
-                     strong("Increase in CSR"),
+                     strong("Increase in Suicide Rate"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(

@@ -66,7 +66,7 @@ shinyUI(fluidPage(
                  tags$hr(),
                  
                  ## author line
-                 helpText("Created by Emily R. Ramos, Xuelian Li, Arvind Ramakrishnan, and Jenna F. Kiridly"),
+                 helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly and Xeulian Li "),
       
       ## email feedback link
       ## To develop a link in HTML
@@ -198,7 +198,7 @@ bootstrapPage(mainPanel(
              absolutePanel(
                right = 30, top = 215, draggable=FALSE, style = "", 
                class = "floater",
-               strong("Poverty"),
+               strong("Poverty Rate"),
                tags$table(
                  mapply(function(from, to, color) {
                    tags$tr(

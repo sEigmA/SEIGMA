@@ -1,10 +1,10 @@
 #######################################
-## Title: Employment global.R           ##
+## Title: Employment global.R        ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ##
-## Date Created:                     ##
-## Date Modified: 12/3/2014 AR      ##
+##            Kiridly, Xuelian Li    ##
+## Date Created:  1/07/2015          ##
+## Date Modified: 3/12/2015          ##
 #######################################
 
 ##First file run - Environment Setup
@@ -77,7 +77,7 @@ ylim <- list(
 
 ## Colors for a single-year legend
 spaint.brush <- colorRampPalette(colors=c("white", "red3"))
-smap.colors <- c(spaint.brush(n=5), "#999999")
+smap.colors <- c(spaint.brush(n=5), "grey")
 
 ## For a single year data, we have a series of crude rate (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year

@@ -36,7 +36,7 @@ Dem_data2$Region  <- ifelse(!is.na(Dem_data2$Municipal),as.character(Dem_data2$M
 
 ##Rename the columns
 Dem_data3<-Dem_data2
-colnames(Dem_data3)[5:44] <- c("Five_Year_Range","Total_Population","Male_Pct", "Margin_Error_Male","Femal_Pct", "Margin_Error_Femal",
+colnames(Dem_data3)[5:44] <- c("Five_Year_Range","Total_Population","Male_Pct", "Margin_Error_Male","Female_Pct", "Margin_Error_Female",
                                "20_24_Pct","Margin_Error_20_24_Pct","25_34_Pct", "Margin_Error_25_34_Pct",
                                "35_44_Pct", "Margin_Error_35_44_Pct","45_54_Pct", "Margin_Error_45_54_Pct",
                                "55_59_Pct", "Margin_Error_55_59_Pct","60_64_Pct", "Margin_Error_60_64_Pct",

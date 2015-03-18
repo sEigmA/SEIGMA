@@ -3,8 +3,8 @@
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  12/4/14            ##
-## Date Modified: 02/24/15  ER       ##
+## Date Created:  12/04/14           ##
+## Date Modified: 03/12/15  ER       ##
 #######################################
 
 shinyUI(fluidPage(
@@ -151,13 +151,14 @@ bootstrapPage(mainPanel(
                                  actionButton("action", "Generate Map")
                  )),
                  
-                 ## Legend
+                 ## Legend                 
+                 #High School
                  conditionalPanel(
-                   condition="input.action != 0",
+                   condition="input.var == 'HS_Pct' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                    strong("Educational Attainment Rate"),
+                    strong("High School Attainment"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -178,7 +179,64 @@ bootstrapPage(mainPanel(
                        )
                      )
                    )),
-   
+                 #High School
+                 conditionalPanel(
+                   condition="input.var == 'Bachelors_Pct' && input.action != 0",
+                   absolutePanel(
+                     right = 30, top = 215, draggable=FALSE, style = "", 
+                     class = "floater",
+                     strong("Bachelor's Attainment"),
+                     tags$table(
+                       mapply(function(from, to, color) {
+                         tags$tr(
+                           tags$td(tags$div(
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                           )),
+                           tags$td(prettyNum(round(from, 2)), "% to", 
+                                   prettyNum(round(to, 2)), "%", align = "right")
+                         )
+                       }, 
+                       colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
+                       SIMPLIFY=FALSE),
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                         )),
+                         tags$td("Data not available", align = "right")
+                       )
+                     )
+                   )),
+                 #High School
+                 conditionalPanel(
+                   condition="input.var == 'Grad_Pct' && input.action != 0",
+                   absolutePanel(
+                     right = 30, top = 215, draggable=FALSE, style = "", 
+                     class = "floater",
+                     strong("Graduate Degree Attainment"),
+                     tags$table(
+                       mapply(function(from, to, color) {
+                         tags$tr(
+                           tags$td(tags$div(
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                           )),
+                           tags$td(prettyNum(round(from, 2)), "% to", 
+                                   prettyNum(round(to, 2)), "%", align = "right")
+                         )
+                       }, 
+                       colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
+                       SIMPLIFY=FALSE),
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                         )),
+                         tags$td("Data not available", align = "right")
+                       )
+                     )
+                   )),
+                 
+                 
+                 
+                 
 #                  plot_main_text,
                  value="map"),
         
