@@ -281,17 +281,17 @@ g <- emp_df %>%
 
     if(input$timespan=="sing.yr"){
 
-    as.character(tags$div(
+    return(as.character(tags$div(
       tags$h4("Average Monthly Employment for", muni_name, " for ", input$year),
       tags$h5(muni_value)
-    ))
+    )))
     }
     if(input$timespan=="mult.yrs"){
 
-      as.character(tags$div(
+      return(as.character(tags$div(
         tags$h4("Average Monthly Employment for", muni_name, " for ", input$range[1], "to",input$range[2]),
         tags$h5(muni_value)
-      ))
+      )))
     }
 
   })

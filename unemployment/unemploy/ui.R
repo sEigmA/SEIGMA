@@ -46,7 +46,7 @@ shinyUI(fluidPage(
         
         ## Initializing a single slider
           sliderInput("year", "Select Year",
-                      min=1976, max=2012, value=2012,
+                      min=1990, max=2012, value=2012,
         sep="")
         ),
         conditionalPanel(
@@ -54,7 +54,7 @@ shinyUI(fluidPage(
           condition="input.timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("range", "Select Years",
-                      min=1976, max=2012, value=c(2010,2012),
+                      min=1990, max=2012, value=c(2010,2012),
                       sep="")
         )
       ),
@@ -238,7 +238,7 @@ bootstrapPage(mainPanel(
                        SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
                          tags$td("Data not available", align = "right")))
                    )),
@@ -266,7 +266,7 @@ bootstrapPage(mainPanel(
                        SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
                          tags$td("Data not available", align = "right"))
                      )

@@ -64,8 +64,8 @@ MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
-                "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette <- c("black", "orange", "blue", "green", "yellow",
+                "darkblue", "red", "pink")
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
@@ -82,7 +82,7 @@ ylim <- list(
 
 ## Colors for a single-year legend
 spaint.brush <- colorRampPalette(colors=c("white", "royalblue4"))
-smap.colors <- c(spaint.brush(n=5), "#999999")
+smap.colors <- c(spaint.brush(n=5), "gray")
 
 ## For a single year data, we have a series of rates (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
@@ -108,7 +108,7 @@ scolorRanges <- data.frame(
 ## colors fade from one color to white to another color, with gray for NAs
 ## m-prefix = multiple years
 mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
-mmap.colors <- c(mpaint.brush(n=6), "#999999")
+mmap.colors <- c(mpaint.brush(n=6), "gray")
 
 ## find max and min (crude rates) values for each region
 bound <- labor_data %>%

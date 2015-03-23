@@ -69,7 +69,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
-  min = min(unemp_data$Year)-1,
+  min = 1989,
   max = max(unemp_data$Year)+1
 )
 ylim <- list(

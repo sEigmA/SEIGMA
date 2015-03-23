@@ -185,8 +185,7 @@ shinyServer(function(input, output, session) {
   })
   ##  This function is what creates info box
   output$details <- renderText({
-    
-    ## Before a county is clicked, display a message
+        ## Before a county is clicked, display a message
     if(is.null(values$selectedFeature)){
       return(as.character(tags$div(
         tags$div(

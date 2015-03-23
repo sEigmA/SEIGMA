@@ -246,7 +246,7 @@ shinyUI(fluidPage(
                        SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
                          tags$td("Data not available", align = "right")))
                    )),
@@ -275,7 +275,7 @@ shinyUI(fluidPage(
                        SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
                          tags$td("Data not available", align = "right"))
                      )
