@@ -50,7 +50,7 @@ labor_data3 <- labor_data2[,-6]
 #write.csv(labor_data3, file="labordata.csv")
 labor_data3 <- read.csv("labordata.csv")[,-c(1)]
 
-colnames(labor_data3)[c(5:9)] <- c("Year", "Unemployment Rate Avg", "No Unemployed Avg", "No Employed Avg", "No Labor Avg")
+colnames(labor_data3)[c(2,6:9)] <- c("Region","Year", "Unemployment Rate Avg", "No Unemployed Avg", "No Employed Avg", "No Labor Avg")
 
 #Organizing by Region
 labor_data4 <- labor_data3 %>%
@@ -69,7 +69,7 @@ labor_data4 <- labor_data4[-c(1:759),]
 #write.csv(labor_data4, file="labordata_test.csv")
 #write.csv(labor_data4, file="labor/labordata.csv")
 labor_data5 <- subset(labor_data4, Municipal != "NA")
-write.csv(labor_data5, file="labordata.csv")
+write.csv(labor_data6, file="labordata_final.csv")
 
 
 
