@@ -28,10 +28,10 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 ## -1 eliminates first column [rows,columns]
 Dem_data <- read.csv(file="demodata.csv")
 colnames(Dem_data)[11:28] <- c("20-24_Pct","Margin_Error_20-24_Pct","25-34_Pct", "Margin_Error_25-34_Pct",
-                               "35-44_Pct", "Margin_Error_35-44_Pct","45-54_Pct", "Margin_Error_45-54_Pct",
-                               "55-59_Pct", "Margin_Error_55-59_Pct","60-64_Pct", "Margin_Error_60-64_Pct",
-                               "65-74_Pct", "Margin_Error_65-74_Pct","75-84_Pct", "Margin_Error_75-84_Pct",
-                               "85+Pct", "Margin_Error_85+_Pct")
+                                "35-44_Pct", "Margin_Error_35-44_Pct","45-54_Pct", "Margin_Error_45-54_Pct",
+                                "55-59_Pct", "Margin_Error_55-59_Pct","60-64_Pct", "Margin_Error_60-64_Pct",
+                                "65-74_Pct", "Margin_Error_65-74_Pct","75-84_Pct", "Margin_Error_75-84_Pct",
+                                "85+Pct", "Margin_Error_85+_Pct")
 ## Find order of counties in geojson files
 ## Each county is a separate feature
 MA_counties <- c()

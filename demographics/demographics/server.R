@@ -11,10 +11,7 @@ shinyServer(function(input, output, session) {
   ## Dem_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
   
   Dem_df <- reactive({
-    ## Filter the data by the chosen Five Year Range
-    Dem_df <- Dem_data %>%
-      filter(Five_Year_Range == input$year) %>%
-      arrange(Region)
+       Dem_df <- Dem_data       
     ## Output reactive dataframe
     Dem_df
   })
@@ -23,14 +20,15 @@ shinyServer(function(input, output, session) {
   output$summary <- renderDataTable({
     ## Make reactive dataframe into regular dataframe
     Dem_df <- Dem_df()
-    
+         
     ## make municipals a vector based on input variable
-    if(!is.null(input$sum_muni))
+    if(!is.null(input$sum_muni)){
       munis <- input$sum_muni
+    }
     ## if none selected, put all municipals in vector
-    if(is.null(input$sum_muni))
+    else {
       munis <- MA_municipals
-    
+    }
     ## if the user checks the meanUS box or the meanMA box, add those to counties vector
     if(input$US_mean){
       if(input$MA_mean){
@@ -56,6 +54,7 @@ shinyServer(function(input, output, session) {
     ## create a dataframe consisting only of counties in vector
     Dem_df <- Dem_df %>%
       filter(Region %in% munis) %>%
+      filter(Five_Year_Range == input$year)%>%
       select(4:6, sel_col_num)
     
     colnames(Dem_df) <- gsub("_", " ", colnames(Dem_df))
@@ -68,8 +67,8 @@ shinyServer(function(input, output, session) {
   output$plot <- reactive({
     #     browser()
     ## make reactive dataframe into regular dataframe
-    Dem_df <- Dem_df()
-    
+    Dem_df <- Dem_df()%>%
+    filter(Five_Year_Range == input$year) 
     ## find the county of the municipal
     county <- as.character(Dem_df$County[match(input$plot_muni, Dem_df$Municipal)])
     
@@ -99,22 +98,7 @@ shinyServer(function(input, output, session) {
       select(4, sel_col_num)
     colnames(munis_df) <- gsub("_", " ", colnames(munis_df))
     colnames(munis_df) <- gsub("Pct", "%", colnames(munis_df))
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    #     melted_munis_df <- melt(munis_df, id.vars = "Region",
-    #                             measure.vars = c(colnames(munis_df)[-1]),
-    #                             variable.name = input$radio,
-    #                             value.name = "Population_Pct")
-    #
-    #     levels(melted_munis_df$Region)[1:4] <- munis
-    #
-    #     plot_df <- melted_munis_df %>%
-    #       arrange(Region)
-    #
-    #     g <- dcast(plot_df, Age ~ Region,
-    #                value.var = "Population_Pct")
-    
-    
+
     list(
       data = googleDataTable(munis_df), options = list(title=paste(input$radio, "as a Percentage of the Population by Region ", input$plot_muni,
                                                                    "over selected five years ", input$year)))
@@ -124,15 +108,10 @@ shinyServer(function(input, output, session) {
   map_dat <- reactive({
     # browser()
     ## make reactive dataframe into regular dataframe
-    Dem_df <- Dem_df()
-    
+    Dem_dat <- Dem_df()%>%
     ## take US, MA, and counties out of map_dat
-    Dem_dat <- Dem_df %>%
+      filter(Five_Year_Range == input$year) %>%
       filter(!is.na(Municipal) )
-    
-    
-    
-    ## subset the data by the var selected
     ## get column name and cuts based on input
     if (input$radio == "Age") {
       col<-input$var_age

@@ -48,6 +48,11 @@ colnames(Dem_data3)[5:44] <- c("Five_Year_Range","Total_Population","Male_Pct", 
                                "Not_Hispanic_Pct", "Margin_Error_Not_Hispanic_Pct")
 #exclude Indian, Hawaiian and others
 Dem_data4<-Dem_data3[,c(1:32,35,36,41:44)]
+colnames(Dem_data4)[11:28] <- c("20-24_Pct","Margin_Error_20-24_Pct","25-34_Pct", "Margin_Error_25-34_Pct",
+                               "35-44_Pct", "Margin_Error_35-44_Pct","45-54_Pct", "Margin_Error_45-54_Pct",
+                               "55-59_Pct", "Margin_Error_55-59_Pct","60-64_Pct", "Margin_Error_60-64_Pct",
+                               "65-74_Pct", "Margin_Error_65-74_Pct","75-84_Pct", "Margin_Error_75-84_Pct",
+                               "85+Pct", "Margin_Error_85+_Pct")
 write.csv(Dem_data4, file="demographics/demodata.csv",row.names=FALSE)
 
 #Organizing Region
