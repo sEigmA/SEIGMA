@@ -3,8 +3,8 @@
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Xuelian Li    ##
-## Date Created:                     ##
-## Date Modified: 12/3/2014 AR       ##
+## Date Created:  1/07/2015          ##
+## Date Modified: 3/12/2015          ##
 #######################################
 
 ##First file run - Environment Setup
@@ -184,15 +184,15 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
 
-  helpText(p(strong('Please select the years for which you are interested in viewing annual average monthly employment.'))),
+  helpText(p(strong('Please select the years for which you are interested in viewing the annual estimate of monthly employment.'))),
   tags$br(),
   tags$ul(
     tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To compare the annual average monthly employment to the Massachusetts or national rates, select the corresponding box.'),
+    tags$li('To compare the annual estimate of monthly employment to the Massachusetts or national estimates, select the corresponding box.'),
     tags$br(),
-    tags$li('Sort annual average monthly employment data in ascending and descending order by clicking on the column or variable title.')
+    tags$li('Sort the annual estimate of monthly employment in ascending and descending order by clicking on the column or variable title.')
 
   )
 )
@@ -201,10 +201,10 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the municipality for which you are interested in viewing annual average monthly employment. Do not select more than ten municipalities at a time.')),
+  p(strong('Please select the municipality for which you are interested in viewing the annual estimate of monthly employment. Do not select more than ten municipalities at a time.')),
   tags$br(),
   tags$ul(
-  tags$li("For a yearly range, you can compare a municipalitiy's average monthly employment to the country, state, and national average.")
+  tags$li("For a yearly range, you can compare a municipalitiy's estimated monthly employment to the country, state, and national estimate.")
   ))
 
 
@@ -215,7 +215,7 @@ map_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
 
-    tags$li('Clicking on a municipality will display the monthly employment average for the years you selected.')
+    tags$li('Clicking on a municipality will display the monthly employment estimate for the years you selected.')
   ))
 
 info_side_text <- conditionalPanel(
@@ -223,14 +223,14 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Employment App"), "displays the monthly employment average in Massachusetts' municipalities annually.",
+about_main_text <- p(strong("The SEIGMA Employment App"), "displays the monthly employment estimate in Massachusetts' municipalities annually.",
                      p(strong("Click on different tabs to view the data in different formats.")),
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the source data in table format.")),
-                       tags$li(p(strong("Plot"), "compares monthly employment averages for each municipality to county, state, and national averages.")),
-                       tags$li(p(strong("Map"), "visually displays monthly employment average by municipality.")),
-                       tags$li(p(strong("More Info"), "describes annual average monthly employment, including, formulas and calculations."))
+                       tags$li(p(strong("Plot"), "compares the monthly employment estimate for each municipality to county, state, and national estimate.")),
+                       tags$li(p(strong("Map"), "visually displays the monthly employment estimate by municipality.")),
+                       tags$li(p(strong("More Info"), "describes the annual monthly employment estimate, including, formulas and calculations."))
                      ))
 
 plot_main_text <- p(strong("Variable Summary:"),

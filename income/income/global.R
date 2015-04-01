@@ -75,7 +75,7 @@ ylim <- list(
 )
 
 ## Colors for a single-year legend
-paint_brush <- colorRampPalette(colors=c("white", "red3"))
+paint_brush <- colorRampPalette(colors=c("white", "green"))
 map_colors <- c(paint_brush(n=5), "#999999")
 
 ##Cuts are quintiles of the total data

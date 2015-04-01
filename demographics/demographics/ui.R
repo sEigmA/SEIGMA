@@ -15,7 +15,7 @@ shinyUI(
     googleChartsInit(),
     
     ## blank title, but put in a special title for window tab
-    titlePanel("", windowTitle = "SEIGMA: Demographics Status Shiny App"),
+    titlePanel("", windowTitle = "SEIGMA: Demographics App"),
     
     ## Create sidebar
     sidebarLayout(
@@ -112,7 +112,9 @@ shinyUI(
                    helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
                    
                    ## data source citation
-                   helpText(a("Data Source: American Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1501&prodType=table",
+                   helpText(a("Data Source: American Community Survey: Age", href="http://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t",
+                              target="_blank")),
+                   helpText(a("Data Source: American Community Survey: Race and Ethncity", href="http://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t",
                               target="_blank")),
                    
                    ## GitHub link
@@ -288,10 +290,18 @@ shinyUI(
             tabPanel("More Info",
                      p(strong("Variable Summary:")),
                      
-                     p(strong("Marital Status Rates"),
-                       " - The number of people within each marital status category for a region over a specified five year range. When the number of people in a particular marital status category is too small, data cannot be displayed."),
+                     p(strong("Race"),
+                       " - The number of people within each race, for a region over a specified five year range.  Races were listed as White, Black or African American, Asian, American Indian or Alaska Native, Native Hawaiian or Other Pacific Islander, or some other race."),
                      tags$br(),
-                     
+                     p(strong("Ethnicity"),
+                       " - The number of people within each ethnicity, for a region over a specified five year range.  Ethnicities were listed as hispanic or not hispanic."),
+                     tags$br(),
+                     p(strong("Gender"),
+                       " - The number of people within each gender, for a region over a specified five year range."),
+                     tags$br(),
+                     p(strong("Gender"),
+                       " - The number of people within each age group, for a region over a specified five year range. Age groups were specified as 20-24, 25- 34, 35- 44, 45- 54, 55-59, 60- 54, 65- 74, 75- 84, and 85+."),
+                     tags$br(),
                      p(strong("Five-Year Estimate"),
                        "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions."),
                      

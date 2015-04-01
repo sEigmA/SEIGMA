@@ -14,7 +14,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Unemployment Rate Shiny App"),
+  titlePanel("", windowTitle = "SEIGMA: Unemployment App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -46,7 +46,7 @@ shinyUI(fluidPage(
         
         ## Initializing a single slider
           sliderInput("year", "Select Year",
-                      min=1976, max=2012, value=2012,
+                      min=1990, max=2012, value=2012,
         sep="")
         ),
         conditionalPanel(
@@ -54,7 +54,7 @@ shinyUI(fluidPage(
           condition="input.timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("range", "Select Years",
-                      min=1976, max=2012, value=c(2010,2012),
+                      min=1990, max=2012, value=c(2010,2012),
                       sep="")
         )
       ),
@@ -95,7 +95,7 @@ shinyUI(fluidPage(
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: Amercian Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S2301&prodType=table",
+      helpText(a("Data Source: Bureau of Labor Statistics", href="http://www.bls.gov/lau/data.htm",
                  target="_blank")),
       
       ## GitHub link
@@ -238,7 +238,7 @@ bootstrapPage(mainPanel(
                        SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
                          tags$td("Data not available", align = "right")))
                    )),
@@ -266,7 +266,7 @@ bootstrapPage(mainPanel(
                        SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
                          tags$td("Data not available", align = "right"))
                      )
@@ -280,7 +280,7 @@ bootstrapPage(mainPanel(
                  tags$br(),
                  tags$ul(
     
-                   tags$li(p(strong("Annual Average Unemployment"),
+                   tags$li(p(strong("Annual Unemployment Estimate"),
                             " -Average annual unemployment rates account for workers who have lost their jobs and are looking for new ones.  This excludes people who are not looking for work.  The unemployment rate is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey.  Municipality unemployment rates were gathered form a secition of thr BLS and CPS called the Local Areas Unemployment Statistics Series.")),
                    tags$br(),
                    tags$li(p(strong("Umemployed"),
@@ -292,7 +292,9 @@ for work except for temporary illness.")),
 people as a percentage of the civilian labor force. For example, if the civilian labor force
 equals 100 people and 7 people are unemployed, then the unemployment rate would be 7
 percent."))),
-
+                  tags$br(),
+                  tags$li((p(strong('Bureau of Labor Statistics'),
+                             "-This data was collected from the Bureau of Labor Statistics (BLS). It's helpful to note that the BLS is subject to annual revision revised to reflect new population controls from the Census Bureau, updated input data, and re-estimation.  Links to the data source will be updated when new data is available."))),
                    
                  #tags$br(),
                 # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),                  

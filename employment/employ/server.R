@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ##
 ## Date Created:  01/07/2015         ##
-## Date Modified: 02/05/2015         ##
+## Date Modified: 03/14/2015         ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -68,9 +68,6 @@ shinyServer(function(input, output, session) {
   }, options = list(searching = FALSE, orderClasses = TRUE))
 
   # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
-
-
-  ##############################################
 
 
   ## create the plot of the data
@@ -284,17 +281,17 @@ g <- emp_df %>%
 
     if(input$timespan=="sing.yr"){
 
-    as.character(tags$div(
+    return(as.character(tags$div(
       tags$h4("Average Monthly Employment for", muni_name, " for ", input$year),
       tags$h5(muni_value)
-    ))
+    )))
     }
     if(input$timespan=="mult.yrs"){
 
-      as.character(tags$div(
+      return(as.character(tags$div(
         tags$h4("Average Monthly Employment for", muni_name, " for ", input$range[1], "to",input$range[2]),
         tags$h5(muni_value)
-      ))
+      )))
     }
 
   })
