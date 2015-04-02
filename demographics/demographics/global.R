@@ -14,7 +14,7 @@ require(sp)
 require(maptools)
 require(rgeos)
 require(Hmisc)
-require(reshape2)
+
 require(shiny)
 require(googleCharts)
 require(leaflet)

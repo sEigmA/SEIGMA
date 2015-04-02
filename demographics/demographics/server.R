@@ -53,8 +53,7 @@ shinyServer(function(input, output, session) {
     
     ## create a dataframe consisting only of counties in vector
     Dem_df <- Dem_df %>%
-      filter(Region %in% munis) %>%
-      filter(Five_Year_Range == input$year)%>%
+      filter(Region %in% munis,Five_Year_Range == input$year) %>%
       select(4:6, sel_col_num)
     
     colnames(Dem_df) <- gsub("_", " ", colnames(Dem_df))
@@ -82,20 +81,20 @@ shinyServer(function(input, output, session) {
     
     Dem_df$Region <- factor(Dem_df$Region, levels = c(munis, as.character(Dem_df$Region)[-muni_index]))
     
-    sel_col_num<-c()
+    sel_col_num1<-c()
     if (input$radio=="Age") {
-      sel_col_num<-c(11, 13,15,17,19,21,23,25,27)
+      sel_col_num1<-c(11, 13,15,17,19,21,23,25,27)
     } else if (input$radio=="Gender") {
-      sel_col_num<-c(7,9)
+      sel_col_num1<-c(7,9)
     } else if (input$radio=="Race") {
-      sel_col_num<-c(29,31,33)
-    } else {sel_col_num<-c(35,37)}
+      sel_col_num1<-c(29,31,33)
+    } else {sel_col_num1<-c(35,37)}
     
     ## create a dataframe consisting only of counties in vector
     munis_df <- Dem_df %>%
       filter(Region %in% munis) %>%
       arrange(Region)%>%
-      select(4, sel_col_num)
+      select(4, sel_col_num1)
     colnames(munis_df) <- gsub("_", " ", colnames(munis_df))
     colnames(munis_df) <- gsub("Pct", "%", colnames(munis_df))
 
