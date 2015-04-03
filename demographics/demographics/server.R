@@ -16,6 +16,15 @@ shinyServer(function(input, output, session) {
     Dem_df
   })
   
+  Dem_map_df <- reactive({
+    Dem_map_df <- Dem_data%>%
+    filter(Five_Year_Range == input$map_year)%>%
+    ## take US, MA, and counties out of map_dat
+    filter(!is.na(Municipal) )
+    ## Output reactive dataframe
+    Dem_map_df
+  })
+  
   ## Create summary table
   output$summary <- renderDataTable({
     ## Make reactive dataframe into regular dataframe
@@ -43,17 +52,17 @@ shinyServer(function(input, output, session) {
     }
     ##select columns according input$radio
     sel_col_num<-c()
-    if (input$radio=="Age") {
+    if (input$sum_radio=="Age") {
       sel_col_num<-c(11:28)
-    } else if (input$radio=="Gender") {
+    } else if (input$sum_radio=="Gender") {
       sel_col_num<-c(7:10)
-    } else if (input$radio=="Race") {
+    } else if (input$sum_radio=="Race") {
       sel_col_num<-c(29:34)
     } else {sel_col_num<-c(35:38)}
     
     ## create a dataframe consisting only of counties in vector
     Dem_df <- Dem_df %>%
-      filter(Region %in% munis,Five_Year_Range == input$year) %>%
+      filter(Region %in% munis,Five_Year_Range == input$sum_year) %>%
       select(4:6, sel_col_num)
     
     colnames(Dem_df) <- gsub("_", " ", colnames(Dem_df))
@@ -67,7 +76,7 @@ shinyServer(function(input, output, session) {
     #     browser()
     ## make reactive dataframe into regular dataframe
     Dem_df <- Dem_df()%>%
-    filter(Five_Year_Range == input$year) 
+    filter(Five_Year_Range == input$plot_year) 
     ## find the county of the municipal
     county <- as.character(Dem_df$County[match(input$plot_muni, Dem_df$Municipal)])
     
@@ -82,11 +91,11 @@ shinyServer(function(input, output, session) {
     Dem_df$Region <- factor(Dem_df$Region, levels = c(munis, as.character(Dem_df$Region)[-muni_index]))
     
     sel_col_num1<-c()
-    if (input$radio=="Age") {
+    if (input$plot_radio=="Age") {
       sel_col_num1<-c(11, 13,15,17,19,21,23,25,27)
-    } else if (input$radio=="Gender") {
+    } else if (input$plot_radio=="Gender") {
       sel_col_num1<-c(7,9)
-    } else if (input$radio=="Race") {
+    } else if (input$plot_radio=="Race") {
       sel_col_num1<-c(29,31,33)
     } else {sel_col_num1<-c(35,37)}
     
@@ -99,28 +108,26 @@ shinyServer(function(input, output, session) {
     colnames(munis_df) <- gsub("Pct", "%", colnames(munis_df))
 
     list(
-      data = googleDataTable(munis_df), options = list(title=paste(input$radio, "as a Percentage of the Population by Region ", input$plot_muni,
-                                                                   "over selected five years ", input$year)))
+      data = googleDataTable(munis_df), options = list(title=paste(input$plot_radio, "as a Percentage of the Population by Region ", input$plot_muni,
+                                                                   "over selected five years ", input$plot_year)))
     
   })
   ## set map colors
   map_dat <- reactive({
     # browser()
     ## make reactive dataframe into regular dataframe
-    Dem_dat <- Dem_df()%>%
-    ## take US, MA, and counties out of map_dat
-      filter(Five_Year_Range == input$year) %>%
-      filter(!is.na(Municipal) )
+    Dem_dat <- Dem_map_df()
+          
     ## get column name and cuts based on input
-    if (input$radio == "Age") {
+    if (input$map_radio == "Age") {
       col<-input$var_age
       cuts<-agecuts
     }
-    else if (input$radio == "Gender"){
+    else if (input$map_radio == "Gender"){
       col<-input$var_gen
       cuts<-gencuts
     }
-    else if (input$radio == "Race"){
+    else if (input$map_radio == "Race"){
       col<-input$var_rac
       cuts<-racecuts
     }
@@ -141,7 +148,7 @@ shinyServer(function(input, output, session) {
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
     missing_df <- data.frame(Municipal = NA, County = NA, State = "MA",
-                             Region = missing_munis, Five_Year_Range = input$year,
+                             Region = missing_munis, Five_Year_Range = input$map_year,
                              Total_Population = NA,
                              Map_var = NA, color=length(map_colors), opacity = 0)
     colnames(missing_df)[7]<-col
@@ -212,13 +219,13 @@ shinyServer(function(input, output, session) {
   })
   ##  This function is what creates info box
   output$details <- renderText({
-    if (input$radio == "Age") {
+    if (input$map_radio == "Age") {
       col<-input$var_age
      }
-    else if (input$radio == "Gender"){
+    else if (input$map_radio == "Gender"){
       col<-input$var_gen
      }
-    else if (input$radio == "Race"){
+    else if (input$map_radio == "Race"){
       col<-input$var_rac
     }
     else{
@@ -244,7 +251,7 @@ shinyServer(function(input, output, session) {
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4(var_select, "% in ", muni_name, " for ", input$year),
+      tags$h4(var_select, "% in ", muni_name, " for ", input$map_year),
       tags$h5(muni_value, "%")
     ))
   })

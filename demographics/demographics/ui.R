@@ -26,49 +26,59 @@ shinyUI(
                    map_side_text,
                    info_side_text,
                    
-                   ##if multiple years are selected, choose range.
-                   ##allow for catigorical variables selection
+                   ##in summary, allow for year, catigorical variables,  municipal selection selection
                    conditionalPanel(
-                     condition="input.tabs == 'summary' || input.tabs == 'plot' || input.tabs == 'map'",
-                     selectInput("year", "Select Five Year Range",
+                     condition="input.tabs == 'summary'",
+                     selectInput("sum_year", "Select Five Year Range",
                                  choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                                 "2008-2012" = "2008-2012")
                      ),
-                     radioButtons("radio", "Catigorical variables",
+                     radioButtons("sum_radio", "Catigorical variables",
+                                  c("Age" = "Age", "Gender" = "Gender",
+                                    "Race" = "Race","Ethnicity" ="Ethnicity"),
+                                  selected="Age"),
+                     selectInput("sum_muni", "Select Municipality",
+                                 choices = MA_municipals,
+                                 ## Multiple allows for multi-county selection
+                                 multiple=TRUE),
+                     ##show boxes that will compare to MA or US average,False at the end means it starts off unchecked
+                     checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+                     checkboxInput("US_mean", "Compare to US Average", FALSE)
+                   ),
+                   
+                                    
+                   ## in plot, allow for catigorical variables,  municipal selection selection
+                   conditionalPanel(
+                     condition="input.tabs == 'plot'",
+                     ## Select input = List
+                     selectInput("plot_year", "Select Five Year Range",
+                                 choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                                "2008-2012" = "2008-2012")
+                     ),
+                     radioButtons("plot_radio", "Catigorical variables",
+                                  c("Age" = "Age", "Gender" = "Gender",
+                                    "Race" = "Race","Ethnicity" ="Ethnicity"),
+                                  selected="Age"),
+                     selectInput("plot_muni", "Select Municipality",
+                                 choices = MA_municipals)
+                   ),
+                   
+                   ## In map, 
+                   conditionalPanel(
+                     condition="input.tabs == 'map'",
+                     selectInput("map_year", "Select Five Year Range",
+                                 choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                                "2008-2012" = "2008-2012")
+                     ),
+                     radioButtons("map_radio", "Catigorical variables",
                                   c("Age" = "Age", "Gender" = "Gender",
                                     "Race" = "Race","Ethnicity" ="Ethnicity"),
                                   selected="Age")
                    ),
                    
-                   ## in summary, allow for municipal selection
-                   conditionalPanel(
-                     condition="input.tabs == 'summary'",
-                     ## Select input = List
-                     selectInput("sum_muni", "Select Municipality",
-                                 choices = MA_municipals,
-                                 ## Multiple allows for multi-county selection
-                                 multiple=TRUE)
-                   ),
-                   
-                   ## in plot, allow for municipal selection
-                   conditionalPanel(
-                     condition="input.tabs == 'plot'",
-                     ## Select input = List
-                     selectInput("plot_muni", "Select Municipality",
-                                 choices = MA_municipals)
-                   ),
-                   
-                   ## In summary, show boxes that will compare to MA or US average
-                   conditionalPanel(
-                     condition="input.tabs == 'summary'",
-                     ## False at the end means it starts off unchecked
-                     checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-                     checkboxInput("US_mean", "Compare to US Average", FALSE)
-                   ),
-                   
                    ## in map, allow for variable selection
                    conditionalPanel(
-                     condition="input.tabs == 'map'&& input.radio =='Age'",
+                     condition="input.tabs == 'map'&& input.map_radio =='Age'",
                      selectInput("var_age", "Select Variable of Interest",
                                  choices = list("20-24"="20-24_Pct",
                                                 "25-34"="25-34_Pct",
@@ -82,21 +92,21 @@ shinyUI(
                    ),
                    
                    conditionalPanel(
-                     condition="input.tabs == 'map'&& input.radio =='Gender'",
+                     condition="input.tabs == 'map'&& input.map_radio =='Gender'",
                      selectInput("var_gen", "Select Variable of Interest",
                                  choices = list("Male"="Male_Pct", "Female"="Female_Pct"),
                                  selected = "Female_Pct")
                    ),
                    
                    conditionalPanel(
-                     condition="input.tabs == 'map'&& input.radio =='Race'",
+                     condition="input.tabs == 'map'&& input.map_radio =='Race'",
                      selectInput("var_rac", "Select Variable of Interest",
                                  choices = list("Percent White"="White_Pct", "Percent Black"="Black_Pct", "Percent Asian"="Asian_Pct")
                      )
                    ),
                    
                    conditionalPanel(
-                     condition="input.tabs == 'map'&& input.radio =='Ethnicity'",
+                     condition="input.tabs == 'map'&& input.map_radio =='Ethnicity'",
                      selectInput("var_eth", "Select Variable of Interest",
                                  choices = list("Hispanic or Latino"="Hispanic_Pct", "not Hispanic or Latino"="Not_Hispanic_Pct"),
                                  selected = "Not_Hispanic_Pct")
@@ -177,11 +187,11 @@ shinyUI(
                      
                      ## Age Legend
                      conditionalPanel(
-                       condition="input.radio =='Age' && input.action != 0",
+                       condition="input.map_radio =='Age' && input.action != 0",
                        absolutePanel(
                          right = 30, top = 215, draggable=FALSE, style = "",
                          class = "floater",
-                         strong("Age Rate"),
+                         strong("Age Percentage"),
                          tags$table(
                            mapply(function(from, to, color) {
                              tags$tr(
@@ -204,11 +214,11 @@ shinyUI(
                        )),
                      ## Gender Legend
                      conditionalPanel(
-                       condition="input.radio =='Gender' && input.action != 0",
+                       condition="input.map_radio =='Gender' && input.action != 0",
                        absolutePanel(
                          right = 30, top = 215, draggable=FALSE, style = "",
                          class = "floater",
-                         strong("Sex Rate"),
+                         strong("Sex Percentage"),
                          tags$table(
                            mapply(function(from, to, color) {
                              tags$tr(
@@ -231,11 +241,11 @@ shinyUI(
                        )),
                      ## Race Legend
                      conditionalPanel(
-                       condition="input.radio =='Race' && input.action != 0",
+                       condition="input.map_radio =='Race' && input.action != 0",
                        absolutePanel(
                          right = 30, top = 215, draggable=FALSE, style = "",
                          class = "floater",
-                         strong("Race Rate"),
+                         strong("Race Percentage"),
                          tags$table(
                            mapply(function(from, to, color) {
                              tags$tr(
@@ -258,11 +268,11 @@ shinyUI(
                        )),
                      ## Ethnicity Legend
                      conditionalPanel(
-                       condition="input.radio =='Ethnicity' && input.action != 0",
+                       condition="input.map_radio =='Ethnicity' && input.action != 0",
                        absolutePanel(
                          right = 30, top = 215, draggable=FALSE, style = "",
                          class = "floater",
-                         strong("Ethnicity Rate"),
+                         strong("Ethnicity Percentage"),
                          tags$table(
                            mapply(function(from, to, color) {
                              tags$tr(
