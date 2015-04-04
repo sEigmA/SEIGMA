@@ -2,9 +2,10 @@
 ## Title: Education ui.R             ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
-## Date Created:  12/04/14           ##
-## Date Modified: 03/12/15  ER       ##
+##            Kiridly, Xuelian Li    ## 
+##            Steve Lauer            ##
+##    Date Created:  12/04/14        ##
+## Date Modified: 04/04/15  XL       ##
 #######################################
 
 shinyUI(fluidPage(
@@ -27,47 +28,45 @@ shinyUI(fluidPage(
       map_side_text,
       
       info_side_text,
-      
-      ## in map, allow for variable selection
-      conditionalPanel(
-       condition="input.tabs == 'map'",
-       selectInput("var", "Select Variable of Interest",
-                   choices = list("High School Diploma or Higher" = "HS_Pct", 
-                                  "Bachelors Degree or Higher" = "Bachelors_Pct",
-                                  "Graduate or Professional Degree" = "Grad_Pct"))
-      ),
-      
-      ## if single year is selected, select year. if multiple years are selected, choose range.
-      ## Initializing a single slider
-      conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'plot' || input.tabs == 'map'",
-      selectInput("year", "Select Five Year Range",
-                  choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                 "2008-2012" = "2008-2012"))
-      ),
-      
-      ## in summary, allow for municipal selection
+                
+      ## in summary, allow for year, municipal selection 
       conditionalPanel(
         condition="input.tabs == 'summary'",
-        ## Select input = List
-        selectInput("sum_muni", "Select Municipality", 
-                    choices = MA_municipals,
-                    ## Multiple allows for multi-county selection
-                    multiple=TRUE)),
+      selectInput("sum_year", "Select Five Year Range",
+                  choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                 "2008-2012" = "2008-2012")),
+      selectInput("sum_muni", "Select Municipality", 
+                  choices = MA_municipals,
+                  ## Multiple allows for multi-county selection
+                  multiple=TRUE),
+      ## In summary, show boxes that will compare to MA or US average
+      checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+      checkboxInput("US_mean", "Compare to US Average", FALSE)
+      ),
       
-      ## in plot, allow for municipal selection
+          
+      ## in plot, allow for year, municipal selection
       conditionalPanel(
         condition="input.tabs == 'plot'",
+        selectInput("plot_year", "Select Five Year Range",
+                    choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                   "2008-2012" = "2008-2012")),
         ## Select input = List
         selectInput("plot_muni", "Select Municipality", 
                     choices = MA_municipals)),
       
-      ## In summary, show boxes that will compare to MA or US average
+      ## in map, allow for year, municipal selection
       conditionalPanel(
-        condition="input.tabs == 'summary'",
-        ## False at the end means it starts off unchecked
-        checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-        checkboxInput("US_mean", "Compare to US Average", FALSE)
+        condition="input.tabs == 'map'",
+        selectInput("map_year", "Select Five Year Range",
+                    choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                   "2008-2012" = "2008-2012")),
+        ## in map, allow for variable selection
+        selectInput("var", "Select Variable of Interest",
+                    choices = list("High School Diploma or Higher" = "HS_Pct", 
+                                   "Bachelors Degree or Higher" = "Bachelors_Pct",
+                                   "Graduate or Professional Degree" = "Grad_Pct"))
+        
       ),
       
       tags$hr(),
@@ -141,7 +140,7 @@ bootstrapPage(mainPanel(
                  ## Info Box 
                  conditionalPanel(
                    condition="input.action != 0",
-                   absolutePanel(left=450, top=450, width=300, class="floater",
+                   absolutePanel(left=100, top=450, width=300, class="floater",
                                  htmlOutput("details"))),
                  
                  conditionalPanel(

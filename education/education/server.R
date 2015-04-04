@@ -12,8 +12,7 @@ shinyServer(function(input, output, session) {
   edu_df <- reactive({
     ## Filter the data by the chosen Five Year Range 
     edu_df <- edu_data %>%
-      filter(Five_Year_Range == input$year) %>%
-      arrange(Region)
+     arrange(Region)
     ## Output reactive dataframe
     edu_df    
   })
@@ -46,6 +45,7 @@ shinyServer(function(input, output, session) {
     
     ## create a dataframe consisting only of counties in vector
     edu_df <- edu_df %>%
+      filter(Five_Year_Range == input$sum_year) %>%
       filter(Region %in% munis) %>%
       select(4:length(colnames(edu_df)))
     
@@ -55,14 +55,15 @@ shinyServer(function(input, output, session) {
                           "% Graduate or Professional Degree", "Graduate Margin of Error")
     
     return(edu_df)
-  }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
+  }, options=list(searching = FALSE, orderClasses = TRUE )) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
   ## create the plot of the data
   ## for the Google charts plot
   output$plot <- reactive({
 #     browser()
     ## make reactive dataframe into regular dataframe
-    edu_df <- edu_df()
+    edu_df <- edu_df()%>%
+    filter(Five_Year_Range == input$plot_year) 
     
     ## find the county of the municipal
     county <- as.character(edu_df$County[match(input$plot_muni, edu_df$Municipal)])
@@ -101,7 +102,7 @@ shinyServer(function(input, output, session) {
     list(
       data = googleDataTable(g))
   })
-
+ ##options = list(title=paste("Educational Attainment by Region ", input$plot_muni, "over selected five years Period ", input$plot_year)
 ##########################################################
   
   ## set map colors
@@ -114,6 +115,7 @@ shinyServer(function(input, output, session) {
     
     ## take US, MA, and counties out of map_dat
     map_dat <- edu_df %>%
+      filter(Five_Year_Range == input$map_year)%>%
       filter(!is.na(Region))
     
     ## assign colors to each entry in the data frame
@@ -125,7 +127,7 @@ shinyServer(function(input, output, session) {
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
     missing_df <- data.frame(Municipal = NA, County = NA, State = NA, Region = missing_munis,
-                             Five_Year_Range = input$year, Pop_25 = NA, Margin_Error_Pop = NA,
+                             Five_Year_Range = input$map_year, Pop_25 = NA, Margin_Error_Pop = NA,
                              HS_Pct = NA, Margin_Error_HS = NA, Bachelors_Pct = NA,
                              Margin_Error_Bach = NA, 
                              Grad_Pct = NA, Margin_Error_Grad = NA, color=length(map_colors), 
@@ -259,7 +261,7 @@ shinyServer(function(input, output, session) {
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4(var_select, "% in ", muni_name, " for ", input$year),
+      tags$h4(var_select, "% in ", muni_name, " for ", input$map_year),
       tags$h5(muni_value, "%")
     ))
   })
