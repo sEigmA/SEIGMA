@@ -16,14 +16,6 @@ shinyServer(function(input, output, session) {
     Dem_df
   })
   
-  Dem_map_df <- reactive({
-    Dem_map_df <- Dem_data%>%
-    filter(Five_Year_Range == input$map_year)%>%
-    ## take US, MA, and counties out of map_dat
-    filter(!is.na(Municipal) )
-    ## Output reactive dataframe
-    Dem_map_df
-  })
   
   ## Create summary table
   output$summary <- renderDataTable({
@@ -114,9 +106,11 @@ shinyServer(function(input, output, session) {
   })
   ## set map colors
   map_dat <- reactive({
-    # browser()
     ## make reactive dataframe into regular dataframe
-    Dem_dat <- Dem_map_df()
+    Dem_dat <- Dem_df()%>%
+      filter(Five_Year_Range == input$map_year)%>%
+      ## take US, MA, and counties out of map_dat
+      filter(!is.na(Municipal) )
           
     ## get column name and cuts based on input
     if (input$map_radio == "Age") {

@@ -10,7 +10,11 @@
 ##First file run - Environment Setup
 ## load necessary libraries
 require(dplyr)
+require(sp)
 require(maptools)
+require(rgeos)
+require(Hmisc)
+require(reshape2)
 require(shiny)
 require(googleCharts)
 require(leaflet)
