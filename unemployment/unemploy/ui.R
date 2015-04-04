@@ -2,9 +2,10 @@
 ## Title: Unemployment ui.R          ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Xuelian       ## 
-## Date Created:  01/08/2015         ##
-## Date Modified: 03/12/2015  ER     ##
+##            Kiridly, Xuelian Li,   ##
+##            Steve Lauer            ##
+## Date Created:  01/07/2015         ##
+## Date Modified: 04/05/2015 XL      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -29,59 +30,75 @@ shinyUI(fluidPage(
       info_side_text,
       
       ## in map, allow for variable selection
-      ## in summary and map, allow for timespan selection
-      conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'map'",
-        ## Select input = Drop down list of timespan (variable name on server side) 
-        selectInput("timespan", "Select Timespan",
-                    list("Single Year" = "sing.yr",
-                         "Multiple Years" = "mult.yrs"))
-      ),
-      
+      ## in summary, allow for timespan selection
       ## if single year is selected, select year. if multiple years are selected, choose range.
       conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'map'",
+        condition="input.tabs == 'summary'",
+        ## Select input = Drop down list of timespan (variable name on server side) 
+        selectInput("sum_timespan", "Select Timespan",
+                    list("Single Year" = "sing.yr",
+                         "Multiple Years" = "mult.yrs")),
         conditionalPanel(
-          condition="input.timespan == 'sing.yr'",
+          condition="input.sum_timespan == 'sing.yr'",
+          ## Initializing a single slider
+          sliderInput("sum_year", "Select Year",
+                      min=1990, max=2012, value=2012,
+                      sep="")
+        ),
+        conditionalPanel(
+          ## Initializes a multi-year slider (range)
+          condition="input.sum_timespan == 'mult.yrs'",
+          ## Slider starts from 2010-2012
+          sliderInput("sum_range", "Select Years",
+                      min=1990, max=2012, value=c(2010,2012),
+                      sep="")
+        ),
+        ## in summary, allow for municipal selection
+        selectInput("sum_muni", "Select Municipality", 
+                    choices = MA_municipals,
+                    ## Multiple allows for multi-county selection
+                    multiple=TRUE),
+        ## In summary and plot, show boxes that will compare to MA or US average
+        ## False at the end means it starts off unchecked
+        checkboxInput("sum_MA_mean", "Compare to MA Average", FALSE),
+        checkboxInput("sum_US_mean", "Compare to US Average", FALSE)
+      ),
+      
+      ## in map, allow for timespan selection
+      ## if single year is selected, select year. if multiple years are selected, choose range.
+      conditionalPanel(
+        condition="input.tabs == 'map'",
+        selectInput("map_timespan", "Select Timespan",
+                    list("Single Year" = "sing.yr",
+                         "Multiple Years" = "mult.yrs")),
+        conditionalPanel(
+          condition="input.map_timespan == 'sing.yr'",
         
         ## Initializing a single slider
-          sliderInput("year", "Select Year",
+          sliderInput("map_year", "Select Year",
                       min=1990, max=2012, value=2012,
         sep="")
         ),
         conditionalPanel(
           ## Initializes a multi-year slider (range)
-          condition="input.timespan == 'mult.yrs'",
+          condition="input.map_timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
-          sliderInput("range", "Select Years",
+          sliderInput("map_range", "Select Years",
                       min=1990, max=2012, value=c(2010,2012),
                       sep="")
         )
       ),
-
-      ## in summary, allow for municipal selection
-      conditionalPanel(
-        condition="input.tabs == 'summary'",
-        ## Select input = List
-        selectInput("sum_muni", "Select Municipality", 
-                    choices = MA_municipals,
-                    ## Multiple allows for multi-county selection
-                    multiple=TRUE)),
-      
+        
       ## in plot, allow for municipal selection
       conditionalPanel(
         condition="input.tabs == 'plot'",
         ## Select input = List
         selectInput("plot_muni", "Select Municipality", 
-                    choices = MA_municipals, multiple=TRUE)),
-      
-      ## In summary and plot, show boxes that will compare to MA or US average
-      conditionalPanel(
-        condition="input.tabs == 'summary'|| input.tabs == 'plot'",
-        ## False at the end means it starts off unchecked
-        checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-        checkboxInput("US_mean", "Compare to US Average", FALSE)
-      ),
+                    choices = MA_municipals, multiple=TRUE),
+        ## In plot, show boxes that will compare to MA or US average
+        checkboxInput("plot_MA_mean", "Compare to MA Average", FALSE),
+        checkboxInput("plot_US_mean", "Compare to US Average", FALSE)
+        ),
       
       tags$hr(),
       
@@ -218,7 +235,7 @@ bootstrapPage(mainPanel(
                  
                  ## Single Year Legend
                  conditionalPanel(
-                   condition="input.timespan == 'sing.yr' && input.action != 0",
+                   condition="input.map_timespan == 'sing.yr' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
@@ -245,7 +262,7 @@ bootstrapPage(mainPanel(
                  
                  ## Multi Year Legend
                  conditionalPanel(
-                   condition="input.timespan == 'mult.yrs' && input.action != 0",
+                   condition="input.map_timespan == 'mult.yrs' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
