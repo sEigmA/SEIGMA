@@ -21,13 +21,13 @@ shinyServer(function(input, output, session){
     labor_df <- labor_df()
     
     ## if a user chooses Single Year, display only data from that year (dpylr)
-    if(input$timespan == "sing.yr"){
-      df <- filter(labor_df, Year==input$year)
+    if(input$sum_timespan == "sing.yr"){
+      df <- filter(labor_df, Year==input$sum_year)
     }
     
     ## if a user chooses Multiple Years, display data from all years in range
-    if(input$timespan == "mult.yrs"){
-      range <- seq(min(input$range), max(input$range), 1)
+    if(input$sum_timespan == "mult.yrs"){
+      range <- seq(min(input$sum_range), max(input$sum_range), 1)
       df <- c()
       
       ####**********RBIND.Data.frame -DO Not Match
@@ -119,10 +119,10 @@ shinyServer(function(input, output, session){
     ######################################################
     
     ## for single year maps...
-    if(input$timespan == "sing.yr"){
+    if(input$map_timespan == "sing.yr"){
       #     browser()
       ## subset the data by the year selected
-      labor_df <- filter(labor_df, Year==input$year)
+      labor_df <- filter(labor_df, Year==input$map_year)
       
       ## assign colors to each entry in the data frame
       color <- as.integer(cut2(labor_df$No.Labor.Avg, cuts=scuts))
@@ -138,7 +138,7 @@ shinyServer(function(input, output, session){
       missing.munis <- setdiff(leftover_munis_map, labor_df$Municipal)
       if(length(missing.munis) > 0){
         df <- data.frame(Municipal=missing.munis, County="County", State="MA", Region=missing.munis,
-                         Year=input$year, Unemployment.Rate.Avg=NA, No.Unemployed.Avg=NA,
+                         Year=input$map_year, Unemployment.Rate.Avg=NA, No.Unemployed.Avg=NA,
                          No.Employed.Avg=NA, No.Labor.Avg=NA,
                          color=length(smap.colors), opacity = 0)
         
@@ -151,11 +151,11 @@ shinyServer(function(input, output, session){
     
     ######################################MULTIPLE YEARS
     
-    if(input$timespan=="mult.yrs"){
+    if(input$map_timespan=="mult.yrs"){
       #     browser()
       ## create dataframes for the max and min year of selected data
-      min.year <- min(input$range)
-      max.year <- max(input$range)
+      min.year <- min(input$map_range)
+      max.year <- max(input$map_range)
       min.df <- subset(labor_df, Year==min.year)
       max.df <- subset(labor_df, Year==max.year)
       
@@ -270,15 +270,15 @@ shinyServer(function(input, output, session){
         tags$h5("Labor for", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
-    if(input$timespan=="sing.yr"){
+    if(input$map_timespan=="sing.yr"){
      return(as.character(tags$div(
-        tags$h4("Labor for", muni_name, " for ", input$year),
+        tags$h4("Labor for", muni_name, " for ", input$map_year),
         tags$h5(muni_value)
       )))
     }
-    if(input$timespan=="mult.yrs"){
+    if(input$map_timespan=="mult.yrs"){
       return(as.character(tags$div(
-        tags$h4("Labor for", muni_name, " for ", input$range[1], "to",input$range[2]),
+        tags$h4("Labor for", muni_name, " for ", input$map_range[1], "to",input$map_range[2]),
         tags$h5(muni_value)
       )))
     }
