@@ -245,7 +245,7 @@ shinyUI(fluidPage(
                  
                  ## Single Year Legend
                  conditionalPanel(
-                   condition="input.sum_timespan == 'sing.yr' && input.action != 0",
+                   condition="input.map_timespan == 'sing.yr' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
