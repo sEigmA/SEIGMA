@@ -33,43 +33,62 @@ shinyUI(fluidPage(
                  ## Choose range for year.
                  ## Initializing a single slider
                  conditionalPanel(
-                   condition="input.tabs == 'summary' || input.tabs == 'map'",
+                   condition="input.tabs == 'summary'",
                    ## Select input = Drop down list of timespan (variable name on server side) 
 
-                   selectInput("timespan", "Select Timespan",
+                   selectInput("sum_timespan", "Select Timespan",
                                list("Single Year" = "sing.yr",
-                                    "Multiple Years" = "mult.yrs"))
-                 ),
-                 
-                 ## if single year is selected, select year. if multiple years are selected, choose range.
-                 conditionalPanel(
-                   condition="input.tabs == 'summary' || input.tabs == 'map'",
+                                    "Multiple Years" = "mult.yrs"), selected="sing.yr"),
                    conditionalPanel(
-                     condition="input.timespan == 'sing.yr'",
+                     condition="input.sum_timespan == 'sing.yr'",
                      
                      ## Initializing a single slider
-                     sliderInput("year", "Select Year",
+                     sliderInput("sum_year", "Select Year",
                                  min=2001, max=2012, value=2012,
                                  sep="")
                    ),
                    conditionalPanel(
                      ## Initializes a multi-year slider (range)
-                     condition="input.timespan == 'mult.yrs'",
+                     condition="input.sum_timespan == 'mult.yrs'",
                      ## Slider starts from 2010-2012
-                     sliderInput("range", "Select Years",
+                     sliderInput("sum_range", "Select Years",
+                                 min=2001, max=2012, value=c(2010,2012),
+                                 sep="")
+                   ),
+                   
+                   selectInput("sum_muni", "Select Municipality", 
+                                 choices = MA_municipals,
+                                 ## Multiple allows for multi-county selection
+                                 multiple=TRUE),
+                          
+                   ),
+                 
+                 ## if single year is selected, select year. if multiple years are selected, choose range.
+                 
+                 conditionalPanel(
+                   condition="input.tabs == 'map'",
+                   selectInput("map_timespan", "Select Timespan",
+                               list("Single Year" = "sing.yr",
+                                    "Multiple Years" = "mult.yrs"), selected = "sing.yr"),
+                   conditionalPanel(
+                     condition="input.map_timespan == 'sing.yr'",
+                     
+                     ## Initializing a single slider
+                     sliderInput("map_year", "Select Year",
+                                 min=2001, max=2012, value=2012,
+                                 sep="")
+                   ),
+                   conditionalPanel(
+                     ## Initializes a multi-year slider (range)
+                     condition="input.map_timespan == 'mult.yrs'",
+                     ## Slider starts from 2010-2012
+                     sliderInput("map_range", "Select Years",
                                  min=2001, max=2012, value=c(2010,2012),
                                  sep="")
                    )
                  ),
                  
-                 ## in summary, allow for municipal selection
-                 conditionalPanel(
-                   condition="input.tabs == 'summary'",
-                   ## Select input = List
-                   selectInput("sum_muni", "Select Municipality", 
-                               choices = MA_municipals,
-                               ## Multiple allows for multi-county selection
-                               multiple=TRUE)),
+                 
                  
                  ## in plot, allow for municipal selection
                  conditionalPanel(
@@ -86,7 +105,8 @@ shinyUI(fluidPage(
 #                    checkboxInput("MA_mean", "Compare to MA Average", FALSE),
 #                    checkboxInput("US_mean", "Compare to US Average", FALSE)
 #                  ),
-                 
+                 #browse()
+
                  tags$hr(),
                    
               
@@ -213,7 +233,7 @@ shinyUI(fluidPage(
                  ## Info Box 
                  conditionalPanel(
                    condition="input.action != 0",
-                   absolutePanel(left=450, top=450, width=300, class="floater",
+                   absolutePanel(left=100, top=450, width=300, class="floater",
                                  htmlOutput("details"))),
                  
                  conditionalPanel(
@@ -225,7 +245,7 @@ shinyUI(fluidPage(
                  
                  ## Single Year Legend
                  conditionalPanel(
-                   condition="input.timespan == 'sing.yr' && input.action != 0",
+                   condition="input.sum_timespan == 'sing.yr' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
@@ -253,7 +273,7 @@ shinyUI(fluidPage(
                  
                  ## Multi Year Legend
                  conditionalPanel(
-                   condition="input.timespan == 'mult.yrs' && input.action != 0",
+                   condition="input.sum_timespan == 'mult.yrs' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",

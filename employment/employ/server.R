@@ -32,13 +32,13 @@ shinyServer(function(input, output, session) {
     emp_df <- emp_df()
 
     ## if a user chooses Single Year, display only data from that year (dpylr)
-    if(input$timespan == "sing.yr"){
-      df <- filter(emp_df, Year==input$year)
+    if(input$sum_timespan == "sing.yr"){
+      df <- filter(emp_df, Year==input$sum_year)
     }
 
     ## if a user chooses Multiple Years, display data from all years in range
-    if(input$timespan == "mult.yrs"){
-      range <- seq(min(input$range), max(input$range), 1)
+    if(input$sum_timespan == "mult.yrs"){
+      range <- seq(min(input$sum_range), max(input$sum_range), 1)
       df <- c()
 
       for(i in 1:length(range)){
@@ -129,10 +129,10 @@ g <- emp_df %>%
 
     ######################################################
     ## for single year maps...
-    if(input$timespan == "sing.yr"){
+    if(input$map_timespan == "sing.yr"){
 
       ## subset the data by the year selected
-      emp_df <- filter(emp_df, Year==input$year)
+      emp_df <- filter(emp_df, Year==input$map_year)
 
       ## assign colors to each entry in the data frame
       color <- as.integer(cut2(emp_df$Average_Monthly_Employment,cuts=scuts))
@@ -149,7 +149,7 @@ g <- emp_df %>%
 
 
       if(length(missing.munis) > 0){
-        df <- data.frame(Municipal=missing.munis, Year=input$year, Average_Monthly_Employment=NA,
+        df <- data.frame(Municipal=missing.munis, Year=input$map_year, Average_Monthly_Employment=NA,
                          color=length(smap.colors), opacity = 0)
 
         ## combine data subset with missing counties data
@@ -162,11 +162,11 @@ g <- emp_df %>%
     ######################################MULTIPLE YEARS
 
 
-    if(input$timespan=="mult.yrs"){
+    if(input$map_timespan=="mult.yrs"){
 
       ## create dataframes for the max and min year of selected data
-      min.year <- min(input$range)
-      max.year <- max(input$range)
+      min.year <- min(input$map_range)
+      max.year <- max(input$map_range)
       min.df <- subset(emp_df, Year==min.year)
       max.df <- subset(emp_df, Year==max.year)
 
@@ -279,17 +279,17 @@ g <- emp_df %>%
     }
     ## For a single year when county is clicked, display a message
 
-    if(input$timespan=="sing.yr"){
+    if(input$map_timespan=="sing.yr"){
 
     return(as.character(tags$div(
-      tags$h4("Average Monthly Employment for", muni_name, " for ", input$year),
+      tags$h4("Average Monthly Employment for", muni_name, " for ", input$map_year),
       tags$h5(muni_value)
     )))
     }
-    if(input$timespan=="mult.yrs"){
+    if(input$map_timespan=="mult.yrs"){
 
       return(as.character(tags$div(
-        tags$h4("Average Monthly Employment for", muni_name, " for ", input$range[1], "to",input$range[2]),
+        tags$h4("Average Monthly Employment for", muni_name, " for ", input$map_range[1], "to",input$map_range[2]),
         tags$h5(muni_value)
       )))
     }
