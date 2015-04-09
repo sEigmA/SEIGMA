@@ -37,7 +37,7 @@ shinyUI(fluidPage(
         ## Select input = Drop down list of timespan (variable name on server side) 
         selectInput("sum_timespan", "Select Timespan",
                     list("Single Year" = "sing.yr",
-                         "Multiple Years" = "mult.yrs")),
+                         "Multiple Years" = "mult.yrs"),selected = "sing.yr"),
         conditionalPanel(
           condition="input.sum_timespan == 'sing.yr'",
           ## Initializing a single slider
@@ -70,7 +70,7 @@ shinyUI(fluidPage(
         condition="input.tabs == 'map'",
         selectInput("map_timespan", "Select Timespan",
                     list("Single Year" = "sing.yr",
-                         "Multiple Years" = "mult.yrs")),
+                         "Multiple Years" = "mult.yrs"), selected = "sing.yr"),
         conditionalPanel(
           condition="input.map_timespan == 'sing.yr'",
         
