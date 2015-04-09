@@ -59,7 +59,7 @@ shinyUI(fluidPage(
                    selectInput("sum_muni", "Select Municipality", 
                                  choices = MA_municipals,
                                  ## Multiple allows for multi-county selection
-                                 multiple=TRUE),
+                                 multiple=TRUE)
                           
                    ),
                  
@@ -251,7 +251,9 @@ shinyUI(fluidPage(
                      class = "floater",
                      strong("Single Year"),
                      tags$br(),
-                     strong("Annual Average Monthly Employment"),
+                     strong("Annual Average" ),
+                     tags$br(),
+                     strong("Monthly Employment"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -273,13 +275,15 @@ shinyUI(fluidPage(
                  
                  ## Multi Year Legend
                  conditionalPanel(
-                   condition="input.sum_timespan == 'mult.yrs' && input.action != 0",
+                   condition="input.map_timespan == 'mult.yrs' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Multiple Year"),
                      tags$br(),
-                     strong("Annual Average Monthly Employment"),
+                     strong("Annual Average"),
+                     tags$br(),
+                     strong("Monthly Employment"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
