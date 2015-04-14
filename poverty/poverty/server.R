@@ -13,8 +13,7 @@ shinyServer(function(input, output, session) {
     #     browser()
     ## Filter the data by the chosen Five Year Range 
     labor_df <- labor %>%
-      filter(Five_Year_Range == input$year) %>%
-      select(1:4, Total_Pop, Pov_Pop, Percent_Pov, Margin_Error_Percent)
+      select(1:4, Five_Year_Range,Total_Pop, Pov_Pop, Percent_Pov, Margin_Error_Percent)
     
     ## Output reactive dataframe
     labor_df    
@@ -23,7 +22,8 @@ shinyServer(function(input, output, session) {
   ## Create summary table
   output$summary <- renderDataTable({
     ## Make reactive dataframe into regular dataframe
-    labor_df <- labor_df()
+    labor_df <- labor_df() %>%
+    filter(Five_Year_Range == input$sum_year)
     
     ## make municipals a vector based on input variable
     if(!is.null(input$sum_muni))
@@ -50,7 +50,7 @@ shinyServer(function(input, output, session) {
       filter(Region %in% munis) %>%
       select(4:length(colnames(labor_df)))
     
-    colnames(sum_df) <- c("Region", "Total Population", "Population Below Poverty Level", 
+    colnames(sum_df) <- c("Region","Five Year Range", "Total Population", "Population Below Poverty Level", 
                           "Percent Below Poverty Level", "Margin of Error")
     
     return(sum_df)
@@ -60,7 +60,9 @@ shinyServer(function(input, output, session) {
   ## for the Google charts plot
   output$plot <- reactive({
     ## make reactive dataframe into regular dataframe
-    labor_df <- labor_df()
+    labor_df <- labor_df() %>%
+    filter(Five_Year_Range == input$plot_year)
+    
     
     county <- as.character(labor_df$County[which(labor_df$Municipal==input$plot_muni)])
     
@@ -92,7 +94,9 @@ shinyServer(function(input, output, session) {
     #     browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
-    labor_df <- labor_df()
+    labor_df <- labor_df()%>%
+    filter(Five_Year_Range == input$map_year)%>%
+    select(1:4, Total_Pop, Pov_Pop, Percent_Pov, Margin_Error_Percent)
     
     ## take US, MA, and counties out of map_dat
     map_dat <- labor_df %>%
@@ -203,7 +207,7 @@ shinyServer(function(input, output, session) {
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4("Poverty Rate in", muni_name, " for ", input$year),
+      tags$h4("Poverty Rate in", muni_name, " for ", input$map_year),
       tags$h5(muni_value, "%")
     ))
   })
