@@ -2,9 +2,10 @@
 ## Title: Suicide server.R           ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
+##            Kiridly, Xuelian Li    ##
+##            Steve Lauer            ## 
 ## Date Created:                     ##
-## Date Modified: 02/24/2014 ER      ##
+## Date Modified: 04/13/15 XL        ##
 #######################################
 
 ## load necessary libraries
@@ -29,13 +30,13 @@ shinyServer(function(input, output, session) {
     suidf <- suidf()
     
     ## if a user chooses Single Year, display only data from that year (dpylr)
-    if(input$timespan == "sing.yr"){
-      df <- filter(suidf, Year==input$year)
+    if(input$sum_timespan == "sing.yr"){
+      df <- filter(suidf, Year==input$sum_year)
     }
     
     ## if a user chooses Multiple Years, display data from all years in range
-    if(input$timespan == "mult.yrs"){
-      range <- seq(min(input$range), max(input$range), 1)
+    if(input$sum_timespan == "mult.yrs"){
+      range <- seq(min(input$sum_range), max(input$sum_range), 1)
       df <- c()
       
 ####**********RBIND.Data.frame -DO Not Match
@@ -46,21 +47,21 @@ shinyServer(function(input, output, session) {
     }
     
     ## make counties a vector based on input variable
-    if(!is.null(input$county))
-      counties <- input$county
+    if(!is.null(input$sum_county))
+      counties <- input$sum_county
     ## if none selected, put all counties in vector
-    if(is.null(input$county))
+    if(is.null(input$sum_county))
       counties <- names(table(suidata[,1]))[c(1:7, 9:12,14)]
     
     ## if the user checks the meanUS box or the meanMA box, add those to counties vector
-    if(input$meanUS){
-      if(input$meanMA){
+    if(input$sum_meanUS){
+      if(input$sum_meanMA){
         counties <- c("US", "MA", counties) ## US and MA  
       } else{
         counties <- c("US", counties) ## US only
       }
     } else{
-      if(input$meanMA){
+      if(input$sum_meanMA){
         counties <- c("MA", counties) ## US only ## MA only
       }
     }
@@ -92,23 +93,23 @@ shinyServer(function(input, output, session) {
     suidf <- suidf()
     
     ## make counties a vector based on input variable
-    counties <- input$county
+    counties <- input$plot_county
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     df <- dcast(suidf, Year ~ County, value.var="Age.Adjusted.Rate")
     
     ## if no counties have been selected, just show the US average
-    if(is.null(input$county)){
+    if(is.null(input$plot_county)){
       ## %>% = then
       g <- df %>%
         select(Year, US)
     }
     
     ## if counties are selected and MA or US mean boxes are selected, add those to dataframe
-    if(!is.null(input$county)){
-      if(input$meanMA)
+    if(!is.null(input$plot_county)){
+      if(input$plot_meanMA)
         counties <- c(counties, "MA")
-      if(input$meanUS)
+      if(input$plot_meanUS)
         counties <- c(counties, "US")
       
       g <- df[,c("Year", counties)]
@@ -138,10 +139,10 @@ shinyServer(function(input, output, session) {
     suidf <- subset(suidf, County!="US")
     
     ## for single year maps...
-    if(input$timespan == "sing.yr"){
+    if(input$map_timespan == "sing.yr"){
       
       ## subset the data by the year selected
-      suidf <- filter(suidf, Year==input$year)
+      suidf <- filter(suidf, Year==input$map_year)
       
       ## assign colors to each entry in the data frame
       color <- as.integer(cut2(suidf$Age.Adjusted.Rate,cuts=scuts))
@@ -154,7 +155,7 @@ shinyServer(function(input, output, session) {
       ## find missing counties in data subset and assign NAs to all values
       missing.counties <- setdiff(MAcounties, suidf$County)
       df <- data.frame(County=missing.counties, State="MA", Country="US", 
-                       Year=input$year, Suicides=NA, Population=NA, 
+                       Year=input$map_year, Suicides=NA, Population=NA, 
                        Age.Adjusted.Rate=NA, Age.Adjusted.Rate.Lower.Bound=NA,
                        Age.Adjusted.Rate.Upper.Bound=NA, 
                        Age.Adjusted.Rate.Standard.Error=NA,Crude.Rate=NA,
@@ -166,11 +167,11 @@ shinyServer(function(input, output, session) {
       return(suidf)
     }
     
-    if(input$timespan=="mult.yrs"){
+    if(input$map_timespan=="mult.yrs"){
       
       ## create dataframes for the max and min year of selected data
-      min.year <- min(input$range)
-      max.year <- max(input$range)
+      min.year <- min(input$map_range)
+      max.year <- max(input$map_range)
       min.df <- subset(suidf, Year==min.year)
       max.df <- subset(suidf, Year==max.year)
       
@@ -309,15 +310,15 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
         tags$h5("Age Adjusted suicide rate in ", values$selectedFeature$County, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
-    if(input$timespan=="sing.yr"){
+    if(input$map_timespan=="sing.yr"){
     return(as.character(tags$div(
-      tags$h4(input$year, "crude suicide rate in ", values$selectedFeature$County),
+      tags$h4(input$map_year, "crude suicide rate in ", values$selectedFeature$County),
       tags$h5(values$selectedFeature$Age.Adjusted.Rate, "per 100,000 in population")
     )))}
    ## For multiple years when county is clicked, display a message
-    if(input$timespan=="mult.yrs"){
+    if(input$map_timespan=="mult.yrs"){
       return(as.character(tags$div(
-        tags$h4("Change in crude suicide rate from ", min(input$range), " to ", max(input$range), " in ", values$selectedFeature$County),
+        tags$h4("Change in crude suicide rate from ", min(input$map_range), " to ", max(input$map_range), " in ", values$selectedFeature$County),
         tags$h5("Increased by "[values$selectedFeature$Age.Adjusted.Rate>=0],
                 "Decreased by"[values$selectedFeature$Age.Adjusted.Rate<0],
                 abs(values$selectedFeature$Age.Adjusted.Rate), "per 100,000 in population")

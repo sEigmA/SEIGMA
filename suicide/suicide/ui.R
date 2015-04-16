@@ -2,9 +2,10 @@
 ## Title: Suicide ui.R               ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
+##            Kiridly, Xuelian Li    ##
+##            Steve Lauer            ## 
 ## Date Created:                     ##
-## Date Modified: 03/12/15 ER        ##
+## Date Modified: 04/13/15 XL        ##
 #######################################
 
 ## load necessary libraries
@@ -118,51 +119,66 @@ shinyUI(fluidPage(
       ),
       
       
-      ## in summary and map, allow for timespan selection
+      ## in summary, allow for timespan and year selection
       conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'map'",
+        condition="input.tabs == 'summary'",
         ## Select input = Drop down list of timespan (variable name on server side) 
-        selectInput("timespan", "Select Timespan",
+        selectInput("sum_timespan", "Select Timespan",
                     list("Single Year" = "sing.yr",
-                         "Multiple Years" = "mult.yrs"))
-      ),
-      
-      ## if single year is selected, select year. if multiple years are selected, choose range.
-      conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'map'",
+                         "Multiple Years" = "mult.yrs"), selected = "sing.yr"),
         conditionalPanel(
-          condition="input.timespan == 'sing.yr'",
-          
+          condition="input.sum_timespan == 'sing.yr'",
           ## Initializing a single slider
-          sliderInput("year", "Select Year",
-                      min=1999, max=2012, value=2012, sep="",
-                      format="####")),
+          sliderInput("sum_year", "Select Year",
+                      min=1999, max=2012, value=2012, sep="")),
         conditionalPanel(
           ## Initializes a multi-year slider (range)
-          condition="input.timespan == 'mult.yrs'",
+          condition="input.sum_timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
-          sliderInput("range", "Select Years",
-                      min=1999, max=2012, value=c(2010,2012), sep="",
-                      format="####")
+          sliderInput("sum_range", "Select Years",
+                      min=1999, max=2012, value=c(2010,2012), sep="")
+        ),
+        selectInput("sum_county", "Select County", 
+                    names(table(suidata[,1]))[c(1:7, 9:12,14)], 
+                    ## Multiple allows for multi-county selection
+                    multiple=TRUE),
+        checkboxInput("sum_meanMA", "Compare to MA Average", FALSE),
+        checkboxInput("sum_meanUS", "Compare to US Average", FALSE)
+       ),
+      ## in map, allow for timespan and year selection
+      ## if single year is selected, select year. if multiple years are selected, choose range.
+      conditionalPanel(
+        condition="input.tabs == 'map'",
+        selectInput("map_timespan", "Select Timespan",
+                    list("Single Year" = "sing.yr",
+                         "Multiple Years" = "mult.yrs"), selected = "sing.yr"),
+        conditionalPanel(
+          condition="input.map_timespan == 'sing.yr'",
+          
+          ## Initializing a single slider
+          sliderInput("map_year", "Select Year",
+                      min=1999, max=2012, value=2012, sep="")),
+        conditionalPanel(
+          ## Initializes a multi-year slider (range)
+          condition="input.map_timespan == 'mult.yrs'",
+          ## Slider starts from 2010-2012
+          sliderInput("map_range", "Select Years",
+                      min=1999, max=2012, value=c(2010,2012), sep="")
         )
       ),
       
-      ## in summary or plot, allow for county selection
+      ## in plot, allow for county selection
       conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'plot'",
+        condition="input.tabs == 'plot'",
         ## Select input = List
-        selectInput("county", "Select County", 
+        selectInput("plot_county", "Select County", 
                     names(table(suidata[,1]))[c(1:7, 9:12,14)], 
                     ## Multiple allows for multi-county selection
-                    multiple=TRUE)),
-      
-      ## If a county is selected, show boxes that will compare to MA or US average
-      conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'plot' && input.county != null",
-        ## False at the end means it starts off unchecked
-        checkboxInput("meanMA", "Compare to MA Average", FALSE),
-        checkboxInput("meanUS", "Compare to US Average", FALSE)),
-      
+                    multiple=TRUE),
+        checkboxInput("plot_meanMA", "Compare to MA Average", FALSE),
+        checkboxInput("plot_meanUS", "Compare to US Average", FALSE)
+        ),
+        
       tags$hr(),
       
       ## author line
@@ -301,7 +317,7 @@ shinyUI(fluidPage(
                  ## Info Box 
                  conditionalPanel(
                    condition="input.action != 0",
-                   absolutePanel(left=450, top=450, width=300, class="floater",
+                   absolutePanel(left=100, top=450, width=300, class="floater",
                                  htmlOutput("details"))),
                  
                  conditionalPanel(
@@ -313,7 +329,7 @@ shinyUI(fluidPage(
                  
                  ## Single Year Legend
                  conditionalPanel(
-                   condition="input.timespan == 'sing.yr' && input.action != 0",
+                   condition="input.map_timespan == 'sing.yr' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
@@ -340,7 +356,7 @@ shinyUI(fluidPage(
                  
                  ## Multi Year Legend
                  conditionalPanel(
-                   condition="input.timespan == 'mult.yrs' && input.action != 0",
+                   condition="input.map_timespan == 'mult.yrs' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
