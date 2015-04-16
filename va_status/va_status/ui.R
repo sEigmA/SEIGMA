@@ -2,9 +2,10 @@
 ## Title: Veteran ui.R               ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
+##            Kiridly, Xuelian Li    ##
+##            Steve Lauer            ## 
 ## Date Created:  11/5/2014          ##
-## Date Modified: 02/25/2015 ER      ##
+## Date Modified: 04/16/2015 XL      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -31,38 +32,43 @@ shinyUI(fluidPage(
       ## in map, allow for variable selection
       
       ## Choose range for year.
-      ## Initializing a single slider
-      conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'plot' || input.tabs == 'map'",
-      selectInput("year", "Select Five Year Range",
-                  choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                 "2008-2012"))
-      ),
-
-      ## in summary, allow for municipal selection
+      ## in summary, allow for year and municipal selection
       conditionalPanel(
         condition="input.tabs == 'summary'",
+      selectInput("sum_year", "Select Five Year Range",
+                  choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                 "2008-2012")),
+      selectInput("sum_muni", "Select Municipality", 
+                  choices = MA_municipals,
+                  ## Multiple allows for multi-county selection
+                  multiple=TRUE),
+      ##show boxes that will compare to MA or US average
+      checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+      checkboxInput("US_mean", "Compare to US Average", FALSE)
+      ),
+
+      ## in map, allow for year selection
+      conditionalPanel(
+        condition="input.tabs == 'map'",
         ## Select input = List
-        selectInput("sum_muni", "Select Municipality", 
-                    choices = MA_municipals,
-                    ## Multiple allows for multi-county selection
-                    multiple=TRUE)),
+        selectInput("map_year", "Select Five Year Range",
+                    choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                   "2008-2012"))
+      ),
       
-      ## in plot, allow for municipal selection
+      ## in plot, allow for year and municipal selection
       conditionalPanel(
         condition="input.tabs == 'plot'",
         ## Select input = List
+        selectInput("plot_year", "Select Five Year Range",
+                    choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                   "2008-2012")),
+        
         selectInput("plot_muni", "Select Municipality", 
                     choices = MA_municipals)),
       
-      ## In summary, show boxes that will compare to MA or US average
-      conditionalPanel(
-        condition="input.tabs == 'summary'",
-        ## False at the end means it starts off unchecked
-        checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-        checkboxInput("US_mean", "Compare to US Average", FALSE)
-      ),
-      
+  
+     
       tags$hr(),
       
       ## author line
@@ -182,7 +188,7 @@ bootstrapPage(mainPanel(
                  ## Info Box 
                  conditionalPanel(
                    condition="input.action != 0",
-                   absolutePanel(left=450, top=450, width=300, class="floater",
+                   absolutePanel(left=100, top=450, width=300, class="floater",
                                  htmlOutput("details"))),
                  
                  conditionalPanel(

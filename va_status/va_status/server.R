@@ -13,8 +13,7 @@ shinyServer(function(input, output, session) {
 #     browser()
     ## Filter the data by the chosen Five Year Range 
     va_df <- va_data %>%
-      filter(Five_Year_Range == input$year) %>%
-      select(1:4, Civilian_Pop, Vet_Pop, Percent_Vet, Margin_Error_Percent)
+      select(1:4,Five_Year_Range, Civilian_Pop, Vet_Pop, Percent_Vet, Margin_Error_Percent)
     
     ## Output reactive dataframe
     va_df    
@@ -23,7 +22,8 @@ shinyServer(function(input, output, session) {
   ## Create summary table
   output$summary <- renderDataTable({
     ## Make reactive dataframe into regular dataframe
-    va_df <- va_df()
+    va_df <- va_df() %>%
+    filter(Five_Year_Range == input$sum_year)
     
     ## make municipals a vector based on input variable
     if(!is.null(input$sum_muni))
@@ -50,7 +50,7 @@ shinyServer(function(input, output, session) {
       filter(Region %in% munis) %>%
       select(4:length(colnames(va_df)))
     
-    colnames(sum_df) <- c("Region", "Civilian Over 18 Population", "Civilian Veteran Population", 
+    colnames(sum_df) <- c("Region","Five_Year_Range", "Civilian Over 18 Population", "Civilian Veteran Population", 
                          "Civilain Veteran Percentage", "Margin of Error")
     
     return(sum_df)
@@ -60,7 +60,8 @@ shinyServer(function(input, output, session) {
   ## for the Google charts plot
   output$plot <- reactive({
     ## make reactive dataframe into regular dataframe
-    va_df <- va_df()
+    va_df <- va_df()%>%
+    filter(Five_Year_Range == input$plot_year)
     
     county <- as.character(va_df$County[which(va_df$Municipal==input$plot_muni)])
     
@@ -92,7 +93,9 @@ shinyServer(function(input, output, session) {
 #     browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
-    va_df <- va_df()
+    va_df <- va_df()%>%
+    filter(Five_Year_Range == input$map_year)
+    
     
     ## take US, MA, and counties out of map_dat
     map_dat <- va_df %>%
@@ -108,12 +111,12 @@ shinyServer(function(input, output, session) {
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                             Region = missing_munis, Civilian_Pop = NA, Vet_Pop = NA,
+                             Region = missing_munis, Five_Year_Range = input$map_year,Civilian_Pop = NA, Vet_Pop = NA,
                              Percent_Vet = NA, Margin_Error_Percent = NA,
                              color=length(map_colors), opacity = 0)
     na_munis <- setdiff(MA_municipals_map, map_dat$Region)
     na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
-                             Region = na_munis, Civilian_Pop = NA, Vet_Pop = NA,
+                        Five_Year_Range = input$map_year, Region = na_munis, Civilian_Pop = NA, Vet_Pop = NA,
                              Percent_Vet = NA, Margin_Error_Percent = NA,
                              color=length(map_colors), opacity = 0.7)
         
@@ -243,7 +246,7 @@ shinyServer(function(input, output, session) {
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4("Percentage of Veterans in", muni_name, " for ", input$year),
+      tags$h4("Percentage of Veterans in", muni_name, " for ", input$map_year),
       tags$h5(muni_value, "%")
     ))
   })
