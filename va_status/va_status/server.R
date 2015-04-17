@@ -220,9 +220,12 @@ shinyServer(function(input, output, session) {
     evt <- input$map_geojson_click
     if(is.null(evt))
       return()
-    
+    input$map_year
+    map_dat <- map_dat()
     isolate({
       values$selectedFeature <- evt$properties
+      region <- evt$properties$NAMELSAD10
+      values$selectedFeature["Percent_Vet"] <- map_dat[match(region, map_dat$Region), "Percent_Vet"]
     })
   })
   ##  This function is what creates info box
