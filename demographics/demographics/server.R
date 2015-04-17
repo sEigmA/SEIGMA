@@ -58,7 +58,7 @@ shinyServer(function(input, output, session) {
       select(4:6, sel_col_num)
     
     colnames(Dem_df) <- gsub("_", " ", colnames(Dem_df))
-    colnames(Dem_df) <- gsub("Pct", "%", colnames(Dem_df))
+    colnames(Dem_df) <- gsub("Pct", "Percentage", colnames(Dem_df))
     
     return(Dem_df)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
@@ -97,7 +97,7 @@ shinyServer(function(input, output, session) {
       arrange(Region)%>%
       select(4, sel_col_num1)
     colnames(munis_df) <- gsub("_", " ", colnames(munis_df))
-    colnames(munis_df) <- gsub("Pct", "%", colnames(munis_df))
+    colnames(munis_df) <- gsub("Pct", "", colnames(munis_df))
 
     list(
       data = googleDataTable(munis_df), options = list(title=paste(input$plot_radio, "as a Percentage of the Population by Region ", input$plot_muni,
@@ -206,9 +206,12 @@ shinyServer(function(input, output, session) {
     evt <- input$map_geojson_click
     if(is.null(evt))
       return()
-    
+    map_dat <- map_dat()
+    col_name<-colnames(map_dat)[7]
     isolate({
       values$selectedFeature <- evt$properties
+      region <- evt$properties$NAMELSAD10
+      values$selectedFeature[col_name] <- map_dat[match(region, map_dat$Region), col_name]
     })
   })
   ##  This function is what creates info box
@@ -241,11 +244,11 @@ shinyServer(function(input, output, session) {
     ## If clicked county has no crude rate, display a message
     if(is.null(values$selectedFeature[col])){
       return(as.character(tags$div(
-        tags$h5(var_select, "% in ", muni_name, "is not available for this timespan"))))
+        tags$h5("Percentage of", var_select, "in ", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4(var_select, "% in ", muni_name, " for ", input$map_year),
+      tags$h4("Percentage of", var_select, "in ", muni_name, " for ", input$map_year),
       tags$h5(muni_value, "%")
     ))
   })
