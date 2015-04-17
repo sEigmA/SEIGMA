@@ -74,7 +74,7 @@ ylim <- list(
 
 ## Colors for a single-year legend
 paint_brush <- colorRampPalette(colors=c("white", "red3"))
-map_colors <- c(paint_brush(n=4), "#999999")
+map_colors <- c(paint_brush(n=5), "#999999")
 
 ## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
