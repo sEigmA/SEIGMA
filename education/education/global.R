@@ -152,15 +152,15 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
 
-  helpText(p(strong('Please select the five-year range for which you are interested in viewing educational attainment percentages.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in viewing the educational attainment estimate.'))),
   tags$br(),
   tags$ul(
     tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To compare educational attainment percentages to the Massachusetts or United States average, select the corresponding check box.'),
+    tags$li('To compare educational attainment estimate to the Massachusetts or United States estimate, select the corresponding check box.'),
     tags$br(),
-    tags$li('Sort educational attainment percentages in ascending and descending order by clicking the column or variable title.')
+    tags$li('Sort the educational attainment estimate in ascending and descending order by clicking the column or variable title.')
 
   )
 )
@@ -172,7 +172,7 @@ plot_side_text <- conditionalPanel(
   p(strong('Please select the five- year range and municipality for which you are interested in viewing educational attainment.')),
   tags$br(),
   tags$ul(
-    tags$li("For a given five-year period, you can compare a municipality's percentage of educational attainment to the county, state, and national average.")
+    tags$li("For a given five-year period, you can compare a municipality's estimate of educational attainment to the county, state, and national estimate.")
   ))
 
 
@@ -183,21 +183,21 @@ map_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
     
-    tags$li('Clicking on a municipality will display the educational attainment percentage for the five-year range that you selected.')
+    tags$li('Clicking on a municipality will display the educational attainment estimate for the five-year range that you selected.')
   ))
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
+  helpText(p(strong('This tab contains more detailed information regarding the variable of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Educational Status App"), "displays the five-year average educational attainment percentages for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Educational Status App"), "displays the five-year estimate of educational attainment for Massachusetts by municipality.",
                      p(strong("Click on different tabs to see the data in different formats.")),
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
-                       tags$li(p(strong("Plot"), "compares the educational attainment percentages for each municipality to county, state, and national averages.")),
-                       tags$li(p(strong("Map"), "visually displays educational attainment percentages by municipality.")),
+                       tags$li(p(strong("Plot"), "compares the educational attainment estimate for each municipality to the county, state, and national estimate.")),
+                       tags$li(p(strong("Map"), "visually displays educational attainment estimate by municipality.")),
                        tags$li(p(strong("More Info"), "describes educational attainment, including formulas and calculations."))
                      ))
 

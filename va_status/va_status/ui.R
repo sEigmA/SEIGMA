@@ -79,7 +79,7 @@ shinyUI(fluidPage(
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S2101&prodType=table",
+      helpText(a("Data Source: American Community Survey- Table DP02", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S2101&prodType=table",
                  target="_blank")),
       
       ## GitHub link
@@ -231,7 +231,7 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Veteran Status"), "-People with active duty military service and or service in the military Reserves or National Guard.")),
+                   tags$li(p(strong("Veteran Status"), "-People with active duty military service and or service in the military Reserves or National Guard. All individuals were at least 18 years of age.")),
                    tags$br(),
                  tags$li(p(strong("Civilian Veterans"), "-Men and women who have served for any period of time, but are no longer on active duty.  People who served in the National Guard or Reserves are classified as veterans only if they were called to active duty.")),
                  tags$br(),

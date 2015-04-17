@@ -80,7 +80,7 @@ shinyUI(fluidPage(
           tags$li("If you are interested in a specific county or multiple counties select them by clicking on the box or typing them in."), 
           p(strong('For data on all Massachusetts counties, leave this selection blank.')),
           tags$li("To compare the data to the Massachusetts average or US average, select the corresponding check box."),
-          p(strong('Please note that only consecutive year ranges can be selected'))
+          p(strong('Please note that only consecutive year ranges can be selected.'))
         )),
       
       ## Same concept
@@ -300,6 +300,8 @@ shinyUI(fluidPage(
                  p(strong("Broken Lines"),
                    " - Number of suicides for a region during a specified year. For some counties, data may not appear only for certain years, resulting in shortened or broken line.  This occurs when the number of deaths is less than 10 in order to maintian confidentiality."), 
                  tags$br(),
+                 p(strong("Missing data"),
+                   " - For some counties, data may not appear.  This occurs when there is no data available for this county. However, the county name will still appear on the side legend to notify that it has been selected."),
                  value="plot"),
         
         ## plot map

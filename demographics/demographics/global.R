@@ -173,7 +173,7 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in viewing the demographic estimate.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in viewing the estimate of age, gender, race, or ethinicity.'))),
   tags$br(),
   tags$ul(
       tags$li('View the estimate for age, gender, race, or ethnicity by selecting the appropriate box below.'),
@@ -182,7 +182,7 @@ summary_side_text <- conditionalPanel(
       tags$br(),
       tags$li('For the five year ranges below, you can compare the demographic estimate in a municipality to national, state, and county estimate.'),
       tags$br(),
-      tags$li(p(strong('The demographic estimate can be sorted in ascending and descending order by clicking the column or variable.')))
+      tags$li(p(strong('The estimate of age, gender, race, or ethinicity can be sorted in ascending and descending order by clicking the column or variable.')))
             
   )
   
@@ -212,8 +212,6 @@ map_side_text <- conditionalPanel(
   helpText(p(strong("Please select a five- year range and click on Generate Map to get started."))),
   tags$br(),
   tags$ul(
-    tags$li('View the estimate for age, gender, race, or ethnicity by selecting the appropriate box below.'),
-    tags$br(),
     tags$li('Select the variable of interest for age, gender, race, or ethnicity by selecting either an age range, gender, race, or ethnicity from the drop down list below.'),
     tags$br(),
     tags$li('Clicking on a municipality will display the variable of interest for the five-year range and gender that you selected.')
@@ -234,12 +232,12 @@ info_side_text <- conditionalPanel(
   #tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Demographics App"), "displays demogrpahic estimates in Massachusetts' municipalities over a five-year period.",
+about_main_text <- p(strong("The SEIGMA Demographics App"), "displays the demogrpahic composition in Massachusetts' municipalities over a five-year period.",
   p(strong("Click on different tabs to see the data in different formats.")),
     tags$br(),
     tags$ul(
       tags$li(p(strong("Summary"), "shows the data in table format.")),
-      tags$li(p(strong("Plot"), "compares a municipality's demogrpahic estimates to county, state, and national estimate.")),
+      tags$li(p(strong("Plot"), "compares a municipality's demogrpahic estimate to county, state, and national estimate.")),
       tags$li(p(strong("Map"), "visually displays demographic estimates by municipality.")),
       tags$li(p(strong("More Info"), "describes demographic estimates including formulas and calculations."))
 )

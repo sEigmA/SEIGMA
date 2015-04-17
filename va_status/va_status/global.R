@@ -151,7 +151,7 @@ summary_side_text <- conditionalPanel(
    #   tags$li('View rates by: male or female (or both by leaving this selection blank)'),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('To compare the data to the Massachusetts percentage or US percentage select the corresponding check box below.'),
+      tags$li('To compare the data to the Massachusetts or US estimate select the corresponding check box below.'),
       tags$br(),
       tags$li('Civilian veteran status estimates can be sorted in ascending and descending order by clicking the column or variable.')
   )

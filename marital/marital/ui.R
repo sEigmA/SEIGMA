@@ -97,7 +97,7 @@ shinyUI(fluidPage(
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey", href="http://www.census.gov/acs/www/",
+      helpText(a("Data Source: American Community Survey - Table DP02", href="http://www.census.gov/acs/www/",
                  target="_blank")),
       
       ## GitHub link
@@ -124,7 +124,13 @@ shinyUI(fluidPage(
         
         ## summary tab
         tabPanel("Summary", 
-                 dataTableOutput("summary"), value="summary", 
+                 dataTableOutput("summary"),
+                 tags$br(),
+                 tags$ul(
+                   tags$li(p(strong("Population includes individuals 15 years and older.")))
+                 ),
+                 tags$br(),
+                 value="summary", 
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
         
         ## plot tab with google chart options
@@ -315,7 +321,7 @@ shinyUI(fluidPage(
                   tags$br(),
 
                 p(strong("Five-Year Estimate"),
-                  "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions."),
+                  "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions.  To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision."),
                 
                  
                  ## email feedback link
