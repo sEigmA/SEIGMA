@@ -19,7 +19,7 @@ require(shiny)
 require(googleCharts)
 require(leaflet)
 require(RJSONIO)
-require(rCharts)
+##require(rCharts)
 require(tidyr)
 
 ## load map data
