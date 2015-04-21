@@ -76,8 +76,8 @@ ylim <- list(
   max = 110
 )
 
-## Colors for a five-year legend "#00FF00"
-paint_brush <- colorRampPalette(colors=c("#0072B2","white", "#FF0000"))
+## Colors for a five-year legend "#00FF00" "white","#0072B2"#FF0000
+paint_brush <- colorRampPalette(colors=c("lightgreen","yellow", "red"))
 map_colors <- c(paint_brush(n=6), "#999999")
 
 
