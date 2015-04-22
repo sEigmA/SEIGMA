@@ -238,7 +238,7 @@ about_main_text <- p(strong("The SEIGMA Unemployment App"), "displays the unempl
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
-                       tags$li(p(strong("Plot"), "compares the annual unemployment estimate for each municipality to county, state, and national estimate.")),
+                       tags$li(p(strong("Plot"), "compares the annual unemployment estimates for each municipality to county, state, and national estimates.")),
                        tags$li(p(strong("Map"), "visually displays the annual unemployment estimate by municipality")),
                        tags$li(p(strong("More Info"), "describes the annual unemployment estimate, including formulas and calculations."))
                      ))

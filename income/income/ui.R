@@ -33,8 +33,8 @@ shinyUI(fluidPage(
       ## Choose range for year.
       ## Initializing a single slider
       conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'plot' || input.tabs == 'map'",
-      selectInput("year", "Select Five Year Range",
+        condition="input.tabs == 'map'",
+      selectInput("map_year", "Select Five Year Range",
                   choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
                                  "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
       ),
@@ -47,22 +47,31 @@ shinyUI(fluidPage(
         selectInput("sum_muni", "Select Municipality", 
                     choices = MA_municipals,
                     ## Multiple allows for multi-county selection
-                    multiple=TRUE)),
+                    multiple=TRUE),
+        
+        selectInput("sum_year", "Select Five Year Range",
+                    choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
+                                   "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
+        
+        ## In summary, show boxes that will compare to MA or US average
+        checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+        checkboxInput("US_mean", "Compare to US Average", FALSE)
+                
+        ),
       
       ## in plot, allow for municipal selection
       conditionalPanel(
         condition="input.tabs == 'plot'",
         ## Select input = List
         selectInput("plot_muni", "Select Municipality", 
-                    choices = MA_municipals)),
+                    choices = MA_municipals),
+        
+        selectInput("year", "Select Five Year Range",
+                    choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
+                                   "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
+                
+        ),
       
-      ## In summary, show boxes that will compare to MA or US average
-      conditionalPanel(
-        condition="input.tabs == 'summary'",
-        ## False at the end means it starts off unchecked
-        checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-        checkboxInput("US_mean", "Compare to US Average", FALSE)
-      ),
       
       tags$hr(),
       
@@ -74,7 +83,7 @@ shinyUI(fluidPage(
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1903&prodType=table",
+      helpText(a("Data Source: American Community Survey- Table B19013", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1903&prodType=table",
                  target="_blank")),
       
       ## GitHub link
@@ -232,7 +241,7 @@ bootstrapPage(mainPanel(
                    tags$br(),
                    tags$li(p(strong("Median"),"-The median divides the distribution of average annual household income into two equal parts; half that fall below the median for average household income and half that fall above the average annual household income.")),
                    tags$br(),
-                   tags$li(p(strong("Five- Year Percentages"),"-Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions.")
+                   tags$li(p(strong("Five- Year Estimates"),"-Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.")
                    )
                    ),
                  #tags$br(),

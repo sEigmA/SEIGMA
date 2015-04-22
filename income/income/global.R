@@ -152,7 +152,7 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in viewing median household income data.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in viewing median  annual household income data.'))),
   tags$br(),
   tags$ul(
 #       tags$li('View rates by: male or female (or both by leaving this selection blank)'),
@@ -161,7 +161,7 @@ summary_side_text <- conditionalPanel(
       tags$br(),
       tags$li('To compare median data to the Massachusetts median or US median, select the corresponding box.'),
       tags$br(),
-      tags$li(p(strong('Please note that all statistics are 5-year medians.'))),
+      tags$li(p(strong('Please note that all statistics are 5-year estimates.'))),
       tags$br(),
       tags$li("For more information about how 5- year medians are calculated, click on the 'More Info' tab.")
             
@@ -177,7 +177,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select the five- year range and municipality for which you are interested in viewing household income.')),
+p(strong('Please select the five- year range and municipality for which you are interested in viewing median annual household income.')),
            tags$br(),
   tags$ul(
     tags$li("For a five-year period, you can compare a municipalitiy's median household income to the country, state, and national median.")
@@ -189,7 +189,7 @@ map_side_text <- conditionalPanel(
   helpText(p(strong("Please select a five- year range, and click on 'Generate Map' to get started. "))),
   tags$br(),
   tags$ul(
-    tags$li('Clicking on a municipality will display the median household income for the five-year range that you selected.')
+    tags$li('Clicking on a municipality will display the median annual household income for the five-year range that you selected.')
     ))
 
 info_side_text <- conditionalPanel(
@@ -199,7 +199,7 @@ info_side_text <- conditionalPanel(
  
 
 
-about_main_text <- p(strong("The SEIGMA Household Income Status App"), "displays the five-year median incomes of households in Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Median Household Income Status App"), "displays the five-year median incomes of households in Massachusetts by municipality.",
     tags$br(),
     p(strong("Click on different tabs to view the data in different formats.")),
     tags$ul(
