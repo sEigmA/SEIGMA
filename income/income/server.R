@@ -12,7 +12,7 @@ shinyServer(function(input, output, session) {
   inc_df <- reactive({
     ## Filter the data by the chosen Five Year Range 
     inc_df <- inc_data %>%
-      filter(Five_Year_Range == input$year) %>%
+      filter(Five_Year_Range == input$sum_year) %>%
       select(1:4, Five_Year_Range, Median_Household_Income, Margin_Error_Median)
     
     ## Output reactive dataframe
@@ -109,13 +109,13 @@ shinyServer(function(input, output, session) {
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                             Region = missing_munis, Five_Year_Range = input$year, 
+                             Region = missing_munis, Five_Year_Range = input$map_year, 
                              Median_Household_Income = NA, Margin_Error_Median = NA,
                              color=length(map_colors), opacity = 0)
     
     na_munis <- setdiff(MA_municipals_map, map_dat$Region)
     na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
-                             Region = na_munis, Five_Year_Range = input$year, 
+                             Region = na_munis, Five_Year_Range = input$map_year, 
                              Median_Household_Income = NA, Margin_Error_Median = NA,
                              color=length(map_colors), opacity = 0.7)
     
@@ -248,7 +248,7 @@ shinyServer(function(input, output, session) {
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4("Median Household Income in ", muni_name, " for ", input$year),
+      tags$h4("Median Household Income in ", muni_name, " for ", input$map_year),
       tags$h5("$",muni_value)
     ))
   })

@@ -37,56 +37,52 @@ shinyUI(fluidPage(
                                   "Married" = "Married_Pct",
                                   "Separated" = "Separated_Pct",
                                   "Widowed" = "Widowed_Pct",
-                                  "Divorced" = "Divorced_Pct"))
+                                  "Divorced" = "Divorced_Pct")),
+       selectInput("map_year", "Select Five Year Range",
+                   choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                  "2008-2012" = "2008-2012")),
+       selectInput("map_gender", "Select Gender",
+                   choices = list("Female", "Male"))
+              
       ),
       
       ## if single year is selected, select year. if multiple years are selected, choose range.
       ## Initializing a single slider
       conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'plot' || input.tabs == 'map'",
-      selectInput("year", "Select Five Year Range",
+        condition="input.tabs == 'plot'",
+      selectInput("plot_year", "Select Five Year Range",
                   choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                 "2008-2012" = "2008-2012"))
+                                 "2008-2012" = "2008-2012")),
+      selectInput("plot_muni", "Select Municipality", 
+                  choices = MA_municipals)
+      
       ),
       
       ## in summary, allow for gender selection
       conditionalPanel(
        condition="input.tabs == 'summary'",
        selectInput("sum_gender", "Select Gender",
-                   choices = list("Female" = "Female", "Male" = "Male"), multiple=TRUE)
+                   choices = list("Female" = "Female", "Male" = "Male"), multiple=TRUE),
+       selectInput("sum_year", "Select Five Year Range",
+                   choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                  "2008-2012" = "2008-2012")),
+       selectInput("sum_muni", "Select Municipality", 
+                   choices = MA_municipals,
+                   ## Multiple allows for multi-county selection
+                   multiple=TRUE),
+       
+       
+       ## False at the end means it starts off unchecked
+         checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+         checkboxInput("US_mean", "Compare to US Average", FALSE)
+       
       ),
       
-      ## in map, allow for gender selection
-      conditionalPanel(
-       condition="input.tabs == 'map'",
-       selectInput("map_gender", "Select Gender",
-                   choices = list("Female", "Male"))
-      ),
-      
-      ## in summary, allow for municipal selection
-      conditionalPanel(
-        condition="input.tabs == 'summary'",
-        ## Select input = List
-        selectInput("sum_muni", "Select Municipality", 
-                    choices = MA_municipals,
-                    ## Multiple allows for multi-county selection
-                    multiple=TRUE)),
-      
+        
       ## in plot, allow for municipal selection
-      conditionalPanel(
-        condition="input.tabs == 'plot'",
-        ## Select input = List
-        selectInput("plot_muni", "Select Municipality", 
-                    choices = MA_municipals)),
-      
+            
       ## In summary, show boxes that will compare to MA or US average
-      conditionalPanel(
-        condition="input.tabs == 'summary'",
-        ## False at the end means it starts off unchecked
-        checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-        checkboxInput("US_mean", "Compare to US Average", FALSE)
-      ),
-      
+            
       tags$hr(),
       
       ## author line

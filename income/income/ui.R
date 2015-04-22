@@ -33,8 +33,8 @@ shinyUI(fluidPage(
       ## Choose range for year.
       ## Initializing a single slider
       conditionalPanel(
-        condition="input.tabs == 'summary' || input.tabs == 'plot' || input.tabs == 'map'",
-      selectInput("year", "Select Five Year Range",
+        condition="input.tabs == 'map'",
+      selectInput("map_year", "Select Five Year Range",
                   choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
                                  "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
       ),
@@ -47,22 +47,31 @@ shinyUI(fluidPage(
         selectInput("sum_muni", "Select Municipality", 
                     choices = MA_municipals,
                     ## Multiple allows for multi-county selection
-                    multiple=TRUE)),
+                    multiple=TRUE),
+        
+        selectInput("sum_year", "Select Five Year Range",
+                    choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
+                                   "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
+        
+        ## In summary, show boxes that will compare to MA or US average
+        checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+        checkboxInput("US_mean", "Compare to US Average", FALSE)
+                
+        ),
       
       ## in plot, allow for municipal selection
       conditionalPanel(
         condition="input.tabs == 'plot'",
         ## Select input = List
         selectInput("plot_muni", "Select Municipality", 
-                    choices = MA_municipals)),
+                    choices = MA_municipals),
+        
+        selectInput("year", "Select Five Year Range",
+                    choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
+                                   "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
+                
+        ),
       
-      ## In summary, show boxes that will compare to MA or US average
-      conditionalPanel(
-        condition="input.tabs == 'summary'",
-        ## False at the end means it starts off unchecked
-        checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-        checkboxInput("US_mean", "Compare to US Average", FALSE)
-      ),
       
       tags$hr(),
       
