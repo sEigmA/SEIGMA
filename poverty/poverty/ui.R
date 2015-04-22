@@ -14,7 +14,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Poverty Rate Shiny App"),
+  titlePanel("", windowTitle = "SEIGMA: Poverty Rate App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -228,6 +228,8 @@ bootstrapPage(mainPanel(
            tags$ul(
              tags$li(p(strong("Poverty Status"), "-To determine a person's poverty status, one compares the person’s total family income in the last 12 months with the poverty threshold appropriate for that person's family size and composition. If the total income of that person's family is less than the threshold appropriate for that family, then the person is considered below the poverty level. Poverty is defined at the family level and not the household level, the poverty status of
 the household is determined by the poverty status of the householder.")),
+             tags$br(),
+             tags$li(p(strong("Poverty Threshold"), "-Poverty thresholds are determined by multiplying base year thresholds (set as yearly income in 1982) by the monthly inflation factor for the 12- months before the period of interest.  For example, if we want to determine if a family with three children with a total income of $14,000 (July 2012- June 2013) was at or below the poverty threshold we would do the following. First we would see what the base year threshold was in 1982 for a family of this size, $7,765. We then multiply this by the inflation rate for the 12 month period before June 2012- July 2013, 2.39719.  This would give us a threshold income of $18,614.  When we compare this to the income of the family above, $14,000 is well below the threshold we calculated, meaning this family woudl be considered to be in poverty.  In this app we calculate the poverty threshold as described in the example above as being $23,268." )),
              tags$br(),
              tags$li(p(strong("Five-Year Estimates"), "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates, are possible for larger municipalities." ))),
            

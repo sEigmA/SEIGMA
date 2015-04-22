@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  11/05/2014         ##
-## Date Modified: 02/24/2014 ER      ##
+## Date Modified: 04/22/2015 AR      ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -57,13 +57,25 @@ shinyServer(function(input, output, session) {
     return(inc_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
+  
   ## create the plot of the data
+  
+  plot_inc_df <- reactive({
+    ## Filter the data by the chosen Five Year Range 
+    plot_inc_df <- inc_data %>%
+      filter(Five_Year_Range == input$plot_year) %>%
+      select(1:4, Five_Year_Range, Median_Household_Income, Margin_Error_Median)
+    
+    ## Output reactive dataframe
+    plot_inc_df    
+  })
+  
   ## for the Google charts plot
   output$plot <- reactive({
     ## make reactive dataframe into regular dataframe
-    inc_df <- inc_df()
+    plot_inc_df <- plot_inc_df()
     
-    county <- as.character(inc_df$County[which(inc_df$Municipal==input$plot_muni)])
+    county <- as.character(plot_inc_df$County[which(plot_inc_df$Municipal==input$plot_muni)])
     
     ## make counties a vector based on input variable
     munis <- c(input$plot_muni, county, "MA", "United States")
@@ -71,15 +83,15 @@ shinyServer(function(input, output, session) {
     muni_index <- c()
     
     for(i in 1:length(munis)){
-      muni_index[i] <- match(munis[i], inc_df$Region)
+      muni_index[i] <- match(munis[i], plot_inc_df$Region)
     }
-#     browser()
-    plot_df <- inc_df[muni_index,] %>%
+    #     browser()
+    plot_df <- plot_inc_df[muni_index,] %>%
       select(Region, Median_Household_Income)
     
     colnames(plot_df) <- gsub("_", " ", colnames(plot_df))
     
-#     plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
+    #     plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
     
     list(
       data=googleDataTable(plot_df))
@@ -88,15 +100,26 @@ shinyServer(function(input, output, session) {
   
   #####################################MAP CREATION##############
   
+  map_inc_df <- reactive({
+    ## Filter the data by the chosen Five Year Range 
+    map_inc_df <- inc_data %>%
+      filter(Five_Year_Range == input$map_year) %>%
+      select(1:4, Five_Year_Range, Median_Household_Income, Margin_Error_Median)
+    
+    ## Output reactive dataframe
+    map_inc_df    
+  })
+  
+  
   ## set map colors
   map_dat <- reactive({
     
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
-    inc_df <- inc_df()
+    map_inc_df <- map_inc_df()
     
     ## take US, MA, and counties out of map_dat
-    map_dat <- inc_df %>%
+    map_dat <- map_inc_df %>%
       filter(!is.na(Municipal))
     
     ## assign colors to each entry in the data frame
@@ -115,9 +138,9 @@ shinyServer(function(input, output, session) {
     
     na_munis <- setdiff(MA_municipals_map, map_dat$Region)
     na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
-                             Region = na_munis, Five_Year_Range = input$map_year, 
-                             Median_Household_Income = NA, Margin_Error_Median = NA,
-                             color=length(map_colors), opacity = 0.7)
+                        Region = na_munis, Five_Year_Range = input$map_year, 
+                        Median_Household_Income = NA, Margin_Error_Median = NA,
+                        color=length(map_colors), opacity = 0.7)
     
     
     # combine data subset with missing counties data
@@ -237,7 +260,7 @@ shinyServer(function(input, output, session) {
           h4("Click on a town or city"))
       )))
     }
-#     browser()
+    #     browser()
     muni_name <- values$selectedFeature$NAMELSAD10
     muni_value <- prettyNum(values$selectedFeature["Median_Household_Income"], big.mark = ",")
     

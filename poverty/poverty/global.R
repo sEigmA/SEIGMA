@@ -209,7 +209,7 @@ about_main_text <- p(strong("The SEIGMA Poverty App"), "displays the poverty rat
       tags$li(p(strong("Summary"), "shows the source data in table format.")),
       tags$li(p(strong("Plot"), "compares municipal poverty rates to county, state, and national rates.")),
       tags$li(p(strong("Map"), "visually displays poverty rates by municipality.")),
-      tags$li(p(strong("More Info"), "describes poverty rates."))
+      tags$li(p(strong("More Info"), "describes poverty rates including, formulas and calculations."))
 )
 )
 

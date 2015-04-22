@@ -32,17 +32,18 @@ shinyUI(fluidPage(
       ## in map, allow for variable selection
       conditionalPanel(
        condition="input.tabs == 'map'",
+
+       selectInput("map_year", "Select Five Year Range",
+                   choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
+                                  "2008-2012" = "2008-2012")),
+       selectInput("map_gender", "Select Gender",
+                   choices = list("Female", "Male")),
        selectInput("var", "Select Variable of Interest",
                    choices = list("Never Married" = "Never_Married_Pct", 
                                   "Married" = "Married_Pct",
                                   "Separated" = "Separated_Pct",
                                   "Widowed" = "Widowed_Pct",
-                                  "Divorced" = "Divorced_Pct")),
-       selectInput("map_year", "Select Five Year Range",
-                   choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                  "2008-2012" = "2008-2012")),
-       selectInput("map_gender", "Select Gender",
-                   choices = list("Female", "Male"))
+                                  "Divorced" = "Divorced_Pct"))
               
       ),
       
@@ -61,17 +62,17 @@ shinyUI(fluidPage(
       ## in summary, allow for gender selection
       conditionalPanel(
        condition="input.tabs == 'summary'",
-       selectInput("sum_gender", "Select Gender",
-                   choices = list("Female" = "Female", "Male" = "Male"), multiple=TRUE),
+
        selectInput("sum_year", "Select Five Year Range",
                    choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                   "2008-2012" = "2008-2012")),
+       selectInput("sum_gender", "Select Gender",
+                   choices = list("Female" = "Female", "Male" = "Male"), multiple=TRUE),
        selectInput("sum_muni", "Select Municipality", 
                    choices = MA_municipals,
                    ## Multiple allows for multi-county selection
                    multiple=TRUE),
-       
-       
+      
        ## False at the end means it starts off unchecked
          checkboxInput("MA_mean", "Compare to MA Average", FALSE),
          checkboxInput("US_mean", "Compare to US Average", FALSE)
@@ -93,7 +94,7 @@ shinyUI(fluidPage(
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey", href="http://www.census.gov/acs/www/",
+      helpText(a("Data Source: American Community Survey - Table DP02", href="http://www.census.gov/acs/www/",
                  target="_blank")),
       
       ## GitHub link
@@ -120,7 +121,13 @@ shinyUI(fluidPage(
         
         ## summary tab
         tabPanel("Summary", 
-                 dataTableOutput("summary"), value="summary", 
+                 dataTableOutput("summary"),
+                 tags$br(),
+                 tags$ul(
+                   tags$li(p(strong("Population includes individuals 15 years and older.")))
+                 ),
+                 tags$br(),
+                 value="summary", 
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
         
         ## plot tab with google chart options
@@ -311,7 +318,7 @@ shinyUI(fluidPage(
                   tags$br(),
 
                 p(strong("Five-Year Estimate"),
-                  "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions."),
+                  "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions.  To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision."),
                 
                  
                  ## email feedback link

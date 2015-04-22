@@ -129,7 +129,11 @@ shinyUI(
                    
                    ## GitHub link
                    helpText(a("View our data and code on GitHub",
+<<<<<<< HEAD
+                              href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/demographics/demographics", target="_blank")),
+=======
                               href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/demographics", target="_blank")),
+>>>>>>> 00fce41fa277fb6393f88d0509c6c70fe8660c34
                    
                    helpText("If using Internet Explorer, application only visible in version 10.")
       ),
