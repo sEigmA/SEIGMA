@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  11/05/2014         ##
-## Date Modified: 02/24/2014 ER      ##
+## Date Modified: 04/22/2015 AR      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -19,85 +19,85 @@ shinyUI(fluidPage(
   ## Create sidebar
   sidebarLayout(
     sidebarPanel(width=4,
-      ## Conditional panel means if the condition is met show all text below otherwise Don't!
-      summary_side_text,
-      
-      plot_side_text,
-      
-      map_side_text,
-      
-      info_side_text,
-      
-      ## in map, allow for variable selection
-      
-      ## Choose range for year.
-      ## Initializing a single slider
-      conditionalPanel(
-        condition="input.tabs == 'map'",
-      selectInput("map_year", "Select Five Year Range",
-                  choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                 "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
-      ),
-      
-
-      ## in summary, allow for municipal selection
-      conditionalPanel(
-        condition="input.tabs == 'summary'",
-        ## Select input = List
-        selectInput("sum_muni", "Select Municipality", 
-                    choices = MA_municipals,
-                    ## Multiple allows for multi-county selection
-                    multiple=TRUE),
-        
-        selectInput("sum_year", "Select Five Year Range",
-                    choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                   "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
-        
-        ## In summary, show boxes that will compare to MA or US average
-        checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-        checkboxInput("US_mean", "Compare to US Average", FALSE)
-                
-        ),
-      
-      ## in plot, allow for municipal selection
-      conditionalPanel(
-        condition="input.tabs == 'plot'",
-        ## Select input = List
-        selectInput("plot_muni", "Select Municipality", 
-                    choices = MA_municipals),
-        
-        selectInput("year", "Select Five Year Range",
-                    choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                   "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
-                
-        ),
-      
-      
-      tags$hr(),
-      
-      ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
-      
-      ## email feedback link
-      ## To develop a link in HTML
-      helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
-      
-      ## data source citation
-      helpText(a("Data Source: American Community Survey- Table B19013", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1903&prodType=table",
-                 target="_blank")),
-      
-      ## GitHub link
-      helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/income", target="_blank")),
-      
-      helpText("If using Internet Explorer, application only visible in version 10.")
+                 ## Conditional panel means if the condition is met show all text below otherwise Don't!
+                 summary_side_text,
+                 
+                 plot_side_text,
+                 
+                 map_side_text,
+                 
+                 info_side_text,
+                 
+                 ## in map, allow for variable selection
+                 
+                 ## Choose range for year.
+                 ## Initializing a single slider
+                 conditionalPanel(
+                   condition="input.tabs == 'map'",
+                   selectInput("map_year", "Select Five Year Range",
+                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
+                 ),
+                 
+                 
+                 ## in summary, allow for municipal selection
+                 conditionalPanel(
+                   condition="input.tabs == 'summary'",
+                   ## Select input = List
+                   selectInput("sum_muni", "Select Municipality", 
+                               choices = MA_municipals,
+                               ## Multiple allows for multi-county selection
+                               multiple=TRUE),
+                   
+                   selectInput("sum_year", "Select Five Year Range",
+                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
+                   
+                   ## In summary, show boxes that will compare to MA or US average
+                   checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+                   checkboxInput("US_mean", "Compare to US Average", FALSE)
+                   
+                 ),
+                 
+                 ## in plot, allow for municipal selection
+                 conditionalPanel(
+                   condition="input.tabs == 'plot'",
+                   ## Select input = List
+                   selectInput("plot_muni", "Select Municipality", 
+                               choices = MA_municipals),
+                   
+                   selectInput("plot_year", "Select Five Year Range",
+                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
+                   
+                 ),
+                 
+                 
+                 tags$hr(),
+                 
+                 ## author line
+                 helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
+                 
+                 ## email feedback link
+                 ## To develop a link in HTML
+                 helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
+                 
+                 ## data source citation
+                 helpText(a("Data Source: American Community Survey- Table B19013", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1903&prodType=table",
+                            target="_blank")),
+                 
+                 ## GitHub link
+                 helpText(a("View our data and code on GitHub", 
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/income", target="_blank")),
+                 
+                 helpText("If using Internet Explorer, application only visible in version 10.")
     ),
-
-######### End of Sidebar  #########
     
-######### Start of Main Panel #####
+    ######### End of Sidebar  #########
     
-bootstrapPage(mainPanel(
+    ######### Start of Main Panel #####
+    
+    bootstrapPage(mainPanel(
       ## put in logo for title
       a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/"),
       
@@ -172,7 +172,7 @@ bootstrapPage(mainPanel(
                    )
                  )),
                  ## add text about the variables
-#                  plot_main_text,
+                 #                  plot_main_text,
                  value="plot"),
         
         ## plot map
@@ -180,9 +180,9 @@ bootstrapPage(mainPanel(
                  
                  ## Add a little CSS to make the map background pure white
                  tags$head(tags$style("
-    #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
-    .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
-  ")),
+                                      #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
+                                      .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+                                      ")),
                  ## Map Creation
                  leafletMap("map", width="100%", height=500, 
                             options=list(center = c(42.15, -71.65), zoom=8, 
@@ -200,7 +200,7 @@ bootstrapPage(mainPanel(
                    ## within the map area, you can create an action button.  similar to initializing the legend but just putting a button instead.
                    absolutePanel(right = 400, top = 300, class = "floater",
                                  actionButton("action", "Generate Map")
-                 )),
+                   )),
                  
                  ## Legend
                  conditionalPanel(
@@ -208,7 +208,7 @@ bootstrapPage(mainPanel(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                      strong("Avg Annual Household Income"),
+                     strong("Avg Annual Household Income"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -228,7 +228,7 @@ bootstrapPage(mainPanel(
                      )
                    )),
                  
-#                plot_main_text,
+                 #                plot_main_text,
                  value="map"),
         
         tabPanel("More Info", 
@@ -243,18 +243,18 @@ bootstrapPage(mainPanel(
                    tags$br(),
                    tags$li(p(strong("Five- Year Estimates"),"-Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.")
                    )
-                   ),
+                 ),
                  #tags$br(),
-                # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),
+                 # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),
                  
                  
                  
-              
-                  
+                 
+                 
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
         id="tabs"   
-    ))
+                 ))
+      ))
   ))
-))

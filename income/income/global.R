@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  11/05/2014         ##
-## Date Modified: 02/24/2014 ER      ##
+## Date Modified: 04/22/2015 AR      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -51,13 +51,13 @@ for(i in 1:length(MA_map_muni$features)){
 idx_leftovers <- which(!MA_municipals_map %in% inc_data$Region)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
- MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
-  substr(leftover_munis[i], 1, nchar(leftover_munis[i])-5)
+  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
+    substr(leftover_munis[i], 1, nchar(leftover_munis[i])-5)
 }
 
 MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
- MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
+  MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 idx_leftovers2 <- which(!MA_municipals %in% inc_data$Region)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
@@ -105,8 +105,8 @@ colorRanges <- data.frame(
 
 ## Generate map button
 gen_map_button <- HTML('<style type="text/css">
-       .action-button {
-       -moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+                       .action-button {
+                       -moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
                        -webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
                        box-shadow:inset 0px 1px 0px 0px #54a3f7;
                        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
@@ -155,33 +155,33 @@ summary_side_text <- conditionalPanel(
   helpText(p(strong('Please select the five-year range for which you are interested in viewing median  annual household income data.'))),
   tags$br(),
   tags$ul(
-#       tags$li('View rates by: male or female (or both by leaving this selection blank)'),
-#       tags$br(),
-      tags$li('Select one or multiple municipalities.'),
-      tags$br(),
-      tags$li('To compare median data to the Massachusetts median or US median, select the corresponding box.'),
-      tags$br(),
-      tags$li(p(strong('Please note that all statistics are 5-year estimates.'))),
-      tags$br(),
-      tags$li("For more information about how 5- year medians are calculated, click on the 'More Info' tab.")
-            
+    #       tags$li('View rates by: male or female (or both by leaving this selection blank)'),
+    #       tags$br(),
+    tags$li('Select one or multiple municipalities.'),
+    tags$br(),
+    tags$li('To compare median data to the Massachusetts median or US median, select the corresponding box.'),
+    tags$br(),
+    tags$li(p(strong('Please note that all statistics are 5-year estimates.'))),
+    tags$br(),
+    tags$li("For more information about how 5- year medians are calculated, click on the 'More Info' tab.")
+    
   )
 )
-  
-  
-  ## Creates horizontal line
-  ##tags$hr()
+
+
+## Creates horizontal line
+##tags$hr()
 
 
 ## Same concept
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select the five- year range and municipality for which you are interested in viewing median annual household income.')),
-           tags$br(),
+  p(strong('Please select the five- year range and municipality for which you are interested in viewing median annual household income.')),
+  tags$br(),
   tags$ul(
     tags$li("For a five-year period, you can compare a municipalitiy's median household income to the country, state, and national median.")
-    ))
+  ))
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
@@ -190,24 +190,24 @@ map_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
     tags$li('Clicking on a municipality will display the median annual household income for the five-year range that you selected.')
-    ))
+  ))
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
- 
+
 
 
 about_main_text <- p(strong("The SEIGMA Median Household Income Status App"), "displays the five-year median incomes of households in Massachusetts by municipality.",
-    tags$br(),
-    p(strong("Click on different tabs to view the data in different formats.")),
-    tags$ul(
-      tags$li(p(strong("Summary"), "shows the source data in table format.")),
-      tags$li(p(strong("Plot"), "compares municipality's median household income to county, state, and national medians.")),
-      tags$li(p(strong("Map"), "visually displays median household income by municipality.")),
-      tags$li(p(strong("More Info"), "describes median household income, including, formulas and calculations."))
-  )
+                     tags$br(),
+                     p(strong("Click on different tabs to view the data in different formats.")),
+                     tags$ul(
+                       tags$li(p(strong("Summary"), "shows the source data in table format.")),
+                       tags$li(p(strong("Plot"), "compares municipality's median household income to county, state, and national medians.")),
+                       tags$li(p(strong("Map"), "visually displays median household income by municipality.")),
+                       tags$li(p(strong("More Info"), "describes median household income, including, formulas and calculations."))
+                     )
 )
 
 
@@ -216,6 +216,6 @@ plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
                     p(strong("Median Household income"),
-                    " - Average annual median household income over a five year period for each municipality."))
+                      " - Average annual median household income over a five year period for each municipality."))
 
 font_size <- 14
