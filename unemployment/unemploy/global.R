@@ -28,6 +28,9 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 ## -1 eliminates first column [rows,columns]
 unemp_data <- read.csv(file="unempdata.csv")[,-1]
 
+#drop extra MA years
+unemp_data <- unemp_data[unemp_data$Year >= 1990,]
+
 ## Find order of counties in geojson files
 ## Each county is a separate feature
 # MA_counties <- c()
@@ -63,12 +66,12 @@ MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
-                "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette <- c("black", "red", "orange", "yellow", "green",
+                "blue", "maroon", "deeppink")
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
-  min = 1989,
+  min = min(unemp_data$Year)-1,
   max = max(unemp_data$Year)+1
 )
 ylim <- list(
@@ -80,8 +83,8 @@ ylim <- list(
 #################################################################
 
 ## Colors for a single-year legend
-spaint.brush <- colorRampPalette(colors=c("white", "red3"))
-smap.colors <- c(spaint.brush(n=5), "#999999")
+spaint.brush <- colorRampPalette(colors=c("darkgreen", "white", "maroon"))
+smap.colors <- c(spaint.brush(n=7), "#999999")
 
 ## For a single year data, we have a series of rates (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
@@ -93,6 +96,7 @@ smin.val <- min(unemp_data$Unemployment.Rate.Avg, na.rm=TRUE)
 ## length.out will make that many cuts
 # scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
 scuts <- quantile(unemp_data$Unemployment.Rate.Avg, probs = seq(0, 1, length.out = length(smap.colors)), na.rm=TRUE)
+#scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
