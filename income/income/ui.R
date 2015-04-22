@@ -44,16 +44,16 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.tabs == 'summary'",
                    ## Select input = List
+                   selectInput("sum_year", "Select Five Year Range",
+                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
                    selectInput("sum_muni", "Select Municipality", 
                                choices = MA_municipals,
                                ## Multiple allows for multi-county selection
                                multiple=TRUE),
                    
-                   selectInput("sum_year", "Select Five Year Range",
-                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
                    
-                   ## In summary, show boxes that will compare to MA or US average
+                     ## In summary, show boxes that will compare to MA or US average
                    checkboxInput("MA_mean", "Compare to MA Average", FALSE),
                    checkboxInput("US_mean", "Compare to US Average", FALSE)
                    
@@ -63,13 +63,13 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.tabs == 'plot'",
                    ## Select input = List
-                   selectInput("plot_muni", "Select Municipality", 
-                               choices = MA_municipals),
-                   
                    selectInput("plot_year", "Select Five Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
+                   selectInput("plot_muni", "Select Municipality", 
+                               choices = MA_municipals)
                    
+                 
                  ),
                  
                  
@@ -206,9 +206,11 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.action != 0",
                    absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
+                     right = 30, top = 155, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Avg Annual Household Income"),
+                     strong("Avg Annual"),
+                     tags$br(),
+                     strong("Household Income"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
