@@ -12,7 +12,7 @@ shinyServer(function(input, output, session) {
   mar_df <- reactive({
     ## Filter the data by the chosen Five Year Range 
     mar_df <- mar_data %>%
-      filter(Five_Year_Range == input$year) %>%
+      filter(Five_Year_Range == input$sum_year) %>%
       select(1:4, Gender, Five_Year_Range, Population, Never_Married_Pct, Married_Pct,
              Separated_Pct, Widowed_Pct, Divorced_Pct) %>%
       arrange(Region, Gender)
@@ -212,7 +212,7 @@ shinyServer(function(input, output, session) {
       missing_munis <- setdiff(leftover_munis_map, marmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$year, Population = NA,
+                               Five_Year_Range = input$map_year, Population = NA,
                                Married_Pct = NA, color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       marmap_dat <- rbind.data.frame(marmap_dat, missing_df)
@@ -238,7 +238,7 @@ shinyServer(function(input, output, session) {
       missing_munis <- setdiff(leftover_munis_map, nevmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$year, Population = NA, Never_Married_Pct = NA,
+                               Five_Year_Range = input$map_year, Population = NA, Never_Married_Pct = NA,
                                color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       nevmap_dat <- rbind.data.frame(nevmap_dat, missing_df)
@@ -264,7 +264,7 @@ shinyServer(function(input, output, session) {
       missing_munis <- setdiff(leftover_munis_map, sepmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$year, Population = NA, Separated_Pct = NA, color=length(map_colors), opacity = 0)
+                               Five_Year_Range = input$map_year, Population = NA, Separated_Pct = NA, color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       sepmap_dat <- rbind.data.frame(sepmap_dat, missing_df)
       sepmap_dat$color <- map_colors[sepmap_dat$color]
@@ -288,7 +288,7 @@ shinyServer(function(input, output, session) {
       missing_munis <- setdiff(leftover_munis_map, widmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$year, Population = NA, Widowed_Pct = NA, 
+                               Five_Year_Range = input$map_year, Population = NA, Widowed_Pct = NA, 
                                color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       widmap_dat <- rbind.data.frame(widmap_dat, missing_df)
@@ -313,7 +313,7 @@ shinyServer(function(input, output, session) {
       missing_munis <- setdiff(leftover_munis_map, divmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$year, Population = NA, 
+                               Five_Year_Range = input$map_year, Population = NA, 
                                Divorced_Pct = NA, color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       divmap_dat <- rbind.data.frame(divmap_dat, missing_df)
@@ -463,7 +463,7 @@ shinyServer(function(input, output, session) {
     ## If clicked county has no crude rate, display a message
     if(is.null(values$selectedFeature[input$var])){
       return(as.character(tags$div(
-        tags$h5(input$gender, var_select, "% in ", muni_name, "is not available for this timespan"))))
+        tags$h5(input$map_gender, var_select, "% in ", muni_name, "is not available for this timespan"))))
     }
     
     ## For a single year when county is clicked, display a message
