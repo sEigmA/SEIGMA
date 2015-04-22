@@ -206,7 +206,7 @@ summary_side_text <- conditionalPanel(
       tags$br(),
       tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box.'),
       tags$br(),
-      tags$li(p(strong('Please note that all statistics are 5-year averages.')))
+      tags$li(p(strong('Please note that all statistics are 5-year estimates.')))
             
   )
   

@@ -79,7 +79,7 @@ shinyUI(fluidPage(
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1501&prodType=table",
+      helpText(a("Data Source: American Community Survey- Table DP02", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1501&prodType=table",
                  target="_blank")),
       
       ## GitHub link
@@ -244,9 +244,9 @@ bootstrapPage(mainPanel(
                  tags$br(),
                  tags$ul(
                   tags$li(p(strong("Educational Attainment Rates"),
-                 " - The number of people with each level of educational attainment for a specific region over a specific five-year period of time. Educational attainment data were collected from individuals 18 years and over. Respondents were classified according to highest level of school completed. When a municipaility is missing data, this indicates that data cannot be displayed because the number of people is too small.")), 
+                 " - The number of people with each level of educational attainment for a specific region over a specific five-year period of time. Educational attainment data were collected from individuals 18 years and over. Respondents were classified according to highest level of school completed. When a municipaility is missing data, this indicates that data cannot be displayed because the number of people is too small. All inidviduals represented were at least 25 years of age.")), 
                  tags$br(),
-                 tags$li(p(strong("Five-Year Estimates"), "-Survey information is collected everyday of the year and then aggregated over a specific time period,in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible for larger municipalities." ))),
+                 tags$li(p(strong("Five-Year Estimates"), "-Survey information is collected everyday of the year and then aggregated over a specific time period,in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible for larger municipalities.To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision." ))),
                  
                 
                  
