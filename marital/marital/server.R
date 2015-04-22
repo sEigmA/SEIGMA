@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  10/22/2014         ##
-## Date Modified: 02/25/2015  ER     ##
+## Date Modified: 04/22/2015  AR     ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -63,16 +63,28 @@ shinyServer(function(input, output, session) {
     return(mar_df)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
+  
+  mar_plot_df <- reactive({
+    ## Filter the data by the chosen Five Year Range 
+    mar_plot_df <- mar_data %>%
+      filter(Five_Year_Range == input$plot_year) %>%
+      select(1:4, Gender, Five_Year_Range, Population, Never_Married_Pct, Married_Pct,
+             Separated_Pct, Widowed_Pct, Divorced_Pct) %>%
+      arrange(Region, Gender)
+    ## Output reactive dataframe
+    mar_plot_df    
+  })
+  
   ## create the plot of the data
   ## for the Google charts plot
   output$plot_US <- reactive({
     ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    mar_plot_df <- mar_plot_df()
     
     ## make counties a vector based on input variable
     munis <- "United States"
     
-    plot_df <- mar_df %>%
+    plot_df <- mar_plot_df %>%
       filter(Region %in% munis)
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
@@ -92,15 +104,16 @@ shinyServer(function(input, output, session) {
       data=googleDataTable(g))
   })
   
+  
   ## create the plot of the MA data
   output$plot_MA <- reactive({
     ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    mar_plot_df <- mar_plot_df()
     
     ## make counties a vector based on input variable
     munis <- "MA"
     
-    plot_df <- mar_df %>%
+    plot_df <- mar_plot_df %>%
       filter(Region %in% munis)
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
@@ -123,14 +136,14 @@ shinyServer(function(input, output, session) {
   ## create the plot of the MA data
   output$plot_county <- reactive({
     ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    mar_plot_df <- mar_plot_df()
     
     ## find the county of the municipal
-    county <- mar_df$County[which(mar_df$Municipal==input$plot_muni)]
+    county <- mar_plot_df$County[which(mar_plot_df$Municipal==input$plot_muni)]
     ## make counties a vector based on input variable
-    munis <- mar_df$Region[match(county, mar_df$Region)]
+    munis <- mar_plot_df$Region[match(county, mar_plot_df$Region)]
     
-    plot_df <- mar_df %>%
+    plot_df <- mar_plot_df %>%
       filter(Region %in% munis)
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
@@ -154,12 +167,12 @@ shinyServer(function(input, output, session) {
   ## create the plot of the MA data
   output$plot_muni <- reactive({
     ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    mar_plot_df <- mar_plot_df()
     
     ## make counties a vector based on input variable
     munis <- input$plot_muni
     
-    plot_df <- mar_df %>%
+    plot_df <- mar_plot_df %>%
       filter(Region %in% munis)
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
@@ -180,6 +193,20 @@ shinyServer(function(input, output, session) {
         title = paste("Marital Status Statistics for", munis)))
   })
   
+  
+  
+  mar_map_df <- reactive({
+    ## Filter the data by the chosen Five Year Range 
+    mar_map_df <- mar_data %>%
+      filter(Five_Year_Range == input$map_year) %>%
+      select(1:4, Gender, Five_Year_Range, Population, Never_Married_Pct, Married_Pct,
+             Separated_Pct, Widowed_Pct, Divorced_Pct) %>%
+      arrange(Region, Gender)
+    ## Output reactive dataframe
+    mar_map_df    
+  })
+  
+  
   ## set map colors
   map_dat <- reactive({
     
@@ -187,17 +214,17 @@ shinyServer(function(input, output, session) {
     
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
-    mar_df <- mar_df()
+    mar_map_df <- mar_map_df()
     
     ## take US, MA, and counties out of map_dat
-    map_dat <- mar_df %>%
+    map_dat <- mar_map_df %>%
       filter(!is.na(Municipal), Gender == input$map_gender)
     
     ## for single year maps...
     if(input$var == "Married_Pct"){
       
       ## subset the data by the var selected
-#      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Married_Pct)
+      #      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Married_Pct)
       marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Married_Pct)
       
       ## assign colors to each entry in the data frame
@@ -400,7 +427,7 @@ shinyServer(function(input, output, session) {
     isolate({
       ## Duplicate MAmap to x
       x <- MA_map_muni
-
+      
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a county
@@ -468,7 +495,7 @@ shinyServer(function(input, output, session) {
     
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4(input$map_gender, var_select, "% in ", muni_name, " for ", input$year),
+      tags$h4(input$map_gender, var_select, "% in ", muni_name, " for ", input$map_year),
       tags$h5(muni_value, "%")
     ))
   })
