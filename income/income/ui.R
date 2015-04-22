@@ -66,7 +66,7 @@ shinyUI(fluidPage(
         selectInput("plot_muni", "Select Municipality", 
                     choices = MA_municipals),
         
-        selectInput("plot_year", "Select Five Year Range",
+        selectInput("year", "Select Five Year Range",
                     choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
                                    "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
                 
