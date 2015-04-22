@@ -81,7 +81,7 @@ ylim <- list(
 #################################################################
 
 ## Colors for a single-year legend
-spaint.brush <- colorRampPalette(colors=c("white", "royalblue4"))
+spaint.brush <- colorRampPalette(colors=c("white", "darkcyan"))
 smap.colors <- c(spaint.brush(n=5), "gray")
 
 ## For a single year data, we have a series of rates (split into quintiles).  Cuts are quintiles of the total data

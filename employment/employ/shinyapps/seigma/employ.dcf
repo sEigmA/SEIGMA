@@ -1,4 +1,8 @@
 name: employ
 account: seigma
+<<<<<<< HEAD
 bundleId: 160713
+=======
+bundleId: 168450
+>>>>>>> 00fce41fa277fb6393f88d0509c6c70fe8660c34
 url: http://seigma.shinyapps.io/employ

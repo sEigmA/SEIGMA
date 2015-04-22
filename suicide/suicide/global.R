@@ -27,11 +27,11 @@ for(i in 1:length(MAmap$features)){
 ## Load formatted suicide data
 ## -1 eliminates first column [rows,columns]
 suidata <- read.csv(file="SASuicidedata_Updated.csv")[,-1]
-# suidata$Age.Adjusted.Rate <- as.numeric(suidata$Age.Adjusted.Rate)
-# suidata$Age.Adjusted.Rate.Lower.Bound <- as.numeric(suidata$Age.Adjusted.Rate.Lower.Bound)
-# suidata$Age.Adjusted.Rate.Upper.Bound <- as.numeric(suidata$Age.Adjusted.Rate.Upper.Bound)
-# suidata$Age.Adjusted.Rate.Standard.Error <- as.numeric(suidata$Age.Adjusted.Rate.Standard.Error)
 
+#If there is no age adjusted rate, get rid of the bounds and standard errors
+suidata$Age.Adjusted.Rate.Lower.Bound[is.na(suidata$Age.Adjusted.Rate)] <- NA
+suidata$Age.Adjusted.Rate.Upper.Bound[is.na(suidata$Age.Adjusted.Rate)] <- NA
+suidata$Age.Adjusted.Rate.Standard.Error[is.na(suidata$Age.Adjusted.Rate)] <- NA
 
 ## Set graph colors (special for colorblind people)
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 

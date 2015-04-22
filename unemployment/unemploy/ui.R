@@ -60,8 +60,8 @@ shinyUI(fluidPage(
                     multiple=TRUE),
         ## In summary and plot, show boxes that will compare to MA or US average
         ## False at the end means it starts off unchecked
-        checkboxInput("sum_MA_mean", "Compare to MA Average", FALSE),
-        checkboxInput("sum_US_mean", "Compare to US Average", FALSE)
+        checkboxInput("sum_MA_mean", "Compare to MA Average", FALSE)
+        #checkboxInput("sum_US_mean", "Compare to US Average", FALSE)
       ),
       
       ## in map, allow for timespan selection
@@ -96,8 +96,8 @@ shinyUI(fluidPage(
         selectInput("plot_muni", "Select Municipality", 
                     choices = MA_municipals, multiple=TRUE),
         ## In plot, show boxes that will compare to MA or US average
-        checkboxInput("plot_MA_mean", "Compare to MA Average", FALSE),
-        checkboxInput("plot_US_mean", "Compare to US Average", FALSE)
+        checkboxInput("plot_MA_mean", "Compare to MA Average", FALSE)
+        #checkboxInput("plot_US_mean", "Compare to US Average", FALSE)
         ),
       
       tags$hr(),
