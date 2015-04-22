@@ -36,7 +36,7 @@ shinyUI(fluidPage(
         condition="input.tabs == 'summary' || input.tabs == 'plot' || input.tabs == 'map'",
       selectInput("year", "Select Five Year Range",
                   choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                 "2007-2011" = "2007-2011"))
+                                 "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
       ),
       
 
@@ -183,7 +183,7 @@ bootstrapPage(mainPanel(
                  ## Info Box 
                  conditionalPanel(
                    condition="input.action != 0",
-                   absolutePanel(left=450, top=450, width=300, class="floater",
+                   absolutePanel(left=100, top=450, width=300, class="floater",
                                  htmlOutput("details"))),
                  
                  conditionalPanel(

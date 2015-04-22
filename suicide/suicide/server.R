@@ -287,11 +287,17 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
   
   observe({
     evt <- input$map_geojson_click
+    input$map_year
     if(is.null(evt))
       return()
     
+    ## load in relevant map data
+    map_dat <- map_dat()
+    
     isolate({
       values$selectedFeature <- evt$properties
+      county <- evt$properties$County
+      values$selectedFeature$Age.Adjusted.Rate <- map_dat$Age.Adjusted.Rate[match(county, map_dat$County)]
     })
   })
   ##  This function is what creates info box
@@ -309,20 +315,22 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
       return(as.character(tags$div(
         tags$h5("Age Adjusted suicide rate in ", values$selectedFeature$County, "is not available for this timespan"))))
     }
+    else{
     ## For a single year when county is clicked, display a message
     if(input$map_timespan=="sing.yr"){
     return(as.character(tags$div(
-      tags$h4(input$map_year, "crude suicide rate in ", values$selectedFeature$County),
+      tags$h4(input$map_year, "Age Adjusted rate in ", values$selectedFeature$County),
       tags$h5(values$selectedFeature$Age.Adjusted.Rate, "per 100,000 in population")
     )))}
    ## For multiple years when county is clicked, display a message
     if(input$map_timespan=="mult.yrs"){
       return(as.character(tags$div(
-        tags$h4("Change in crude suicide rate from ", min(input$map_range), " to ", max(input$map_range), " in ", values$selectedFeature$County),
+        tags$h4("Change in Age Adjusted rate from ", min(input$map_range), " to ", max(input$map_range), " in ", values$selectedFeature$County),
         tags$h5("Increased by "[values$selectedFeature$Age.Adjusted.Rate>=0],
                 "Decreased by"[values$selectedFeature$Age.Adjusted.Rate<0],
                 abs(values$selectedFeature$Age.Adjusted.Rate), "per 100,000 in population")
       )))}
+    }
   })
   
 })

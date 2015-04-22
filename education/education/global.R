@@ -64,8 +64,8 @@ MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
-                "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette <- c("black", "red", "orange", "yellow", "darkgreen", 
+                "blue", "purple", "deeppink")
 
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
@@ -74,7 +74,7 @@ ylim <- list(
 )
 
 ## Colors for a single-year legend
-paint_brush <- colorRampPalette(colors=c("white", "red3"))
+paint_brush <- colorRampPalette(colors=c("white", "darkblue"))
 map_colors <- c(paint_brush(n=4), "#999999")
 
 ## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages

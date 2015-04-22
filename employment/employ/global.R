@@ -26,6 +26,9 @@ require(tidyr)
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 emp_data <- read.csv(file="empdata.csv")[,-1]
 
+#drop extra MA years
+emp_data <- emp_data[emp_data$Year >= 1990,]
+
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
 for(i in 1:length(MA_map_muni$features)){
@@ -58,8 +61,8 @@ MA_municipals <- sort(MA_municipals)
 
 
 ## Set graph colors (special for colorblind people)
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
-                "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette <- c("#000000", "red", "yellow", "green", "blue",
+                "turquoise", "violetred", "deeppink")
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
@@ -76,7 +79,7 @@ ylim <- list(
 ####################################################
 
 ## Colors for a single-year legend
-spaint.brush <- colorRampPalette(colors=c("white", "red3"))
+spaint.brush <- colorRampPalette(colors=c("white", "violetred"))
 smap.colors <- c(spaint.brush(n=5), "grey")
 
 ## For a single year data, we have a series of crude rate (split into quintiles).  Cuts are quintiles of the total data

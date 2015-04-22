@@ -44,18 +44,10 @@ shinyServer(function(input, output, session){
     if(is.null(input$sum_muni))
       munis <- MA_municipals
     
-    ## if the user checks the meanUS box or the meanMA box, add those to counties vector
-    if(input$sum_US_mean){
-      if(input$sum_MA_mean){
-        munis <- c("United States", "MA", munis) ## US and MA
-      } else{
-        munis <- c("United States", munis) ## US only
-      }
-    } else{
-      if(input$sum_MA_mean){
-        munis <- c("MA", munis) ## US only ## MA only
-      }
-    }
+    ## if the user checks the the meanMA box, add those to counties vector
+    if(input$sum_MA_mean){
+      munis <- c("MA", munis) ## MA only
+      } 
     
     ## create a dataframe consisting only of counties in vector
     sum_df <- df %>%
@@ -84,9 +76,7 @@ shinyServer(function(input, output, session){
     if(!is.null(input$plot_muni)){
       if(input$plot_MA_mean)
         munis <- c(munis, "MA")
-      if(input$plot_US_mean)
-        munis <- c(munis, "United States")
-    }
+      }
     
     ## if no counties have been selected, just show the MA average
     if(is.null(input$plot_muni)){

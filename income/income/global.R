@@ -19,7 +19,7 @@ require(shiny)
 require(googleCharts)
 require(leaflet)
 require(RJSONIO)
-require(rCharts)
+##require(rCharts)
 require(tidyr)
 
 ## load map data
@@ -75,7 +75,7 @@ ylim <- list(
 )
 
 ## Colors for a single-year legend
-paint_brush <- colorRampPalette(colors=c("white", "green"))
+paint_brush <- colorRampPalette(colors=c("white", "#009E73"))
 map_colors <- c(paint_brush(n=5), "#999999")
 
 ##Cuts are quintiles of the total data

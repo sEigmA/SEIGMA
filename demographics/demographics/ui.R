@@ -80,15 +80,15 @@ shinyUI(
                    conditionalPanel(
                      condition="input.tabs == 'map'&& input.map_radio =='Age'",
                      selectInput("var_age", "Select Variable of Interest",
-                                 choices = list("20-24"="20-24_Pct",
-                                                "25-34"="25-34_Pct",
-                                                "35-44"="35-44_Pct",
-                                                "45-54"="45-54_Pct",
-                                                "55-59"="55-59_Pct",
-                                                "60-64"="60-64_Pct",
-                                                "65-74"="65-74_Pct",
-                                                "75-84"="75-84_Pct", "over 85"="85+Pct"),
-                                 selected = "20-24_Pct")
+                                 choices = list("20-24"="Age_20-24_Pct",
+                                                "25-34"="Age_25-34_Pct",
+                                                "35-44"="Age_35-44_Pct",
+                                                "45-54"="Age_45-54_Pct",
+                                                "55-59"="Age_55-59_Pct",
+                                                "60-64"="Age_60-64_Pct",
+                                                "65-74"="Age_65-74_Pct",
+                                                "75-84"="Age_75-84_Pct", "over 85"="Age_85+Pct"),
+                                 selected = "Age_20-24_Pct")
                    ),
                    
                    conditionalPanel(
@@ -129,7 +129,11 @@ shinyUI(
                    
                    ## GitHub link
                    helpText(a("View our data and code on GitHub",
+<<<<<<< HEAD
                               href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/demographics/demographics", target="_blank")),
+=======
+                              href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/demographics", target="_blank")),
+>>>>>>> 00fce41fa277fb6393f88d0509c6c70fe8660c34
                    
                    helpText("If using Internet Explorer, application only visible in version 10.")
       ),
@@ -189,7 +193,7 @@ shinyUI(
                      conditionalPanel(
                        condition="input.map_radio =='Age' && input.action != 0",
                        absolutePanel(
-                         right = 30, top = 215, draggable=FALSE, style = "",
+                         right = 30, top = 150, draggable=FALSE, style = "",
                          class = "floater",
                          strong("Age Percentage"),
                          tags$table(
