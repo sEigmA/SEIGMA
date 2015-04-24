@@ -78,7 +78,7 @@ shinyServer(function(input, output, session) {
     plot_df <- labor_df[muni_index,] %>%
       select(Region, Percent_Pov)
     
-    colnames(plot_df) <- gsub("_", " ", colnames(plot_df))
+    colnames(plot_df) <- gsub("Percent_Pov", "Poverty Rate", colnames(plot_df))
     
     #     plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
     
