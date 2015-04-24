@@ -74,10 +74,10 @@ shinyServer(function(input, output, session) {
       }
     
     ## make column names more pretty (i.e. no periods)
-    colnames(df2)[7:11] <- c("Age Adjusted Rate (per 100,000)", 
-                            "Age Adjusted Rate Lower Bound", 
-                            "Age Adjusted Rate Upper Bound", 
-                            "Age Adjusted Rate Standard Error", "Crude Rate (per 100,000  )")
+    colnames(df2)[7:11] <- c("Age-adjusted suicide Rate (per 100,000)", 
+                            "Age-adjusted suicide Rate Lower Bound", 
+                            "Age-adjusted suicide Rate Upper Bound", 
+                            "Age-adjusted suicide Rate Standard Error", "Crude Rate (per 100,000  )")
     
     return(df2)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, these make them pretty
@@ -313,19 +313,19 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
     ## If clicked county has no crude rate, display a message
     if(is.null(values$selectedFeature$Age.Adjusted.Rate)){
       return(as.character(tags$div(
-        tags$h5("Age Adjusted suicide rate in ", values$selectedFeature$County, "is not available for this timespan"))))
+        tags$h5("Age-adjusted suicide rate in ", values$selectedFeature$County, "is not available for this timespan"))))
     }
     else{
     ## For a single year when county is clicked, display a message
     if(input$map_timespan=="sing.yr"){
     return(as.character(tags$div(
-      tags$h4(input$map_year, "Age Adjusted rate in ", values$selectedFeature$County),
+      tags$h4(input$map_year, "Age-adjusted suicide rate in ", values$selectedFeature$County),
       tags$h5(values$selectedFeature$Age.Adjusted.Rate, "per 100,000 in population")
     )))}
    ## For multiple years when county is clicked, display a message
     if(input$map_timespan=="mult.yrs"){
       return(as.character(tags$div(
-        tags$h4("Change in Age Adjusted rate from ", min(input$map_range), " to ", max(input$map_range), " in ", values$selectedFeature$County),
+        tags$h4("Change in Age-adjusted suicide rate from ", min(input$map_range), " to ", max(input$map_range), " in ", values$selectedFeature$County),
         tags$h5("Increased by "[values$selectedFeature$Age.Adjusted.Rate>=0],
                 "Decreased by"[values$selectedFeature$Age.Adjusted.Rate<0],
                 abs(values$selectedFeature$Age.Adjusted.Rate), "per 100,000 in population")

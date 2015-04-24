@@ -236,7 +236,7 @@ shinyUI(fluidPage(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Age-Adjusted Suicide Rate Over Time (per 100,000 population) for", align="center"),
+                 h4("Age-adjusted Suicide Rate Over Time (per 100,000 population) for", align="center"),
                  ## make line chart
                  googleLineChart("plot", width="100%", height="475px", options = list(
                    
@@ -258,7 +258,7 @@ shinyUI(fluidPage(
                        italic = FALSE)
                    ),
                    vAxis = list(
-                     title = "Age-Adjusted Suicide Rate (per 100,000 population)",
+                     title = "Age-adjusted Suicide Rate (per 100,000 population)",
                      viewWindow = ylim,
                      textStyle = list(
                        fontSize = 14),
@@ -337,7 +337,7 @@ shinyUI(fluidPage(
                      class = "floater",
                      strong("Single Year"),
                      tags$br(),
-                     strong("Age Adjusted Suicide Rate"),
+                     strong("Age-adjusted Suicide Rate"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -404,21 +404,21 @@ shinyUI(fluidPage(
                  p(strong("Suicides"),
                    " - Number of suicides for a region during a specified year.Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
                  tags$br(),
-                 p(strong("Age Adjusted Rate"), 
-                   " - Age Adjusted rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
+                 p(strong("Age-adjusted Suicide Rate"), 
+                   " - Age-adjusted suicide rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),
                  tags$br(),
-                 p(strong("Age Adjusted Rate = Count / Population * 100,000"), align="center"),
+                 p(strong("Age-adjusted Suicide Rate = Count / Population * 100,000"), align="center"),
                  tags$br(),
-                 p(strong("Age Adjusted Rate Lower Bound"),
+                 p(strong("Age-adjusted Suicide Rate Lower Bound"),
                    " - 95% confidence interval lower bound based upon the Age-Adjusted Rate Standard Error (see below)."),
                  tags$br(),
-                 p(strong("Age Adjusted Rate Upper Bound"),
-                   " - 95% confidence interval upper bound based upon the Age-Adjusted Rate Standard Error (see below)."),
+                 p(strong("Age-adjusted Suicide Rate Upper Bound"),
+                   " - 95% confidence interval upper bound based upon the Age-adjusted Rate Standard Error (see below)."),
                  tags$br(),
-                 p(strong("Age Adjusted Rate Standard Error"),
-                   " - The relative standard error for Age-Adjusted Rate. The number of suicides represents the complete counts for each region and are not suject to sampling error.  However, they are sucbject to non-sampling errors. This is calculated by:"),
+                 p(strong("Age-adjusted Rate Standard Error"),
+                   " - The relative standard error for Age-adjusted Rate. The number of suicides represents the complete counts for each region and are not suject to sampling error.  However, they are sucbject to non-sampling errors. This is calculated by:"),
                  tags$br(),
-                 p(strong("Age Adjusted Rate Standard Error = 100 / sqrt(Suicides)."), align="center"),
+                 p(strong("Age-adjusted Suicide Rate Standard Error = 100 / sqrt(Suicides)."), align="center"),
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
