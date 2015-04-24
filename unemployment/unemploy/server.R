@@ -273,7 +273,7 @@ shinyServer(function(input, output, session){
     if(input$map_timespan=="mult.yrs"){
       
       return(as.character(tags$div(
-        tags$h4("Average Monthly Employment for", muni_name, " for ", input$map_range[1], "to",input$map_range[2]),
+        tags$h4("Annual Average Unemployment Rate for", muni_name, " for ", input$map_range[1], "to",input$map_range[2]),
         tags$h5(muni_value, "%")
       )))
     }
