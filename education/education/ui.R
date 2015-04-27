@@ -157,7 +157,7 @@ bootstrapPage(mainPanel(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                    strong("High School Attainment"),
+                    strong("High School Attainment or Greater"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -184,7 +184,7 @@ bootstrapPage(mainPanel(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Bachelor's Attainment"),
+                     strong("Bachelor's Attainment or Greater"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -211,7 +211,7 @@ bootstrapPage(mainPanel(
                    absolutePanel(
                      right = 30, top = 215, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Graduate Degree Attainment"),
+                     strong("Graduate Degree Attainment or Greater"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(

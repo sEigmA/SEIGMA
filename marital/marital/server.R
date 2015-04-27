@@ -97,7 +97,7 @@ shinyServer(function(input, output, session) {
                value.var = "Population_Pct")
     
     g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
+    g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
@@ -126,7 +126,7 @@ shinyServer(function(input, output, session) {
                value.var = "Population_Pct")
     
     g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
+    g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
@@ -156,7 +156,7 @@ shinyServer(function(input, output, session) {
                value.var = "Population_Pct")
     
     g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
+    g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
@@ -185,7 +185,7 @@ shinyServer(function(input, output, session) {
                value.var = "Population_Pct")
     
     g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "", g$Marital_Status)
+    g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(

@@ -94,9 +94,9 @@ shinyServer(function(input, output, session) {
     g <- dcast(plot_df, Education_Attainment ~ Region, 
                value.var = "Population_Pct")
     
-    g$Education_Attainment <- c("High School Graduate or Greater",
-                                "Bachelor's Degree or Greater",
-                                "Graduate or Professional Degree")
+    g$Education_Attainment <- c("% with High School Graduate or Greater",
+                                "% with Bachelor's Degree or Greater",
+                                "% with Graduate or Professional Degree")
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(
