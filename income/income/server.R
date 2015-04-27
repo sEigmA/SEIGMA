@@ -13,7 +13,7 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range 
     inc_df <- inc_data %>%
       filter(Five_Year_Range == input$sum_year) %>%
-      select(1:4, Five_Year_Range, Median_Household_Income, Margin_Error_Median)
+      select(1:4, Five_Year_Range, Median_Annual_Household_Income, Margin_Error_Median)
     
     ## Output reactive dataframe
     inc_df    
@@ -64,7 +64,7 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range 
     plot_inc_df <- inc_data %>%
       filter(Five_Year_Range == input$plot_year) %>%
-      select(1:4, Five_Year_Range, Median_Household_Income, Margin_Error_Median)
+      select(1:4, Five_Year_Range, Median_Annual_Household_Income, Margin_Error_Median)
     
     ## Output reactive dataframe
     plot_inc_df    
@@ -87,7 +87,7 @@ shinyServer(function(input, output, session) {
     }
     #     browser()
     plot_df <- plot_inc_df[muni_index,] %>%
-      select(Region, Median_Household_Income)
+      select(Region, Median_Annual_Household_Income)
     
     colnames(plot_df) <- gsub("_", " ", colnames(plot_df))
     
@@ -104,7 +104,7 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range 
     map_inc_df <- inc_data %>%
       filter(Five_Year_Range == input$map_year) %>%
-      select(1:4, Five_Year_Range, Median_Household_Income, Margin_Error_Median)
+      select(1:4, Five_Year_Range, Median_Annual_Household_Income, Margin_Error_Median)
     
     ## Output reactive dataframe
     map_inc_df    
@@ -123,7 +123,7 @@ shinyServer(function(input, output, session) {
       filter(!is.na(Municipal))
     
     ## assign colors to each entry in the data frame
-    color <- as.integer(cut2(map_dat[,"Median_Household_Income"],cuts=cuts))
+    color <- as.integer(cut2(map_dat[,"Median_Annual_Household_Income"],cuts=cuts))
     map_dat <- cbind.data.frame(map_dat, color)
     map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors), 
                             map_dat$color)
@@ -133,13 +133,13 @@ shinyServer(function(input, output, session) {
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                              Region = missing_munis, Five_Year_Range = input$map_year, 
-                             Median_Household_Income = NA, Margin_Error_Median = NA,
+                             Median_Annual_Household_Income = NA, Margin_Error_Median = NA,
                              color=length(map_colors), opacity = 0)
     
     na_munis <- setdiff(MA_municipals_map, map_dat$Region)
     na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
                         Region = na_munis, Five_Year_Range = input$map_year, 
-                        Median_Household_Income = NA, Margin_Error_Median = NA,
+                        Median_Annual_Household_Income = NA, Margin_Error_Median = NA,
                         color=length(map_colors), opacity = 0.7)
     
     
@@ -210,8 +210,8 @@ shinyServer(function(input, output, session) {
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a county
-        x$features[[i]]$properties["Median_Household_Income"] <- 
-          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Median_Household_Income"]
+        x$features[[i]]$properties["Median_Annual_Household_Income"] <- 
+          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Median_Annual_Household_Income"]
         ## Style properties
         x$features[[i]]$properties$style <- list(
           fill=TRUE, 
@@ -247,7 +247,7 @@ shinyServer(function(input, output, session) {
     isolate({
       values$selectedFeature <- evt$properties
       region <- evt$properties$NAMELSAD10
-      values$selectedFeature["Median_Household_Income"] <- map_dat[match(region, map_dat$Region), "Median_Household_Income"]
+      values$selectedFeature["Median_Annual_Household_Income"] <- map_dat[match(region, map_dat$Region), "Median_Annual_Household_Income"]
     })
   })
   ##  This function is what creates info box
@@ -262,16 +262,16 @@ shinyServer(function(input, output, session) {
     }
     #     browser()
     muni_name <- values$selectedFeature$NAMELSAD10
-    muni_value <- prettyNum(values$selectedFeature["Median_Household_Income"], big.mark = ",")
+    muni_value <- prettyNum(values$selectedFeature["Median_Annual_Household_Income"], big.mark = ",")
     
     ## If clicked county has no crude rate, display a message
     if(muni_value == "NULL"){
       return(as.character(tags$div(
-        tags$h5("Median Household Income in ", muni_name, "is not available for this timespan"))))
+        tags$h5("Median Annual Household Income in ", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4("Median Household Income in ", muni_name, " for ", input$map_year),
+      tags$h4("Median Annual Household Income in ", muni_name, " for ", input$map_year),
       tags$h5("$",muni_value)
     ))
   })

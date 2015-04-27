@@ -71,7 +71,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
   min = 0,
-  max = max(inc_data$Median_Household_Income)
+  max = max(inc_data$Median_Annual_Household_Income)
 )
 
 ## Colors for a single-year legend
@@ -81,7 +81,7 @@ map_colors <- c(paint_brush(n=5), "#999999")
 ##Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-max_val <- max(inc_data$Median_Household_Income)
+max_val <- max(inc_data$Median_Annual_Household_Income)
 min_val <- 0
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
@@ -180,7 +180,7 @@ plot_side_text <- conditionalPanel(
   p(strong('Please select the five- year range and municipality for which you are interested in viewing median annual household income.')),
   tags$br(),
   tags$ul(
-    tags$li("For a five-year period, you can compare a municipalitiy's median household income to the country, state, and national median.")
+    tags$li("For a five-year period, you can compare a municipalitiy's median annual household income to the country, state, and national median.")
   ))
 
 map_side_text <- conditionalPanel(
@@ -199,14 +199,14 @@ info_side_text <- conditionalPanel(
 
 
 
-about_main_text <- p(strong("The SEIGMA Median Household Income Status App"), "displays the five-year median incomes of households in Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Median Annual Household Income Status App"), "displays the five-year median incomes of households in Massachusetts by municipality.",
                      tags$br(),
                      p(strong("Click on different tabs to view the data in different formats.")),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the source data in table format.")),
-                       tags$li(p(strong("Plot"), "compares municipality's median household income to county, state, and national medians.")),
-                       tags$li(p(strong("Map"), "visually displays median household income by municipality.")),
-                       tags$li(p(strong("More Info"), "describes median household income, including, formulas and calculations."))
+                       tags$li(p(strong("Plot"), "compares municipality's median annual household income to county, state, and national medians.")),
+                       tags$li(p(strong("Map"), "visually displays median annual household income by municipality.")),
+                       tags$li(p(strong("More Info"), "describes median annual household income, including, formulas and calculations."))
                      )
 )
 
@@ -215,7 +215,7 @@ about_main_text <- p(strong("The SEIGMA Median Household Income Status App"), "d
 plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
-                    p(strong("Median Household income"),
-                      " - Average annual median household income over a five year period for each municipality."))
+                    p(strong("Median Annual Household income"),
+                      " - Average median annual household income over a five year period for each municipality."))
 
 font_size <- 14

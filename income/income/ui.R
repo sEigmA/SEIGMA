@@ -115,7 +115,7 @@ shinyUI(fluidPage(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Median Household Income (Inflation-Adjusted Dollars) by Region Over Selected Five Year Period", align="center"),
+                 h4("Median Annual Household Income (Inflation-Adjusted Dollars) by Region Over Selected Five Year Period", align="center"),
                  ## make a row to put two charts in
                  
                  googleColumnChart("plot", width="100%", height="475px", options = list(
@@ -134,7 +134,7 @@ shinyUI(fluidPage(
                        italic = FALSE)
                    ),
                    vAxis = list(
-                     title = "Median Household Income",
+                     title = "Median Annual Household Income",
                      viewWindow = ylim,
                      textStyle = list(
                        fontSize = font_size),
@@ -208,7 +208,7 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 155, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Avg Annual"),
+                     strong("Median Annual"),
                      tags$br(),
                      strong("Household Income"),
                      tags$table(
@@ -237,9 +237,9 @@ shinyUI(fluidPage(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Average Annual Household Income"), "-This includes the income of the household and all other individuals ages 15 and over. Average annual household income provides a clear trend to assess residents' household income overtime. Annual data for median household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
+                   tags$li(p(strong("Average Annual Household Income"), "-This includes the income of the household and all other individuals ages 15 and over. Average annual household income provides a clear trend to assess residents' household income overtime. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
                    tags$br(),
-                   tags$li(p(strong("Infaltion Adjusted Dollars"), "-An adjusted value of currency used to compare dollar values from one period to another. Due to inflation, the purchasing power of the dollar changes over time, so in order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values.")),
+                   tags$li(p(strong("Inflation Adjusted Dollars"), "-An adjusted value of currency used to compare dollar values from one period to another. Due to inflation, the purchasing power of the dollar changes over time, so in order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values.")),
                    tags$br(),
                    tags$li(p(strong("Median"),"-The median divides the distribution of average annual household income into two equal parts; half that fall below the median for average household income and half that fall above the average annual household income.")),
                    tags$br(),

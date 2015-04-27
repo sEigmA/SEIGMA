@@ -260,11 +260,11 @@ shinyServer(function(input, output, session) {
     ## If clicked county has no crude rate, display a message
     if(is.null(values$selectedFeature[input$var])){
       return(as.character(tags$div(
-        tags$h5(var_select, "% in ", muni_name, "is not available for this timespan"))))
+        tags$h5("% ",var_select, " in ", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4(var_select, "% in ", muni_name, " for ", input$map_year),
+      tags$h4("% ",var_select, " or higher in ", muni_name, " for ", input$map_year),
       tags$h5(muni_value, "%")
     ))
   })
