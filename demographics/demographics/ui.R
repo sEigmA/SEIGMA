@@ -46,7 +46,7 @@ shinyUI(
                      checkboxInput("US_mean", "Compare to US Average", FALSE)
                    ),
                    
-                                    
+                   
                    ## in plot, allow for catigorical variables,  municipal selection selection
                    conditionalPanel(
                      condition="input.tabs == 'plot'",
@@ -129,205 +129,203 @@ shinyUI(
                    
                    ## GitHub link
                    helpText(a("View our data and code on GitHub",
-<<<<<<< HEAD
-                              href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/demographics/demographics", target="_blank")),
-=======
-                              href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/demographics", target="_blank")),
->>>>>>> 00fce41fa277fb6393f88d0509c6c70fe8660c34
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/demographics/demographics", target="_blank")),
                    
-                   helpText("If using Internet Explorer, application only visible in version 10.")
-      ),
-      ######### End of Sidebar  #########
+                       
+    
+    helpText("If using Internet Explorer, application only visible in version 10.")
+  ),
+  ######### End of Sidebar  #########
+  
+  ######### Start of Main Panel #####
+  
+  bootstrapPage(
+    mainPanel(
+      ## put in logo for title
+      a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/"),
       
-      ######### Start of Main Panel #####
-      
-      bootstrapPage(
-        mainPanel(
-          ## put in logo for title
-          a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/"),
-          
-          ## create tabs
-          tabsetPanel(
-            tabPanel("About",
-                     ## strong=bold, p=paragraph, em=emboss/italicised or bold italicized,
-                     about_main_text, value="about"),
-            
-            ## summary tab
-            tabPanel("Summary",
-                     dataTableOutput("summary"), value="summary",
-                     tags$style(type="text/css", '#summary tfoot {display:none;}')),
-            
-            ## plot tab with google chart options
-            tabPanel("Plot",
-                     ## make chart title here (otherwise not centered)
-                     plot_options,
-                     ## add text about the variables
-                     #                  plot_main_text,
-                     value="plot"),
-            
-            ## plot map
-            tabPanel("Map",
-                     ## Add a little CSS to make the map background pure white
-                     tags$head(tags$style(
-                       "#showcase-code-position-toggle, #showcase-sxs-code { display: none; }
+      ## create tabs
+      tabsetPanel(
+        tabPanel("About",
+                 ## strong=bold, p=paragraph, em=emboss/italicised or bold italicized,
+                 about_main_text, value="about"),
+        
+        ## summary tab
+        tabPanel("Summary",
+                 dataTableOutput("summary"), value="summary",
+                 tags$style(type="text/css", '#summary tfoot {display:none;}')),
+        
+        ## plot tab with google chart options
+        tabPanel("Plot",
+                 ## make chart title here (otherwise not centered)
+                 plot_options,
+                 ## add text about the variables
+                 #                  plot_main_text,
+                 value="plot"),
+        
+        ## plot map
+        tabPanel("Map",
+                 ## Add a little CSS to make the map background pure white
+                 tags$head(tags$style(
+                   "#showcase-code-position-toggle, #showcase-sxs-code { display: none; }
 .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }"
-                     )),
-                     ## Map Creation
-                     leafletMap("map", width="100%", height=500,
-                                options=list(center = c(42.15, -71.65), zoom=8,
-                                             ##Bounds for the map for when zoomed in on mass
-                                             maxBounds = list(list(41, -73.5), list(43, -70)))),
-                     ## Info Box
-                     conditionalPanel(
-                       condition="input.action != 0",
-                       absolutePanel(left=100, top=450, width=300, class="floater", htmlOutput("details"))),
-                     
-                     conditionalPanel(
-                       condition="input.tabs == 'map' && input.action == 0",
-                       ## within the map area, you can create an action button.  similar to initializing the legend but just putting a button instead.
-                       absolutePanel(right = 400, top = 300, class = "floater",
-                                     actionButton("action", "Generate Map"))
-                     ),
-                     
-                     ## Age Legend
-                     conditionalPanel(
-                       condition="input.map_radio =='Age' && input.action != 0",
-                       absolutePanel(
-                         right = 30, top = 150, draggable=FALSE, style = "",
-                         class = "floater",
-                         strong("Age Percentage"),
-                         tags$table(
-                           mapply(function(from, to, color) {
-                             tags$tr(
-                               tags$td(tags$div(
-                                 style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                               )),
-                               tags$td(prettyNum(round(from, 2)), "% to",
-                                       prettyNum(round(to, 2)), "%", align = "right")
-                             )
-                           },
-                           agecolorRanges$from, agecolorRanges$to, map_colors[-length(map_colors)],
-                           SIMPLIFY=FALSE),
-                           tags$tr(
-                             tags$td(tags$div(
-                               style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                             )),
-                             tags$td("Data not available", align = "right")
-                           )
+                 )),
+                 ## Map Creation
+                 leafletMap("map", width="100%", height=500,
+                            options=list(center = c(42.15, -71.65), zoom=8,
+                                         ##Bounds for the map for when zoomed in on mass
+                                         maxBounds = list(list(41, -73.5), list(43, -70)))),
+                 ## Info Box
+                 conditionalPanel(
+                   condition="input.action != 0",
+                   absolutePanel(left=100, top=450, width=300, class="floater", htmlOutput("details"))),
+                 
+                 conditionalPanel(
+                   condition="input.tabs == 'map' && input.action == 0",
+                   ## within the map area, you can create an action button.  similar to initializing the legend but just putting a button instead.
+                   absolutePanel(right = 400, top = 300, class = "floater",
+                                 actionButton("action", "Generate Map"))
+                 ),
+                 
+                 ## Age Legend
+                 conditionalPanel(
+                   condition="input.map_radio =='Age' && input.action != 0",
+                   absolutePanel(
+                     right = 30, top = 150, draggable=FALSE, style = "",
+                     class = "floater",
+                     strong("Age Percentage"),
+                     tags$table(
+                       mapply(function(from, to, color) {
+                         tags$tr(
+                           tags$td(tags$div(
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                           )),
+                           tags$td(prettyNum(round(from, 2)), "% to",
+                                   prettyNum(round(to, 2)), "%", align = "right")
                          )
-                       )),
-                     ## Gender Legend
-                     conditionalPanel(
-                       condition="input.map_radio =='Gender' && input.action != 0",
-                       absolutePanel(
-                         right = 30, top = 215, draggable=FALSE, style = "",
-                         class = "floater",
-                         strong("Sex Percentage"),
-                         tags$table(
-                           mapply(function(from, to, color) {
-                             tags$tr(
-                               tags$td(tags$div(
-                                 style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                               )),
-                               tags$td(prettyNum(round(from, 2)), "% to",
-                                       prettyNum(round(to, 2)), "%", align = "right")
-                             )
-                           },
-                           gencolorRanges$from, gencolorRanges$to, map_colors[-length(map_colors)],
-                           SIMPLIFY=FALSE),
-                           tags$tr(
-                             tags$td(tags$div(
-                               style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                             )),
-                             tags$td("Data not available", align = "right")
-                           )
+                       },
+                       agecolorRanges$from, agecolorRanges$to, map_colors[-length(map_colors)],
+                       SIMPLIFY=FALSE),
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                         )),
+                         tags$td("Data not available", align = "right")
+                       )
+                     )
+                   )),
+                 ## Gender Legend
+                 conditionalPanel(
+                   condition="input.map_radio =='Gender' && input.action != 0",
+                   absolutePanel(
+                     right = 30, top = 215, draggable=FALSE, style = "",
+                     class = "floater",
+                     strong("Sex Percentage"),
+                     tags$table(
+                       mapply(function(from, to, color) {
+                         tags$tr(
+                           tags$td(tags$div(
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                           )),
+                           tags$td(prettyNum(round(from, 2)), "% to",
+                                   prettyNum(round(to, 2)), "%", align = "right")
                          )
-                       )),
-                     ## Race Legend
-                     conditionalPanel(
-                       condition="input.map_radio =='Race' && input.action != 0",
-                       absolutePanel(
-                         right = 30, top = 215, draggable=FALSE, style = "",
-                         class = "floater",
-                         strong("Race Percentage"),
-                         tags$table(
-                           mapply(function(from, to, color) {
-                             tags$tr(
-                               tags$td(tags$div(
-                                 style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                               )),
-                               tags$td(prettyNum(round(from, 2)), "% to",
-                                       prettyNum(round(to, 2)), "%", align = "right")
-                             )
-                           },
-                           racecolorRanges$from, racecolorRanges$to, map_colors[-length(map_colors)],
-                           SIMPLIFY=FALSE),
-                           tags$tr(
-                             tags$td(tags$div(
-                               style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                             )),
-                             tags$td("Data not available", align = "right")
-                           )
+                       },
+                       gencolorRanges$from, gencolorRanges$to, map_colors[-length(map_colors)],
+                       SIMPLIFY=FALSE),
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                         )),
+                         tags$td("Data not available", align = "right")
+                       )
+                     )
+                   )),
+                 ## Race Legend
+                 conditionalPanel(
+                   condition="input.map_radio =='Race' && input.action != 0",
+                   absolutePanel(
+                     right = 30, top = 215, draggable=FALSE, style = "",
+                     class = "floater",
+                     strong("Race Percentage"),
+                     tags$table(
+                       mapply(function(from, to, color) {
+                         tags$tr(
+                           tags$td(tags$div(
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                           )),
+                           tags$td(prettyNum(round(from, 2)), "% to",
+                                   prettyNum(round(to, 2)), "%", align = "right")
                          )
-                       )),
-                     ## Ethnicity Legend
-                     conditionalPanel(
-                       condition="input.map_radio =='Ethnicity' && input.action != 0",
-                       absolutePanel(
-                         right = 30, top = 215, draggable=FALSE, style = "",
-                         class = "floater",
-                         strong("Ethnicity Percentage"),
-                         tags$table(
-                           mapply(function(from, to, color) {
-                             tags$tr(
-                               tags$td(tags$div(
-                                 style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                               )),
-                               tags$td(prettyNum(round(from, 2)), "% to",
-                                       prettyNum(round(to, 2)), "%", align = "right")
-                             )
-                           },
-                           racecolorRanges$from, racecolorRanges$to, map_colors[-length(map_colors)],
-                           SIMPLIFY=FALSE),
-                           tags$tr(
-                             tags$td(tags$div(
-                               style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                             )),
-                             tags$td("Data not available", align = "right")
-                           )
+                       },
+                       racecolorRanges$from, racecolorRanges$to, map_colors[-length(map_colors)],
+                       SIMPLIFY=FALSE),
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                         )),
+                         tags$td("Data not available", align = "right")
+                       )
+                     )
+                   )),
+                 ## Ethnicity Legend
+                 conditionalPanel(
+                   condition="input.map_radio =='Ethnicity' && input.action != 0",
+                   absolutePanel(
+                     right = 30, top = 215, draggable=FALSE, style = "",
+                     class = "floater",
+                     strong("Ethnicity Percentage"),
+                     tags$table(
+                       mapply(function(from, to, color) {
+                         tags$tr(
+                           tags$td(tags$div(
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                           )),
+                           tags$td(prettyNum(round(from, 2)), "% to",
+                                   prettyNum(round(to, 2)), "%", align = "right")
                          )
-                       )),
-                     value="map"
-            ),
-            
-            
-            tabPanel("More Info",
-                     p(strong("Variable Summary:")),
-                     
-                     p(strong("Race"),
-                       " - The number of people within each race, for a region over a specified five year range.  Races were listed as White, Black or African American, Asian, American Indian or Alaska Native, Native Hawaiian or Other Pacific Islander, or some other race."),
-                     tags$br(),
-                     p(strong("Ethnicity"),
-                       " - The number of people within each ethnicity, for a region over a specified five year range.  Ethnicities were listed as hispanic or not hispanic."),
-                     tags$br(),
-                     p(strong("Gender"),
-                       " - The number of people within each gender, for a region over a specified five year range."),
-                     tags$br(),
-                     p(strong("Gender"),
-                       " - The number of people within each age group, for a region over a specified five year range. Age groups were specified as 20-24, 25- 34, 35- 44, 45- 54, 55-59, 60- 54, 65- 74, 75- 84, and 85+."),
-                     tags$br(),
-                     p(strong("Five-Year Estimate"),
-                       "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions."),
-                     
-                     
-                     ## email feedback link
-                     h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
-                     value="info"
-            ),
-            id="tabs"
-          ) #tabsetPanel
-        ) #mainpanel
-      ) #bootstrapPage
-    )
-  )
+                       },
+                       racecolorRanges$from, racecolorRanges$to, map_colors[-length(map_colors)],
+                       SIMPLIFY=FALSE),
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                         )),
+                         tags$td("Data not available", align = "right")
+                       )
+                     )
+                   )),
+                 value="map"
+        ),
+        
+        
+        tabPanel("More Info",
+                 p(strong("Variable Summary:")),
+                 
+                 p(strong("Race"),
+                   " - The number of people within each race, for a region over a specified five year range.  Races were listed as White, Black or African American, Asian, American Indian or Alaska Native, Native Hawaiian or Other Pacific Islander, or some other race."),
+                 tags$br(),
+                 p(strong("Ethnicity"),
+                   " - The number of people within each ethnicity, for a region over a specified five year range.  Ethnicities were listed as hispanic or not hispanic."),
+                 tags$br(),
+                 p(strong("Gender"),
+                   " - The number of people within each gender, for a region over a specified five year range."),
+                 tags$br(),
+                 p(strong("Gender"),
+                   " - The number of people within each age group, for a region over a specified five year range. Age groups were specified as 20-24, 25- 34, 35- 44, 45- 54, 55-59, 60- 54, 65- 74, 75- 84, and 85+."),
+                 tags$br(),
+                 p(strong("Five-Year Estimate"),
+                   "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions."),
+                 
+                 
+                 ## email feedback link
+                 h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
+                 value="info"
+        ),
+        id="tabs"
+      ) #tabsetPanel
+    ) #mainpanel
+  ) #bootstrapPage
+)
+)
 )
