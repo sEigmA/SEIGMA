@@ -152,18 +152,18 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in viewing median  annual household income data.'))),
+  helpText(p(strong('Please select the five-year range for which you are interested in viewing median annual household income data.'))),
   tags$br(),
   tags$ul(
     #       tags$li('View rates by: male or female (or both by leaving this selection blank)'),
     #       tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To compare median data to the Massachusetts median or US median, select the corresponding box.'),
+    tags$li('To compare median data to the Massachusetts or US median, select the corresponding box.'),
     tags$br(),
     tags$li(p(strong('Please note that all statistics are 5-year estimates.'))),
     tags$br(),
-    tags$li("For more information about how 5- year medians are calculated, click on the 'More Info' tab.")
+    tags$li("For more information about how 5- year estimates are calculated, click on the 'More Info' tab.")
     
   )
 )
@@ -199,11 +199,11 @@ info_side_text <- conditionalPanel(
 
 
 
-about_main_text <- p(strong("The SEIGMA Median Annual Household Income Status App"), "displays the five-year median incomes of households in Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Household Income App"), "displays median annual household income for municipalities in Massachusetts.",
                      tags$br(),
                      p(strong("Click on different tabs to view the data in different formats.")),
                      tags$ul(
-                       tags$li(p(strong("Summary"), "shows the source data in table format.")),
+                       tags$li(p(strong("Summary"), "shows the data in table format.")),
                        tags$li(p(strong("Plot"), "compares municipality's median annual household income to county, state, and national medians.")),
                        tags$li(p(strong("Map"), "visually displays median annual household income by municipality.")),
                        tags$li(p(strong("More Info"), "describes median annual household income, including, formulas and calculations."))
