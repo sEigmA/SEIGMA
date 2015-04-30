@@ -182,7 +182,9 @@ summary_side_text <- conditionalPanel(
       tags$br(),
       tags$li('For the five year ranges below, you can compare the demographic estimate in a municipality to national, state, and county estimate.'),
       tags$br(),
-      tags$li(p(strong('The estimate of age, gender, race, or ethinicity can be sorted in ascending and descending order by clicking the column or variable.')))
+      tags$li(p(strong('The estimate of age, gender, race, or ethinicity can be sorted in ascending and descending order by clicking the column or variable.'))),
+      tags$br(),
+      tags$li('Please note that all statistics are five-year estimates.')
             
   )
   

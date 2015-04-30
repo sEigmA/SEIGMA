@@ -153,8 +153,11 @@ summary_side_text <- conditionalPanel(
       tags$br(),
       tags$li('To compare the data to the Massachusetts or US estimate select the corresponding check box below.'),
       tags$br(),
-      tags$li('Civilian veteran status estimates can be sorted in ascending and descending order by clicking the column or variable.')
+      tags$li('Civilian veteran status estimates can be sorted in ascending and descending order by clicking the column or variable.'),
+      tags$br(),
+      tags$li('Please note all statistics are five-year estimates.')
   )
+  
     
    #   tags$li(p(strong('Please note that all statistics are 5-year averages')))
             

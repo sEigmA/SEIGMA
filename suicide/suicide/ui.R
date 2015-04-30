@@ -416,7 +416,7 @@ shinyUI(fluidPage(
                    " - 95% confidence interval upper bound based upon the Age-adjusted Rate Standard Error (see below)."),
                  tags$br(),
                  p(strong("Age-adjusted Rate Standard Error"),
-                   " - The relative standard error for Age-adjusted Rate. The number of suicides represents the complete counts for each region and are not suject to sampling error.  However, they are sucbject to non-sampling errors. This is calculated by:"),
+                   " - The relative standard error for Age-adjusted Rate. The number of suicides represents the complete counts for each region and are not suject to sampling error.  However, they are subject to non-sampling errors. This is calculated by:"),
                  tags$br(),
                  p(strong("Age-adjusted Suicide Rate Standard Error = 100 / sqrt(Suicides)."), align="center"),
                  

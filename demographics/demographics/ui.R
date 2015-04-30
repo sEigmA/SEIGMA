@@ -159,8 +159,11 @@ shinyUI(
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
                  plot_options,
+                 
                  ## add text about the variables
                  #                  plot_main_text,
+                 p(strong("Percentages"),
+                   " - Percentages do not add up to 100% as individuals under 20 years of age were not involved in the study."), 
                  value="plot"),
         
         ## plot map
@@ -303,7 +306,7 @@ shinyUI(
                  p(strong("Variable Summary:")),
                  
                  p(strong("Race"),
-                   " - The number of people within each race, for a region over a specified five year range.  Races were listed as White, Black or African American, Asian, American Indian or Alaska Native, Native Hawaiian or Other Pacific Islander, or some other race."),
+                   " - The number of people within each race, for a region over a specified five year range.  Races were listed as White, Black or African American, Asian, American Indian or Alaska Native, Native Hawaiian or Other Pacific Islander, or some other race. In this app we only measure people listed as White, Black, or Asian.  Other race groups such as American Indian or Alaska Native, Native Hawaiian or Other Pacific Islander were too small to be measured accurately within the population, and therefore are not represented."),
                  tags$br(),
                  p(strong("Ethnicity"),
                    " - The number of people within each ethnicity, for a region over a specified five year range.  Ethnicities were listed as hispanic or not hispanic."),
