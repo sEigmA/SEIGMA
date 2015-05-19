@@ -45,17 +45,17 @@ shinyServer(function(input, output, session) {
     ##select columns according input$radio
     sel_col_num<-c()
     if (input$sum_radio=="Age") {
-      sel_col_num<-c(11:28)
+      sel_col_num<-c(12:37)
     } else if (input$sum_radio=="Gender") {
-      sel_col_num<-c(7:10)
+      sel_col_num<-c(8:11)
     } else if (input$sum_radio=="Race") {
-      sel_col_num<-c(29:34)
-    } else {sel_col_num<-c(35:38)}
+      sel_col_num<-c(38:49)
+    } else {sel_col_num<-c(50:53)}
     
     ## create a dataframe consisting only of counties in vector
     Dem_df <- Dem_df %>%
       filter(Region %in% munis,Five_Year_Range == input$sum_year) %>%
-      select(4:6, sel_col_num)
+      select(4:7, sel_col_num)
     
     colnames(Dem_df) <- gsub("_", " ", colnames(Dem_df))
     colnames(Dem_df) <- gsub("Pct", "Percentage", colnames(Dem_df))
@@ -84,12 +84,12 @@ shinyServer(function(input, output, session) {
     
     sel_col_num1<-c()
     if (input$plot_radio=="Age") {
-      sel_col_num1<-c(11, 13,15,17,19,21,23,25,27)
+      sel_col_num1<-c(12,14,16,18,20,22,24,26,28,30,32,34,36)
     } else if (input$plot_radio=="Gender") {
-      sel_col_num1<-c(7,9)
+      sel_col_num1<-c(8,10)
     } else if (input$plot_radio=="Race") {
-      sel_col_num1<-c(29,31,33)
-    } else {sel_col_num1<-c(35,37)}
+      sel_col_num1<-c(38,40,42,44,46,48)
+    } else {sel_col_num1<-c(50,52)}
     
     ## create a dataframe consisting only of counties in vector
     munis_df <- Dem_df %>%
