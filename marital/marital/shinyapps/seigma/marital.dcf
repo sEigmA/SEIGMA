@@ -1,8 +1,4 @@
 name: marital
 account: seigma
-<<<<<<< HEAD
-bundleId: 168525
-=======
-bundleId: 169146
->>>>>>> 1b7ce5e52f4e8f8b7d7c1b65b7de01941964a342
+bundleId: 178688
 url: http://seigma.shinyapps.io/marital

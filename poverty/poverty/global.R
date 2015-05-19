@@ -153,8 +153,11 @@ summary_side_text <- conditionalPanel(
       tags$br(),
       tags$li('For the five year ranges below, you can compare the rate of poverty in a municipality to national, state, and county rates.'),
       tags$br(),
-      tags$li('Poverty rates can be sorted in ascending and descending order by clicking the column or variable.')
+      tags$li('Poverty rates can be sorted in ascending and descending order by clicking the column or variable.'),
+      tags$br(),
+      tags$li('please note that all statistics are five-year estimates.')
   )
+  
     
    #   tags$li(p(strong('Please note that all statistics are 5-year averages')))
             

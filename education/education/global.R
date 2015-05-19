@@ -160,7 +160,9 @@ summary_side_text <- conditionalPanel(
     tags$br(),
     tags$li('To compare educational attainment estimate to the Massachusetts or United States estimate, select the corresponding check box.'),
     tags$br(),
-    tags$li('Sort the educational attainment estimate in ascending and descending order by clicking the column or variable title.')
+    tags$li('Sort the educational attainment estimate in ascending and descending order by clicking the column or variable title.'),
+    tags$br(),
+    tags$li('Please note that all statistics are five-year estimates.')
 
   )
 )
@@ -191,7 +193,7 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variable of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Educational Status App"), "displays the five-year estimate of educational attainment for Massachusetts by municipality.",
+about_main_text <- p(strong("The SEIGMA Educational Status App"), "displays the five-year estimate of educational attainment for municipalities in Massachusetts.",
                      p(strong("Click on different tabs to see the data in different formats.")),
                      tags$br(),
                      tags$ul(
