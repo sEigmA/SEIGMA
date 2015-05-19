@@ -162,8 +162,8 @@ shinyUI(
                  
                  ## add text about the variables
                  #                  plot_main_text,
-                 p(strong("Percentages"),
-                   " - Percentages do not add up to 100% as individuals under 20 years of age were not involved in the study."), 
+                 #p(strong("Percentages"),
+                  # " - Percentages do not add up to 100% as individuals under 20 years of age were not involved in the study."), 
                  value="plot"),
         
         ## plot map

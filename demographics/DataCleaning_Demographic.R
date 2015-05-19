@@ -44,7 +44,7 @@ colnames(Dem_data3)[5:53] <- c("Five_Year_Range","Total_Population","Margin_Erro
                                "55_59_Pct", "Margin_Error_55_59_Pct","60_64_Pct", "Margin_Error_60_64_Pct",
                                "65_74_Pct", "Margin_Error_65_74_Pct","75_84_Pct", "Margin_Error_75_84_Pct",
                                "85+_Pct", "Margin_Error_85+_Pct","White_Pct","Margin_Error_White_Pct",
-                               "Black_Pct","Margin_Error_Black_Pct","American_Indian_and_ Alaska_Native_Pct","Margin_Error_American_Indian_and_ Alaska_Native_Pct",
+                               "Black_Pct","Margin_Error_Black_Pct","American_Indian_and_Alaska_Native_Pct","Margin_Error_American_Indian_and_Alaska_Native_Pct",
                                "Asian_Pct","Margin_Error_Asian_Pct","Hawaiian_and_Other_Pacific_Islander_Pct","Margin_Error_Hawaiian_and_Other_Pacific_Islander_Pct",
                                "Others_Pct","Margin_Error_Others_Pct","Hispanic_Pct","Margin_Error_Hispanic_Pct",
                                "Not_Hispanic_Pct", "Margin_Error_Not_Hispanic_Pct")
@@ -53,11 +53,11 @@ colnames(Dem_data3)[5:53] <- c("Five_Year_Range","Total_Population","Margin_Erro
 write.csv(Dem_data3, file="demographics/demodata.csv",row.names=FALSE)
 
 #Organizing Region
-Dem_data5 <- Dem_data4[!is.na(Dem_data4$County),]
+Dem_data5 <- Dem_data3[!is.na(Dem_data3$County),]
 Dem_data5<-Dem_data5[order(Dem_data5$Region),]
-idx_MA <- which(Dem_data4$Region == "MA")
-idx_US <- which(Dem_data4$Region == "United States")
-Dem_data6 <- rbind.data.frame(Dem_data4[idx_US,],Dem_data4[idx_MA,], Dem_data5)
+idx_MA <- which(Dem_data3$Region == "MA")
+idx_US <- which(Dem_data3$Region == "United States")
+Dem_data6 <- rbind.data.frame(Dem_data3[idx_US,],Dem_data3[idx_MA,], Dem_data5)
 
 
 write.csv(Dem_data6, file="demographics/demodata1.csv",row.names=FALSE)
