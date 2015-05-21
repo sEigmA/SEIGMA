@@ -70,13 +70,14 @@ MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
 cbbPalette <- c("cyan","darkviolet","deeppink", "blue","green","yellow","darkorange","red",
-                "darksalmon") 
+                "darksalmon","deepskyblue","lawngreen","magenta","brown") 
 
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
   min = 0,
   max = 110
 )
+
 
 ## Colors for a five-year legend "#00FF00" "white","#0072B2"#FF0000
 paint_brush <- colorRampPalette(colors=c("lightgreen","yellow", "red"))
@@ -261,7 +262,7 @@ plot_main_text <- p(strong("Variable Summary:"),
 
 font_size <- 14
 
-plot_options <- googleColumnChart("plot", width="100%", height="475px", options = list(
+plot_options1 <- googleColumnChart("Plot_age", width="100%", height="475px", options = list(
  ## set fonts
  fontName = "Source Sans Pro",
  fontSize = font_size,
@@ -298,7 +299,7 @@ plot_options <- googleColumnChart("plot", width="100%", height="475px", options 
  ),
  
  ## set colors
- colors = cbbPalette[c(1:9)],
+ colors = cbbPalette[c(1:13)],
  
  ## set point size
  pointSize = 3,
@@ -315,5 +316,55 @@ plot_options <- googleColumnChart("plot", width="100%", height="475px", options 
  isStacked= TRUE
 ))
 
-
+plot_options2 <- googleColumnChart("Plot_gender", width="100%", height="475px", options = list(
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = font_size,
+  title = "",
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "",
+    textStyle = list(
+      fontSize = font_size),
+    titleTextStyle = list(
+      fontSize = font_size+2,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    title = "% of Population",
+    viewWindow = ylim,
+    textStyle = list(
+      fontSize = font_size),
+    titleTextStyle = list(
+      fontSize = font_size+2,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    position = "in"),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 75,
+    height = "75%", width = "70%"
+  ),
+  
+  ## set colors
+  colors = cbbPalette[c(1:9)],
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = font_size
+    )
+  )
+  
+))
  

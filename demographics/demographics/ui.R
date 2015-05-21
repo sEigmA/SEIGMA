@@ -156,10 +156,15 @@ shinyUI(
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
         
         ## plot tab with google chart options
+       
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 plot_options,
-                 
+                 conditionalPanel(
+                   condition="input.plot_radio =='Age'",
+                   plot_options1),
+                 conditionalPanel(
+                   condition="input.plot_radio =='Gender'||input.plot_radio =='Race'||input.plot_radio =='Ethnicity'",
+                   plot_options2),                                
                  ## add text about the variables
                  #                  plot_main_text,
                  #p(strong("Percentages"),
@@ -221,7 +226,7 @@ shinyUI(
                  conditionalPanel(
                    condition="input.map_radio =='Gender' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "",
+                     right = 30, top = 150, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Sex Percentage"),
                      tags$table(
@@ -248,7 +253,7 @@ shinyUI(
                  conditionalPanel(
                    condition="input.map_radio =='Race' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "",
+                     right = 30, top = 150, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Race Percentage"),
                      tags$table(
@@ -275,7 +280,7 @@ shinyUI(
                  conditionalPanel(
                    condition="input.map_radio =='Ethnicity' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "",
+                     right = 30, top = 150, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Ethnicity Percentage"),
                      tags$table(

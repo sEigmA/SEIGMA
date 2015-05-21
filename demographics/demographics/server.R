@@ -64,7 +64,7 @@ shinyServer(function(input, output, session) {
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   ## create the plot of the data
   ## for the Google charts plot
-  output$plot <- reactive({
+  munis_df <- reactive({
     #     browser()
     ## make reactive dataframe into regular dataframe
     Dem_df <- Dem_df()%>%
@@ -98,12 +98,19 @@ shinyServer(function(input, output, session) {
       select(4, sel_col_num1)
     colnames(munis_df) <- gsub("_", " ", colnames(munis_df))
     colnames(munis_df) <- gsub("Pct", "", colnames(munis_df))
-
-    list(
-      data = googleDataTable(munis_df), options = list(title=paste(input$plot_radio, "as a Percentage of the Population by Region ", input$plot_muni,
+    return(munis_df)
+})
+    output$Plot_age<-reactive({list(
+      data = googleDataTable(munis_df()), options = list(title=paste(input$plot_radio, "as a Percentage of the Population by Region ", input$plot_muni,
                                                                    "over selected five years ", input$plot_year)))
     
   })
+output$Plot_gender<-reactive({list(
+  data = googleDataTable(munis_df()), options = list(title=paste(input$plot_radio, "as a Percentage of the Population by Region ", input$plot_muni,
+                                                                 "over selected five years ", input$plot_year)))
+  
+})
+
   ## set map colors
   map_dat <- reactive({
     ## make reactive dataframe into regular dataframe
