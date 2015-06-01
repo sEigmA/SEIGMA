@@ -1,8 +1,4 @@
 name: demographics
 account: seigma
-<<<<<<< HEAD
-bundleId: 177661
-=======
-bundleId: 178684
->>>>>>> 65873239401cda04ff53dd985eeca34e2a9c4856
-url: http://seigma.shinyapps.io/demographics
+bundleId: 190306
+url: https://seigma.shinyapps.io/demographics
