@@ -6,7 +6,5 @@
   ga('create', 'UA-63614048-2', 'auto');
   ga('send', 'pageview');
   
-  $(document).on('click', 'button', function() {
-    ga('send', 'event', 'button', 'Generate Map');
+  $(document).on('click', 'button', function() {ga('send', 'event', 'button', 'Generate Map');
   });
-    
