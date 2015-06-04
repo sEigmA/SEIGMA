@@ -9,6 +9,8 @@
 
 shinyUI(
   fluidPage(
+    ## embed the google analytics script in the app
+    tags$head(includeScript("google-analytics.js")),
     ## HTML to create generate map button
     gen_map_button,
     ## this starts the googleCharts engine
