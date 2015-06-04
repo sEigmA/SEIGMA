@@ -3,8 +3,8 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-63614048-5', 'auto');
+  ga('create', 'UA-63614048-6', 'auto');
   ga('send', 'pageview');
-  
+
   $(document).on('click', 'button', function() {ga('send', 'event', 'button', 'Generate Map');
   });

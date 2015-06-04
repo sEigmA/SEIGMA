@@ -188,15 +188,15 @@ shinyUI(fluidPage(
       
       ## email feedback link
       ## To develop a link in HTML
-      helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
+      helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank", onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
       
       ## data source citation
       helpText(a("Data Source: CDC Wonder", href="http://wonder.cdc.gov/wonder/help/cmf.html",
-                 target="_blank")),
+                 target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dataSource', 1)")),
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/suicide", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/suicide", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),

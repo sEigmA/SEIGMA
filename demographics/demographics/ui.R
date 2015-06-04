@@ -121,17 +121,17 @@ shinyUI(
                    
                    ## email feedback link
                    ## To develop a link in HTML
-                   helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
+                   helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
                    
                    ## data source citation
                    helpText(a("Data Source: American Community Survey: Age", href="http://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t",
-                              target="_blank")),
+                              target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dataAge', 1)")),
                    helpText(a("Data Source: American Community Survey: Race and Ethncity", href="http://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t",
-                              target="_blank")),
+                              target="_blank", onclick="ga('send', 'event', 'click', 'link', 'dataRace', 1)")),
                    
                    ## GitHub link
                    helpText(a("View our data and code on GitHub",
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/demographics/demographics", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/demographics/demographics", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
                    
                        
     

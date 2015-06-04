@@ -9,6 +9,8 @@
 #######################################
 
 shinyUI(fluidPage(
+  ## embed the google analytics script in the app
+  tags$head(includeScript("google-analytics.js")),
   ## HTML to create generate map button
   gen_map_button,
   ## this starts the googleCharts engine
@@ -72,19 +74,19 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
-      helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
+      helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
       
       ## data source citation
       helpText(a("Data Source: American Community Survey- Table DP02", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S2101&prodType=table",
-                 target="_blank")),
+                 target="_blank", onclick="ga('send', 'event', 'click', 'link', 'dataSource', 1)")),
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/va_status", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/va_status", target="_blank", onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
