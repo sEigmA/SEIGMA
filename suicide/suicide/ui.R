@@ -14,6 +14,8 @@ require(googleCharts)
 
 
 shinyUI(fluidPage(
+  ## embed the google analytics script in the app
+  tags$head(includeScript("google-analytics.js")),
   ## HTML to create generate map button
   HTML('<style type="text/css">
        .action-button {
@@ -182,7 +184,7 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Sophie E. O'Brien and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, Sophie E. O'Brien and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
@@ -333,7 +335,7 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_timespan == 'sing.yr' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
+                     right = 30, top = 150, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Single Year"),
                      tags$br(),
