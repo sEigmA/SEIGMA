@@ -22,6 +22,7 @@ colnames(unemp)[6:12] <- substring(colnames(unemp[6:12]), first=12)
 
 ## grab only columns needed
 unemp <- unemp[,-c(7, 12)]
+write.csv(unemp, file="unempdata1.csv")
 
 #Keep only Annual average for the year
 unemp_data <- unemp[which(unemp$Period=="Annual Average"),]
@@ -30,10 +31,7 @@ write.csv(unemp_data, file="unempdata2.csv")
 
 ## Replace N/A's with "NA" to remove the slash.
 unemp_data2 <- unemp_data
-unemp_data2$Region <- replace(unemp_data2$Region,unemp_data2$Region=="N/A", NA)
-unemp_data2$County <- replace(unemp_data2$County,unemp_data2$County=="N/A", NA)
-unemp_data2$State <- replace(unemp_data2$State,unemp_data2$State=="N/A", NA)
-unemp_data2$Municipal <- replace(unemp_data2$Municipal,unemp_data2$Municipal=="N/A", NA)
+unemp_data2[,1:4]<-apply(unemp_data2[,1:4],2, function(x) replace(x, x=="N/A", NA))
 
 unemp_data2$Region  <- ifelse(!is.na(unemp_data2$Region), "United States", "MA")
 unemp_data2$Region  <- ifelse(!is.na(unemp_data2$County), paste(unemp_data2$County, "County"), unemp_data2$Region)

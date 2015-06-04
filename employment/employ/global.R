@@ -26,8 +26,6 @@ require(tidyr)
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 emp_data <- read.csv(file="empdata.csv")[,-1]
 
-#drop extra MA years
-emp_data <- emp_data[emp_data$Year >= 1990,]
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
