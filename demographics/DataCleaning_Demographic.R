@@ -37,27 +37,38 @@ Dem_data2$Region  <- ifelse(!is.na(Dem_data2$Municipal),as.character(Dem_data2$M
 ##Rename the columns
 Dem_data3<-Dem_data2
 colnames(Dem_data3)[5:53] <- c("Five_Year_Range","Total_Population","Margin_Error_Total_Population","Male_Pct", "Margin_Error_Male","Female_Pct", "Margin_Error_Female",
-                               "under_5_Pct","Margin_Error_under_5_Pct","5_9_Pct", "Margin_Error_5_9_Pct",
-                               "10_14_Pct","Margin_Error_10_14_Pct","15_19_Pct", "Margin_Error_15_19_Pct",
-                               "20_24_Pct","Margin_Error_20_24_Pct","25_34_Pct", "Margin_Error_25_34_Pct",
-                               "35_44_Pct", "Margin_Error_35_44_Pct","45_54_Pct", "Margin_Error_45_54_Pct",
-                               "55_59_Pct", "Margin_Error_55_59_Pct","60_64_Pct", "Margin_Error_60_64_Pct",
-                               "65_74_Pct", "Margin_Error_65_74_Pct","75_84_Pct", "Margin_Error_75_84_Pct",
-                               "85+_Pct", "Margin_Error_85+_Pct","White_Pct","Margin_Error_White_Pct",
+                               "Age_under_5_Pct","Margin_Error_under_5_Pct","Age_5_9_Pct", "Margin_Error_5_9_Pct",
+                               "Age_10_14_Pct","Margin_Error_10_14_Pct","Age_15_19_Pct", "Margin_Error_15_19_Pct",
+                               "Age_20_24_Pct","Margin_Error_20_24_Pct","Age_25_34_Pct", "Margin_Error_25_34_Pct",
+                               "Age_35_44_Pct", "Margin_Error_35_44_Pct","Age_45_54_Pct", "Margin_Error_45_54_Pct",
+                               "Age_55_59_Pct", "Margin_Error_55_59_Pct","Age_60_64_Pct", "Margin_Error_60_64_Pct",
+                               "Age_65_74_Pct", "Margin_Error_65_74_Pct","Age_75_84_Pct", "Margin_Error_75_84_Pct",
+                               "Age_over_85_Pct", "Margin_Error_85+_Pct","White_Pct","Margin_Error_White_Pct",
                                "Black_Pct","Margin_Error_Black_Pct","American_Indian_and_Alaska_Native_Pct","Margin_Error_American_Indian_and_Alaska_Native_Pct",
                                "Asian_Pct","Margin_Error_Asian_Pct","Hawaiian_and_Other_Pacific_Islander_Pct","Margin_Error_Hawaiian_and_Other_Pacific_Islander_Pct",
                                "Others_Pct","Margin_Error_Others_Pct","Hispanic_Pct","Margin_Error_Hispanic_Pct",
                                "Not_Hispanic_Pct", "Margin_Error_Not_Hispanic_Pct")
-#exclude Indian, Hawaiian and others
 
-write.csv(Dem_data3, file="demographics/demodata.csv",row.names=FALSE)
+## save and reload to make factors into numeric
+write.csv(Dem_data3, file="demodata1.csv",row.names=FALSE)
+Dem_data4 <- read.csv(file="demodata1.csv")
+
+#Add 6 new variables for age "under_20_Pct, 20_34_Pct, 35_54_Pct, 55_64_Pct, 65_74_Pct, 75+_Pct"
+Dem_data4$Age_under_20_Pct_plot<-Dem_data4$Age_under_5_Pct + Dem_data4$Age_5_9_Pct + Dem_data4$Age_10_14_Pct + Dem_data4$Age_15_19_Pct
+Dem_data4$Age_20_34_Pct_plot<-Dem_data4$Age_20_24_Pct + Dem_data4$Age_25_34_Pct
+Dem_data4$Age_35_54_Pct_plot<-Dem_data4$Age_35_44_Pct + Dem_data4$Age_45_54_Pct
+Dem_data4$Age_55_64_Pct_plot<-Dem_data4$Age_55_59_Pct + Dem_data4$Age_60_64_Pct
+Dem_data4$Age_65_74_Pct_plot<-Dem_data4$Age_65_74_Pct
+Dem_data4$Age_over_75_Pct_plot<-Dem_data4$Age_75_84_Pct + Dem_data4$Age_over_85_Pct
+
+write.csv(Dem_data4, file="demographics/demodata.csv",row.names=FALSE)
 
 #Organizing Region
-Dem_data5 <- Dem_data3[!is.na(Dem_data3$County),]
+Dem_data5 <- Dem_data4[!is.na(Dem_data4$County),]
 Dem_data5<-Dem_data5[order(Dem_data5$Region),]
-idx_MA <- which(Dem_data3$Region == "MA")
-idx_US <- which(Dem_data3$Region == "United States")
-Dem_data6 <- rbind.data.frame(Dem_data3[idx_US,],Dem_data3[idx_MA,], Dem_data5)
+idx_MA <- which(Dem_data4$Region == "MA")
+idx_US <- which(Dem_data4$Region == "United States")
+Dem_data6 <- rbind.data.frame(Dem_data4[idx_US,],Dem_data4[idx_MA,], Dem_data5)
 
 
 write.csv(Dem_data6, file="demographics/demodata1.csv",row.names=FALSE)

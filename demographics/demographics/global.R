@@ -33,6 +33,8 @@ colnames(Dem_data)[12:37] <- c("Age_under_5_Pct","Margin_Error_under_5_Pct","Age
                                 "Age_55-59_Pct", "Margin_Error_55-59_Pct","Age_60-64_Pct", "Margin_Error_60-64_Pct",
                                 "Age_65-74_Pct", "Margin_Error_65-74_Pct","Age_75-84_Pct", "Margin_Error_75-84_Pct",
                                 "Age_85+Pct", "Margin_Error_85+_Pct")
+colnames(Dem_data)[54:59] <- c("Age_under_20_Pct_plot","Age_20-34_Pct_plot","Age_35-54_Pct_plot", "Age_55-64_Pct_plot",
+                               "Age_65-74_Pct_plot", "Age_75+Pct_plot")
 ## Find order of counties in geojson files
 ## Each county is a separate feature
 MA_counties <- c()
@@ -84,7 +86,7 @@ map_colors <- c(paint_brush(n=6), "#999999")
 
 
 ## Cuts based on Age range 
-agemax.val <- 40
+agemax.val <- 46
 agemin.val <- 0
 agecuts <- seq(agemin.val, agemax.val, length.out = length(map_colors))
 
