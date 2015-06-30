@@ -84,7 +84,7 @@ shinyServer(function(input, output, session) {
     
     sel_col_num1<-c()
     if (input$plot_radio=="Age") {
-      sel_col_num1<-c(12,14,16,18,20,22,24,26,28,30,32,34,36)
+      sel_col_num1<-c(54, 55, 56, 57, 58, 59)
     } else if (input$plot_radio=="Gender") {
       sel_col_num1<-c(8,10)
     } else if (input$plot_radio=="Race") {
@@ -98,6 +98,7 @@ shinyServer(function(input, output, session) {
       select(4, sel_col_num1)
     colnames(munis_df) <- gsub("_", " ", colnames(munis_df))
     colnames(munis_df) <- gsub("Pct", "", colnames(munis_df))
+    colnames(munis_df) <- gsub("plot", "", colnames(munis_df))
     return(munis_df)
 })
     output$Plot_age<-reactive({list(
@@ -245,8 +246,9 @@ output$Plot_gender<-reactive({list(
     
     muni_name <- values$selectedFeature$NAMELSAD10
     muni_value <- values$selectedFeature[col]
-    var_select <- gsub("_", " ", col)
-    var_select <- gsub("Pct", "", var_select)
+    var_select <- gsub("Pct", "", col)
+    var_select <- gsub("_", " ", var_select)
+    var_select <- gsub("plot", "", var_select)
     
     ## If clicked county has no crude rate, display a message
     if(is.null(values$selectedFeature[col])){
