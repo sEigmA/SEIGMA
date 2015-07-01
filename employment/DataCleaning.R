@@ -20,10 +20,10 @@ colnames(emp)[4:29] <- as.character(column_titles$Label[1:26])
 ## remove unnecessary characters from column names
 colnames(emp)[4:29] <- substring(colnames(emp[4:29]), first=12)
 write.csv(emp, file="empdata1.csv",row.names=FALSE)
-
+emp<-read.csv(file="empdata1.csv")
 
 ## grab only columns needed
-emp_data <- emp[,c(1:3,7:9, 13:25)]
+emp_data <- emp[,c(1:3,7:9,12,25)]
 
 #Keep only Average Monthly employment and each monthly employment of all industries for the year
 emp_data1 <- emp_data[which(emp_data[,4]=="Total, All Industries"),]
@@ -36,15 +36,35 @@ emp_data2[,1:2]<-apply(emp_data2[,1:2],2, function(x) replace(x, x=="N/A", NA))
 ##No NA in Municipal
 
 # grab only the columns that we want: 
-emp_data3 <- emp_data2[,-c(4,19)]
+emp_data3 <- emp_data2[,-4]
 
 
-colnames(emp_data3)[c(3:17)] <- c("Year" , "Average_Monthly_Employment","Average_Weekly_Wage","Employment_for_January",
-                                  "Employment_for_February", "Employment_for_March","Employment_for_April", 
-                                  "Employment_for_May","Employment_for_June","Employment_for_Junly", 
-                                  "Employment_for_August", "Employment_for_September","Employment_for_October",
-                                  "Employment_for_November","Employment_for_December")
-
+colnames(emp_data3)[c(3:7)] <- c("Year" , "Average_Monthly_Employment","Average_Weekly_Wage","Number_of_Employer_Establishments",
+                                  "Total_Wages_Paid_to_All_Workers")
 
 ## save data
 write.csv(emp_data3, file="employ/empdata1.csv")
+
+##calculate the employment percentage change since 2001
+emp_data4<-emp_data3[order(emp_data3$Municipal),]
+idx1<-emp_data4[which(emp_data4$Year==2001),]
+emp_data4$Change<-emp_data4$Average_Monthly_Employment/idx1$Average_Monthly_Employment[match(emp_data4$Municipal,idx1$Municipal)]
+##"Hancock" (2003-2012),"Leyden"(2006-2012), "Mount Washington"(2003-2012), "Peru"(2002-2012), so the Change_Pct for these town are NA
+emp_data4$Change[which(emp_data4$Municipal=="Hancock")]<-emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Hancock")]/emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Hancock"&emp_data4$Year==2003)]
+emp_data4$Change[which(emp_data4$Municipal=="Peru")]<-emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Peru")]/emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Peru"&emp_data4$Year==2002)]
+emp_data4$Change[which(emp_data4$Municipal=="Leyden")]<-emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Leyden")]/emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Leyden"&emp_data4$Year==2006)]
+emp_data4$Change[which(emp_data4$Municipal=="Mount Washington")]<-emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Mount Washington")]/emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Mount Washington"&emp_data4$Year==2003)]
+emp_data4$Change_Pct<-emp_data4$Change*100
+colnames(emp_data4)[8]<-"Employment_Change_Pct"
+
+##calculate the Establishment percentage change since 2001
+emp_data4$Establishment_Change<-emp_data4$Number_of_Employer_Establishments/idx1$Number_of_Employer_Establishments[match(emp_data4$Municipal,idx1$Municipal)]
+##"Hancock" (2003-2012),"Leyden"(2006-2012), "Mount Washington"(2003-2012), "Peru"(2002-2012), so the Change_Pct for these town are NA
+emp_data4$Establishment_Change[which(emp_data4$Municipal=="Hancock")]<-emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Hancock")]/emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Hancock"&emp_data4$Year==2003)]
+emp_data4$Establishment_Change[which(emp_data4$Municipal=="Peru")]<-emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Peru")]/emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Peru"&emp_data4$Year==2002)]
+emp_data4$Establishment_Change[which(emp_data4$Municipal=="Leyden")]<-emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Leyden")]/emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Leyden"&emp_data4$Year==2006)]
+emp_data4$Establishment_Change[which(emp_data4$Municipal=="Mount Washington")]<-emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Mount Washington")]/emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Mount Washington"&emp_data4$Year==2003)]
+emp_data4$Establishment_Change_Pct<-emp_data4$Establishment_Change*100
+
+
+write.csv(emp_data3, file="employ/empdata2.csv")
