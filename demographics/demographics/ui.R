@@ -326,7 +326,7 @@ shinyUI(
                    " - The number of people within each gender, for a region over a specified five year range."),
                  tags$br(),
                  p(strong("Age"),
-                   " - The number of people within each age group, for a region over a specified five year range. Age groups were specified as 20-24, 25- 34, 35- 44, 45- 54, 55-59, 60- 54, 65- 74, 75- 84, and 85+. Within the Plot and Map tab the number of categories for age has been collapsed to the following six groups; <20, 20-34, 35-54, 55-64, 65-74,75+.  This is done inorder to simplify the presentation of data.  To see all age groups please go to the summary tab."),
+                   " - The number of people within each age group, for a region over a specified five year range. Age groups were specified as <5, 5-9, 10-14, 15-19, 20-24, 25-34, 35-44, 45-54, 55-59, 60-54, 65-74, 75-84, and 85+. Within the Plot and Map tab the number of categories for age has been collapsed to the following six groups; <20, 20-34, 35-54, 55-64, 65-74,75+.  This is done inorder to simplify the presentation of data.  To see all age groups please go to the summary tab."),
                  tags$br(),
                  p(strong("Five-Year Estimate"),
                    "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision."),
