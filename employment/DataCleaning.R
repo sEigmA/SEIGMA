@@ -47,18 +47,18 @@ write.csv(emp_data3, file="employ/empdata1.csv")
 
 ##calculate the employment percentage change since 2001
 emp_data4<-emp_data3[order(emp_data3$Municipal),]
-idx1<-emp_data4[which(emp_data4$Year==2001),]
-emp_data4$Change<-emp_data4$Average_Monthly_Employment/idx1$Average_Monthly_Employment[match(emp_data4$Municipal,idx1$Municipal)]
+year_01<-emp_data4[which(emp_data4$Year==2001),]
+emp_data4$Change<-emp_data4$Average_Monthly_Employment/year_01$Average_Monthly_Employment[match(emp_data4$Municipal,year_01$Municipal)]
 ##"Hancock" (2003-2012),"Leyden"(2006-2012), "Mount Washington"(2003-2012), "Peru"(2002-2012), so the Change_Pct for these town are NA
 emp_data4$Change[which(emp_data4$Municipal=="Hancock")]<-emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Hancock")]/emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Hancock"&emp_data4$Year==2003)]
 emp_data4$Change[which(emp_data4$Municipal=="Peru")]<-emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Peru")]/emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Peru"&emp_data4$Year==2002)]
 emp_data4$Change[which(emp_data4$Municipal=="Leyden")]<-emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Leyden")]/emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Leyden"&emp_data4$Year==2006)]
 emp_data4$Change[which(emp_data4$Municipal=="Mount Washington")]<-emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Mount Washington")]/emp_data4$Average_Monthly_Employment[which(emp_data4$Municipal=="Mount Washington"&emp_data4$Year==2003)]
 emp_data4$Change_Pct<-emp_data4$Change*100
-colnames(emp_data4)[8]<-"Employment_Change_Pct"
+colnames(emp_data4)[9]<-"Employment_Change_Pct"
 
 ##calculate the Establishment percentage change since 2001
-emp_data4$Establishment_Change<-emp_data4$Number_of_Employer_Establishments/idx1$Number_of_Employer_Establishments[match(emp_data4$Municipal,idx1$Municipal)]
+emp_data4$Establishment_Change<-emp_data4$Number_of_Employer_Establishments/year_01$Number_of_Employer_Establishments[match(emp_data4$Municipal,year_01$Municipal)]
 ##"Hancock" (2003-2012),"Leyden"(2006-2012), "Mount Washington"(2003-2012), "Peru"(2002-2012), so the Change_Pct for these town are NA
 emp_data4$Establishment_Change[which(emp_data4$Municipal=="Hancock")]<-emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Hancock")]/emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Hancock"&emp_data4$Year==2003)]
 emp_data4$Establishment_Change[which(emp_data4$Municipal=="Peru")]<-emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Peru")]/emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Peru"&emp_data4$Year==2002)]
@@ -66,5 +66,46 @@ emp_data4$Establishment_Change[which(emp_data4$Municipal=="Leyden")]<-emp_data4$
 emp_data4$Establishment_Change[which(emp_data4$Municipal=="Mount Washington")]<-emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Mount Washington")]/emp_data4$Number_of_Employer_Establishments[which(emp_data4$Municipal=="Mount Washington"&emp_data4$Year==2003)]
 emp_data4$Establishment_Change_Pct<-emp_data4$Establishment_Change*100
 
+##calculate the Average Weely wages percentage change since 2001
+emp_data4$Average_Weekly_Wage_Change<-emp_data4$Average_Weekly_Wage/year_01$Average_Weekly_Wage[match(emp_data4$Municipal,year_01$Municipal)]
+##"Hancock" (2003-2012),"Leyden"(2006-2012), "Mount Washington"(2003-2012), "Peru"(2002-2012), so the Change_Pct for these town are NA
+emp_data4$Average_Weekly_Wage_Change[which(emp_data4$Municipal=="Hancock")]<-emp_data4$Average_Weekly_Wage[which(emp_data4$Municipal=="Hancock")]/emp_data4$Average_Weekly_Wage[which(emp_data4$Municipal=="Hancock"&emp_data4$Year==2003)]
+emp_data4$Average_Weekly_Wage_Change[which(emp_data4$Municipal=="Peru")]<-emp_data4$Average_Weekly_Wage[which(emp_data4$Municipal=="Peru")]/emp_data4$Average_Weekly_Wage[which(emp_data4$Municipal=="Peru"&emp_data4$Year==2002)]
+emp_data4$Average_Weekly_Wage_Change[which(emp_data4$Municipal=="Leyden")]<-emp_data4$Average_Weekly_Wage[which(emp_data4$Municipal=="Leyden")]/emp_data4$Average_Weekly_Wage[which(emp_data4$Municipal=="Leyden"&emp_data4$Year==2006)]
+emp_data4$Average_Weekly_Wage_Change[which(emp_data4$Municipal=="Mount Washington")]<-emp_data4$Average_Weekly_Wage[which(emp_data4$Municipal=="Mount Washington")]/emp_data4$Average_Weekly_Wage[which(emp_data4$Municipal=="Mount Washington"&emp_data4$Year==2003)]
+emp_data4$Average_Weekly_Wage_Change_Pct<-emp_data4$Average_Weekly_Wage_Change*100
 
-write.csv(emp_data3, file="employ/empdata2.csv")
+
+write.csv(emp_data4, file="employ/empdata2.csv",row.names=FALSE)
+
+##Only keep data since 2003
+emp_data5<-emp_data3%>%
+  filter(Year>=2003)
+##calculate the employment percentage change since 2003
+emp_data6<-emp_data5[order(emp_data5$Municipal),]
+year_03<-emp_data6[which(emp_data6$Year==2003),]
+emp_data6$Change<-emp_data6$Average_Monthly_Employment/year_03$Average_Monthly_Employment[match(emp_data6$Municipal,year_03$Municipal)]
+##"Tolland" (2001,2005-2012),"Leyden"(2006-2012), "Savoy"(2001,2007-2009,2012), so the Change_Pct for these town are NA
+emp_data6$Change[which(emp_data6$Municipal=="Tolland")]<-emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Tolland")]/emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Tolland"&emp_data6$Year==2005)]
+emp_data6$Change[which(emp_data6$Municipal=="Leyden")]<-emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Leyden")]/emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Leyden"&emp_data6$Year==2006)]
+emp_data6$Change[which(emp_data6$Municipal=="Savoy")]<-emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Savoy")]/emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Savoy"&emp_data6$Year==2007)]
+emp_data6$Change_Pct<-emp_data6$Change*100
+colnames(emp_data6)[9]<-"Employment_Change_Pct"
+
+##calculate the Establishment percentage change since 2003
+emp_data6$Establishment_Change<-emp_data6$Number_of_Employer_Establishments/year_03$Number_of_Employer_Establishments[match(emp_data6$Municipal,year_03$Municipal)]
+##"Tolland" (2001,2005-2012),"Leyden"(2006-2012), "Savoy"(2001,2007-2009,2012), so the Change_Pct for these town are NA
+emp_data6$Establishment_Change[which(emp_data6$Municipal=="Tolland")]<-emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Tolland")]/emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Tolland"&emp_data6$Year==2005)]
+emp_data6$Establishment_Change[which(emp_data6$Municipal=="Leyden")]<-emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Leyden")]/emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Leyden"&emp_data6$Year==2006)]
+emp_data6$Establishment_Change[which(emp_data6$Municipal=="Savoy")]<-emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Savoy")]/emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Savoy"&emp_data6$Year==2007)]
+emp_data6$Establishment_Change_Pct<-emp_data6$Establishment_Change*100
+
+##calculate the Average Weely wages percentage change since 2003
+emp_data6$Average_Weekly_Wage_Change<-emp_data6$Average_Weekly_Wage/year_03$Average_Weekly_Wage[match(emp_data6$Municipal,year_03$Municipal)]
+##"Tolland" (2001,2005-2012),"Leyden"(2006-2012), "Savoy"(2001,2007-2009,2012), so the Change_Pct for these town are NA
+emp_data6$Average_Weekly_Wage_Change[which(emp_data6$Municipal=="Tolland")]<-emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Tolland")]/emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Tolland"&emp_data6$Year==2005)]
+emp_data6$Average_Weekly_Wage_Change[which(emp_data6$Municipal=="Leyden")]<-emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Leyden")]/emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Leyden"&emp_data6$Year==2006)]
+emp_data6$Average_Weekly_Wage_Change[which(emp_data6$Municipal=="Savoy")]<-emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Savoy")]/emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Savoy"&emp_data6$Year==2007)]
+emp_data6$Average_Weekly_Wage_Change_Pct<-emp_data6$Average_Weekly_Wage_Change*100
+
+write.csv(emp_data6, file="employ/empdata3.csv",row.names=FALSE)
