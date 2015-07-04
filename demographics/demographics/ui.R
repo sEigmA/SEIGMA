@@ -159,14 +159,15 @@ shinyUI(
                  ## make chart title here (otherwise not centered)
                  conditionalPanel(
                    condition="input.plot_radio =='Age'",
-                   plot_options1),
+                   plot_options1,
+                   p(strong("Age"),
+                     " - The number of categories for age has been collapsed to the following six groups; <20, 20-34, 35-54, 55-64, 65-74,75+.  This is done inorder to simplify the presentation of data.  To see all age groups please go to the summary tab.")),
                  conditionalPanel(
                    condition="input.plot_radio =='Gender'||input.plot_radio =='Race'||input.plot_radio =='Ethnicity'",
                    plot_options2),                                
                  ## add text about the variables
                  #                  plot_main_text,
-                 p(strong("Age"),
-                   " - The number of categories for age has been collapsed to the following six groups; <20, 20-34, 35-54, 55-64, 65-74,75+.  This is done inorder to simplify the presentation of data.  To see all age groups please go to the summary tab."), 
+                  
                  
                  
                  value="plot"),
@@ -221,7 +222,10 @@ shinyUI(
                          tags$td("Data not available", align = "right")
                        )
                      )
-                   )),
+                   ),
+                  p(strong("Age"),
+                     " - The number of categories for age has been collapsed to the following six groups; <20, 20-34, 35-54, 55-64, 65-74,75+.  This is done inorder to simplify the presentation of data.  To see all age groups please go to the summary tab.") 
+                 ),
                  ## Gender Legend
                  conditionalPanel(
                    condition="input.map_radio =='Gender' && input.action != 0",
@@ -275,7 +279,10 @@ shinyUI(
                          tags$td("Data not available", align = "right")
                        )
                      )
-                   )),
+                   ),
+                   p(strong("Race"),
+                     " - Race categories are listed here as white, black, and asian.  Although the data for other races is available, the percentage is too small to depict in map format accurately.  To view the percentage of other race categories please refer to the Plot or Summary tabs.") 
+                 ),
                  ## Ethnicity Legend
                  conditionalPanel(
                    condition="input.map_radio =='Ethnicity' && input.action != 0",
@@ -303,11 +310,6 @@ shinyUI(
                        )
                      )
                    )),
-                 p(strong("Race"),
-                   " - Race categories are listed here as white, black, and asian.  Although the data for other races is available, the percentage is too small to depict in map format accurately.  To view the percentage of other race categories please refer to the Plot or Summary tabs."), 
-                 tags$br(),
-                 p(strong("Age"),
-                   " - The number of categories for age has been collapsed to the following six groups; <20, 20-34, 35-54, 55-64, 65-74,75+.  This is done inorder to simplify the presentation of data.  To see all age groups please go to the summary tab."), 
                  
                  value="map"
         ),
