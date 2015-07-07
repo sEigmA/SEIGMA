@@ -18,9 +18,7 @@ shinyServer(function(input, output, session) {
   emp_df <- reactive({
     ## Filter the data by the chosen Year
     emp_df <- emp_data ## %>%
-
-    ##  filter(Year == input$year) %>%
-    ##  select(1:4, 6:9)
+    ##select(1:6, 9,11,13)
 
     ## Output reactive dataframe
     emp_df
@@ -60,9 +58,9 @@ shinyServer(function(input, output, session) {
     ## create a dataframe consisting only of counties in vector
     sum_df <- df %>%
       filter(Municipal %in% munis) %>%
-      select(Municipal, Year, Average_Monthly_Employment)
+      select(Municipal, Year, Average_Monthly_Employment, Average_Weekly_Wage, Number_of_Employer_Establishments)
 
-    colnames(sum_df) <- c("Municipal","Year","Average Monthly Employment")
+    colnames(sum_df) <- c("Municipal","Year","Average Monthly Employment","Average Weekly Wage", "Number of Employer Establishments")
 
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE))
@@ -71,8 +69,31 @@ shinyServer(function(input, output, session) {
 
 
   ## create the plot of the data
+  
+  output$Wage_plot1<-reactive({
+    wage_df<-emp_df()
+    munis <- input$plot_muni
+    w <- wage_df %>%
+      filter(Municipal %in% munis) %>%
+      select(Municipal, Year, Average_Weekly_Wage) %>%
+      spread(Municipal, Average_Weekly_Wage)
+    list(
+      data=googleDataTable(w))
+  })
+  
+  output$Wage_pct_plot<-reactive({
+    wage_df<-emp_df()
+    munis <- input$plot_muni
+    w_pct <- wage_df %>%
+      filter(Municipal %in% munis) %>%
+      select(Municipal, Year, Average_Weekly_Wage_Change_Pct) %>%
+      spread(Municipal, Average_Weekly_Wage_Change_Pct)
+    list(
+      data=googleDataTable(w_pct))
+  })
+    
   ## for the Google charts plot
-  output$plot <- reactive({
+  output$Emp_plot1 <- reactive({
 #   browser()
     ## make reactive dataframe into regular dataframe
     emp_df <- emp_df()
@@ -99,6 +120,7 @@ shinyServer(function(input, output, session) {
 #      g <- dcast(emp_df, Year ~ munis, value.var="Average_Monthly_Employment")
 g <- emp_df %>%
     filter(Municipal %in% munis) %>%
+    select( Municipal, Year, Average_Monthly_Employment) %>%
     spread(Municipal, Average_Monthly_Employment)
 
 #     g <- emp_df %>%
@@ -111,6 +133,46 @@ g <- emp_df %>%
     list(
       data=googleDataTable(g))
   })
+output$Est_plot1 <- reactive({
+  #   browser()
+  ## make reactive dataframe into regular dataframe
+  emp_df <- emp_df()
+  
+  ## make region a vector based on input variable
+  munis <- input$plot_muni
+
+  est <- emp_df %>%
+    filter(Municipal %in% munis) %>%
+    select( Municipal, Year, Number_of_Employer_Establishments) %>%
+    spread(Municipal, Number_of_Employer_Establishments)
+  
+    
+  ## this outputs the google data to be used in the UI to create the dataframe
+  list(
+    data=googleDataTable(est))
+})
+
+output$Emp_pct_plot<-reactive({
+  emp_df<-emp_df()
+  munis <- input$plot_muni
+  emp_pct <- emp_df %>%
+    filter(Municipal %in% munis) %>%
+    select(Municipal, Year, Employment_Change_Pct) %>%
+    spread(Municipal, Employment_Change_Pct)
+  list(
+    data=googleDataTable(emp_pct))
+})
+
+output$Est_pct_plot<-reactive({
+  emp_df<-emp_df()
+  munis <- input$plot_muni
+  est_pct <- emp_df %>%
+    filter(Municipal %in% munis) %>%
+    select(Municipal, Year, Establishment_Change_Pct) %>%
+    spread(Municipal, Establishment_Change_Pct)
+  list(
+    data=googleDataTable(est_pct))
+})
 
 
 
@@ -121,82 +183,75 @@ g <- emp_df %>%
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
     emp_df <- emp_df()
-
-    ## take US, MA, and counties out of map_dat
-#     map_dat <- emp_df %>%
-#       filter(!is.na(Municipal))
-#
-
-    ######################################################
-    ## for single year maps...
-    if(input$map_timespan == "sing.yr"){
-
-      ## subset the data by the year selected
-      emp_df <- filter(emp_df, Year==input$map_year)
-
-      ## assign colors to each entry in the data frame
-      color <- as.integer(cut2(emp_df$Average_Monthly_Employment,cuts=scuts))
-      emp_df <- cbind.data.frame(emp_df,color)
-      emp_df$color <- ifelse(is.na(emp_df$color), length(smap.colors),
-                             emp_df$color)
-      emp_df$opacity = 0.7
-
-      #       ## This line is important. Formats county name (ie Franklin County)
-      #       suidf$County <- paste(as.character(suidf$County), "County")
-
+    ## subset the data by the year selected
+    emp_df <- filter(emp_df, Year==input$map_year)
+    ## get column name and cuts based on input
+    if (input$map_display_radio == "Actual Values"){
+      if (input$map_radio == "Employment") {
+        col<-"Average_Monthly_Employment"  
+        cuts<-empcuts
+      }
+      else if (input$map_radio == "Establishments"){
+        col<-"Number_of_Employer_Establishments"
+        cuts<-estcuts
+      }
+      else {
+        col<-"Average_Weekly_Wage"
+        cuts<-wagecuts
+      }
+   
+    ## assign colors to each entry in the data frame
+    col_sel_num1<-which( colnames(emp_df)==col )
+    map_dat <- select(emp_df,c(1,3,col_sel_num1))
+    color <- as.integer(cut2(map_dat[,col],cuts=cuts))
+    map_dat <- cbind.data.frame(map_dat, color)
+    map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors),
+                            map_dat$color)
+    map_dat$opacity <- 0.7
+    
+    ## find missing counties in data subset and assign NAs to all values
+    missing.munis <- setdiff(leftover_munis_map,emp_df$Municipal)
+    missing_df <-data.frame(Municipal=missing.munis, Year=input$map_year, Map_var=NA,
+                            color=length(map_colors), opacity = 0)
+    colnames(missing_df)[3]<-col
+    # combine data subset with missing counties data
+    map_dat <- rbind.data.frame(map_dat, missing_df)
+    map_dat$color <- map_colors[map_dat$color]
+    ##return(map_dat)
+    } 
+    if (input$map_display_radio == "Change_Pct"){
+      if (input$map_radio == "Employment") {
+        col<-"Employment_difference"  
+        cuts<-pctcuts
+      }
+      else if (input$map_radio == "Establishments"){
+        col<-"Establishment_difference"
+        cuts<-pctcuts
+      }
+      else {
+        col<-"Average_Weekly_Wage_difference"
+        cuts<-pctcuts
+      }
+      col_sel_num1<-which( colnames(emp_df)==col )
+      map_dat <- select(emp_df,c(1,3,col_sel_num1))
+      color <- as.integer(cut2(map_dat[,col],cuts=cuts))
+      map_dat <- cbind.data.frame(map_dat, color)
+      map_dat$color <- ifelse(is.na(map_dat$color), length(pctmap_colors),
+                              map_dat$color)
+      map_dat$opacity <- 0.7
+      
       ## find missing counties in data subset and assign NAs to all values
       missing.munis <- setdiff(leftover_munis_map,emp_df$Municipal)
-
-
-      if(length(missing.munis) > 0){
-        df <- data.frame(Municipal=missing.munis, Year=input$map_year, Average_Monthly_Employment=NA,
-                         color=length(smap.colors), opacity = 0)
-
-        ## combine data subset with missing counties data
-        emp_df <- rbind.data.frame(emp_df, df)
-      }
-      emp_df$color <- smap.colors[emp_df$color]
-      return(emp_df)
+      missing_df <-data.frame(Municipal=missing.munis, Year=input$map_year, Map_var=NA,
+                              color=length(pctmap_colors), opacity = 0)
+      colnames(missing_df)[3]<-col
+      # combine data subset with missing counties data
+      map_dat <- rbind.data.frame(map_dat, missing_df)
+      map_dat$color <- pctmap_colors[map_dat$color]
+      ##return(map_dat)
+      
     }
-
-    ######################################MULTIPLE YEARS
-
-
-    if(input$map_timespan=="mult.yrs"){
-
-      ## create dataframes for the max and min year of selected data
-      min.year <- min(input$map_range)
-      max.year <- max(input$map_range)
-      min.df <- subset(emp_df, Year==min.year)
-      max.df <- subset(emp_df, Year==max.year)
-
-      ## merge data and take difference between the data of the min year and the max year
-      diff.df <- within(merge(min.df, max.df, by="Municipal"),{
-        Average_Monthly_Employment <- (Average_Monthly_Employment.y - Average_Monthly_Employment.x)
-      })[,c("Municipal", "Average_Monthly_Employment")]
-
-      #diff.df$Municipal <- paste(as.character(diff.df$Municipal), "Municipal")
-
-      ## assign colors to each entry in the data frame
-      color <- as.integer(cut2(diff.df[,2],cuts=mcuts))
-      diff.df <- cbind.data.frame(diff.df,color)
-      diff.df$color <- ifelse(is.na(diff.df$color), length(mmap.colors), diff.df$color)
-      diff.df$opacity <- 0.7
-
-
-      ## find missing munis in data subset and assign NAs to all values
-      missing.munis <- setdiff(leftover_munis_map, diff.df$Municipal)
-      df <- data.frame(Municipal=missing.munis, Average_Monthly_Employment=NA,
-                       color=length(mmap.colors))
-      df$opacity <- 0
-
-      ## combine data subset with missing counties data
-      diff.df <- rbind.data.frame(diff.df, df)
-      diff.df$color <- mmap.colors[diff.df$color]
-      return(diff.df)
-    }
-
-  })
+   })
 
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
 
@@ -211,6 +266,7 @@ g <- emp_df %>%
 
     ## load in relevant map data
     map_dat <- map_dat()
+    col_name<-colnames(map_dat)[3]
 
     ## All functions which are isolated, will not run until the above observe function is activated
     isolate({
@@ -220,7 +276,7 @@ g <- emp_df %>%
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a Municipal
-        x$features[[i]]$properties["Average_Monthly_Employment"] <- map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal), "Average_Monthly_Employment"]
+        x$features[[i]]$properties[col_name] <- map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal), col_name]
         ## Style properties
         x$features[[i]]$properties$style <- list(
           fill=TRUE,
@@ -243,7 +299,7 @@ g <- emp_df %>%
     evt <- input$map_click
     if(is.null(evt))
       return()
-
+    
     isolate({
       values$selectedFeature <- NULL
     })
@@ -253,15 +309,20 @@ g <- emp_df %>%
     evt <- input$map_geojson_click
     if(is.null(evt))
       return()
-
+    map_dat <- map_dat()
+    col_name<-colnames(map_dat)[3]
+    
     isolate({
       values$selectedFeature <- evt$properties
+      region <- evt$properties$NAMELSAD10
+      values$selectedFeature[col_name] <- map_dat[match(region, map_dat$Municipal), col_name]
     })
   })
   ##  This function is what creates info box
 
   output$details <- renderText({
-
+    map_dat <- map_dat()
+    col_name<-colnames(map_dat)[3]
     ## Before a county is clicked, display a message
     if(is.null(values$selectedFeature)){
       return(as.character(tags$div(
@@ -270,27 +331,34 @@ g <- emp_df %>%
       )))
     }
     muni_name <- values$selectedFeature$NAMELSAD10
-    muni_value <- prettyNum(values$selectedFeature["Average_Monthly_Employment"], big.mark = ",")
+    if(input$map_display_radio == "Actual Values"){
+    muni_value <- prettyNum(values$selectedFeature[col_name], big.mark = ",")
+    }
+    if(input$map_display_radio == "Change_Pct"){
+      muni_value <- prettyNum(values$selectedFeature[col_name],digits=4)
+    }
+    var_select <- gsub("Pct", "", col_name)
+    var_select <- gsub("_", " ", var_select)
 
     ## If clicked county has no crude rate, display a message
     if(muni_value == "NULL"){
       return(as.character(tags$div(
-        tags$h5("Average Monthly Employment for", muni_name, "is not available for this timespan"))))
+        tags$h5(var_select, muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
 
-    if(input$map_timespan=="sing.yr"){
-
+    if(input$map_display_radio == "Actual Values"){
+    
     return(as.character(tags$div(
-      tags$h4("Average Monthly Employment for", muni_name, " for ", input$map_year),
+      tags$h4(var_select, "for", muni_name, " for ", input$map_year),
       tags$h5(muni_value)
     )))
     }
-    if(input$map_timespan=="mult.yrs"){
-
+    if(input$map_display_radio == "Change_Pct"){
+      
       return(as.character(tags$div(
-        tags$h4("Average Monthly Employment for", muni_name, " for ", input$map_range[1], "to",input$map_range[2]),
-        tags$h5(muni_value)
+        tags$h4(var_select, "for", muni_name, " for ", input$map_year,"compared to year 2003"),
+        tags$h5(muni_value,"%")
       )))
     }
 
