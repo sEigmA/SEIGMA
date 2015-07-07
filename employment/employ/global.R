@@ -10,9 +10,9 @@
 ##First file run - Environment Setup
 ## load necessary libraries
 require(dplyr)
-require(sp)
+##require(sp)
 require(maptools)
-require(rgeos)
+##require(rgeos)
 require(Hmisc)
 require(reshape2)
 require(shiny)
@@ -24,7 +24,7 @@ require(tidyr)
 ## load map data
 #MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
-emp_data <- read.csv(file="empdata.csv")[,-1]
+emp_data <- read.csv(file="empdata3.csv")
 
 
 ## Find order of municipals in geojson files
@@ -60,7 +60,7 @@ MA_municipals <- sort(MA_municipals)
 
 ## Set graph colors (special for colorblind people)
 cbbPalette <- c("#000000", "red", "yellow", "green", "blue",
-                "turquoise", "violetred", "deeppink")
+                "turquoise", "lightblue", "deeppink")
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
@@ -73,60 +73,132 @@ ylim <- list(
   ##+5 = max Avg monthly employment plus a little extra
   max = max(emp_data$Average_Monthly_Employment, na.rm=T)+5
 )
+##when without boston, create ylim for googleCharts/plot
+ylim1<-list(
+  min = min(emp_data$Average_Monthly_Employment[which(emp_data$Municipal!="Boston")], na.rm=T)-5,
+  
+  ##+5 = max Avg monthly employment plus a little extra
+  max = max(emp_data$Average_Monthly_Employment[which(emp_data$Municipal!="Boston")], na.rm=T)+5
+  )
+##Creat ylim for establishments plot
+ylim_est<-list(
+  min = min(emp_data$Number_of_Employer_Establishments, na.rm=T)-5,
+  
+  ##+5 = max Avg monthly employment plus a little extra
+  max = max(emp_data$Number_of_Employer_Establishments, na.rm=T)+5
+)
+##when without Boston
+ylim1_est<-list(
+  min = min(emp_data$Number_of_Employer_Establishments[which(emp_data$Municipal!="Boston")], na.rm=T)-5,
+  
+  ##+5 = max Avg monthly employment plus a little extra
+  max = max(emp_data$Number_of_Employer_Establishments[which(emp_data$Municipal!="Boston")], na.rm=T)+5
+)
+##Creat ylim for percentage change of employment plot
+ylim_pct<-list(
+  min = min(emp_data$Employment_Change_Pct, na.rm=T)-5,
+  
+  ##+5 = max Avg monthly employment plus a little extra
+  max = max(emp_data$Employment_Change_Pct, na.rm=T)+5
+) 
+##Creat ylim for percentage change of establishments plot
+ylim_pct_est<-list(
+  min = min(emp_data$Establishment_Change_Pct, na.rm=T)-5,
+  
+  ##+5 = max Avg monthly employment plus a little extra
+  max = max(emp_data$Establishment_Change_Pct, na.rm=T)+5
+) 
+
+##Creat ylim for Average Weekly Wages plot
+ylim_wage<-list(
+  min = min(emp_data$Average_Weekly_Wage, na.rm=T)-5,
+  
+  ##+5 = max Avg monthly employment plus a little extra
+  max = max(emp_data$Average_Weekly_Wage, na.rm=T)+5
+)
+##when without Boston
+ylim1_wage<-list(
+  min = min(emp_data$Average_Weekly_Wage[which(emp_data$Municipal!="Boston")], na.rm=T)-5,
+  
+  ##+5 = max Avg monthly employment plus a little extra
+  max = max(emp_data$Average_Weekly_Wage[which(emp_data$Municipal!="Boston")], na.rm=T)+5
+)
+##Creat ylim for percentage change of Average_Weekly_Wage plot
+ylim_pct_wage<-list(
+  min = min(emp_data$Average_Weekly_Wage_Change_Pct, na.rm=T)-5,
+  
+  ##+5 = max Avg monthly employment plus a little extra
+  max = max(emp_data$Average_Weekly_Wage_Change_Pct, na.rm=T)+5
+)
 
 ####################################################
 
-## Colors for a single-year legend
-spaint.brush <- colorRampPalette(colors=c("white", "violetred"))
-smap.colors <- c(spaint.brush(n=5), "grey")
+## Colors for a Employment legend
+paint.brush <- colorRampPalette(colors=c("white", "violetred"))
+map_colors <- c(spaint.brush(n=5), "black")
 
-## For a single year data, we have a series of crude rate (split into quintiles).  Cuts are quintiles of the total data
+## (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-smax.val <- max(emp_data$Average_Monthly_Employment, na.rm=TRUE)
-smin.val <- min(emp_data$Average_Monthly_Employment, na.rm=TRUE)
+empmax.val <- max(emp_data$Average_Monthly_Employment, na.rm=TRUE)
+empmin.val <- min(emp_data$Average_Monthly_Employment, na.rm=TRUE)
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
 # scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
-scuts <- quantile(emp_data$Average_Monthly_Employment, probs = seq(0, 1, length.out = length(smap.colors)), na.rm=TRUE)
+empcuts <- quantile(emp_data$Average_Monthly_Employment, probs = seq(0, 1, length.out = length(map.colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
 ## head = scuts takes everything except for the last one,
 ## tails = same thing opposite
 
-scolorRanges <- data.frame(
-  from = head(scuts, length(scuts)-1),
-  to = tail(scuts, length(scuts)-1)
+empcolorRanges <- data.frame(
+  from = head(empcuts, length(empcuts)-1),
+  to = tail(empcuts, length(empcuts)-1)
+)
+
+##Colors for a Establishments legend
+estcuts <- quantile(emp_data$Number_of_Employer_Establishments, probs = seq(0, 1, length.out = length(map.colors)), na.rm=TRUE)
+
+## Construct break ranges for displaying in the legend
+## Creates a data frame
+## head = scuts takes everything except for the last one,
+## tails = same thing opposite
+estcolorRanges <- data.frame(
+  from = head(estcuts, length(estcuts)-1),
+  to = tail(estcuts, length(estcuts)-1)
+)
+
+##Colors for a Wages legend
+wagecuts <- quantile(emp_data$Average_Weekly_Wage, probs = seq(0, 1, length.out = length(map.colors)), na.rm=TRUE)
+
+## Construct break ranges for displaying in the legend
+## Creates a data frame
+## head = scuts takes everything except for the last one,
+## tails = same thing opposite
+wagecolorRanges <- data.frame(
+  from = head(wagecuts, length(wagecuts)-1),
+  to = tail(wagecuts, length(wagecuts)-1)
 )
 
 ## colors fade from one color to white to another color, with gray for NAs
-## m-prefix = multiple years
-mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
-mmap.colors <- c(mpaint.brush(n=6), "#999999")
+## colors for pecentage change since 2003 legend
+pctpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[8]))
+pctmap_colors <- c(pctpaint.brush(n=6), "#999999")
 
 ## find max and min (crude suicide rates) values for each county
-bound <- emp_data %>%
- group_by(Municipal) %>%
+##n.rm=FALSE = needed
+pctmax.val<-max(c(max(emp_data$Employment_difference, na.rm=FALSE),max(emp_data$Establishment_difference, na.rm=FALSE),max(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
+pctmin.val<-min(c(min(emp_data$Employment_difference, na.rm=FALSE),min(emp_data$Establishment_difference, na.rm=FALSE),min(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
 
-  ##n.rm=FALSE = needed
-  summarise(max.val = max(Average_Monthly_Employment, na.rm=FALSE),
-            min.val = min(Average_Monthly_Employment, na.rm=FALSE))
-
-## find the difference between each county's max and min
-bound$diff <- (bound$max.val - bound$min.val)
-
-## set the max and min value (for the legend) at 95% of the largest difference
-mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
-mmin.val <- -1*mmax.val
-mcuts <- seq(mmin.val, mmax.val, length.out = length(mmap.colors))
+pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(pctmap.colors))
 
 # Construct break ranges for displaying in the legend
 
-mcolorRanges <- data.frame(
-  from = head(mcuts, length(mcuts)-1),
-  to = tail(mcuts, length(mcuts)-1)
+pctcolorRanges <- data.frame(
+  from = head(pctcuts, length(pctcuts)-1),
+  to = tail(pctcuts, length(pctcuts)-1)
 )
 
 
@@ -244,56 +316,489 @@ plot_main_text <- p(strong("Variable Summary:"),
 
 font_size <- 14
 
-plot_options <- googleColumnChart("plot", width="100%", height="475px",
-                                  options = list(
+Emp_plot_options1 <- googleLineChart("Emp_plot1", width="100%", height="475px", options = list(
+                                    
                                     ## set fonts
                                     fontName = "Source Sans Pro",
-                                    fontSize = font_size,
-                                    title = "",
+                                    fontSize = 14,
+                                    
                                     ## set axis titles, ticks, fonts, and ranges
                                     hAxis = list(
-                                      title = "",
+                                      title = "Year",
+                                      format = "####",
+                                      ticks = seq(2002, 2012, 2),
+                                      viewWindow = xlim,
                                       textStyle = list(
-                                        fontSize = font_size),
+                                        fontSize = 14),
                                       titleTextStyle = list(
-                                        fontSize = font_size+2,
+                                        fontSize = 16,
                                         bold = TRUE,
                                         italic = FALSE)
                                     ),
                                     vAxis = list(
-                                      title = "Number of Population",
+                                      title = "Average Monthly Employment",
                                       viewWindow = ylim,
                                       textStyle = list(
-                                        fontSize = font_size),
+                                        fontSize = 14),
                                       titleTextStyle = list(
-                                        fontSize = font_size+2,
+                                        fontSize = 16,
                                         bold = TRUE,
                                         italic = FALSE)
                                     ),
-
+                                    
                                     ## set legend fonts
                                     legend = list(
                                       textStyle = list(
-                                        fontSize=font_size),
-                                      position = "right"),
-
+                                        fontSize=14)),
+                                    
                                     ## set chart area padding
                                     chartArea = list(
-                                      top = 50, left = 100,
-                                      height = "75%", width = "65%"
+                                      top = 50, left = 75,
+                                      height = "75%", width = "70%"
                                     ),
-
+                                    
                                     ## set colors
-                                    colors = cbbPalette[c(2:8)],
-
+                                    colors = cbbPalette,
+                                    
                                     ## set point size
                                     pointSize = 3,
-
+                                    
                                     ## set tooltip font size
                                     ## Hover text font stuff
                                     tooltip = list(
                                       textStyle = list(
-                                        fontSize = font_size
+                                        fontSize = 14
                                       )
                                     )
                                   ))
+Emp_plot_options2 <- googleLineChart("Emp_plot2", width="100%", height="475px", options = list(
+                        ## set fonts
+                        fontName = "Source Sans Pro",
+                        fontSize = 14,
+                        
+                        ## set axis titles, ticks, fonts, and ranges
+                        hAxis = list(
+                          title = "Year",
+                          format = "####",
+                          ticks = seq(2002, 2012, 2),
+                          viewWindow = xlim,
+                          textStyle = list(
+                            fontSize = 14),
+                          titleTextStyle = list(
+                            fontSize = 16,
+                            bold = TRUE,
+                            italic = FALSE)
+                        ),
+                        vAxis = list(
+                          title = "Average Monthly Employment",
+                          viewWindow = ylim1,
+                          textStyle = list(
+                            fontSize = 14),
+                          titleTextStyle = list(
+                            fontSize = 16,
+                            bold = TRUE,
+                            italic = FALSE)
+                        ),
+                        
+                        ## set legend fonts
+                        legend = list(
+                          textStyle = list(
+                            fontSize=14)),
+                        
+                        ## set chart area padding
+                        chartArea = list(
+                          top = 50, left = 75,
+                          height = "75%", width = "70%"
+                        ),
+                        
+                        ## set colors
+                        colors = cbbPalette,
+                        
+                        ## set point size
+                        pointSize = 3,
+                        
+                        ## set tooltip font size
+                        ## Hover text font stuff
+                        tooltip = list(
+                          textStyle = list(
+                            fontSize = 14
+                          )
+                        )
+                      ))
+Est_plot_options1 <- googleLineChart("Est_plot1", width="100%", height="475px", options = list(
+                      
+                      ## set fonts
+                      fontName = "Source Sans Pro",
+                      fontSize = 14,
+                      
+                      ## set axis titles, ticks, fonts, and ranges
+                      hAxis = list(
+                        title = "Year",
+                        format = "####",
+                        ticks = seq(2002, 2012, 2),
+                        viewWindow = xlim,
+                        textStyle = list(
+                          fontSize = 14),
+                        titleTextStyle = list(
+                          fontSize = 16,
+                          bold = TRUE,
+                          italic = FALSE)
+                      ),
+                      vAxis = list(
+                        title = "Number of Employer Establishments",
+                        viewWindow = ylim_est,
+                        textStyle = list(
+                          fontSize = 14),
+                        titleTextStyle = list(
+                          fontSize = 16,
+                          bold = TRUE,
+                          italic = FALSE)
+                      ),
+                      
+                      ## set legend fonts
+                      legend = list(
+                        textStyle = list(
+                          fontSize=14)),
+                      
+                      ## set chart area padding
+                      chartArea = list(
+                        top = 50, left = 75,
+                        height = "75%", width = "70%"
+                      ),
+                      
+                      ## set colors
+                      colors = cbbPalette,
+                      
+                      ## set point size
+                      pointSize = 3,
+                      
+                      ## set tooltip font size
+                      ## Hover text font stuff
+                      tooltip = list(
+                        textStyle = list(
+                          fontSize = 14
+                        )
+                      )
+                    ))
+Est_plot_options2 <- googleLineChart("Est_plot2", width="100%", height="475px", options = list(
+                      ## set fonts
+                      fontName = "Source Sans Pro",
+                      fontSize = 14,
+                      
+                      ## set axis titles, ticks, fonts, and ranges
+                      hAxis = list(
+                        title = "Year",
+                        format = "####",
+                        ticks = seq(2002, 2012, 2),
+                        viewWindow = xlim,
+                        textStyle = list(
+                          fontSize = 14),
+                        titleTextStyle = list(
+                          fontSize = 16,
+                          bold = TRUE,
+                          italic = FALSE)
+                      ),
+                      vAxis = list(
+                        title = "Number of Employer Establishments",
+                        viewWindow = ylim1_est,
+                        textStyle = list(
+                          fontSize = 14),
+                        titleTextStyle = list(
+                          fontSize = 16,
+                          bold = TRUE,
+                          italic = FALSE)
+                      ),
+                      
+                      ## set legend fonts
+                      legend = list(
+                        textStyle = list(
+                          fontSize=14)),
+                      
+                      ## set chart area padding
+                      chartArea = list(
+                        top = 50, left = 75,
+                        height = "75%", width = "70%"
+                      ),
+                      
+                      ## set colors
+                      colors = cbbPalette,
+                      
+                      ## set point size
+                      pointSize = 3,
+                      
+                      ## set tooltip font size
+                      ## Hover text font stuff
+                      tooltip = list(
+                        textStyle = list(
+                          fontSize = 14
+                        )
+                      )
+                    ))
+Emp_pct_plot_options <- googleLineChart("Emp_pct_plot", width="100%", height="475px",
+                                       options = list(
+                                         ## set fonts
+                                         fontName = "Source Sans Pro",
+                                         fontSize = font_size,
+                                         title = "",
+                                         ## set axis titles, ticks, fonts, and ranges
+                                         hAxis = list(
+                                           title = "",
+                                           textStyle = list(
+                                             fontSize = font_size),
+                                           titleTextStyle = list(
+                                             fontSize = font_size+2,
+                                             bold = TRUE,
+                                             italic = FALSE)
+                                         ),
+                                         vAxis = list(
+                                           title = "Percentage Change in Employment since 2003",
+                                           viewWindow = ylim_pct,
+                                           textStyle = list(
+                                             fontSize = font_size),
+                                           titleTextStyle = list(
+                                             fontSize = font_size+2,
+                                             bold = TRUE,
+                                             italic = FALSE)
+                                         ),
+                                         
+                                         ## set legend fonts
+                                         legend = list(
+                                           textStyle = list(
+                                             fontSize=font_size),
+                                           position = "right"),
+                                         
+                                         ## set chart area padding
+                                         chartArea = list(
+                                           top = 50, left = 100,
+                                           height = "75%", width = "65%"
+                                         ),
+                                         
+                                         ## set colors
+                                         colors = cbbPalette[c(2:8)],
+                                         
+                                         ## set point size
+                                         pointSize = 3,
+                                         
+                                         ## set tooltip font size
+                                         ## Hover text font stuff
+                                         tooltip = list(
+                                           textStyle = list(
+                                             fontSize = font_size
+                                           )
+                                         )
+                                       ))
+Est_pct_plot_options <- googleLineChart("Est_pct_plot", width="100%", height="475px",
+                                          options = list(
+                                            ## set fonts
+                                            fontName = "Source Sans Pro",
+                                            fontSize = font_size,
+                                            title = "",
+                                            ## set axis titles, ticks, fonts, and ranges
+                                            hAxis = list(
+                                              title = "",
+                                              textStyle = list(
+                                                fontSize = font_size),
+                                              titleTextStyle = list(
+                                                fontSize = font_size+2,
+                                                bold = TRUE,
+                                                italic = FALSE)
+                                            ),
+                                            vAxis = list(
+                                              title = "Percentage Change in Establishments since 2003",
+                                              viewWindow = ylim_pct_est,
+                                              textStyle = list(
+                                                fontSize = font_size),
+                                              titleTextStyle = list(
+                                                fontSize = font_size+2,
+                                                bold = TRUE,
+                                                italic = FALSE)
+                                            ),
+                                            
+                                            ## set legend fonts
+                                            legend = list(
+                                              textStyle = list(
+                                                fontSize=font_size),
+                                              position = "right"),
+                                            
+                                            ## set chart area padding
+                                            chartArea = list(
+                                              top = 50, left = 100,
+                                              height = "75%", width = "65%"
+                                            ),
+                                            
+                                            ## set colors
+                                            colors = cbbPalette[c(2:8)],
+                                            
+                                            ## set point size
+                                            pointSize = 3,
+                                            
+                                            ## set tooltip font size
+                                            ## Hover text font stuff
+                                            tooltip = list(
+                                              textStyle = list(
+                                                fontSize = font_size
+                                              )
+                                            )
+                                          ))
+Wage_plot_options1 <- googleLineChart("Wage_plot1", width="100%", height="475px", options = list(
+  
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = 14,
+  
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "Year",
+    format = "####",
+    ticks = seq(2002, 2012, 2),
+    viewWindow = xlim,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    title = "Average Weekly Wage",
+    viewWindow = ylim_wage,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    textStyle = list(
+      fontSize=14)),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 75,
+    height = "75%", width = "70%"
+  ),
+  
+  ## set colors
+  colors = cbbPalette,
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = 14
+    )
+  )
+))
+Wage_plot_options2 <- googleLineChart("Wage_plot2", width="100%", height="475px", options = list(
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = 14,
+  
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "Year",
+    format = "####",
+    ticks = seq(2002, 2012, 2),
+    viewWindow = xlim,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    title = "Number of Employer Establishments",
+    viewWindow = ylim1_wage,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    textStyle = list(
+      fontSize=14)),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 75,
+    height = "75%", width = "70%"
+  ),
+  
+  ## set colors
+  colors = cbbPalette,
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = 14
+    )
+  )
+))
+Wage_pct_plot_options <- googleLineChart("Wage_pct_plot", width="100%", height="475px",
+                                        options = list(
+                                          ## set fonts
+                                          fontName = "Source Sans Pro",
+                                          fontSize = font_size,
+                                          title = "",
+                                          ## set axis titles, ticks, fonts, and ranges
+                                          hAxis = list(
+                                            title = "",
+                                            textStyle = list(
+                                              fontSize = font_size),
+                                            titleTextStyle = list(
+                                              fontSize = font_size+2,
+                                              bold = TRUE,
+                                              italic = FALSE)
+                                          ),
+                                          vAxis = list(
+                                            title = "Percentage Change in Average Weekly Wage since 2003",
+                                            viewWindow = ylim_pct_wage,
+                                            textStyle = list(
+                                              fontSize = font_size),
+                                            titleTextStyle = list(
+                                              fontSize = font_size+2,
+                                              bold = TRUE,
+                                              italic = FALSE)
+                                          ),
+                                          
+                                          ## set legend fonts
+                                          legend = list(
+                                            textStyle = list(
+                                              fontSize=font_size),
+                                            position = "right"),
+                                          
+                                          ## set chart area padding
+                                          chartArea = list(
+                                            top = 50, left = 100,
+                                            height = "75%", width = "65%"
+                                          ),
+                                          
+                                          ## set colors
+                                          colors = cbbPalette[c(2:8)],
+                                          
+                                          ## set point size
+                                          pointSize = 3,
+                                          
+                                          ## set tooltip font size
+                                          ## Hover text font stuff
+                                          tooltip = list(
+                                            textStyle = list(
+                                              fontSize = font_size
+                                            )
+                                          )
+                                        ))

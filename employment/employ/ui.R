@@ -28,7 +28,6 @@ shinyUI(fluidPage(
                  
                  info_side_text,
                  
-                 ## in map, allow for variable selection
                  
                  ## Choose range for year.
                  ## Initializing a single slider
@@ -39,12 +38,12 @@ shinyUI(fluidPage(
                    selectInput("sum_timespan", "Select Timespan",
                                list("Single Year" = "sing.yr",
                                     "Multiple Years" = "mult.yrs"), selected="sing.yr"),
+                   ## if single year is selected, select year. if multiple years are selected, choose range.
                    conditionalPanel(
                      condition="input.sum_timespan == 'sing.yr'",
-                     
-                     ## Initializing a single slider
+                      ## Initializing a single slider
                      sliderInput("sum_year", "Select Year",
-                                 min=2001, max=2012, value=2012,
+                                 min=2003, max=2012, value=2012,
                                  sep="")
                    ),
                    conditionalPanel(
@@ -52,7 +51,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'mult.yrs'",
                      ## Slider starts from 2010-2012
                      sliderInput("sum_range", "Select Years",
-                                 min=2001, max=2012, value=c(2010,2012),
+                                 min=2003, max=2012, value=c(2010,2012),
                                  sep="")
                    ),
                    
@@ -63,29 +62,21 @@ shinyUI(fluidPage(
                           
                    ),
                  
-                 ## if single year is selected, select year. if multiple years are selected, choose range.
                  
-                 conditionalPanel(
+                 ## in map, allow for variable , option and year selection
+                  conditionalPanel(
                    condition="input.tabs == 'map'",
-                   selectInput("map_timespan", "Select Timespan",
-                               list("Single Year" = "sing.yr",
-                                    "Multiple Years" = "mult.yrs"), selected = "sing.yr"),
-                   conditionalPanel(
-                     condition="input.map_timespan == 'sing.yr'",
-                     
-                     ## Initializing a single slider
-                     sliderInput("map_year", "Select Year",
-                                 min=2001, max=2012, value=2012,
+                   radioButtons("map_radio", "Select Variable of Interest",
+                                c("Employment"="Employment", "Establishments" = "Establishments", 
+                                  "Wages" = "Wages"),
+                                selected="Employment"),
+                   radioButtons("map_display_radio", "Display Options",
+                                c("Actual Values"="Actual Values", "Difference Compared to Year 2003"="Change_Pct"),
+                                selected="Actual Values"),
+                   sliderInput("map_year", "Select Year",
+                                 min=2003, max=2012, value=2012,
                                  sep="")
-                   ),
-                   conditionalPanel(
-                     ## Initializes a multi-year slider (range)
-                     condition="input.map_timespan == 'mult.yrs'",
-                     ## Slider starts from 2010-2012
-                     sliderInput("map_range", "Select Years",
-                                 min=2001, max=2012, value=c(2010,2012),
-                                 sep="")
-                   )
+                   
                  ),
                  
                  
@@ -95,25 +86,23 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'plot'",
                    ## Select input = List
                    selectInput("plot_muni", "Select Municipality", 
-                               choices = MA_municipals, multiple=TRUE)),
+                               choices = MA_municipals, multiple=TRUE),
+                   radioButtons("plot_radio", "Select Variable of Interest",
+                                c("Employment and Establishments" = "Employment and Establishments", 
+                                  "Wages" = "Wages"),
+                                selected="Employment and Establishments"),
+                   radioButtons("plot_display_radio", "Display Options",
+                                c("Actual Values"="Actual Values", "Difference Compared to Year 2003"="Change_Pct"),
+                                selected="Actual Values")
+                   ),
                  
-#                 No US/MA data available in this dataset 
-                  ## In summary and plot, show boxes that will compare to MA or US average
-#                  conditionalPanel(
-#                    condition="input.tabs == 'summary'|| input.tabs == 'plot'",
-#                    ## False at the end means it starts off unchecked
-#                    checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-#                    checkboxInput("US_mean", "Compare to US Average", FALSE)
-#                  ),
-                 #browse()
-
                  tags$hr(),
                    
               
                
                  ## author line
 
-                 helpText("Created by Arvind Ramakrishnan, Jenna F. Kiridly, Xeulian Li and Emily R. Ramos"),
+                 helpText("Created by Xuelian Li, Arvind Ramakrishnan, Jenna F. Kiridly and Emily R. Ramos"),
                  
                  ## email feedback link
                  ## To develop a link in HTML
@@ -153,67 +142,35 @@ shinyUI(fluidPage(
         
         ## plot tab with google chart options
         tabPanel("Plot",
-                 ## make chart title here (otherwise not centered)
-                 h4("Annual Average Monthly Employment Data by Region", align="center"),
-                 ## make a row to put two charts in
-                 
-                 googleLineChart("plot", width="100%", height="475px", options = list(
-                   
-                   ## set fonts
-                   fontName = "Source Sans Pro",
-                   fontSize = 14,
-                   
-                   ## set axis titles, ticks, fonts, and ranges
-                   hAxis = list(
-                     title = "Year",
-                     format = "####",
-                     ticks = seq(2000, 2012, 2),
-                     viewWindow = xlim,
-                     textStyle = list(
-                       fontSize = 14),
-                     titleTextStyle = list(
-                       fontSize = 16,
-                       bold = TRUE,
-                       italic = FALSE)
+                 ##plot upon the selected variable and display option           
+                 conditionalPanel(
+                   condition="input.plot_radio =='Employment and Establishments'",
+                     conditionalPanel(
+                       condition="input.plot_display_radio=='Actual Values'",
+                       ## make chart title here (otherwise not centered)
+                       h4("Annual Average Monthly Employment and Establishments by Region", align="center"),
+                       Emp_plot_options1,
+                       Est_plot_options1),
+                     conditionalPanel(
+                       condition="input.plot_display_radio=='Change_Pct'",
+                       ## make chart title here (otherwise not centered)
+                       h4("Change in Annual Average Monthly Employment and Establishments by Region Since 2003", align="center"),
+                       Emp_pct_plot_options,
+                       Est_pct_plot_options)
+                 ),
+                   conditionalPanel(
+                   condition="input.plot_radio =='Wages'",
+                   conditionalPanel(
+                     condition="input.plot_display_radio=='Actual Values'",
+                     ## make chart title here (otherwise not centered)
+                     h4("Average Weekly Wage by Region", align="center"),
+                     Wage_plot_options1),
+                   conditionalPanel(
+                     condition="input.plot_display_radio=='Change_Pct'",
+                     ## make chart title here (otherwise not centered)
+                     h4("Change in Average Weekly Wage Since 2003", align="center"),
+                     Wage_pct_plot_options)
                    ),
-                   vAxis = list(
-                     title = "Average Monthly Employment",
-                     viewWindow = ylim,
-                     textStyle = list(
-                       fontSize = 14),
-                     titleTextStyle = list(
-                       fontSize = 16,
-                       bold = TRUE,
-                       italic = FALSE)
-                   ),
-                   
-                   ## set legend fonts
-                   legend = list(
-                     textStyle = list(
-                       fontSize=14)),
-                   
-                   ## set chart area padding
-                   chartArea = list(
-                     top = 50, left = 75,
-                     height = "75%", width = "70%"
-                   ),
-                   
-                   ## set colors
-                   colors = cbbPalette,
-                   
-                   ## set point size
-                   pointSize = 3,
-                   
-                   ## set tooltip font size
-                   ## Hover text font stuff
-                   tooltip = list(
-                     textStyle = list(
-                       fontSize = 14
-                     )
-                   )
-                 )),
-                 ## add text about the variables
-                 #                  plot_main_text,
                  value="plot"),
         
         ## plot map
@@ -243,17 +200,13 @@ shinyUI(fluidPage(
                                  actionButton("action", "Generate Map")
                    )),
                  
-                 ## Single Year Legend
+                 ## Employment Legend
                  conditionalPanel(
-                   condition="input.map_timespan == 'sing.yr' && input.action != 0",
+                   condition="input.map_radio == 'Employment' && input.map_display_radio=='Actual Values' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
+                     right = 10, top = 150, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Single Year"),
-                     tags$br(),
-                     strong("Annual Average" ),
-                     tags$br(),
-                     strong("Monthly Employment"),
+                     strong("Average Monthly Employment"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -264,7 +217,7 @@ shinyUI(fluidPage(
                                    prettyNum(round(to), big.mark = ","), align = "right")
                          )
                        }, 
-                       scolorRanges$from, scolorRanges$to, smap.colors[-length(smap.colors)],
+                       empcolorRanges$from, empcolorRanges$to, map.colors[-length(map.colors)],
                        SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
@@ -273,37 +226,89 @@ shinyUI(fluidPage(
                          tags$td("Data not available", align = "right")))
                    )),
                  
-                 ## Multi Year Legend
+                 ## Establishments Legend
                  conditionalPanel(
-                   condition="input.map_timespan == 'mult.yrs' && input.action != 0",
+                   condition="input.map_radio =='Establishments' && input.map_display_radio=='Actual Values' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
+                     right = 30, top = 150, draggable=FALSE, style = "",
                      class = "floater",
-                     strong("Multiple Year"),
-                     tags$br(),
-                     strong("Annual Average"),
-                     tags$br(),
-                     strong("Monthly Employment"),
+                     strong("Number of Establishments"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
-                           tags$td(
-                             tags$div(
-                               style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                             )),
-                           tags$td(prettyNum(round(from), big.mark = ","), "to", 
-                                   prettyNum(round(to), big.mark = ","), align = "right")
+                           tags$td(tags$div(
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                           )),
+                           tags$td(prettyNum(round(from), big.mark = ","), "to",
+                                   prettyNum(round(to), big.mark = ","),  align = "right")
                          )
-                       }, 
-                       mcolorRanges$from, mcolorRanges$to, mmap.colors[-length(mmap.colors)],
+                       },
+                       estcolorRanges$from, estcolorRanges$to, map_colors[-length(map_colors)],
                        SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
-                         tags$td("Data not available", align = "right"))
+                         tags$td("Data not available", align = "right")
+                       )
                      )
                    )),
+                 ## Wages Legend
+                 conditionalPanel(
+                   condition="input.map_radio =='Wages' && input.map_display_radio=='Actual Values' && input.action != 0",
+                   absolutePanel(
+                     right = 30, top = 150, draggable=FALSE, style = "",
+                     class = "floater",
+                     strong("Average Weekly Wage"),
+                     tags$table(
+                       mapply(function(from, to, color) {
+                         tags$tr(
+                           tags$td(tags$div(
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                           )),
+                           tags$td(prettyNum(round(from), big.mark = ","), "to",
+                                   prettyNum(round(to), big.mark = ","),align = "right")
+                         )
+                       },
+                       wagecolorRanges$from, wagecolorRanges$to, map_colors[-length(map_colors)],
+                       SIMPLIFY=FALSE),
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
+                         )),
+                         tags$td("Data not available", align = "right")
+                       )
+                     )
+                   )
+                   ),
+                 ## Difference compared to Year 2003 Legend
+                 conditionalPanel(
+                   condition="input.map_display_radio=='Change_Pct' && input.action != 0",
+                   absolutePanel(
+                     right = 10, top = 150, draggable=FALSE, style = "",
+                     class = "floater",
+                     strong("Difference Compared to 2003"),
+                     tags$table(
+                       mapply(function(from, to, color) {
+                         tags$tr(
+                           tags$td(tags$div(
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                           )),
+                           tags$td(prettyNum(round(from, 2)), "% to",
+                                   prettyNum(round(to, 2)), "%", align = "right")
+                         )
+                       },
+                       pctcolorRanges$from, pctcolorRanges$to, pctmap_colors[-length(pctmap_colors)],
+                       SIMPLIFY=FALSE),
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
+                         )),
+                         tags$td("Data not available", align = "right")
+                       )
+                     )
+                   )
+                 ),
                  
                  #                plot_main_text,
                  value="map"),

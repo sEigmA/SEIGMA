@@ -108,4 +108,9 @@ emp_data6$Average_Weekly_Wage_Change[which(emp_data6$Municipal=="Leyden")]<-emp_
 emp_data6$Average_Weekly_Wage_Change[which(emp_data6$Municipal=="Savoy")]<-emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Savoy")]/emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Savoy"&emp_data6$Year==2007)]
 emp_data6$Average_Weekly_Wage_Change_Pct<-emp_data6$Average_Weekly_Wage_Change*100
 
+##Calculate the difference since 2003
+emp_data6$Employment_difference<-emp_data6$Employment_Change_Pct-100
+emp_data6$Establishment_difference<-emp_data6$Establishment_Change_Pct-100
+emp_data6$Average_Weekly_Wage_difference<-emp_data6$Average_Weekly_Wage_Change_Pct-100
+
 write.csv(emp_data6, file="employ/empdata3.csv",row.names=FALSE)
