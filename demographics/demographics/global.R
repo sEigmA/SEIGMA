@@ -238,7 +238,7 @@ info_side_text <- conditionalPanel(
   #tags$hr()
 
 
-about_main_text <- p(strong("The SEIGMA Demographics App"), "displays the demogrpahic composition in Massachusetts' municipalities over a five-year period.",
+about_main_text <- p(strong("The SEIGMA Demographics App"), "displays the demogrpahic composition of Massachusetts' municipalities over a five-year period.",
   p(strong("Click on different tabs to see the data in different formats.")),
     tags$br(),
     tags$ul(
