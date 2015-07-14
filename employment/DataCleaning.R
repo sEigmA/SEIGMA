@@ -1,11 +1,11 @@
-#######################################
-## Title: employment Data Cleaning   ##
-## Author(s): Emily Ramos, Arvind    ##
-##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
-## Date Created:  02/04/2015         ##
-## Date Modified: 02/05/2015         ##
-#######################################
+###########################################
+## Title: employment Data Cleaning       ##
+## Author(s): Xuelian Li, Emily Ramos,   ## 
+##            Arvind Ramakrishnan,       ##
+##            Jenna Kiridly, Steve Lauer ## 
+## Date Created:  02/04/2015             ##
+## Date Modified: 07/13/2015             ##
+###########################################
 
 require(sas7bdat)
 require(dplyr)
@@ -89,7 +89,7 @@ emp_data6$Change<-emp_data6$Average_Monthly_Employment/year_03$Average_Monthly_E
 emp_data6$Change[which(emp_data6$Municipal=="Tolland")]<-emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Tolland")]/emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Tolland"&emp_data6$Year==2005)]
 emp_data6$Change[which(emp_data6$Municipal=="Leyden")]<-emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Leyden")]/emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Leyden"&emp_data6$Year==2006)]
 emp_data6$Change[which(emp_data6$Municipal=="Savoy")]<-emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Savoy")]/emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Savoy"&emp_data6$Year==2007)]
-emp_data6$Change_Pct<-emp_data6$Change*100
+emp_data6$Change_Pct<-round(emp_data6$Change*100,3)
 colnames(emp_data6)[9]<-"Employment_Change_Pct"
 
 ##calculate the Establishment percentage change since 2003
@@ -98,7 +98,7 @@ emp_data6$Establishment_Change<-emp_data6$Number_of_Employer_Establishments/year
 emp_data6$Establishment_Change[which(emp_data6$Municipal=="Tolland")]<-emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Tolland")]/emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Tolland"&emp_data6$Year==2005)]
 emp_data6$Establishment_Change[which(emp_data6$Municipal=="Leyden")]<-emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Leyden")]/emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Leyden"&emp_data6$Year==2006)]
 emp_data6$Establishment_Change[which(emp_data6$Municipal=="Savoy")]<-emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Savoy")]/emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Savoy"&emp_data6$Year==2007)]
-emp_data6$Establishment_Change_Pct<-emp_data6$Establishment_Change*100
+emp_data6$Establishment_Change_Pct<-round(emp_data6$Establishment_Change*100,3)
 
 ##calculate the Average Weely wages percentage change since 2003
 emp_data6$Average_Weekly_Wage_Change<-emp_data6$Average_Weekly_Wage/year_03$Average_Weekly_Wage[match(emp_data6$Municipal,year_03$Municipal)]
@@ -106,7 +106,7 @@ emp_data6$Average_Weekly_Wage_Change<-emp_data6$Average_Weekly_Wage/year_03$Aver
 emp_data6$Average_Weekly_Wage_Change[which(emp_data6$Municipal=="Tolland")]<-emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Tolland")]/emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Tolland"&emp_data6$Year==2005)]
 emp_data6$Average_Weekly_Wage_Change[which(emp_data6$Municipal=="Leyden")]<-emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Leyden")]/emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Leyden"&emp_data6$Year==2006)]
 emp_data6$Average_Weekly_Wage_Change[which(emp_data6$Municipal=="Savoy")]<-emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Savoy")]/emp_data6$Average_Weekly_Wage[which(emp_data6$Municipal=="Savoy"&emp_data6$Year==2007)]
-emp_data6$Average_Weekly_Wage_Change_Pct<-emp_data6$Average_Weekly_Wage_Change*100
+emp_data6$Average_Weekly_Wage_Change_Pct<-round(emp_data6$Average_Weekly_Wage_Change*100,3)
 
 ##Calculate the difference since 2003
 emp_data6$Employment_difference<-emp_data6$Employment_Change_Pct-100

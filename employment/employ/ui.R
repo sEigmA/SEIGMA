@@ -1,11 +1,12 @@
-#######################################
-## Title: Employment ui.R            ##
-## Author(s): Emily Ramos, Arvind    ##
-##            Ramakrishnan, Jenna    ##
-##            Kiridly, Xuelian Li    ## 
-## Date Created:  01/08/2015         ##
-## Date Modified: 03/14/2015 AR      ##
-#######################################
+###########################################
+## Title: employment Data Cleaning       ##
+## Author(s): Xuelian Li, Emily Ramos,   ## 
+##            Arvind Ramakrishnan,       ##
+##            Jenna Kiridly, Steve Lauer ## 
+## Date Created:  02/04/2015             ##
+## Date Modified: 07/13/2015             ##
+###########################################
+
 
 shinyUI(fluidPage(
   ## HTML to create generate map button
@@ -92,7 +93,7 @@ shinyUI(fluidPage(
                                   "Wages" = "Wages"),
                                 selected="Employment and Establishments"),
                    radioButtons("plot_display_radio", "Display Options",
-                                c("Actual Values"="Actual Values", "Difference Compared to Year 2003"="Change_Pct"),
+                                c("Actual Values"="Actual Values", "Percentage Change Since Year 2003"="Change_Pct"),
                                 selected="Actual Values")
                    ),
                  
@@ -154,7 +155,7 @@ shinyUI(fluidPage(
                      conditionalPanel(
                        condition="input.plot_display_radio=='Change_Pct'",
                        ## make chart title here (otherwise not centered)
-                       h4("Change in Annual Average Monthly Employment and Establishments by Region Since 2003", align="center"),
+                       h4("Percentage Change in Annual Average Monthly Employment and Establishments by Region Since 2003", align="center"),
                        Emp_pct_plot_options,
                        Est_pct_plot_options)
                  ),
@@ -168,7 +169,7 @@ shinyUI(fluidPage(
                    conditionalPanel(
                      condition="input.plot_display_radio=='Change_Pct'",
                      ## make chart title here (otherwise not centered)
-                     h4("Change in Average Weekly Wage Since 2003", align="center"),
+                     h4("Percentage Change in Average Weekly Wage Since 2003", align="center"),
                      Wage_pct_plot_options)
                    ),
                  value="plot"),
@@ -217,7 +218,7 @@ shinyUI(fluidPage(
                                    prettyNum(round(to), big.mark = ","), align = "right")
                          )
                        }, 
-                       empcolorRanges$from, empcolorRanges$to, map.colors[-length(map.colors)],
+                       empcolorRanges$from, empcolorRanges$to, map_colors[-length(map_colors)],
                        SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(

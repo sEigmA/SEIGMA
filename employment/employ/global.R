@@ -1,11 +1,12 @@
-#######################################
-## Title: Employment global.R        ##
-## Author(s): Emily Ramos, Arvind    ##
-##            Ramakrishnan, Jenna    ##
-##            Kiridly, Xuelian Li    ##
-## Date Created:  1/07/2015          ##
-## Date Modified: 3/12/2015          ##
-#######################################
+###########################################
+## Title: employment Data Cleaning       ##
+## Author(s): Xuelian Li, Emily Ramos,   ## 
+##            Arvind Ramakrishnan,       ##
+##            Jenna Kiridly, Steve Lauer ## 
+## Date Created:  02/04/2015             ##
+## Date Modified: 07/13/2015             ##
+###########################################
+
 
 ##First file run - Environment Setup
 ## load necessary libraries
@@ -135,7 +136,7 @@ ylim_pct_wage<-list(
 
 ## Colors for a Employment legend
 paint.brush <- colorRampPalette(colors=c("white", "violetred"))
-map_colors <- c(spaint.brush(n=5), "black")
+map_colors <- c(paint.brush(n=5), "black")
 
 ## (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
@@ -145,8 +146,8 @@ empmin.val <- min(emp_data$Average_Monthly_Employment, na.rm=TRUE)
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-# scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
-empcuts <- quantile(emp_data$Average_Monthly_Employment, probs = seq(0, 1, length.out = length(map.colors)), na.rm=TRUE)
+# scuts <- seq(smin.val, smax.val, length.out = length(smap_colors))
+empcuts <- quantile(emp_data$Average_Monthly_Employment, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
@@ -159,7 +160,7 @@ empcolorRanges <- data.frame(
 )
 
 ##Colors for a Establishments legend
-estcuts <- quantile(emp_data$Number_of_Employer_Establishments, probs = seq(0, 1, length.out = length(map.colors)), na.rm=TRUE)
+estcuts <- quantile(emp_data$Number_of_Employer_Establishments, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
@@ -171,7 +172,7 @@ estcolorRanges <- data.frame(
 )
 
 ##Colors for a Wages legend
-wagecuts <- quantile(emp_data$Average_Weekly_Wage, probs = seq(0, 1, length.out = length(map.colors)), na.rm=TRUE)
+wagecuts <- quantile(emp_data$Average_Weekly_Wage, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
@@ -192,7 +193,7 @@ pctmap_colors <- c(pctpaint.brush(n=6), "#999999")
 pctmax.val<-max(c(max(emp_data$Employment_difference, na.rm=FALSE),max(emp_data$Establishment_difference, na.rm=FALSE),max(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
 pctmin.val<-min(c(min(emp_data$Employment_difference, na.rm=FALSE),min(emp_data$Establishment_difference, na.rm=FALSE),min(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
 
-pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(pctmap.colors))
+pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(pctmap_colors))
 
 # Construct break ranges for displaying in the legend
 
@@ -542,16 +543,19 @@ Emp_pct_plot_options <- googleLineChart("Emp_pct_plot", width="100%", height="47
                                          title = "",
                                          ## set axis titles, ticks, fonts, and ranges
                                          hAxis = list(
-                                           title = "",
+                                           title = "Year",
+                                           format = "####",
+                                           ticks = seq(2002, 2012, 2),
+                                           viewWindow = xlim,
                                            textStyle = list(
-                                             fontSize = font_size),
+                                             fontSize = 14),
                                            titleTextStyle = list(
-                                             fontSize = font_size+2,
+                                             fontSize = 16,
                                              bold = TRUE,
                                              italic = FALSE)
                                          ),
                                          vAxis = list(
-                                           title = "Percentage Change in Employment since 2003",
+                                           title = "Percentage Change in Employment since 2003 (%)",
                                            viewWindow = ylim_pct,
                                            textStyle = list(
                                              fontSize = font_size),
@@ -595,16 +599,19 @@ Est_pct_plot_options <- googleLineChart("Est_pct_plot", width="100%", height="47
                                             title = "",
                                             ## set axis titles, ticks, fonts, and ranges
                                             hAxis = list(
-                                              title = "",
+                                              title = "Year",
+                                              format = "####",
+                                              ticks = seq(2002, 2012, 2),
+                                              viewWindow = xlim,
                                               textStyle = list(
-                                                fontSize = font_size),
+                                                fontSize = 14),
                                               titleTextStyle = list(
-                                                fontSize = font_size+2,
+                                                fontSize = 16,
                                                 bold = TRUE,
                                                 italic = FALSE)
                                             ),
                                             vAxis = list(
-                                              title = "Percentage Change in Establishments since 2003",
+                                              title = "Percentage Change in Establishments since 2003 (%)",
                                               viewWindow = ylim_pct_est,
                                               textStyle = list(
                                                 fontSize = font_size),
@@ -757,16 +764,19 @@ Wage_pct_plot_options <- googleLineChart("Wage_pct_plot", width="100%", height="
                                           title = "",
                                           ## set axis titles, ticks, fonts, and ranges
                                           hAxis = list(
-                                            title = "",
+                                            title = "Year",
+                                            format = "####",
+                                            ticks = seq(2002, 2012, 2),
+                                            viewWindow = xlim,
                                             textStyle = list(
-                                              fontSize = font_size),
+                                              fontSize = 14),
                                             titleTextStyle = list(
-                                              fontSize = font_size+2,
+                                              fontSize = 16,
                                               bold = TRUE,
                                               italic = FALSE)
                                           ),
                                           vAxis = list(
-                                            title = "Percentage Change in Average Weekly Wage since 2003",
+                                            title = "Percentage Change in Average Weekly Wage since 2003 (%)",
                                             viewWindow = ylim_pct_wage,
                                             textStyle = list(
                                               fontSize = font_size),

@@ -1,11 +1,12 @@
-#######################################
-## Title: Employment server.R        ##
-## Author(s): Emily Ramos, Arvind    ##
-##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ##
-## Date Created:  01/07/2015         ##
-## Date Modified: 03/14/2015         ##
-#######################################
+###########################################
+## Title: employment Data Cleaning       ##
+## Author(s): Xuelian Li, Emily Ramos,   ## 
+##            Arvind Ramakrishnan,       ##
+##            Jenna Kiridly, Steve Lauer ## 
+## Date Created:  02/04/2015             ##
+## Date Modified: 07/13/2015             ##
+###########################################
+
 
 shinyServer(function(input, output, session) {
   # emp_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
@@ -217,7 +218,7 @@ output$Est_pct_plot<-reactive({
     # combine data subset with missing counties data
     map_dat <- rbind.data.frame(map_dat, missing_df)
     map_dat$color <- map_colors[map_dat$color]
-    ##return(map_dat)
+    return(map_dat)
     } 
     if (input$map_display_radio == "Change_Pct"){
       if (input$map_radio == "Employment") {
@@ -248,9 +249,8 @@ output$Est_pct_plot<-reactive({
       # combine data subset with missing counties data
       map_dat <- rbind.data.frame(map_dat, missing_df)
       map_dat$color <- pctmap_colors[map_dat$color]
-      ##return(map_dat)
-      
-    }
+      return(map_dat)
+         }
    })
 
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
@@ -341,9 +341,9 @@ output$Est_pct_plot<-reactive({
     var_select <- gsub("_", " ", var_select)
 
     ## If clicked county has no crude rate, display a message
-    if(muni_value == "NULL"){
+    if(muni_value == "NULL"|| muni_value =="NA"){
       return(as.character(tags$div(
-        tags$h5(var_select, muni_name, "is not available for this timespan"))))
+        tags$h4(var_select, muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
 
