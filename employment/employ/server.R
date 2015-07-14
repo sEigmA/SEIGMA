@@ -59,6 +59,7 @@ shinyServer(function(input, output, session) {
     ## create a dataframe consisting only of counties in vector
     sum_df <- df %>%
       filter(Municipal %in% munis) %>%
+      arrange(Municipal)%>%
       select(Municipal, Year, Average_Monthly_Employment, Average_Weekly_Wage, Number_of_Employer_Establishments)
 
     colnames(sum_df) <- c("Municipal","Year","Average Monthly Employment","Average Weekly Wage", "Number of Employer Establishments")
