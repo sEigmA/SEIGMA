@@ -172,6 +172,8 @@ shinyUI(fluidPage(
                      h4("Percentage Change in Average Weekly Wage Since 2003", align="center"),
                      Wage_pct_plot_options)
                    ),
+                 p(strong("Broken Lines"),
+                   " - For some municipalities, data may not appear only for certain years, resulting in shortened or broken line.  This occurs when the data is not available for that particular time period."),
                  value="plot"),
         
         ## plot map
