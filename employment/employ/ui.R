@@ -2,13 +2,15 @@
 ## Title: employment Data Cleaning       ##
 ## Author(s): Xuelian Li, Emily Ramos,   ## 
 ##            Arvind Ramakrishnan,       ##
-##            Jenna Kiridly, Steve Lauer ## 
+##            Jenna Kiridly              ## 
 ## Date Created:  02/04/2015             ##
 ## Date Modified: 07/13/2015             ##
 ###########################################
 
 
 shinyUI(fluidPage(
+  ## embed the google analytics script in the app
+  tags$head(includeScript("google-analytics.js")),
   ## HTML to create generate map button
   gen_map_button,
   ## this starts the googleCharts engine
