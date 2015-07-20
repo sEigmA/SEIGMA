@@ -323,13 +323,20 @@ shinyUI(fluidPage(
                  tags$br(),
                  tags$ul(
                   tags$li(p(strong("Employed"),
-                           " - All civilians 16 years old and over who worked during the reference week as paid employees, worked in their own business, worked on a farm or family business, worked for 15 hours or more as unpaid workers on a family farm or business, or those who had a job but were absent due to illness, bad weather, vacation, or personal reasons.  Exluded from this category are people whose only activity consisted of work around the house or unpaid volunteer work for religious, charitable, or similar organizations. ")),
+                           " - A monthly survey was conducted each year for more than 8,000 employers.  This survey provided estimates of employment by industry for the state. All civilians 16 years old and over who worked during the reference week as paid employees, worked in their own business, worked on a farm or family business, worked for 15 hours or more as unpaid workers on a family farm or business, or those who had a job but were absent due to illness, bad weather, vacation, or personal reasons.  Exluded from this category are people whose only activity consisted of work around the house or unpaid volunteer work for religious, charitable, or similar organizations.")),
                   tags$br(),
-                 tags$li((p(strong("Annual estimate"),
-                            "-The annual estimate of employees is calculated by first calculating the total number of employees paid for all periods. You must count all employees that you paid at any time during the year and include full-time, part-time, temporary, seasonal, salaried, and hourly workers. Note that pay periods could be monthly, weekly, bi-weekly, etc. Next, divide the total number of employees by the number of pay periods your establishment had in the calender year."))),
+                 tags$li((p(strong("Annual employment estimate"),
+                            "- The annual estimate of employees is calculated by first calculating the total number of employees paid for all periods. You must count all employees that you paid at any time during the year and include full-time, part-time, temporary, seasonal, salaried, and hourly workers. Note that pay periods could be monthly, weekly, bi-weekly, etc. Next, divide the total number of employees by the number of pay periods your establishment had in the calender year."))),
+                 tags$br(),
+                 tags$li((p(strong("Weekly Wage Estimate"), "- Average weekly wage is calculated by dividing quarterly
+total wages by the average employment level over three months.  This number is then divided by 13, which represents the 13 weeks wihtin the payment quarter.  Wage data can be effected by the ratio of full time to part time employees, the number of higher paid employees within an establishment, and by the number of pay periods within the quarter."))),
+                 tags$br(),
+                 tags$li((p(strong("Establishments"), "- An establishment is defined as an economic unit which produces goods or services at a single location and engages in predominantly one activity."))),
+                 tags$br(),
+                 tags$li(p(strong("Percentage Change"), "- This is calculated by comparing the annnual monthly employment esimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered 100% for these calculations. ")),
                  tags$br(),
                  tags$li((p(strong("Bureau of Labor Statistics"),
-                            "-This data was collected from the Bureau of Labor Statistics (BLS). It's helpful to note that the BLS is subject to annual revision revised to reflect new population controls from the Census Bureau, updated input data, and re-estimation.  Links to the data source will be updated when new data is available.")))
+                            "- This data was collected from the Bureau of Labor Statistics (BLS). It's helpful to note that the BLS is subject to annual revision revised to reflect new population controls from the Census Bureau, updated input data, and re-estimation.  Links to the data source will be updated when new data is available.")))
                  ),
                  
                  #tags$br(),
