@@ -61,7 +61,7 @@ MA_municipals <- sort(MA_municipals)
 
 ## Set graph colors (special for colorblind people,turquoise)
 cbbPalette <- c("#000000", "red", "yellow", "green", "blue",
-                "darkblue", "lightblue", "deeppink")
+                "turquoise", "lightblue", "deeppink")
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
@@ -191,8 +191,8 @@ pctmap_colors <- c(pctpaint.brush(n=8), "#999999")
 ## find max and min (crude suicide rates) values for each county
 ##n.rm=FALSE = needed
 pctmax.val<-max(c(max(emp_data$Employment_difference, na.rm=FALSE),max(emp_data$Establishment_difference, na.rm=FALSE),max(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
-pctmin.val<-min(c(min(emp_data$Employment_difference, na.rm=FALSE),min(emp_data$Establishment_difference, na.rm=FALSE),min(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
-
+##pctmin.val<-min(c(min(emp_data$Employment_difference, na.rm=FALSE),min(emp_data$Establishment_difference, na.rm=FALSE),min(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
+pctmin.val<--pctmax.val
 pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(pctmap_colors))
 
 # Construct break ranges for displaying in the legend
