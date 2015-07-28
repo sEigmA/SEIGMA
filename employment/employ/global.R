@@ -59,9 +59,9 @@ MA_municipals <- sort(MA_municipals)
 
 
 
-## Set graph colors (special for colorblind people)
+## Set graph colors (special for colorblind people,turquoise)
 cbbPalette <- c("#000000", "red", "yellow", "green", "blue",
-                "turquoise", "lightblue", "deeppink")
+                "darkblue", "lightblue", "deeppink")
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
@@ -112,19 +112,19 @@ ylim_pct_est<-list(
 
 ##Creat ylim for Average Weekly Wages plot
 ylim_wage<-list(
-  min = min(emp_data$Average_Weekly_Wage, na.rm=T)-5,
+  min = min(emp_data$Inflation_Adjusted_Average_Weekly_Wage, na.rm=T)-5,
   
   ##+5 = max Avg monthly employment plus a little extra
-  max = max(emp_data$Average_Weekly_Wage, na.rm=T)+5
+  max = max(emp_data$Inflation_Adjusted_Average_Weekly_Wage, na.rm=T)+5
 )
 ##when without Boston
 ylim1_wage<-list(
-  min = min(emp_data$Average_Weekly_Wage[which(emp_data$Municipal!="Boston")], na.rm=T)-5,
+  min = min(emp_data$Inflation_Adjusted_Average_Weekly_Wage[which(emp_data$Municipal!="Boston")], na.rm=T)-5,
   
   ##+5 = max Avg monthly employment plus a little extra
-  max = max(emp_data$Average_Weekly_Wage[which(emp_data$Municipal!="Boston")], na.rm=T)+5
+  max = max(emp_data$Inflation_Adjusted_Average_Weekly_Wage[which(emp_data$Municipal!="Boston")], na.rm=T)+5
 )
-##Creat ylim for percentage change of Average_Weekly_Wage plot
+##Creat ylim for percentage change of Inflation_Adjusted_Average_Weekly_Wage plot
 ylim_pct_wage<-list(
   min = min(emp_data$Average_Weekly_Wage_Change_Pct, na.rm=T)-5,
   
@@ -172,7 +172,7 @@ estcolorRanges <- data.frame(
 )
 
 ##Colors for a Wages legend
-wagecuts <- quantile(emp_data$Average_Weekly_Wage, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+wagecuts <- quantile(emp_data$Inflation_Adjusted_Average_Weekly_Wage, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
@@ -185,8 +185,8 @@ wagecolorRanges <- data.frame(
 
 ## colors fade from one color to white to another color, with gray for NAs
 ## colors for pecentage change since 2003 legend
-pctpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[8]))
-pctmap_colors <- c(pctpaint.brush(n=6), "#999999")
+pctpaint.brush <- colorRampPalette(colors=c(cbbPalette[5], "white", cbbPalette[8]))
+pctmap_colors <- c(pctpaint.brush(n=8), "#999999")
 
 ## find max and min (crude suicide rates) values for each county
 ##n.rm=FALSE = needed
@@ -200,6 +200,18 @@ pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(pctmap_colors))
 pctcolorRanges <- data.frame(
   from = head(pctcuts, length(pctcuts)-1),
   to = tail(pctcuts, length(pctcuts)-1)
+)
+# wage pct cut
+wagepctmax.val<-max(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)
+wagepctmin.val<-min(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)
+
+wagepctcuts <- seq(wagepctmin.val, wagepctmax.val, length.out = length(pctmap_colors))
+
+# Construct break ranges for displaying in the legend
+
+wagepctcolorRanges <- data.frame(
+  from = head(wagepctcuts, length(wagepctcuts)-1),
+  to = tail(wagepctcuts, length(wagepctcuts)-1)
 )
 
 
@@ -684,7 +696,7 @@ Wage_plot_options1 <- googleLineChart("Wage_plot1", width="100%", height="475px"
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Average Weekly Wage",
+    title = "Inflation Adjusted Average Weekly Wage",
     viewWindow = ylim_wage,
     textStyle = list(
       fontSize = 14),
@@ -738,7 +750,7 @@ Wage_plot_options2 <- googleLineChart("Wage_plot2", width="100%", height="475px"
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Number of Employer Establishments",
+    title = "Inflation Adjusted Average Weekly Wage",
     viewWindow = ylim1_wage,
     textStyle = list(
       fontSize = 14),

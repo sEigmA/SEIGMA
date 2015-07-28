@@ -60,9 +60,9 @@ shinyServer(function(input, output, session) {
     sum_df <- df %>%
       filter(Municipal %in% munis) %>%
       arrange(Municipal)%>%
-      select(Municipal, Year, Average_Monthly_Employment, Average_Weekly_Wage, Number_of_Employer_Establishments)
+      select(Municipal, Year, Average_Monthly_Employment, Inflation_Adjusted_Average_Weekly_Wage, Number_of_Employer_Establishments)
 
-    colnames(sum_df) <- c("Municipal","Year","Average Monthly Employment","Average Weekly Wage", "Number of Employer Establishments")
+    colnames(sum_df) <- c("Municipal","Year","Average Monthly Employment","Inflation Adjusted Average Weekly Wage", "Number of Employer Establishments")
 
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE))
@@ -77,8 +77,8 @@ shinyServer(function(input, output, session) {
     munis <- input$plot_muni
     w <- wage_df %>%
       filter(Municipal %in% munis) %>%
-      select(Municipal, Year, Average_Weekly_Wage) %>%
-      spread(Municipal, Average_Weekly_Wage)
+      select(Municipal, Year, Inflation_Adjusted_Average_Weekly_Wage) %>%
+      spread(Municipal, Inflation_Adjusted_Average_Weekly_Wage)
     list(
       data=googleDataTable(w))
   })
@@ -198,7 +198,7 @@ output$Est_pct_plot<-reactive({
         cuts<-estcuts
       }
       else {
-        col<-"Average_Weekly_Wage"
+        col<-"Inflation_Adjusted_Average_Weekly_Wage"
         cuts<-wagecuts
       }
    
