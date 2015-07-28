@@ -117,7 +117,7 @@ shinyUI(fluidPage(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Median Annual Household Income (Inflation-Adjusted Dollars) by Region Over Selected Five Year Period", align="center"),
+                 h4("Median Annual Household Income by Region Over Selected Five Year Period", align="center"),
                  ## make a row to put two charts in
                  
                  googleColumnChart("plot", width="100%", height="475px", options = list(
@@ -240,8 +240,7 @@ shinyUI(fluidPage(
                  tags$br(),
                  tags$ul(
                    tags$li(p(strong("Median Annual Household Income"), "-This includes the income of the household and all other individuals ages 15 and over. Median annual household income provides a clear trend to assess residents' household income overtime. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
-                   tags$br(),
-                   tags$li(p(strong("Inflation Adjusted Dollars"), "-An adjusted value of currency used to compare dollar values from one period to another. Due to inflation, the purchasing power of the dollar changes over time, so in order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values.")),
+            
                    tags$br(),
                    tags$li(p(strong("Median"),"-The median divides the distribution of median annual household income into two equal parts; half that fall below the median for median annual household income and half that fall above the median annual household income.")),
                    tags$br(),
