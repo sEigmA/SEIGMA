@@ -130,7 +130,7 @@ shinyUI(fluidPage(
     
     bootstrapPage(mainPanel(
       ## put in logo for title
-      a(img(src = "logo.jpg", height=105, width=750), href="http://www.umass.edu/seigma/"),
+      a(img(src = "logo.jpg", height=82, width=750), href="http://www.umass.edu/seigma/"),
       
       ## create tabs
       tabsetPanel(
