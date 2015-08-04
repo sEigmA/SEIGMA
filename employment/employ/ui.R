@@ -130,7 +130,7 @@ shinyUI(fluidPage(
     
     bootstrapPage(mainPanel(
       ## put in logo for title
-      a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/"),
+      a(img(src = "logo.jpg", height=82, width=750), href="http://www.umass.edu/seigma/"),
       
       ## create tabs
       tabsetPanel(
@@ -330,6 +330,8 @@ shinyUI(fluidPage(
                  tags$br(),
                  tags$li((p(strong("Weekly Wage Estimate"), "- Average weekly wage is calculated by dividing quarterly
 total wages by the average employment level over three months.  This number is then divided by 13, which represents the 13 weeks wihtin the payment quarter.  Wage data can be effected by the ratio of full time to part time employees, the number of higher paid employees within an establishment, and by the number of pay periods within the quarter."))),
+                 tags$br(),
+                 tags$li(p(strong("Inflation Adjusted Dollars"), "-An adjusted value of currency used to compare dollar values from one period to another. Due to inflation, the purchasing power of the dollar changes over time, so in order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values.")),
                  tags$br(),
                  tags$li((p(strong("Establishments"), "- An establishment is defined as an economic unit which produces goods or services at a single location and engages in predominantly one activity."))),
                  tags$br(),
