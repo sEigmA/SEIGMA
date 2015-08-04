@@ -584,7 +584,8 @@ Emp_pct_plot_options <- googleLineChart("Emp_pct_plot", width="100%", height="47
                                              italic = FALSE)
                                          ),
                                          vAxis = list(
-                                           title = "Percentage Change in Employment since 2003 (%)",
+                                           title = "Change in Employment since 2003 (%)",
+                                           ticks = seq(50, 250, 50),
                                            viewWindow = ylim_pct,
                                            textStyle = list(
                                              fontSize = font_size),
@@ -640,7 +641,8 @@ Est_pct_plot_options <- googleLineChart("Est_pct_plot", width="100%", height="47
                                                 italic = FALSE)
                                             ),
                                             vAxis = list(
-                                              title = "Percentage Change in Establishments since 2003 (%)",
+                                              title = "Change in Establishments since 2003 (%)",
+                                              ticks = seq(50, 250, 50),
                                               viewWindow = ylim_pct_est,
                                               textStyle = list(
                                                 fontSize = font_size),
@@ -696,7 +698,7 @@ Wage_plot_options1 <- googleLineChart("Wage_plot1", width="100%", height="475px"
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Inflation Adjusted Average Weekly Wage",
+    title = "Average Weekly Wage (2012 dollars)",
     viewWindow = ylim_wage,
     textStyle = list(
       fontSize = 14),
@@ -750,7 +752,7 @@ Wage_plot_options2 <- googleLineChart("Wage_plot2", width="100%", height="475px"
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Inflation Adjusted Average Weekly Wage",
+    title = "Average Weekly Wage (2012 dollars)",
     viewWindow = ylim1_wage,
     textStyle = list(
       fontSize = 14),
@@ -805,7 +807,7 @@ Wage_pct_plot_options <- googleLineChart("Wage_pct_plot", width="100%", height="
                                               italic = FALSE)
                                           ),
                                           vAxis = list(
-                                            title = "Percentage Change in Average Weekly Wage since 2003 (%)",
+                                            title = "Change in Average Weekly Wage since 2003 (%)",
                                             viewWindow = ylim_pct_wage,
                                             textStyle = list(
                                               fontSize = font_size),

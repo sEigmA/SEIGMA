@@ -95,7 +95,7 @@ shinyUI(fluidPage(
                                   "Wages" = "Wages"),
                                 selected="Employment and Establishments"),
                    radioButtons("plot_display_radio", "Display Options",
-                                c("Actual Values"="Actual Values", "Percentage Change Since Year 2003"="Change_Pct"),
+                                c("Actual Values"="Actual Values", "Change Since 2003"="Change_Pct"),
                                 selected="Actual Values")
                    ),
                  
@@ -151,13 +151,13 @@ shinyUI(fluidPage(
                      conditionalPanel(
                        condition="input.plot_display_radio=='Actual Values'",
                        ## make chart title here (otherwise not centered)
-                       h4("Annual Average Monthly Employment and Establishments by Region", align="center"),
+                       h4("Average Monthly Employment and Establishments Over Time", align="center"),
                        Emp_plot_options1,
                        Est_plot_options1),
                      conditionalPanel(
                        condition="input.plot_display_radio=='Change_Pct'",
                        ## make chart title here (otherwise not centered)
-                       h4("Percentage Change in Annual Average Monthly Employment and Establishments by Region Since 2003", align="center"),
+                       h4("Change in Annual Average Monthly Employment and Establishments Over Time Since 2003", align="center"),
                        Emp_pct_plot_options,
                        Est_pct_plot_options)
                  ),
@@ -166,12 +166,12 @@ shinyUI(fluidPage(
                    conditionalPanel(
                      condition="input.plot_display_radio=='Actual Values'",
                      ## make chart title here (otherwise not centered)
-                     h4("Average Weekly Wage by Region", align="center"),
+                     h4("Average Weekly Wage Over Time", align="center"),
                      Wage_plot_options1),
                    conditionalPanel(
                      condition="input.plot_display_radio=='Change_Pct'",
                      ## make chart title here (otherwise not centered)
-                     h4("Percentage Change in Average Weekly Wage Since 2003", align="center"),
+                     h4("Change in Average Weekly Wage Since 2003", align="center"),
                      Wage_pct_plot_options)
                    ),
                  p(strong("Broken Lines"),
@@ -216,7 +216,7 @@ shinyUI(fluidPage(
                        mapply(function(from, to, color) {
                          tags$tr(
                            tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
                            )),
                            tags$td(prettyNum(round(from), big.mark = ","), "to", 
                                    prettyNum(round(to), big.mark = ","), align = "right")
@@ -242,7 +242,7 @@ shinyUI(fluidPage(
                        mapply(function(from, to, color) {
                          tags$tr(
                            tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
                            )),
                            tags$td(prettyNum(round(from), big.mark = ","), "to",
                                    prettyNum(round(to), big.mark = ","),  align = "right")
@@ -269,7 +269,7 @@ shinyUI(fluidPage(
                        mapply(function(from, to, color) {
                          tags$tr(
                            tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                             style = sprintf("width: 16px; height: 16px; background-color: %s; border:1px solid black;", color)
                            )),
                            tags$td(prettyNum(round(from), big.mark = ","), "to",
                                    prettyNum(round(to), big.mark = ","),align = "right")
@@ -290,14 +290,14 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_display_radio=='Change_Pct' && input.action != 0",
                    absolutePanel(
-                     right = 10, top = 150, draggable=FALSE, style = "",
+                     right = 10, top = 130, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Difference Compared to 2003"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
                            tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+                             style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
                            )),
                            tags$td(prettyNum(round(from, 2)), "% to",
                                    prettyNum(round(to, 2)), "%", align = "right")

@@ -62,7 +62,7 @@ shinyServer(function(input, output, session) {
       arrange(Municipal)%>%
       select(Municipal, Year, Average_Monthly_Employment, Inflation_Adjusted_Average_Weekly_Wage, Number_of_Employer_Establishments)
 
-    colnames(sum_df) <- c("Municipal","Year","Average Monthly Employment","Inflation Adjusted Average Weekly Wage", "Number of Employer Establishments")
+    colnames(sum_df) <- c("Municipal","Year","Average Monthly Employment","Average Weekly Wage (2012 dollars)", "Number of Employer Establishments")
 
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE))
@@ -349,16 +349,23 @@ output$Est_pct_plot<-reactive({
     ## For a single year when county is clicked, display a message
 
     if(input$map_display_radio == "Actual Values"){
-    
+      if(input$map_radio =='Wages'){
     return(as.character(tags$div(
-      tags$h4(var_select, "for", muni_name, " for ", input$map_year),
-      tags$h5(muni_value)
+      tags$h4("Average Weekly Wage (2012 dolloars)", "in", muni_name, " for ", input$map_year),
+      tags$h5("$",muni_value)
     )))
+    }
+    else {
+      return(as.character(tags$div(
+        tags$h4(var_select, "in", muni_name, " for ", input$map_year),
+        tags$h5(muni_value)
+      )))
+    }
     }
     if(input$map_display_radio == "Change_Pct"){
       
       return(as.character(tags$div(
-        tags$h4(var_select, "for", muni_name, " for ", input$map_year,"compared to year 2003"),
+        tags$h4(var_select, "in", muni_name, " for ", input$map_year,"compared to year 2003"),
         tags$h5(muni_value,"%")
       )))
     }

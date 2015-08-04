@@ -28,7 +28,7 @@ emp_data <- emp[,c(1:3,7:9,12,25)]
 #Keep only Average Monthly employment and each monthly employment of all industries for the year
 emp_data1 <- emp_data[which(emp_data[,4]=="Total, All Industries"),]
 
-write.csv(emp_data1, file="empdata2.csv")
+write.csv(emp_data1, file="empdata2.csv",row.names=FALSE)
 
 ## Replace N/A's with "NA" to remove the slash.
 emp_data2 <- emp_data1
@@ -43,7 +43,7 @@ colnames(emp_data3)[c(3:7)] <- c("Year" , "Average_Monthly_Employment","Average_
                                   "Total_Wages_Paid_to_All_Workers")
 
 ## save data
-write.csv(emp_data3, file="employ/empdata1.csv")
+write.csv(emp_data3, file="employ/empdata1.csv",row.names=FALSE)
 
 ##calculate the inflation adjusted Wage
 Adjusted_index<-data.frame(Year=2001:2012, Annual=c(177.1,179.9,184.0,188.9,195.3,201.6,207.342,215.303,214.537,218.056,224.939,229.594))
@@ -52,7 +52,7 @@ emp_data3$Inflation_Adjusted_Average_Weekly_Wage<-rep(0,4180)
 for (i in 2001:2012) {
   emp_data3$Inflation_Adjusted_Average_Weekly_Wage[which(emp_data3$Year==i)]<-emp_data3$Average_Weekly_Wage[which(emp_data3$Year==i)]*Adjusted_index$Inflation_rate[i-2000]
 }
-emp_data3$Inflation_Adjusted_Average_Weekly_Wage<-round(emp_data3$Inflation_Adjusted_Average_Weekly_Wage,2)
+emp_data3$Inflation_Adjusted_Average_Weekly_Wage<-round(emp_data3$Inflation_Adjusted_Average_Weekly_Wage,0)
   
 ##calculate the employment percentage change since 2001
 emp_data4<-emp_data3[order(emp_data3$Municipal),]
@@ -98,7 +98,7 @@ emp_data6$Change<-emp_data6$Average_Monthly_Employment/year_03$Average_Monthly_E
 emp_data6$Change[which(emp_data6$Municipal=="Tolland")]<-emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Tolland")]/emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Tolland"&emp_data6$Year==2005)]
 emp_data6$Change[which(emp_data6$Municipal=="Leyden")]<-emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Leyden")]/emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Leyden"&emp_data6$Year==2006)]
 emp_data6$Change[which(emp_data6$Municipal=="Savoy")]<-emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Savoy")]/emp_data6$Average_Monthly_Employment[which(emp_data6$Municipal=="Savoy"&emp_data6$Year==2007)]
-emp_data6$Change_Pct<-round(emp_data6$Change*100,3)
+emp_data6$Change_Pct<-round(emp_data6$Change*100,1)
 colnames(emp_data6)[10]<-"Employment_Change_Pct"
 
 ##calculate the Establishment percentage change since 2003
@@ -107,7 +107,7 @@ emp_data6$Establishment_Change<-emp_data6$Number_of_Employer_Establishments/year
 emp_data6$Establishment_Change[which(emp_data6$Municipal=="Tolland")]<-emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Tolland")]/emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Tolland"&emp_data6$Year==2005)]
 emp_data6$Establishment_Change[which(emp_data6$Municipal=="Leyden")]<-emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Leyden")]/emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Leyden"&emp_data6$Year==2006)]
 emp_data6$Establishment_Change[which(emp_data6$Municipal=="Savoy")]<-emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Savoy")]/emp_data6$Number_of_Employer_Establishments[which(emp_data6$Municipal=="Savoy"&emp_data6$Year==2007)]
-emp_data6$Establishment_Change_Pct<-round(emp_data6$Establishment_Change*100,3)
+emp_data6$Establishment_Change_Pct<-round(emp_data6$Establishment_Change*100,1)
 
 ##calculate the Average Weely wages percentage change since 2003
 emp_data6$Average_Weekly_Wage_Change<-emp_data6$Inflation_Adjusted_Average_Weekly_Wage/year_03$Inflation_Adjusted_Average_Weekly_Wage[match(emp_data6$Municipal,year_03$Municipal)]
@@ -115,7 +115,7 @@ emp_data6$Average_Weekly_Wage_Change<-emp_data6$Inflation_Adjusted_Average_Weekl
 emp_data6$Average_Weekly_Wage_Change[which(emp_data6$Municipal=="Tolland")]<-emp_data6$Inflation_Adjusted_Average_Weekly_Wage[which(emp_data6$Municipal=="Tolland")]/emp_data6$Inflation_Adjusted_Average_Weekly_Wage[which(emp_data6$Municipal=="Tolland"&emp_data6$Year==2005)]
 emp_data6$Average_Weekly_Wage_Change[which(emp_data6$Municipal=="Leyden")]<-emp_data6$Inflation_Adjusted_Average_Weekly_Wage[which(emp_data6$Municipal=="Leyden")]/emp_data6$Inflation_Adjusted_Average_Weekly_Wage[which(emp_data6$Municipal=="Leyden"&emp_data6$Year==2006)]
 emp_data6$Average_Weekly_Wage_Change[which(emp_data6$Municipal=="Savoy")]<-emp_data6$Inflation_Adjusted_Average_Weekly_Wage[which(emp_data6$Municipal=="Savoy")]/emp_data6$Inflation_Adjusted_Average_Weekly_Wage[which(emp_data6$Municipal=="Savoy"&emp_data6$Year==2007)]
-emp_data6$Average_Weekly_Wage_Change_Pct<-round(emp_data6$Average_Weekly_Wage_Change*100,3)
+emp_data6$Average_Weekly_Wage_Change_Pct<-round(emp_data6$Average_Weekly_Wage_Change*100,1)
 
 ##Calculate the difference since 2003
 emp_data6$Employment_difference<-emp_data6$Employment_Change_Pct-100
