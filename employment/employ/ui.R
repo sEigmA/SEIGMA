@@ -112,7 +112,7 @@ shinyUI(fluidPage(
                  helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
                  
                  ## data source citation
-                 helpText(a("Data Source: Bureau of Labor Statistics", href="http://www.bls.gov/lau/data.htm",
+                 helpText(a("Massachusetts Office of Labor and Workforce Development, ES-202", href="http://lmi2.detma.org/lmi/lmi_es_a.asp",
                             target="_blank")),
                  
                  ## GitHub link
@@ -176,6 +176,8 @@ shinyUI(fluidPage(
                    ),
                  p(strong("Broken Lines"),
                    " - For some municipalities, data may not appear only for certain years, resulting in shortened or broken line.  This occurs when the data is not available for that particular time period."),
+                 tags$br(),
+                 p(strong("Change Since 2003"), "- This is calculated by comparing the  monthly employment esimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered 100% for these calculations. "),
                  value="plot"),
         
         ## plot map
@@ -325,20 +327,17 @@ shinyUI(fluidPage(
                   tags$li(p(strong("Employed"),
                            " - A monthly survey was conducted each year for more than 8,000 employers.  This survey provided estimates of employment by industry for the state. All civilians 16 years old and over who worked during the reference week as paid employees, worked in their own business, worked on a farm or family business, worked for 15 hours or more as unpaid workers on a family farm or business, or those who had a job but were absent due to illness, bad weather, vacation, or personal reasons.  Exluded from this category are people whose only activity consisted of work around the house or unpaid volunteer work for religious, charitable, or similar organizations.")),
                   tags$br(),
-                 tags$li((p(strong("Annual employment estimate"),
+                 tags$li((p(strong("Monthly employment estimate"),
                             "- The annual estimate of employees is calculated by first calculating the total number of employees paid for all periods. You must count all employees that you paid at any time during the year and include full-time, part-time, temporary, seasonal, salaried, and hourly workers. Note that pay periods could be monthly, weekly, bi-weekly, etc. Next, divide the total number of employees by the number of pay periods your establishment had in the calender year."))),
                  tags$br(),
                  tags$li((p(strong("Weekly Wage Estimate"), "- Average weekly wage is calculated by dividing quarterly
 total wages by the average employment level over three months.  This number is then divided by 13, which represents the 13 weeks wihtin the payment quarter.  Wage data can be effected by the ratio of full time to part time employees, the number of higher paid employees within an establishment, and by the number of pay periods within the quarter."))),
                  tags$br(),
-                 tags$li(p(strong("Inflation Adjusted Dollars"), "-An adjusted value of currency used to compare dollar values from one period to another. Due to inflation, the purchasing power of the dollar changes over time, so in order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values.")),
+                 tags$li(p(strong("2012 Dollars"), "-An adjusted value of currency used to compare dollar values from one period to another. Due to inflation, the purchasing power of the dollar changes over time, so in order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values.")),
                  tags$br(),
                  tags$li((p(strong("Establishments"), "- An establishment is defined as an economic unit which produces goods or services at a single location and engages in predominantly one activity."))),
                  tags$br(),
-                 tags$li(p(strong("Percentage Change"), "- This is calculated by comparing the annnual monthly employment esimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered 100% for these calculations. ")),
-                 tags$br(),
-                 tags$li((p(strong("Bureau of Labor Statistics"),
-                            "- This data was collected from the Bureau of Labor Statistics (BLS). It's helpful to note that the BLS is subject to annual revision revised to reflect new population controls from the Census Bureau, updated input data, and re-estimation.  Links to the data source will be updated when new data is available.")))
+                 tags$li(p(strong("Change Since 2003"), "- This is calculated by comparing the  monthly employment esimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered 100% for these calculations. "))
                  ),
                  
                  #tags$br(),

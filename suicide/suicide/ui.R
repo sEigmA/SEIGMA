@@ -238,7 +238,7 @@ shinyUI(fluidPage(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Age-adjusted Suicide Rate Over Time (per 100,000 population) for", align="center"),
+                 h4("Age-adjusted Suicide Rate Over Time (per 100,000 population)", align="center"),
                  ## make line chart
                  googleLineChart("plot", width="100%", height="475px", options = list(
                    

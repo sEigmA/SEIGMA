@@ -270,17 +270,17 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
 
-  helpText(p(strong('Please select the years for which you are interested in viewing the annual estimate of monthly employment, weekly wage, and number of establishments.'))),
+  helpText(p(strong('Please select the years for which you are interested in viewing the estimate of monthly employment, weekly wage, and number of establishments.'))),
   tags$br(),
   tags$ul(
     tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To look at the annual estimate of monthly employment, weekly wage, and number of establishments for a single year select single year from the drop down menu.'),
+    tags$li('To look at the estimate of monthly employment, weekly wage, and number of establishments for a single year select single year from the drop down menu.'),
     tags$br(),
-    tags$li('To look at the annual estimate of monthly employment, weekly wage, and number of establishments over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
+    tags$li('To look at the estimate of monthly employment, weekly wage, and number of establishments over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
     tags$br(),
-    tags$li('Sort the annual estimate of monthly employment in ascending and descending order by clicking on the column or variable title.')
+    tags$li('Sort the estimate of monthly employment in ascending and descending order by clicking on the column or variable title.')
 
   )
 )
@@ -289,18 +289,18 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the municipality for which you are interested in viewing the annual estimate of monthly employment, weekly wage, and number of establishments. Do not select more than ten municipalities at a time.')),
+  p(strong('Please select the municipality for which you are interested in viewing the estimate of monthly employment, weekly wage, and number of establishments. Do not select more than ten municipalities at a time.')),
   tags$br(),
   tags$ul(
   tags$li("Once you have selected the municipalities which you are interested in viewing, select a Variable of Interest."),
   tags$br(),
-  tags$li("To view the annual estimate of monthly employment and number of establishments select Employment and Establishments."),
+  tags$li("To view the estimate of monthly employment and number of establishments select Employment and Establishments."),
   tags$br(),
   tags$li("To view the annual estimate of weekly wages, select Wages."),
   tags$br(),
-  tags$li("Select Actual Values from the Display Options to view the annual estimate of monthly employment, weekly wage, and number of establishments for 2003-2012."),
+  tags$li("Select Actual Values from the Display Options to view theestimate of monthly employment, weekly wage, and number of establishments for 2003-2012."),
   tags$br(),
-  tags$li("Select Percentage Change from the Display Options to view the percent change in annual estimate of monthly employment, weekly wage, and number of establishments each year for the years 2003-2012.")
+  tags$li("Select Change Since 2003 from the Display Options to view the percent change in the estimate of monthly employment, weekly wage, and number of establishments each year for the years 2003-2012.")
   ))
 
 
@@ -311,13 +311,13 @@ map_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
 
-    tags$li('To view the annual estimate of monthly employment select Employment, then click on a municipality for which you are interested in viewing the annual estimate of monthly employment.'),
+    tags$li('To view the estimate of monthly employment select Employment, then click on a municipality for which you are interested in viewing the annual estimate of monthly employment.'),
     tags$br(),
     tags$li("To view the number of establishments select Establishments, then click on a municipality for which you are interested in viewing the number of establishments."),
     tags$br(),
     tags$li("To view the annual estimate of weekly wages select Wages, then click on a municipality for which you are interested in viewing the annual estimate of weekly wages."),
     tags$br(),
-    tags$li("To view the difference in annual estimate of monthly employment, weekly wage, and number of establishments between the year you selected and 2003 select Difference Compared to Year 2003.")
+    tags$li("To view the difference in the estimate of monthly employment, weekly wage, and number of establishments between the year you selected and 2003 select Difference Compared to Year 2003.")
     
   ))
 
@@ -326,14 +326,14 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Employment App"), "displays annual monthly employment estimates, weekly wage estimates, and the number of establishments for Massachusetts municipalities.",
+about_main_text <- p(strong("The SEIGMA Employment App"), "displays monthly employment estimates, weekly wage estimates, and the number of establishments for Massachusetts municipalities.",
                      p(strong("Click on different tabs to view the data in different formats.")),
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the source data in table format.")),
-                       tags$li(p(strong("Plot"), "compares estimates of annual monthly employment, annual weekly wage, and number of establishments for each municipality.")),
-                       tags$li(p(strong("Map"), "visually displays annual monthly employment estimates, annual weekly wage estimates, and number of establishments by municipality.")),
-                       tags$li(p(strong("More Info"), "describes the annual monthly employment estimate, annual weekly wage estimate, and number of establishments including formulas and calculations."))
+                       tags$li(p(strong("Plot"), "compares estimates of monthly employment, annual weekly wage, and number of establishments for each municipality.")),
+                       tags$li(p(strong("Map"), "visually displays monthly employment estimates, annual weekly wage estimates, and number of establishments by municipality.")),
+                       tags$li(p(strong("More Info"), "describes the monthly employment estimate, annual weekly wage estimate, and number of establishments including formulas and calculations."))
                      ))
 
 plot_main_text <- p(strong("Variable Summary:"),
