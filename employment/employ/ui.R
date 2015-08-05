@@ -157,10 +157,11 @@ shinyUI(fluidPage(
                      conditionalPanel(
                        condition="input.plot_display_radio=='Change_Pct'",
                        ## make chart title here (otherwise not centered)
-                       h4("Change in Annual Average Monthly Employment and Establishments Over Time Since 2003", align="center"),
+                       h4("Change in Average Monthly Employment and Establishments Over Time Since 2003", align="center"),
                        Emp_pct_plot_options,
-                       Est_pct_plot_options)
-                 ),
+                       Est_pct_plot_options,
+                   p(strong("Change Since 2003"), "- This is calculated by comparing the  monthly employment esimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered 100% for these calculations. ")
+                 )),
                    conditionalPanel(
                    condition="input.plot_radio =='Wages'",
                    conditionalPanel(
@@ -172,13 +173,15 @@ shinyUI(fluidPage(
                      condition="input.plot_display_radio=='Change_Pct'",
                      ## make chart title here (otherwise not centered)
                      h4("Change in Average Weekly Wage Since 2003", align="center"),
-                     Wage_pct_plot_options)
+                     Wage_pct_plot_options,
+                     p(strong("Change Since 2003"), "- This is calculated by comparing the  monthly employment esimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered 100% for these calculations. ")
+                     )
                    ),
+                 tags$br(),
                  p(strong("Broken Lines"),
                    " - For some municipalities, data may not appear only for certain years, resulting in shortened or broken line.  This occurs when the data is not available for that particular time period."),
-                 tags$br(),
-                 p(strong("Change Since 2003"), "- This is calculated by comparing the  monthly employment esimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered 100% for these calculations. "),
-                 value="plot"),
+                 
+                  value="plot"),
         
         ## plot map
         tabPanel("Map",
