@@ -351,7 +351,7 @@ output$Est_pct_plot<-reactive({
     if(input$map_display_radio == "Actual Values"){
       if(input$map_radio =='Wages'){
     return(as.character(tags$div(
-      tags$h4("Average Weekly Wage (2012 dolloars)", "in", muni_name, " for ", input$map_year),
+      tags$h4("Average Weekly Wage (2012 dollars)", "in", muni_name, " for ", input$map_year),
       tags$h5("$",muni_value)
     )))
     }

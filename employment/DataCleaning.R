@@ -43,7 +43,7 @@ colnames(emp_data3)[c(3:7)] <- c("Year" , "Average_Monthly_Employment","Average_
                                   "Total_Wages_Paid_to_All_Workers")
 
 ## save data
-write.csv(emp_data3, file="employ/empdata1.csv",row.names=FALSE)
+write.csv(emp_data3, file="employment/empdata1.csv",row.names=FALSE)
 
 ##calculate the inflation adjusted Wage
 Adjusted_index<-data.frame(Year=2001:2012, Annual=c(177.1,179.9,184.0,188.9,195.3,201.6,207.342,215.303,214.537,218.056,224.939,229.594))
@@ -85,7 +85,7 @@ emp_data4$Average_Weekly_Wage_Change[which(emp_data4$Municipal=="Mount Washingto
 emp_data4$Average_Weekly_Wage_Change_Pct<-emp_data4$Average_Weekly_Wage_Change*100
 
 
-write.csv(emp_data4, file="employ/empdata2.csv",row.names=FALSE)
+write.csv(emp_data4, file="employment/empdata2.csv",row.names=FALSE)
 
 ##Only keep data since 2003
 emp_data5<-emp_data3%>%
@@ -122,4 +122,4 @@ emp_data6$Employment_difference<-emp_data6$Employment_Change_Pct-100
 emp_data6$Establishment_difference<-emp_data6$Establishment_Change_Pct-100
 emp_data6$Average_Weekly_Wage_difference<-emp_data6$Average_Weekly_Wage_Change_Pct-100
 
-write.csv(emp_data6, file="employ/empdata3.csv",row.names=FALSE)
+write.csv(emp_data6, file="employment/empdata3.csv",row.names=FALSE)
