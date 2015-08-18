@@ -70,7 +70,7 @@ shinyUI(fluidPage(
                   conditionalPanel(
                    condition="input.tabs == 'map'",
                    radioButtons("map_radio", "Select Variable of Interest",
-                                c("Employment"="Employment", "Establishments" = "Establishments", 
+                                c("Employment"="Employment", "Business Establishments" = "Establishments", 
                                   "Wages" = "Wages"),
                                 selected="Employment"),
                    radioButtons("map_display_radio", "Display Options",
@@ -91,7 +91,7 @@ shinyUI(fluidPage(
                    selectInput("plot_muni", "Select Municipality", 
                                choices = MA_municipals, multiple=TRUE),
                    radioButtons("plot_radio", "Select Variable of Interest",
-                                c("Employment and Establishments" = "Employment and Establishments", 
+                                c("Employment and Business Establishments" = "Employment and Establishments", 
                                   "Wages" = "Wages"),
                                 selected="Employment and Establishments"),
                    radioButtons("plot_display_radio", "Display Options",
@@ -151,13 +151,13 @@ shinyUI(fluidPage(
                      conditionalPanel(
                        condition="input.plot_display_radio=='Actual Values'",
                        ## make chart title here (otherwise not centered)
-                       h4("Average Monthly Employment and Establishments Over Time", align="center"),
+                       h4("Average Monthly Employment and Business Establishments Over Time", align="center"),
                        Emp_plot_options1,
                        Est_plot_options1),
                      conditionalPanel(
                        condition="input.plot_display_radio=='Change_Pct'",
                        ## make chart title here (otherwise not centered)
-                       h4("Change in Average Monthly Employment and Establishments Over Time Since 2003", align="center"),
+                       h4("Change in Average Monthly Employment and Business Establishments Over Time Since 2003", align="center"),
                        Emp_pct_plot_options,
                        Est_pct_plot_options,
                    p(strong("Change Since 2003"), "- This is calculated by comparing average monthly employment and weekly wages for a specific year to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered 100% for these calculations.")
