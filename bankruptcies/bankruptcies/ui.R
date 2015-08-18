@@ -43,7 +43,7 @@ shinyUI(fluidPage(
                                ## Multiple allows for multi-county selection
                                multiple=TRUE),
                    radioButtons("sum_radio", "Select Variable of Interest",
-                                c("Total Filings" = "Total Filings"
+                                c("Total Filings" = "Total Filings",
                                   "Business Filings" = "Business Filings", 
                                   "NonBusiness Filings" = "NonBusiness Filings"),
                                 selected="Total Filings"),
@@ -57,7 +57,7 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'plot'",
                    ## Select input = List
                    selectInput("plot_county", "Select County", 
-                               choices = MAcounties, multiple=TRUE),
+                               choices = MAcounties, selected="Barnstable County", multiple=TRUE),
                    radioButtons("plot_radio", "Select Variable of Interest",
                                 c("Business Filings" = "Business Filings", 
                                   "NonBusiness Filings" = "NonBusiness Filings"),
@@ -253,7 +253,7 @@ shinyUI(fluidPage(
                  
                  ## NonBusiness Legend
                  conditionalPanel(
-                   condition="input.map_radio =='NonBusiness Filings' && input.map_bus_display == 'Business_Filings_Total' && input.action != 0",
+                   condition="input.map_radio =='NonBusiness Filings' && input.map_nonbus_display == 'NonBusiness_Filings_Total' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 150, draggable=FALSE, style = "",
                      class = "floater",
@@ -280,12 +280,13 @@ shinyUI(fluidPage(
                    )),
                  ## Proportion by Chapter in Business Filings Bankruptcies Legend
                  conditionalPanel(
-                   condition="input.map_radio =='Wages' && input.map_display_radio=='Actual Values' && input.action != 0",
+                   condition="input.map_radio =='Business Filings' && input.map_bus_display != 'Business_Filings_Total' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 150, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Proportion by Chapter in"),
-                     strong("Business Filings Bankruptcies")
+                     br(),
+                     strong("Business Filings Bankruptcies"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -309,12 +310,13 @@ shinyUI(fluidPage(
                  ),
                  ## Proportion by Chapter in NonBusiness Filings Bankruptcies
                  conditionalPanel(
-                   condition="input.map_display_radio=='Change_Pct' && input.action != 0",
+                   condition="input.map_radio =='NonBusiness Filings' && input.map_nonbus_display != 'NonBusiness_Filings_Total' && input.action != 0",
                    absolutePanel(
                      right = 10, top = 130, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Proportion by Chapter in"),
-                     strong("NonBusiness Filings Bankruptcies")
+                     br(),
+                     strong("NonBusiness Filings Bankruptcies"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(

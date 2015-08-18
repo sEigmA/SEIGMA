@@ -70,7 +70,7 @@ ylim_pro <- list(
 
 ## Colors for business total legend
 paint_brush <- colorRampPalette(colors=c("white", "red3"))
-map_colors <- c(spaint_brush(n=5), "#999999")
+map_colors <- c(paint_brush(n=5), "#999999")
 
 ## (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year

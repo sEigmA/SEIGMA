@@ -64,6 +64,7 @@ shinyServer(function(input, output, session) {
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   ## create the plot of the data
   ## for the Google charts plot
+
   munis_df <- reactive({
     #     browser()
     ## make reactive dataframe into regular dataframe
