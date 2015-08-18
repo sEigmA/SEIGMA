@@ -68,3 +68,4 @@ bank_data5$Proportion_Business_Filings_Chapter_13<-round(bank_data5$Business_Fil
 bank_data5$Proportion_NonBusiness_Filings_Chapter_7<-round(bank_data5$NonBusiness_Filings_Chapter_7/bank_data5$NonBusiness_Filings_Total,3)
 bank_data5$Proportion_NonBusiness_Filings_Chapter_11<-round(bank_data5$NonBusiness_Filings_Chapter_11/bank_data5$NonBusiness_Filings_Total,3)
 bank_data5$Proportion_NonBusiness_Filings_Chapter_13<-round(bank_data5$NonBusiness_Filings_Chapter_13/bank_data5$NonBusiness_Filings_Total,3)
+write.csv(bank_data5, file="bankruptcies/bankdata1.csv",row.names=FALSE)
