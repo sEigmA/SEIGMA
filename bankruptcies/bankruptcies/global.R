@@ -16,6 +16,7 @@ require(googleCharts)
 require(reshape2)
 require(tidyr)
 require(maptools)
+require(Hmisc)
 
 ## load map data
 MAmap <- fromJSON("County_2010Census_DP1.geojson")
