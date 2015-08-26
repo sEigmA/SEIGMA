@@ -169,7 +169,7 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
   
-  helpText(p(strong('Please select the years for which you are interested in viewing the estimate of monthly employment, weekly wage, and number of establishments.'))),
+  helpText(p(strong('Please select the years for which you are interested in viewing the number of , weekly wage, and number of establishments.'))),
   tags$br(),
   tags$ul(
     tags$br(),
