@@ -65,7 +65,7 @@ ylim_Non_bus <- list(
 ylim_pro <- list(
   min = 0,
   
-  max = 1.05
+  max = 103
 )
 
 
@@ -108,7 +108,7 @@ nonbuscolorRanges <- data.frame(
 )
 
 ## Colors for proportion of chapter legend
-procuts <- seq(0, 1, length.out = length(map_colors))
+procuts <- seq(0, 100, length.out = length(map_colors))
 
 procolorRanges <- data.frame(
   from = head(procuts, length(procuts)-1),
@@ -376,7 +376,7 @@ Pro_Bus_plot_options <- googleLineChart("Pro_Bus_plot", width="100%", height="47
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Proportion of Chapter in Business Filings",
+    title = "Percentage of Chapter in Business Filings",
     viewWindow = ylim_pro,
     textStyle = list(
       fontSize = 14),
@@ -431,7 +431,7 @@ Pro_NonBus_plot_options <- googleLineChart("Pro_NonBus_plot", width="100%", heig
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Proportion of Chapter in NonBusiness Filings",
+    title = "Percentage of Chapter in Non-Business Filings",
     viewWindow = ylim_pro,
     textStyle = list(
       fontSize = 14),
