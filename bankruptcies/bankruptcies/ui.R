@@ -35,7 +35,9 @@ shinyUI(fluidPage(
                    ## Select input = Drop down list of timespan (variable name on server side) 
                    
                    selectInput("sum_year", "Select Year",
-                               choices = list("2013" = "2013", "2014" = "2014")
+                               choices = list("2013" = "2013", "2014" = "2014"),
+                               selected="2013",
+                               multiple=TRUE
                    ),
                    
                    selectInput("sum_county", "Select County", 
@@ -45,7 +47,7 @@ shinyUI(fluidPage(
                    radioButtons("sum_radio", "Select Variable of Interest",
                                 c("Total Filings" = "Total Filings",
                                   "Business Filings" = "Business Filings", 
-                                  "NonBusiness Filings" = "NonBusiness Filings"),
+                                  "Non-Business Filings" = "NonBusiness Filings"),
                                 selected="Total Filings"),
                    checkboxInput("sum_MA", "Compare to MA", FALSE),
                    checkboxInput("sum_US", "Compare to US", FALSE)
@@ -60,14 +62,14 @@ shinyUI(fluidPage(
                                choices = MAcounties, selected="Barnstable County", multiple=TRUE),
                    radioButtons("plot_radio", "Select Variable of Interest",
                                 c("Business Filings" = "Business Filings", 
-                                  "NonBusiness Filings" = "NonBusiness Filings"),
+                                  "Non-Business Filings" = "NonBusiness Filings"),
                                 selected="Business Filings"),
                    conditionalPanel(
                      condition="input.plot_radio == 'Business Filings'",
                      selectInput("plot_bus_display", "Display Options",
-                                 choices=list("Total" = "Business_Filings_Total", "Proportion of Chapter 7" = "Proportion_Business_Filings_Chapter_7",
-                                              "Proportion of Chapter 11" = "Proportion_Business_Filings_Chapter_11","Proportion of Chapter 12" = "Proportion_Business_Filings_Chapter_12",
-                                              "Proportion of Chapter 13" = "Proportion_Business_Filings_Chapter_13"),
+                                 choices=list("Total" = "Business_Filings_Total", "Percentage of Chapter 7" = "Percentage_of_Chapter_7_in_Business_Filings",
+                                              "Percentage of Chapter 11" = "Percentage_of_Chapter_11_in_Business_Filings","Percentage of Chapter 12" = "Percentage_of_Chapter_12_in_Business_Filings",
+                                              "Percentage of Chapter 13" = "Percentage_of_Chapter_13_in_Business_Filings"),
                                  selected = "Business_Filings_Total"
                        ),
                      conditionalPanel(
@@ -79,15 +81,15 @@ shinyUI(fluidPage(
                    conditionalPanel(
                      condition="input.plot_radio == 'NonBusiness Filings'",
                      selectInput("plot_nonbus_display", "Display Options",
-                                 choices=list("Total" = "NonBusiness_Filings_Total", "Proportion of Chapter 7" = "Proportion_NonBusiness_Filings_Chapter_7",
-                                              "Proportion of Chapter 11" = "Proportion_NonBusiness_Filings_Chapter_11",
-                                              "Proportion of Chapter 13" = "Proportion_NonBusiness_Filings_Chapter_13"),
+                                 choices=list("Total" = "NonBusiness_Filings_Total", "Percentage of Chapter 7" = "Percentage_of_Chapter_7_in_NonBusiness_Filings",
+                                              "Percentage of Chapter 11" = "Percentage_of_Chapter_11_in_NonBusiness_Filings",
+                                              "Percentage of Chapter 13" = "Percentage_of_Chapter_13_in_NonBusiness_Filings"),
                                  selected = "NonBusiness_Filings_Total"
                      ),
                      conditionalPanel(
                        condition="input.plot_nonbus_display != 'NonBusiness_Filings_Total'",
-                       checkboxInput("plot_MA", "Compare to MA", FALSE),
-                       checkboxInput("plot_US", "Compare to US", FALSE)
+                       checkboxInput("plot2_MA", "Compare to MA", FALSE),
+                       checkboxInput("plot2_US", "Compare to US", FALSE)
                      )
                    )
                  ),
@@ -101,23 +103,23 @@ shinyUI(fluidPage(
                    ),
                    radioButtons("map_radio", "Select Variable of Interest",
                                 c("Business Filings" = "Business Filings", 
-                                  "NonBusiness Filings" = "NonBusiness Filings"),
+                                  "Non-Business Filings" = "NonBusiness Filings"),
                                 selected="Business Filings"),
                    conditionalPanel(
                      condition="input.map_radio == 'Business Filings'",
                      selectInput("map_bus_display", "Display Options",
-                                 choices=list("Total" = "Business_Filings_Total", "Proportion of Chapter 7" = "Proportion_Business_Filings_Chapter_7",
-                                              "Proportion of Chapter 11" = "Proportion_Business_Filings_Chapter_11","Proportion of Chapter 12" = "Proportion_Business_Filings_Chapter_12",
-                                              "Proportion of Chapter 13" = "Proportion_Business_Filings_Chapter_13"),
+                                 choices=list("Total" = "Business_Filings_Total", "Percentage of Chapter 7" = "Percentage_of_Chapter_7_in_Business_Filings",
+                                              "Percentage of Chapter 11" = "Percentage_of_Chapter_11_in_Business_Filings","Percentage of Chapter 12" = "Percentage_of_Chapter_12_in_Business_Filings",
+                                              "Percentage of Chapter 13" = "Percentage_of_Chapter_13_in_Business_Filings"),
                                  selected = "Business_Filings_Total"
                      )
                     ),
                    conditionalPanel(
                      condition="input.map_radio == 'NonBusiness Filings'",
                      selectInput("map_nonbus_display", "Display Options",
-                                 choices=list("Total" = "NonBusiness_Filings_Total", "Proportion of Chapter 7" = "Proportion_NonBusiness_Filings_Chapter_7",
-                                              "Proportion of Chapter 11" = "Proportion_NonBusiness_Filings_Chapter_11",
-                                              "Proportion of Chapter 13" = "Proportion_NonBusiness_Filings_Chapter_13"),
+                                 choices=list("Total" = "NonBusiness_Filings_Total", "Percentage of Chapter 7" = "Percentage_of_Chapter_7_in_NonBusiness_Filings",
+                                              "Percentage of Chapter 11" = "Percentage_of_Chapter_11_in_NonBusiness_Filings",
+                                              "Percentage of Chapter 13" = "Percentage_of_Chapter_13_in_NonBusiness_Filings"),
                                  selected = "NonBusiness_Filings_Total"
                      )
                    )
@@ -171,28 +173,21 @@ shinyUI(fluidPage(
                    condition="input.plot_radio =='Business Filings'",
                  conditionalPanel(
                    condition="input.plot_bus_display == 'Business_Filings_Total'",
-                    ## make chart title here (otherwise not centered)
-                     h4("Total Business Filings Bankruptcies Over Time", align="center"),
                    Bus_plot_options),
                    conditionalPanel(
                      condition="input.plot_bus_display != 'Business_Filings_Total'",
                      ## make chart title here (otherwise not centered)
-                     h4("Proportiong by Chapter in Business Filings Bankruptcies Over Time ", align="center"),
-                     Pro_Bus_plot_options
+                    Pro_Bus_plot_options
                      )
                  ),
                  conditionalPanel(
                    condition="input.plot_radio =='NonBusiness Filings'",
                    conditionalPanel(
                      condition="input.plot_nonbus_display == 'NonBusiness_Filings_Total'",
-                     ## make chart title here (otherwise not centered)
-                     h4("Total NonBusiness Filings Bankruptcies Over Time", align="center"),
-                     NonBus_plot_options),
+                    NonBus_plot_options),
                    conditionalPanel(
                      condition="input.plot_nonbus_display != 'NonBusiness_Filings_Total'",
-                     ## make chart title here (otherwise not centered)
-                     h4("Proportion by Chapter in NonBusiness Filings Bankruptcies Over Time ", align="center"),
-                     Pro_NonBus_plot_options
+                    Pro_NonBus_plot_options
                    )
                  ),
                  
@@ -257,7 +252,9 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 150, draggable=FALSE, style = "",
                      class = "floater",
-                     strong("NonBusiness Filings of Bankruptcies"),
+                     strong("Non-Business Filings"),
+                     br(),
+                     strong("of Bankruptcies"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -284,7 +281,7 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 30, top = 150, draggable=FALSE, style = "",
                      class = "floater",
-                     strong("Proportion by Chapter in"),
+                     strong("Percentage by Chapter in"),
                      br(),
                      strong("Business Filings Bankruptcies"),
                      tags$table(
@@ -293,8 +290,8 @@ shinyUI(fluidPage(
                            tags$td(tags$div(
                              style = sprintf("width: 16px; height: 16px; background-color: %s; border:1px solid black;", color)
                            )),
-                           tags$td(prettyNum(round(from), big.mark = ","), "to",
-                                   prettyNum(round(to), big.mark = ","),align = "right")
+                           tags$td(prettyNum(round(from), big.mark = ","), "% to",
+                                   prettyNum(round(to), big.mark = ","),"%",align = "right")
                          )
                        },
                        procolorRanges$from, procolorRanges$to, map_colors[-length(map_colors)],
@@ -314,9 +311,9 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 10, top = 130, draggable=FALSE, style = "",
                      class = "floater",
-                     strong("Proportion by Chapter in"),
+                     strong("Percentage by Chapter in"),
                      br(),
-                     strong("NonBusiness Filings Bankruptcies"),
+                     strong("Non-Business Filings Bankruptcies"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(

@@ -58,14 +58,14 @@ colnames(bank_data4)[2:15] <- c("All_Filings_Total","All_Filings_Chapter_7","All
                                  "NonBusiness_Filings_Chapter_11", "NonBusiness_Filings_Chapter_13")
 
 write.csv(bank_data4, file="bankruptcies/bankdata.csv",row.names=FALSE)
-##calculated the proportion of each chapter in business filings
+##calculated the percentage proportion of each chapter in business filings
 bank_data5<-bank_data4
-bank_data5$Proportion_Business_Filings_Chapter_7<-round(bank_data5$Business_Filings_Chapter_7/bank_data5$Business_Filings_Total,3)
-bank_data5$Proportion_Business_Filings_Chapter_11<-round(bank_data5$Business_Filings_Chapter_11/bank_data5$Business_Filings_Total,3)
-bank_data5$Proportion_Business_Filings_Chapter_12<-round(bank_data5$Business_Filings_Chapter_12/bank_data5$Business_Filings_Total,3)
-bank_data5$Proportion_Business_Filings_Chapter_13<-round(bank_data5$Business_Filings_Chapter_13/bank_data5$Business_Filings_Total,3)
+bank_data5$Percentage_of_Chapter_7_in_Business_Filings<-round(bank_data5$Business_Filings_Chapter_7/bank_data5$Business_Filings_Total*100,2)
+bank_data5$Percentage_of_Chapter_11_in_Business_Filings<-round(bank_data5$Business_Filings_Chapter_11/bank_data5$Business_Filings_Total*100,2)
+bank_data5$Percentage_of_Chapter_12_in_Business_Filings<-round(bank_data5$Business_Filings_Chapter_12/bank_data5$Business_Filings_Total*100,2)
+bank_data5$Percentage_of_Chapter_13_in_Business_Filings<-round(bank_data5$Business_Filings_Chapter_13/bank_data5$Business_Filings_Total*100,2)
 ##calculated the proportion of each chapter in nonbusiness filings
-bank_data5$Proportion_NonBusiness_Filings_Chapter_7<-round(bank_data5$NonBusiness_Filings_Chapter_7/bank_data5$NonBusiness_Filings_Total,3)
-bank_data5$Proportion_NonBusiness_Filings_Chapter_11<-round(bank_data5$NonBusiness_Filings_Chapter_11/bank_data5$NonBusiness_Filings_Total,3)
-bank_data5$Proportion_NonBusiness_Filings_Chapter_13<-round(bank_data5$NonBusiness_Filings_Chapter_13/bank_data5$NonBusiness_Filings_Total,3)
+bank_data5$Percentage_of_Chapter_7_in_NonBusiness_Filings<-round(bank_data5$NonBusiness_Filings_Chapter_7/bank_data5$NonBusiness_Filings_Total*100,2)
+bank_data5$Percentage_of_Chapter_11_in_NonBusiness_Filings<-round(bank_data5$NonBusiness_Filings_Chapter_11/bank_data5$NonBusiness_Filings_Total*100,2)
+bank_data5$Percentage_of_Chapter_13_in_NonBusiness_Filings<-round(bank_data5$NonBusiness_Filings_Chapter_13/bank_data5$NonBusiness_Filings_Total*100,2)
 write.csv(bank_data5, file="bankruptcies/bankdata1.csv",row.names=FALSE)

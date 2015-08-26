@@ -49,7 +49,7 @@ shinyServer(function(input, output, session) {
     
     ## create a dataframe consisting only of counties in vector
     bank_df <- bank_df %>%
-      filter(Region %in% munis,Year == input$sum_year) %>%
+      filter(Region %in% munis,Year %in% input$sum_year) %>%
       select(1, 16, sel_col_num)
     
     colnames(bank_df) <- gsub("_", " ", colnames(bank_df))
@@ -60,16 +60,34 @@ shinyServer(function(input, output, session) {
   plot_dat<- reactive({
     plot_df<-bank_df()
     counties <- input$plot_county
-    if(input$plot_US){
-      if(input$plot_MA){
-        counties <- c("United States", "MA", counties) ## US and MA
+    if(input$plot_radio =='Business Filings'){
+     if(input$plot_bus_display != 'Business_Filings_Total'){
+      if(input$plot_US){
+        if(input$plot_MA){
+          counties <- c("United States", "MA", counties) ## US and MA
+        } else {
+          counties <- c("United States", counties) ## US only
+        }
       } else{
-        counties <- c("United States", counties) ## US only
+        if(input$plot_MA){
+          counties <- c("MA", counties)  ## MA only
+        }
       }
-    } else{
-      if(input$plot_MA){
-        counties <- c("MA", counties)  ## MA only
-      }
+    }
+    } else {
+     if (input$plot_nonbus_display != 'NonBusiness_Filings_Total') {
+       if(input$plot2_US){
+         if(input$plot2_MA){
+           counties <- c("United States", "MA", counties) ## US and MA
+         } else {
+           counties <- c("United States", counties) ## US only
+         }
+       } else{
+         if(input$plot2_MA){
+           counties <- c("MA", counties)  ## MA only
+         }
+       } 
+     }
     }
     ##Choose column according input
     if (input$plot_radio == "Business Filings") {
@@ -93,31 +111,39 @@ shinyServer(function(input, output, session) {
   output$Bus_plot <- reactive({
     ## make reactive dataframe into regular dataframe
     bus_df <- plot_dat()
+    Bnames <- gsub("_", " ", input$plot_bus_display)
     list(
-      data=googleDataTable(bus_df))
+      data=googleDataTable(bus_df),options = list(title=paste("Bankruptcies",Bnames,
+                                                              "Over Time "),fontSize = 19,bold = TRUE))
   })
   
   ##NonBusiness Filings Plot
   output$NonBus_plot <- reactive({
     ## make reactive dataframe into regular dataframe
     nonbus_df <- plot_dat()
+    Nnames <- gsub("_", " ", input$plot_nonbus_display)
     list(
-      data=googleDataTable(nonbus_df))
+      data=googleDataTable(nonbus_df),options = list(title=paste("Bankruptcies", Nnames,
+                                                                 "Over Time "),fontSize = 19,bold = TRUE))
   })
   
   ##proportion by chapter in Business Filings
   output$Pro_Bus_plot <- reactive({
     ## make reactive dataframe into regular dataframe
     pro_bus_df <- plot_dat()
+    Bpnames <- gsub("_", " ", input$plot_bus_display)
     list(
-      data=googleDataTable(pro_bus_df))
+      data=googleDataTable(pro_bus_df),options = list(title=paste(Bpnames,
+                                                                  "Over Time "),fontSize = 19,bold = TRUE))
   })
   ##proportion by chapter in NonBusiness Filings
   output$Pro_NonBus_plot <- reactive({
     ## make reactive dataframe into regular dataframe
     pro_nonbus_df <- plot_dat()
+    Npnames <- gsub("_", " ", input$plot_nonbus_display)
     list(
-      data=googleDataTable(pro_nonbus_df))
+      data=googleDataTable(pro_nonbus_df),options = list(title=paste(Npnames,
+                                                                     "Over Time "),fontSize = 19,bold = TRUE))
   })
    
   ##map
@@ -261,10 +287,18 @@ shinyServer(function(input, output, session) {
         tags$h5(var_select, "in ", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
-    as.character(tags$div(
+    if(input$map_bus_display != 'Business_Filings_Total' & input$map_nonbus_display != 'NonBusiness_Filings_Total'){
+     return(as.character(tags$div(
       tags$h4(var_select, "in ", muni_name, " for ", input$map_year),
-      tags$h5(muni_value)
-    ))
+      tags$h5(muni_value,"%")
+    )))
+    }
+    else {
+      return(as.character(tags$div(
+        tags$h4(var_select, "in ", muni_name, " for ", input$map_year),
+        tags$h5(muni_value)
+      )))  
+    }
   })
   ##########################################################
 })
