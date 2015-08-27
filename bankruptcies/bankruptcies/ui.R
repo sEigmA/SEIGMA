@@ -177,7 +177,19 @@ shinyUI(fluidPage(
                    conditionalPanel(
                      condition="input.plot_bus_display != 'Business_Filings_Total'",
                      ## make chart title here (otherwise not centered)
-                    Pro_Bus_plot_options
+                    Pro_Bus_plot_options,
+                    tags$br(),
+                    p(strong("Chapter 7"), 
+                      " - This chapter deals with liquidation, the sale of a debtor's nonexempt property and the distribution of the funds to the creditors."),
+                    tags$br(),
+                    p(strong("Chapter 11"), 
+                      " - Deals with corporations or partnerships.  A corporation must propose a reorganization plan to repay their debt over time."),
+                    tags$br(),
+                    p(strong("Chapter 12"), 
+                      " - Deals with the debt of a 'family farmer' or 'family fisherman'. A payment plan is proposed to pay back their debt over three to five years."),
+                    tags$br(),
+                    p(strong("Chapter 13"), 
+                      " - Deals with the debt of an individual. A payment plan is proposed to pay back their debt over the course of three to five years.")
                      )
                  ),
                  conditionalPanel(
@@ -187,8 +199,17 @@ shinyUI(fluidPage(
                     NonBus_plot_options),
                    conditionalPanel(
                      condition="input.plot_nonbus_display != 'NonBusiness_Filings_Total'",
-                    Pro_NonBus_plot_options
-                   )
+                    Pro_NonBus_plot_options,
+                    tags$br(),
+                    p(strong("Chapter 7"), 
+                      " - This chapter deals with liquidation, the sale of a debtor's nonexempt property and the distribution of the funds to the creditors."),
+                    tags$br(),
+                    p(strong("Chapter 11"), 
+                      " - Deals with corporations or partnerships.  A corporation must propose a reorganization plan to repay their debt over time."),
+                    tags$br(),
+                    p(strong("Chapter 13"), 
+                      " - Deals with the debt of an individual. A payment plan is proposed to pay back their debt over the course of three to five years.")
+                    )
                  ),
                  
                  value="plot"),
@@ -303,8 +324,20 @@ shinyUI(fluidPage(
                          tags$td("Data not available", align = "right")
                        )
                      )
-                   )
-                 ),
+                   ),
+                   tags$br(),
+                   p(strong("Chapter 7"), 
+                     " - This chapter deals with liquidation, the sale of a debtor's nonexempt property and the distribution of the funds to the creditors."),
+                   tags$br(),
+                   p(strong("Chapter 11"), 
+                     " - Deals with corporations or partnerships.  A corporation must propose a reorganization plan to repay their debt over time."),
+                   tags$br(),
+                   p(strong("Chapter 12"), 
+                     " - Deals with the debt of a 'family farmer' or 'family fisherman'. A payment plan is proposed to pay back their debt over three to five years."),
+                   tags$br(),
+                   p(strong("Chapter 13"), 
+                     " - Deals with the debt of an individual. A payment plan is proposed to pay back their debt over the course of three to five years.")
+                   ),
                  ## Proportion by Chapter in NonBusiness Filings Bankruptcies
                  conditionalPanel(
                    condition="input.map_radio =='NonBusiness Filings' && input.map_nonbus_display != 'NonBusiness_Filings_Total' && input.action != 0",
@@ -333,8 +366,17 @@ shinyUI(fluidPage(
                          tags$td("Data not available", align = "right")
                        )
                      )
-                   )
-                 ),
+                   ),
+                   tags$br(),
+                   p(strong("Chapter 7"), 
+                     " - This chapter deals with liquidation, the sale of a debtor's nonexempt property and the distribution of the funds to the creditors."),
+                   tags$br(),
+                   p(strong("Chapter 11"), 
+                     " - Deals with corporations or partnerships.  A corporation must propose a reorganization plan to repay their debt over time."),
+                   tags$br(),
+                   p(strong("Chapter 13"), 
+                     " - Deals with the debt of an individual. A payment plan is proposed to pay back their debt over the course of three to five years.")
+                  ),
                  
                 value="map"),
         

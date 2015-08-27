@@ -287,7 +287,7 @@ shinyServer(function(input, output, session) {
         tags$h5(var_select, "in ", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
-    if(input$map_bus_display != 'Business_Filings_Total' & input$map_nonbus_display != 'NonBusiness_Filings_Total'){
+    if((input$map_radio=='Business Filings' & input$map_bus_display != 'Business_Filings_Total') | (input$map_radio=='NonBusiness Filings' & input$map_nonbus_display != 'NonBusiness_Filings_Total')){
      return(as.character(tags$div(
       tags$h4(var_select, "in ", muni_name, " for ", input$map_year),
       tags$h5(muni_value,"%")
