@@ -62,7 +62,7 @@ shinyServer(function(input, output, session) {
       arrange(Municipal)%>%
       select(Municipal, Year, Average_Monthly_Employment, Inflation_Adjusted_Average_Weekly_Wage, Number_of_Employer_Establishments)
 
-    colnames(sum_df) <- c("Municipal","Year","Average Monthly Employment","Average Weekly Wage (2012 dollars)", "Number of Employer Establishments")
+    colnames(sum_df) <- c("Municipal","Year","Average Monthly Employment","Average Weekly Wage (2012 dollars)", "Number of Business Establishments")
 
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE))
@@ -340,6 +340,7 @@ output$Est_pct_plot<-reactive({
     }
     var_select <- gsub("Pct", "", col_name)
     var_select <- gsub("_", " ", var_select)
+    var_select <- gsub("Employer", "Business", var_select)
 
     ## If clicked county has no crude rate, display a message
     if(muni_value == "NULL"|| muni_value =="NA"){

@@ -475,7 +475,7 @@ Est_plot_options1 <- googleLineChart("Est_plot1", width="100%", height="475px", 
                           italic = FALSE)
                       ),
                       vAxis = list(
-                        title = "Number of Employer Establishments",
+                        title = "Number of Business Establishments",
                         viewWindow = ylim_est,
                         textStyle = list(
                           fontSize = 14),
@@ -529,7 +529,7 @@ Est_plot_options2 <- googleLineChart("Est_plot2", width="100%", height="475px", 
                           italic = FALSE)
                       ),
                       vAxis = list(
-                        title = "Number of Employer Establishments",
+                        title = "Number of Business Establishments",
                         viewWindow = ylim1_est,
                         textStyle = list(
                           fontSize = 14),
@@ -641,7 +641,7 @@ Est_pct_plot_options <- googleLineChart("Est_pct_plot", width="100%", height="47
                                                 italic = FALSE)
                                             ),
                                             vAxis = list(
-                                              title = "Change in Establishments since 2003 (%)",
+                                              title = "Change in Business Establishments since 2003 (%)",
                                               ticks = seq(50, 250, 50),
                                               viewWindow = ylim_pct_est,
                                               textStyle = list(

@@ -240,9 +240,11 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_radio =='Establishments' && input.map_display_radio=='Actual Values' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 150, draggable=FALSE, style = "",
+                     right = 20, top = 150, draggable=FALSE, style = "",
                      class = "floater",
-                     strong("Number of Establishments"),
+                     strong("Number of"),
+                     br(),
+                     strong("Business Establishments"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
