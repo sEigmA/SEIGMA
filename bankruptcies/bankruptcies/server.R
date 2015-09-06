@@ -75,7 +75,7 @@ shinyServer(function(input, output, session) {
       }
     }
     } else {
-     if (input$plot_nonbus_display != 'NonBusiness_Filings_Total') {
+     if (input$plot_nonbus_display != 'Personal_Filings_Total') {
        if(input$plot2_US){
          if(input$plot2_MA){
            counties <- c("United States", "MA", counties) ## US and MA
@@ -117,7 +117,7 @@ shinyServer(function(input, output, session) {
                                                               "Over Time "),fontSize = 19,bold = TRUE))
   })
   
-  ##NonBusiness Filings Plot
+  ##Personal Filings Plot
   output$NonBus_plot <- reactive({
     ## make reactive dataframe into regular dataframe
     nonbus_df <- plot_dat()
@@ -136,7 +136,7 @@ shinyServer(function(input, output, session) {
       data=googleDataTable(pro_bus_df),options = list(title=paste(Bpnames,
                                                                   "Over Time "),fontSize = 19,bold = TRUE))
   })
-  ##proportion by chapter in NonBusiness Filings
+  ##proportion by chapter in Personal Filings
   output$Pro_NonBus_plot <- reactive({
     ## make reactive dataframe into regular dataframe
     pro_nonbus_df <- plot_dat()
@@ -168,7 +168,7 @@ shinyServer(function(input, output, session) {
     }
     else {
       col<-input$map_nonbus_display
-      if(input$map_nonbus_display=="NonBusiness_Filings_Total") {
+      if(input$map_nonbus_display=="Personal_Filings_Total") {
         cuts<-nonbuscuts
       }
       else{
@@ -287,7 +287,7 @@ shinyServer(function(input, output, session) {
         tags$h5(var_select, "in ", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
-    if((input$map_radio=='Business Filings' & input$map_bus_display != 'Business_Filings_Total') | (input$map_radio=='NonBusiness Filings' & input$map_nonbus_display != 'NonBusiness_Filings_Total')){
+    if((input$map_radio=='Business Filings' & input$map_bus_display != 'Business_Filings_Total') | (input$map_radio=='Personal Filings' & input$map_nonbus_display != 'Personal_Filings_Total')){
      return(as.character(tags$div(
       tags$h4(var_select, "in ", muni_name, " for ", input$map_year),
       tags$h5(muni_value,"%")

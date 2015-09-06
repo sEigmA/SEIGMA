@@ -47,7 +47,7 @@ shinyUI(fluidPage(
                    radioButtons("sum_radio", "Select Variable of Interest",
                                 c("Total Filings" = "Total Filings",
                                   "Business Filings" = "Business Filings", 
-                                  "Non-Business Filings" = "NonBusiness Filings"),
+                                  "Personal Filings" = "Personal Filings"),
                                 selected="Total Filings"),
                    checkboxInput("sum_MA", "Compare to MA", FALSE),
                    checkboxInput("sum_US", "Compare to US", FALSE)
@@ -62,7 +62,7 @@ shinyUI(fluidPage(
                                choices = MAcounties, selected="Barnstable County", multiple=TRUE),
                    radioButtons("plot_radio", "Select Variable of Interest",
                                 c("Business Filings" = "Business Filings", 
-                                  "Non-Business Filings" = "NonBusiness Filings"),
+                                  "Personal Filings" = "Personal Filings"),
                                 selected="Business Filings"),
                    conditionalPanel(
                      condition="input.plot_radio == 'Business Filings'",
@@ -79,15 +79,15 @@ shinyUI(fluidPage(
                        )
                      ),
                    conditionalPanel(
-                     condition="input.plot_radio == 'NonBusiness Filings'",
+                     condition="input.plot_radio == 'Personal Filings'",
                      selectInput("plot_nonbus_display", "Display Options",
-                                 choices=list("Total" = "NonBusiness_Filings_Total", "Percentage of Chapter 7" = "Percentage_of_Chapter_7_in_NonBusiness_Filings",
-                                              "Percentage of Chapter 11" = "Percentage_of_Chapter_11_in_NonBusiness_Filings",
-                                              "Percentage of Chapter 13" = "Percentage_of_Chapter_13_in_NonBusiness_Filings"),
-                                 selected = "NonBusiness_Filings_Total"
+                                 choices=list("Total" = "Personal_Filings_Total", "Percentage of Chapter 7" = "Percentage_of_Chapter_7_in_Personal_Filings",
+                                              "Percentage of Chapter 11" = "Percentage_of_Chapter_11_in_Personal_Filings",
+                                              "Percentage of Chapter 13" = "Percentage_of_Chapter_13_in_Personal_Filings"),
+                                 selected = "Personal_Filings_Total"
                      ),
                      conditionalPanel(
-                       condition="input.plot_nonbus_display != 'NonBusiness_Filings_Total'",
+                       condition="input.plot_nonbus_display != 'Personal_Filings_Total'",
                        checkboxInput("plot2_MA", "Compare to MA", FALSE),
                        checkboxInput("plot2_US", "Compare to US", FALSE)
                      )
@@ -103,7 +103,7 @@ shinyUI(fluidPage(
                    ),
                    radioButtons("map_radio", "Select Variable of Interest",
                                 c("Business Filings" = "Business Filings", 
-                                  "Non-Business Filings" = "NonBusiness Filings"),
+                                  "Personal Filings" = "Personal Filings"),
                                 selected="Business Filings"),
                    conditionalPanel(
                      condition="input.map_radio == 'Business Filings'",
@@ -115,12 +115,12 @@ shinyUI(fluidPage(
                      )
                     ),
                    conditionalPanel(
-                     condition="input.map_radio == 'NonBusiness Filings'",
+                     condition="input.map_radio == 'Personal Filings'",
                      selectInput("map_nonbus_display", "Display Options",
-                                 choices=list("Total" = "NonBusiness_Filings_Total", "Percentage of Chapter 7" = "Percentage_of_Chapter_7_in_NonBusiness_Filings",
-                                              "Percentage of Chapter 11" = "Percentage_of_Chapter_11_in_NonBusiness_Filings",
-                                              "Percentage of Chapter 13" = "Percentage_of_Chapter_13_in_NonBusiness_Filings"),
-                                 selected = "NonBusiness_Filings_Total"
+                                 choices=list("Total" = "Personal_Filings_Total", "Percentage of Chapter 7" = "Percentage_of_Chapter_7_in_Personal_Filings",
+                                              "Percentage of Chapter 11" = "Percentage_of_Chapter_11_in_Personal_Filings",
+                                              "Percentage of Chapter 13" = "Percentage_of_Chapter_13_in_Personal_Filings"),
+                                 selected = "Personal_Filings_Total"
                      )
                    )
                 ),
@@ -193,12 +193,12 @@ shinyUI(fluidPage(
                      )
                  ),
                  conditionalPanel(
-                   condition="input.plot_radio =='NonBusiness Filings'",
+                   condition="input.plot_radio =='Personal Filings'",
                    conditionalPanel(
-                     condition="input.plot_nonbus_display == 'NonBusiness_Filings_Total'",
+                     condition="input.plot_nonbus_display == 'Personal_Filings_Total'",
                     NonBus_plot_options),
                    conditionalPanel(
-                     condition="input.plot_nonbus_display != 'NonBusiness_Filings_Total'",
+                     condition="input.plot_nonbus_display != 'Personal_Filings_Total'",
                     Pro_NonBus_plot_options,
                     tags$br(),
                     p(strong("Chapter 7"), 
@@ -267,13 +267,13 @@ shinyUI(fluidPage(
                          tags$td("Data not available", align = "right")))
                    )),
                  
-                 ## NonBusiness Legend
+                 ## Personal Legend
                  conditionalPanel(
-                   condition="input.map_radio =='NonBusiness Filings' && input.map_nonbus_display == 'NonBusiness_Filings_Total' && input.action != 0",
+                   condition="input.map_radio =='Personal Filings' && input.map_nonbus_display == 'Personal_Filings_Total' && input.action != 0",
                    absolutePanel(
                      right = 30, top = 150, draggable=FALSE, style = "",
                      class = "floater",
-                     strong("Non-Business Filings"),
+                     strong("Personal Filings"),
                      br(),
                      strong("of Bankruptcies"),
                      tags$table(
@@ -338,15 +338,15 @@ shinyUI(fluidPage(
                    p(strong("Chapter 13"), 
                      " - Deals with the debt of an individual. A payment plan is proposed to pay back their debt over the course of three to five years.")
                    ),
-                 ## Proportion by Chapter in NonBusiness Filings Bankruptcies
+                 ## Proportion by Chapter in Personal Filings Bankruptcies
                  conditionalPanel(
-                   condition="input.map_radio =='NonBusiness Filings' && input.map_nonbus_display != 'NonBusiness_Filings_Total' && input.action != 0",
+                   condition="input.map_radio =='Personal Filings' && input.map_nonbus_display != 'Personal_Filings_Total' && input.action != 0",
                    absolutePanel(
                      right = 10, top = 130, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Percentage by Chapter in"),
                      br(),
-                     strong("Non-Business Filings Bankruptcies"),
+                     strong("Personal Filings Bankruptcies"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
@@ -389,7 +389,7 @@ shinyUI(fluidPage(
                  p(strong("Business Bankruptcies"), 
                    " - Any debt related to or dealing with businesses, corporations or partnerships."),
                  tags$br(),
-                 p(strong("Nonbusiness Bankruptcies"), 
+                 p(strong("Personal Bankruptcies"), 
                    " - Any debt related to or dealing with an individual primarily for a personal, family, or household purpose."),
                  tags$br(),
                  p(strong("Chapter 7"), 

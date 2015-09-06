@@ -53,12 +53,12 @@ ylim_bus <- list(
   max = max(bank_data1$Business_Filings_Total, na.rm=T)+5
 )
 
-##Creat ylim for NonBusiness plot
+##Creat ylim for Personal plot
 ylim_Non_bus <- list(
-  min = min(bank_data1$NonBusiness_Filings_Total, na.rm=T)-5,
+  min = min(bank_data1$Personal_Filings_Total, na.rm=T)-5,
   
   ##+5 = max Avg monthly employment plus a little extra
-  max = max(bank_data1$NonBusiness_Filings_Total, na.rm=T)+5
+  max = max(bank_data1$Personal_Filings_Total, na.rm=T)+5
 )
 
 ##Creat ylim for proportion of chapter plot
@@ -94,8 +94,8 @@ buscolorRanges <- data.frame(
   to = tail(buscuts, length(buscuts)-1)
 )
 
-## Colors for nonbusiness total legend
-nonbuscuts <- quantile(bank_data1$NonBusiness_Filings_Total, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+## Colors for Personal total legend
+nonbuscuts <- quantile(bank_data1$Personal_Filings_Total, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
@@ -169,25 +169,25 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
   
-  helpText(p(strong('Please select the years for which you are interested in viewing the number of business and nonbusiness bankruptcies. By selecting a year, you may also view the number of business and nonbusiness bankruptcies by chapter.'))),
+  helpText(p(strong('Please select the years for which you are interested in viewing the number of business and Personal bankruptcies. By selecting a year, you may also view the number of business and Personal bankruptcies by chapter.'))),
   tags$br(),
   tags$ul(
     tags$br(),
     tags$li('Select one or multiple counties.'),
     tags$br(),
-    tags$li('To look at the number of business and nonbusiness bankruptcies for a single year select a single year from the drop down menu.'),
+    tags$li('To look at the number of business and Personal bankruptcies for a single year select a single year from the drop down menu.'),
     tags$br(),
-    tags$li('To look at the number of business and nonbusiness bankruptcies over a specific time period select multiple years from the drop down menu.'),
+    tags$li('To look at the number of business and Personal bankruptcies over a specific time period select multiple years from the drop down menu.'),
     tags$br(),
-    tags$li('To look at the total number of business and nonbusiness bankruptcies please select "Total Fillings".'),
+    tags$li('To look at the total number of business and Personal bankruptcies please select "Total Fillings".'),
     tags$br(),
     tags$li('To look at the number of business bankruptcies please select "Business Fillings".'),
     tags$br(),
-    tags$li('To look at the number of nonbusiness bankruptcies please select "Nonbusiness Fillings"'),
+    tags$li('To look at the number of Personal bankruptcies please select "Personal Fillings"'),
     tags$br(),
-    tags$li('To compare the number of business and nonbusiness bankruptcies to Massachusetts or US number please select "Compare to MA" or "Compare to US".'),
+    tags$li('To compare the number of business and Personal bankruptcies to Massachusetts or US number please select "Compare to MA" or "Compare to US".'),
     tags$br(),
-    tags$li('Sort the number of business and nonbusiness bankruptcies in ascending and descending order by clicking on the column or variable title.')
+    tags$li('Sort the number of business and Personal bankruptcies in ascending and descending order by clicking on the column or variable title.')
     
   )
 )
@@ -196,16 +196,16 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the county for which you are interested in viewing the number of business and nonbusiness bankruptcies.')),
+  p(strong('Please select the county for which you are interested in viewing the number of business and Personal bankruptcies.')),
   tags$br(),
   tags$ul(
-    tags$li("Once you have selected the counties for which you are interested in viewing the number of business and nonbusiness bankruptcies, select a Variable of Interest."),
+    tags$li("Once you have selected the counties for which you are interested in viewing the number of business and Personal bankruptcies, select a Variable of Interest."),
     tags$br(),
     tags$li("To view the number of business bankruptcies, select 'Business Fillings'."),
     tags$br(),
-    tags$li("To view the number of nonbusiness bankruptcies, select 'Nonbusiness Fillings'."),
+    tags$li("To view the number of Personal bankruptcies, select 'Personal Fillings'."),
     tags$br(),
-    tags$li("Select 'Total' from the Display Options to view the total number of business or nonbusiness bankruptcies for the years 2013-2014."),
+    tags$li("Select 'Total' from the Display Options to view the total number of business or Personal bankruptcies for the years 2013-2014."),
     tags$br(),
     tags$li("Select 'Percentage of Chapter 7' from the Display Options to view the percent of chapter 7 bankruptcies for the years 2013-2014."),
     tags$br(),
@@ -215,8 +215,8 @@ plot_side_text <- conditionalPanel(
     tags$br(),
     tags$li("Select 'Percentage of Chapter 13' from the Display Options to view the percent of chapter 13 bankruptcies for the years 2013-2014."),
     tags$br(),
-    tags$li("To compare the percentage of business and nonbusiness bankruptcies within a specific chapter to Massachusetts or US percentages please select 'Compare to MA' or 'Compare to US'."),
-p(strong("Please note this can only be done when looking at a specific chapter of business or nonbusiness bankruptcies."))
+    tags$li("To compare the percentage of business and Personal bankruptcies within a specific chapter to Massachusetts or US percentages please select 'Compare to MA' or 'Compare to US'."),
+p(strong("Please note this can only be done when looking at a specific chapter of business or Personal bankruptcies."))
     
   ))
 
@@ -230,9 +230,9 @@ map_side_text <- conditionalPanel(
     
     tags$li('To view the number of business bankruptcies select "Business Fillings", then click on a county for which you are interested in viewing the number of business bankruptcies.'),
     tags$br(),
-    tags$li("To view the number of nonbusiness bankruptcies select 'Nonbusiness Fillings', then click on a county for which you are interested in viewing the number of nonbusiness bankruptcies."),
+    tags$li("To view the number of Personal bankruptcies select 'Personal Fillings', then click on a county for which you are interested in viewing the number of Personal bankruptcies."),
     tags$br(),
-    tags$li("To view the total number of business or nonbusiness bankruptcies select 'Total' from the Display Options, then click on a county for which you are interested in viewing the total number of business or nonbusiness bankruptcies."),
+    tags$li("To view the total number of business or Personal bankruptcies select 'Total' from the Display Options, then click on a county for which you are interested in viewing the total number of business or Personal bankruptcies."),
     tags$br(),
     tags$li("To view the percentage of chapter 7 bankruptcies select 'Percentage of Chapter 7' from the Display Options, then click on a county for which you are interested in viewing the percentage of chapter 7 bankruptcies."),
     tags$br(),
@@ -242,8 +242,8 @@ map_side_text <- conditionalPanel(
     tags$br(),
     tags$li("To view the percentage of chapter 13 bankruptcies select 'Percentage of Chapter 13' from the Display Options, then click on a county for which you are interested in viewing the percentage of chapter 13 bankruptcies."),
     tags$br(),
-    tags$li("To compare the percentage of business and nonbusiness bankruptcies within a specific chapter to Massachusetts or US percentages please select 'Compare to MA' or 'Compare to US'."),
-  p(strong("Please note this can only be done when looking at a specific chapter of business or nonbusiness bankruptcies."))
+    tags$li("To compare the percentage of business and Personal bankruptcies within a specific chapter to Massachusetts or US percentages please select 'Compare to MA' or 'Compare to US'."),
+  p(strong("Please note this can only be done when looking at a specific chapter of business or Personal bankruptcies."))
   ))
 
 info_side_text <- conditionalPanel(
@@ -251,14 +251,14 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Bankruptcy App"), "displays business and nonbusiness bankruptcies by total number and percentage of bankruptcy by chapter for Massachusetts counties.",
+about_main_text <- p(strong("The SEIGMA Bankruptcy App"), "displays business and Personal bankruptcies by total number and percentage of bankruptcy by chapter for Massachusetts counties.",
                      p(strong("Click on different tabs to view the data in different formats.")),
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the source data in table format.")),
-                       tags$li(p(strong("Plot"), "displays business and nonbusiness bankruptcies by total number and the percentage of bankruptcies by chapter for each county.")),
-                       tags$li(p(strong("Map"), "visually displays business and nonbusiness bankrupticies by total number and the percentage of bankruptcies by chapter for each county.")),
-                       tags$li(p(strong("More Info"), "defines business and nonbusiness bankruptcies, chapters of bankruptcies, and describes the percentage of bankruptcies including formulas and calculations."))
+                       tags$li(p(strong("Plot"), "displays business and Personal bankruptcies by total number and the percentage of bankruptcies by chapter for each county.")),
+                       tags$li(p(strong("Map"), "visually displays business and Personal bankrupticies by total number and the percentage of bankruptcies by chapter for each county.")),
+                       tags$li(p(strong("More Info"), "defines business and Personal bankruptcies, chapters of bankruptcies, and describes the percentage of bankruptcies including formulas and calculations."))
                      ))
 
 plot_main_text <- p(strong("Variable Summary:"),
@@ -346,7 +346,7 @@ NonBus_plot_options <- googleLineChart("NonBus_plot", width="100%", height="475p
       italic = FALSE)
   ),
   vAxis = list(
-    title = "NonBusiness Filings Total",
+    title = "Personal Filings Total",
     viewWindow = ylim_Non_bus,
     textStyle = list(
       fontSize = 14),
@@ -457,7 +457,7 @@ Pro_NonBus_plot_options <- googleLineChart("Pro_NonBus_plot", width="100%", heig
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Percentage of Chapter in Non-Business Filings",
+    title = "Percentage of Chapter in Personal Filings",
     viewWindow = ylim_pro,
     textStyle = list(
       fontSize = 14),
