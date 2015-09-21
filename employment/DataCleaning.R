@@ -118,8 +118,8 @@ emp_data6$Average_Weekly_Wage_Change[which(emp_data6$Municipal=="Savoy")]<-emp_d
 emp_data6$Average_Weekly_Wage_Change_Pct<-round(emp_data6$Average_Weekly_Wage_Change*100,1)
 
 ##Calculate the difference since 2003
-emp_data6$Employment_difference<-emp_data6$Employment_Change_Pct-100
-emp_data6$Establishment_difference<-emp_data6$Establishment_Change_Pct-100
-emp_data6$Average_Weekly_Wage_difference<-emp_data6$Average_Weekly_Wage_Change_Pct-100
+emp_data6$Employment_difference<-round(emp_data6$Employment_Change_Pct-100,1)
+emp_data6$Establishment_difference<-round(emp_data6$Establishment_Change_Pct-100,1)
+emp_data6$Average_Weekly_Wage_difference<-round(emp_data6$Average_Weekly_Wage_Change_Pct-100,1)
 
 write.csv(emp_data6, file="employment/empdata3.csv",row.names=FALSE)

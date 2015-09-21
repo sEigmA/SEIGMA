@@ -88,8 +88,8 @@ shinyServer(function(input, output, session) {
     munis <- input$plot_muni
     w_pct <- wage_df %>%
       filter(Municipal %in% munis) %>%
-      select(Municipal, Year, Average_Weekly_Wage_Change_Pct) %>%
-      spread(Municipal, Average_Weekly_Wage_Change_Pct)
+      select(Municipal, Year, Average_Weekly_Wage_difference) %>%
+      spread(Municipal, Average_Weekly_Wage_difference)
     list(
       data=googleDataTable(w_pct))
   })
@@ -159,8 +159,8 @@ output$Emp_pct_plot<-reactive({
   munis <- input$plot_muni
   emp_pct <- emp_df %>%
     filter(Municipal %in% munis) %>%
-    select(Municipal, Year, Employment_Change_Pct) %>%
-    spread(Municipal, Employment_Change_Pct)
+    select(Municipal, Year, Employment_difference) %>%
+    spread(Municipal, Employment_difference)
   list(
     data=googleDataTable(emp_pct))
 })
@@ -170,8 +170,8 @@ output$Est_pct_plot<-reactive({
   munis <- input$plot_muni
   est_pct <- emp_df %>%
     filter(Municipal %in% munis) %>%
-    select(Municipal, Year, Establishment_Change_Pct) %>%
-    spread(Municipal, Establishment_Change_Pct)
+    select(Municipal, Year, Establishment_difference) %>%
+    spread(Municipal, Establishment_difference)
   list(
     data=googleDataTable(est_pct))
 })

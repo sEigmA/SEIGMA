@@ -97,17 +97,17 @@ ylim1_est<-list(
 )
 ##Creat ylim for percentage change of employment plot
 ylim_pct<-list(
-  min = min(emp_data$Employment_Change_Pct, na.rm=T)-5,
+  min = min(emp_data$Employment_difference, na.rm=T)-0.05,
   
   ##+5 = max Avg monthly employment plus a little extra
-  max = max(emp_data$Employment_Change_Pct, na.rm=T)+5
+  max = max(emp_data$Employment_difference, na.rm=T)+0.05
 ) 
 ##Creat ylim for percentage change of establishments plot
 ylim_pct_est<-list(
-  min = min(emp_data$Establishment_Change_Pct, na.rm=T)-5,
+  min = min(emp_data$Establishment_difference, na.rm=T)-0.05,
   
   ##+5 = max Avg monthly employment plus a little extra
-  max = max(emp_data$Establishment_Change_Pct, na.rm=T)+5
+  max = max(emp_data$Establishment_difference, na.rm=T)+0.05
 ) 
 
 ##Creat ylim for Average Weekly Wages plot
@@ -126,10 +126,10 @@ ylim1_wage<-list(
 )
 ##Creat ylim for percentage change of Inflation_Adjusted_Average_Weekly_Wage plot
 ylim_pct_wage<-list(
-  min = min(emp_data$Average_Weekly_Wage_Change_Pct, na.rm=T)-5,
+  min = min(emp_data$Average_Weekly_Wage_difference, na.rm=T)-0.05,
   
   ##+5 = max Avg monthly employment plus a little extra
-  max = max(emp_data$Average_Weekly_Wage_Change_Pct, na.rm=T)+5
+  max = max(emp_data$Average_Weekly_Wage_difference, na.rm=T)+0.05
 )
 
 ####################################################
@@ -186,13 +186,13 @@ wagecolorRanges <- data.frame(
 ## colors fade from one color to white to another color, with gray for NAs
 ## colors for pecentage change since 2003 legend
 pctpaint.brush <- colorRampPalette(colors=c(cbbPalette[5], "white", cbbPalette[8]))
-pctmap_colors <- c(pctpaint.brush(n=8), "#999999")
+pctmap_colors <- c(pctpaint.brush(n=7), "#999999")
 
 ## find max and min (crude suicide rates) values for each county
 ##n.rm=FALSE = needed
 pctmax.val<-max(c(max(emp_data$Employment_difference, na.rm=FALSE),max(emp_data$Establishment_difference, na.rm=FALSE),max(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
-##pctmin.val<-min(c(min(emp_data$Employment_difference, na.rm=FALSE),min(emp_data$Establishment_difference, na.rm=FALSE),min(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
-pctmin.val<--pctmax.val
+pctmin.val<-min(c(min(emp_data$Employment_difference, na.rm=FALSE),min(emp_data$Establishment_difference, na.rm=FALSE),min(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
+##pctmin.val<--pctmax.val
 pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(pctmap_colors))
 
 # Construct break ranges for displaying in the legend
@@ -585,7 +585,6 @@ Emp_pct_plot_options <- googleLineChart("Emp_pct_plot", width="100%", height="47
                                          ),
                                          vAxis = list(
                                            title = "Change in Employment since 2003 (%)",
-                                           ticks = seq(50, 250, 50),
                                            viewWindow = ylim_pct,
                                            textStyle = list(
                                              fontSize = font_size),
@@ -642,7 +641,7 @@ Est_pct_plot_options <- googleLineChart("Est_pct_plot", width="100%", height="47
                                             ),
                                             vAxis = list(
                                               title = "Change in Business Establishments since 2003 (%)",
-                                              ticks = seq(50, 250, 50),
+                                              ##ticks = seq(50, 250, 50),
                                               viewWindow = ylim_pct_est,
                                               textStyle = list(
                                                 fontSize = font_size),
