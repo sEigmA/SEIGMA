@@ -185,16 +185,17 @@ wagecolorRanges <- data.frame(
 
 ## colors fade from one color to white to another color, with gray for NAs
 ## colors for pecentage change since 2003 legend
-pctpaint.brush <- colorRampPalette(colors=c(cbbPalette[5], "white", cbbPalette[8]))
-pctmap_colors <- c(pctpaint.brush(n=7), "#999999")
+pctpaint.brush <- colorRampPalette(colors=c(cbbPalette[5], "white",cbbPalette[8]))
+pctmap_colors <- c(pctpaint.brush(n=6), "#999999")
 
 ## find max and min (crude suicide rates) values for each county
 ##n.rm=FALSE = needed
 pctmax.val<-max(c(max(emp_data$Employment_difference, na.rm=FALSE),max(emp_data$Establishment_difference, na.rm=FALSE),max(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
 pctmin.val<-min(c(min(emp_data$Employment_difference, na.rm=FALSE),min(emp_data$Establishment_difference, na.rm=FALSE),min(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
 ##pctmin.val<--pctmax.val
-pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(pctmap_colors))
-
+pctcuts1 <- seq(pctmin.val, 0, length.out = 4)
+pctcuts2 <- seq(0, pctmax.val, length.out = 4)
+pctcuts<-unique(c(pctcuts1, pctcuts2))
 # Construct break ranges for displaying in the legend
 
 pctcolorRanges <- data.frame(
