@@ -295,7 +295,7 @@ plot_side_text <- conditionalPanel(
   tags$ul(
   tags$li("Once you have selected the municipalities which you are interested in viewing, select a Variable of Interest."),
   tags$br(),
-  tags$li("To view average monthly employment and number of business establishments select Employment and Establishments."),
+  tags$li("To view average monthly employment and number of business establishments select Employment and Business Establishments."),
   tags$br(),
   tags$li("To view average weekly wages, select Wages."),
   tags$br(),
@@ -314,7 +314,7 @@ map_side_text <- conditionalPanel(
 
     tags$li('To view average monthly employment select Employment, then click on a municipality for which you are interested in viewing average monthly employment.'),
     tags$br(),
-    tags$li("To view the number of business establishments select Establishments, then click on a municipality for which you are interested in viewing the number of business establishments."),
+    tags$li("To view the number of business establishments select Business Establishments, then click on a municipality for which you are interested in viewing the number of business establishments."),
     tags$br(),
     tags$li("To view average weekly wages select Wages, then click on a municipality for which you are interested in viewing the average weekly wages."),
     tags$br(),
