@@ -57,7 +57,7 @@ colnames(bank_data4)[2:15] <- c("All_Filings_Total","All_Filings_Chapter_7","All
                                  "Business_Filings_Chapter_13", "Personal_Filings_Total","Personal_Filings_Chapter_7",
                                  "Personal_Filings_Chapter_11", "Personal_Filings_Chapter_13")
 
-write.csv(bank_data4, file="bankruptcies/bankdata.csv",row.names=FALSE)
+write.csv(bank_data4, file="bankruptcy/bankdata.csv",row.names=FALSE)
 ##calculated the percentage proportion of each chapter in business filings
 bank_data5<-bank_data4
 bank_data5$Percentage_of_Chapter_7_in_Business_Filings<-round(bank_data5$Business_Filings_Chapter_7/bank_data5$Business_Filings_Total*100,2)
@@ -68,4 +68,4 @@ bank_data5$Percentage_of_Chapter_13_in_Business_Filings<-round(bank_data5$Busine
 bank_data5$Percentage_of_Chapter_7_in_Personal_Filings<-round(bank_data5$Personal_Filings_Chapter_7/bank_data5$Personal_Filings_Total*100,2)
 bank_data5$Percentage_of_Chapter_11_in_Personal_Filings<-round(bank_data5$Personal_Filings_Chapter_11/bank_data5$Personal_Filings_Total*100,2)
 bank_data5$Percentage_of_Chapter_13_in_Personal_Filings<-round(bank_data5$Personal_Filings_Chapter_13/bank_data5$Personal_Filings_Total*100,2)
-write.csv(bank_data5, file="bankruptcies/bankdata1.csv",row.names=FALSE)
+write.csv(bank_data5, file="bankruptcy/bankdata1.csv",row.names=FALSE)
