@@ -74,7 +74,7 @@ shinyUI(fluidPage(
                                   "Wages" = "Wages"),
                                 selected="Employment"),
                    radioButtons("map_display_radio", "Display Options",
-                                c("Actual Values"="Actual Values", "Difference Compared to Year 2003"="Change_Pct"),
+                                c("Actual Values"="Actual Values", "Change Since 2003"="Change_Pct"),
                                 selected="Actual Values"),
                    sliderInput("map_year", "Select Year",
                                  min=2003, max=2012, value=2012,
@@ -293,13 +293,13 @@ shinyUI(fluidPage(
                      )
                    )
                    ),
-                 ## Difference compared to Year 2003 Legend
+                 ## Change Since 2003 Legend
                  conditionalPanel(
                    condition="input.map_display_radio=='Change_Pct' && input.action != 0",
                    absolutePanel(
                      right = 10, top = 130, draggable=FALSE, style = "",
                      class = "floater",
-                     strong("Difference Compared to 2003"),
+                     strong("Change Since 2003"),
                      tags$table(
                        mapply(function(from, to, color) {
                          tags$tr(
