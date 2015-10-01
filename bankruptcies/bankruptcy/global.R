@@ -197,7 +197,7 @@ plot_side_text <- conditionalPanel(
     tags$br(),
     tags$li("Select your preferred display option- total bankruptcies or look at bankruptcies by specific chapter."),
     tags$br(),
-    tags$li("To compare the percentage of business and personal bankruptcies within a specific chapter to Massachusetts or US percentages please select 'Compare to MA' or 'Compare to US'."),
+    tags$li("To compare total business and personal bankruptcies within a specific chapter to Massachusetts or US totals please select 'Compare to MA' or 'Compare to US'."),
 p(strong("Please note this can only be done when looking at a specific chapter of business or personal bankruptcies."))
     
   ))
@@ -211,7 +211,7 @@ map_side_text <- conditionalPanel(
   tags$ul(
     tags$li('Select your preferred display option- total bankruptcies or look at bankruptcies by specific chapter.'),
     tags$br(),
-    tags$li("To compare the percentage of business and personal bankruptcies within a specific chapter to Massachusetts or US percentages please select 'Compare to MA' or 'Compare to US'."),
+    tags$li("To compare total business and personal bankruptcies within a specific chapter to Massachusetts or US totals please select 'Compare to MA' or 'Compare to US'."),
   p(strong("Please note this can only be done when looking at a specific chapter of business or personal bankruptcies."))
   ))
 
@@ -225,8 +225,8 @@ about_main_text <- p(strong("The SEIGMA Bankruptcy App"), "displays business and
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the source data in table format.")),
-                       tags$li(p(strong("Plot"), "displays business and personal bankruptcies by total number and the percentage of bankruptcies by chapter for each county.")),
-                       tags$li(p(strong("Map"), "visually displays business and personal bankrupticies by total number and the percentage of bankruptcies by chapter for each county.")),
+                       tags$li(p(strong("Plot"), "displays business and personal bankruptcies by total number and total bankruptcies by chapter for each county.")),
+                       tags$li(p(strong("Map"), "visually displays business and personal bankrupticies by total number and the total bankruptcies by chapter for each county.")),
                        tags$li(p(strong("More Info"), "defines business and personal bankruptcies, chapters of bankruptcies, and describes the percentage of bankruptcies including formulas and calculations."))
                      ))
 
