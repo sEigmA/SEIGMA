@@ -160,7 +160,7 @@ shinyUI(fluidPage(
                        h4("Change in Average Monthly Employment and Business Establishments Over Time Since 2003", align="center"),
                        Emp_pct_plot_options,
                        Est_pct_plot_options,
-                   p(strong("Change Since 2003"), "- This is calculated by comparing average monthly employment and weekly wages for a specific year to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations.")
+                   p(strong("Change Since 2003"), "- This is calculated by comparing average monthly employment and weekly wages for a specific year to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
                  )),
                    conditionalPanel(
                    condition="input.plot_radio =='Wages'",
@@ -174,7 +174,7 @@ shinyUI(fluidPage(
                      ## make chart title here (otherwise not centered)
                      h4("Change in Average Weekly Wage Since 2003", align="center"),
                      Wage_pct_plot_options,
-                     p(strong("Change Since 2003"), "- This is calculated by comparing the monthly employment estimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered '0' for these calculations. ")
+                     p(strong("Change Since 2003"), "- This is calculated by comparing the monthly employment estimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
                      )
                    ),
                  tags$br(),
@@ -338,11 +338,11 @@ shinyUI(fluidPage(
                  tags$li((p(strong("Average Weekly Wage"), "- Average weekly wage is calculated by dividing quarterly
 total wages by the average employment level over three months.  This number is then divided by 13, which represents the 13 weeks wihtin the payment quarter.  Wage data can be affected by the ratio of full time to part time employees, the number of higher paid employees within an establishment, and by the number of pay periods within the quarter."))),
                  tags$br(),
-                 tags$li(p(strong("2012 Dollars"), "-Due to inflation, the purchasing power of the dollar changes over time, so in order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the collar values from 2012 to be our constant.")),
+                 tags$li(p(strong("2012 Dollars"), "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2012 to be our constant.")),
                  tags$br(),
                  tags$li((p(strong("Business Establishments"), "- A business establishment is defined as an economic unit which produces goods or services at a single location and engages in predominantly one activity."))),
                  tags$br(),
-                 tags$li(p(strong("Change Since 2003"), "- This is calculated by comparing average monthly employment and weekly wages for a specific year to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations."))
+                 tags$li(p(strong("Change Since 2003"), "- This is calculated by comparing average monthly employment and weekly wages for a specific year to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003."))
                  ),
                  
                  #tags$br(),

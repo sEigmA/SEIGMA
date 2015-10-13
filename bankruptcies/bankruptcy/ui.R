@@ -336,7 +336,10 @@ shinyUI(fluidPage(
                      " - Deals with the debt of a 'family farmer' or 'family fisherman'. A payment plan is proposed to pay back their debt over three to five years."),
                    tags$br(),
                    p(strong("Chapter 13"), 
-                     " - Deals with the debt of an individual. A payment plan is proposed to pay back their debt over the course of three to five years.")
+                     " - Deals with the debt of an individual. A payment plan is proposed to pay back their debt over the course of three to five years."),
+                   tags$br(),
+                   p(strong("Updates to Graphs"), 
+                     " - More bankruptcy data will be added as it is available.")
                    ),
                  ## Proportion by Chapter in Personal Filings Bankruptcies
                  conditionalPanel(
