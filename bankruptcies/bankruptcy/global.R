@@ -17,6 +17,7 @@ require(reshape2)
 require(tidyr)
 require(maptools)
 require(Hmisc)
+require(ggplot2)
 
 ## load map data
 MAmap <- fromJSON("County_2010Census_DP1.geojson")
@@ -70,14 +71,17 @@ ylim_pro <- list(
 
 
 ## Colors for business total legend
-paint_brush <- colorRampPalette(colors=c("white", "red3"))
-map_colors <- c(paint_brush(n=5), "#999999")
-
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
+                "#0072B2", "#D55E00", "#CC79A7", "#cccccc")
+##paint_brush <- colorRampPalette(colors=c("#053061", "#CCCCCC", "#FF2C19"))
+##map_colors <- c(paint_brush(n=20), "#999999")
+paint_brush<-colorRampPalette(colors=c("white","red3"))
+map_colors <- c(paint_brush(n=25), "#999999")
 ## (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-busmax.val <- max(bank_data1$Business_Filings_Total, na.rm=TRUE)
-busmin.val <- min(bank_data1$Business_Filings_Total, na.rm=TRUE)
+busmax.val <- round(max(bank_data1$Business_Filings_Total, na.rm=TRUE),0)
+busmin.val <- round(min(bank_data1$Business_Filings_Total, na.rm=TRUE),0)
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
@@ -95,6 +99,8 @@ buscolorRanges <- data.frame(
 )
 
 ## Colors for Personal total legend
+nonbusmax.val <- round(max(bank_data1$Personal_Filings_Total, na.rm=TRUE),0)
+nonbusmin.val <- round(min(bank_data1$Personal_Filings_Total, na.rm=TRUE),0)
 nonbuscuts <- quantile(bank_data1$Personal_Filings_Total, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend

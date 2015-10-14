@@ -260,6 +260,97 @@ shinyServer(function(input, output, session) {
       values$selectedFeature[col_name] <- map_dat[match(region, map_dat$Region), col_name]
     })
   })
+  ## map legend
+  output$legend <- renderPlot({
+    if(input$map_radio =='Personal Filings' && input$map_nonbus_display != 'Personal_Filings_Total'){
+      
+      paint.brush = colorRampPalette(c("white","red3"))
+      cols <- paint.brush(101)
+      leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+      
+      p <- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col,y), x = x), show_guide = FALSE) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+      
+    }
+    return(p)
+  })
+  output$legend3 <- renderPlot({
+      if(input$map_radio =='Business Filings' && input$map_nonbus_display != 'Business_Filings_Total'){
+      
+      paint.brush = colorRampPalette(c("white", "red3"))
+      cols <- paint.brush(101)
+      leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+      
+      b <- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+      
+    }
+    return(b)
+  })
+  output$legend1 <- renderPlot({  
+  if(input$map_radio =='Personal Filings' && input$map_nonbus_display == 'Personal_Filings_Total'){
+      paint.brush = colorRampPalette(c("white", "red3"))
+      cols <- paint.brush(length(map_colors)-1)
+      leg_dat<- data_frame(y = seq(nonbusmin.val, nonbusmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+        scale_y_continuous(limits = c(nonbusmin.val, nonbusmax.val), breaks = seq(nonbusmin.val, nonbusmax.val, length.out = 5)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    
+    return(q)
+    
+  })
+  output$legend2 <- renderPlot({  
+    if(input$map_radio =='Business Filings' && input$map_bus_display == 'Business_Filings_Total'){
+      paint.brush = colorRampPalette(c("white", "red3"))
+      cols <- paint.brush(length(map_colors)-1)
+      leg_dat <- data_frame(y = seq(busmin.val, busmax.val, length.out=(length(map_colors)-1)), x = 1, col = cols)
+      
+      d<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+        scale_y_continuous(limits = c(busmin.val, busmax.val), breaks = round(seq(busmin.val, busmax.val, length.out = 8)),1) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    
+    return(d)
+    
+  })
   ##  This function is what creates info box
   output$details <- renderText({
     if (input$map_radio == "Business Filings") {

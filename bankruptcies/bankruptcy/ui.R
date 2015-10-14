@@ -223,7 +223,7 @@ shinyUI(fluidPage(
                                       .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
                                       ")),
                  ## Map Creation
-                 leafletMap("map", width="100%", height=500, 
+                 leafletMap("map", width="95%", height=500, 
                             options=list(center = c(42.15, -71.65), zoom=8, 
                                          ##Bounds for the map for when zoomed in on mass
                                          maxBounds = list(list(41, -73.5), 
@@ -245,85 +245,42 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_radio == 'Business Filings' && input.map_bus_display == 'Business_Filings_Total' && input.action != 0",
                    absolutePanel(
-                     right = 10, top = 150, draggable=FALSE, style = "", 
+                     right = 5, top = 130, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Business Filings of Bankruptcies"),
-                     tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
-                           )),
-                           tags$td(prettyNum(round(from), big.mark = ","), "to", 
-                                   prettyNum(round(to), big.mark = ","), align = "right")
-                         )
-                       }, 
-                       buscolorRanges$from, buscolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
-                         )),
-                         tags$td("Data not available", align = "right")))
+                     strong("Business Filings"),
+                     br(),
+                    strong("of Bankruptcies"),
+                     plotOutput("legend2")
+                     
                    )),
                  
                  ## Personal Legend
                  conditionalPanel(
                    condition="input.map_radio =='Personal Filings' && input.map_nonbus_display == 'Personal_Filings_Total' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 150, draggable=FALSE, style = "",
+                     right = 5, top = 130, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Personal Filings"),
                      br(),
                      strong("of Bankruptcies"),
-                     tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
-                           )),
-                           tags$td(prettyNum(round(from), big.mark = ","), "to",
-                                   prettyNum(round(to), big.mark = ","),  align = "right")
-                         )
-                       },
-                       nonbuscolorRanges$from, nonbuscolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
-                         )),
-                         tags$td("Data not available", align = "right")
-                       )
-                     )
-                   )),
+                     plotOutput("legend1")
+                   )
+                  ),
+                 
                  ## Proportion by Chapter in Business Filings Bankruptcies Legend
                  conditionalPanel(
                    condition="input.map_radio =='Business Filings' && input.map_bus_display != 'Business_Filings_Total' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 150, draggable=FALSE, style = "",
+                     right = 5, top = 130, draggable=FALSE, style = "",
                      class = "floater",
-                     strong("Percentage by Chapter in"),
+                     strong("Percentage by"),
+                    br(),
+                     strong("Chapter in"),
                      br(),
-                     strong("Business Filings Bankruptcies"),
-                     tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s; border:1px solid black;", color)
-                           )),
-                           tags$td(prettyNum(round(from), big.mark = ","), "% to",
-                                   prettyNum(round(to), big.mark = ","),"%",align = "right")
-                         )
-                       },
-                       procolorRanges$from, procolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
-                         )),
-                         tags$td("Data not available", align = "right")
-                       )
-                     )
+                     strong("Business Filings"),
+                     br(),
+                      strong("Bankruptcies"),
+                     plotOutput("legend3")
                    ),
                    tags$br(),
                    p(strong("Chapter 7"), 
@@ -342,30 +299,35 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_radio =='Personal Filings' && input.map_nonbus_display != 'Personal_Filings_Total' && input.action != 0",
                    absolutePanel(
-                     right = 10, top = 130, draggable=FALSE, style = "",
+                     right = 5, top = 130, draggable=FALSE, style = "",
                      class = "floater",
-                     strong("Percentage by Chapter in"),
+                     strong("Percentage by"), 
                      br(),
-                     strong("Personal Filings Bankruptcies"),
-                     tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
-                           )),
-                           tags$td(prettyNum(round(from, 2)), "% to",
-                                   prettyNum(round(to, 2)), "%", align = "right")
-                         )
-                       },
-                       procolorRanges$from, procolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
-                         )),
-                         tags$td("Data not available", align = "right")
-                       )
-                     )
+                     strong("Chapter in"),
+                     br(),
+                     strong("Personal Filings"),
+                     br(),
+                     strong("Bankruptcies"),
+                     plotOutput("legend")
+                     ##tags$table(
+                       ##mapply(function(from, to, color) {
+                         ##tags$tr(
+                           ##tags$td(tags$div(
+                             ##style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
+                           ##)),
+                           ##tags$td(prettyNum(round(from, 2)), "% to",
+                                   ##prettyNum(round(to, 2)), "%", align = "right")
+                         ##)
+                       ##},
+                       ##procolorRanges$from, procolorRanges$to, map_colors[-length(map_colors)],
+                       ##SIMPLIFY=FALSE),
+                       ##tags$tr(
+                         ##tags$td(tags$div(
+                           ##style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
+                         ##)),
+                         ##tags$td("Data not available", align = "right")
+                       ##)
+                     ##)
                    ),
                    tags$br(),
                    p(strong("Chapter 7"), 
