@@ -211,6 +211,9 @@ shinyUI(fluidPage(
                       " - Deals with the debt of an individual. A payment plan is proposed to pay back their debt over the course of three to five years.")
                     )
                  ),
+                
+                 p(strong("Updates to Graphs"), 
+                   " - More bankruptcy data will be added as it is available."),
                  
                  value="plot"),
         
