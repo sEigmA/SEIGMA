@@ -319,9 +319,9 @@ shinyUI(fluidPage(
                          tags$td("Data not available", align = "right")
                        )
                      )
-                   )
-                 ),
-                 p(strong("This is calculated by comparing the monthly employment estimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")),
+                   ),
+                   p(strong("This is calculated by comparing the monthly employment estimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003."))),
+                 
                  #                plot_main_text,
                  value="map"),
         
