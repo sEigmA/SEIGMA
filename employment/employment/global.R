@@ -60,8 +60,8 @@ MA_municipals <- sort(MA_municipals)
 
 
 ## Set graph colors (special for colorblind people,turquoise)
-cbbPalette <- c("#000000", "red", "yellow", "green", "blue",
-                "turquoise", "lightblue", "deeppink")
+cbbPalette <- c("#000000", "red", "green", "blue",
+                "turquoise", "lightblue", "deeppink", "yellow")
 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(

@@ -89,7 +89,7 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'plot'",
                    ## Select input = List
                    selectInput("plot_muni", "Select Municipality", 
-                               choices = MA_municipals, multiple=TRUE),
+                               choices = MA_municipals, selected="Boston", multiple=TRUE),
                    radioButtons("plot_radio", "Select Variable of Interest",
                                 c("Employment and Business Establishments" = "Employment and Establishments", 
                                   "Wages" = "Wages"),
