@@ -97,7 +97,7 @@ shinyServer(function(input, output, session) {
       col<-input$plot_nonbus_display
     }
     
-    ## assign colors to each entry in the data frame
+    ## assign column to each entry in the data frame
     col_sel_num1<-which( colnames(plot_df)==col )
     plot_dat1 <- plot_df %>%
       filter(Region %in% counties) %>%
