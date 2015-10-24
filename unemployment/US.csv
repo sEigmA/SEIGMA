@@ -1,4 +1,4 @@
-"Municipal","County","State","Region","Year","Unemployment Rate Avg","No Unemployed Avg","No Employed Avg","No Labor Avg"
+"Municipal","County","State","Region","Year","Unemployment_Rate_Avg","No_Unemployed_Avg","No_Employed_Avg","No_Labor_Avg"
 NA,"NA County",NA,"United States",1990,4,906,21944,22850
 NA,"NA County",NA,"United States",1991,4.6,1000,20738,21738
 NA,"NA County",NA,"United States",1992,3.7,806,20825,21631

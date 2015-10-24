@@ -47,24 +47,28 @@ unemp_data3 <- unemp_data2[,-6]
 write.csv(unemp_data3, file="unempdata.csv", row.names=FALSE)
 unemp_data3 <- read.csv("unempdata.csv")
 
-colnames(unemp_data3)[c(5:9)] <- c("Year", "Unemployment Rate Avg", "No Unemployed Avg", "No Employed Avg", "No Labor Avg")
+colnames(unemp_data3)[c(5:9)] <- c("Year", "Unemployment_Rate_Avg", "No_Unemployed_Avg", "No_Employed_Avg", "No_Labor_Avg")
 
 #Organizing by Region
 unemp_data4 <- unemp_data3 %>%
-    arrange(Region)
+    filter(Year>=1990)%>%
+  arrange(Region)
 
 # Put US and MA at top of data set
 idx_unemp_MA <- which(unemp_data4$Region == "MA")
 idx_unemp_US <- which(unemp_data4$Region == "United States")
 MA<-unemp_data4[idx_unemp_MA,]
 US<-unemp_data4[idx_unemp_US,]
+##Eliminating unnecessary data, US is not the real us data
 write.csv(MA, file="MA.csv", row.names=FALSE)
 write.csv(US, file="US.csv", row.names=FALSE)
-unemp_data4 <- rbind.data.frame(unemp_data4[idx_unemp_US,], unemp_data4[idx_unemp_MA,], unemp_data4[-c(idx_unemp_MA, idx_unemp_US),])
-
-
-##Eliminating unnecessary data read from CDC - not required for most other datasets
-unemp_data4 <- unemp_data4[-c(1:759),]
+unemp_data4 <- rbind.data.frame(unemp_data4[idx_unemp_MA,], unemp_data4[-c(idx_unemp_MA, idx_unemp_US),])
   
 ## save data
-write.csv(unemp_data4, file="unemploy/unempdata.csv")
+write.csv(unemp_data4, file="unemploy/unempdata.csv",row.names=FALSE)
+##calculate the unemployment rate and labor force percent change since 1990
+year_90<-unemp_data4[which(unemp_data4$Year==1990),]
+unemp_data4$Unemployment_Rate_Change<-round(unemp_data4$Unemployment_Rate_Avg-year_90$Unemployment_Rate_Avg[match(unemp_data4$Municipal,year_90$Municipal)],1)
+##labor force
+unemp_data4$Labor_Pct_Change<-round((unemp_data4$No_Labor_Avg/year_90$No_Labor_Avg[match(unemp_data4$Municipal,year_90$Municipal)]-1)*100,1)
+write.csv(unemp_data4, file="unemploy/unempdata1.csv",row.names=FALSE)
