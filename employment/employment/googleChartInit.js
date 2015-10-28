@@ -1,0 +1,1 @@
+google.charts.load("43", {packages: [ "corechart", "annotatedtimeline", "calendar", "gauge", "geochart", "geomap", "intensitymap", "map", "motionchart", "orgchart", "table", "timeline", "treemap", "sankey" ]});

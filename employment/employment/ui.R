@@ -11,6 +11,7 @@
 shinyUI(fluidPage(
   ## embed the google analytics script in the app
   tags$head(includeScript("google-analytics.js")),
+    
   ## HTML to create generate map button
   gen_map_button,
   ## this starts the googleCharts engine
@@ -89,7 +90,7 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'plot'",
                    ## Select input = List
                    selectInput("plot_muni", "Select Municipality", 
-                               choices = MA_municipals, selected="Boston", multiple=TRUE),
+                               choices = MA_municipals, selected="Amherst", multiple=TRUE),
                    radioButtons("plot_radio", "Select Variable of Interest",
                                 c("Employment and Business Establishments" = "Employment and Establishments", 
                                   "Wages" = "Wages"),

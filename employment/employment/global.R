@@ -402,60 +402,7 @@ Emp_plot_options1 <- googleLineChart("Emp_plot1", width="100%", height="475px", 
                                       )
                                     )
                                   ))
-Emp_plot_options2 <- googleLineChart("Emp_plot2", width="100%", height="475px", options = list(
-                        ## set fonts
-                        fontName = "Source Sans Pro",
-                        fontSize = 14,
-                        
-                        ## set axis titles, ticks, fonts, and ranges
-                        hAxis = list(
-                          title = "Year",
-                          format = "####",
-                          ticks = seq(2002, 2012, 2),
-                          viewWindow = xlim,
-                          textStyle = list(
-                            fontSize = 14),
-                          titleTextStyle = list(
-                            fontSize = 16,
-                            bold = TRUE,
-                            italic = FALSE)
-                        ),
-                        vAxis = list(
-                          title = "Average Monthly Employment",
-                          viewWindow = ylim1,
-                          textStyle = list(
-                            fontSize = 14),
-                          titleTextStyle = list(
-                            fontSize = 16,
-                            bold = TRUE,
-                            italic = FALSE)
-                        ),
-                        
-                        ## set legend fonts
-                        legend = list(
-                          textStyle = list(
-                            fontSize=14)),
-                        
-                        ## set chart area padding
-                        chartArea = list(
-                          top = 50, left = 75,
-                          height = "75%", width = "70%"
-                        ),
-                        
-                        ## set colors
-                        colors = cbbPalette,
-                        
-                        ## set point size
-                        pointSize = 3,
-                        
-                        ## set tooltip font size
-                        ## Hover text font stuff
-                        tooltip = list(
-                          textStyle = list(
-                            fontSize = 14
-                          )
-                        )
-                      ))
+
 Est_plot_options1 <- googleLineChart("Est_plot1", width="100%", height="475px", options = list(
                       
                       ## set fonts
@@ -511,60 +458,7 @@ Est_plot_options1 <- googleLineChart("Est_plot1", width="100%", height="475px", 
                         )
                       )
                     ))
-Est_plot_options2 <- googleLineChart("Est_plot2", width="100%", height="475px", options = list(
-                      ## set fonts
-                      fontName = "Source Sans Pro",
-                      fontSize = 14,
-                      
-                      ## set axis titles, ticks, fonts, and ranges
-                      hAxis = list(
-                        title = "Year",
-                        format = "####",
-                        ticks = seq(2002, 2012, 2),
-                        viewWindow = xlim,
-                        textStyle = list(
-                          fontSize = 14),
-                        titleTextStyle = list(
-                          fontSize = 16,
-                          bold = TRUE,
-                          italic = FALSE)
-                      ),
-                      vAxis = list(
-                        title = "Number of Business Establishments",
-                        viewWindow = ylim1_est,
-                        textStyle = list(
-                          fontSize = 14),
-                        titleTextStyle = list(
-                          fontSize = 16,
-                          bold = TRUE,
-                          italic = FALSE)
-                      ),
-                      
-                      ## set legend fonts
-                      legend = list(
-                        textStyle = list(
-                          fontSize=14)),
-                      
-                      ## set chart area padding
-                      chartArea = list(
-                        top = 50, left = 75,
-                        height = "75%", width = "70%"
-                      ),
-                      
-                      ## set colors
-                      colors = cbbPalette,
-                      
-                      ## set point size
-                      pointSize = 3,
-                      
-                      ## set tooltip font size
-                      ## Hover text font stuff
-                      tooltip = list(
-                        textStyle = list(
-                          fontSize = 14
-                        )
-                      )
-                    ))
+
 Emp_pct_plot_options <- googleLineChart("Emp_pct_plot", width="100%", height="475px",
                                        options = list(
                                          ## set fonts
