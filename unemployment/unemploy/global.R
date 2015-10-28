@@ -1,18 +1,18 @@
 #######################################
-## Title: Unemploy global.R          ##
-## Author(s): Emily Ramos, Arvind    ##
-##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ##
-## Date Created:  01/07/2015         ##
-## Date Modified: 03/05/2015  ER     ##
+## Title: Unemploy global.R           ##
+## Author(s): Xuelian Li,Jenna Kiridly##
+##            Emily Ramos, Arvind     ##
+##            Ramakrishnan,           ##
+## Date Created:  01/07/2015          ##
+## Date Modified: 10/27/2015  XL      ##
 #######################################
 
 ## First file run - Environment Setup
 ## load necessary libraries
 require(dplyr)
-require(sp)
+##require(sp)
 require(maptools)
-require(rgeos)
+##require(rgeos)
 require(Hmisc)
 require(shiny)
 require(googleCharts)
@@ -26,17 +26,8 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted unemp data
 ## -1 eliminates first column [rows,columns]
-unemp_data <- read.csv(file="unempdata.csv")[,-1]
+unemp_data <- read.csv(file="unempdata1.csv")
 
-#drop extra MA years
-unemp_data <- unemp_data[unemp_data$Year >= 1990,]
-
-## Find order of counties in geojson files
-## Each county is a separate feature
-# MA_counties <- c()
-# for(i in 1:length(MA_map_county$features)){
-#   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-# }
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -66,10 +57,10 @@ MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
-cbbPalette <- c("black", "red", "orange", "yellow", "green",
-                "blue", "maroon", "deeppink")
+cbbPalette <- c("black", "red", "orange","green",
+                "blue", "maroon", "deeppink", "yellow")
 
-## Create maxs and mins for googleCharts/Plot tab
+## Create maxs and mins for unemployment rate plot in googleCharts/Plot tab
 xlim <- list(
   min = min(unemp_data$Year)-1,
   max = max(unemp_data$Year)+1
@@ -77,67 +68,95 @@ xlim <- list(
 ylim <- list(
   min = 0,
   ##+5 = max rate plus a little extra
-  max = max(unemp_data$Unemployment.Rate.Avg, na.rm=T)+5
+  max = max(unemp_data$Unemployment_Rate_Avg, na.rm=T)+5
+)
+
+## create ylim for unemployment rate change since 1990 plot 
+ylim_pct<-list(
+  min = min(unemp_data$Unemployment_Rate_Change, na.rm=T)-0.05,
+  
+  ##+5 = max Avg monthly employment plus a little extra
+  max = max(unemp_data$Unemployment_Rate_Change, na.rm=T)+0.05
+)
+## create ylim for labor force with real number plot 
+ylim_lab<-list(
+  min = min(unemp_data$No_Labor_Avg, na.rm=T)-5,
+  
+  ##+5 = max Avg monthly employment plus a little extra
+  max = max(unemp_data$No_Labor_Avg, na.rm=T)+5
+)
+
+## create ylim for labor force with change since 1990 plot 
+ylim_pct_lab<-list(
+  min = min(unemp_data$Labor_Pct_Change, na.rm=T)-0.05,
+  
+  ##+5 = max Avg monthly employment plus a little extra
+  max = max(unemp_data$Labor_Pct_Change, na.rm=T)+0.05
 )
 
 #################################################################
 
-## Colors for a single-year legend
-spaint.brush <- colorRampPalette(colors=c("darkgreen", "white", "maroon"))
-smap.colors <- c(spaint.brush(n=7), "#999999")
+## Colors for unemployment rate legend
+paint.brush <- colorRampPalette(colors=c("darkgreen", "white", "maroon"))
+map.colors <- c(paint.brush(n=25), "#999999")
 
 ## For a single year data, we have a series of rates (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-smax.val <- max(unemp_data$Unemployment.Rate.Avg, na.rm=TRUE)
-smin.val <- min(unemp_data$Unemployment.Rate.Avg, na.rm=TRUE)
+unemax.val <- max(unemp_data$Unemployment_Rate_Avg, na.rm=TRUE)
+unemin.val <- min(unemp_data$Unemployment_Rate_Avg, na.rm=TRUE)
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-# scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
-scuts <- quantile(unemp_data$Unemployment.Rate.Avg, probs = seq(0, 1, length.out = length(smap.colors)), na.rm=TRUE)
-#scuts <- seq(smin.val, smax.val, length.out = length(smap.colors))
+unecuts <- quantile(unemp_data$Unemployment_Rate_Avg, probs = seq(0, 1, length.out = length(map.colors)), na.rm=TRUE)
 
+labmax.val <- max(unemp_data$No_Labor_Avg, na.rm=TRUE)
+labmin.val <- min(unemp_data$No_Labor_Avg, na.rm=TRUE)
+labcuts <- quantile(unemp_data$No_Labor_Avg, probs = seq(0, 1, length.out = length(map.colors)), na.rm=TRUE)
+
+pctmax.val<-max(c(max(unemp_data$Unemployment_Rate_Change, na.rm=FALSE),max(unemp_data$Labor_Pct_Change, na.rm=FALSE)))
+pctmin.val<-min(c(min(unemp_data$Unemployment_Rate_Change, na.rm=FALSE),min(unemp_data$Labor_Pct_Change, na.rm=FALSE)))
+pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map.colors))
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
 ## head = scuts takes everything except for the last one,
 ## tails = same thing opposite
 
-scolorRanges <- data.frame(
-  from = head(scuts, length(scuts)-1),
-  to = tail(scuts, length(scuts)-1)
-)
+##scolorRanges <- data.frame(
+##from = head(scuts, length(scuts)-1),
+##to = tail(scuts, length(scuts)-1)
+##)
 
 ## colors fade from one color to white to another color, with gray for NAs
 ## m-prefix = multiple years
-mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
-mmap.colors <- c(mpaint.brush(n=6), "#999999")
+##mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
+##mmap.colors <- c(mpaint.brush(n=6), "#999999")
 
 ## find max and min (crude rates) values for each region
-bound <- unemp_data %>%
-  group_by(Region) %>%
+##bound <- unemp_data %>%
+## group_by(Region) %>%
 
-  ##n.rm=FALSE = needed
-  summarise(max.val = max(Unemployment.Rate.Avg, na.rm=FALSE),
-            min.val = min(Unemployment.Rate.Avg, na.rm=FALSE))
+##n.rm=FALSE = needed
+## summarise(max.val = max(Unemployment.Rate.Avg, na.rm=FALSE),
+##min.val = min(Unemployment.Rate.Avg, na.rm=FALSE))
 
 ## find the difference between each region's max and min
-bound$diff <- abs(bound$max.val - bound$min.val)
+##bound$diff <- abs(bound$max.val - bound$min.val)
 
 ## set the max and min value (for the legend) at 95% of the largest difference
-mmax.val <- max(bound$diff)
+##mmax.val <- max(bound$diff)
 
 #mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
 
-mmin.val <- -1*mmax.val
-mcuts <- seq(mmin.val, mmax.val, length.out = length(mmap.colors))
+##mmin.val <- -1*mmax.val
+##mcuts <- seq(mmin.val, mmax.val, length.out = length(mmap.colors))
 
 # Construct break ranges for displaying in the legend
 
-mcolorRanges <- data.frame(
-  from = head(mcuts, length(mcuts)-1),
-  to = tail(mcuts, length(mcuts)-1)
-)
+##mcolorRanges <- data.frame(
+##from = head(mcuts, length(mcuts)-1),
+##to = tail(mcuts, length(mcuts)-1)
+##)
 
 
 #############################
@@ -193,7 +212,7 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-
+  
   helpText(p(strong('Please select the years for which you are interested in viewing the annual unemployment estimate.'))),
   tags$br(),
   tags$ul(
@@ -203,7 +222,7 @@ summary_side_text <- conditionalPanel(
     tags$li('To compare the annual unemployment estimate to the Massachusetts or national estimate, select the corresponding box.'),
     tags$br(),
     tags$li('Sort the annual umemployment estimate in ascending and descending order by clicking the column or variable title.')
-
+    
   )
 )
 
@@ -224,7 +243,7 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please select a yearly range and click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
-
+    
     tags$li('Clicking on a municipality will display the annual unemployment estimate for the time period you selected.')
   ))
 
@@ -246,63 +265,237 @@ about_main_text <- p(strong("The SEIGMA Unemployment App"), "displays the unempl
 plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
-                    strong("Annual Avergage Unemployment Rate-"),
+                    strong("Annual Average Unemployment Rate-"),
                     " Average annual unemployment rates account for workers who have lost their jobs and are looking for new ones.  This excludes people who are not looking for work.  The unemployment rate is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey.  Municipality unemployment rates were gathered form a secition of thr BLS and CPS called the Local Areas Unemployment Statistics Series.",
                     tags$br(),
                     strong("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf", align="center"))
 
 font_size <- 14
 
-plot_options <- googleColumnChart("plot", width="100%", height="475px",
-                                  options = list(
-                                    ## set fonts
-                                    fontName = "Source Sans Pro",
-                                    fontSize = font_size,
-                                    title = "",
-                                    ## set axis titles, ticks, fonts, and ranges
-                                    hAxis = list(
-                                      title = "",
-                                      textStyle = list(
-                                        fontSize = font_size),
-                                      titleTextStyle = list(
-                                        fontSize = font_size+2,
-                                        bold = TRUE,
-                                        italic = FALSE)
-                                    ),
-                                    vAxis = list(
-                                      title = "% of Population",
-                                      viewWindow = ylim,
-                                      textStyle = list(
-                                        fontSize = font_size),
-                                      titleTextStyle = list(
-                                        fontSize = font_size+2,
-                                        bold = TRUE,
-                                        italic = FALSE)
-                                    ),
+une_plot_options <- googleLineChart("une_plot1", width="100%", height="475px", options = list(
+  
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = 14,
+  
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "Year",
+    format = "####",
+    ticks = seq(1990, 2012, 5),
+    viewWindow = xlim,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    title = "Annual Average Unemployment Rate",
+    viewWindow = ylim,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    textStyle = list(
+      fontSize=14)),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 75,
+    height = "75%", width = "70%"
+  ),
+  
+  ## set colors
+  colors = cbbPalette,
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = 14
+    )
+  )
+))
 
-                                    ## set legend fonts
-                                    legend = list(
-                                      textStyle = list(
-                                        fontSize=font_size),
-                                      position = "right"),
+lab_plot_options <- googleLineChart("lab_plot1", width="100%", height="475px", options = list(
+  
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = 14,
+  
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "Year",
+    format = "####",
+    ticks = seq(1990, 2012, 5),
+    viewWindow = xlim,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    title = "Annual Average labors",
+    viewWindow = ylim_lab,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    textStyle = list(
+      fontSize=14)),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 75,
+    height = "75%", width = "70%"
+  ),
+  
+  ## set colors
+  colors = cbbPalette,
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = 14
+    )
+  )
+))
 
-                                    ## set chart area padding
-                                    chartArea = list(
-                                      top = 50, left = 100,
-                                      height = "75%", width = "65%"
-                                    ),
+lab_pct_plot_options <- googleLineChart("lab_pct_plot", width="100%", height="475px", options = list(
+  
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = 14,
+  
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "Year",
+    format = "####",
+    ticks = seq(1990, 2012, 5),
+    viewWindow = xlim,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    title = "Change in labors since 1990 (%)",
+    viewWindow = ylim_pct_lab,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    textStyle = list(
+      fontSize=14)),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 75,
+    height = "75%", width = "70%"
+  ),
+  
+  ## set colors
+  colors = cbbPalette,
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = 14
+    )
+  )
+))
 
-                                    ## set colors
-                                    colors = cbbPalette[c(2:8)],
+pct_plot_options <- googleLineChart("une_pct_plot", width="100%", height="475px", options = list(
+  
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = 14,
+  
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "Year",
+    format = "####",
+    ticks = seq(1990, 2012, 5),
+    viewWindow = xlim,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    title = "Change in Unempolyment Rate since 1990 (%)",
+    viewWindow = ylim_pct,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    textStyle = list(
+      fontSize=14)),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 75,
+    height = "75%", width = "70%"
+  ),
+  
+  ## set colors
+  colors = cbbPalette,
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = 14
+    )
+  )
+))
 
-                                    ## set point size
-                                    pointSize = 3,
 
-                                    ## set tooltip font size
-                                    ## Hover text font stuff
-                                    tooltip = list(
-                                      textStyle = list(
-                                        fontSize = font_size
-                                      )
-                                    )
-                                  ))
+
+

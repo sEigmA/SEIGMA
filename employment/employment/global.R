@@ -75,12 +75,12 @@ ylim <- list(
   max = max(emp_data$Average_Monthly_Employment, na.rm=T)+5
 )
 ##when without boston, create ylim for googleCharts/plot
-ylim1<-list(
-  min = min(emp_data$Average_Monthly_Employment[which(emp_data$Municipal!="Boston")], na.rm=T)-5,
-  
+##ylim1<-list(
+  ##min = min(emp_data$Average_Monthly_Employment[which(emp_data$Municipal!="Boston")], na.rm=T)-5,
+  ##
   ##+5 = max Avg monthly employment plus a little extra
-  max = max(emp_data$Average_Monthly_Employment[which(emp_data$Municipal!="Boston")], na.rm=T)+5
-  )
+  ##max = max(emp_data$Average_Monthly_Employment[which(emp_data$Municipal!="Boston")], na.rm=T)+5
+  ##)
 ##Creat ylim for establishments plot
 ylim_est<-list(
   min = min(emp_data$Number_of_Employer_Establishments, na.rm=T)-5,
