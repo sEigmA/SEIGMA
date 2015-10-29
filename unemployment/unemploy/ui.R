@@ -61,8 +61,7 @@ shinyUI(fluidPage(
         ## In summary and plot, show boxes that will compare to MA or US average
         ## False at the end means it starts off unchecked
         checkboxInput("sum_MA_mean", "Compare to MA Average", FALSE)
-        #checkboxInput("sum_US_mean", "Compare to US Average", FALSE)
-      ),
+              ),
       
       ## in map, allow for timespan selection
       ## if single year is selected, select year. if multiple years are selected, choose range.
