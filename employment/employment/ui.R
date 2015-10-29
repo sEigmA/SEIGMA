@@ -11,11 +11,15 @@
 shinyUI(fluidPage(
   ## embed the google analytics script in the app
   tags$head(includeScript("google-analytics.js")),
-    
+  ## embed the googleCharts Init script to use version 43 (frozen version) to fixed the bug (2 charts in one page)
+  tags$head(tags$script(src="https://www.google.com/jsapi")),
+  tags$head(tags$script(src="https://www.gstatic.com/charts/loader.js")),
+  tags$head(includeScript("googleChartInit.js")),
+  tags$head(tags$script(src="bindings.js")),
   ## HTML to create generate map button
   gen_map_button,
   ## this starts the googleCharts engine
-  googleChartsInit(),
+  ##googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
   titlePanel("", windowTitle = "SEIGMA: Employment Monthly Shiny App"),
