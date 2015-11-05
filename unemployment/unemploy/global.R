@@ -230,7 +230,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select a municipality to analyze the annual unemployment estimate, do not slecet more than ten municipalities at a time.')),
+  p(strong('Please select a municipality to analyze the annual unemployment estimate, do not select more than ten municipalities at a time.')),
   tags$br(),
   tags$ul(
     tags$li('For a given timespan, you can compare the annual unemployment estimate to the national, state, and county estimate.')
