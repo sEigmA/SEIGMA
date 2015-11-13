@@ -4,7 +4,7 @@
 ##            Emily Ramos, Arvind     ##
 ##            Ramakrishnan,           ##
 ## Date Created:  01/07/2015          ##
-## Date Modified: 10/27/2015  XL      ##
+## Date Modified: 11/13/2015  XL      ##
 #######################################
 
 ## First file run - Environment Setup
@@ -26,7 +26,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted unemp data
 ## -1 eliminates first column [rows,columns]
-unemp_data <- read.csv(file="unempdata1.csv")
+unemp_data <- read.csv(file="unempdata2.csv")
 
 
 ## Find order of municipals in geojson files
@@ -60,6 +60,7 @@ MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 cbbPalette <- c("black", "red", "orange","green",
                 "blue", "maroon", "deeppink", "yellow")
 
+unemp_data1<-unemp_data[which(!is.na(unemp_data$Municipal)),]
 ## Create maxs and mins for unemployment rate plot in googleCharts/Plot tab
 xlim <- list(
   min = min(unemp_data$Year)-1,
@@ -71,52 +72,48 @@ ylim <- list(
   max = max(unemp_data$Unemployment_Rate_Avg, na.rm=T)+5
 )
 
-## create ylim for unemployment rate change since 1990 plot 
-ylim_pct<-list(
-  min = min(unemp_data$Unemployment_Rate_Change, na.rm=T)-0.05,
-  
-  ##+5 = max Avg monthly employment plus a little extra
-  max = max(unemp_data$Unemployment_Rate_Change, na.rm=T)+0.05
-)
+
 ## create ylim for labor force with real number plot 
 ylim_lab<-list(
   min = min(unemp_data$No_Labor_Avg, na.rm=T)-5,
   
   ##+5 = max Avg monthly employment plus a little extra
-  max = max(unemp_data$No_Labor_Avg, na.rm=T)+5
+  max = max(unemp_data1$No_Labor_Avg, na.rm=T)+5
 )
 
 ## create ylim for labor force with change since 1990 plot 
 ylim_pct_lab<-list(
-  min = min(unemp_data$Labor_Pct_Change, na.rm=T)-0.05,
+  min = min(unemp_data1$Labor_Pct_Change, na.rm=T)-0.05,
   
   ##+5 = max Avg monthly employment plus a little extra
-  max = max(unemp_data$Labor_Pct_Change, na.rm=T)+0.05
+  max = max(unemp_data1$Labor_Pct_Change, na.rm=T)+0.05
 )
 
 #################################################################
 
+
 ## Colors for unemployment rate legend
 paint.brush <- colorRampPalette(colors=c("darkgreen", "white", "maroon"))
-map.colors <- c(paint.brush(n=25), "#999999")
+map_colors <- c(paint.brush(n=25), "#999999")
 
 ## For a single year data, we have a series of rates (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-unemax.val <- max(unemp_data$Unemployment_Rate_Avg, na.rm=TRUE)
-unemin.val <- min(unemp_data$Unemployment_Rate_Avg, na.rm=TRUE)
+unemax.val <- max(unemp_data1$Unemployment_Rate_Avg, na.rm=TRUE)
+unemin.val <- min(unemp_data1$Unemployment_Rate_Avg, na.rm=TRUE)
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-unecuts <- quantile(unemp_data$Unemployment_Rate_Avg, probs = seq(0, 1, length.out = length(map.colors)), na.rm=TRUE)
+unecuts <- quantile(unemp_data1$Unemployment_Rate_Avg, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
-labmax.val <- max(unemp_data$No_Labor_Avg, na.rm=TRUE)
-labmin.val <- min(unemp_data$No_Labor_Avg, na.rm=TRUE)
-labcuts <- quantile(unemp_data$No_Labor_Avg, probs = seq(0, 1, length.out = length(map.colors)), na.rm=TRUE)
+labmax.val <- max(unemp_data1$No_Labor_Avg, na.rm=TRUE)
+labmin.val <- min(unemp_data1$No_Labor_Avg, na.rm=TRUE)
+labcuts <- quantile(unemp_data1$No_Labor_Avg, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
-pctmax.val<-max(c(max(unemp_data$Unemployment_Rate_Change, na.rm=FALSE),max(unemp_data$Labor_Pct_Change, na.rm=FALSE)))
-pctmin.val<-min(c(min(unemp_data$Unemployment_Rate_Change, na.rm=FALSE),min(unemp_data$Labor_Pct_Change, na.rm=FALSE)))
-pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map.colors))
+pctmax.val<-max(unemp_data1$Labor_Pct_Change, na.rm=FALSE)
+pctmin.val<--pctmax.val
+##pctmin.val<-min(unemp_data1$Labor_Pct_Change, na.rm=FALSE)
+pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
 ## head = scuts takes everything except for the last one,
@@ -282,7 +279,7 @@ une_plot_options <- googleLineChart("une_plot1", width="100%", height="475px", o
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(1990, 2012, 5),
+    ticks = seq(2003, 2012, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -292,7 +289,7 @@ une_plot_options <- googleLineChart("une_plot1", width="100%", height="475px", o
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Annual Average Unemployment Rate",
+    title = "Average Annual Unemployment Rate",
     viewWindow = ylim,
     textStyle = list(
       fontSize = 14),
@@ -338,7 +335,7 @@ lab_plot_options <- googleLineChart("lab_plot1", width="100%", height="475px", o
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(1990, 2012, 5),
+    ticks = seq(2003, 2012, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -394,7 +391,7 @@ lab_pct_plot_options <- googleLineChart("lab_pct_plot", width="100%", height="47
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(1990, 2012, 5),
+    ticks = seq(2003, 2012, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -404,7 +401,7 @@ lab_pct_plot_options <- googleLineChart("lab_pct_plot", width="100%", height="47
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Change in labors since 1990 (%)",
+    title = "Change in labors since 2003 (%)",
     viewWindow = ylim_pct_lab,
     textStyle = list(
       fontSize = 14),
@@ -440,61 +437,7 @@ lab_pct_plot_options <- googleLineChart("lab_pct_plot", width="100%", height="47
   )
 ))
 
-pct_plot_options <- googleLineChart("une_pct_plot", width="100%", height="475px", options = list(
-  
-  ## set fonts
-  fontName = "Source Sans Pro",
-  fontSize = 14,
-  
-  ## set axis titles, ticks, fonts, and ranges
-  hAxis = list(
-    title = "Year",
-    format = "####",
-    ticks = seq(1990, 2012, 5),
-    viewWindow = xlim,
-    textStyle = list(
-      fontSize = 14),
-    titleTextStyle = list(
-      fontSize = 16,
-      bold = TRUE,
-      italic = FALSE)
-  ),
-  vAxis = list(
-    title = "Change in Unempolyment Rate since 1990 (%)",
-    viewWindow = ylim_pct,
-    textStyle = list(
-      fontSize = 14),
-    titleTextStyle = list(
-      fontSize = 16,
-      bold = TRUE,
-      italic = FALSE)
-  ),
-  
-  ## set legend fonts
-  legend = list(
-    textStyle = list(
-      fontSize=14)),
-  
-  ## set chart area padding
-  chartArea = list(
-    top = 50, left = 75,
-    height = "75%", width = "70%"
-  ),
-  
-  ## set colors
-  colors = cbbPalette,
-  
-  ## set point size
-  pointSize = 3,
-  
-  ## set tooltip font size
-  ## Hover text font stuff
-  tooltip = list(
-    textStyle = list(
-      fontSize = 14
-    )
-  )
-))
+
 
 
 

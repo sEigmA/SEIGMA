@@ -1,11 +1,10 @@
 #######################################
-## Title: Unemployment ui.R          ##
-## Author(s): Emily Ramos, Arvind    ##
-##            Ramakrishnan, Jenna    ##
-##            Kiridly, Xuelian Li,   ##
-##            Steve Lauer            ##
-## Date Created:  01/07/2015         ##
-## Date Modified: 04/05/2015 XL      ##
+## Title: Unemployment uil.R          ##
+## Author(s): Xuelian Li,Jenna Kiridly##
+##            Emily Ramos, Arvind     ##
+##            Ramakrishnan,           ##
+## Date Created:  01/07/2015          ##
+## Date Modified: 11/13/2015  XL      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -42,7 +41,7 @@ shinyUI(fluidPage(
           condition="input.sum_timespan == 'sing.yr'",
           ## Initializing a single slider
           sliderInput("sum_year", "Select Year",
-                      min=1990, max=2012, value=2012,
+                      min=2003, max=2012, value=2012,
                       sep="")
         ),
         conditionalPanel(
@@ -50,7 +49,7 @@ shinyUI(fluidPage(
           condition="input.sum_timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("sum_range", "Select Years",
-                      min=1990, max=2012, value=c(2010,2012),
+                      min=203, max=2012, value=c(2010,2012),
                       sep="")
         ),
         ## in summary, allow for municipal selection
@@ -70,37 +69,43 @@ shinyUI(fluidPage(
         selectInput("plot_muni", "Select Municipality", 
                     choices = MA_municipals, selected="Amherst", multiple=TRUE),
         radioButtons("plot_radio", "Select Variable of Interest",
-                     c("Unemployment Rate" = "Unemployment Rate",
+                     c("Unemployment Rate" = "Unemployment_Rate_Avg",
                        "Labor Force" = "Labor Force"),
-                     selected="Unemployment Rate"),
-        radioButtons("plot_display_radio", "Display Options",
-                     c("Actual Values"="Actual Values", "Change Since 1990"="Change_Pct"),
-                     selected="Actual Values"),
+                     selected="Unemployment_Rate_Avg"),
         conditionalPanel(
-          condition="input.plot_radio == 'Unemployment Rate'",
-        ## In plot, show boxes that will compare to MA average
-        checkboxInput("plot_MA", "Compare to MA", FALSE)),
-        conditionalPanel(
-          condition="input.plot_radio == 'Labor Force'&& input.plot_display_radio='Change_Pct'",
+          condition="input.plot_radio == 'Unemployment_Rate_Avg'",
           ## In plot, show boxes that will compare to MA average
-          checkboxInput("plot2_MA", "Compare to MA", FALSE))
+          checkboxInput("plot_MA", "Compare to MA", FALSE)),
+        
+        conditionalPanel(
+          condition="input.plot_radio == 'Labor Force'",
+          radioButtons("plot_display_radio", "Display Options",
+                     c("Actual Values"="No_Labor_Avg", "Change Since 2003"="Labor_Pct_Change"),
+                     selected="No_Labor_Avg"),
+          conditionalPanel(
+            condition="input.plot_display_radio=='Labor_Pct_Change'",
+            ## In plot, show boxes that will compare to MA average
+            checkboxInput("plot2_MA", "Compare to MA", FALSE)
+          )
+        )
       ),
       
       ## in map, allow for timespan selection
-      ## if single year is selected, select year. if multiple years are selected, choose range.
-      conditionalPanel(
+     conditionalPanel(
         condition="input.tabs == 'map'",
         ## Initializing a single slider
           sliderInput("map_year", "Select Year",
-                      min=1990, max=2012, value=2012,
+                      min=2003, max=2012, value=2012,
         sep=""),
         radioButtons("map_radio", "Select Variable of Interest",
-                     c("Unemployment Rate" = "Unemployment Rate",
+                     c("Unemployment Rate" = "Unemployment_Rate_Avg",
                        "Labor Force" = "Labor Force"),
-                     selected="Unemployment Rate"),
+                     selected="Unemployment_Rate_Avg"),
+        conditionalPanel(
+          condition="input.map_radio == 'Labor Force'",
         radioButtons("map_display_radio", "Display Options",
-                     c("Actual Values"="Actual Values", "Change Since 1990"="Change_Pct"),
-                     selected="Actual Values")
+                     c("Actual Values"="No_Labor_Avg", "Change Since 2003"="Labor_Pct_Change"),
+                     selected="No_Labor_Avg"))
        ),
         
            
@@ -149,29 +154,22 @@ bootstrapPage(mainPanel(
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
                 conditionalPanel(
-                   condition="input.plot_radio =='Unemployment Rate'",
-                   conditionalPanel(
-                     condition="input.plot_display_radio=='Actual Values'",
-                     ## make chart title here (otherwise not centered)
+                   condition="input.plot_radio =='Unemployment_Rate_Avg'",
+                  ## make chart title here (otherwise not centered)
                      h4("Average Unemployment Rate by Region Over Time", align="center"),
                      une_plot_options),
-                   conditionalPanel(
-                     condition="input.plot_display_radio=='Change_Pct'",
-                     ## make chart title here (otherwise not centered)
-                     h4("Change in Average Unemployment Rate Over Time Since 1990", align="center"),
-                     pct_plot_options
-                     )),
+                   
                  conditionalPanel(
                    condition="input.plot_radio =='Labor Force'",
                    conditionalPanel(
-                     condition="input.plot_display_radio=='Actual Values'",
+                     condition="input.plot_display_radio=='No_Labor_Avg'",
                      ## make chart title here (otherwise not centered)
                      h4("Average Number in Labor Force Over Time", align="center"),
                      lab_plot_options),
                    conditionalPanel(
-                     condition="input.plot_display_radio=='Change_Pct'",
+                     condition="input.plot_display_radio=='Labor_Pct_Change'",
                      ## make chart title here (otherwise not centered)
-                     h4("Change in Average Labor Force Since 1990", align="center"),
+                     h4("Change in Average Labor Force Since 2003", align="center"),
                      lab_pct_plot_options
                      )
                  ),
@@ -206,57 +204,29 @@ bootstrapPage(mainPanel(
                  
                  ## Unemployment Rate Legend
                  conditionalPanel(
-                   condition="input.map_radio == 'Unemployment Rate' && input.map_bus_display == 'Actual Values' && input.action != 0",
+                   condition="input.map_radio == 'Unemployment_Rate_Avg' && input.action != 0",
                    absolutePanel(
                      right = 5, top = 130, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Unemployment Rate"),
-                     plotOutput("legend1"),
-                     tags$tr(
-                       tags$td(tags$div(
-                         style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
-                       )),
-                       tags$td("Data not available", align = "right"))
-                   )),
+                     plotOutput("legend1")
+                    )),
                  
-                 ## Unemployment Rate Change Legend
+                ## Labor Force Legend
                  conditionalPanel(
-                   condition="input.map_radio == 'Unemployment Rate' && input.map_bus_display == 'Change_Pct' && input.action != 0",
-                   absolutePanel(
-                     right = 5, top = 130, draggable=FALSE, style = "", 
-                     class = "floater",
-                     strong("Change in"),
-                     br(),
-                     strong("Unemployment Rate"),
-                     br(),
-                     strong("Since 1990")
-                     plotOutput("legend2"),
-                     tags$tr(
-                       tags$td(tags$div(
-                         style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
-                       )),
-                       tags$td("Data not available", align = "right"))
-                   )),
-                 ## Labor Force Legend
-                 conditionalPanel(
-                   condition="input.map_radio == 'Labor Force' && input.map_bus_display == 'Actual Values' && input.action != 0",
+                   condition="input.map_radio == 'Labor Force' && input.map_display_radio == 'No_Labor_Avg' && input.action != 0",
                    absolutePanel(
                      right = 5, top = 130, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Average Number in"),
                      br(),
                      strong("Labor Force"),
-                     plotOutput("legend3"),
-                     tags$tr(
-                       tags$td(tags$div(
-                         style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
-                       )),
-                       tags$td("Data not available", align = "right"))
-                   )),
+                     plotOutput("legend2")
+                     )),
                  
                  ## Labor Force Change Legend
                  conditionalPanel(
-                   condition="input.map_radio == 'Labor Force' && input.map_bus_display == 'Change_Pct' && input.action != 0",
+                   condition="input.map_radio == 'Labor Force' && input.map_display_radio == 'Labor_Pct_Change' && input.action != 0",
                    absolutePanel(
                      right = 5, top = 130, draggable=FALSE, style = "", 
                      class = "floater",
@@ -264,14 +234,9 @@ bootstrapPage(mainPanel(
                      br(),
                      strong("Labor Force"),
                      br(),
-                     strong("Since 1990")
-                     plotOutput("legend4"),
-                     tags$tr(
-                       tags$td(tags$div(
-                         style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
-                       )),
-                       tags$td("Data not available", align = "right"))
-                   )),     
+                     strong("Since 2003"),
+                     plotOutput("legend3")
+                     )),     
                                    
 #                plot_main_text,
                  value="map"),

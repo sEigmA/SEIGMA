@@ -1,10 +1,10 @@
 #######################################
-## Title: Unemployment Data Cleaning ##
-## Author(s): Emily Ramos, Arvind    ##
-##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
-## Date Created:  01/07/2015         ##
-## Date Modified: 01/07/2015         ##
+## Title: Unemploy data cleaning      ##
+## Author(s): Xuelian Li,Jenna Kiridly##
+##            Emily Ramos, Arvind     ##
+##            Ramakrishnan,           ##
+## Date Created:  01/07/2015          ##
+## Date Modified: 11/13/2015  XL      ##
 #######################################
 
 require(sas7bdat)
@@ -65,10 +65,18 @@ write.csv(US, file="US.csv", row.names=FALSE)
 unemp_data4 <- rbind.data.frame(unemp_data4[idx_unemp_MA,], unemp_data4[-c(idx_unemp_MA, idx_unemp_US),])
   
 ## save data
-write.csv(unemp_data4, file="unemploy/unempdata.csv",row.names=FALSE)
+write.csv(unemp_data4, file="unemployment/unempdata.csv",row.names=FALSE)
 ##calculate the unemployment rate and labor force percent change since 1990
 year_90<-unemp_data4[which(unemp_data4$Year==1990),]
 unemp_data4$Unemployment_Rate_Change<-round(unemp_data4$Unemployment_Rate_Avg-year_90$Unemployment_Rate_Avg[match(unemp_data4$Municipal,year_90$Municipal)],1)
 ##labor force
 unemp_data4$Labor_Pct_Change<-round((unemp_data4$No_Labor_Avg/year_90$No_Labor_Avg[match(unemp_data4$Municipal,year_90$Municipal)]-1)*100,1)
 write.csv(unemp_data4, file="unemploy/unempdata1.csv",row.names=FALSE)
+
+##calculate the labor force percent change since 2003
+unemp_data5<-read.csv("unemployment/unempdata.csv")
+unemp_data6 <- unemp_data5 %>%
+  filter(Year>=2003)
+year_2003<-unemp_data6[which(unemp_data6$Year==2003),]
+unemp_data6$Labor_Pct_Change<-round((unemp_data6$No_Labor_Avg/year_2003$No_Labor_Avg[match(unemp_data6$Municipal,year_2003$Municipal)]-1)*100,1)
+write.csv(unemp_data6, file="unemployment/unempdata2.csv",row.names=FALSE)
