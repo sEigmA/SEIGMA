@@ -192,7 +192,7 @@ bootstrapPage(mainPanel(
                  ## Info Box 
                  conditionalPanel(
                    condition="input.action != 0",
-                   absolutePanel(left=450, top=450, width=300, class="floater",
+                   absolutePanel(left=200, top=450, width=300, class="floater",
                                  htmlOutput("details"))),
                  
                  conditionalPanel(
@@ -208,7 +208,9 @@ bootstrapPage(mainPanel(
                    absolutePanel(
                      right = 5, top = 130, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Unemployment Rate"),
+                     strong("Unemployment"),
+                    br(),
+                     strong("Rate"),
                      plotOutput("legend1")
                     )),
                  

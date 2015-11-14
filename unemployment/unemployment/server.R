@@ -72,8 +72,17 @@ shinyServer(function(input, output, session){
     
     ## if counties are selected and MA or US mean boxes are selected, add those to dataframe
     if(!is.null(input$plot_muni)){
-      if(input$plot_MA ||input$plot2_MA)
-        munis <- c(munis, "MA")
+      if(input$plot_radio =="Unemployment_Rate_Avg"){
+        if (input$plot_MA ){
+          munis <- c(munis, "MA")
+        }
+      }  
+        else { if (input$plot_display_radio=="Labor_Pct_Change"){
+            if(input$plot2_MA){
+              munis <- c(munis, "MA")  
+            }
+          }  
+        } 
       }
     
     ##Choose column according input
