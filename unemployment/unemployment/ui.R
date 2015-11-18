@@ -248,19 +248,15 @@ bootstrapPage(mainPanel(
                  tags$br(),
                  tags$ul(
     
-                   tags$li(p(strong("Annual Unemployment Estimate"),
-                            " -Average annual unemployment rates account for workers who have lost their jobs and are looking for new ones.  This excludes people who are not looking for work.  The unemployment rate is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey.  Municipality unemployment rates were gathered form a secition of thr BLS and CPS called the Local Areas Unemployment Statistics Series.")),
-                   tags$br(),
-                   tags$li(p(strong("Umemployed"),
-"-All civilians 16 years old and over are classified as unemployed if they were not at work during the reference week, were actively looking for work during the last 4 weeks, and were available to start a job. Also included as unemployed are civilians who did not work at all during the reference week,were waiting to be called back to a job from which they had been laid off, and were available
-for work except for temporary illness.")),
+                   tags$li(p(strong("Umemployed Persons"),
+"-All people 16 years old and over are classified as unemployed if they were not at work during the reference week, but were actively seeking work during the last 4 weeks, and were available to start a job. Also included as unemployed are those who did not work at all during the reference week, those were waiting to be called back to a job from which they had been laid off, and those who were available for work except for temporary illness.")),
                   tags$br(),
                   tags$li(p(strong('Unemployment Rate'),
-                            "-The unemployment rate represents the number of unemployed
-people as a percentage of the civilian labor force. For example, if the civilian labor force
-equals 100 people and 7 people are unemployed, then the unemployment rate would be 7
-percent."))),
+                            "-The unemployment rate is produced by the Bureau of Labor Statistics (BLS), which uses state and national level information from the Current Population Survey (CPS).  Municipality unemployment rates were gathered form a secition of the BLS and CPS called the Local Areas Unemployment Statistics Series. 
+                            The unemployment rate represents the number of unemployed people as a proportion of the total labor force. For example, if the civilian labor force equals 100 people and 7 people are unemployed, then the unemployment rate would be 7 percent."))),
                   tags$br(),
+tags$li((p(strong('Labor Force'),
+           "-The labor force includes all persons classified as employed or unemployed."))),
                   tags$li((p(strong('Bureau of Labor Statistics'),
                              "-This data was collected from the Bureau of Labor Statistics (BLS). It's helpful to note that the BLS is subject to annual revision revised to reflect new population controls from the Census Bureau, updated input data, and re-estimation.  Links to the data source will be updated when new data is available."))),
                    
