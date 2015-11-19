@@ -113,7 +113,7 @@ shinyUI(fluidPage(
       
       ## author line
 
-      helpText("Created by Emily R. Ramos, Xuelian Li, Arvind Ramakrishnan, and Jenna F. Kiridly"),
+      helpText("Created by Xuelian Li, Jenna F. Kiridly, Emily R. Ramos and Arvind Ramakrishnan"),
 
       
       ## email feedback link
