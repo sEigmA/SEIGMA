@@ -156,7 +156,7 @@ bootstrapPage(mainPanel(
                 conditionalPanel(
                    condition="input.plot_radio =='Unemployment_Rate_Avg'",
                   ## make chart title here (otherwise not centered)
-                     h4("Average Unemployment Rate by Region Over Time", align="center"),
+                     h4("Annual Average Unemployment Rate by Region Over Time", align="center"),
                      une_plot_options),
                    
                  conditionalPanel(
@@ -164,12 +164,12 @@ bootstrapPage(mainPanel(
                    conditionalPanel(
                      condition="input.plot_display_radio=='No_Labor_Avg'",
                      ## make chart title here (otherwise not centered)
-                     h4("Average Number in Labor Force Over Time", align="center"),
+                     h4("Annual Average Number in Labor Force Over Time", align="center"),
                      lab_plot_options),
                    conditionalPanel(
                      condition="input.plot_display_radio=='Labor_Pct_Change'",
                      ## make chart title here (otherwise not centered)
-                     h4("Change in Average Labor Force Since 2003", align="center"),
+                     h4("Change in Labor Force Since 2003", align="center"),
                      lab_pct_plot_options
                      )
                  ),

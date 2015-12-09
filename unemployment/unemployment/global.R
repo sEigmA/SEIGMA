@@ -359,7 +359,7 @@ lab_plot_options <- googleLineChart("lab_plot1", width="100%", height="475px", o
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Annual Average labors",
+    title = "Annual Average Numbers in Labor Force",
     viewWindow = ylim_lab,
     textStyle = list(
       fontSize = 14),
@@ -415,7 +415,7 @@ lab_pct_plot_options <- googleLineChart("lab_pct_plot", width="100%", height="47
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Change in labors since 2003 (%)",
+    title = "Change in Labor Force since 2003 (%)",
     viewWindow = ylim_pct_lab,
     textStyle = list(
       fontSize = 14),

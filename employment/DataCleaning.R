@@ -18,7 +18,7 @@ column_titles <- read.csv("AP003_01_contents.csv", skip=1)
 colnames(emp)[4:29] <- as.character(column_titles$Label[1:26])
 
 ## remove unnecessary characters from column names
-colnames(emp)[4:29] <- substring(colnames(emp[4:29]), first=12)
+colnames(emp)[4:29] <- substring(colnames(emp)[4:29], first=12)
 write.csv(emp, file="empdata1.csv",row.names=FALSE)
 emp<-read.csv(file="empdata1.csv")
 
