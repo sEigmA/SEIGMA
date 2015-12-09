@@ -1,0 +1,11 @@
+Alphabetic List of Variables and Attributes,,,,,,
+#,Variable,Type,Len,Format,Informat,Label
+3,AW002_001,Num,8,DOLLAR23.2,DOLLAR23.2,AW002_001: Total Budget
+4,AW002_002,Num,8,DOLLAR23.2,DOLLAR23.2,AW002_002: Residential
+5,AW002_003,Num,8,DOLLAR23.2,DOLLAR23.2,AW002_003: Open Space
+6,AW002_004,Num,8,DOLLAR23.2,DOLLAR23.2,AW002_004: Commercial
+7,AW002_005,Num,8,DOLLAR23.2,DOLLAR23.2,AW002_005: Industrial
+8,AW002_006,Num,8,DOLLAR23.2,DOLLAR23.2,AW002_006: Personal Property
+9,AW002_007,Num,8,DOLLAR23.2,DOLLAR23.2,AW002_007: Total Levy
+2,F_year,Char,4,,,Fiscal Year
+1,Municipal,Char,21,$21.00 ,$21.00 ,Municipal
