@@ -1,0 +1,66 @@
+Alphabetic List of Variables and Attributes,,,,,,
+#,Variable,Type,Len,Format,Informat,Label
+5,BF001_001,Char,149,$86.00 ,$86.00 ,BF001_001: School Name
+6,BF001_002,Num,8,,,BF001_002: Pre-Kindergarden
+7,BF001_003,Num,8,,,BF001_003: Kindergarden
+8,BF001_004,Num,8,,,BF001_004: First Grade
+9,BF001_005,Num,8,,,BF001_005: Second Grade
+10,BF001_006,Num,8,,,BF001_006: Third Grade
+11,BF001_007,Num,8,,,BF001_007: Fourth Grade
+12,BF001_008,Num,8,,,BF001_008: Fifth Grade
+13,BF001_009,Num,8,,,BF001_009: Sixth Grade
+14,BF001_010,Num,8,,,BF001_010: Seventh Grade
+15,BF001_011,Num,8,,,BF001_011: Eight Grade
+16,BF001_012,Num,8,,,BF001_012: Ninth Grade
+17,BF001_013,Num,8,,,BF001_013: Tenth Grade
+18,BF001_014,Num,8,,,BF001_014: Eleventh Grade
+19,BF001_015,Num,8,,,BF001_015: Twelfth Grade
+20,BF001_016,Num,8,,,BF001_016: Special Ed Beyond 12th Grade
+21,BF001_017,Num,8,,,BF001_017: Total Students Enrolled
+22,BF001_018,Num,8,,,BF001_018: African American
+23,BF001_019,Num,8,,,BF001_019: Asian
+24,BF001_020,Num,8,,,BF001_020: Hispanic
+25,BF001_021,Num,8,,,BF001_021: White
+26,BF001_022,Num,8,,,BF001_022: Native American
+27,BF001_023,Num,8,,,BF001_023: Males
+28,BF001_024,Num,8,,,BF001_024: Females
+29,BF001_025,Num,8,,,BF001_025: Native Hawaiian/Pacific Islander
+30,BF001_026,Num,8,,,BF001_026: Multi Race/Non Hispanic
+31,BF001_027,Num,8,,,BF001_027: First Language Not English (#enrolled)
+32,BF001_028,Num,8,,,BF001_028: First Language Not English (%enrolled)
+33,BF001_029,Num,8,,,BF001_029: English Language Learner (#enrolled)
+34,BF001_030,Num,8,,,BF001_030: English Language Learner (%enrolled)
+35,BF001_031,Num,8,,,BF001_031: Students With Disabilities (#enrolled)
+36,BF001_032,Num,8,,,BF001_032: Students With Disabilities (%enrolled)
+37,BF001_033,Num,8,,,BF001_033: Low Income (#enrolled)
+38,BF001_034,Num,8,,,BF001_034: Low Income (%enrolled)
+39,BF001_035,Num,8,,,BF001_035: Free Lunch (#enrolled)
+40,BF001_036,Num,8,,,BF001_036: Free Lunch (%enrolled)
+41,BF001_037,Num,8,,,BF001_037: Reduced Lunch (#enrolled)
+42,BF001_038,Num,8,,,BF001_038: Reduced Lunch (%enrolled)
+43,BF001_039,Num,8,,,BF001_039: High Needs (#enrolled)
+44,BF001_040,Num,8,,,BF001_040: High Needs (%enrolled)
+45,BF001_041,Num,8,,,BF001_041: Churn Enrollment for Students with Disabilities
+46,BF001_042,Num,8,,,BF001_042: Churn Rate for Students with Disabilities
+47,BF001_043,Num,8,,,BF001_043: Intake Rate for Students with Disabilities
+48,BF001_044,Num,8,,,BF001_044: Stability Enrollment for Students with Disabilities
+49,BF001_045,Num,8,,,BF001_045: Stability Rate for Students with Disabilities
+50,BF001_046,Num,8,,,BF001_046: Churn Enrollment for English Language Learning Students
+51,BF001_047,Num,8,,,BF001_047: Churn Rate for English Language Learning Students
+52,BF001_048,Num,8,,,BF001_048: Intake Rate for English Language Learning Students
+53,BF001_049,Num,8,,,BF001_049: Stability Enrollment for English Language Learning Students
+54,BF001_050,Num,8,,,BF001_050: Stability Rate for English Language Learning Students
+55,BF001_051,Num,8,,,BF001_051: Churn Enrollmment for High Needs Students
+56,BF001_052,Num,8,,,BF001_052: Churn Rate for High Needs Students
+57,BF001_053,Num,8,,,BF001_053: Intake Rate for High Needs Students
+58,BF001_054,Num,8,,,BF001_054: Stability Enrollment for High Needs Students
+59,BF001_055,Num,8,,,BF001_055: Stability Rate for High Needs Students
+60,BF001_056,Num,8,,,BF001_056: Churn Enrollment for Low Income Students
+61,BF001_057,Num,8,,,BF001_057: Churn Rate for Low Income Students
+62,BF001_058,Num,8,,,BF001_058: Intake Rate for Low Income Students
+63,BF001_059,Num,8,,,BF001_059: Stability Enrollment for Low Income Students
+64,BF001_060,Num,8,,,BF001_060: Stability Rate for Low Income Students
+2,County,Char,18,$10.00 ,$10.00 ,County
+1,Municipal,Char,21,$21.00 ,$21.00 ,Municipal
+4,S_year,Char,9,$9.00 ,$9.00 ,School Year
+3,State,Char,3,$2.00 ,$2.00 ,State
