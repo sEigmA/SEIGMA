@@ -240,7 +240,7 @@ plot_side_text <- conditionalPanel(
     tags$br(),
     tags$li("Select Actual Values from the Display Options to view average annual unemployment rates and the average annual number of people in the labor force for 2003-2012."),
     tags$br(),
-    tags$li("Select Change Since 2003 from the Display Options to view the percent change in average annual unemployment rates and in the average annual number of people in the labor force each year for the years 2003-2012.")
+     tags$li("Select Change Since 2003 from the Display Options to view the percent change in the average annual number of people in the labor force each year for the years 2003-2012.")
   ))
 
 
