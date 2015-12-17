@@ -33,9 +33,9 @@ shinyServer(function(input, output, session) {
     edum <- edum()
 
     ## if a user chooses Single Year, display only data from that year (dpylr)
-#     if(input$sum_timespan == "sing.yr"){
-#       df <- filter(edum, school.year==input$sum_year)
-#     }
+    if(input$sum_timespan == "sing.yr"){
+      df <- filter(edum, school.year==input$sum_year)
+    }
 
     ## if a user chooses Multiple Years, display data from all years in range
     if(input$sum_timespan == "mult.yrs"){
@@ -61,64 +61,71 @@ shinyServer(function(input, output, session) {
  
     
     ##select row according input$school_type
+    grades<-c()
     if (input$school_type=="Pre-K") {
+      grades<-c(7:14)
+      grade_level_names<-c("Pre Kindergarden", "Kindergarden" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
       sum_df <- df %>%
         filter(Municipal %in% munis, PREK==1)
         } else if (input$school_type=="Kindergarten") {
+      grades<-c(7:14)
+      grade_level_names<-c("Pre Kindergarden", "Kindergarden" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
       sum_df <- df %>%
         filter(Municipal %in% munis,  KIND==1)
         } else if (input$school_type=="Elementary") {
+      grades<-c(7:14)
+      grade_level_names<-c("Pre Kindergarden", "Kindergarden" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
       sum_df <- df %>%
         filter(Municipal %in% munis, ELEM==1) 
         } else if (input$school_type=="Middle") {
+      grades<-c(13:17)
+      grade_level_names<-c("Fifth Grade" , "Sixth Grade","Seventh Grade", "Eight Grade", "Ninth Grade")
       sum_df <- df %>%
          filter(Municipal %in% munis, MIDD==1)
      } else {
+      grades<-c(17:21)
+      grade_level_names<-c("Ninth Grade", "Tenth Grade","Eleventh Grade" ,"Twelfth Grade","Special Ed Beyond 12th Grade")
        sum_df <- df %>%
          filter(Municipal %in% munis, HIGH==1)}
     
-    ##selecting rows based on the chosen school name
-    if(!is.null(input$school_name))
-      sname <- input$school_name
-    ## if none selected, put no schools in vector
-    ## For nothing clicked
-    if(is.null(input$school_name))
-      sname <- all_schools
-    sum_df <- sum_df %>%
-      filter(school.name %in% sname)
 
-    
+    ##select columns according input$radio
+    sel_col_num<-c()
+    df_colnames<-c()
+    if (input$sum_radio=="Race/Ethnicity") {
+      sel_col_num<-c(23:27, 30:31)
+      df_colnames<-c("African American", "Asian", "Hispanic", "White", "Native American", "Native Hawaiian Pacific Islander", "Multi-race non-Hispanic")
+    } else if (input$sum_radio=="Gender") {
+      sel_col_num<-c(28:29)
+      df_colnames<-c( "Males", "Females")
+    } else if (input$sum_radio=="Grade Level") {
+      sel_col_num<-grades
+      df_colnames<-grade_level_names
+    }  else if (input$sum_radio=="English Language Learners") {
+        sel_col_num<-c(32, 34, 51:55)
+        df_colnames<-c("First Language Not English Enrolled", "English Language Learner Enrolled", "Churn Enrollment for English Language Learning Students", "Churn Rate for English Language Learning Students", "Intake Rate for English Language Learning Students", "Stability Enrollment for English Language Learning Students", "Stability Rate for English Language Learning Students")
+    } else if (input$sum_radio=="Students with Disabilities") {
+      sel_col_num<-c(36, 46:50)
+      df_colnames<-c(  "Students with Disabilities Enrolled", "Churn Enrollment for Students With Disabilites", "Churn Rate for Students With Disabilites", "Intake Rate for Students With Disabilites", "Stability Enrollment for Students with Disabilities", "Stability Rate for Students with Disabilities")
+    } else if (input$sum_radio=="Low Income") {
+      sel_col_num<-c(38, 61:65)
+      df_colnames<-c(  "Low Income Enrolled","Churn Enrollment for Low Income Students", "Churn Rate for Low Income Students", "Intake Rate for Low Income Students", "Stability Enrollment for Low Income Students", "Stability Rate for Low Income Students")
+    } else {
+      sel_col_num<-c(44, 56:60)
+      df_colnames<-c("High Needs Enrolled", "Churn Enrollmment for High Needs Students", "Churn Rate for High Needs Students", "Intake Rate for High Needs Students", "Stability Enrollment for High Needs Students", "Stability Rate for High Needs Students")}
     
     sum_df <- sum_df %>%
     arrange(Municipal, school.name)%>%
-      select(Municipal, school.name, school.year, 
-             Total.Students.Enrolled, African.American, Asian, Hispanic, White, Native.American,Native.Hawaiian.Pacific.Islander, Multi.Race.Non.Hispanic,
-             Males, Females,
-             First.Language.Not.English...enrolled., English.Language.Learner...enrolled., Students.With.Disabilities...enrolled., Low.Income...enrolled., High.Needs...enrolled., 
-             Churn.Enrollment.for.Students.with.Disabilities, Churn.Rate.for.Students.with.Disabilities, Intake.Rate.for.Students.with.Disabilities, Stability.Enrollment.for.Students.with.Disabilities, Stability.Rate.for.Students.with.Disabilities, 
-             Churn.Enrollment.for.English.Language.Learning.Students, Churn.Rate.for.English.Language.Learning.Students, Intake.Rate.for.English.Language.Learning.Students, Stability.Enrollment.for.English.Language.Learning.Students, Stability.Rate.for.English.Language.Learning.Students, 
-             Churn.Enrollmment.for.High.Needs.Students, Churn.Rate.for.High.Needs.Students,
-             Intake.Rate.for.High.Needs.Students, Stability.Enrollment.for.High.Needs.Students, Stability.Rate.for.High.Needs.Students, 
-             Churn.Enrollment.for.Low.Income.Students, Churn.Rate.for.Low.Income.Students, Intake.Rate.for.Low.Income.Students, Stability.Enrollment.for.Low.Income.Students, Stability.Rate.for.Low.Income.Students
-      )
+      select(Municipal, school.name, school.year, Total.Students.Enrolled, 
+             sel_col_num)
     
-    colnames(sum_df) <- c("Municipal","School Name","School Year", 
-                          "Total Number Enrolled", "African American", "Asian", "Hispanic", "White", "Native American", "Native Hawaiian Pacific Islander", "Multi-race non-Hispanic",
-                          "Males", "Females",
-                          "First Language Not English Enrolled", "English Language Learner Enrolled", "Students with Disabilities Enrolled", "Low Income Enrolled", "High Needs Enrolled", 
-                          "Churn Enrollment for Students With Disabilites", "Churn Rate for Students With Disabilites", "Intake Rate for Students With Disabilites", "stability enrollment for Students with Disabilities", "Stability Rate for Students with Disabilities", "Churn Enrollment for English Language Learning Students", "Churn Rate for English Language Learning Students", "Intake Rate for English Language Learning Students", "Stability Enrollment for English Language Learning Students", "Stability Rate for English Language Learning Students", "Churn Enrollmment for High Needs Students", "Churn Rate for High Needs Students", "Intake Rate for High Needs Students", "Stability Enrollment for High Needs Students", "Stability Rate for High Needs Students", "Churn Enrollment for Low Income Students", "Churn Rate for Low Income Students", "Intake Rate for Low Income Students", "Stability Enrollment for Low Income Students", "Stability Rate for Low Income Students")  
-    
-    
+    final_colnames<-c("Municipal","School Name","School Year", "Total Number Enrolled",
+                      df_colnames)
+  
+    colnames(sum_df) <- final_colnames
+
     ## create a dataframe consisting only of counties in vector
-    
-
-    return(sum_df)
-
-        ### we want a list of availbale schools that depend on the selections the 
-    ### user makes to the summary table
-    
-    school_choice<-sum_df$"School Name"
-    
+return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE))
 
 
@@ -127,10 +134,111 @@ shinyServer(function(input, output, session) {
   # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
 
 
-#   ## create the plot of the data
-#   
-#   output$Wage_plot1<-reactive({
-#     wage_df<-emp_df()
+  ## create the plot of the data
+  
+  output$Female_pct_plot<-reactive({
+   
+    emp_df <- edum()
+    
+    ## make region a vector based on input variable
+    munis <- input$plot_muni
+    
+    ##selecting rows based on the chosen school name
+    if(!is.null(input$plot_school))
+      sname <- input$plot_school
+    ## if none selected, put no schools in vector
+    ## For nothing clicked
+    if(is.null(input$plot_school))
+      sname <- all_schools
+    emp_df <- emp_df %>%
+      filter(school.name %in% sname)
+#     
+#     ## make municipals a vector based on input variable
+#     ## For when something is clicked
+#     
+#     if(!is.null(input$sum_muni))
+#       munis <- input$sum_muni
+#     ## if none selected, put all municipals in vector
+#     ## For nothing clicked
+#     if(is.null(input$sum_muni))
+#       munis <- MA_municipals
+#     
+    
+    
+   
+    
+    
+    ##select columns according input$radio
+    sel_col_num<-c()
+   if (input$sum_radio=="Gender") {
+      sel_col_num<-c(28:29)
+      df_colnames<-c( "Males", "Females")
+    } 
+
+    
+    f <- sum_df %>%
+      select(Municipal, school.name, school.year, 
+             sel_col_num[2]) %>%
+      spread(school.year, sel_col_num[2])
+    
+         list(
+         data=googleDataTable(f))
+  })
+    
+
+  
+  output$Male_pct_plot<-reactive({
+    
+    emp_df <- edum()
+    
+    ## make region a vector based on input variable
+    munis <- input$plot_muni
+    
+    ##selecting rows based on the chosen school name
+    if(!is.null(input$plot_school))
+      sname <- input$plot_school
+    ## if none selected, put no schools in vector
+    ## For nothing clicked
+    if(is.null(input$plot_school))
+      sname <- all_schools
+    emp_df <- emp_df %>%
+      filter(school.name %in% sname)
+    #     
+    #     ## make municipals a vector based on input variable
+    #     ## For when something is clicked
+    #     
+    #     if(!is.null(input$sum_muni))
+    #       munis <- input$sum_muni
+    #     ## if none selected, put all municipals in vector
+    #     ## For nothing clicked
+    #     if(is.null(input$sum_muni))
+    #       munis <- MA_municipals
+    #     
+    
+    
+    
+    
+    
+    ##select columns according input$radio
+    sel_col_num<-c()
+    if (input$sum_radio=="Gender") {
+      sel_col_num<-c(28:29)
+      df_colnames<-c( "Males", "Females")
+    } 
+    m <- sum_df %>%
+      select(Municipal, school.name, school.year, 
+             sel_col_num[1]) %>%
+      spread(school.year, sel_col_num[1])
+    
+    list(
+      data=googleDataTable(m))
+  })
+  
+  
+    
+#     
+#     
+#      wage_df<-emp_df()
 #     munis <- input$plot_muni
 #     w <- wage_df %>%
 #       filter(Municipal %in% munis) %>%
@@ -138,7 +246,7 @@ shinyServer(function(input, output, session) {
 #       spread(Municipal, Inflation_Adjusted_Average_Weekly_Wage)
 #     list(
 #       data=googleDataTable(w))
-#   })
+  # })
 #   
 #   output$Wage_pct_plot<-reactive({
 #     wage_df<-emp_df()
@@ -168,6 +276,17 @@ shinyServer(function(input, output, session) {
 # #       if(input$US_mean)
 # #         munis <- c(munis, "United States")
 # #     }
+#   
+#       ##selecting rows based on the chosen school name
+#             if(!is.null(input$school_name))
+#           sname <- input$school_name
+#         ## if none selected, put no schools in vector
+#         ## For nothing clicked
+#         if(is.null(input$school_name))
+#          sname <- all_schools
+#         sum_df <- sum_df %>%
+#          filter(school.name %in% sname)
+#   
 # 
 #     ## if no counties have been selected, just show the US average
 # #     if(is.null(input$plot_muni)){

@@ -18,7 +18,7 @@ require(maptools)
 require(Hmisc)
 require(reshape2)
 require(shiny)
-#require(googleCharts)
+require(googleCharts)
 require(googleVis)
 require(leaflet)
 require(RJSONIO)
@@ -61,22 +61,22 @@ edu_data <- read.csv(file="edum_data.csv")
 # 
 # 
 # 
-# 
-# ## Set graph colors (special for colorblind people,turquoise)
-# cbbPalette <- c("#000000", "red", "green", "blue",
-#                 "turquoise", "lightblue", "deeppink", "yellow")
-# 
-# ## Create maxs and mins for googleCharts/Plot tab
-# xlim <- list(
-#   min = min(emp_data$Year)-1,
-#   max = max(emp_data$Year)+1
-# )
-# ylim <- list(
-#   min = min(emp_data$Average_Monthly_Employment, na.rm=T)-5,
-# 
-#   ##+5 = max Avg monthly employment plus a little extra
-#   max = max(emp_data$Average_Monthly_Employment, na.rm=T)+5
-# )
+
+## Set graph colors (special for colorblind people,turquoise)
+cbbPalette <- c("#000000", "red", "green", "blue",
+                "turquoise", "lightblue", "deeppink", "yellow")
+
+## Create maxs and mins for googleCharts/Plot tab
+xlim <- list(
+  min = min(edu_data$school.year)-1,
+  max = max(edu_data$school.year)+1
+)
+ylim <- list(
+  min = min(edu_data$Females, na.rm=T)-5,
+
+  ##+5 = max Avg monthly employment plus a little extra
+  max = max(edu_data$Females, na.rm=T)+5
+)
 # ##when without boston, create ylim for googleCharts/plot
 # ##ylim1<-list(
 #   ##min = min(emp_data$Average_Monthly_Employment[which(emp_data$Municipal!="Boston")], na.rm=T)-5,
@@ -289,25 +289,25 @@ summary_side_text <- conditionalPanel(
   )
 )
 
-# ## Same concept
-# plot_side_text <- conditionalPanel(
-#   condition="input.tabs == 'plot'",
-#   h4("How to use this app:"),
-#   p(strong('Please select the municipality for which you are interested in viewing average monthly employment, weekly wage, and number of business establishments. Please do not select more than ten municipalities at a time.')),
-#   tags$br(),
-#   tags$ul(
-#   tags$li("Once you have selected the municipalities which you are interested in viewing, select a Variable of Interest."),
-#   tags$br(),
-#   tags$li("To view average monthly employment and number of business establishments select Employment and Business Establishments."),
-#   tags$br(),
-#   tags$li("To view average weekly wages, select Wages."),
-#   tags$br(),
-#   tags$li("Select Actual Values from the Display Options to view average monthly employment, weekly wage, and number of business establishments for 2003-2012."),
-#   tags$br(),
-#   tags$li("Select Change Since 2003 from the Display Options to view the percent change in average monthly employment, weekly wage, and number of business establishments each year for the years 2003-2012.")
-#   ))
-# 
-# 
+## Same concept
+plot_side_text <- conditionalPanel(
+  condition="input.tabs == 'plot'",
+  h4("How to use this app:"),
+  p(strong('Please select the municipality for which you are interested in viewing average monthly employment, weekly wage, and number of business establishments. Please do not select more than ten municipalities at a time.')),
+  tags$br(),
+  tags$ul(
+  tags$li("Once you have selected the municipalities which you are interested in viewing, select a Variable of Interest."),
+  tags$br(),
+  tags$li("To view average monthly employment and number of business establishments select Employment and Business Establishments."),
+  tags$br(),
+  tags$li("To view average weekly wages, select Wages."),
+  tags$br(),
+  tags$li("Select Actual Values from the Display Options to view average monthly employment, weekly wage, and number of business establishments for 2003-2012."),
+  tags$br(),
+  tags$li("Select Change Since 2003 from the Display Options to view the percent change in average monthly employment, weekly wage, and number of business establishments each year for the years 2003-2012.")
+  ))
+
+
 # map_side_text <- conditionalPanel(
 #   condition="input.tabs == 'map'",
 #   h4("How to use this app:"),
@@ -350,62 +350,62 @@ summary_side_text <- conditionalPanel(
 # 
 # font_size <- 14
 # 
-# Emp_plot_options1 <- googleLineChart("Emp_plot1", width="100%", height="475px", options = list(
-#                                     
-#                                     ## set fonts
-#                                     fontName = "Source Sans Pro",
-#                                     fontSize = 14,
-#                                     
-#                                     ## set axis titles, ticks, fonts, and ranges
-#                                     hAxis = list(
-#                                       title = "Year",
-#                                       format = "####",
-#                                       ticks = seq(2002, 2012, 2),
-#                                       viewWindow = xlim,
-#                                       textStyle = list(
-#                                         fontSize = 14),
-#                                       titleTextStyle = list(
-#                                         fontSize = 16,
-#                                         bold = TRUE,
-#                                         italic = FALSE)
-#                                     ),
-#                                     vAxis = list(
-#                                       title = "Average Monthly Employment",
-#                                       viewWindow = ylim,
-#                                       textStyle = list(
-#                                         fontSize = 14),
-#                                       titleTextStyle = list(
-#                                         fontSize = 16,
-#                                         bold = TRUE,
-#                                         italic = FALSE)
-#                                     ),
-#                                     
-#                                     ## set legend fonts
-#                                     legend = list(
-#                                       textStyle = list(
-#                                         fontSize=14)),
-#                                     
-#                                     ## set chart area padding
-#                                     chartArea = list(
-#                                       top = 50, left = 75,
-#                                       height = "75%", width = "70%"
-#                                     ),
-#                                     
-#                                     ## set colors
-#                                     colors = cbbPalette,
-#                                     
-#                                     ## set point size
-#                                     pointSize = 3,
-#                                     
-#                                     ## set tooltip font size
-#                                     ## Hover text font stuff
-#                                     tooltip = list(
-#                                       textStyle = list(
-#                                         fontSize = 14
-#                                       )
-#                                     )
-#                                   ))
-# 
+Emp_plot_options1 <- googleLineChart("Female_pct_plot", width="100%", height="475px", options = list(
+                                    
+                                    ## set fonts
+                                    fontName = "Source Sans Pro",
+                                    fontSize = 14,
+                                    
+                                    ## set axis titles, ticks, fonts, and ranges
+                                    hAxis = list(
+                                      title = "Year",
+                                      format = "####",
+                                      ticks = seq(2002, 2012, 2),
+                                      viewWindow = xlim,
+                                      textStyle = list(
+                                        fontSize = 14),
+                                      titleTextStyle = list(
+                                        fontSize = 16,
+                                        bold = TRUE,
+                                        italic = FALSE)
+                                    ),
+                                    vAxis = list(
+                                      title = "Average Monthly Employment",
+                                      viewWindow = ylim,
+                                      textStyle = list(
+                                        fontSize = 14),
+                                      titleTextStyle = list(
+                                        fontSize = 16,
+                                        bold = TRUE,
+                                        italic = FALSE)
+                                    ),
+                                    
+                                    ## set legend fonts
+                                    legend = list(
+                                      textStyle = list(
+                                        fontSize=14)),
+                                    
+                                    ## set chart area padding
+                                    chartArea = list(
+                                      top = 50, left = 75,
+                                      height = "75%", width = "70%"
+                                    ),
+                                    
+                                    ## set colors
+                                    colors = cbbPalette,
+                                    
+                                    ## set point size
+                                    pointSize = 3,
+                                    
+                                    ## set tooltip font size
+                                    ## Hover text font stuff
+                                    tooltip = list(
+                                      textStyle = list(
+                                        fontSize = 14
+                                      )
+                                    )
+                                  ))
+
 # Est_plot_options1 <- googleLineChart("Est_plot1", width="100%", height="475px", options = list(
 #                       
 #                       ## set fonts
