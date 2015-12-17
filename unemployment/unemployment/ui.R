@@ -49,7 +49,7 @@ shinyUI(fluidPage(
           condition="input.sum_timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("sum_range", "Select Years",
-                      min=203, max=2012, value=c(2010,2012),
+                      min=2003, max=2012, value=c(2010,2012),
                       sep="")
         ),
         ## in summary, allow for municipal selection
@@ -164,7 +164,7 @@ bootstrapPage(mainPanel(
                    conditionalPanel(
                      condition="input.plot_display_radio=='No_Labor_Avg'",
                      ## make chart title here (otherwise not centered)
-                     h4("Annual Average Number in Labor Force Over Time", align="center"),
+                     h4("Annual Average # in Labor Force Over Time", align="center"),
                      lab_plot_options),
                    conditionalPanel(
                      condition="input.plot_display_radio=='Labor_Pct_Change'",
@@ -209,6 +209,8 @@ bootstrapPage(mainPanel(
                    absolutePanel(
                      right = 5, top = 130, draggable=FALSE, style = "", 
                      class = "floater",
+                     strong("Annual Average"),
+                     br(),
                      strong("Unemployment"),
                     br(),
                      strong("Rate"),
@@ -221,9 +223,9 @@ bootstrapPage(mainPanel(
                    absolutePanel(
                      right = 5, top = 130, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Average Number in"),
+                     strong("Annual Average #"),
                      br(),
-                     strong("Labor Force"),
+                     strong("in Labor Force"),
                      plotOutput("legend2")
                      )),
                  

@@ -267,7 +267,7 @@ shinyServer(function(input, output, session){
     else{
     if(input$map_display_radio == "No_Labor_Avg"){
       return(as.character(tags$div(
-        tags$h4("Average Labor Force in", muni_name, " for ", input$map_year),
+        tags$h4("Annual Average # in Labor Force in", muni_name, " for ", input$map_year),
         tags$h5(muni_value)
       )))
     }
