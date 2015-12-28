@@ -171,7 +171,7 @@ bootstrapPage(mainPanel(
                      ## make chart title here (otherwise not centered)
                      h4("Change in Labor Force Since 2003", align="center"),
                      lab_pct_plot_options,
-                     p(strong("Change Since 2003"), "- This is calculated by comparing average monthly employment and weekly wages for a specific year to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
+                     p(strong("Change Since 2003"), "- This is calculated by comparing average labor force for a specific year to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
                      )
                  ),
                  value="plot"),
@@ -249,19 +249,20 @@ bootstrapPage(mainPanel(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                 tags$ul(
+                
     
-                  tags$li(p(strong("Umemployed Persons"), 
-                            "-All people 16 years old and over are classified as unemployed if they were not at work during the reference week, but were actively seeking work during the last 4 weeks, and were available to start a job. Also included as unemployed are those who did not work at all during the reference week, those were waiting to be called back to a job from which they had been laid off, and those who were available for work except for temporary illness.")),
+                 p(strong("Umemployed Persons"), 
+                            "-All people 16 years old and over are classified as unemployed if they were not at work during the survey period, but were actively seeking work during the last 4 weeks, and were available to start a job. Also included as unemployed are those who did not work at all during the reference week, those were waiting to be called back to a job from which they had been laid off, and those who were available for work except for temporary illness."),
                   tags$br(),
-                  tags$li(p(strong('Unemployment Rate'),
-                              "-The unemployment rate is produced by the Bureau of Labor Statistics (BLS), which uses state and national level information from the Current Population Survey (CPS).  Municipality unemployment rates were gathered form a secition of the BLS and CPS called the Local Areas Unemployment Statistics Series. The unemployment rate represents the number of unemployed people as a proportion of the total labor force. For example, if the civilian labor force equals 100 people and 7 people are unemployed, then the unemployment rate would be 7 percent."))),
+                  p(strong('Unemployment Rate'),
+                              "-The unemployment rate is produced by the Bureau of Labor Statistics (BLS), which uses state and national level information from the Current Population Survey (CPS).  Municipality unemployment rates were gathered form a secition of the BLS and CPS called the Local Areas Unemployment Statistics Series. The unemployment rate represents the number of unemployed people as a proportion of the total labor force. For example, if the civilian labor force equals 100 people and 7 people are unemployed, then the unemployment rate would be 7 percent."),
                   tags$br(),
   
-                tags$li((p(strong('Average Number in Labor Force'), 
-                           "-The labor force includes all persons classified as employed or unemployed."))),
-                tags$li((p(strong('Bureau of Labor Statistics'), 
-                           "-These data were collected from the Bureau of Labor Statistics (BLS). It's helpful to note that the BLS is subject to annual revision revised to reflect new population controls from the Census Bureau, updated input data, and re-estimation.  Links to the data source will be updated when new data are available."))),
+                p(strong('Average Number in Labor Force'), 
+                           "-The labor force includes all persons classified as employed or unemployed."),
+                tags$br(),
+              p(strong('Bureau of Labor Statistics'), 
+                           "-These data were collected from the Bureau of Labor Statistics (BLS). It's helpful to note that the BLS is subject to annual revision revised to reflect new population controls from the Census Bureau, updated input data, and re-estimation.  Links to the data source will be updated when new data are available."),
                    
                  #tags$br(),
                 # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),                  
