@@ -96,6 +96,8 @@ ylim_pct_lab<-list(
 paint.brush <- colorRampPalette(colors=c("darkgreen", "white", "maroon"))
 map_colors <- c(paint.brush(n=25), "#999999")
 
+paint.brush1 <- colorRampPalette(colors=c("white", "violetred"))
+map_colors1 <- c(paint.brush1(n=25), "black")
 ## For a single year data, we have a series of rates (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
@@ -114,46 +116,7 @@ pctmax.val<-max(unemp_data1$Labor_Pct_Change, na.rm=FALSE)
 pctmin.val<--pctmax.val
 ##pctmin.val<-min(unemp_data1$Labor_Pct_Change, na.rm=FALSE)
 pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
-## Construct break ranges for displaying in the legend
-## Creates a data frame
-## head = scuts takes everything except for the last one,
-## tails = same thing opposite
 
-##scolorRanges <- data.frame(
-##from = head(scuts, length(scuts)-1),
-##to = tail(scuts, length(scuts)-1)
-##)
-
-## colors fade from one color to white to another color, with gray for NAs
-## m-prefix = multiple years
-##mpaint.brush <- colorRampPalette(colors=c(cbbPalette[6], "white", cbbPalette[7]))
-##mmap.colors <- c(mpaint.brush(n=6), "#999999")
-
-## find max and min (crude rates) values for each region
-##bound <- unemp_data %>%
-## group_by(Region) %>%
-
-##n.rm=FALSE = needed
-## summarise(max.val = max(Unemployment.Rate.Avg, na.rm=FALSE),
-##min.val = min(Unemployment.Rate.Avg, na.rm=FALSE))
-
-## find the difference between each region's max and min
-##bound$diff <- abs(bound$max.val - bound$min.val)
-
-## set the max and min value (for the legend) at 95% of the largest difference
-##mmax.val <- max(bound$diff)
-
-#mmax.val <- quantile(bound$diff, .95, na.rm=TRUE)
-
-##mmin.val <- -1*mmax.val
-##mcuts <- seq(mmin.val, mmax.val, length.out = length(mmap.colors))
-
-# Construct break ranges for displaying in the legend
-
-##mcolorRanges <- data.frame(
-##from = head(mcuts, length(mcuts)-1),
-##to = tail(mcuts, length(mcuts)-1)
-##)
 
 
 #############################

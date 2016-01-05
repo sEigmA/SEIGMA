@@ -165,7 +165,12 @@ shinyServer(function(input, output, session){
    colnames(missing_df)[3]<-col
    # combine data subset with missing counties data
    map_dat <- rbind.data.frame(map_dat, missing_df)
+   if (input$map_radio == "Labor Force" & input$map_display_radio=="Labor_Pct_Change"){
     map_dat$color <- map_colors[map_dat$color]
+   }
+   else{
+    map_dat$color <- map_colors1[map_dat$color]
+   }
     return(map_dat)
   })
  
@@ -283,9 +288,9 @@ shinyServer(function(input, output, session){
   output$legend1 <- renderPlot({
     if(input$map_radio == "Unemployment_Rate_Avg"){
       
-      paint.brush = colorRampPalette(colors=c("darkgreen", "white", "maroon"))
-      cols <- paint.brush(26)
-      leg_dat <- data_frame(y = seq(0, 25), x = 1, col = cols)
+      paint.brush = colorRampPalette(colors=c("white", "violetred"))
+      cols <- paint.brush(25)
+      leg_dat <- data_frame(y = seq(unemin.val, unemax.val,length.out=(length(map_colors1)-1)), x = 1, col = cols)
       
       p <- ggplot(data = leg_dat) +
         geom_tile(aes(y = y, fill = reorder(col,y), x = x), show_guide = FALSE) +
@@ -327,9 +332,9 @@ shinyServer(function(input, output, session){
   })
   output$legend2 <- renderPlot({  
     if(input$map_display_radio == "No_Labor_Avg"){
-      paint.brush = colorRampPalette(colors=c("darkgreen", "white", "maroon"))
-      cols <- paint.brush(length(map_colors)-1)
-      leg_dat<- data_frame(y = seq(labmin.val, labmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      paint.brush = colorRampPalette(colors=c("white", "violetred"))
+      cols <- paint.brush(length(map_colors1)-1)
+      leg_dat<- data_frame(y = seq(labmin.val, labmax.val,length.out=(length(map_colors1)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
         geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
