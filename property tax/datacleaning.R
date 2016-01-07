@@ -2,7 +2,7 @@
 ## Title: Property Tax Data Cleaning     ##
 ## Author(s): Xuelian Li, Jenna Kiridly  ## 
 ## Date Created:  12/08/2015             ##
-## Date Modified:                        ##
+## Date Modified: 01/04/2016 XL          ##
 ###########################################
 
 require(sas7bdat)
@@ -74,3 +74,7 @@ tax$Percentage_of_Commercial<-round(tax$Commercial/tax$Total.Levy*100, 2)
 tax$Percentage_of_Industrial<-round(tax$Industrial/tax$Total.Levy*100, 2)
 tax$Percentage_of_Personal_Property<-round(tax$Personal.Property/tax$Total.Levy*100, 2)
 write.csv(tax, file="PropertyTax/taxdata.csv",row.names=FALSE)
+##calculate the Total levy percent change since 2003
+year_2003<-tax[which(tax$F_year==2003),]
+tax$Total_Levy_Pct_Change<-round((tax$Inflation_Adjusted_Total_Levy/year_2003$Inflation_Adjusted_Total_Levy[match(tax$Municipal,year_2003$Municipal)]-1)*100,1)
+write.csv(tax, file="PropertyTax/taxdata2.csv",row.names=FALSE)

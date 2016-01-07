@@ -1,9 +1,9 @@
 #######################################
-## Title: Bankruptices global.R      ##
+## Title: Property Tax global.R      ##
 ## Author(s): Xuelian Li, Jenna      ##
 ##            Kiridly                ## 
-## Date Created:  08/11/15           ##
-## Date Modified: 08/15/15 XL        ##
+## Date Created:  01/04/16           ##
+## Date Modified: 01/06/16 XL        ##
 #######################################
 
 ##First file run - Environment Setup
