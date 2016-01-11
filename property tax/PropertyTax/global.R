@@ -21,8 +21,8 @@ require(tidyr)
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted tax data
-tax_data <- read.csv(file="taxdata.csv")
-colnames(tax_data)[2]<-"Year"
+tax_data <- read.csv(file="taxdata2.csv")
+colnames(tax_data)[2:3]<-c("Year", "Total_Budget")
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -70,7 +70,14 @@ ylim <- list(
 ylim_pct<-list(
   min = 0,
   
-  max = 100
+  max = max(tax_data$Percentage_of_Residential, na.rm=T)+0.5
+)
+
+## create ylim for the change of tax total levy since 2003
+ylim_cha<-list(
+  min = min(tax_data$Total_Levy_Pct_Change, na.rm=T)-0.5,
+  
+  max = max(tax_data$Total_Levy_Pct_Change, na.rm=T)+0.5
 )
 
 #################################################################
@@ -84,17 +91,19 @@ map_colors <- c(paint.brush(n=25), "black")
 ##Cuts for Inflation_Adjusted_Total_Levy 
 TotTaxmax.val <- max(tax_data$Inflation_Adjusted_Total_Levy, na.rm=TRUE)
 TotTaxmin.val <- min(tax_data$Inflation_Adjusted_Total_Levy, na.rm=TRUE)
-
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-unecuts <- quantile(tax_data$Inflation_Adjusted_Total_Levy, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+TotTaxcuts <- quantile(tax_data$Inflation_Adjusted_Total_Levy, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
-labmax.val <- max(unemp_data1$No_Labor_Avg, na.rm=TRUE)
-labmin.val <- min(unemp_data1$No_Labor_Avg, na.rm=TRUE)
-labcuts <- quantile(unemp_data1$No_Labor_Avg, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+##Cuts for change in Total_Levy since 2003
+TaxChamax.val <- max(tax_data$Total_Levy_Pct_Change, na.rm=TRUE)
+TaxChamin.val<--TaxChamax.val
+##TaxChamin.val <- min(tax_data$Total_Levy_Pct_Change, na.rm=TRUE)
+TaxChacuts <- seq(TaxChamin.val, TaxChamax.val, length.out = length(map_colors1))
 
-pctmax.val<-max(unemp_data1$Labor_Pct_Change, na.rm=FALSE)
-pctmin.val<--pctmax.val
+##Cuts for the Percent of Levy by Class
+pctmax.val<-max(tax_data$Percentage_of_Residential, na.rm=TRUE)
+pctmin.val<--0
 ##pctmin.val<-min(unemp_data1$Labor_Pct_Change, na.rm=FALSE)
 pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
 
@@ -227,7 +236,7 @@ plot_main_text <- p(strong("Variable Summary:"),
 
 font_size <- 14
 
-une_plot_options <- googleLineChart("une_plot1", width="100%", height="475px", options = list(
+TotTax_plot_options <- googleLineChart("TotTax_plot1", width="100%", height="475px", options = list(
   
   ## set fonts
   fontName = "Source Sans Pro",
@@ -237,7 +246,7 @@ une_plot_options <- googleLineChart("une_plot1", width="100%", height="475px", o
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2012, 2),
+    ticks = seq(2003, 2013, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -247,8 +256,120 @@ une_plot_options <- googleLineChart("une_plot1", width="100%", height="475px", o
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Average Annual Unemployment Rate",
+    title = "Total Tax Levy (2013 dollars)",
     viewWindow = ylim,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    textStyle = list(
+      fontSize=14)),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 75,
+    height = "75%", width = "70%"
+  ),
+  
+  ## set colors
+  colors = cbbPalette,
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = 14
+    )
+  )
+))
+
+TaxCha_plot_options<- googleLineChart("TotTax_plot2", width="100%", height="475px", options = list(
+  
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = 14,
+  
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "Year",
+    format = "####",
+    ticks = seq(2003, 2013, 2),
+    viewWindow = xlim,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    title = "Chang in Total Tax Levy since 2003",
+    viewWindow = ylim_cha,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    textStyle = list(
+      fontSize=14)),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 75,
+    height = "75%", width = "70%"
+  ),
+  
+  ## set colors
+  colors = cbbPalette,
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = 14
+    )
+  )
+))
+
+Pct_plot_options<- googleLineChart("pct_plot1", width="100%", height="475px", options = list(
+  
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = 14,
+  
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "Year",
+    format = "####",
+    ticks = seq(2003, 2013, 2),
+    viewWindow = xlim,
+    textStyle = list(
+      fontSize = 14),
+    titleTextStyle = list(
+      fontSize = 16,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    title = "Percent of Tax Levy by Class",
+    viewWindow = ylim_pct,
     textStyle = list(
       fontSize = 14),
     titleTextStyle = list(
