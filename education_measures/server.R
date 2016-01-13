@@ -64,22 +64,25 @@ shinyServer(function(input, output, session) {
     grades<-c()
     if (input$school_type=="Pre-K") {
       grades<-c(7:14)
-      grade_level_names<-c("Pre Kindergarden", "Kindergarden" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
+      grade_level_names<-c("Pre Kindergarten", "Kindergarten" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
       sum_df <- df %>%
         filter(Municipal %in% munis, PREK==1)
-        } else if (input$school_type=="Kindergarten") {
+        } else 
+    if (input$school_type=="Kindergarten") {
       grades<-c(7:14)
-      grade_level_names<-c("Pre Kindergarden", "Kindergarden" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
+      grade_level_names<-c("Pre Kindergarten", "Kindergarten" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
       sum_df <- df %>%
         filter(Municipal %in% munis,  KIND==1)
-        } else if (input$school_type=="Elementary") {
+        } else 
+    if (input$school_type=="Elementary") {
       grades<-c(7:14)
-      grade_level_names<-c("Pre Kindergarden", "Kindergarden" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
+      grade_level_names<-c("Pre Kindergarten", "Kindergarten" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
       sum_df <- df %>%
         filter(Municipal %in% munis, ELEM==1) 
-        } else if (input$school_type=="Middle") {
+        } else 
+    if (input$school_type=="Middle") {
       grades<-c(13:17)
-      grade_level_names<-c("Fifth Grade" , "Sixth Grade","Seventh Grade", "Eight Grade", "Ninth Grade")
+      grade_level_names<-c("Fifth Grade" , "Sixth Grade","Seventh Grade", "Eighth Grade", "Ninth Grade")
       sum_df <- df %>%
          filter(Municipal %in% munis, MIDD==1)
      } else {
@@ -549,4 +552,43 @@ return(sum_df)
 # 
 #   })
 # 
+  
+  ###################################################################
+  #  MAP in googlevis
+  ####################################################################
+  
+  #title
+  output$map_title <- renderText({
+    paste(input$map_radio, "in Massachusetts", input$map_schooltype, 
+          "during the", input$map_year, "school year")
+  })
+  
+  output$gvis<-renderGvis({
+    ## Make reactive dataframe into regular dataframe
+    edum <- edum()
+    
+    
+    map_df<-edum[runif(100, 1,nrow(edum)),]
+    
+    #filter
+    
+   gvisGeoChart(map_df,
+                 locationvar="LatLong", sizevar="Total.Students.Enrolled",
+                 colorvar="Females", hovervar="school.name",
+                 options=list(region="US-MA", displayMode="Markers", 
+                              resolution="metros",
+                              width=750, height=600,
+                              magnifyingGlass=T,
+                              colorAxis="{colors:['#FFFFFF', '#0000FF']}"
+                 ))
+    })
+  
+  
+#   output$mapvar_levels<-renderUI({
+#     #get the levels of the df, after the radio has been selected
+#     map_levels<-names(map_df[,input$map_radio])
+#     selectInput("map_var", "Select Variable for Map",
+#                 choices=map_levels)
+#   })
+  
 })

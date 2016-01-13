@@ -307,7 +307,7 @@ plot_side_text <- conditionalPanel(
   tags$li("Select Change Since 2003 from the Display Options to view the percent change in average monthly employment, weekly wage, and number of business establishments each year for the years 2003-2012.")
   ))
 
-
+# 
 # map_side_text <- conditionalPanel(
 #   condition="input.tabs == 'map'",
 #   h4("How to use this app:"),
@@ -324,21 +324,21 @@ plot_side_text <- conditionalPanel(
 #     tags$li("To view the difference in average monthly employment, weekly wage, and number of business establishments between the year you selected and 2003 select Difference Compared to Year 2003.")
 #     
 #   ))
-# 
-# info_side_text <- conditionalPanel(
-#   condition="input.tabs == 'info'",
-#   h4("How to use this app:"),
-#   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
-# 
-# about_main_text <- p(strong("The SEIGMA Employment App"), "displays average monthly employment, weekly wage, and number of business establishments for Massachusetts municipalities.",
-#                      p(strong("Click on different tabs to view the data in different formats.")),
-#                      tags$br(),
-#                      tags$ul(
-#                        tags$li(p(strong("Summary"), "shows the source data in table format.")),
-#                        tags$li(p(strong("Plot"), "compares average monthly employment, weekly wage, and number of business establishments for each municipality.")),
-#                        tags$li(p(strong("Map"), "visually displays average monthly employment, weekly wage, and number of business establishments by municipality.")),
-#                        tags$li(p(strong("More Info"), "describes the average monthly employment estimate, weekly wage, and number of business establishments including formulas and calculations."))
-#                      ))
+
+info_side_text <- conditionalPanel(
+  condition="input.tabs == 'info'",
+  h4("How to use this app:"),
+  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
+
+ about_main_text <- p(strong("The SEIGMA Employment App"), "displays average monthly employment, weekly wage, and number of business establishments for Massachusetts municipalities.",
+                      p(strong("Click on different tabs to view the data in different formats.")),
+                      tags$br(),
+                      tags$ul(
+                        tags$li(p(strong("Summary"), "shows the source data in table format.")),
+                        tags$li(p(strong("Plot"), "compares average monthly employment, weekly wage, and number of business establishments for each municipality.")),
+                        tags$li(p(strong("Map"), "visually displays average monthly employment, weekly wage, and number of business establishments by municipality.")),
+                        tags$li(p(strong("More Info"), "describes the average monthly employment estimate, weekly wage, and number of business establishments including formulas and calculations."))
+                      ))
 
 # plot_main_text <- p(strong("Variable Summary:"),
 #                     ## breaks between paragraphs
