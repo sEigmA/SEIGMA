@@ -308,22 +308,22 @@ plot_side_text <- conditionalPanel(
   ))
 
 # 
-# map_side_text <- conditionalPanel(
-#   condition="input.tabs == 'map'",
-#   h4("How to use this app:"),
-#   helpText(p(strong("Please select a year, and click on 'Generate Map' to get started"))),
-#   tags$br(),
-#   tags$ul(
-# 
-#     tags$li('To view average monthly employment select Employment, then click on a municipality for which you are interested in viewing average monthly employment.'),
-#     tags$br(),
-#     tags$li("To view the number of business establishments select Business Establishments, then click on a municipality for which you are interested in viewing the number of business establishments."),
-#     tags$br(),
-#     tags$li("To view average weekly wages select Wages, then click on a municipality for which you are interested in viewing the average weekly wages."),
-#     tags$br(),
-#     tags$li("To view the difference in average monthly employment, weekly wage, and number of business establishments between the year you selected and 2003 select Difference Compared to Year 2003.")
-#     
-#   ))
+map_side_text <- conditionalPanel(
+  condition="input.tabs == 'map'",
+  h4("How to use this app:"),
+  helpText(p(strong("Please select a year, and click on 'Generate Map' to get started"))),
+  tags$br(),
+  tags$ul(
+
+    tags$li('To view average monthly employment select Employment, then click on a municipality for which you are interested in viewing average monthly employment.'),
+    tags$br(),
+    tags$li("To view the number of business establishments select Business Establishments, then click on a municipality for which you are interested in viewing the number of business establishments."),
+    tags$br(),
+    tags$li("To view average weekly wages select Wages, then click on a municipality for which you are interested in viewing the average weekly wages."),
+    tags$br(),
+    tags$li("To view the difference in average monthly employment, weekly wage, and number of business establishments between the year you selected and 2003 select Difference Compared to Year 2003.")
+    
+  ))
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
