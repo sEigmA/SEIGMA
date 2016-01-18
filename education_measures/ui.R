@@ -117,30 +117,11 @@ shinyUI(fluidPage(
                               "Low Income"="Low Income", "High Needs"="High Needs"),
                             selected="Grade Level"
                )
-#                ,
-#                uiOuput("mapvar_levels")
+                ,
+                uiOutput("mapvar_levels")
                
              )
         ,
-#                  
-#                  ## in map, allow for variable , option and year selection
-#                   conditionalPanel(
-#                    condition="input.tabs == 'map'",
-#                    radioButtons("map_radio", "Select Variable of Interest",
-#                                 c("Employment"="Employment", "Business Establishments" = "Establishments", 
-#                                   "Wages" = "Wages"),
-#                                 selected="Employment"),
-#                    radioButtons("map_display_radio", "Display Options",
-#                                 c("Actual Values"="Actual Values", "Change Since 2003"="Change_Pct"),
-#                                 selected="Actual Values"),
-#                    sliderInput("map_year", "Select Year",
-#                                  min=2003, max=2012, value=2012,
-#                                  sep="")
-#                    
-#                  ),
-#                  
-
-                 
                  
                   ## in plot, allow for municipal selection
                   conditionalPanel(
