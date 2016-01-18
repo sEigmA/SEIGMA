@@ -104,8 +104,8 @@ shinyUI(fluidPage(
                ,
                
                radioButtons("map_schooltype", "School Type",
-                            c("Pre-K" = "Pre-K", "Kindergarten" = "Kindergarten",
-                              "Elementary" = "Elementary","Middle School" ="Middle","High School" ="High School"),
+                            c("Pre-K" = "prek", "Kindergarten" = "kindergarten",
+                              "Elementary" = "elementary","Middle School" ="middle","High School" ="high"),
                             selected="High School"
                ),
                
@@ -239,7 +239,6 @@ shinyUI(fluidPage(
                                       .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
                                       ")),
                  htmlOutput("gvis"),
-                 
                  value="map"
                  ),
 #                  ## Map Creation

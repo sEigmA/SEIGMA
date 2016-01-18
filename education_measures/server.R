@@ -571,8 +571,8 @@ return(sum_df)
                                               "Hispanic" = "Hispanic",
                                               "White" = "White",
                                               "Native American" = "Native.American",
-                                              "Native.Hawaiian.Pacific.Islander" = "Native.Hawaiian.Pacific.Islander",
-                                              "Multi.Race.Non.Hispanic" = "Multi.Race.Non.Hispanic"),
+                                              "Native Hawaiian/Pacific Islander" = "Native.Hawaiian.Pacific.Islander",
+                                              "Multi-Race Non-Hispanic" = "Multi.Race.Non.Hispanic"),
                                           selected = "African.American"
            ), 
            "Gender"= selectInput("map_level","Choose Level to map",
@@ -656,35 +656,32 @@ return(sum_df)
   ##
   
   
-  edum<- reactive({
-    ## Filter the data by the chosen Year
-    edum <- edu_data ## %>%
-    ##select(1:6, 9,11,13)
-    
-    ## Output reactive dataframe
-    edum
-  })
-  
-  
-  
   #title
   output$map_title <- renderText({
-    paste(input$map_radio, "in Massachusetts", input$map_schooltype, 
+    paste(input$map_level, "in Massachusetts", input$map_schooltype, 
           "during the", input$map_year, "school year")
   })
   
   output$gvis<-renderGvis({
-    ## Make reactive dataframe into regular dataframe
-    edum <- edum()
     
+    ## filter dataframe
     
-    map_df<-edum[runif(100, 1,nrow(edum)),]
+    map_df <- edu_data %>%
+      select(1,3,4,6, which(names(map_df)==input$map_level), 22,67:74) %>%
+      filter(school.year==input$map_year)
+    switch(input$map_schooltype, 
+           "prek"= map_df <- filter(map_df, PREK==1),
+           "kindergarten"= map_df <-filter(map_df, KIND==1),
+           "elementary"= map_df <-filter(map_df, ELEM==1),
+           "middle"= map_df <-filter(map_df, MIDD==1),
+           "high" = map_df <-filter(map_df, HIGH==1))
     
-    #filter
+    ## Output reactive dataframe
+    colnames(map_df)[5]<-"var"
     
    gvisGeoChart(map_df,
                  locationvar="LatLong", sizevar="Total.Students.Enrolled",
-                 colorvar="Females", hovervar="school.name",
+                 colorvar="var", hovervar="school.name",
                  options=list(region="US-MA", displayMode="Markers", 
                               resolution="metros",
                               width=750, height=600,
