@@ -238,6 +238,7 @@ shinyUI(fluidPage(
                                       #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
                                       .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
                                       ")),
+                 textOutput("map_title"),
                  htmlOutput("gvis"),
                  value="map"
                  ),

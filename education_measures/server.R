@@ -676,12 +676,11 @@ return(sum_df)
            "middle"= map_df <-filter(map_df, MIDD==1),
            "high" = map_df <-filter(map_df, HIGH==1))
     
-    ## Output reactive dataframe
-    colnames(map_df)[5]<-"var"
+  
     
    gvisGeoChart(map_df,
                  locationvar="LatLong", sizevar="Total.Students.Enrolled",
-                 colorvar="var", hovervar="school.name",
+                 colorvar=input$map_level, hovervar="school.name",
                  options=list(region="US-MA", displayMode="Markers", 
                               resolution="metros",
                               width=750, height=600,
