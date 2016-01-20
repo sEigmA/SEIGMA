@@ -85,7 +85,7 @@ shinyUI(fluidPage(
                               "English Language Learners"="English Language Learners",
                               "Students with Disabilities"="Students with Disabilities",
                               "Low Income"="Low Income", "High Needs"="High Needs"),
-             selected="Grade Level"
+             selected="Race/Ethnicity"
                   )
                  )
              ,
@@ -122,6 +122,34 @@ shinyUI(fluidPage(
                
              )
         ,
+         conditionalPanel(
+           condition="input.tabs == 'lmap'",
+           ## Select year with multiyear slider
+           
+           sliderInput("lmap_year", "Select Year",
+                       min=2003, max=2012, value=2012,
+                       sep="")
+           ,
+           
+           radioButtons("lmap_schooltype", "School Type",
+                        c("Pre-K" = "prek", "Kindergarten" = "kindergarten",
+                          "Elementary" = "elementary","Middle School" ="middle","High School" ="high"),
+                        selected="High School"
+           ),
+           
+           radioButtons("lmap_radio", "Variables",
+                        c("Race/Ethnicity"="Race/Ethnicity", 
+                          "Gender"="Gender", "Grade Level"="Grade Level",
+                          "English Language Learners"="English Language Learners",
+                          "Students with Disabilities"="Students with Disabilities",
+                          "Low Income"="Low Income", "High Needs"="High Needs"),
+                        selected="Race/Ethnicity"
+           )
+           ,
+           uiOutput("lmapvar_levels")
+           
+         )
+         ,
                  
                   ## in plot, allow for municipal selection
                   conditionalPanel(
@@ -376,6 +404,24 @@ shinyUI(fluidPage(
 #                  #                plot_main_text,
 #                  value="map"),
 #         
+# 
+
+##plot leaflet map
+tabPanel("Leaflet Map",
+         
+         ## Add a little CSS to make the map background pure white
+         tags$head(tags$style("
+                              #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
+                              .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+                              ")),
+         tags$br(),
+         textOutput("lmap_title"),
+         tags$br(),
+         
+         leafletOutput("leafmap"),
+         value="lmap"
+         )
+,
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
