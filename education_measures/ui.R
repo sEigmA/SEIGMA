@@ -85,7 +85,7 @@ shinyUI(fluidPage(
                               "English Language Learners"="English Language Learners",
                               "Students with Disabilities"="Students with Disabilities",
                               "Low Income"="Low Income", "High Needs"="High Needs"),
-             selected="Grade Level"
+             selected="Race/Ethnicity"
                   )
                  )
              ,
@@ -104,8 +104,8 @@ shinyUI(fluidPage(
                ,
                
                radioButtons("map_schooltype", "School Type",
-                            c("Pre-K" = "Pre-K", "Kindergarten" = "Kindergarten",
-                              "Elementary" = "Elementary","Middle School" ="Middle","High School" ="High School"),
+                            c("Pre-K" = "prek", "Kindergarten" = "kindergarten",
+                              "Elementary" = "elementary","Middle School" ="middle","High School" ="high"),
                             selected="High School"
                ),
                
@@ -117,30 +117,39 @@ shinyUI(fluidPage(
                               "Low Income"="Low Income", "High Needs"="High Needs"),
                             selected="Grade Level"
                )
-#                ,
-#                uiOuput("mapvar_levels")
+                ,
+                uiOutput("mapvar_levels")
                
              )
         ,
-#                  
-#                  ## in map, allow for variable , option and year selection
-#                   conditionalPanel(
-#                    condition="input.tabs == 'map'",
-#                    radioButtons("map_radio", "Select Variable of Interest",
-#                                 c("Employment"="Employment", "Business Establishments" = "Establishments", 
-#                                   "Wages" = "Wages"),
-#                                 selected="Employment"),
-#                    radioButtons("map_display_radio", "Display Options",
-#                                 c("Actual Values"="Actual Values", "Change Since 2003"="Change_Pct"),
-#                                 selected="Actual Values"),
-#                    sliderInput("map_year", "Select Year",
-#                                  min=2003, max=2012, value=2012,
-#                                  sep="")
-#                    
-#                  ),
-#                  
-
-                 
+         conditionalPanel(
+           condition="input.tabs == 'lmap'",
+           ## Select year with multiyear slider
+           
+           sliderInput("lmap_year", "Select Year",
+                       min=2003, max=2012, value=2012,
+                       sep="")
+           ,
+           
+           radioButtons("lmap_schooltype", "School Type",
+                        c("Pre-K" = "prek", "Kindergarten" = "kindergarten",
+                          "Elementary" = "elementary","Middle School" ="middle","High School" ="high"),
+                        selected="High School"
+           ),
+           
+           radioButtons("lmap_radio", "Variables",
+                        c("Race/Ethnicity"="Race/Ethnicity", 
+                          "Gender"="Gender", "Grade Level"="Grade Level",
+                          "English Language Learners"="English Language Learners",
+                          "Students with Disabilities"="Students with Disabilities",
+                          "Low Income"="Low Income", "High Needs"="High Needs"),
+                        selected="Race/Ethnicity"
+           )
+           ,
+           uiOutput("lmapvar_levels")
+           
+         )
+         ,
                  
                   ## in plot, allow for municipal selection
                   conditionalPanel(
@@ -257,8 +266,8 @@ shinyUI(fluidPage(
                                       #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
                                       .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
                                       ")),
+                 textOutput("map_title"),
                  htmlOutput("gvis"),
-                 
                  value="map"
                  ),
 #                  ## Map Creation
@@ -395,6 +404,24 @@ shinyUI(fluidPage(
 #                  #                plot_main_text,
 #                  value="map"),
 #         
+# 
+
+##plot leaflet map
+tabPanel("Leaflet Map",
+         
+         ## Add a little CSS to make the map background pure white
+         tags$head(tags$style("
+                              #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
+                              .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+                              ")),
+         tags$br(),
+         textOutput("lmap_title"),
+         tags$br(),
+         
+         leafletOutput("leafmap"),
+         value="lmap"
+         )
+,
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
