@@ -163,17 +163,17 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
   
-  helpText(p(strong('Please select the years for which you are interested in viewing average annual unemployment rates and the average annual number of people within the labor force.'))),
+  helpText(p(strong('Please select the years for which you are interested in viewing the annual total tax levy and percent tax levy by class.'))),
   tags$br(),
   tags$ul(
     tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To look at average annual unemployment rates and the number of people within the labor force for a single year, select single year from the drop down menu.'),
+    tags$li('To look at the annual total tax levy and percent tax levy by class for a single year, select single year from the drop down menu.'),
     tags$br(),
-    tags$li('To look at average annual unemployment rates and the number of people within the labor force over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
+    tags$li('To look at the annual total tax levy and percent tax levy by class over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
     tags$br(),
-    tags$li('Sort average annual unemployment rates and the number of people within the labor force in ascending and descending order by clicking on the column or variable title.')
+    tags$li('Sort the annual total tax levy and percent tax levy by class in ascending and descending order by clicking on the column or variable title.')
     
   )
 )
@@ -182,18 +182,18 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the municipality for which you are interested in viewing the average annual unemployment rate and average annual number of people within the labor force. Please do not select more than ten municipalities at a time.')),
+  p(strong('Please select the municipality for which you are interested in viewing the annual total tax levy and percent of the total tax levy by class. Please do not select more than ten municipalities at a time.')),
   tags$br(),
   tags$ul(
-    tags$li('Once you have selected the municipalities which you are interested in viewing, select a Variable of Interest.'),
+    tags$li('Once you have selected the municipalities which you are interested in viewing the annual total tax levy and percent of the total tax levy by class, select a Variable of Interest.'),
     tags$br(),
-    tags$li("To view average annual unemployment rates, select Unemployment Rate."),
+    tags$li("To view the annual total tax levy, select Total Tax Levy."),
     tags$br(),
-    tags$li("To view the average annual number of people within the labor force, select Labor force."),
+    tags$li("To view the percent total tax levy by class, select Percent of Levy by Class."),
     tags$br(),
-    tags$li("Select Actual Values from the Display Options to view average annual unemployment rates and the average annual number of people in the labor force for 2003-2012."),
+    tags$li("Select Actual Values from the Display Options to view the annual total tax levy for the years 2003-2012."),
     tags$br(),
-    tags$li("Select Change Since 2003 from the Display Options to view the percent change in the average annual number of people in the labor force each year for the years 2003-2012.")
+    tags$li("Select Change Since 2003 from the Display Options to view the percent change in the the annual total tax levy each year for the years 2003-2012.")
   ))
 
 
@@ -204,11 +204,13 @@ map_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
     
-    tags$li('To view average annual unemployment rate select Unemployment Rate, then click on a municipality for which you are interested in viewing average annual unemployment rate.'),
+    tags$li('To view the annual total tax levy select Total Tax Levy, then click on a municipality for which you are interested in viewing the annual total tax levy.'),
     tags$br(),
-    tags$li("To view the number of people within the labor force select Labor Force, then click on a municipality for which you are interested in viewing the number of people witin the labor force."),
+    tags$li("To view the percent total tax levy by class select Percent of Levy by Class, then click on a municipality for which you are interested in viewing the percent total tax levy."),
     tags$br(),
-    tags$li("To view the change in the annual average number of people within the labor force between the year you selected and 2003 select Change Since 2003.")
+    tags$li("To view the annual total tax levy between the year you selected and 2003 select Change Since 2003."),
+    tags$br(),
+    tags$li("To view the percent total tax levy by a specific class select a specific class from the Percent of Levy by Class list.")
   ))
 
 info_side_text <- conditionalPanel(
@@ -216,14 +218,14 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Unemployment App"), "displays the average unemployment rate and the average number of people within the labor force in Massachusetts' municipalities annually.",
+about_main_text <- p(strong("The SEIGMA Property Tax App"), "displays the total tax levy and percent tax levy by class in Massachusetts' municipalities annually.",
                      p(strong("Click on different tabs to see the data in different forms.")),
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
-                       tags$li(p(strong("Plot"), "compares the annual unemployment rate and the annual average number of people within the labor force for each municipality to state rates.")),
-                       tags$li(p(strong("Map"), "visually displays the annual unemployment rate and the annual average number of people within the labor force by municipality")),
-                       tags$li(p(strong("More Info"), "describes the annual unemployment rate and the annual average number of people within the labor force, including formulas and calculations."))
+                       tags$li(p(strong("Plot"), "compares the annual total tax levy and percent tax levy by class for each municipality to state rates.")),
+                       tags$li(p(strong("Map"), "visually displays the annual total tax levy and percent tax levy by class for each municipality")),
+                       tags$li(p(strong("More Info"), "describes the annual total tax levy and percent tax levy by class, including formulas and calculations."))
                      ))
 
 plot_main_text <- p(strong("Variable Summary:"),

@@ -121,12 +121,12 @@ shinyUI(fluidPage(
                  helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
                  
                  ## data source citation
-                 helpText(a("Data Source: Bureau of Labor Statistics", href="http://www.bls.gov/lau/data.htm",
+                 helpText(a("Data Source: Massachusetts Department of Revenue", href="https://dlsgateway.dor.state.ma.us/reports/rdPage.aspx?rdReport=PropertyTaxInformation.taxratesbyclass.taxratesbyclass_main",
                             target="_blank")),
                  
                  ## GitHub link
                  helpText(a("View the data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/unemployment", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/property%20tax", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -170,7 +170,7 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.plot_radio =='Percent_Levy'",
                    Pct_plot_options,
-                     p(strong("Change Since 2003"), "- This is calculated by comparing average monthly employment and weekly wages for a specific year to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
+                     p(strong("Change Since 2003"), "- This is calculated by the total annual tax to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
                    ),
                   value="plot"),
         
@@ -245,19 +245,20 @@ shinyUI(fluidPage(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                 tags$ul(
+                
                    
-                   tags$li(p(strong("Umemployed Persons"), 
-                             "-All people 16 years old and over are classified as unemployed if they were not at work during the reference week, but were actively seeking work during the last 4 weeks, and were available to start a job. Also included as unemployed are those who did not work at all during the reference week, those were waiting to be called back to a job from which they had been laid off, and those who were available for work except for temporary illness.")),
+                   p(strong("Total Tax Levy"), 
+                             "-a levy, or tax, on property that the owner is required to pay. The tax is given by the region in which the property is located."),
                    tags$br(),
-                   tags$li(p(strong('Unemployment Rate'),
-                             "-The unemployment rate is produced by the Bureau of Labor Statistics (BLS), which uses state and national level information from the Current Population Survey (CPS).  Municipality unemployment rates were gathered form a secition of the BLS and CPS called the Local Areas Unemployment Statistics Series. The unemployment rate represents the number of unemployed people as a proportion of the total labor force. For example, if the civilian labor force equals 100 people and 7 people are unemployed, then the unemployment rate would be 7 percent."))),
+                   p(strong('Class - Residential'),
+                             "-All property including one or more homes.  It also includes accessory buildings and land such as pools, tennis, courts, sheds, etc.  "),
                  tags$br(),
-                 
-                 tags$li((p(strong('Average Number in Labor Force'), 
-                            "-The labor force includes all persons classified as employed or unemployed."))),
-                 tags$li((p(strong('Bureau of Labor Statistics'), 
-                            "-These data were collected from the Bureau of Labor Statistics (BLS). It's helpful to note that the BLS is subject to annual revision revised to reflect new population controls from the Census Bureau, updated input data, and re-estimation.  Links to the data source will be updated when new data are available."))),
+                 p(strong('Class- Commercial'), 
+                            "-Property for the purpose of conducting a business.  This includes office buildings, retail stores, etc. Personal Property is also considered in this category of Commercial Class."),
+                 tags$br(),
+                 p(strong('Class- Industrial'), 
+                   "-Property involved in manufacturing or processing. This includes porperty used for storage, transmission, and the regulated generation of utilities."),
+                 tags$
                  
                  #tags$br(),
                  # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),                  
