@@ -65,19 +65,26 @@ shinyUI(fluidPage(
                    )
                  ,
                
-                   
-                   selectInput("sum_muni", "Select Municipality", 
-                                 choices = MA_municipals,
-                                 ## Multiple allows for multi-county selection
-                                 multiple=TRUE)
-                          
-                   ,
+                 selectInput("sum_county", "Select County", 
+                             choices = MA_county,
+                             ## Multiple allows for multi-county selection
+                             multiple=TRUE)
                  
-                 radioButtons("school_type", "School Type",
-                              c("Pre-K" = "Pre-K", "Kindergarten" = "Kindergarten",
-                                "Elementary" = "Elementary","Middle School" ="Middle","High School" ="High School"),
-                              selected="High School"
-                  ),
+                 ,
+                 uiOutput("sum_muniui"),
+                 
+#                    selectInput("sum_muni", "Select Municipality", 
+#                                  choices = MA_municipals,
+#                                  ## Multiple allows for multi-county selection
+#                                  multiple=TRUE)
+#                           
+#                    ,
+                 
+#                  radioButtons("school_type", "School Type",
+#                               c("Pre-K" = "Pre-K", "Kindergarten" = "Kindergarten",
+#                                 "Elementary" = "Elementary","Middle School" ="Middle","High School" ="High School"),
+#                               selected="High School"
+#                   ),
 
                 radioButtons("sum_radio", "Variables",
                             c("Race/Ethnicity"="Race/Ethnicity", 

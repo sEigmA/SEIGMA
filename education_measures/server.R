@@ -51,6 +51,12 @@ shinyServer(function(input, output, session) {
     ## make municipals a vector based on input variable
     ## For when something is clicked
 
+    if(!is.null(input$sum_county))
+    county<-input$sum_county
+if(is.null(input$sum_county))
+  county<-"Hampshire"
+
+
     if(!is.null(input$sum_muni))
       munis <- input$sum_muni
     ## if none selected, put all municipals in vector
@@ -58,39 +64,39 @@ shinyServer(function(input, output, session) {
     if(is.null(input$sum_muni))
       munis <- MA_municipals
     
- 
+sum_df <- df %>% filter(County %in% county & Municipal %in% munis)
     
     ##select row according input$school_type
-    grades<-c()
-    if (input$school_type=="Pre-K") {
-      grades<-c(7:14)
-      grade_level_names<-c("Pre Kindergarten", "Kindergarten" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
-      sum_df <- df %>%
-        filter(Municipal %in% munis, PREK==1)
-        } else 
-    if (input$school_type=="Kindergarten") {
-      grades<-c(7:14)
-      grade_level_names<-c("Pre Kindergarten", "Kindergarten" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
-      sum_df <- df %>%
-        filter(Municipal %in% munis,  KIND==1)
-        } else 
-    if (input$school_type=="Elementary") {
-      grades<-c(7:14)
-      grade_level_names<-c("Pre Kindergarten", "Kindergarten" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
-      sum_df <- df %>%
-        filter(Municipal %in% munis, ELEM==1) 
-        } else 
-    if (input$school_type=="Middle") {
-      grades<-c(13:17)
-      grade_level_names<-c("Fifth Grade" , "Sixth Grade","Seventh Grade", "Eighth Grade", "Ninth Grade")
-      sum_df <- df %>%
-         filter(Municipal %in% munis, MIDD==1)
-     } else {
-      grades<-c(17:21)
-      grade_level_names<-c("Ninth Grade", "Tenth Grade","Eleventh Grade" ,"Twelfth Grade","Special Ed Beyond 12th Grade")
-       sum_df <- df %>%
-         filter(Municipal %in% munis, HIGH==1)}
-    
+#     grades<-c()
+#     if (input$school_type=="Pre-K") {
+#       grades<-c(7:14)
+#       grade_level_names<-c("Pre Kindergarten", "Kindergarten" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
+#       sum_df <- df %>%
+#         filter(Municipal %in% munis, PREK==1)
+#         } else 
+#     if (input$school_type=="Kindergarten") {
+#       grades<-c(7:14)
+#       grade_level_names<-c("Pre Kindergarten", "Kindergarten" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
+#       sum_df <- df %>%
+#         filter(Municipal %in% munis,  KIND==1)
+#         } else 
+#     if (input$school_type=="Elementary") {
+#       grades<-c(7:14)
+#       grade_level_names<-c("Pre Kindergarten", "Kindergarten" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
+#       sum_df <- df %>%
+#         filter(Municipal %in% munis, ELEM==1) 
+#         } else 
+#     if (input$school_type=="Middle") {
+#       grades<-c(13:17)
+#       grade_level_names<-c("Fifth Grade" , "Sixth Grade","Seventh Grade", "Eighth Grade", "Ninth Grade")
+#       sum_df <- df %>%
+#          filter(Municipal %in% munis, MIDD==1)
+#      } else {
+#       grades<-c(17:21)
+#       grade_level_names<-c("Ninth Grade", "Tenth Grade","Eleventh Grade" ,"Twelfth Grade","Special Ed Beyond 12th Grade")
+#        sum_df <- df %>%
+#          filter(Municipal %in% munis, HIGH==1)}
+   
 
     ##select columns according input$radio
     sel_col_num<-c()
@@ -102,8 +108,8 @@ shinyServer(function(input, output, session) {
       sel_col_num<-c(28:29)
       df_colnames<-c( "Males", "Females")
     } else if (input$sum_radio=="Grade Level") {
-      sel_col_num<-grades
-      df_colnames<-grade_level_names
+      sel_col_num<-c(7:21)
+      df_colnames<-names(edu_data)[7:21]
     }  else if (input$sum_radio=="English Language Learners") {
         sel_col_num<-c(32, 34, 51:55)
         df_colnames<-c("First Language Not English Enrolled", "English Language Learner Enrolled", "Churn Enrollment for English Language Learning Students", "Churn Rate for English Language Learning Students", "Intake Rate for English Language Learning Students", "Stability Enrollment for English Language Learning Students", "Stability Rate for English Language Learning Students")
@@ -118,11 +124,11 @@ shinyServer(function(input, output, session) {
       df_colnames<-c("High Needs Enrolled", "Churn Enrollmment for High Needs Students", "Churn Rate for High Needs Students", "Intake Rate for High Needs Students", "Stability Enrollment for High Needs Students", "Stability Rate for High Needs Students")}
     
     sum_df <- sum_df %>%
-    arrange(Municipal, school.name)%>%
-      select(Municipal, school.name, school.year, Total.Students.Enrolled, 
+    arrange(County, Municipal, school.name)%>%
+      select(County, Municipal, school.name, school.year, Total.Students.Enrolled, 
              sel_col_num)
     
-    final_colnames<-c("Municipal","School Name","School Year", "Total Number Enrolled",
+    final_colnames<-c("County", "Municipal","School Name","School Year", "Total Number Enrolled",
                       df_colnames)
   
     colnames(sum_df) <- final_colnames
@@ -237,8 +243,81 @@ return(sum_df)
       data=googleDataTable(m))
   })
   
-  
+  output$sum_muniui <-renderUI({
     
+    # Depending on input$input_type, we'll generate a different
+    # UI component and send it to the client.
+    switch(input$sum_county,
+           
+           "Barnstable" = selectInput("sum_muni","Choose Municipality",
+                                          choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Barnstable")])) 
+                                            ,
+                                          multiple = T
+           ), 
+           "Berkshire" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Berkshire")])) 
+                                      ,
+                                      multiple = T
+           ),
+           "Bristol" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Bristol")])) 
+                                      ,
+                                      multiple = T
+           ), 
+           "Dukes" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Dukes")])) 
+                                      ,
+                                      multiple = T
+           ), 
+            "Essex" = selectInput("sum_muni","Choose Municipality",
+                                        choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Essex")])) 
+                                        ,
+                                        multiple = T
+           ),
+            "Franklin" = selectInput("sum_muni","Choose Municipality",
+                                        choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Franklin")])) 
+                                        ,
+                                        multiple = T
+           ), 
+           "Hampden" = selectInput("sum_muni","Choose Municipality",
+                                         choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Hampden")])) 
+                                         ,
+                                         multiple = T
+           ), 
+           "Hampshire" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Hampshire")])) 
+                                      ,
+                                      multiple = T
+           ), 
+           "Middlesex" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Middlesex")])),
+                                      multiple = T
+           ),
+           "Nantucket" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Nantucket")])) ,
+                                      multiple = T
+           ),
+           "Norfolk" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Norfolk")])) 
+                                      ,
+                                      multiple = T
+           ),
+           "Plymouth" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Plymouth")])) 
+                                      ,
+                                      multiple = T
+           ),
+           "Suffolk" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Suffolk")])) 
+                                      ,
+                                      multiple = T
+           ),
+           "Worcester" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Worcester")])) 
+                                      ,
+                                      multiple = T
+           ))
+  })
 #     
 #     
 #      wage_df<-emp_df()

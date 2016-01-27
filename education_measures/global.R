@@ -49,6 +49,7 @@ edu_data <- read.csv(file="edum_data.csv")
 # }
 # 
 # 
+MA_county <- sort(as.character(unique(edu_data$County)))
  MA_municipals <- sort(as.character(unique(edu_data$Municipal)))
  all_schools<-as.character(unique(edu_data$school.name))
 # for(i in 1:length(MA_map_muni$features)){
