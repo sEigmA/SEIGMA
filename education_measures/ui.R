@@ -66,9 +66,9 @@ shinyUI(fluidPage(
                  ,
                
                  selectInput("sum_county", "Select County", 
-                             choices = MA_county,
+                             choices = c(MA_county, " "),
                              ## Multiple allows for multi-county selection
-                             multiple=TRUE)
+                             multiple=FALSE, selected = " ")
                  
                  ,
                  uiOutput("sum_muniui"),
@@ -100,35 +100,35 @@ shinyUI(fluidPage(
              #map sidebar options
              #
              
-              
-             conditionalPanel(
-               condition="input.tabs == 'map'",
-               ## Select year with multiyear slider
-               
-               sliderInput("map_year", "Select Year",
-                             min=2003, max=2012, value=2012,
-                             sep="")
-               ,
-               
-               radioButtons("map_schooltype", "School Type",
-                            c("Pre-K" = "prek", "Kindergarten" = "kindergarten",
-                              "Elementary" = "elementary","Middle School" ="middle","High School" ="high"),
-                            selected="High School"
-               ),
-               
-               radioButtons("map_radio", "Variables",
-                            c("Race/Ethnicity"="Race/Ethnicity", 
-                              "Gender"="Gender", "Grade Level"="Grade Level",
-                              "English Language Learners"="English Language Learners",
-                              "Students with Disabilities"="Students with Disabilities",
-                              "Low Income"="Low Income", "High Needs"="High Needs"),
-                            selected="Grade Level"
-               )
-                ,
-                uiOutput("mapvar_levels")
-               
-             )
-        ,
+#               
+#              conditionalPanel(
+#                condition="input.tabs == 'map'",
+#                ## Select year with multiyear slider
+#                
+#                sliderInput("map_year", "Select Year",
+#                              min=2003, max=2012, value=2012,
+#                              sep="")
+#                ,
+#                
+#                radioButtons("map_schooltype", "School Type",
+#                             c("Pre-K" = "prek", "Kindergarten" = "kindergarten",
+#                               "Elementary" = "elementary","Middle School" ="middle","High School" ="high"),
+#                             selected="High School"
+#                ),
+#                
+#                radioButtons("map_radio", "Variables",
+#                             c("Race/Ethnicity"="Race/Ethnicity", 
+#                               "Gender"="Gender", "Grade Level"="Grade Level",
+#                               "English Language Learners"="English Language Learners",
+#                               "Students with Disabilities"="Students with Disabilities",
+#                               "Low Income"="Low Income", "High Needs"="High Needs"),
+#                             selected="Grade Level"
+#                )
+#                 ,
+#                 uiOutput("mapvar_levels")
+#                
+#              )
+#         ,
          conditionalPanel(
            condition="input.tabs == 'lmap'",
            ## Select year with multiyear slider
@@ -138,11 +138,6 @@ shinyUI(fluidPage(
                        sep="")
            ,
            
-           radioButtons("lmap_schooltype", "School Type",
-                        c("Pre-K" = "prek", "Kindergarten" = "kindergarten",
-                          "Elementary" = "elementary","Middle School" ="middle","High School" ="high"),
-                        selected="High School"
-           ),
            
            radioButtons("lmap_radio", "Variables",
                         c("Race/Ethnicity"="Race/Ethnicity", 
@@ -162,25 +157,38 @@ shinyUI(fluidPage(
                   conditionalPanel(
                     condition="input.tabs == 'plot'",
                     ## Select input = List
-                    selectInput("plot_muni", "Select Municipality", 
-                                choices = MA_municipals, selected="Amherst", multiple=FALSE),
+                    selectInput("plot_county", "Select County", 
+                                choices = c(MA_county, " "),
+                                ## Multiple allows for multi-county selection
+                                multiple=FALSE, selected = " ")
                     
-                    radioButtons("plot_radio", "Select Variable of Interest",
-                                 c("Gender" = "Gender",
-                                 selected="Gender")),
+                    ,
+                                uiOutput("plot_schoolui"),
+                    
+                    radioButtons("plot_radio", "Variables",
+                                 c("Race/Ethnicity"="Race/Ethnicity", 
+                                   "Gender"="Gender", "Grade Level"="Grade Level",
+                                   "English Language Learners"="English Language Learners",
+                                   "Students with Disabilities"="Students with Disabilities",
+                                   "Low Income"="Low Income", "High Needs"="High Needs"),
+                                 selected="Race/Ethnicity"
+                    )
+                    
+                  ),
+                    
 #                     radioButtons("plot_display_radio", "Display Options",
 #                                  c("Actual Values"="Actual Values", "Change Since 2003"="Change_Pct"),
 #                                  selected="Actual Values")
 
-                  selectInput("plot_school", "Select School", 
-                    choices = all_schools,
-                    ## Multiple allows for multi-county selection
-                    multiple=TRUE)
-                    ),
-                  
+#                   selectInput("plot_school", "Select School", 
+#                     choices = all_schools,
+#                     ## Multiple allows for multi-county selection
+#                     multiple=FALSE)
+#                     ),
+
                   tags$hr(),
-                   
-              
+    
+                  
                
                  ## author line
 
@@ -225,58 +233,27 @@ shinyUI(fluidPage(
         
         ## plot tab with google chart options
         tabPanel("Plot",
-                 ##plot upon the selected variable and display option           
-                 conditionalPanel(
-                   condition="input.plot_radio =='Gender'",
-#                      conditionalPanel(
-#                        condition="input.plot_display_radio=='Actual Values'",
-                       ## make chart title here (otherwise not centered)
-                       # h4("Average Monthly Employment and Business Establishments Over Time", align="center"),
-             Emp_plot_options1),
-                       # Male_pct_plot),
-#                      conditionalPanel(
-#                        condition="input.plot_display_radio=='Change_Pct'",
-#                        ## make chart title here (otherwise not centered)
-#                        h4("Change in Average Monthly Employment and Business Establishments Over Time Since 2003", align="center"),
-#                        Emp_pct_plot_options,
-#                        Est_pct_plot_options,
-                   # p(strong("Change Since 2003"), "- This is calculated by comparing average monthly employment and weekly wages for a specific year to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
-                 # ),
-#                    conditionalPanel(
-#                    condition="input.plot_radio =='Wages'",
-#                    conditionalPanel(
-#                      condition="input.plot_display_radio=='Actual Values'",
-#                      ## make chart title here (otherwise not centered)
-#                      h4("Average Weekly Wage Over Time", align="center"),
-#                      Wage_plot_options1),
-#                    conditionalPanel(
-#                      condition="input.plot_display_radio=='Change_Pct'",
-#                      ## make chart title here (otherwise not centered)
-#                      h4("Change in Average Weekly Wage Since 2003", align="center"),
-#                      Wage_pct_plot_options,
-#                      p(strong("Change Since 2003"), "- This is calculated by comparing the monthly employment estimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
-#                      )
-                   # ),
-#                  tags$br(),
-#                  p(strong("Broken Lines"),
-#                    " - For some municipalities, data may not appear for certain years, resulting in shortened or broken lines.  This occurs when the data is not available for that particular time period."),
-#                  
-                  value="Female_pct_plot"),
+                 ##plot upon the selected variable and display option 
+                 textOutput("plot_title"),
+                 
+                 
+                 htmlOutput("plot_gvis"), value="plot"),
+                   
        
        
         
         ## plot map
-        tabPanel("Map",
-                 
-                 ## Add a little CSS to make the map background pure white
-                 tags$head(tags$style("
-                                      #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
-                                      .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
-                                      ")),
-                 textOutput("map_title"),
-                 htmlOutput("gvis"),
-                 value="map"
-                 ),
+#         tabPanel("Map",
+#                  
+#                  ## Add a little CSS to make the map background pure white
+#                  tags$head(tags$style("
+#                                       #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
+#                                       .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+#                                       ")),
+#                  textOutput("map_title"),
+#                  htmlOutput("gvis"),
+#                  value="map"
+#                  ),
 #                  ## Map Creation
 #                  leafletMap("map", width="100%", height=500, 
 #                             options=list(center = c(42.15, -71.65), zoom=8, 
@@ -414,7 +391,7 @@ shinyUI(fluidPage(
 # 
 
 ##plot leaflet map
-tabPanel("Leaflet Map",
+tabPanel("Map",
          
          ## Add a little CSS to make the map background pure white
          tags$head(tags$style("

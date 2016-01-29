@@ -28,7 +28,9 @@ require(tidyr)
 # #MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 # MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 edu_data <- read.csv(file="edum_data.csv")
-
+#put this in data cleaning
+colnames(edu_data)[7:21]<-gsub(x=names(edu_data)[7:21],pattern=".", replacement=" ", fixed=T)
+colnames(edu_data)[16]<-"Eighth Grade"
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -741,3 +743,18 @@ Emp_plot_options1 <- googleLineChart("Female_pct_plot", width="100%", height="47
 #                                             )
 #                                           )
 #                                         ))
+
+
+#############
+#   PLOT
+#############
+# 
+# switch(input$plot_radio,
+#        
+#        "Race/Ethnicity"= plot_cols<-c("African.American", "Asian", 
+#                                       "Hispanic", "White", "Native.American", 
+#                                       "Native.Hawaiian.Pacific.Islander",
+#                                       "Multi.Race.Non.Hispanic"),
+#        "Gender"=plot_cols
+#        
+#        )

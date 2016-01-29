@@ -51,10 +51,10 @@ shinyServer(function(input, output, session) {
     ## make municipals a vector based on input variable
     ## For when something is clicked
 
-    if(!is.null(input$sum_county))
-    county<-input$sum_county
-if(is.null(input$sum_county))
-  county<-"Hampshire"
+    if(input$sum_county!=" "){
+    county<-input$sum_county}
+else if(input$sum_county==" "){
+  county<-MA_county}
 
 
     if(!is.null(input$sum_muni))
@@ -137,117 +137,17 @@ sum_df <- df %>% filter(County %in% county & Municipal %in% munis)
 return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE))
 
-
-  
-  
-  # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
-
-
-  ## create the plot of the data
-  
-  output$Female_pct_plot<-reactive({
-   
-    emp_df <- edum()
-    
-    ## make region a vector based on input variable
-    munis <- input$plot_muni
-    
-    ##selecting rows based on the chosen school name
-    if(!is.null(input$plot_school))
-      sname <- input$plot_school
-    ## if none selected, put no schools in vector
-    ## For nothing clicked
-    if(is.null(input$plot_school))
-      sname <- all_schools
-    emp_df <- emp_df %>%
-      filter(school.name %in% sname)
-#     
-#     ## make municipals a vector based on input variable
-#     ## For when something is clicked
-#     
-#     if(!is.null(input$sum_muni))
-#       munis <- input$sum_muni
-#     ## if none selected, put all municipals in vector
-#     ## For nothing clicked
-#     if(is.null(input$sum_muni))
-#       munis <- MA_municipals
-#     
-    
-    
-   
-    
-    
-    ##select columns according input$radio
-    sel_col_num<-c()
-   if (input$sum_radio=="Gender") {
-      sel_col_num<-c(28:29)
-      df_colnames<-c( "Males", "Females")
-    } 
-
-    
-    f <- sum_df %>%
-      select(Municipal, school.name, school.year, 
-             sel_col_num[2]) %>%
-      spread(school.year, sel_col_num[2])
-    
-         list(
-         data=googleDataTable(f))
-  })
-    
-
-  
-  output$Male_pct_plot<-reactive({
-    
-    emp_df <- edum()
-    
-    ## make region a vector based on input variable
-    munis <- input$plot_muni
-    
-    ##selecting rows based on the chosen school name
-    if(!is.null(input$plot_school))
-      sname <- input$plot_school
-    ## if none selected, put no schools in vector
-    ## For nothing clicked
-    if(is.null(input$plot_school))
-      sname <- all_schools
-    emp_df <- emp_df %>%
-      filter(school.name %in% sname)
-    #     
-    #     ## make municipals a vector based on input variable
-    #     ## For when something is clicked
-    #     
-    #     if(!is.null(input$sum_muni))
-    #       munis <- input$sum_muni
-    #     ## if none selected, put all municipals in vector
-    #     ## For nothing clicked
-    #     if(is.null(input$sum_muni))
-    #       munis <- MA_municipals
-    #     
-    
-    
-    
-    
-    
-    ##select columns according input$radio
-    sel_col_num<-c()
-    if (input$sum_radio=="Gender") {
-      sel_col_num<-c(28:29)
-      df_colnames<-c( "Males", "Females")
-    } 
-    m <- sum_df %>%
-      select(Municipal, school.name, school.year, 
-             sel_col_num[1]) %>%
-      spread(school.year, sel_col_num[1])
-    
-    list(
-      data=googleDataTable(m))
-  })
   
   output$sum_muniui <-renderUI({
     
     # Depending on input$input_type, we'll generate a different
     # UI component and send it to the client.
+  
+    
     switch(input$sum_county,
+           
+           " "=selectInput("sum_muni", "Choose Municipality",
+                          choices= c(MA_municipals, " " ), selected= " "),
            
            "Barnstable" = selectInput("sum_muni","Choose Municipality",
                                           choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Barnstable")])) 
@@ -318,7 +218,166 @@ return(sum_df)
                                       multiple = T
            ))
   })
-#     
+  ##end of summary
+#######THIS IS WHERE WE LEFT OFF 12/27/16
+# # #plot #####################################################
+#
+#   if(input$plot_county!=" "){
+#     county<-input$plot_county}
+#   else if(input$plot_county==" "){
+#     county<-MA_county}
+  
+  output$plot_schoolui <-renderUI({
+    
+    # Depending on input$input_type, we'll generate a different
+    # UI component and send it to the client.
+    
+    
+    switch(input$plot_county,
+           
+           " "=selectInput("plot_school", "Choose School",
+                           choices= c(all_schools, " " ), selected= " "),
+           
+           "Barnstable" = selectInput("plot_school","Choose School",
+                                      choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Barnstable")])) 
+                                      ,
+                                      multiple = F
+           ), 
+           "Berkshire" = selectInput("plot_school","Choose School",
+                                     choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Berkshire")])) 
+                                     ,
+                                     multiple = F
+           ),
+           "Bristol" = selectInput("plot_school","Choose School",
+                                   choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Bristol")])) 
+                                   ,
+                                   multiple = F
+           ), 
+           "Dukes" = selectInput("plot_school","Choose School",
+                                 choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Dukes")])) 
+                                 ,
+                                 multiple = F
+           ), 
+           "Essex" = selectInput("plot_school","Choose School",
+                                 choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Essex")])) 
+                                 ,
+                                 multiple = F
+           ),
+           "Franklin" = selectInput("plot_school","Choose School",
+                                    choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Franklin")])) 
+                                    ,
+                                    multiple = F
+           ), 
+           "Hampden" = selectInput("plot_school","Choose School",
+                                   choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Hampden")])) 
+                                   ,
+                                   multiple = F
+           ), 
+           "Hampshire" = selectInput("plot_school","Choose School",
+                                     choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Hampshire")])) 
+                                     ,
+                                     multiple = F
+           ), 
+           "Middlesex" = selectInput("plot_school","Choose School",
+                                     choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Middlesex")])),
+                                     multiple = F
+           ),
+           "Nantucket" = selectInput("plot_school","Choose School",
+                                     choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Nantucket")])) ,
+                                     multiple = F
+           ),
+           "Norfolk" = selectInput("plot_school","Choose School",
+                                   choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Norfolk")])) 
+                                   ,
+                                   multiple = F
+           ),
+           "Plymouth" = selectInput("plot_school","Choose School",
+                                    choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Plymouth")])) 
+                                    ,
+                                    multiple = F
+           ),
+           "Suffolk" = selectInput("plot_school","Choose School",
+                                   choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Suffolk")])) 
+                                   ,
+                                   multiple = F
+           ),
+           "Worcester" = selectInput("plot_school","Choose School",
+                                     choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Worcester")])) 
+                                     ,
+                                     multiple = F
+           ))
+  })
+  
+  #title
+  output$plot_title <- renderText({
+    paste(input$plot_radio, "in ", input$plot_school)
+  })
+  
+  output$plot_gvis<-renderGvis({
+        
+    sel_col_num<-c()
+    df_colnames<-c()
+    if (input$plot_radio=="Race/Ethnicity") {
+      sel_col_num<-c(23:27, 30:31)
+      df_colnames<-c("African American", "Asian", "Hispanic", "White", "Native American", "Native Hawaiian Pacific Islander", "Multi-race non-Hispanic")
+    } else if (input$plot_radio=="Gender") {
+      sel_col_num<-c(28:29)
+      df_colnames<-c( "Males", "Females")
+    } else if (input$plot_radio=="Grade Level") {
+      sel_col_num<-c(7:21)
+      df_colnames<-names(edu_data)[7:21]
+    }  else if (input$plot_radio=="English Language Learners") {
+      sel_col_num<-c(32, 34, 51:55)
+      df_colnames<-c("First Language Not English Enrolled", "English Language Learner Enrolled", "Churn Enrollment for English Language Learning Students", "Churn Rate for English Language Learning Students", "Intake Rate for English Language Learning Students", "Stability Enrollment for English Language Learning Students", "Stability Rate for English Language Learning Students")
+    } else if (input$plot_radio=="Students with Disabilities") {
+      sel_col_num<-c(36, 46:50)
+      df_colnames<-c(  "Students with Disabilities Enrolled", "Churn Enrollment for Students With Disabilites", "Churn Rate for Students With Disabilites", "Intake Rate for Students With Disabilites", "Stability Enrollment for Students with Disabilities", "Stability Rate for Students with Disabilities")
+    } else if (input$plot_radio=="Low Income") {
+      sel_col_num<-c(38, 61:65)
+      df_colnames<-c(  "Low Income Enrolled","Churn Enrollment for Low Income Students", "Churn Rate for Low Income Students", "Intake Rate for Low Income Students", "Stability Enrollment for Low Income Students", "Stability Rate for Low Income Students")
+    } else {
+      sel_col_num<-c(44, 56:60)
+      df_colnames<-c("High Needs Enrolled", "Churn Enrollmment for High Needs Students", "Churn Rate for High Needs Students", "Intake Rate for High Needs Students", "Stability Enrollment for High Needs Students", "Stability Rate for High Needs Students")}
+    
+        ## filter dataframe
+        
+    validate(
+      need(input$plot_school != " ", "Please select a school")
+    )
+    
+        plot_df <- edu_data %>%
+          select(1,3, 6, sel_col_num) %>%
+          filter(school.name==input$plot_school) %>%
+          arrange(school.year)
+          colnames(plot_df)[4:ncol(plot_df)]<-df_colnames
+        
+          #drop columns that have nothing in them: only important for grade level legend
+          if(input$plot_radio=="Grade Level"){
+          col_sums<-apply(plot_df[,4:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
+          plot_df<-plot_df[,c(1,2,3,c(3+as.numeric(which(col_sums!=0))))]}
+          
+        # NA:s in race data present problem:
+          # 3 solutions, pick one: -exclude columns (then some years dont add to 100%)
+          #                        -exclude rows (lose whole year's data, possibly discontinuous)
+          #                        -fill NA with 0
+        
+          
+        #  na_col<-apply(plot_df[4:ncol(plot_df)], 2, FUN=function(x){any(is.na(x))})
+        #  true_plot_cols<-c("TRUE","TRUE","TRUE",as.character(!na_col))
+        #  finalplot_df<-plot_df[,which(true_plot_cols==TRUE)]
+        
+          finalplot_df<-plot_df[complete.cases(plot_df),]
+          
+      
+        
+       gvisSteppedAreaChart(finalplot_df,
+                     xvar="school.year",
+                     yvar=names(finalplot_df)[4:ncol(finalplot_df)],
+                     options=list(isStacked='percent',
+                                  height=500
+                                  ))
+        })
+  
 #     
 #      wage_df<-emp_df()
 #     munis <- input$plot_muni
@@ -631,143 +690,143 @@ return(sum_df)
 # 
 #   })
 # 
-  
-  ###################################################################
-  #  MAP in googlevis
-  ####################################################################
-  
-  
-  output$mapvar_levels <- renderUI({
-    
-    # Depending on input$input_type, we'll generate a different
-    # UI component and send it to the client.
-    switch(input$map_radio,
-           
-           "Race/Ethnicity" = selectInput("map_level","Choose Level to map",
-                                          choices = 
-                                            c("African American" = "African.American",
-                                              "Asian" = "Asian",
-                                              "Hispanic" = "Hispanic",
-                                              "White" = "White",
-                                              "Native American" = "Native.American",
-                                              "Native Hawaiian/Pacific Islander" = "Native.Hawaiian.Pacific.Islander",
-                                              "Multi-Race Non-Hispanic" = "Multi.Race.Non.Hispanic"),
-                                          selected = "African.American"
-           ), 
-           "Gender"= selectInput("map_level","Choose Level to map",
-                                 choices = 
-                                   c("Female" = "Females",
-                                     "Males" = "Males"),
-                                 selected = "Females"
-           ), 
-           "Grade Level"= selectInput("map_level","Choose Level to map",
-                                      choices = 
-                                        c("Pre-Kindergarden" = "Pre.Kindergarden",
-                                          "Kindergarden" = "Kindergarden",
-                                          "First Grade" = "First.Grade",
-                                          "Second Grade" = "Second.Grade",
-                                          "Third Grade" = "Third.Grade",
-                                          "Fourth Grade" = "Fourth.Grade",
-                                          "Fifth Grade" = "Fifth.Grade",
-                                          "Sixth Grade" = "Sixth.Grade",
-                                          "Seventh Grade" = "Seventh.Grade",
-                                          "Eight Grade" = "Eight.Grade",
-                                          "Ninth Grade" = "Ninth.Grade",
-                                          "Tenth Grade" = "Tenth.Grade",
-                                          "Eleventh Grade" = "Eleventh.Grade",
-                                          "Twelfth Grade" = "Twelfth.Grade",
-                                          "Special Education Beyond 12th Grade" = "Special.Ed.Beyond.12th.Grade"),
-                                      selected = "Pre.Kindergarden"
-           ), 
-           "English Language Learners"= selectInput("map_level","Choose Level to map",
-                                                    choices = 
-                                                      c("Count of Students: English Language Learners" = "English.Language.Learner...enrolled.",
-                                                        "Percent of Students: English Language Learners" = "English.Language.Learner...enrolled..1",
-                                                        "Churn Enrollment: English Language Learners" = "Churn.Enrollment.for.English.Language.Learning.Students",
-                                                        "Churn Rate: English Language Learners" = "Churn.Rate.for.English.Language.Learning.Students",
-                                                        "Intake Rate: English Language Learners" = "Intake.Rate.for.English.Language.Learning.Students",
-                                                        "Stability Enrollment: English Language Learners" = "Stability.Enrollment.for.English.Language.Learning.Students",
-                                                        "Stability Rate: English Language Learners" = "Stability.Rate.for.English.Language.Learning.Students"),
-                                                    selected = "English.Language.Learner...enrolled."
-           ),
-           "Students with Disabilities"= selectInput("map_level","Choose Level to map",
-                                                     choices = 
-                                                       c("Count of Students: Students with Disabilities" = "Students.with.Disabilities...enrolled.",
-                                                         "Percent of Students: Students with Disabilities" = "Students.with.Disabilities...enrolled..1",
-                                                         "Churn Enrollment: Students with Disabilities" = "Churn.Enrollment.for.Students.with.Disabilities",
-                                                         "Churn Rate: Students with Disabilities" = "Churn.Rate.for.Students.with.Disabilities",
-                                                         "Intake Rate: Students with Disabilities" = "Intake.Rate.for.Students.with.Disabilities",
-                                                         "Stability Enrollment: Students with Disabilities" = "Stability.Enrollment.for.Students.with.Disabilities",
-                                                         "Stability Rate: Students with Disabilities" = "Stability.Rate.for.Students.with.Disabilities"),
-                                                     selected = "Students.with.Disabilities...enrolled."
-           ), 
-           "Low Income"= selectInput("map_level","Choose Level to map",
-                                     choices = 
-                                       c("Count of Students: Low Income" = "Low.Income...enrolled.",
-                                         "Percent of Students: Low Income" = "Low.Income...enrolled..1",
-                                         "Churn Enrollment: Low Income" = "Churn.Enrollment.for.Low.Income.Students",
-                                         "Churn Rate: Low Income" = "Churn.Rate.for.Low.Income.Students",
-                                         "Intake Rate: Low Income" = "Intake.Rate.for.Low.Income.Students",
-                                         "Stability Enrollment: Low Income" = "Stability.Enrollment.for.Low.Income.Students",
-                                         "Stability Rate: Low Income" = "Stability.Rate.for.Low.Income.Students"),
-                                     selected = "Low.Income...enrolled."
-           ), 
-           "High Needs"= selectInput("map_level","Choose Level to map",
-                                     choices = 
-                                       c("Count of Students: High Needs" = "High.Needs.Students...enrolled.",
-                                         "Percent of Students: High Needs" = "High.Needs.Students...enrolled..1",
-                                         "Churn Enrollment: High Needs" = "Churn.Enrollment.for.High.Needs.Students",
-                                         "Churn Rate: High Needs" = "Churn.Rate.for.High.Needs.Students",
-                                         "Intake Rate: High Needs" = "Intake.Rate.for.High.Needs.Students",
-                                         "Stability Enrollment: High Needs" = "Stability.Enrollment.for.High.Needs.Students",
-                                         "Stability Rate: High Needs" = "Stability.Rate.for.High.Needs.Students"),
-                                     selected = "High.Needs.Students...enrolled."
-           )
-           
-    )
-  })
-  
-  ##
-  #
-  # use input$map_year to choose rows
-  # use input$map_schooltype to choose rows
-  # use input$map_level to choose columns
-  ##
-  
-  
-  #title
-  output$map_title <- renderText({
-    paste(input$map_level, "in Massachusetts", input$map_schooltype, 
-          "during the", input$map_year, "school year")
-  })
-  
-  output$gvis<-renderGvis({
-    
-    ## filter dataframe
-    
-    map_df <- edu_data %>%
-      select(1,3,4,6, which(names(edu_data)==input$map_level), 22,67:74) %>%
-      filter(school.year==input$map_year)
-    switch(input$map_schooltype, 
-           "prek"= map_df <- filter(map_df, PREK==1),
-           "kindergarten"= map_df <-filter(map_df, KIND==1),
-           "elementary"= map_df <-filter(map_df, ELEM==1),
-           "middle"= map_df <-filter(map_df, MIDD==1),
-           "high" = map_df <-filter(map_df, HIGH==1))
-    
-  
-    
-   gvisGeoChart(map_df,
-                 locationvar="LatLong", sizevar="Total.Students.Enrolled",
-                 colorvar=input$map_level, hovervar="school.name",
-                 options=list(region="US-MA", displayMode="Markers", 
-                              resolution="metros",
-                              width=750, height=600,
-                              magnifyingGlass=T,
-                              colorAxis="{colors:['#FFFFFF', '#0000FF']}"
-                 ))
-    })
-  
+#   
+#   ###################################################################
+#   #  MAP in googlevis
+#   ####################################################################
+#   
+#   
+#   output$mapvar_levels <- renderUI({
+#     
+#     # Depending on input$input_type, we'll generate a different
+#     # UI component and send it to the client.
+#     switch(input$map_radio,
+#            
+#            "Race/Ethnicity" = selectInput("map_level","Choose Level to map",
+#                                           choices = 
+#                                             c("African American" = "African.American",
+#                                               "Asian" = "Asian",
+#                                               "Hispanic" = "Hispanic",
+#                                               "White" = "White",
+#                                               "Native American" = "Native.American",
+#                                               "Native Hawaiian/Pacific Islander" = "Native.Hawaiian.Pacific.Islander",
+#                                               "Multi-Race Non-Hispanic" = "Multi.Race.Non.Hispanic"),
+#                                           selected = "African.American"
+#            ), 
+#            "Gender"= selectInput("map_level","Choose Level to map",
+#                                  choices = 
+#                                    c("Female" = "Females",
+#                                      "Males" = "Males"),
+#                                  selected = "Females"
+#            ), 
+#            "Grade Level"= selectInput("map_level","Choose Level to map",
+#                                       choices = 
+#                                         c("Pre-Kindergarden" = "Pre.Kindergarden",
+#                                           "Kindergarden" = "Kindergarden",
+#                                           "First Grade" = "First.Grade",
+#                                           "Second Grade" = "Second.Grade",
+#                                           "Third Grade" = "Third.Grade",
+#                                           "Fourth Grade" = "Fourth.Grade",
+#                                           "Fifth Grade" = "Fifth.Grade",
+#                                           "Sixth Grade" = "Sixth.Grade",
+#                                           "Seventh Grade" = "Seventh.Grade",
+#                                           "Eight Grade" = "Eight.Grade",
+#                                           "Ninth Grade" = "Ninth.Grade",
+#                                           "Tenth Grade" = "Tenth.Grade",
+#                                           "Eleventh Grade" = "Eleventh.Grade",
+#                                           "Twelfth Grade" = "Twelfth.Grade",
+#                                           "Special Education Beyond 12th Grade" = "Special.Ed.Beyond.12th.Grade"),
+#                                       selected = "Pre.Kindergarden"
+#            ), 
+#            "English Language Learners"= selectInput("map_level","Choose Level to map",
+#                                                     choices = 
+#                                                       c("Count of Students: English Language Learners" = "English.Language.Learner...enrolled.",
+#                                                         "Percent of Students: English Language Learners" = "English.Language.Learner...enrolled..1",
+#                                                         "Churn Enrollment: English Language Learners" = "Churn.Enrollment.for.English.Language.Learning.Students",
+#                                                         "Churn Rate: English Language Learners" = "Churn.Rate.for.English.Language.Learning.Students",
+#                                                         "Intake Rate: English Language Learners" = "Intake.Rate.for.English.Language.Learning.Students",
+#                                                         "Stability Enrollment: English Language Learners" = "Stability.Enrollment.for.English.Language.Learning.Students",
+#                                                         "Stability Rate: English Language Learners" = "Stability.Rate.for.English.Language.Learning.Students"),
+#                                                     selected = "English.Language.Learner...enrolled."
+#            ),
+#            "Students with Disabilities"= selectInput("map_level","Choose Level to map",
+#                                                      choices = 
+#                                                        c("Count of Students: Students with Disabilities" = "Students.with.Disabilities...enrolled.",
+#                                                          "Percent of Students: Students with Disabilities" = "Students.with.Disabilities...enrolled..1",
+#                                                          "Churn Enrollment: Students with Disabilities" = "Churn.Enrollment.for.Students.with.Disabilities",
+#                                                          "Churn Rate: Students with Disabilities" = "Churn.Rate.for.Students.with.Disabilities",
+#                                                          "Intake Rate: Students with Disabilities" = "Intake.Rate.for.Students.with.Disabilities",
+#                                                          "Stability Enrollment: Students with Disabilities" = "Stability.Enrollment.for.Students.with.Disabilities",
+#                                                          "Stability Rate: Students with Disabilities" = "Stability.Rate.for.Students.with.Disabilities"),
+#                                                      selected = "Students.with.Disabilities...enrolled."
+#            ), 
+#            "Low Income"= selectInput("map_level","Choose Level to map",
+#                                      choices = 
+#                                        c("Count of Students: Low Income" = "Low.Income...enrolled.",
+#                                          "Percent of Students: Low Income" = "Low.Income...enrolled..1",
+#                                          "Churn Enrollment: Low Income" = "Churn.Enrollment.for.Low.Income.Students",
+#                                          "Churn Rate: Low Income" = "Churn.Rate.for.Low.Income.Students",
+#                                          "Intake Rate: Low Income" = "Intake.Rate.for.Low.Income.Students",
+#                                          "Stability Enrollment: Low Income" = "Stability.Enrollment.for.Low.Income.Students",
+#                                          "Stability Rate: Low Income" = "Stability.Rate.for.Low.Income.Students"),
+#                                      selected = "Low.Income...enrolled."
+#            ), 
+#            "High Needs"= selectInput("map_level","Choose Level to map",
+#                                      choices = 
+#                                        c("Count of Students: High Needs" = "High.Needs.Students...enrolled.",
+#                                          "Percent of Students: High Needs" = "High.Needs.Students...enrolled..1",
+#                                          "Churn Enrollment: High Needs" = "Churn.Enrollment.for.High.Needs.Students",
+#                                          "Churn Rate: High Needs" = "Churn.Rate.for.High.Needs.Students",
+#                                          "Intake Rate: High Needs" = "Intake.Rate.for.High.Needs.Students",
+#                                          "Stability Enrollment: High Needs" = "Stability.Enrollment.for.High.Needs.Students",
+#                                          "Stability Rate: High Needs" = "Stability.Rate.for.High.Needs.Students"),
+#                                      selected = "High.Needs.Students...enrolled."
+#            )
+#            
+#     )
+#   })
+#   
+#   ##
+#   #
+#   # use input$map_year to choose rows
+#   # use input$map_schooltype to choose rows
+#   # use input$map_level to choose columns
+#   ##
+#   
+#   
+#   #title
+#   output$map_title <- renderText({
+#     paste(input$map_level, "in Massachusetts", input$map_schooltype, 
+#           "during the", input$map_year, "school year")
+#   })
+#   
+#   output$gvis<-renderGvis({
+#     
+#     ## filter dataframe
+#     
+#     map_df <- edu_data %>%
+#       select(1,3,4,6, which(names(edu_data)==input$map_level), 22,67:74) %>%
+#       filter(school.year==input$map_year)
+#     switch(input$map_schooltype, 
+#            "prek"= map_df <- filter(map_df, PREK==1),
+#            "kindergarten"= map_df <-filter(map_df, KIND==1),
+#            "elementary"= map_df <-filter(map_df, ELEM==1),
+#            "middle"= map_df <-filter(map_df, MIDD==1),
+#            "high" = map_df <-filter(map_df, HIGH==1))
+#     
+#   
+#     
+#    gvisGeoChart(map_df,
+#                  locationvar="LatLong", sizevar="Total.Students.Enrolled",
+#                  colorvar=input$map_level, hovervar="school.name",
+#                  options=list(region="US-MA", displayMode="Markers", 
+#                               resolution="metros",
+#                               width=750, height=600,
+#                               magnifyingGlass=T,
+#                               colorAxis="{colors:['#FFFFFF', '#0000FF']}"
+#                  ))
+#     })
+#   
   ###############################################################
   # POINT MAP in LEAFLET
   #######################################################
@@ -778,7 +837,7 @@ return(sum_df)
     # UI component and send it to the client.
     switch(input$lmap_radio,
            
-           "Race/Ethnicity" = selectInput("lmap_level","Choose Level to map",
+           "Race/Ethnicity" = selectInput("lmap_level","Choose Race/Ethnicity to map",
                                           choices = 
                                             c("African American" = "African.American",
                                               "Asian" = "Asian",
@@ -789,46 +848,31 @@ return(sum_df)
                                               "Multi-Race Non-Hispanic" = "Multi.Race.Non.Hispanic"),
                                           selected = "African.American"
            ), 
-           "Gender"= selectInput("lmap_level","Choose Level to map",
+           "Gender"= selectInput("lmap_level","Choose Gender to map",
                                  choices = 
                                    c("Female" = "Females",
                                      "Males" = "Males"),
                                  selected = "Females"
            ), 
-           "Grade Level"= 
-             if(input$lmap_schooltype %in% c("prek","kindergarten", "elementary")){
-                selectInput("lmap_level","Choose Level to map",
+           "Grade Level"= selectInput("lmap_level","Choose Grade Level to map",
                             choices = 
-                              c("Pre-Kindergarden" = "Pre.Kindergarden",
+                              c("Pre-Kindergarden" = "Pre Kindergarden",
                                 "Kindergarden" = "Kindergarden",
-                                "First Grade" = "First.Grade",
-                                "Second Grade" = "Second.Grade",
-                                "Third Grade" = "Third.Grade",
-                                "Fourth Grade" = "Fourth.Grade",
-                                "Fifth Grade" = "Fifth.Grade",
-                                "Sixth Grade" = "Sixth.Grade"),
-                            selected = "Kindergarten")
-               
-              }else if(input$lmap_schooltype=="middle"){
-                selectInput("lmap_level","Choose Level to map",
-                            choices = 
-                              c("Fifth Grade" = "Fifth.Grade",
-                                "Sixth Grade" = "Sixth.Grade",
-                                "Seventh Grade" = "Seventh.Grade",
-                                "Eighth Grade" = "Eight.Grade",
-                                "Ninth Grade" = "Ninth.Grade"),
-                            selected = "Fifth.Grade")
-              }else if(input$lmap_schooltype=="high"){
-                selectInput("lmap_level","Choose Level to map",
-                            choices = 
-                              c("Ninth Grade" = "Ninth.Grade",
-                                "Tenth Grade" = "Tenth.Grade",
-                                "Eleventh Grade" = "Eleventh.Grade",
-                                "Twelfth Grade" = "Twelfth.Grade",
-                                "Special Education Beyond 12th Grade" = "Special.Ed.Beyond.12th.Grade"),
-                            selected = "Ninth.Grade")
-              }
-             , 
+                                "First Grade" = "First Grade",
+                                "Second Grade" = "Second Grade",
+                                "Third Grade" = "Third Grade",
+                                "Fourth Grade" = "Fourth Grade",
+                                "Fifth Grade" = "Fifth Grade",
+                                "Sixth Grade" = "Sixth Grade", 
+                                "Seventh Grade" = "Seventh Grade",
+                                "Eighth Grade" = "Eighth Grade",
+                                "Ninth Grade" = "Ninth Grade",
+                                "Tenth Grade" = "Tenth Grade",
+                                "Eleventh Grade" = "Eleventh Grade",
+                                "Twelfth Grade" = "Twelfth Grade",
+                                "Special Education Beyond 12th Grade" = "Special Ed Beyond 12th Grade"),
+                            selected = "Kindergarten"
+                          ), 
            "English Language Learners"= selectInput("lmap_level","Choose Level to map",
                                                     choices = 
                                                       c("Count of Students: English Language Learners" = "English.Language.Learner...enrolled.",
@@ -879,7 +923,7 @@ return(sum_df)
   
   #title
   output$lmap_title <- renderText({
-    paste(input$lmap_level, "in Massachusetts", input$lmap_schooltype, 
+    paste(input$lmap_level, "in Massachusetts", 
           "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
   })
   
@@ -889,14 +933,9 @@ return(sum_df)
   
   map_df<-reactive({  
     map_df <- edu_data %>%
-      select(1,3,4,6, which(names(edu_data)==input$lmap_level), 22,67:74) %>%
+      select(1,3,4,6, which(names(edu_data)==input$lmap_level), 22,67,68,74) %>%
       filter(school.year==input$lmap_year)
-    switch(input$lmap_schooltype, 
-           "prek"= map_df <- filter(map_df, PREK==1),
-           "kindergarten"= map_df <-filter(map_df, KIND==1),
-           "elementary"= map_df <-filter(map_df, ELEM==1),
-           "middle"= map_df <-filter(map_df, MIDD==1),
-           "high" = map_df <-filter(map_df, HIGH==1))
+    
     colnames(map_df)[5]<-"var"
     
     
@@ -916,7 +955,7 @@ return(sum_df)
     ## Map Creation
     leaflet(width="100%", height=500) %>%
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("OpenStreetMap.BlackAndWhite") %>%
+      addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
               lng = ~lon, lat = ~lat, radius=~log(Total.Students.Enrolled), 
               color=~pal(var),
