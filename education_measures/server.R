@@ -147,7 +147,7 @@ return(sum_df)
     switch(input$sum_county,
            
            " "=selectInput("sum_muni", "Choose Municipality",
-                          choices= c(MA_municipals, " " ), selected= " "),
+                          choices= c(MA_municipals, " " ), multiple = T),
            
            "Barnstable" = selectInput("sum_muni","Choose Municipality",
                                           choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Barnstable")])) 
@@ -370,11 +370,13 @@ return(sum_df)
           
       
         
-       gvisSteppedAreaChart(finalplot_df,
+       gvisColumnChart(finalplot_df,
                      xvar="school.year",
                      yvar=names(finalplot_df)[4:ncol(finalplot_df)],
-                     options=list(isStacked='percent',
-                                  height=500
+                     
+                     options=list(isStacked=TRUE,
+                                  height=500, 
+                                  vAxis=c(0,100)
                                   ))
         })
   
