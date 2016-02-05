@@ -310,10 +310,14 @@ return(sum_df)
   
   #title
   output$plot_title <- renderText({
+    ## filter dataframe
+    validate(
+      need(input$plot_school != " ", "Please select a school")
+    )
     paste(input$plot_radio, "in ", input$plot_school)
   })
   
-  output$plot_gvis<-renderGvis({
+  r_plot_df<-reactive({
         
     sel_col_num<-c()
     df_colnames<-c()
@@ -339,11 +343,7 @@ return(sum_df)
       sel_col_num<-c(44, 56:60)
       df_colnames<-c("High Needs Enrolled", "Churn Enrollmment for High Needs Students", "Churn Rate for High Needs Students", "Intake Rate for High Needs Students", "Stability Enrollment for High Needs Students", "Stability Rate for High Needs Students")}
     
-        ## filter dataframe
-        
-    validate(
-      need(input$plot_school != " ", "Please select a school")
-    )
+    
     
         plot_df <- edu_data %>%
           select(1,3, 6, sel_col_num) %>%
@@ -352,7 +352,7 @@ return(sum_df)
           colnames(plot_df)[4:ncol(plot_df)]<-df_colnames
         
           #drop columns that have nothing in them: only important for grade level legend
-          if(input$plot_radio=="Grade Level"){
+          if(input$plot_radio %in% c("Grade Level", "Race/Ethnicity")){
           col_sums<-apply(plot_df[,4:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
           plot_df<-plot_df[,c(1,2,3,c(3+as.numeric(which(col_sums!=0))))]}
           
@@ -366,19 +366,19 @@ return(sum_df)
         #  true_plot_cols<-c("TRUE","TRUE","TRUE",as.character(!na_col))
         #  finalplot_df<-plot_df[,which(true_plot_cols==TRUE)]
         
-          finalplot_df<-plot_df[complete.cases(plot_df),]
-          
+          finalplot_df<-plot_df[complete.cases(plot_df),-c(1,2)]
+          finalplot_df
+  })
       
         
-       gvisColumnChart(finalplot_df,
-                     xvar="school.year",
-                     yvar=names(finalplot_df)[4:ncol(finalplot_df)],
-                     
-                     options=list(isStacked=TRUE,
-                                  height=500, 
-                                  vAxis=c(0,100)
-                                  ))
-        })
+    output$chart<-reactive({
+     
+      list(
+        data=googleDataTable(r_plot_df())
+        )
+      
+    })
+      
   
 #     
 #      wage_df<-emp_df()

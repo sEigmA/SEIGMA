@@ -236,8 +236,11 @@ shinyUI(fluidPage(
                  ##plot upon the selected variable and display option 
                  textOutput("plot_title"),
                  
+                 googleColumnChart("chart",
+                                width="100%", height = "500px",
+                                options=plot_options), 
                  
-                 htmlOutput("plot_gvis"), value="plot"),
+                 value="plot"),
                    
        
        
