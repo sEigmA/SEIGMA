@@ -308,14 +308,7 @@ return(sum_df)
            ))
   })
   
-  #title
-  output$plot_title <- renderText({
-    ## filter dataframe
-    validate(
-      need(input$plot_school != " ", "Please select a school")
-    )
-    paste(input$plot_radio, "in ", input$plot_school)
-  })
+  
   
   r_plot_df<-reactive({
         
@@ -366,16 +359,50 @@ return(sum_df)
         #  true_plot_cols<-c("TRUE","TRUE","TRUE",as.character(!na_col))
         #  finalplot_df<-plot_df[,which(true_plot_cols==TRUE)]
         
-          finalplot_df<-plot_df[complete.cases(plot_df),-c(1,2)]
-          finalplot_df
+          return(plot_df[complete.cases(plot_df),-c(1,2)])
   })
       
         
     output$chart<-reactive({
-     
+      #message to be displayed when no school selected
+      validate(
+        need(input$plot_school != " ", "Please select a school")
+      )
+      
+      #make dataframe non-reactive
+      r_plot_df<-r_plot_df()
+      r_plot_df$school.year<-as.numeric(r_plot_df$school.year)
+      
+      #call the plot (switch won't work because it can't do multiple actions ..?)
+      if(input$plot_radio=="Race/Ethnicity"){
+        #call the plot for race/ethnicity
+        #first edit the options from the reactive dataframe
+        raceplot_options$hAxis$ticks<-seq(min(r_plot_df$school.year, na.rm=T), 
+                                          max(r_plot_df$school.year, na.rm=T), 1)
+        raceplot_options$hAxis$viewWindow$min<-min(r_plot_df$school.year, na.rm=T)
+        raceplot_options$hAxis$viewWindow$max<-max(r_plot_df$school.year, na.rm=T)
+        
+        #now call the plot using the options defined in global
+        #and the edits provided from the reactive dataframe
+        list(
+               data=googleDataTable(r_plot_df()),
+               title=paste(input$plot_radio, "in", input$plot_school),
+               options=raceplot_options
+             )
+      } else if(input$plot_radio=="Gender"){
+        list(
+               data=googleDataTable(r_plot_df()),
+               title=paste(input$plot_radio, "in", input$plot_school),
+               options=genderplot_options
+             )
+    } else if(input$plot_radio=="Grade Level"){
       list(
-        data=googleDataTable(r_plot_df())
-        )
+               data=googleDataTable(r_plot_df()),
+               title=paste(input$plot_radio, "in", input$plot_school),
+               options=gradelevelplot_options
+             )
+    }
+      
       
     })
       

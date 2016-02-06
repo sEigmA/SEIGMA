@@ -743,21 +743,20 @@ Emp_plot_options1 <- googleLineChart("Female_pct_plot", width="100%", height="47
 #                                             )
 #                                           )
 #                                         ))
-switch(input$plot_radio,
-  
-"Race/Ethnicity" =  plot_options<-list(isStacked="percent",
+
+
+theplot <- googleColumnChart("chart",width="100%", height = "500px")
+
+raceplot_options<-list(isStacked="TRUE",
                                        # set fonts
                                        fontName = "Source Sans Pro",
                                        fontSize = font_size,
                                        title = "",
-                                       explorer = list(),
                                        ## set axis titles, ticks, fonts, and ranges
                                        hAxis = list(
                                          title = "Start of School Year",
                                          format = "####",
-                                         #  ticks = seq(2002, 2012, 2),
-                                         #  viewWindow = list(min=, max=),
-                                         textStyle = list(
+                                           textStyle = list(
                                            fontSize = 14),
                                          titleTextStyle = list(
                                            fontSize = 16,
@@ -765,8 +764,9 @@ switch(input$plot_radio,
                                            italic = FALSE)
                                        ),
                                        vAxis = list(
-                                         title = "Number of students",
+                                         title = "Percent of Students",
                                          viewWindow = list(min=0, max=100),
+                                         ticks = seq(0,100,20),
                                          textStyle = list(
                                            fontSize = font_size),
                                          titleTextStyle = list(
@@ -794,10 +794,9 @@ switch(input$plot_radio,
                                        textStyle = list(
                                        fontSize = font_size
                                        ))
-)
-,
+                       )
 
-"Gender"= plot_options<-list(isStacked="TRUE",
+genderplot_options <- list(isStacked="TRUE",
                              # set fonts
                              fontName = "Source Sans Pro",
                              fontSize = font_size,
@@ -818,6 +817,7 @@ switch(input$plot_radio,
                              vAxis = list(
                                title = "Number of students",
                                viewWindow = list(min=0, max=100),
+                               ticks = seq(0,100,20),
                                textStyle = list(
                                  fontSize = font_size),
                                titleTextStyle = list(
@@ -825,10 +825,11 @@ switch(input$plot_radio,
                                  bold = TRUE,
                                  italic = FALSE)
                              ))
-,
+
+
 
        
-"Grade Level" = plot_options<-list(isStacked="percent",
+gradelevelplot_options <- list(isStacked="percent",
                                    # set fonts
                                   fontName = "Source Sans Pro",
                                   fontSize = font_size,
@@ -848,6 +849,8 @@ switch(input$plot_radio,
                                   ),
                                   vAxis = list(
                                   title = "Number of students",
+                                  ticks = seq(0,1,0.2),
+                                  
                                  #viewWindow = list(min=0, max=100),
                                   textStyle = list(
                                   fontSize = font_size),
@@ -856,4 +859,3 @@ switch(input$plot_radio,
                                   bold = TRUE,
                                   italic = FALSE)
                                   ))
-)

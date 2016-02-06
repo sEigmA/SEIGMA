@@ -160,7 +160,7 @@ shinyUI(fluidPage(
                     selectInput("plot_county", "Select County", 
                                 choices = c(MA_county, " "),
                                 ## Multiple allows for multi-county selection
-                                multiple=FALSE, selected = " ")
+                                multiple=FALSE)
                     
                     ,
                                 uiOutput("plot_schoolui"),
@@ -234,11 +234,8 @@ shinyUI(fluidPage(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ##plot upon the selected variable and display option 
-                 textOutput("plot_title"),
-                 
-                 googleColumnChart("chart",
-                                width="100%", height = "500px",
-                                options=plot_options), 
+                
+                 theplot,
                  
                  value="plot"),
                    
