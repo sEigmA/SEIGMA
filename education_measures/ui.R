@@ -73,20 +73,8 @@ shinyUI(fluidPage(
                  ,
                  uiOutput("sum_muniui"),
                  
-#                    selectInput("sum_muni", "Select Municipality", 
-#                                  choices = MA_municipals,
-#                                  ## Multiple allows for multi-county selection
-#                                  multiple=TRUE)
-#                           
-#                    ,
-                 
-#                  radioButtons("school_type", "School Type",
-#                               c("Pre-K" = "Pre-K", "Kindergarten" = "Kindergarten",
-#                                 "Elementary" = "Elementary","Middle School" ="Middle","High School" ="High School"),
-#                               selected="High School"
-#                   ),
 
-                radioButtons("sum_radio", "Variables",
+                 radioButtons("sum_radio", "Variables",
                             c("Race/Ethnicity"="Race/Ethnicity", 
                               "Gender"="Gender", "Grade Level"="Grade Level",
                               "English Language Learners"="English Language Learners",
@@ -154,7 +142,7 @@ shinyUI(fluidPage(
          ,
                  
                   ## in plot, allow for municipal selection
-                  conditionalPanel(
+        conditionalPanel(
                     condition="input.tabs == 'plot'",
                     ## Select input = List
                     selectInput("plot_county", "Select County", 
@@ -172,19 +160,13 @@ shinyUI(fluidPage(
                                    "Students with Disabilities"="Students with Disabilities",
                                    "Low Income"="Low Income", "High Needs"="High Needs"),
                                  selected="Race/Ethnicity"
-                    )
-                    
-                  ),
-                    
-#                     radioButtons("plot_display_radio", "Display Options",
-#                                  c("Actual Values"="Actual Values", "Change Since 2003"="Change_Pct"),
-#                                  selected="Actual Values")
-
-#                   selectInput("plot_school", "Select School", 
-#                     choices = all_schools,
-#                     ## Multiple allows for multi-county selection
-#                     multiple=FALSE)
-#                     ),
+                    ),
+                    conditionalPanel(condition='input$plot_radio %in% 
+                                     c("English Language Learners",
+                                     "Students with Disabilities","Low Income", "High Needs")',
+                                     uiOutput("plot_varlevels")
+                                     )
+        ),
 
                   tags$hr(),
     
