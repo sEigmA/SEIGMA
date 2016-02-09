@@ -308,17 +308,58 @@ return(sum_df)
            ))
   })
   
-  
+  output$plot_varlevels <-renderUI({
+    
+    # Depending on input$input_type, we'll generate a different
+    # UI component and send it to the client.
+    
+    
+    switch(input$plot_radio,
+           
+           "English Language Learners"=selectInput("plot_level", "Select Measure",
+                                                   c("First Language Not English Enrolled",
+                                                     "English Language Learner Enrolled", 
+                                                     "Churn Enrollment for English Language Learning Students", 
+                                                     "Churn Rate for English Language Learning Students", 
+                                                     "Intake Rate for English Language Learning Students", 
+                                                     "Stability Enrollment for English Language Learning Students", 
+                                                     "Stability Rate for English Language Learning Students")),
+           
+           'Students with Disabilities'=selectInput("plot_level", "Select Measure",
+                                                    c(  "Students with Disabilities Enrolled",
+                                                        "Churn Enrollment for Students With Disabilites", 
+                                                        "Churn Rate for Students With Disabilites", 
+                                                        "Intake Rate for Students With Disabilites", 
+                                                        "Stability Enrollment for Students with Disabilities", 
+                                                        "Stability Rate for Students with Disabilities")),
+           
+           'Low Income'=selectInput("plot_level", "Select Measure",
+                                     c(  "Low Income Enrolled",
+                                         "Churn Enrollment for Low Income Students", 
+                                         "Churn Rate for Low Income Students", 
+                                         "Intake Rate for Low Income Students", 
+                                         "Stability Enrollment for Low Income Students", 
+                                         "Stability Rate for Low Income Students")) ,
+           
+           'High Needs'=selectInput("plot_level", "Select Measure",
+                                    c("High Needs Enrolled", 
+                                      "Churn Enrollmment for High Needs Students", 
+                                      "Churn Rate for High Needs Students", 
+                                      "Intake Rate for High Needs Students", 
+                                      "Stability Enrollment for High Needs Students", 
+                                      "Stability Rate for High Needs Students"))
+           ) 
+  })
   
   r_plot_df<-reactive({
         
     sel_col_num<-c()
     df_colnames<-c()
     if (input$plot_radio=="Race/Ethnicity") {
-      sel_col_num<-c(23:27, 30:31)
+      sel_col_num<-c(77:83)
       df_colnames<-c("African American", "Asian", "Hispanic", "White", "Native American", "Native Hawaiian Pacific Islander", "Multi-race non-Hispanic")
     } else if (input$plot_radio=="Gender") {
-      sel_col_num<-c(28:29)
+      sel_col_num<-c(75:76)
       df_colnames<-c( "Males", "Females")
     } else if (input$plot_radio=="Grade Level") {
       sel_col_num<-c(7:21)
@@ -349,15 +390,11 @@ return(sum_df)
           col_sums<-apply(plot_df[,4:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
           plot_df<-plot_df[,c(1,2,3,c(3+as.numeric(which(col_sums!=0))))]}
           
-        # NA:s in race data present problem:
-          # 3 solutions, pick one: -exclude columns (then some years dont add to 100%)
-          #                        -exclude rows (lose whole year's data, possibly discontinuous)
-          #                        -fill NA with 0
-        
+          else if(input$plot_radio %in% c('English Language Learners','Students with Disabilities',
+                                     'Low Income', 'High Needs')){
+          plot_df<-plot_df[,c(1,2,3,which(names(plot_df)==input$plot_level))]
+          }
           
-        #  na_col<-apply(plot_df[4:ncol(plot_df)], 2, FUN=function(x){any(is.na(x))})
-        #  true_plot_cols<-c("TRUE","TRUE","TRUE",as.character(!na_col))
-        #  finalplot_df<-plot_df[,which(true_plot_cols==TRUE)]
         
           return(plot_df[complete.cases(plot_df),-c(1,2)])
   })
@@ -401,6 +438,12 @@ return(sum_df)
                title=paste(input$plot_radio, "in", input$plot_school),
                options=gradelevelplot_options
              )
+    } else if(input$plot_radio=="High Needs"){
+      list(
+        data=googleDataTable(r_plot_df()),
+        title=paste(input$plot_radio, "in", input$plot_school)
+#        options=gradelevelplot_options
+      )
     }
       
       
