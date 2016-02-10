@@ -159,14 +159,46 @@ shinyUI(fluidPage(
                                    "English Language Learners"="English Language Learners",
                                    "Students with Disabilities"="Students with Disabilities",
                                    "Low Income"="Low Income", "High Needs"="High Needs"),
-                                 selected="Race/Ethnicity"
+                                 selected="Race/Ethnicity")
                     ),
-                    conditionalPanel(condition='input$plot_radio %in% 
-                                     c("English Language Learners",
-                                     "Students with Disabilities","Low Income", "High Needs")',
-                                     uiOutput("plot_varlevels")
+                    
+                    #i think renderui is causing problems
+                    #
+                    conditionalPanel(
+                      condition="input.tabs=='plot' && input.plot_radio =='English Language Learners'",
+                                     selectInput("plot_level", "Select Measure",
+                                      c("English Language Learners Enrolled",
+                                      "First Language Not English Enrolled",
+                                      "Mobility Enrollment",
+                                      "Mobility Rate"),
+                                      selected="English Language Learners Enrolled")),
+                    
+                    conditionalPanel(
+                      condition="input.tabs=='plot' && input.plot_radio =='Students with Disabilities'",
+                                     selectInput("plot_level", "Select Measure",
+                                       c(  "Students with Disabilities Enrolled",
+                                       "Mobility Enrollment","Mobility Rate"),
+                                        selected="Students with Disabilities Enrolled")
+                                     ),
+                                     
+                    conditionalPanel(
+                      condition="input.tabs=='plot' && input.plot_radio =='Low Income'",
+                                     selectInput("plot_level", "Select Measure",
+                                                              c(  "Low Income Enrolled",
+                                                                  "Mobility Enrollment",
+                                                                  "Mobility Rate"),
+                                                              selected="Low Income Enrolled")
+                                     ),
+                                     
+                    conditionalPanel(
+                      condition="input.tabs=='plot' && input.plot_radio =='High Needs'",
+                                     selectInput("plot_level", "Select Measure",
+                                                 c("High Needs Enrolled", 
+                                                   "Mobility Enrollment",
+                                                   "Mobility Rate"),
+                                                 selected="High Needs Enrolled")
                                      )
-        ),
+        ,
 
                   tags$hr(),
     
@@ -217,7 +249,7 @@ shinyUI(fluidPage(
         tabPanel("Plot",
                  ##plot upon the selected variable and display option 
                 
-                 theplot,
+                 thebarplot,
                  
                  value="plot"),
                    

@@ -745,7 +745,9 @@ Emp_plot_options1 <- googleLineChart("Female_pct_plot", width="100%", height="47
 #                                         ))
 
 
-theplot <- googleColumnChart("chart",width="100%", height = "500px")
+thebarplot <- googleColumnChart("chart",width="100%", height = "500px")
+
+thelineplot <- googleLineChart("chart",width="100%", height = "500px")
 
 raceplot_options<-list(isStacked="percent",
                                        # set fonts
@@ -861,3 +863,100 @@ gradelevelplot_options <- list(isStacked="percent",
                                   bold = TRUE,
                                   italic = FALSE)
                                   ))
+
+mobenrollmentplot_options  <- list(isStacked="TRUE",
+                           # set fonts
+                           fontName = "Source Sans Pro",
+                           fontSize = font_size,
+                           title = "",
+                           ## set axis titles, ticks, fonts, and ranges
+                           hAxis = list(
+                             title = "Start of School Year",
+                             format = "####",
+                             #  ticks = seq(2002, 2012, 2),
+                             #  viewWindow = list(min=, max=),
+                             textStyle = list(
+                               fontSize = 14),
+                             titleTextStyle = list(
+                               fontSize = 16,
+                               bold = TRUE,
+                               italic = FALSE)
+                           ),
+                           vAxis = list(
+                             title = "Number of Students",
+                           #  ticks = seq(0,1,0.2),
+                             
+                             #viewWindow = list(min=0, max=100),
+                             textStyle = list(
+                               fontSize = font_size),
+                             titleTextStyle = list(
+                               fontSize = font_size+2,
+                               bold = TRUE,
+                               italic = FALSE)
+                           ))
+
+
+mobrateplot_options <- list(isStacked="TRUE",
+                           # set fonts
+                           fontName = "Source Sans Pro",
+                           fontSize = font_size,
+                           title = "",
+                           ## set axis titles, ticks, fonts, and ranges
+                           hAxis = list(
+                             title = "Start of School Year",
+                             format = "####",
+                             #  ticks = seq(2002, 2012, 2),
+                             #  viewWindow = list(min=, max=),
+                             textStyle = list(
+                               fontSize = 14),
+                             titleTextStyle = list(
+                               fontSize = 16,
+                               bold = TRUE,
+                               italic = FALSE)
+                           ),
+                           vAxis = list(
+                             title = "Mobility Rate",
+                           #  ticks = seq(0,1,0.2),
+                             
+                             #viewWindow = list(min=0, max=100),
+                             textStyle = list(
+                               fontSize = font_size),
+                             titleTextStyle = list(
+                               fontSize = font_size+2,
+                               bold = TRUE,
+                               italic = FALSE)
+                           ))
+
+
+enrolledplot_options  <- list(isStacked="percent",
+                             # set fonts
+                             fontName = "Source Sans Pro",
+                             fontSize = font_size,
+                             title = "",
+                             ## set axis titles, ticks, fonts, and ranges
+                             hAxis = list(
+                               title = "Start of School Year",
+                               format = "####",
+                               #  ticks = seq(2002, 2012, 2),
+                               #  viewWindow = list(min=, max=),
+                               textStyle = list(
+                                 fontSize = 14),
+                               titleTextStyle = list(
+                                 fontSize = 16,
+                                 bold = TRUE,
+                                 italic = FALSE)
+                             ),
+                             vAxis = list(
+                               title = "Number of students",
+                               ticks = seq(0,1,0.2),
+                               
+                               #viewWindow = list(min=0, max=100),
+                               textStyle = list(
+                                 fontSize = font_size),
+                               titleTextStyle = list(
+                                 fontSize = font_size+2,
+                                 bold = TRUE,
+                                 italic = FALSE)
+                             ))
+
+  
