@@ -66,37 +66,6 @@ else if(input$sum_county==" "){
     
 sum_df <- df %>% filter(County %in% county & Municipal %in% munis)
     
-    ##select row according input$school_type
-#     grades<-c()
-#     if (input$school_type=="Pre-K") {
-#       grades<-c(7:14)
-#       grade_level_names<-c("Pre Kindergarten", "Kindergarten" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
-#       sum_df <- df %>%
-#         filter(Municipal %in% munis, PREK==1)
-#         } else 
-#     if (input$school_type=="Kindergarten") {
-#       grades<-c(7:14)
-#       grade_level_names<-c("Pre Kindergarten", "Kindergarten" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
-#       sum_df <- df %>%
-#         filter(Municipal %in% munis,  KIND==1)
-#         } else 
-#     if (input$school_type=="Elementary") {
-#       grades<-c(7:14)
-#       grade_level_names<-c("Pre Kindergarten", "Kindergarten" ,"First Grade" ,"Second Grade" ,"Third Grade" ,"Fourth Grade","Fifth Grade" , "Sixth Grade")
-#       sum_df <- df %>%
-#         filter(Municipal %in% munis, ELEM==1) 
-#         } else 
-#     if (input$school_type=="Middle") {
-#       grades<-c(13:17)
-#       grade_level_names<-c("Fifth Grade" , "Sixth Grade","Seventh Grade", "Eighth Grade", "Ninth Grade")
-#       sum_df <- df %>%
-#          filter(Municipal %in% munis, MIDD==1)
-#      } else {
-#       grades<-c(17:21)
-#       grade_level_names<-c("Ninth Grade", "Tenth Grade","Eleventh Grade" ,"Twelfth Grade","Special Ed Beyond 12th Grade")
-#        sum_df <- df %>%
-#          filter(Municipal %in% munis, HIGH==1)}
-   
 
     ##select columns according input$radio
     sel_col_num<-c()
@@ -218,15 +187,10 @@ return(sum_df)
                                       multiple = T
            ))
   })
-  ##end of summary
-#######THIS IS WHERE WE LEFT OFF 12/27/16
-# # #plot #####################################################
-#
-#   if(input$plot_county!=" "){
-#     county<-input$plot_county}
-#   else if(input$plot_county==" "){
-#     county<-MA_county}
+
   
+    ##end of summary
+
   output$plot_schoolui <-renderUI({
     
     # Depending on input$input_type, we'll generate a different
@@ -308,27 +272,26 @@ return(sum_df)
            ))
   })
   
-  #title
-  output$plot_title <- renderText({
-    paste(input$plot_radio, "in ", input$plot_school)
-  })
-  
-  output$plot_gvis<-renderGvis({
+           
+           
+           
+          
+  r_plot_df<-reactive({
         
     sel_col_num<-c()
     df_colnames<-c()
     if (input$plot_radio=="Race/Ethnicity") {
-      sel_col_num<-c(23:27, 30:31)
+      sel_col_num<-c(77:83)
       df_colnames<-c("African American", "Asian", "Hispanic", "White", "Native American", "Native Hawaiian Pacific Islander", "Multi-race non-Hispanic")
     } else if (input$plot_radio=="Gender") {
-      sel_col_num<-c(28:29)
+      sel_col_num<-c(75:76)
       df_colnames<-c( "Males", "Females")
     } else if (input$plot_radio=="Grade Level") {
       sel_col_num<-c(7:21)
       df_colnames<-names(edu_data)[7:21]
     }  else if (input$plot_radio=="English Language Learners") {
       sel_col_num<-c(32, 34, 51:55)
-      df_colnames<-c("First Language Not English Enrolled", "English Language Learner Enrolled", "Churn Enrollment for English Language Learning Students", "Churn Rate for English Language Learning Students", "Intake Rate for English Language Learning Students", "Stability Enrollment for English Language Learning Students", "Stability Rate for English Language Learning Students")
+      df_colnames<-c("First Language Not English Enrolled", "English Language Learners Enrolled", "Churn Enrollment for English Language Learning Students", "Churn Rate for English Language Learning Students", "Intake Rate for English Language Learning Students", "Stability Enrollment for English Language Learning Students", "Stability Rate for English Language Learning Students")
     } else if (input$plot_radio=="Students with Disabilities") {
       sel_col_num<-c(36, 46:50)
       df_colnames<-c(  "Students with Disabilities Enrolled", "Churn Enrollment for Students With Disabilites", "Churn Rate for Students With Disabilites", "Intake Rate for Students With Disabilites", "Stability Enrollment for Students with Disabilities", "Stability Rate for Students with Disabilities")
@@ -339,46 +302,107 @@ return(sum_df)
       sel_col_num<-c(44, 56:60)
       df_colnames<-c("High Needs Enrolled", "Churn Enrollmment for High Needs Students", "Churn Rate for High Needs Students", "Intake Rate for High Needs Students", "Stability Enrollment for High Needs Students", "Stability Rate for High Needs Students")}
     
-        ## filter dataframe
-        
-    validate(
-      need(input$plot_school != " ", "Please select a school")
-    )
+    
     
         plot_df <- edu_data %>%
-          select(1,3, 6, sel_col_num) %>%
+          select(1,3, 6, 22, sel_col_num) %>%
           filter(school.name==input$plot_school) %>%
           arrange(school.year)
-          colnames(plot_df)[4:ncol(plot_df)]<-df_colnames
+          colnames(plot_df)[4:ncol(plot_df)]<-c("Total Students Enrolled", df_colnames)
         
-          #drop columns that have nothing in them: only important for grade level legend
-          if(input$plot_radio=="Grade Level"){
-          col_sums<-apply(plot_df[,4:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
-          plot_df<-plot_df[,c(1,2,3,c(3+as.numeric(which(col_sums!=0))))]}
+          #drop columns that have nothing in them: only important for grade level, gender and race legend
+          if(input$plot_radio %in% c("Grade Level", "Race/Ethnicity", "Gender")){
+          col_sums<-apply(plot_df[,5:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
+          plot_df<-plot_df[,c(1,2,3,c(4+as.numeric(which(col_sums!=0))))]}
           
-        # NA:s in race data present problem:
-          # 3 solutions, pick one: -exclude columns (then some years dont add to 100%)
-          #                        -exclude rows (lose whole year's data, possibly discontinuous)
-          #                        -fill NA with 0
+          #otherwise keep all selected columns
+          #if any mobilitygroup is chosen, refine columns to get 
+          #-students enrolled (plus total-subgroup) [stacked bar]
+          #-enrollment [stacked bar]
+          #-rates [3 lines]
+          else if(!input$plot_radio %in% c("Grade Level", "Race/Ethnicity", "Gender")){
+          if(grepl(x=input$plot_level, pattern="Enrolled")==T){
+            plot_df<-plot_df[,c(1:4,which(names(plot_df)==input$plot_level))]
+            plot_df[,ncol(plot_df)-1]<-plot_df[,ncol(plot_df)-1]-plot_df[,ncol(plot_df)]
+            names(plot_df)[ncol(plot_df)-1]<-"Others"
+          }
+          else if(input$plot_level=="Mobility Enrollment"){
+            plot_df<-plot_df[,c(1:3,grep(x=names(plot_df), pattern="Enrollment"))]
+            
+          }
+          else if(input$plot_level=="Mobility Rate"){
+            plot_df<-plot_df[,c(1:3,grep(x=names(plot_df), pattern="Rate"))]
+          }
+          }
+     
         
-          
-        #  na_col<-apply(plot_df[4:ncol(plot_df)], 2, FUN=function(x){any(is.na(x))})
-        #  true_plot_cols<-c("TRUE","TRUE","TRUE",as.character(!na_col))
-        #  finalplot_df<-plot_df[,which(true_plot_cols==TRUE)]
-        
-          finalplot_df<-plot_df[complete.cases(plot_df),]
-          
+          return(plot_df[complete.cases(plot_df),-c(1,2)])
+  })
       
         
-       gvisColumnChart(finalplot_df,
-                     xvar="school.year",
-                     yvar=names(finalplot_df)[4:ncol(finalplot_df)],
-                     
-                     options=list(isStacked=TRUE,
-                                  height=500, 
-                                  vAxis=c(0,100)
-                                  ))
-        })
+    output$chart<-reactive({
+      #message to be displayed when no school selected
+      
+      validate(
+        need(input$plot_school != " ", "Please select a school")
+      )
+     
+      
+      #make dataframe non-reactive
+      r_plot_df<-r_plot_df()
+      r_plot_df$school.year<-as.numeric(r_plot_df$school.year)
+      
+      #call the plot (switch won't work because it can't do multiple actions ..?)
+      if(input$plot_radio=="Race/Ethnicity"){
+        #call the plot for race/ethnicity
+        #first edit the options from the reactive dataframe
+        raceplot_options$hAxis$ticks<-seq(min(r_plot_df$school.year, na.rm=T), 
+                                          max(r_plot_df$school.year, na.rm=T), 1)
+        raceplot_options$hAxis$viewWindow$min<-min(r_plot_df$school.year, na.rm=T)
+        raceplot_options$hAxis$viewWindow$max<-max(r_plot_df$school.year, na.rm=T)
+        
+        #now call the plot using the options defined in global
+        #and the edits provided from the reactive dataframe
+        list(
+               data=googleDataTable(r_plot_df()),
+               title=paste(input$plot_radio, "in", input$plot_school),
+               options=raceplot_options
+             )
+      } else if(input$plot_radio=="Gender"){
+        list(
+               data=googleDataTable(r_plot_df()),
+               title=paste(input$plot_radio, "in", input$plot_school),
+               options=genderplot_options
+             )
+    } else if(input$plot_radio=="Grade Level"){
+      list(
+               data=googleDataTable(r_plot_df()),
+               title=paste(input$plot_radio, "in", input$plot_school),
+               options=gradelevelplot_options
+             )
+    } else if(input$plot_level=="Mobility Enrollment"){
+      list(
+        data=googleDataTable(r_plot_df()),
+        title=paste(input$plot_level, "of", input$plot_radio, "in", input$plot_school),
+        options=mobenrollmentplot_options
+        )
+    } else if(input$plot_level=="Mobility Rate"){
+      list(
+        data=googleDataTable(r_plot_df()),
+        title=paste(input$plot_level, "of", input$plot_radio, "in", input$plot_school),
+        options=mobrateplot_options
+        )
+    } else (
+      list(
+        data=googleDataTable(r_plot_df()),
+        title=paste(input$plot_level, "in", input$plot_school),
+        options=enrolledplot_options
+      )
+    )
+      
+      
+    })
+      
   
 #     
 #      wage_df<-emp_df()

@@ -351,7 +351,7 @@ info_side_text <- conditionalPanel(
 #                     tags$br(),
 #                     strong("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf", align="center"))
 # 
-# font_size <- 14
+ font_size <- 14
 # 
 Emp_plot_options1 <- googleLineChart("Female_pct_plot", width="100%", height="475px", options = list(
                                     
@@ -745,16 +745,218 @@ Emp_plot_options1 <- googleLineChart("Female_pct_plot", width="100%", height="47
 #                                         ))
 
 
-#############
-#   PLOT
-#############
-# 
-# switch(input$plot_radio,
-#        
-#        "Race/Ethnicity"= plot_cols<-c("African.American", "Asian", 
-#                                       "Hispanic", "White", "Native.American", 
-#                                       "Native.Hawaiian.Pacific.Islander",
-#                                       "Multi.Race.Non.Hispanic"),
-#        "Gender"=plot_cols
-#        
-#        )
+thebarplot <- googleColumnChart("chart",width="100%", height = "500px")
+
+thelineplot <- googleLineChart("chart",width="100%", height = "500px")
+
+raceplot_options<-list(isStacked="percent",
+                                       # set fonts
+                                       fontName = "Source Sans Pro",
+                                       fontSize = font_size,
+                                       title = "",
+                                       ## set axis titles, ticks, fonts, and ranges
+                                       hAxis = list(
+                                         title = "Start of School Year",
+                                         format = "####",
+                                           textStyle = list(
+                                           fontSize = 14),
+                                         titleTextStyle = list(
+                                           fontSize = 16,
+                                           bold = TRUE,
+                                           italic = FALSE)
+                                       ),
+                       vAxis = list(
+                         title = "Number of students",
+                         ticks = seq(0,1,0.2),
+                         
+                         #viewWindow = list(min=0, max=100),
+                         textStyle = list(
+                           fontSize = font_size),
+                         titleTextStyle = list(
+                           fontSize = font_size+2,
+                           bold = TRUE,
+                           italic = FALSE)
+                       ),
+                                       
+                                       ## set legend fonts
+                                       legend = list(
+                                       textStyle = list(
+                                       fontSize=font_size),
+                                       position = "right"),
+                                       
+                                       ## set chart area padding
+                                       chartArea = list(
+                                       top = 50, left = 100,
+                                       height = "75%", width = "65%"
+                                       ),
+                                       
+                                                                                  
+                                       ## set tooltip font size
+                                       ## Hover text font stuff
+                                       tooltip = list(
+                                       textStyle = list(
+                                       fontSize = font_size
+                                       ))
+                       )
+
+genderplot_options <- list(isStacked="percent",
+                             # set fonts
+                             fontName = "Source Sans Pro",
+                             fontSize = font_size,
+                             title = "",
+                             ## set axis titles, ticks, fonts, and ranges
+                             hAxis = list(
+                               title = "Start of School Year",
+                               format = "####",
+                               #  ticks = seq(2002, 2012, 2),
+                               #  viewWindow = list(min=, max=),
+                               textStyle = list(
+                                 fontSize = 14),
+                               titleTextStyle = list(
+                                 fontSize = 16,
+                                 bold = TRUE,
+                                 italic = FALSE)
+                             ),
+                           vAxis = list(
+                             title = "Number of students",
+                             ticks = seq(0,1,0.2),
+                             
+                             #viewWindow = list(min=0, max=100),
+                             textStyle = list(
+                               fontSize = font_size),
+                             titleTextStyle = list(
+                               fontSize = font_size+2,
+                               bold = TRUE,
+                               italic = FALSE)
+                           ))
+
+
+
+       
+gradelevelplot_options <- list(isStacked="percent",
+                                   # set fonts
+                                  fontName = "Source Sans Pro",
+                                  fontSize = font_size,
+                                  title = "",
+                                  ## set axis titles, ticks, fonts, and ranges
+                                  hAxis = list(
+                                  title = "Start of School Year",
+                                  format = "####",
+                                #  ticks = seq(2002, 2012, 2),
+                                #  viewWindow = list(min=, max=),
+                                  textStyle = list(
+                                  fontSize = 14),
+                                  titleTextStyle = list(
+                                  fontSize = 16,
+                                  bold = TRUE,
+                                  italic = FALSE)
+                                  ),
+                                  vAxis = list(
+                                  title = "Number of students",
+                                  ticks = seq(0,1,0.2),
+                                  
+                                 #viewWindow = list(min=0, max=100),
+                                  textStyle = list(
+                                  fontSize = font_size),
+                                  titleTextStyle = list(
+                                  fontSize = font_size+2,
+                                  bold = TRUE,
+                                  italic = FALSE)
+                                  ))
+
+mobenrollmentplot_options  <- list(isStacked="TRUE",
+                           # set fonts
+                           fontName = "Source Sans Pro",
+                           fontSize = font_size,
+                           title = "",
+                           ## set axis titles, ticks, fonts, and ranges
+                           hAxis = list(
+                             title = "Start of School Year",
+                             format = "####",
+                             #  ticks = seq(2002, 2012, 2),
+                             #  viewWindow = list(min=, max=),
+                             textStyle = list(
+                               fontSize = 14),
+                             titleTextStyle = list(
+                               fontSize = 16,
+                               bold = TRUE,
+                               italic = FALSE)
+                           ),
+                           vAxis = list(
+                             title = "Number of Students",
+                           #  ticks = seq(0,1,0.2),
+                             
+                             #viewWindow = list(min=0, max=100),
+                             textStyle = list(
+                               fontSize = font_size),
+                             titleTextStyle = list(
+                               fontSize = font_size+2,
+                               bold = TRUE,
+                               italic = FALSE)
+                           ))
+
+
+mobrateplot_options <- list(isStacked="TRUE",
+                           # set fonts
+                           fontName = "Source Sans Pro",
+                           fontSize = font_size,
+                           title = "",
+                           ## set axis titles, ticks, fonts, and ranges
+                           hAxis = list(
+                             title = "Start of School Year",
+                             format = "####",
+                             #  ticks = seq(2002, 2012, 2),
+                             #  viewWindow = list(min=, max=),
+                             textStyle = list(
+                               fontSize = 14),
+                             titleTextStyle = list(
+                               fontSize = 16,
+                               bold = TRUE,
+                               italic = FALSE)
+                           ),
+                           vAxis = list(
+                             title = "Mobility Rate",
+                           #  ticks = seq(0,1,0.2),
+                             
+                             #viewWindow = list(min=0, max=100),
+                             textStyle = list(
+                               fontSize = font_size),
+                             titleTextStyle = list(
+                               fontSize = font_size+2,
+                               bold = TRUE,
+                               italic = FALSE)
+                           ))
+
+
+enrolledplot_options  <- list(isStacked="percent",
+                             # set fonts
+                             fontName = "Source Sans Pro",
+                             fontSize = font_size,
+                             title = "",
+                             ## set axis titles, ticks, fonts, and ranges
+                             hAxis = list(
+                               title = "Start of School Year",
+                               format = "####",
+                               #  ticks = seq(2002, 2012, 2),
+                               #  viewWindow = list(min=, max=),
+                               textStyle = list(
+                                 fontSize = 14),
+                               titleTextStyle = list(
+                                 fontSize = 16,
+                                 bold = TRUE,
+                                 italic = FALSE)
+                             ),
+                             vAxis = list(
+                               title = "Number of students",
+                               ticks = seq(0,1,0.2),
+                               
+                               #viewWindow = list(min=0, max=100),
+                               textStyle = list(
+                                 fontSize = font_size),
+                               titleTextStyle = list(
+                                 fontSize = font_size+2,
+                                 bold = TRUE,
+                                 italic = FALSE)
+                             ))
+
+  

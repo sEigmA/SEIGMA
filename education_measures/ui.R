@@ -73,20 +73,8 @@ shinyUI(fluidPage(
                  ,
                  uiOutput("sum_muniui"),
                  
-#                    selectInput("sum_muni", "Select Municipality", 
-#                                  choices = MA_municipals,
-#                                  ## Multiple allows for multi-county selection
-#                                  multiple=TRUE)
-#                           
-#                    ,
-                 
-#                  radioButtons("school_type", "School Type",
-#                               c("Pre-K" = "Pre-K", "Kindergarten" = "Kindergarten",
-#                                 "Elementary" = "Elementary","Middle School" ="Middle","High School" ="High School"),
-#                               selected="High School"
-#                   ),
 
-                radioButtons("sum_radio", "Variables",
+                 radioButtons("sum_radio", "Variables",
                             c("Race/Ethnicity"="Race/Ethnicity", 
                               "Gender"="Gender", "Grade Level"="Grade Level",
                               "English Language Learners"="English Language Learners",
@@ -154,13 +142,13 @@ shinyUI(fluidPage(
          ,
                  
                   ## in plot, allow for municipal selection
-                  conditionalPanel(
+        conditionalPanel(
                     condition="input.tabs == 'plot'",
                     ## Select input = List
                     selectInput("plot_county", "Select County", 
                                 choices = c(MA_county, " "),
                                 ## Multiple allows for multi-county selection
-                                multiple=FALSE, selected = " ")
+                                multiple=FALSE)
                     
                     ,
                                 uiOutput("plot_schoolui"),
@@ -171,20 +159,46 @@ shinyUI(fluidPage(
                                    "English Language Learners"="English Language Learners",
                                    "Students with Disabilities"="Students with Disabilities",
                                    "Low Income"="Low Income", "High Needs"="High Needs"),
-                                 selected="Race/Ethnicity"
-                    )
+                                 selected="Race/Ethnicity")
+                    ),
                     
-                  ),
+                    #i think renderui is causing problems
+                    #
+                    conditionalPanel(
+                      condition="input.tabs=='plot' && input.plot_radio =='English Language Learners'",
+                                     selectInput("plot_level", "Select Measure",
+                                      c("English Language Learners Enrolled",
+                                      "First Language Not English Enrolled",
+                                      "Mobility Enrollment",
+                                      "Mobility Rate"),
+                                      selected="English Language Learners Enrolled")),
                     
-#                     radioButtons("plot_display_radio", "Display Options",
-#                                  c("Actual Values"="Actual Values", "Change Since 2003"="Change_Pct"),
-#                                  selected="Actual Values")
-
-#                   selectInput("plot_school", "Select School", 
-#                     choices = all_schools,
-#                     ## Multiple allows for multi-county selection
-#                     multiple=FALSE)
-#                     ),
+                    conditionalPanel(
+                      condition="input.tabs=='plot' && input.plot_radio =='Students with Disabilities'",
+                                     selectInput("plot_level", "Select Measure",
+                                       c(  "Students with Disabilities Enrolled",
+                                       "Mobility Enrollment","Mobility Rate"),
+                                        selected="Students with Disabilities Enrolled")
+                                     ),
+                                     
+                    conditionalPanel(
+                      condition="input.tabs=='plot' && input.plot_radio =='Low Income'",
+                                     selectInput("plot_level", "Select Measure",
+                                                              c(  "Low Income Enrolled",
+                                                                  "Mobility Enrollment",
+                                                                  "Mobility Rate"),
+                                                              selected="Low Income Enrolled")
+                                     ),
+                                     
+                    conditionalPanel(
+                      condition="input.tabs=='plot' && input.plot_radio =='High Needs'",
+                                     selectInput("plot_level", "Select Measure",
+                                                 c("High Needs Enrolled", 
+                                                   "Mobility Enrollment",
+                                                   "Mobility Rate"),
+                                                 selected="High Needs Enrolled")
+                                     )
+        ,
 
                   tags$hr(),
     
@@ -234,10 +248,10 @@ shinyUI(fluidPage(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ##plot upon the selected variable and display option 
-                 textOutput("plot_title"),
+                
+                 thebarplot,
                  
-                 
-                 htmlOutput("plot_gvis"), value="plot"),
+                 value="plot"),
                    
        
        
