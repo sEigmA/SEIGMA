@@ -78,3 +78,11 @@ write.csv(tax, file="PropertyTax/taxdata.csv",row.names=FALSE)
 year_2003<-tax[which(tax$F_year==2003),]
 tax$Total_Levy_Pct_Change<-round((tax$Inflation_Adjusted_Total_Levy/year_2003$Inflation_Adjusted_Total_Levy[match(tax$Municipal,year_2003$Municipal)]-1)*100,1)
 write.csv(tax, file="PropertyTax/taxdata2.csv",row.names=FALSE)
+##put the label as x million
+tax$Total_Levy_Million<-round(tax$Inflation_Adjusted_Total_Levy/1000000, 2)
+tax$Residential_Million<-round(tax$Inflation_Adjusted_Residential/1000000, 2)
+tax$Open_Space_Million<-round(tax$Inflation_Adjusted_Open_Space/1000000, 2)
+tax$Commercial_Million<-round(tax$Inflation_Adjusted_Commercial/1000000, 2)
+tax$Industrial_Million<-round(tax$Inflation_Adjusted_Industrial/1000000, 2)
+tax$Personal_Property_Million<-round(tax$Inflation_Adjusted_Personal_Property/1000000, 2)
+write.csv(tax, file="PropertyTax/taxdata2.csv",row.names=FALSE)

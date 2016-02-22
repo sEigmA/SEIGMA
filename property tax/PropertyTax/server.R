@@ -46,7 +46,7 @@ shinyServer(function(input, output, session){
     sum_df <- df %>%
       filter(Municipal %in% munis) %>%
       select(Municipal, Year, Inflation_Adjusted_Total_Levy, Inflation_Adjusted_Residential, Inflation_Adjusted_Open_Space, Inflation_Adjusted_Commercial, Inflation_Adjusted_Industrial, Inflation_Adjusted_Personal_Property)
-    
+      sum_df[3:8]<-apply(sum_df[3:8],2,function(x)prettyNum(x,big.mark = ","))
     colnames(sum_df) <- c("Municipal","F-Year", "Total Levy (2013 dollars)", "Residential (2013 dollars)", "Open Space (2013 dollars) ", "Commercial (2013 dollars)", "Industrial (2013 dollars)", "Personal Property (2013 dollars)")
     
     return(sum_df)
@@ -86,7 +86,7 @@ shinyServer(function(input, output, session){
   output$TotTax_plot1 <- reactive({
     ## make reactive dataframe into regular dataframe
     TotTax_df <- plot_dat()
-    if (input$plot_radio == "Total_Levy"& input$plot_display_radio=="Inflation_Adjusted_Total_Levy"){
+    if (input$plot_radio == "Total_Levy"& input$plot_display_radio=="Total_Levy_Million"){
       list(
         data=googleDataTable(TotTax_df))  
     }

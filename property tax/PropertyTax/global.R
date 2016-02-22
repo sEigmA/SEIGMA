@@ -63,7 +63,7 @@ xlim <- list(
 ylim <- list(
   min = 0,
   ##+5 = max rate plus a little extra
-  max = max(tax_data$Inflation_Adjusted_Total_Levy, na.rm=T)+5
+  max = max(tax_data$Total_Levy_Million, na.rm=T)+5
 )
 
 ## create ylim for the Percent of Levy by Class 
@@ -258,7 +258,7 @@ TotTax_plot_options <- googleLineChart("TotTax_plot1", width="100%", height="475
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Total Tax Levy (2013 dollars)",
+    title = "Total Tax Levy (2013 dollars, Million)",
     viewWindow = ylim,
     textStyle = list(
       fontSize = 14),
@@ -314,7 +314,7 @@ TaxCha_plot_options<- googleLineChart("TotTax_plot2", width="100%", height="475p
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Chang in Total Tax Levy since 2003",
+    title = "Chang in Total Tax Levy since 2003 (%)",
     viewWindow = ylim_cha,
     textStyle = list(
       fontSize = 14),
@@ -370,7 +370,7 @@ Pct_plot_options<- googleLineChart("pct_plot1", width="100%", height="475px", op
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Percent of Tax Levy by Class",
+    title = "Percent of Tax Levy by Class (%)",
     viewWindow = ylim_pct,
     textStyle = list(
       fontSize = 14),

@@ -71,8 +71,8 @@ shinyUI(fluidPage(
                      condition="input.plot_radio == 'Total_Levy'",
                      ## In plot, show boxes that will compare to MA average
                      radioButtons("plot_display_radio", "Display Options",
-                                  c("Actual Values"="Inflation_Adjusted_Total_Levy", "Change Since 2003"="Total_Levy_Pct_Change"),
-                                  selected="Inflation_Adjusted_Total_Levy")),
+                                  c("Actual Values"="Total_Levy_Million", "Change Since 2003"="Total_Levy_Pct_Change"),
+                                  selected="Total_Levy_Million")),
                    
                    conditionalPanel(
                      condition="input.plot_radio == 'Percent_Levy'",
@@ -156,7 +156,7 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.plot_radio =='Total_Levy'",
                    conditionalPanel(
-                     condition="input.plot_display_radio=='Inflation_Adjusted_Total_Levy'", 
+                     condition="input.plot_display_radio=='Total_Levy_Million'", 
                    ## make chart title here (otherwise not centered)
                    h4("Annual Total Tax Levy by Region Over Time", align="center"),
                    TotTax_plot_options),
