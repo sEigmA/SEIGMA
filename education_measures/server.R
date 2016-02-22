@@ -191,93 +191,11 @@ return(sum_df)
   
     ##end of summary
 
-  output$plot_schoolui <-renderUI({
-    
-    # Depending on input$input_type, we'll generate a different
-    # UI component and send it to the client.
-    
-    
-    switch(input$plot_county,
            
-           " "=selectInput("plot_school", "Choose School",
-                           choices= c(all_schools, " " ), selected= " "),
-           
-           "Barnstable" = selectInput("plot_school","Choose School",
-                                      choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Barnstable")])) 
-                                      ,
-                                      multiple = F
-           ), 
-           "Berkshire" = selectInput("plot_school","Choose School",
-                                     choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Berkshire")])) 
-                                     ,
-                                     multiple = F
-           ),
-           "Bristol" = selectInput("plot_school","Choose School",
-                                   choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Bristol")])) 
-                                   ,
-                                   multiple = F
-           ), 
-           "Dukes" = selectInput("plot_school","Choose School",
-                                 choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Dukes")])) 
-                                 ,
-                                 multiple = F
-           ), 
-           "Essex" = selectInput("plot_school","Choose School",
-                                 choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Essex")])) 
-                                 ,
-                                 multiple = F
-           ),
-           "Franklin" = selectInput("plot_school","Choose School",
-                                    choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Franklin")])) 
-                                    ,
-                                    multiple = F
-           ), 
-           "Hampden" = selectInput("plot_school","Choose School",
-                                   choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Hampden")])) 
-                                   ,
-                                   multiple = F
-           ), 
-           "Hampshire" = selectInput("plot_school","Choose School",
-                                     choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Hampshire")])) 
-                                     ,
-                                     multiple = F
-           ), 
-           "Middlesex" = selectInput("plot_school","Choose School",
-                                     choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Middlesex")])),
-                                     multiple = F
-           ),
-           "Nantucket" = selectInput("plot_school","Choose School",
-                                     choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Nantucket")])) ,
-                                     multiple = F
-           ),
-           "Norfolk" = selectInput("plot_school","Choose School",
-                                   choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Norfolk")])) 
-                                   ,
-                                   multiple = F
-           ),
-           "Plymouth" = selectInput("plot_school","Choose School",
-                                    choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Plymouth")])) 
-                                    ,
-                                    multiple = F
-           ),
-           "Suffolk" = selectInput("plot_school","Choose School",
-                                   choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Suffolk")])) 
-                                   ,
-                                   multiple = F
-           ),
-           "Worcester" = selectInput("plot_school","Choose School",
-                                     choices = as.character(unique(edu_data$school.name[which(edu_data$County=="Worcester")])) 
-                                     ,
-                                     multiple = F
-           ))
-  })
-  
-           
-           
-           
-          
+  #plot dataframe          
   r_plot_df<-reactive({
-        
+    
+    
     sel_col_num<-c()
     df_colnames<-c()
     if (input$plot_radio=="Race/Ethnicity") {
@@ -289,119 +207,409 @@ return(sum_df)
     } else if (input$plot_radio=="Grade Level") {
       sel_col_num<-c(7:21)
       df_colnames<-names(edu_data)[7:21]
-    }  else if (input$plot_radio=="English Language Learners") {
-      sel_col_num<-c(32, 34, 51:55)
-      df_colnames<-c("First Language Not English Enrolled", "English Language Learners Enrolled", "Churn Enrollment for English Language Learning Students", "Churn Rate for English Language Learning Students", "Intake Rate for English Language Learning Students", "Stability Enrollment for English Language Learning Students", "Stability Rate for English Language Learning Students")
-    } else if (input$plot_radio=="Students with Disabilities") {
-      sel_col_num<-c(36, 46:50)
-      df_colnames<-c(  "Students with Disabilities Enrolled", "Churn Enrollment for Students With Disabilites", "Churn Rate for Students With Disabilites", "Intake Rate for Students With Disabilites", "Stability Enrollment for Students with Disabilities", "Stability Rate for Students with Disabilities")
-    } else if (input$plot_radio=="Low Income") {
-      sel_col_num<-c(38, 61:65)
-      df_colnames<-c(  "Low Income Enrolled","Churn Enrollment for Low Income Students", "Churn Rate for Low Income Students", "Intake Rate for Low Income Students", "Stability Enrollment for Low Income Students", "Stability Rate for Low Income Students")
-    } else {
-      sel_col_num<-c(44, 56:60)
-      df_colnames<-c("High Needs Enrolled", "Churn Enrollmment for High Needs Students", "Churn Rate for High Needs Students", "Intake Rate for High Needs Students", "Stability Enrollment for High Needs Students", "Stability Rate for High Needs Students")}
+      
+      #ELL
+    } else if (input$plot_radio=="English Language Learners" & input$plot_level=="English Language Learners Enrolled") {
+      sel_col_num<-c(22, 34)
+      df_colnames<-c("Total Students Enrolled", "English Language Learners Enrolled")
+    } else if (input$plot_radio=="English Language Learners" & input$plot_level=="First Language Not English Enrolled") {
+      sel_col_num<-c(22, 32)
+      df_colnames<-c("Total Students Enrolled", "First Language Not English Enrolled")
+    } else if (input$plot_radio=="English Language Learners" & input$plot_level=="English Language Learners Mobility Enrollment") {
+      sel_col_num<-c(51, 54)
+      df_colnames<-c("Churn Enrollment for English Language Learning Students",
+                     "Stability Enrollment for English Language Learning Students")
+    } else if (input$plot_radio=="English Language Learners" & input$plot_level=="English Language Learners Mobility Rate") {
+      sel_col_num<-c(52, 53, 55)
+      df_colnames<-c("Churn Rate for English Language Learning Students",
+                     "Intake Rate for English Language Learning Students",
+                     "Stability Rate for English Language Learning Students")
+    
+    #DISAB
+  } else if (input$plot_radio=="Students with Disabilities" & input$plot_level=="Students with Disabilities Enrolled") {
+    sel_col_num<-c(22, 36)
+    df_colnames<-c("Total Students Enrolled", "Students with Disabilities Enrolled")
+    } else if (input$plot_radio=="Students with Disabilities" & input$plot_level=="Disabilities Mobility Enrollment") {
+    sel_col_num<-c(46, 49)
+    df_colnames<-c("Churn Enrollment for Students with Disabilities",
+                   "Stability Enrollment for Students with Disabilities")
+  } else if (input$plot_radio=="Students with Disabilities" & input$plot_level=="Disabilities Mobility Rate") {
+    sel_col_num<-c(47, 48, 50)
+    df_colnames<-c("Churn Rate for Students with Disabilities",
+                   "Intake Rate for Students with Disabilities",
+                   "Stability Rate for Students with Disabilities")
+  #LowIncome
+} else if (input$plot_radio=="Low Income" & input$plot_level=="Low Income Students Enrolled") {
+  sel_col_num<-c(22, 38)
+  df_colnames<-c("Total Students Enrolled", "Low Income Students Enrolled")
+} else if (input$plot_radio=="Low Income" & input$plot_level=="Low Income Mobility Enrollment") {
+  sel_col_num<-c(61, 64)
+  df_colnames<-c("Churn Enrollment for Low Income Students",
+                 "Stability Enrollment for Low Income Students")
+} else if (input$plot_radio=="Low Income" & input$plot_level=="Low Income Mobility Rate") {
+  sel_col_num<-c(62, 63, 65)
+  df_colnames<-c("Churn Rate for Low Income Students",
+                 "Intake Rate for Low Income Students",
+                 "Stability Rate for Low Income Students")
+#High Needs
+} else if (input$plot_radio=="High Needs" & input$plot_level=="High Needs Students Enrolled") {
+  sel_col_num<-c(22, 44)
+  df_colnames<-c("Total Students Enrolled", "High Needs Students Enrolled")
+} else if (input$plot_radio=="High Needs" & input$plot_level=="High Needs Mobility Enrollment") {
+  sel_col_num<-c(56, 59)
+  df_colnames<-c("Churn Enrollment for High Needs Students",
+                 "Stability Enrollment for High Needs Students")
+} else if (input$plot_radio=="High Needs" & input$plot_level=="High Needs Mobility Rate") {
+  sel_col_num<-c(57, 58, 60)
+  df_colnames<-c("Churn Rate for High Needs Students",
+                 "Intake Rate for High Needs Students",
+                 "Stability Rate for High Needs Students")
+}
+    
+    plot_df <- edu_data %>%
+      filter(school.name==input$plot_school) %>%
+      select(1,3, 6, sel_col_num) %>% 
+      arrange(school.year)
+      colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+    
+    #drop columns that have nothing in them: only important for grade level, gender and race legend
+    if(input$plot_radio %in% c("Grade Level", "Race/Ethnicity", "Gender")){
+      col_sums<-apply(plot_df[,4:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
+      plot_df<-plot_df[,c(1,2,3,c(3+as.numeric(which(col_sums!=0))))]}
     
     
-    
-        plot_df <- edu_data %>%
-          select(1,3, 6, 22, sel_col_num) %>%
-          filter(school.name==input$plot_school) %>%
-          arrange(school.year)
-          colnames(plot_df)[4:ncol(plot_df)]<-c("Total Students Enrolled", df_colnames)
-        
-          #drop columns that have nothing in them: only important for grade level, gender and race legend
-          if(input$plot_radio %in% c("Grade Level", "Race/Ethnicity", "Gender")){
-          col_sums<-apply(plot_df[,5:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
-          plot_df<-plot_df[,c(1,2,3,c(4+as.numeric(which(col_sums!=0))))]}
+    #otherwise keep all selected columns
+    #if any mobilitygroup is chosen, refine columns to get 
+    #-students enrolled (plus total-subgroup) [stacked bar, %]
+    #-enrollment [stacked bar, %]
+          #-rates [stacked bar]
           
-          #otherwise keep all selected columns
-          #if any mobilitygroup is chosen, refine columns to get 
-          #-students enrolled (plus total-subgroup) [stacked bar]
-          #-enrollment [stacked bar]
-          #-rates [3 lines]
-          else if(!input$plot_radio %in% c("Grade Level", "Race/Ethnicity", "Gender")){
-          if(grepl(x=input$plot_level, pattern="Enrolled")==T){
-            plot_df<-plot_df[,c(1:4,which(names(plot_df)==input$plot_level))]
-            plot_df[,ncol(plot_df)-1]<-plot_df[,ncol(plot_df)-1]-plot_df[,ncol(plot_df)]
-            names(plot_df)[ncol(plot_df)-1]<-"Others"
-          }
-          else if(input$plot_level=="Mobility Enrollment"){
-            plot_df<-plot_df[,c(1:3,grep(x=names(plot_df), pattern="Enrollment"))]
-            
-          }
-          else if(input$plot_level=="Mobility Rate"){
-            plot_df<-plot_df[,c(1:3,grep(x=names(plot_df), pattern="Rate"))]
-          }
-          }
-     
-        
+          
+          else if(!input$plot_radio %in% c("Grade Level", "Race/Ethnicity", "Gender") & 
+                  grepl(x=input$plot_level, pattern="Enrolled")==T){
+              plot_df[,ncol(plot_df)-1]<-plot_df[,ncol(plot_df)-1]-plot_df[,ncol(plot_df)]
+              names(plot_df)[ncol(plot_df)-1]<-"Others"
+            }
+           
+          
           return(plot_df[complete.cases(plot_df),-c(1,2)])
   })
-      
-        
-    output$chart<-reactive({
+    
+  
+    
+    output$raceplot<-reactive({
       #message to be displayed when no school selected
       
+      r_plot_df<-r_plot_df()
+      
       validate(
-        need(input$plot_school != " ", "Please select a school")
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
       )
      
       
-      #make dataframe non-reactive
-      r_plot_df<-r_plot_df()
-      r_plot_df$school.year<-as.numeric(r_plot_df$school.year)
-      
-      #call the plot (switch won't work because it can't do multiple actions ..?)
-      if(input$plot_radio=="Race/Ethnicity"){
-        #call the plot for race/ethnicity
-        #first edit the options from the reactive dataframe
-        raceplot_options$hAxis$ticks<-seq(min(r_plot_df$school.year, na.rm=T), 
-                                          max(r_plot_df$school.year, na.rm=T), 1)
-        raceplot_options$hAxis$viewWindow$min<-min(r_plot_df$school.year, na.rm=T)
-        raceplot_options$hAxis$viewWindow$max<-max(r_plot_df$school.year, na.rm=T)
-        
+#       if(input$plot_radio=="Race/Ethnicity"){
+#         #call the plot for race/ethnicity
+#         #first edit the options from the reactive dataframe
+#         raceplot_options$options$hAxis$ticks<-seq(min(r_plot_df$school.year, na.rm=T), 
+#                                           max(r_plot_df$school.year, na.rm=T), 1)
+#         raceplot_options$options$hAxis$viewWindow$min<-min(r_plot_df$school.year, na.rm=T)
+#         raceplot_options$options$hAxis$viewWindow$max<-max(r_plot_df$school.year, na.rm=T)
+#       }
         #now call the plot using the options defined in global
         #and the edits provided from the reactive dataframe
         list(
-               data=googleDataTable(r_plot_df()),
-               title=paste(input$plot_radio, "in", input$plot_school),
-               options=raceplot_options
+               data=googleDataTable(r_plot_df),
+               title=paste(input$plot_radio, "in", input$plot_school)
              )
-      } else if(input$plot_radio=="Gender"){
-        list(
-               data=googleDataTable(r_plot_df()),
-               title=paste(input$plot_radio, "in", input$plot_school),
-               options=genderplot_options
-             )
-    } else if(input$plot_radio=="Grade Level"){
-      list(
-               data=googleDataTable(r_plot_df()),
-               title=paste(input$plot_radio, "in", input$plot_school),
-               options=gradelevelplot_options
-             )
-    } else if(input$plot_level=="Mobility Enrollment"){
-      list(
-        data=googleDataTable(r_plot_df()),
-        title=paste(input$plot_level, "of", input$plot_radio, "in", input$plot_school),
-        options=mobenrollmentplot_options
-        )
-    } else if(input$plot_level=="Mobility Rate"){
-      list(
-        data=googleDataTable(r_plot_df()),
-        title=paste(input$plot_level, "of", input$plot_radio, "in", input$plot_school),
-        options=mobrateplot_options
-        )
-    } else (
-      list(
-        data=googleDataTable(r_plot_df()),
-        title=paste(input$plot_level, "in", input$plot_school),
-        options=enrolledplot_options
-      )
-    )
+        
+      })
+    
+    output$genderplot<-reactive({
+      #message to be displayed when no school selected
       
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+#       if(input$plot_radio=="Gender"){
+#         
+#         #first edit the options from the reactive dataframe
+#         genderplot_options$options$hAxis$ticks<-seq(min(r_plot_df$school.year, na.rm=T), 
+#                                           max(r_plot_df$school.year, na.rm=T), 1)
+#         genderplot_options$options$hAxis$viewWindow$min<-min(r_plot_df$school.year, na.rm=T)
+#         genderplot_options$options$hAxis$viewWindow$max<-max(r_plot_df$school.year, na.rm=T)
+#       }
+      
+        list(
+               data=googleDataTable(r_plot_df),
+               title=paste(input$plot_radio, "in", input$plot_school)
+             )
+    })
+    
+    output$gradelevelplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+#     if(input$plot_radio=="Grade Level"){
+#       
+#       #first edit the options from the reactive dataframe
+#       gradelevelplot_options$options$hAxis$ticks<-seq(min(r_plot_df$school.year, na.rm=T), 
+#                                           max(r_plot_df$school.year, na.rm=T), 1)
+#       gradelevelplot_options$options$hAxis$viewWindow$min<-min(r_plot_df$school.year, na.rm=T)
+#       gradelevelplot_options$options$hAxis$viewWindow$max<-max(r_plot_df$school.year, na.rm=T)
+#     }
+      list(
+               data=googleDataTable(r_plot_df),
+               title=paste(input$plot_radio, "in", input$plot_school)
+             )
       
     })
+      
+    
+    output$ELL_enrolledplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+      list(
+        data=googleDataTable(r_plot_df),
+        title=paste(input$plot_radio, "in", input$plot_school)
+      )
+      
+    })
+    
+    output$FLNL_enrolledplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+      list(
+        data=googleDataTable(r_plot_df),
+        title=paste(input$plot_radio, "in", input$plot_school)
+      )
+      
+    })
+    
+    output$ELL_mobenrollmentplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+#       if(input$plot_level=="English Language Learners Mobility Enrollment"){
+#         #first edit the options from the reactive dataframe
+#         ELL_mobenrollmentplot_options$options$vAxis$ticks<-seq(0, 
+#                                                    sum(r_plot_df[,c(2,3)]), 10)
+#         ELL_mobenrollmentplot_options$options$vAxis$viewWindow$min<-0
+#         ELL_mobenrollmentplot_options$options$vAxis$viewWindow$max<-sum(r_plot_df[,c(2,3)])
+#       }
+        list(
+          data=googleDataTable(r_plot_df),
+          title=paste(input$plot_level, "of", input$plot_radio, "in", input$plot_school)
+        )
+      
+    })
+    
+    output$ELL_mobrateplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+        list(
+          data=googleDataTable(r_plot_df),
+          title=paste(input$plot_level, "of", input$plot_radio, "in", input$plot_school)
+        )
+        
+      })
+    
+    
+    output$DISAB_enrolledplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+      list(
+        data=googleDataTable(r_plot_df),
+        title=paste(input$plot_radio, "in", input$plot_school)
+      )
+      
+    })
+    
+    output$DISAB_mobenrollmentplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+#       if(input$plot_level=="Disabilities Mobility Enrollment"){
+#         #first edit the options from the reactive dataframe
+#         DISAB_mobenrollmentplot_options$options$vAxis$ticks<-seq(0, 
+#                                                            sum(r_plot_df[,c(2,3)]), 10)
+#         DISAB_mobenrollmentplot_options$options$vAxis$viewWindow$min<-0
+#         DISAB_mobenrollmentplot_options$options$vAxis$viewWindow$max<-sum(r_plot_df[,c(2,3)])
+#       }
+      list(
+        data=googleDataTable(r_plot_df),
+        title=paste(input$plot_level, "of", input$plot_radio, "in", input$plot_school)
+      )
+      
+    })
+    
+    output$DISAB_mobrateplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+      list(
+        data=googleDataTable(r_plot_df),
+        title=paste(input$plot_level, "of", input$plot_radio, "in", input$plot_school)
+      )
+      
+    })
+    
+    output$LOW_enrolledplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+      list(
+        data=googleDataTable(r_plot_df),
+        title=paste(input$plot_radio, "in", input$plot_school)
+      )
+      
+    })
+    
+    output$LOW_mobenrollmentplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+#       if(input$plot_level=="Low Income Mobility Enrollment"){
+#         #first edit the options from the reactive dataframe
+#         LOW_mobenrollmentplot_options$options$vAxis$ticks<-seq(0, 
+#                                                            sum(r_plot_df[,c(2,3)]), 10)
+#         LOW_mobenrollmentplot_options$options$vAxis$viewWindow$min<-0
+#         LOW_mobenrollmentplot_options$options$vAxis$viewWindow$max<-sum(r_plot_df[,c(2,3)])
+#       }
+      list(
+        data=googleDataTable(r_plot_df),
+        title=paste(input$plot_level, "of", input$plot_radio, "in", input$plot_school)
+      )
+      
+    })
+    
+    output$LOW_mobrateplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+      list(
+        data=googleDataTable(r_plot_df),
+        title=paste(input$plot_level, "of", input$plot_radio, "in", input$plot_school)
+      )
+      
+    })
+    
+    output$HINE_enrolledplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+      list(
+        data=googleDataTable(r_plot_df),
+        title=paste(input$plot_radio, "in", input$plot_school)
+      )
+      
+    })
+    
+    output$HINE_mobenrollmentplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+#       if(input$plot_level=="High Needs Mobility Enrollment"){
+#         #first edit the options from the reactive dataframe
+#         HINE_mobenrollmentplot_options$options$vAxis$ticks<-seq(0, 
+#                                                            sum(r_plot_df[,c(2,3)]), 10)
+#         HINE_mobenrollmentplot_options$options$vAxis$viewWindow$min<-0
+#         HINE_mobenrollmentplot_options$options$vAxis$viewWindow$max<-sum(r_plot_df[,c(2,3)])
+#       }
+      list(
+        data=googleDataTable(r_plot_df),
+        title=paste(input$plot_level, "of", input$plot_radio, "in", input$plot_school)
+      )
+      
+    })
+    
+    output$HINE_mobrateplot<-reactive({
+      #message to be displayed when no school selected
+      
+      r_plot_df<-r_plot_df()
+      
+      validate(
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
+      )
+      
+      list(
+        data=googleDataTable(r_plot_df),
+        title=paste(input$plot_level, "of", input$plot_radio, "in", input$plot_school)
+      )
+      
+    })
+    
       
   
 #     
