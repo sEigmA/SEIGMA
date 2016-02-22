@@ -277,17 +277,17 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
 
-  helpText(p(strong('Please select the years for which you are interested in viewing average monthly employment, weekly wage, and number of business establishments.'))),
+  helpText(p(strong('Please select the years for which you are interested in viewing churn, intake, and stability rates for education measures of Massachusetts schools.'))),
   tags$br(),
   tags$ul(
     tags$br(),
-    tags$li('Select one or multiple municipalities.'),
+    tags$li('Select a county then select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To look at average monthly employment, weekly wage, and number of business establishments for a single year select single year from the drop down menu.'),
+    tags$li('To look at churn, intake, and stability rates of an educational measure for a single year select single year from the drop down menu.'),
     tags$br(),
-    tags$li('To look at average monthly employment, weekly wage, and number of business establishments over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
+    tags$li('To look at churn, intake, and stability rates of an educational measure  over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
     tags$br(),
-    tags$li('Sort average monthly employment in ascending and descending order by clicking on the column or variable title.')
+    tags$li('Sort churn, intake, and stability rates in ascending and descending order by clicking on the column or variable title.')
 
   )
 )
@@ -296,18 +296,20 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the municipality for which you are interested in viewing average monthly employment, weekly wage, and number of business establishments. Please do not select more than ten municipalities at a time.')),
+  p(strong('Please select the county for which you are interested in viewing churn, intake, and stability rates.')),
   tags$br(),
   tags$ul(
-  tags$li("Once you have selected the municipalities which you are interested in viewing, select a Variable of Interest."),
+  tags$li("Once you have selected the county which you are interested in viewing churn, intake, and stability rates, select a school."),
   tags$br(),
-  tags$li("To view average monthly employment and number of business establishments select Employment and Business Establishments."),
+  tags$li("To view percent race in the selected school select Race/Ethnicity."),
   tags$br(),
-  tags$li("To view average weekly wages, select Wages."),
+  tags$li("To view percent gender in the selected school select Gender."),
   tags$br(),
-  tags$li("Select Actual Values from the Display Options to view average monthly employment, weekly wage, and number of business establishments for 2003-2012."),
+  tags$li("To view percent grade level in the selected school select Grade Level."),
   tags$br(),
-  tags$li("Select Change Since 2003 from the Display Options to view the percent change in average monthly employment, weekly wage, and number of business establishments each year for the years 2003-2012.")
+  tags$li("To view churn and stability rates select either Enlgish Language Learners, Students with Disabilities, Low income, or High Needs."),
+  tags$br(),
+  tags$li("Then select a measure from the drop down list called Measures.")
   ))
 
 # 
