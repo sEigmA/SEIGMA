@@ -281,17 +281,17 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
 
-  helpText(p(strong('Please select the years for which you are interested in viewing churn, intake, and stability rates for education measures of Massachusetts schools.'))),
+  helpText(p(strong('Please select the years for which you are interested in viewing Massachusetts school profiles and student mobility data.'))),
   tags$br(),
   tags$ul(
     tags$br(),
     tags$li('Select a county then select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To look at churn, intake, and stability rates of an educational measure for a single year select single year from the drop down menu.'),
+    tags$li('To look at the enrollment profile of a school by race/ethnicity, gender or grade levels, select "Race/Ethnicity", "Gender" or "Grade Level" from the "Variables" list.'),
     tags$br(),
-    tags$li('To look at churn, intake, and stability rates of an educational measure  over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
+    tags$li('To look at the student mobility of English language learning students, students with disabilities, low income students or students with high needs, select "English Language Learners", "Students with Disabilities", "Low Income" or "High Needs" from the "Variables" list.'),
     tags$br(),
-    tags$li('Sort churn, intake, and stability rates in ascending and descending order by clicking on the column or variable title.')
+    tags$li('Sort columns in ascending or descending order by clicking on the column or variable title.')
 
   )
 )
@@ -300,16 +300,12 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the county for which you are interested in viewing churn, intake, and stability rates.')),
+  p(strong('Please select the county in which the school you are interested in is located.')),
   tags$br(),
   tags$ul(
-  tags$li("Once you have selected the county which you are interested in viewing churn, intake, and stability rates, select a school."),
+  tags$li("Then select a school for which you are interested in viewing educational measures."),
   tags$br(),
-  tags$li("To view percent race in the selected school select Race/Ethnicity."),
-  tags$br(),
-  tags$li("To view percent gender in the selected school select Gender."),
-  tags$br(),
-  tags$li("To view percent grade level in the selected school select Grade Level."),
+  tags$li("To view the percentage of students by race/ethnicity, gender or grade levels, select 'Race/Ethnicity', 'Gender' or 'Grade Level' from the 'Variables' list."),
   tags$br(),
   tags$li("To view churn and stability rates select either Enlgish Language Learners, Students with Disabilities, Low income, or High Needs."),
   tags$br(),
@@ -363,8 +359,8 @@ info_side_text <- conditionalPanel(
  font_size <- 14
  
  
- raceplot_options<-googleColumnChart("raceplot",width="100%", height = "500px",
-                                     options = list(isStacked="percent",
+ stackedcountchart<-googleColumnChart("colplot",width="100%", height = "500px",
+                                     options = list(isStacked="TRUE",
                                                     # set fonts
                                                     fontName = "Source Sans Pro",
                                                     fontSize = font_size,
@@ -415,7 +411,7 @@ info_side_text <- conditionalPanel(
                                      )
  )
  
- genderplot_options <- googleColumnChart("genderplot",width="100%", height = "500px",
+ stackedpercentchart <- googleColumnChart("colplot",width="100%", height = "500px",
                                          options = list(isStacked="percent",
                                                         # set fonts
                                                         fontName = "Source Sans Pro",
@@ -450,478 +446,478 @@ info_side_text <- conditionalPanel(
  
  
  
- 
- gradelevelplot_options <- googleColumnChart("gradelevelplot",width="100%", height = "500px",
-                                             options=list(isStacked="percent",
-                                                          # set fonts
-                                                          fontName = "Source Sans Pro",
-                                                          fontSize = font_size,
-                                                          title = "",
-                                                          ## set axis titles, ticks, fonts, and ranges
-                                                          hAxis = list(
-                                                            title = "Start of School Year",
-                                                            format = "####",
-                                                            #  ticks = seq(2002, 2012, 2),
-                                                            #  viewWindow = list(min=, max=),
-                                                            textStyle = list(
-                                                              fontSize = 14),
-                                                            titleTextStyle = list(
-                                                              fontSize = 16,
-                                                              bold = TRUE,
-                                                              italic = FALSE)
-                                                          ),
-                                                          vAxis = list(
-                                                            title = "Number of students",
-                                                            ticks = seq(0,1,0.2),
-                                                            
-                                                            #viewWindow = list(min=0, max=100),
-                                                            textStyle = list(
-                                                              fontSize = font_size),
-                                                            titleTextStyle = list(
-                                                              fontSize = font_size+2,
-                                                              bold = TRUE,
-                                                              italic = FALSE)
-                                                          ))
- )
- 
- 
- 
- 
- 
- ELL_enrolledplot_options  <- googleColumnChart("ELL_enrolledplot",width="100%", height = "500px",
-                                                options=list(isStacked="percent",
-                                                             # set fonts
-                                                             fontName = "Source Sans Pro",
-                                                             fontSize = font_size,
-                                                             title = "",
-                                                             ## set axis titles, ticks, fonts, and ranges
-                                                             hAxis = list(
-                                                               title = "Start of School Year",
-                                                               format = "####",
-                                                               #  ticks = seq(2002, 2012, 2),
-                                                               #  viewWindow = list(min=, max=),
-                                                               textStyle = list(
-                                                                 fontSize = 14),
-                                                               titleTextStyle = list(
-                                                                 fontSize = 16,
-                                                                 bold = TRUE,
-                                                                 italic = FALSE)
-                                                             ),
-                                                             vAxis = list(
-                                                               title = "Number of students",
-                                                               #ticks = seq(0,1,0.2),
-                                                               
-                                                               #viewWindow = list(min=0, max=100),
-                                                               textStyle = list(
-                                                                 fontSize = font_size),
-                                                               titleTextStyle = list(
-                                                                 fontSize = font_size+2,
-                                                                 bold = TRUE,
-                                                                 italic = FALSE)
-                                                             ))
- )
- 
- 
- FLNL_enrolledplot_options  <- googleColumnChart("FLNL_enrolledplot",width="100%", height = "500px",
-                                                 options=list(isStacked="percent",
-                                                              # set fonts
-                                                              fontName = "Source Sans Pro",
-                                                              fontSize = font_size,
-                                                              title = "",
-                                                              ## set axis titles, ticks, fonts, and ranges
-                                                              hAxis = list(
-                                                                title = "Start of School Year",
-                                                                format = "####",
-                                                                #  ticks = seq(2002, 2012, 2),
-                                                                #  viewWindow = list(min=, max=),
-                                                                textStyle = list(
-                                                                  fontSize = 14),
-                                                                titleTextStyle = list(
-                                                                  fontSize = 16,
-                                                                  bold = TRUE,
-                                                                  italic = FALSE)
-                                                              ),
-                                                              vAxis = list(
-                                                                title = "Number of students",
-                                                                #ticks = seq(0,1,0.2),
-                                                                
-                                                                #viewWindow = list(min=0, max=100),
-                                                                textStyle = list(
-                                                                  fontSize = font_size),
-                                                                titleTextStyle = list(
-                                                                  fontSize = font_size+2,
-                                                                  bold = TRUE,
-                                                                  italic = FALSE)
-                                                              ))
- )
- 
- ELL_mobenrollmentplot_options  <-  googleColumnChart("ELL_mobenrollmentplot",width="100%", height = "500px",
-                                                      options=list(isStacked="TRUE",
-                                                                   # set fonts
-                                                                   fontName = "Source Sans Pro",
-                                                                   fontSize = font_size,
-                                                                   title = "",
-                                                                   ## set axis titles, ticks, fonts, and ranges
-                                                                   hAxis = list(
-                                                                     title = "Start of School Year",
-                                                                     format = "####",
-                                                                     #  ticks = seq(2002, 2012, 2),
-                                                                     #  viewWindow = list(min=, max=),
-                                                                     textStyle = list(
-                                                                       fontSize = 14),
-                                                                     titleTextStyle = list(
-                                                                       fontSize = 16,
-                                                                       bold = TRUE,
-                                                                       italic = FALSE)
-                                                                   ),
-                                                                   vAxis = list(
-                                                                     title = "Number of Students",
-                                                                     #  ticks = seq(0,1,0.2),
-                                                                     
-                                                                     #viewWindow = list(min=0, max=100),
-                                                                     textStyle = list(
-                                                                       fontSize = font_size),
-                                                                     titleTextStyle = list(
-                                                                       fontSize = font_size+2,
-                                                                       bold = TRUE,
-                                                                       italic = FALSE)
-                                                                   ))
- )
- 
- 
- ELL_mobrateplot_options <- googleColumnChart("ELL_mobrateplot",width="100%", height = "500px",
-                                              options=list(isStacked="TRUE",
-                                                           # set fonts
-                                                           fontName = "Source Sans Pro",
-                                                           fontSize = font_size,
-                                                           title = "",
-                                                           ## set axis titles, ticks, fonts, and ranges
-                                                           hAxis = list(
-                                                             title = "Start of School Year",
-                                                             format = "####",
-                                                             #  ticks = seq(2002, 2012, 2),
-                                                             #  viewWindow = list(min=, max=),
-                                                             textStyle = list(
-                                                               fontSize = 14),
-                                                             titleTextStyle = list(
-                                                               fontSize = 16,
-                                                               bold = TRUE,
-                                                               italic = FALSE)
-                                                           ),
-                                                           vAxis = list(
-                                                             title = "Mobility Rate",
-                                                             ticks = seq(0,100,20),
-                                                             
-                                                             viewWindow = list(min=0, max=120),
-                                                             textStyle = list(
-                                                               fontSize = font_size),
-                                                             titleTextStyle = list(
-                                                               fontSize = font_size+2,
-                                                               bold = TRUE,
-                                                               italic = FALSE)
-                                                           ))
- )
- 
- 
- DISAB_enrolledplot_options  <- googleColumnChart("DISAB_enrolledplot",width="100%", height = "500px",
-                                                  options=list(isStacked="percent",
-                                                               # set fonts
-                                                               fontName = "Source Sans Pro",
-                                                               fontSize = font_size,
-                                                               title = "",
-                                                               ## set axis titles, ticks, fonts, and ranges
-                                                               hAxis = list(
-                                                                 title = "Start of School Year",
-                                                                 format = "####",
-                                                                 #  ticks = seq(2002, 2012, 2),
-                                                                 #  viewWindow = list(min=, max=),
-                                                                 textStyle = list(
-                                                                   fontSize = 14),
-                                                                 titleTextStyle = list(
-                                                                   fontSize = 16,
-                                                                   bold = TRUE,
-                                                                   italic = FALSE)
-                                                               ),
-                                                               vAxis = list(
-                                                                 title = "Number of students",
-                                                                 #ticks = seq(0,1,0.2),
-                                                                 
-                                                                 #viewWindow = list(min=0, max=100),
-                                                                 textStyle = list(
-                                                                   fontSize = font_size),
-                                                                 titleTextStyle = list(
-                                                                   fontSize = font_size+2,
-                                                                   bold = TRUE,
-                                                                   italic = FALSE)
-                                                               ))
- )
- 
- DISAB_mobenrollmentplot_options  <-  googleColumnChart("DISAB_mobenrollmentplot",width="100%", height = "500px",
-                                                        options=list(isStacked="TRUE",
-                                                                     # set fonts
-                                                                     fontName = "Source Sans Pro",
-                                                                     fontSize = font_size,
-                                                                     title = "",
-                                                                     ## set axis titles, ticks, fonts, and ranges
-                                                                     hAxis = list(
-                                                                       title = "Start of School Year",
-                                                                       format = "####",
-                                                                       #  ticks = seq(2002, 2012, 2),
-                                                                       #  viewWindow = list(min=, max=),
-                                                                       textStyle = list(
-                                                                         fontSize = 14),
-                                                                       titleTextStyle = list(
-                                                                         fontSize = 16,
-                                                                         bold = TRUE,
-                                                                         italic = FALSE)
-                                                                     ),
-                                                                     vAxis = list(
-                                                                       title = "Number of Students",
-                                                                       #  ticks = seq(0,1,0.2),
-                                                                       
-                                                                       #viewWindow = list(min=0, max=100),
-                                                                       textStyle = list(
-                                                                         fontSize = font_size),
-                                                                       titleTextStyle = list(
-                                                                         fontSize = font_size+2,
-                                                                         bold = TRUE,
-                                                                         italic = FALSE)
-                                                                     ))
- )
- 
- 
- DISAB_mobrateplot_options <- googleColumnChart("DISAB_mobrateplot",width="100%", height = "500px",
-                                                options=list(isStacked="TRUE",
-                                                             # set fonts
-                                                             fontName = "Source Sans Pro",
-                                                             fontSize = font_size,
-                                                             title = "",
-                                                             ## set axis titles, ticks, fonts, and ranges
-                                                             hAxis = list(
-                                                               title = "Start of School Year",
-                                                               format = "####",
-                                                               #  ticks = seq(2002, 2012, 2),
-                                                               #  viewWindow = list(min=, max=),
-                                                               textStyle = list(
-                                                                 fontSize = 14),
-                                                               titleTextStyle = list(
-                                                                 fontSize = 16,
-                                                                 bold = TRUE,
-                                                                 italic = FALSE)
-                                                             ),
-                                                             vAxis = list(
-                                                               title = "Mobility Rate",
-                                                               ticks = seq(0,100,20),
-                                                               
-                                                               viewWindow = list(min=0, max=120),
-                                                               textStyle = list(
-                                                                 fontSize = font_size),
-                                                               titleTextStyle = list(
-                                                                 fontSize = font_size+2,
-                                                                 bold = TRUE,
-                                                                 italic = FALSE)
-                                                             ))
- )
- 
- 
- LOW_enrolledplot_options  <- googleColumnChart("LOW_enrolledplot",width="100%", height = "500px",
-                                                options=list(isStacked="percent",
-                                                             # set fonts
-                                                             fontName = "Source Sans Pro",
-                                                             fontSize = font_size,
-                                                             title = "",
-                                                             ## set axis titles, ticks, fonts, and ranges
-                                                             hAxis = list(
-                                                               title = "Start of School Year",
-                                                               format = "####",
-                                                               #  ticks = seq(2002, 2012, 2),
-                                                               #  viewWindow = list(min=, max=),
-                                                               textStyle = list(
-                                                                 fontSize = 14),
-                                                               titleTextStyle = list(
-                                                                 fontSize = 16,
-                                                                 bold = TRUE,
-                                                                 italic = FALSE)
-                                                             ),
-                                                             vAxis = list(
-                                                               title = "Number of students",
-                                                               #ticks = seq(0,1,0.2),
-                                                               
-                                                               #viewWindow = list(min=0, max=100),
-                                                               textStyle = list(
-                                                                 fontSize = font_size),
-                                                               titleTextStyle = list(
-                                                                 fontSize = font_size+2,
-                                                                 bold = TRUE,
-                                                                 italic = FALSE)
-                                                             ))
- )
- 
- LOW_mobenrollmentplot_options  <-  googleColumnChart("LOW_mobenrollmentplot",width="100%", height = "500px",
-                                                      options=list(isStacked="TRUE",
-                                                                   # set fonts
-                                                                   fontName = "Source Sans Pro",
-                                                                   fontSize = font_size,
-                                                                   title = "",
-                                                                   ## set axis titles, ticks, fonts, and ranges
-                                                                   hAxis = list(
-                                                                     title = "Start of School Year",
-                                                                     format = "####",
-                                                                     #  ticks = seq(2002, 2012, 2),
-                                                                     #  viewWindow = list(min=, max=),
-                                                                     textStyle = list(
-                                                                       fontSize = 14),
-                                                                     titleTextStyle = list(
-                                                                       fontSize = 16,
-                                                                       bold = TRUE,
-                                                                       italic = FALSE)
-                                                                   ),
-                                                                   vAxis = list(
-                                                                     title = "Number of Students",
-                                                                     #  ticks = seq(0,1,0.2),
-                                                                     
-                                                                     #viewWindow = list(min=0, max=100),
-                                                                     textStyle = list(
-                                                                       fontSize = font_size),
-                                                                     titleTextStyle = list(
-                                                                       fontSize = font_size+2,
-                                                                       bold = TRUE,
-                                                                       italic = FALSE)
-                                                                   ))
- )
- 
- 
- LOW_mobrateplot_options <- googleColumnChart("LOW_mobrateplot",width="100%", height = "500px",
-                                              options=list(isStacked="TRUE",
-                                                           # set fonts
-                                                           fontName = "Source Sans Pro",
-                                                           fontSize = font_size,
-                                                           title = "",
-                                                           ## set axis titles, ticks, fonts, and ranges
-                                                           hAxis = list(
-                                                             title = "Start of School Year",
-                                                             format = "####",
-                                                             #  ticks = seq(2002, 2012, 2),
-                                                             #  viewWindow = list(min=, max=),
-                                                             textStyle = list(
-                                                               fontSize = 14),
-                                                             titleTextStyle = list(
-                                                               fontSize = 16,
-                                                               bold = TRUE,
-                                                               italic = FALSE)
-                                                           ),
-                                                           vAxis = list(
-                                                             title = "Mobility Rate",
-                                                             ticks = seq(0,100,20),
-                                                             
-                                                             viewWindow = list(min=0, max=120),
-                                                             textStyle = list(
-                                                               fontSize = font_size),
-                                                             titleTextStyle = list(
-                                                               fontSize = font_size+2,
-                                                               bold = TRUE,
-                                                               italic = FALSE)
-                                                           ))
- )
- 
- 
- HINE_enrolledplot_options  <- googleColumnChart("HINE_enrolledplot",width="100%", height = "500px",
-                                                 options=list(isStacked="percent",
-                                                              # set fonts
-                                                              fontName = "Source Sans Pro",
-                                                              fontSize = font_size,
-                                                              title = "",
-                                                              ## set axis titles, ticks, fonts, and ranges
-                                                              hAxis = list(
-                                                                title = "Start of School Year",
-                                                                format = "####",
-                                                                #  ticks = seq(2002, 2012, 2),
-                                                                #  viewWindow = list(min=, max=),
-                                                                textStyle = list(
-                                                                  fontSize = 14),
-                                                                titleTextStyle = list(
-                                                                  fontSize = 16,
-                                                                  bold = TRUE,
-                                                                  italic = FALSE)
-                                                              ),
-                                                              vAxis = list(
-                                                                title = "Number of students",
-                                                                #ticks = seq(0,1,0.2),
-                                                                
-                                                                #viewWindow = list(min=0, max=100),
-                                                                textStyle = list(
-                                                                  fontSize = font_size),
-                                                                titleTextStyle = list(
-                                                                  fontSize = font_size+2,
-                                                                  bold = TRUE,
-                                                                  italic = FALSE)
-                                                              ))
- )
- 
- HINE_mobenrollmentplot_options  <-  googleColumnChart("HINE_mobenrollmentplot",width="100%", height = "500px",
-                                                       options=list(isStacked="TRUE",
-                                                                    # set fonts
-                                                                    fontName = "Source Sans Pro",
-                                                                    fontSize = font_size,
-                                                                    title = "",
-                                                                    ## set axis titles, ticks, fonts, and ranges
-                                                                    hAxis = list(
-                                                                      title = "Start of School Year",
-                                                                      format = "####",
-                                                                      #  ticks = seq(2002, 2012, 2),
-                                                                      #  viewWindow = list(min=, max=),
-                                                                      textStyle = list(
-                                                                        fontSize = 14),
-                                                                      titleTextStyle = list(
-                                                                        fontSize = 16,
-                                                                        bold = TRUE,
-                                                                        italic = FALSE)
-                                                                    ),
-                                                                    vAxis = list(
-                                                                      title = "Number of Students",
-                                                                      #  ticks = seq(0,1,0.2),
-                                                                      
-                                                                      #viewWindow = list(min=0, max=100),
-                                                                      textStyle = list(
-                                                                        fontSize = font_size),
-                                                                      titleTextStyle = list(
-                                                                        fontSize = font_size+2,
-                                                                        bold = TRUE,
-                                                                        italic = FALSE)
-                                                                    ))
- )
- 
- 
- HINE_mobrateplot_options <- googleColumnChart("HINE_mobrateplot",width="100%", height = "500px",
-                                               options=list(isStacked="TRUE",
-                                                            # set fonts
-                                                            fontName = "Source Sans Pro",
-                                                            fontSize = font_size,
-                                                            title = "",
-                                                            ## set axis titles, ticks, fonts, and ranges
-                                                            hAxis = list(
-                                                              title = "Start of School Year",
-                                                              format = "####",
-                                                              #  ticks = seq(2002, 2012, 2),
-                                                              #  viewWindow = list(min=, max=),
-                                                              textStyle = list(
-                                                                fontSize = 14),
-                                                              titleTextStyle = list(
-                                                                fontSize = 16,
-                                                                bold = TRUE,
-                                                                italic = FALSE)
-                                                            ),
-                                                            vAxis = list(
-                                                              title = "Mobility Rate",
-                                                              ticks = seq(0,100,20),
-                                                              
-                                                              viewWindow = list(min=0, max=120),
-                                                              textStyle = list(
-                                                                fontSize = font_size),
-                                                              titleTextStyle = list(
-                                                                fontSize = font_size+2,
-                                                                bold = TRUE,
-                                                                italic = FALSE)
-                                                            ))
- )
- 
+#  
+#  gradelevelplot_options <- googleColumnChart("gradelevelplot",width="100%", height = "500px",
+#                                              options=list(isStacked="percent",
+#                                                           # set fonts
+#                                                           fontName = "Source Sans Pro",
+#                                                           fontSize = font_size,
+#                                                           title = "",
+#                                                           ## set axis titles, ticks, fonts, and ranges
+#                                                           hAxis = list(
+#                                                             title = "Start of School Year",
+#                                                             format = "####",
+#                                                             #  ticks = seq(2002, 2012, 2),
+#                                                             #  viewWindow = list(min=, max=),
+#                                                             textStyle = list(
+#                                                               fontSize = 14),
+#                                                             titleTextStyle = list(
+#                                                               fontSize = 16,
+#                                                               bold = TRUE,
+#                                                               italic = FALSE)
+#                                                           ),
+#                                                           vAxis = list(
+#                                                             title = "Number of students",
+#                                                             ticks = seq(0,1,0.2),
+#                                                             
+#                                                             #viewWindow = list(min=0, max=100),
+#                                                             textStyle = list(
+#                                                               fontSize = font_size),
+#                                                             titleTextStyle = list(
+#                                                               fontSize = font_size+2,
+#                                                               bold = TRUE,
+#                                                               italic = FALSE)
+#                                                           ))
+#  )
+#  
+#  
+#  
+#  
+#  
+#  ELL_enrolledplot_options  <- googleColumnChart("ELL_enrolledplot",width="100%", height = "500px",
+#                                                 options=list(isStacked="percent",
+#                                                              # set fonts
+#                                                              fontName = "Source Sans Pro",
+#                                                              fontSize = font_size,
+#                                                              title = "",
+#                                                              ## set axis titles, ticks, fonts, and ranges
+#                                                              hAxis = list(
+#                                                                title = "Start of School Year",
+#                                                                format = "####",
+#                                                                #  ticks = seq(2002, 2012, 2),
+#                                                                #  viewWindow = list(min=, max=),
+#                                                                textStyle = list(
+#                                                                  fontSize = 14),
+#                                                                titleTextStyle = list(
+#                                                                  fontSize = 16,
+#                                                                  bold = TRUE,
+#                                                                  italic = FALSE)
+#                                                              ),
+#                                                              vAxis = list(
+#                                                                title = "Number of students",
+#                                                                #ticks = seq(0,1,0.2),
+#                                                                
+#                                                                #viewWindow = list(min=0, max=100),
+#                                                                textStyle = list(
+#                                                                  fontSize = font_size),
+#                                                                titleTextStyle = list(
+#                                                                  fontSize = font_size+2,
+#                                                                  bold = TRUE,
+#                                                                  italic = FALSE)
+#                                                              ))
+#  )
+#  
+#  
+#  FLNL_enrolledplot_options  <- googleColumnChart("FLNL_enrolledplot",width="100%", height = "500px",
+#                                                  options=list(isStacked="percent",
+#                                                               # set fonts
+#                                                               fontName = "Source Sans Pro",
+#                                                               fontSize = font_size,
+#                                                               title = "",
+#                                                               ## set axis titles, ticks, fonts, and ranges
+#                                                               hAxis = list(
+#                                                                 title = "Start of School Year",
+#                                                                 format = "####",
+#                                                                 #  ticks = seq(2002, 2012, 2),
+#                                                                 #  viewWindow = list(min=, max=),
+#                                                                 textStyle = list(
+#                                                                   fontSize = 14),
+#                                                                 titleTextStyle = list(
+#                                                                   fontSize = 16,
+#                                                                   bold = TRUE,
+#                                                                   italic = FALSE)
+#                                                               ),
+#                                                               vAxis = list(
+#                                                                 title = "Number of students",
+#                                                                 #ticks = seq(0,1,0.2),
+#                                                                 
+#                                                                 #viewWindow = list(min=0, max=100),
+#                                                                 textStyle = list(
+#                                                                   fontSize = font_size),
+#                                                                 titleTextStyle = list(
+#                                                                   fontSize = font_size+2,
+#                                                                   bold = TRUE,
+#                                                                   italic = FALSE)
+#                                                               ))
+#  )
+#  
+#  ELL_mobenrollmentplot_options  <-  googleColumnChart("ELL_mobenrollmentplot",width="100%", height = "500px",
+#                                                       options=list(isStacked="TRUE",
+#                                                                    # set fonts
+#                                                                    fontName = "Source Sans Pro",
+#                                                                    fontSize = font_size,
+#                                                                    title = "",
+#                                                                    ## set axis titles, ticks, fonts, and ranges
+#                                                                    hAxis = list(
+#                                                                      title = "Start of School Year",
+#                                                                      format = "####",
+#                                                                      #  ticks = seq(2002, 2012, 2),
+#                                                                      #  viewWindow = list(min=, max=),
+#                                                                      textStyle = list(
+#                                                                        fontSize = 14),
+#                                                                      titleTextStyle = list(
+#                                                                        fontSize = 16,
+#                                                                        bold = TRUE,
+#                                                                        italic = FALSE)
+#                                                                    ),
+#                                                                    vAxis = list(
+#                                                                      title = "Number of Students",
+#                                                                      #  ticks = seq(0,1,0.2),
+#                                                                      
+#                                                                      #viewWindow = list(min=0, max=100),
+#                                                                      textStyle = list(
+#                                                                        fontSize = font_size),
+#                                                                      titleTextStyle = list(
+#                                                                        fontSize = font_size+2,
+#                                                                        bold = TRUE,
+#                                                                        italic = FALSE)
+#                                                                    ))
+#  )
+#  
+#  
+#  ELL_mobrateplot_options <- googleColumnChart("ELL_mobrateplot",width="100%", height = "500px",
+#                                               options=list(isStacked="TRUE",
+#                                                            # set fonts
+#                                                            fontName = "Source Sans Pro",
+#                                                            fontSize = font_size,
+#                                                            title = "",
+#                                                            ## set axis titles, ticks, fonts, and ranges
+#                                                            hAxis = list(
+#                                                              title = "Start of School Year",
+#                                                              format = "####",
+#                                                              #  ticks = seq(2002, 2012, 2),
+#                                                              #  viewWindow = list(min=, max=),
+#                                                              textStyle = list(
+#                                                                fontSize = 14),
+#                                                              titleTextStyle = list(
+#                                                                fontSize = 16,
+#                                                                bold = TRUE,
+#                                                                italic = FALSE)
+#                                                            ),
+#                                                            vAxis = list(
+#                                                              title = "Mobility Rate",
+#                                                              ticks = seq(0,100,20),
+#                                                              
+#                                                              viewWindow = list(min=0, max=120),
+#                                                              textStyle = list(
+#                                                                fontSize = font_size),
+#                                                              titleTextStyle = list(
+#                                                                fontSize = font_size+2,
+#                                                                bold = TRUE,
+#                                                                italic = FALSE)
+#                                                            ))
+#  )
+#  
+#  
+#  DISAB_enrolledplot_options  <- googleColumnChart("DISAB_enrolledplot",width="100%", height = "500px",
+#                                                   options=list(isStacked="percent",
+#                                                                # set fonts
+#                                                                fontName = "Source Sans Pro",
+#                                                                fontSize = font_size,
+#                                                                title = "",
+#                                                                ## set axis titles, ticks, fonts, and ranges
+#                                                                hAxis = list(
+#                                                                  title = "Start of School Year",
+#                                                                  format = "####",
+#                                                                  #  ticks = seq(2002, 2012, 2),
+#                                                                  #  viewWindow = list(min=, max=),
+#                                                                  textStyle = list(
+#                                                                    fontSize = 14),
+#                                                                  titleTextStyle = list(
+#                                                                    fontSize = 16,
+#                                                                    bold = TRUE,
+#                                                                    italic = FALSE)
+#                                                                ),
+#                                                                vAxis = list(
+#                                                                  title = "Number of students",
+#                                                                  #ticks = seq(0,1,0.2),
+#                                                                  
+#                                                                  #viewWindow = list(min=0, max=100),
+#                                                                  textStyle = list(
+#                                                                    fontSize = font_size),
+#                                                                  titleTextStyle = list(
+#                                                                    fontSize = font_size+2,
+#                                                                    bold = TRUE,
+#                                                                    italic = FALSE)
+#                                                                ))
+#  )
+#  
+#  DISAB_mobenrollmentplot_options  <-  googleColumnChart("DISAB_mobenrollmentplot",width="100%", height = "500px",
+#                                                         options=list(isStacked="TRUE",
+#                                                                      # set fonts
+#                                                                      fontName = "Source Sans Pro",
+#                                                                      fontSize = font_size,
+#                                                                      title = "",
+#                                                                      ## set axis titles, ticks, fonts, and ranges
+#                                                                      hAxis = list(
+#                                                                        title = "Start of School Year",
+#                                                                        format = "####",
+#                                                                        #  ticks = seq(2002, 2012, 2),
+#                                                                        #  viewWindow = list(min=, max=),
+#                                                                        textStyle = list(
+#                                                                          fontSize = 14),
+#                                                                        titleTextStyle = list(
+#                                                                          fontSize = 16,
+#                                                                          bold = TRUE,
+#                                                                          italic = FALSE)
+#                                                                      ),
+#                                                                      vAxis = list(
+#                                                                        title = "Number of Students",
+#                                                                        #  ticks = seq(0,1,0.2),
+#                                                                        
+#                                                                        #viewWindow = list(min=0, max=100),
+#                                                                        textStyle = list(
+#                                                                          fontSize = font_size),
+#                                                                        titleTextStyle = list(
+#                                                                          fontSize = font_size+2,
+#                                                                          bold = TRUE,
+#                                                                          italic = FALSE)
+#                                                                      ))
+#  )
+#  
+#  
+#  DISAB_mobrateplot_options <- googleColumnChart("DISAB_mobrateplot",width="100%", height = "500px",
+#                                                 options=list(isStacked="TRUE",
+#                                                              # set fonts
+#                                                              fontName = "Source Sans Pro",
+#                                                              fontSize = font_size,
+#                                                              title = "",
+#                                                              ## set axis titles, ticks, fonts, and ranges
+#                                                              hAxis = list(
+#                                                                title = "Start of School Year",
+#                                                                format = "####",
+#                                                                #  ticks = seq(2002, 2012, 2),
+#                                                                #  viewWindow = list(min=, max=),
+#                                                                textStyle = list(
+#                                                                  fontSize = 14),
+#                                                                titleTextStyle = list(
+#                                                                  fontSize = 16,
+#                                                                  bold = TRUE,
+#                                                                  italic = FALSE)
+#                                                              ),
+#                                                              vAxis = list(
+#                                                                title = "Mobility Rate",
+#                                                                ticks = seq(0,100,20),
+#                                                                
+#                                                                viewWindow = list(min=0, max=120),
+#                                                                textStyle = list(
+#                                                                  fontSize = font_size),
+#                                                                titleTextStyle = list(
+#                                                                  fontSize = font_size+2,
+#                                                                  bold = TRUE,
+#                                                                  italic = FALSE)
+#                                                              ))
+#  )
+#  
+#  
+#  LOW_enrolledplot_options  <- googleColumnChart("LOW_enrolledplot",width="100%", height = "500px",
+#                                                 options=list(isStacked="percent",
+#                                                              # set fonts
+#                                                              fontName = "Source Sans Pro",
+#                                                              fontSize = font_size,
+#                                                              title = "",
+#                                                              ## set axis titles, ticks, fonts, and ranges
+#                                                              hAxis = list(
+#                                                                title = "Start of School Year",
+#                                                                format = "####",
+#                                                                #  ticks = seq(2002, 2012, 2),
+#                                                                #  viewWindow = list(min=, max=),
+#                                                                textStyle = list(
+#                                                                  fontSize = 14),
+#                                                                titleTextStyle = list(
+#                                                                  fontSize = 16,
+#                                                                  bold = TRUE,
+#                                                                  italic = FALSE)
+#                                                              ),
+#                                                              vAxis = list(
+#                                                                title = "Number of students",
+#                                                                #ticks = seq(0,1,0.2),
+#                                                                
+#                                                                #viewWindow = list(min=0, max=100),
+#                                                                textStyle = list(
+#                                                                  fontSize = font_size),
+#                                                                titleTextStyle = list(
+#                                                                  fontSize = font_size+2,
+#                                                                  bold = TRUE,
+#                                                                  italic = FALSE)
+#                                                              ))
+#  )
+#  
+#  LOW_mobenrollmentplot_options  <-  googleColumnChart("LOW_mobenrollmentplot",width="100%", height = "500px",
+#                                                       options=list(isStacked="TRUE",
+#                                                                    # set fonts
+#                                                                    fontName = "Source Sans Pro",
+#                                                                    fontSize = font_size,
+#                                                                    title = "",
+#                                                                    ## set axis titles, ticks, fonts, and ranges
+#                                                                    hAxis = list(
+#                                                                      title = "Start of School Year",
+#                                                                      format = "####",
+#                                                                      #  ticks = seq(2002, 2012, 2),
+#                                                                      #  viewWindow = list(min=, max=),
+#                                                                      textStyle = list(
+#                                                                        fontSize = 14),
+#                                                                      titleTextStyle = list(
+#                                                                        fontSize = 16,
+#                                                                        bold = TRUE,
+#                                                                        italic = FALSE)
+#                                                                    ),
+#                                                                    vAxis = list(
+#                                                                      title = "Number of Students",
+#                                                                      #  ticks = seq(0,1,0.2),
+#                                                                      
+#                                                                      #viewWindow = list(min=0, max=100),
+#                                                                      textStyle = list(
+#                                                                        fontSize = font_size),
+#                                                                      titleTextStyle = list(
+#                                                                        fontSize = font_size+2,
+#                                                                        bold = TRUE,
+#                                                                        italic = FALSE)
+#                                                                    ))
+#  )
+#  
+#  
+#  LOW_mobrateplot_options <- googleColumnChart("LOW_mobrateplot",width="100%", height = "500px",
+#                                               options=list(isStacked="TRUE",
+#                                                            # set fonts
+#                                                            fontName = "Source Sans Pro",
+#                                                            fontSize = font_size,
+#                                                            title = "",
+#                                                            ## set axis titles, ticks, fonts, and ranges
+#                                                            hAxis = list(
+#                                                              title = "Start of School Year",
+#                                                              format = "####",
+#                                                              #  ticks = seq(2002, 2012, 2),
+#                                                              #  viewWindow = list(min=, max=),
+#                                                              textStyle = list(
+#                                                                fontSize = 14),
+#                                                              titleTextStyle = list(
+#                                                                fontSize = 16,
+#                                                                bold = TRUE,
+#                                                                italic = FALSE)
+#                                                            ),
+#                                                            vAxis = list(
+#                                                              title = "Mobility Rate",
+#                                                              ticks = seq(0,100,20),
+#                                                              
+#                                                              viewWindow = list(min=0, max=120),
+#                                                              textStyle = list(
+#                                                                fontSize = font_size),
+#                                                              titleTextStyle = list(
+#                                                                fontSize = font_size+2,
+#                                                                bold = TRUE,
+#                                                                italic = FALSE)
+#                                                            ))
+#  )
+#  
+#  
+#  HINE_enrolledplot_options  <- googleColumnChart("HINE_enrolledplot",width="100%", height = "500px",
+#                                                  options=list(isStacked="percent",
+#                                                               # set fonts
+#                                                               fontName = "Source Sans Pro",
+#                                                               fontSize = font_size,
+#                                                               title = "",
+#                                                               ## set axis titles, ticks, fonts, and ranges
+#                                                               hAxis = list(
+#                                                                 title = "Start of School Year",
+#                                                                 format = "####",
+#                                                                 #  ticks = seq(2002, 2012, 2),
+#                                                                 #  viewWindow = list(min=, max=),
+#                                                                 textStyle = list(
+#                                                                   fontSize = 14),
+#                                                                 titleTextStyle = list(
+#                                                                   fontSize = 16,
+#                                                                   bold = TRUE,
+#                                                                   italic = FALSE)
+#                                                               ),
+#                                                               vAxis = list(
+#                                                                 title = "Number of students",
+#                                                                 #ticks = seq(0,1,0.2),
+#                                                                 
+#                                                                 #viewWindow = list(min=0, max=100),
+#                                                                 textStyle = list(
+#                                                                   fontSize = font_size),
+#                                                                 titleTextStyle = list(
+#                                                                   fontSize = font_size+2,
+#                                                                   bold = TRUE,
+#                                                                   italic = FALSE)
+#                                                               ))
+#  )
+#  
+#  HINE_mobenrollmentplot_options  <-  googleColumnChart("HINE_mobenrollmentplot",width="100%", height = "500px",
+#                                                        options=list(isStacked="TRUE",
+#                                                                     # set fonts
+#                                                                     fontName = "Source Sans Pro",
+#                                                                     fontSize = font_size,
+#                                                                     title = "",
+#                                                                     ## set axis titles, ticks, fonts, and ranges
+#                                                                     hAxis = list(
+#                                                                       title = "Start of School Year",
+#                                                                       format = "####",
+#                                                                       #  ticks = seq(2002, 2012, 2),
+#                                                                       #  viewWindow = list(min=, max=),
+#                                                                       textStyle = list(
+#                                                                         fontSize = 14),
+#                                                                       titleTextStyle = list(
+#                                                                         fontSize = 16,
+#                                                                         bold = TRUE,
+#                                                                         italic = FALSE)
+#                                                                     ),
+#                                                                     vAxis = list(
+#                                                                       title = "Number of Students",
+#                                                                       #  ticks = seq(0,1,0.2),
+#                                                                       
+#                                                                       #viewWindow = list(min=0, max=100),
+#                                                                       textStyle = list(
+#                                                                         fontSize = font_size),
+#                                                                       titleTextStyle = list(
+#                                                                         fontSize = font_size+2,
+#                                                                         bold = TRUE,
+#                                                                         italic = FALSE)
+#                                                                     ))
+#  )
+#  
+#  
+#  HINE_mobrateplot_options <- googleColumnChart("HINE_mobrateplot",width="100%", height = "500px",
+#                                                options=list(isStacked="TRUE",
+#                                                             # set fonts
+#                                                             fontName = "Source Sans Pro",
+#                                                             fontSize = font_size,
+#                                                             title = "",
+#                                                             ## set axis titles, ticks, fonts, and ranges
+#                                                             hAxis = list(
+#                                                               title = "Start of School Year",
+#                                                               format = "####",
+#                                                               #  ticks = seq(2002, 2012, 2),
+#                                                               #  viewWindow = list(min=, max=),
+#                                                               textStyle = list(
+#                                                                 fontSize = 14),
+#                                                               titleTextStyle = list(
+#                                                                 fontSize = 16,
+#                                                                 bold = TRUE,
+#                                                                 italic = FALSE)
+#                                                             ),
+#                                                             vAxis = list(
+#                                                               title = "Mobility Rate",
+#                                                               ticks = seq(0,100,20),
+#                                                               
+#                                                               viewWindow = list(min=0, max=120),
+#                                                               textStyle = list(
+#                                                                 fontSize = font_size),
+#                                                               titleTextStyle = list(
+#                                                                 fontSize = font_size+2,
+#                                                                 bold = TRUE,
+#                                                                 italic = FALSE)
+#                                                             ))
+#  )
+#  

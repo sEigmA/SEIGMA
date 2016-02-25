@@ -337,196 +337,32 @@ shinyUI(fluidPage(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ##plot upon the selected variable and display option 
-                
+                #percent charts
+                conditionalPanel(condition=
+                                   "input.tabs=='plot'",
+                  conditionalPanel(
+                   condition="input.plot_radio %in% c('Race/Ethnicity', 'Gender','Grade Level') |
+                   input.plot_radio == 'English Language Learners' && input.plot_level == 'English Language Learners Enrolled' |
+                   input.plot_radio == 'English Language Learners' && input.plot_level == 'First Language Not English Enrolled' | 
+                   input.plot_radio == 'Students with Disabilities' && input.plot_level == 'Students with Disabilities Enrolled' |
+                   input.plot_radio == 'Low Income' && input.plot_level == 'Low Income Students Enrolled' |
+                   input.plot_radio == 'High Needs' && input.plot_level == 'High Needs Students Enrolled'",
+                   stackedpercentchart),
+                 #count charts
                  conditionalPanel(
-                   condition="input.plot_radio =='Race/Ethnicity'",
-                   raceplot_options),
-                 conditionalPanel(
-                   condition="input.plot_radio =='Gender'",
-                   genderplot_options),
-                 conditionalPanel(
-                   condition="input.plot_radio =='Grade Level'",
-                   gradelevelplot_options),
-                 
-                 #ELL
-                 conditionalPanel(
-                   condition="input.plot_radio == 'English Language Learners' && input.plot_level == 'English Language Learners Enrolled'",
-                   ELL_enrolledplot_options),
-                 conditionalPanel(
-                   condition="input.plot_radio == 'English Language Learners' && input.plot_level == 'First Language Not English Enrolled'",
-                   FLNL_enrolledplot_options),
-                 conditionalPanel(
-                   condition="input.plot_radio == 'English Language Learners' && input.plot_level == 'English Language Learners Mobility Enrollment'",
-                   ELL_mobenrollmentplot_options),
-                 conditionalPanel(
-                   condition="input.plot_radio == 'English Language Learners' && input.plot_level == English Language Learners 'Mobility Rate'",
-                   ELL_mobrateplot_options),
-                 
-                 #DISAB
-                 conditionalPanel(
-                   condition="input.plot_radio == 'Students with Disabilities' && input.plot_level == 'Students with Disabilities Enrolled'",
-                   DISAB_enrolledplot_options),
-                 conditionalPanel(
-                   condition="input.plot_radio == 'Students with Disabilities' && input.plot_level == 'Disabilities Mobility Enrollment'",
-                   DISAB_mobenrollmentplot_options),
-                 conditionalPanel(
-                   condition="input.plot_radio == 'Students with Disabilities' && input.plot_level == 'Disabilities Mobility Rate'",
-                   DISAB_mobrateplot_options),
-                 
-                 
-                 #LOW
-                 conditionalPanel(
-                   condition="input.plot_radio == 'Low Income' && input.plot_level == 'Low Income Students Enrolled'",
-                   LOW_enrolledplot_options),
-                 conditionalPanel(
-                   condition="input.plot_radio == 'Low Income' && input.plot_level == 'Low Income Mobility Enrollment'",
-                   LOW_mobenrollmentplot_options),
-                 conditionalPanel(
-                   condition="input.plot_radio == 'Low Income' && input.plot_level == 'Low Income Mobility Rate'",
-                   LOW_mobrateplot_options),
-                 
-                 #HINE
-                 conditionalPanel(
-                   condition="input.plot_radio == 'High Needs' && input.plot_level == 'High Needs Students Enrolled'",
-                   HINE_enrolledplot_options),
-                 conditionalPanel(
-                   condition="input.plot_radio == 'High Needs' && input.plot_level == 'High Needs Mobility Enrollment'",
-                   HINE_mobenrollmentplot_options),
-                 conditionalPanel(
-                   condition="input.plot_radio == 'High Needs' && input.plot_level == 'High Needs Mobility Rate'",
-                   HINE_mobrateplot_options),
-                 
-                 value="plot"),
-                   
-       
-       
+                   condition="input.plot_radio == 'English Language Learners' && input.plot_level == 'English Language Learners Mobility Enrollment' |
+                   input.plot_radio == 'English Language Learners' && input.plot_level == English Language Learners 'Mobility Rate' |
+                   input.plot_radio == 'Students with Disabilities' && input.plot_level == 'Disabilities Mobility Enrollment' |
+                   input.plot_radio == 'Students with Disabilities' && input.plot_level == 'Disabilities Mobility Rate' |
+                   input.plot_radio == 'Low Income' && input.plot_level == 'Low Income Mobility Enrollment' | 
+                   input.plot_radio == 'Low Income' && input.plot_level == 'Low Income Mobility Rate' |
+                   input.plot_radio == 'High Needs' && input.plot_level == 'High Needs Mobility Enrollment' |
+                   input.plot_radio == 'High Needs' && input.plot_level == 'High Needs Mobility Rate'",
+                   stackedcountchart)
+                ),
+                value="plot"),
         
-        ## plot map
-#         tabPanel("Map",
-#                  
-#                  ## Add a little CSS to make the map background pure white
-#                  tags$head(tags$style("
-#                                       #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
-#                                       .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
-#                                       ")),
-#                  textOutput("map_title"),
-#                  htmlOutput("gvis"),
-#                  value="map"
-#                  ),
-#                  ## Map Creation
-#                  leafletMap("map", width="100%", height=500, 
-#                             options=list(center = c(42.15, -71.65), zoom=8, 
-#                                          ##Bounds for the map for when zoomed in on mass
-#                                          maxBounds = list(list(41, -73.5), 
-#                                                           list(43, -70)))),
-#                  ## Info Box 
-#                  conditionalPanel(
-#                    condition="input.action != 0",
-#                    absolutePanel(left=100, top=450, width=300, class="floater",
-#                                  htmlOutput("details"))),
-#                  
-#                  conditionalPanel(
-#                    condition="input.tabs == 'map' && input.action == 0",
-#                    ## within the map area, you can create an action button.  similar to initializing the legend but just putting a button instead.
-#                    absolutePanel(right = 400, top = 300, class = "floater",
-#                                  actionButton("action", "Generate Map")
-#                    )),
-                 
-                 ## Employment Legend
-                 
-#                  
-#                  ## Establishments Legend
-#                  conditionalPanel(
-#                    condition="input.map_radio =='Establishments' && input.map_display_radio=='Actual Values' && input.action != 0",
-#                    absolutePanel(
-#                      right = 20, top = 150, draggable=FALSE, style = "",
-#                      class = "floater",
-#                      strong("Number of"),
-#                      br(),
-#                      strong("Business Establishments"),
-#                      tags$table(
-#                        mapply(function(from, to, color) {
-#                          tags$tr(
-#                            tags$td(tags$div(
-#                              style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
-#                            )),
-#                            tags$td(prettyNum(round(from), big.mark = ","), "to",
-#                                    prettyNum(round(to), big.mark = ","),  align = "right")
-#                          )
-#                        },
-#                        estcolorRanges$from, estcolorRanges$to, map_colors[-length(map_colors)],
-#                        SIMPLIFY=FALSE),
-#                        tags$tr(
-#                          tags$td(tags$div(
-#                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
-#                          )),
-#                          tags$td("Data not available", align = "right")
-#                        )
-#                      )
-#                    )),
-#                  ## Wages Legend
-#                  conditionalPanel(
-#                    condition="input.map_radio =='Wages' && input.map_display_radio=='Actual Values' && input.action != 0",
-#                    absolutePanel(
-#                      right = 30, top = 150, draggable=FALSE, style = "",
-#                      class = "floater",
-#                      strong("Average Weekly Wage"),
-#                      tags$table(
-#                        mapply(function(from, to, color) {
-#                          tags$tr(
-#                            tags$td(tags$div(
-#                              style = sprintf("width: 16px; height: 16px; background-color: %s; border:1px solid black;", color)
-#                            )),
-#                            tags$td(prettyNum(round(from), big.mark = ","), "to",
-#                                    prettyNum(round(to), big.mark = ","),align = "right")
-#                          )
-#                        },
-#                        wagecolorRanges$from, wagecolorRanges$to, map_colors[-length(map_colors)],
-#                        SIMPLIFY=FALSE),
-#                        tags$tr(
-#                          tags$td(tags$div(
-#                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
-#                          )),
-#                          tags$td("Data not available", align = "right")
-#                        )
-#                      )
-#                    )
-#                    ),
-#                  ## Change Since 2003 Legend
-#                  conditionalPanel(
-#                    condition="input.map_display_radio=='Change_Pct' && input.action != 0",
-#                    absolutePanel(
-#                      right = 10, top = 130, draggable=FALSE, style = "",
-#                      class = "floater",
-#                      strong("Change Since 2003"),
-#                      tags$table(
-#                        mapply(function(from, to, color) {
-#                          tags$tr(
-#                            tags$td(tags$div(
-#                              style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
-#                            )),
-#                            tags$td(prettyNum(round(from, 2)), "% to",
-#                                    prettyNum(round(to, 2)), "%", align = "right")
-#                          )
-#                        },
-#                        pctcolorRanges$from, pctcolorRanges$to, pctmap_colors[-length(pctmap_colors)],
-#                        SIMPLIFY=FALSE),
-#                        tags$tr(
-#                          tags$td(tags$div(
-#                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
-#                          )),
-#                          tags$td("Data not available", align = "right")
-#                        )
-#                      )
-#                    ),
-#                    p(strong("This is calculated by comparing the monthly employment estimate or weekly wage estimate for a specific year to the baseline year, 2003.  The baseline year, 2003, is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003."))),
-#                  
-#                  #                plot_main_text,
-#                  value="map"),
-#         
-# 
-
-##plot leaflet map
+           ##plot leaflet map
 tabPanel("Map",
          
          ## Add a little CSS to make the map background pure white
