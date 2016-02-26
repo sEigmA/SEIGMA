@@ -80,8 +80,7 @@ shinyUI(fluidPage(
                               "English Language Learners"="English Language Learners",
                               "Students with Disabilities"="Students with Disabilities",
                               "Low Income"="Low Income", "High Needs"="High Needs"),
-             selected="Race/Ethnicity"
-                  )
+             selected="Race/Ethnicity")
                  )
              ,
              #
@@ -152,96 +151,7 @@ shinyUI(fluidPage(
                                 multiple=FALSE, selected=" "),
                     
                     ##if county is not chosen, select school from list of all schools
-                    conditionalPanel(
-                      condition="input.plot_county==' '" ,
-                      selectInput("plot_school", "Choose School",
-                                  choices= c(all_schools), multiple = F, selected=NULL)
-                      ),
-                    ##if county is chosen, select school from list of county's  schools
-                    conditionalPanel(
-                      condition="input.plot_county=='Barnstable'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Barnstable"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Barnstable"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Berkshire'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Berkshire"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Berkshire"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Bristol'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Bristol"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Bristol"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Dukes'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Dukes"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Dukes"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Essex'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Essex"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Essex"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Franklin'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Franklin"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Franklin"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Hampden'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Hampden"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Hampden"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Hampshire'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Hampshire"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Hampshire"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Middlesex'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Middlesex"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Middlesex"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Nantucket'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Nantucket"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Nantucket"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Norfolk'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Norfolk"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Norfolk"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Plymouth'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Plymouth"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Plymouth"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Suffolk'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Suffolk"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Suffolk"]))[1])
-                    ),
-                    conditionalPanel(
-                      condition="input.plot_county=='Worcester'",
-                      selectInput("plot_school", "Choose School",
-                                  choices= as.character(unlist(all_school_table["Worcester"])), multiple = F, 
-                                  selected=as.character(unlist(all_school_table["Worcester"]))[1])
-                    ),
+                    uiOutput("plot_schoolui"),
                     
                     #select variable
                      radioButtons("plot_radio", "Variables",
@@ -250,21 +160,23 @@ shinyUI(fluidPage(
                                    "English Language Learners"="English Language Learners",
                                    "Students with Disabilities"="Students with Disabilities",
                                    "Low Income"="Low Income", "High Needs"="High Needs"),
-                                 selected="Race/Ethnicity")
-                    ,
+                                 selected="Race/Ethnicity")),
+        
+                    
                     
                     #select level, if necessary
                     conditionalPanel(
-                      condition="input.tabs=='plot' && input.plot_radio =='English Language Learners'",
+                      condition="input.tabs == 'plot' && input.plot_radio =='English Language Learners'",
                                      selectInput("plot_level", "Select Measure",
                                       c("English Language Learners Enrolled",
                                       "First Language Not English Enrolled",
                                       "English Language Learner Mobility Enrollment",
                                       "English Language Learner Mobility Rate"),
-                                      selected="English Language Learners Enrolled")),
+                                      selected="English Language Learners Enrolled")
+                      ),
                     
                     conditionalPanel(
-                      condition="input.tabs=='plot' && input.plot_radio =='Students with Disabilities'",
+                      condition="input.tabs == 'plot' && input.plot_radio =='Students with Disabilities'",
                                      selectInput("plot_level", "Select Measure",
                                        c("Students with Disabilities Enrolled",
                                        "Disabilities Mobility Enrollment","Disabilities Mobility Rate"),
@@ -272,7 +184,7 @@ shinyUI(fluidPage(
                                      ),
                                      
                     conditionalPanel(
-                      condition="input.tabs=='plot' && input.plot_radio =='Low Income'",
+                      condition="input.tabs == 'plot' && input.plot_radio =='Low Income'",
                                      selectInput("plot_level", "Select Measure",
                                                               c("Low Income Students Enrolled",
                                                                   "Low Income Mobility Enrollment",
@@ -281,14 +193,16 @@ shinyUI(fluidPage(
                                      ),
                                      
                     conditionalPanel(
-                      condition="input.tabs=='plot' && input.plot_radio =='High Needs'",
+                      condition="input.tabs == 'plot' && input.plot_radio =='High Needs'",
                                      selectInput("plot_level", "Select Measure",
                                                  c("High Needs Students Enrolled", 
                                                    "High Needs Mobility Enrollment",
                                                    "High Needs Mobility Rate"),
                                                  selected="High Needs Students Enrolled")
                                      )
-        ),
+        
+
+        ,
         tags$hr(),
     
                   
@@ -338,29 +252,17 @@ shinyUI(fluidPage(
         tabPanel("Plot",
                  ##plot upon the selected variable and display option 
                 #percent charts
-                conditionalPanel(condition=
-                                   "input.tabs=='plot'",
+                
                   conditionalPanel(
-                   condition="input.plot_radio %in% c('Race/Ethnicity', 'Gender','Grade Level') |
-                   input.plot_radio == 'English Language Learners' && input.plot_level == 'English Language Learners Enrolled' |
-                   input.plot_radio == 'English Language Learners' && input.plot_level == 'First Language Not English Enrolled' | 
-                   input.plot_radio == 'Students with Disabilities' && input.plot_level == 'Students with Disabilities Enrolled' |
-                   input.plot_radio == 'Low Income' && input.plot_level == 'Low Income Students Enrolled' |
-                   input.plot_radio == 'High Needs' && input.plot_level == 'High Needs Students Enrolled'",
+                   condition="input.plot_radio =='Race/Ethnicity'|| input.plot_radio =='Gender' || input.plot_radio =='Grade Level' || input.plot_radio == 'English Language Learners' && input.plot_level == 'English Language Learners Enrolled' || input.plot_radio == 'English Language Learners' && input.plot_level == 'First Language Not English Enrolled' || input.plot_radio == 'Students with Disabilities' && input.plot_level == 'Students with Disabilities Enrolled' || input.plot_radio == 'Low Income' && input.plot_level == 'Low Income Students Enrolled' || input.plot_radio == 'High Needs' && input.plot_level == 'High Needs Students Enrolled'",
                    stackedpercentchart),
                  #count charts
                  conditionalPanel(
-                   condition="input.plot_radio == 'English Language Learners' && input.plot_level == 'English Language Learners Mobility Enrollment' |
-                   input.plot_radio == 'English Language Learners' && input.plot_level == English Language Learners 'Mobility Rate' |
-                   input.plot_radio == 'Students with Disabilities' && input.plot_level == 'Disabilities Mobility Enrollment' |
-                   input.plot_radio == 'Students with Disabilities' && input.plot_level == 'Disabilities Mobility Rate' |
-                   input.plot_radio == 'Low Income' && input.plot_level == 'Low Income Mobility Enrollment' | 
-                   input.plot_radio == 'Low Income' && input.plot_level == 'Low Income Mobility Rate' |
-                   input.plot_radio == 'High Needs' && input.plot_level == 'High Needs Mobility Enrollment' |
-                   input.plot_radio == 'High Needs' && input.plot_level == 'High Needs Mobility Rate'",
+                   condition="input.plot_radio == 'English Language Learners' && input.plot_level == 'English Language Learners Mobility Enrollment' || input.plot_radio == 'English Language Learners' && input.plot_level == English Language Learners 'Mobility Rate' || input.plot_radio == 'Students with Disabilities' && input.plot_level == 'Disabilities Mobility Enrollment' ||                    input.plot_radio == 'Students with Disabilities' && input.plot_level == 'Disabilities Mobility Rate' ||                    input.plot_radio == 'Low Income' && input.plot_level == 'Low Income Mobility Enrollment' ||                     input.plot_radio == 'Low Income' && input.plot_level == 'Low Income Mobility Rate' ||                    input.plot_radio == 'High Needs' && input.plot_level == 'High Needs Mobility Enrollment' || conditioninput.plot_radio == 'High Needs' && input.plot_level == 'High Needs Mobility Rate'",
                    stackedcountchart)
-                ),
-                value="plot"),
+                ,
+                value="plot")
+        ,
         
            ##plot leaflet map
 tabPanel("Map",
@@ -435,7 +337,8 @@ total wages by the average employment level over three months.  This number is t
                  
                  
                  ## email feedback link
-                 h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
+                 h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), 
+                 value="info"),
         id="tabs"
              
         )

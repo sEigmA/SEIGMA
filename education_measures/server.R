@@ -409,6 +409,79 @@ return(sum_df)
   })
     
   
+  
+  output$plot_schoolui <-renderUI({
+    
+    # Depending on input$input_type, we'll generate a different
+    # UI component and send it to the client.
+    
+    
+    switch(input$plot_county,
+           
+           " "=selectInput("plot_school", "Choose School",
+                           choices= c(all_schools), multiple = F, selected=NULL),
+           
+           "Barnstable" = selectInput("plot_school","Choose School",
+                                      choices = as.character(all_school_table$"Barnstable"),
+                                      selected=as.character(all_school_table$"Barnstable")[1],
+                                      multiple = F), 
+           "Berkshire" = selectInput("plot_school","Choose School",
+                                     choices = as.character(all_school_table$"Berkshire"),
+                                     selected=as.character(all_school_table$"Berkshire")[1],
+                                     multiple = F),
+           "Bristol" = selectInput("plot_school","Choose School",
+                                   choices = as.character(all_school_table$"Bristol"),
+                                   selected=as.character(all_school_table$"Bristol")[1],
+                                   multiple = F), 
+           "Dukes" = selectInput("plot_school","Choose School",
+                                 choices = as.character(all_school_table$"Essex"),
+                                 selected=as.character(all_school_table$"Essex")[1],
+                                 multiple = F), 
+           "Essex" = selectInput("plot_school","Choose School",
+                                 choices = as.character(all_school_table$"Barnstable"),
+                                 selected=as.character(all_school_table$"Barnstable")[1],
+                                 multiple = F),
+           "Franklin" = selectInput("plot_school","Choose School",
+                                    choices = as.character(all_school_table$"Franklin"),
+                                    selected=as.character(all_school_table$"Franklin")[1],
+                                    multiple = F), 
+           "Hampden" = selectInput("plot_school","Choose School",
+                                   choices = as.character(all_school_table$"Hampden"),
+                                   selected=as.character(all_school_table$"Hampden")[1],
+                                   multiple = F), 
+           "Hampshire" = selectInput("plot_school","Choose School",
+                                     choices = as.character(all_school_table$"Middlesex"),
+                                     selected=as.character(all_school_table$"Middlesex")[1],
+                                     multiple = F), 
+           "Middlesex" = selectInput("plot_school","Choose School",
+                                     choices = as.character(all_school_table$"Barnstable"),
+                                     selected=as.character(all_school_table$"Barnstable")[1],
+                                     multiple = F),
+           "Nantucket" = sselectInput("plot_school","Choose School",
+                                      choices = as.character(all_school_table$"Nantucket"),
+                                      selected=as.character(all_school_table$"Nantucket")[1],
+                                      multiple = F),
+           "Norfolk" = selectInput("plot_school","Choose School",
+                                   choices = as.character(all_school_table$"Norfolk"),
+                                   selected=as.character(all_school_table$"Norfolk")[1],
+                                   multiple = F),
+           "Plymouth" = selectInput("plot_school","Choose School",
+                                    choices = as.character(all_school_table$"Plymouth"),
+                                    selected=as.character(all_school_table$"Plymouth")[1],
+                                    multiple = F),
+           "Suffolk" = selectInput("plot_school","Choose School",
+                                   choices = as.character(all_school_table$"Suffolk"),
+                                   selected=as.character(all_school_table$"Suffolk")[1],
+                                   multiple = F),
+           "Worcester" = selectInput("plot_school","Choose School",
+                                     choices = as.character(all_school_table$"Worcester"),
+                                     selected=as.character(all_school_table$"Worcester")[1],
+                                     multiple = F))
+  })
+  
+  
+  
+  
     
     output$colplot<-reactive({
       #message to be displayed when no school selected
