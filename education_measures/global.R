@@ -335,14 +335,14 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
- about_main_text <- p(strong("The SEIGMA Employment App"), "displays average monthly employment, weekly wage, and number of business establishments for Massachusetts municipalities.",
+ about_main_text <- p(strong("The SEIGMA Educational Measures and Student Mobility App"), "displays the percentage of students by race/ethnicity, gender or grade levels and student mobility data for Massachusetts schools.",
                       p(strong("Click on different tabs to view the data in different formats.")),
                       tags$br(),
                       tags$ul(
                         tags$li(p(strong("Summary"), "shows the source data in table format.")),
-                        tags$li(p(strong("Plot"), "compares average monthly employment, weekly wage, and number of business establishments for each municipality.")),
-                        tags$li(p(strong("Map"), "visually displays average monthly employment, weekly wage, and number of business establishments by municipality.")),
-                        tags$li(p(strong("More Info"), "describes the average monthly employment estimate, weekly wage, and number of business establishments including formulas and calculations."))
+                        tags$li(p(strong("Plot"), "compares the percentage of students by race/ethnicity, gender or grade levels and student mobility data for each school.")),
+                        tags$li(p(strong("Map"), "visually displays the percentage of students by race/ethnicity, gender or grade levels and student mobility data by school.")),
+                        tags$li(p(strong("More Info"), "describes education measures including formulas and calculations."))
                       ))
 
 # plot_main_text <- p(strong("Variable Summary:"),

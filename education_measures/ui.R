@@ -209,19 +209,19 @@ shinyUI(fluidPage(
                
                  ## author line
 
-                 helpText("Created by Xuelian Li, Arvind Ramakrishnan, Jenna F. Kiridly and Emily R. Ramos"),
+                 helpText("Created by Justin Baldwin, Jenna F. Kiridly and Xuelian Li "),
                  
                  ## email feedback link
                  ## To develop a link in HTML
                  helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
                  
                  ## data source citation
-                 helpText(a("Massachusetts Office of Labor and Workforce Development, ES-202", href="http://lmi2.detma.org/lmi/lmi_es_a.asp",
+                 helpText(a("Massachusetts Department of Education", href="http://www.doe.mass.edu/",
                             target="_blank")),
                  
                  ## GitHub link
                  helpText(a("View the data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/employment", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education_measures", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     
