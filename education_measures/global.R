@@ -356,11 +356,9 @@ info_side_text <- conditionalPanel(
  font_size <- 14
 # 
  
- font_size <- 14
  
- 
- stackedcountchart<-googleColumnChart("colplot",width="100%", height = "500px",
-                                     options = list(isStacked="TRUE",
+ countcolchart<-googleColumnChart("countcolplot",width="100%", height = "500px",
+                                     options = list(isStacked=TRUE,
                                                     # set fonts
                                                     fontName = "Source Sans Pro",
                                                     fontSize = font_size,
@@ -368,6 +366,7 @@ info_side_text <- conditionalPanel(
                                                     ## set axis titles, ticks, fonts, and ranges
                                                     hAxis = list(
                                                       title = "Start of School Year",
+                                                      ticks = seq(2003,2012,1),
                                                       format = "####",
                                                       textStyle = list(
                                                         fontSize = 14),
@@ -411,8 +410,8 @@ info_side_text <- conditionalPanel(
                                      )
  )
  
- stackedpercentchart <- googleColumnChart("colplot",width="100%", height = "500px",
-                                         options = list(isStacked="percent",
+ percentcolchart <- googleColumnChart("percentcolplot",width="100%", height = "500px",
+                                         options = list(isStacked='percent',
                                                         # set fonts
                                                         fontName = "Source Sans Pro",
                                                         fontSize = font_size,
@@ -421,7 +420,7 @@ info_side_text <- conditionalPanel(
                                                         hAxis = list(
                                                           title = "Start of School Year",
                                                           format = "####",
-                                                          #  ticks = seq(2002, 2012, 2),
+                                                          ticks = seq(2003,2012,1),
                                                           #  viewWindow = list(min=, max=),
                                                           textStyle = list(
                                                             fontSize = 14),
