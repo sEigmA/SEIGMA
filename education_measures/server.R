@@ -283,9 +283,10 @@ return(sum_df)
         select(1,3, 6, sel_col_num) %>% 
         arrange(school.year)
       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-      
       col_sums<-apply(plot_df[,4:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
       remove_cols<-as.numeric(which(col_sums==0))
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
       
     } else if (input$plot_radio=="Gender") {
       sel_col_num<-c(75:76)
@@ -296,9 +297,10 @@ return(sum_df)
         select(1,3, 6, sel_col_num) %>% 
         arrange(school.year)
       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-      
       col_sums<-apply(plot_df[,4:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
       remove_cols<-as.numeric(which(col_sums==0))
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
       
     } else if (input$plot_radio=="Grade Level") {
       sel_col_num<-c(7:21)
@@ -309,9 +311,9 @@ return(sum_df)
         select(1,3, 6, sel_col_num) %>% 
         arrange(school.year)
       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-      
       col_sums<-apply(plot_df[,4:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
       remove_cols<-as.numeric(which(col_sums==0))
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
       #ELL
     } else if (input$plot_radio=="English Language Learners" & input$plot_level=="English Language Learners Enrolled") {
@@ -324,6 +326,8 @@ return(sum_df)
         arrange(school.year)
       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
       remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
     } else if (input$plot_radio=="English Language Learners" & input$plot_level=="First Language Not English Enrolled") {
       sel_col_num<-c(84, 32)
       df_colnames<-c("Others", "First Language Not English Enrolled")
@@ -332,9 +336,10 @@ return(sum_df)
         filter(school.name==input$plot_school) %>%
         select(1,3, 6, sel_col_num) %>% 
         arrange(school.year)
-      
       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
       remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
     } else if (input$plot_radio=="English Language Learners" & input$plot_level=="English Language Learners Mobility Enrollment") {
       sel_col_num<-c(51, 54)
       df_colnames<-c("Churn Enrollment for English Language Learning Students",
@@ -344,9 +349,10 @@ return(sum_df)
         filter(school.name==input$plot_school) %>%
         select(1,3, 6, sel_col_num) %>% 
         arrange(school.year)
-      
       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
       remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
       
     } else if (input$plot_radio=="English Language Learners" & input$plot_level=="English Language Learners Mobility Rate") {
       sel_col_num<-c(52, 53, 55)
@@ -358,9 +364,10 @@ return(sum_df)
         filter(school.name==input$plot_school) %>%
         select(1,3, 6, sel_col_num) %>% 
         arrange(school.year)
-      
       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
       remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
       
     #DISAB
   } else if (input$plot_radio=="Students with Disabilities" & input$plot_level=="Students with Disabilities Enrolled") {
@@ -371,9 +378,10 @@ return(sum_df)
       filter(school.name==input$plot_school) %>%
       select(1,3, 6, sel_col_num) %>% 
       arrange(school.year)
-    
     colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
     remove_cols<-NULL
+    return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+    
     } else if (input$plot_radio=="Students with Disabilities" & input$plot_level=="Disabilities Mobility Enrollment") {
     sel_col_num<-c(46, 49)
     df_colnames<-c("Churn Enrollment for Students with Disabilities",
@@ -383,9 +391,10 @@ return(sum_df)
       filter(school.name==input$plot_school) %>%
       select(1,3, 6, sel_col_num) %>% 
       arrange(school.year)
-    
     colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
     remove_cols<-NULL
+    return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+    
   
   } else if (input$plot_radio=="Students with Disabilities" & input$plot_level=="Disabilities Mobility Rate") {
     sel_col_num<-c(47, 48, 50)
@@ -399,6 +408,8 @@ return(sum_df)
       arrange(school.year)
     colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
     remove_cols<-NULL
+    return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+    
     
   #LowIncome
 } else if (input$plot_radio=="Low Income" & input$plot_level=="Low Income Students Enrolled") {
@@ -410,8 +421,9 @@ return(sum_df)
     select(1,3, 6, sel_col_num) %>% 
     arrange(school.year)
   colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-  
   remove_cols<-NULL
+  return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+  
   
 } else if (input$plot_radio=="Low Income" & input$plot_level=="Low Income Mobility Enrollment") {
   sel_col_num<-c(61, 64)
@@ -423,14 +435,23 @@ return(sum_df)
     select(1,3, 6, sel_col_num) %>% 
     arrange(school.year)
   colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-  
   remove_cols<-NULL
+  return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+  
 } else if (input$plot_radio=="Low Income" & input$plot_level=="Low Income Mobility Rate") {
   sel_col_num<-c(62, 63, 65)
-  remove_cols<-NULL
   df_colnames<-c("Churn Rate for Low Income Students",
                  "Intake Rate for Low Income Students",
                  "Stability Rate for Low Income Students")
+  plot_df <- edum %>%
+    filter(school.name==input$plot_school) %>%
+    select(1,3, 6, sel_col_num) %>% 
+    arrange(school.year)
+  colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+  remove_cols<-NULL
+  return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+  
+  
 #High Needs
 } else if (input$plot_radio=="High Needs" & input$plot_level=="High Needs Students Enrolled") {
   sel_col_num<-c(88, 44)
@@ -441,8 +462,9 @@ return(sum_df)
     select(1,3, 6, sel_col_num) %>% 
     arrange(school.year)
   colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-  
   remove_cols<-NULL
+  return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+  
 } else if (input$plot_radio=="High Needs" & input$plot_level=="High Needs Mobility Enrollment") {
   sel_col_num<-c(56, 59)
   df_colnames<-c("Churn Enrollment for High Needs Students",
@@ -454,6 +476,7 @@ return(sum_df)
     arrange(school.year)
   colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
   remove_cols<-NULL
+  return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
   
 } else if (input$plot_radio=="High Needs" & input$plot_level=="High Needs Mobility Rate") {
   sel_col_num<-c(57, 58, 60)
@@ -467,6 +490,8 @@ return(sum_df)
     arrange(school.year)
   colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
   remove_cols<-NULL
+  return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+  
   }
     
     
@@ -480,7 +505,6 @@ return(sum_df)
           #-rates [stacked bar]
           
         
-          return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
   })
     
   
@@ -494,7 +518,7 @@ return(sum_df)
       r_plot_df<-r_plot_df()
       
       validate(
-        need(is.null(input$plot_level)==FALSE, "Please select a measure")
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
       )
      
         list(
@@ -509,7 +533,7 @@ return(sum_df)
       r_plot_df<-r_plot_df()
       
       validate(
-        need(is.null(input$plot_level)==FALSE, "Please select a measure")
+        need(is.null(input$plot_school)==FALSE, "Please select a school")
       )
       
       list(
