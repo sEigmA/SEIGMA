@@ -160,13 +160,13 @@ shinyUI(fluidPage(
                                    "English Language Learners"="English Language Learners",
                                    "Students with Disabilities"="Students with Disabilities",
                                    "Low Income"="Low Income", "High Needs"="High Needs"),
-                                 selected="Race/Ethnicity")),
+                                 selected="Race/Ethnicity"),
         
                     
                     
                     #select level, if necessary
                     conditionalPanel(
-                      condition="input.tabs == 'plot' && input.plot_radio =='English Language Learners'",
+                      condition="input.plot_radio =='English Language Learners'",
                                      selectInput("plot_level", "Select Measure",
                                       c("English Language Learners Enrolled",
                                       "First Language Not English Enrolled",
@@ -176,7 +176,7 @@ shinyUI(fluidPage(
                       ),
                     
                     conditionalPanel(
-                      condition="input.tabs == 'plot' && input.plot_radio =='Students with Disabilities'",
+                      condition="input.plot_radio =='Students with Disabilities'",
                                      selectInput("plot_level", "Select Measure",
                                        c("Students with Disabilities Enrolled",
                                        "Disabilities Mobility Enrollment","Disabilities Mobility Rate"),
@@ -184,7 +184,7 @@ shinyUI(fluidPage(
                                      ),
                                      
                     conditionalPanel(
-                      condition="input.tabs == 'plot' && input.plot_radio =='Low Income'",
+                      condition="input.plot_radio =='Low Income'",
                                      selectInput("plot_level", "Select Measure",
                                                               c("Low Income Students Enrolled",
                                                                   "Low Income Mobility Enrollment",
@@ -193,14 +193,14 @@ shinyUI(fluidPage(
                                      ),
                                      
                     conditionalPanel(
-                      condition="input.tabs == 'plot' && input.plot_radio =='High Needs'",
+                      condition="input.plot_radio =='High Needs'",
                                      selectInput("plot_level", "Select Measure",
                                                  c("High Needs Students Enrolled", 
                                                    "High Needs Mobility Enrollment",
                                                    "High Needs Mobility Rate"),
                                                  selected="High Needs Students Enrolled")
                                      )
-        
+        )
 
         ,
         tags$hr(),
