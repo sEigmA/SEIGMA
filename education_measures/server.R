@@ -274,7 +274,7 @@ return(sum_df)
     
     sel_col_num<-c()
     df_colnames<-c()
-    if (input$plot_radio=="Race/Ethnicity") {
+    if (input$plot_radio=="race") {
       sel_col_num<-c(77:83)
       df_colnames<-c("African American", "Asian", "Hispanic", "White", "Native American", "Native Hawaiian Pacific Islander", "Multi-race non-Hispanic")
       
@@ -288,7 +288,7 @@ return(sum_df)
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
       
-    } else if (input$plot_radio=="Gender") {
+    } else if (input$plot_radio=="gender") {
       sel_col_num<-c(75:76)
       df_colnames<-c( "Males", "Females")
       
@@ -302,7 +302,7 @@ return(sum_df)
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
       
-    } else if (input$plot_radio=="Grade Level") {
+    } else if (input$plot_radio=="grade") {
       sel_col_num<-c(7:21)
       df_colnames<-names(edu_data)[7:21]
       
@@ -316,7 +316,7 @@ return(sum_df)
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
       #ELL
-    } else if (input$plot_radio=="English Language Learners" & input$plot_level=="English Language Learners Enrolled") {
+    } else if (input$plot_radio=="ell" & input$plot_level=="English Language Learners Enrolled") {
       sel_col_num<-c(85, 34)
       df_colnames<-c("Others", "English Language Learners Enrolled")
       
@@ -328,7 +328,7 @@ return(sum_df)
       remove_cols<-NULL
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
-    } else if (input$plot_radio=="English Language Learners" & input$plot_level=="First Language Not English Enrolled") {
+    } else if (input$plot_radio=="ell" & input$plot_level=="First Language Not English Enrolled") {
       sel_col_num<-c(84, 32)
       df_colnames<-c("Others", "First Language Not English Enrolled")
       
@@ -340,7 +340,7 @@ return(sum_df)
       remove_cols<-NULL
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
-    } else if (input$plot_radio=="English Language Learners" & input$plot_level=="English Language Learners Mobility Enrollment") {
+    } else if (input$plot_radio=="ell" & input$plot_level=="English Language Learners Mobility Enrollment") {
       sel_col_num<-c(51, 54)
       df_colnames<-c("Churn Enrollment for English Language Learning Students",
                      "Stability Enrollment for English Language Learning Students")
@@ -354,7 +354,7 @@ return(sum_df)
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
       
-    } else if (input$plot_radio=="English Language Learners" & input$plot_level=="English Language Learners Mobility Rate") {
+    } else if (input$plot_radio=="ell" & input$plot_level=="English Language Learners Mobility Rate") {
       sel_col_num<-c(52, 53, 55)
       df_colnames<-c("Churn Rate for English Language Learning Students",
                      "Intake Rate for English Language Learning Students",
@@ -370,7 +370,7 @@ return(sum_df)
       
       
     #DISAB
-  } else if (input$plot_radio=="Students with Disabilities" & input$plot_level=="Students with Disabilities Enrolled") {
+  } else if (input$plot_radio=="disab" & input$plot_level=="Students with Disabilities Enrolled") {
     sel_col_num<-c(86, 36)
     df_colnames<-c("Others", "Students with Disabilities Enrolled")
     
@@ -382,7 +382,7 @@ return(sum_df)
     remove_cols<-NULL
     return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
     
-    } else if (input$plot_radio=="Students with Disabilities" & input$plot_level=="Disabilities Mobility Enrollment") {
+    } else if (input$plot_radio=="disab" & input$plot_level=="Disabilities Mobility Enrollment") {
     sel_col_num<-c(46, 49)
     df_colnames<-c("Churn Enrollment for Students with Disabilities",
                    "Stability Enrollment for Students with Disabilities")
@@ -396,7 +396,7 @@ return(sum_df)
     return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
     
   
-  } else if (input$plot_radio=="Students with Disabilities" & input$plot_level=="Disabilities Mobility Rate") {
+  } else if (input$plot_radio=="disab" & input$plot_level=="Disabilities Mobility Rate") {
     sel_col_num<-c(47, 48, 50)
     df_colnames<-c("Churn Rate for Students with Disabilities",
                    "Intake Rate for Students with Disabilities",
@@ -412,7 +412,7 @@ return(sum_df)
     
     
   #LowIncome
-} else if (input$plot_radio=="Low Income" & input$plot_level=="Low Income Students Enrolled") {
+} else if (input$plot_radio=="low" & input$plot_level=="Low Income Students Enrolled") {
   sel_col_num<-c(87, 38)
   df_colnames<-c("Others", "Low Income Students Enrolled")
   
@@ -425,7 +425,7 @@ return(sum_df)
   return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
   
   
-} else if (input$plot_radio=="Low Income" & input$plot_level=="Low Income Mobility Enrollment") {
+} else if (input$plot_radio=="low" & input$plot_level=="Low Income Mobility Enrollment") {
   sel_col_num<-c(61, 64)
   df_colnames<-c("Churn Enrollment for Low Income Students",
                  "Stability Enrollment for Low Income Students")
@@ -438,7 +438,7 @@ return(sum_df)
   remove_cols<-NULL
   return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
   
-} else if (input$plot_radio=="Low Income" & input$plot_level=="Low Income Mobility Rate") {
+} else if (input$plot_radio=="low" & input$plot_level=="Low Income Mobility Rate") {
   sel_col_num<-c(62, 63, 65)
   df_colnames<-c("Churn Rate for Low Income Students",
                  "Intake Rate for Low Income Students",
@@ -453,7 +453,7 @@ return(sum_df)
   
   
 #High Needs
-} else if (input$plot_radio=="High Needs" & input$plot_level=="High Needs Students Enrolled") {
+} else if (input$plot_radio=="high" & input$plot_level=="High Needs Students Enrolled") {
   sel_col_num<-c(88, 44)
   df_colnames<-c("Others", "High Needs Students Enrolled")
   
@@ -465,7 +465,7 @@ return(sum_df)
   remove_cols<-NULL
   return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
   
-} else if (input$plot_radio=="High Needs" & input$plot_level=="High Needs Mobility Enrollment") {
+} else if (input$plot_radio=="high" & input$plot_level=="High Needs Mobility Enrollment") {
   sel_col_num<-c(56, 59)
   df_colnames<-c("Churn Enrollment for High Needs Students",
                  "Stability Enrollment for High Needs Students")
@@ -478,7 +478,7 @@ return(sum_df)
   remove_cols<-NULL
   return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
   
-} else if (input$plot_radio=="High Needs" & input$plot_level=="High Needs Mobility Rate") {
+} else if (input$plot_radio=="high" & input$plot_level=="High Needs Mobility Rate") {
   sel_col_num<-c(57, 58, 60)
   df_colnames<-c("Churn Rate for High Needs Students",
                  "Intake Rate for High Needs Students",
