@@ -266,15 +266,21 @@ return(sum_df)
   
   
            
-  #plot dataframe          
-  r_plot_df<-reactive({
+  #plot dataframe for the percent plot    
+  r_percentplot_df<-reactive({
     
     edum<-edum()
     
     
     sel_col_num<-c()
     df_colnames<-c()
-    if (input$plot_radio=="race") {
+    
+    #
+    #make dataframe for the enrolled profile plot: each column is a count that will converted to percent
+    #
+    
+    
+    if (input$plot_enrolled=="race") {
       sel_col_num<-c(77:83)
       df_colnames<-c("African American", "Asian", "Hispanic", "White", "Native American", "Native Hawaiian Pacific Islander", "Multi-race non-Hispanic")
       
@@ -288,7 +294,7 @@ return(sum_df)
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
       
-    } else if (input$plot_radio=="gender") {
+    } else if (input$plot_enrolled=="gender") {
       sel_col_num<-c(75:76)
       df_colnames<-c( "Males", "Females")
       
@@ -302,7 +308,7 @@ return(sum_df)
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
       
-    } else if (input$plot_radio=="grade") {
+    } else if (input$plot_enrolled=="grade") {
       sel_col_num<-c(7:21)
       df_colnames<-names(edu_data)[7:21]
       
@@ -316,9 +322,9 @@ return(sum_df)
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
       #ELL
-    } else if (input$plot_radio=="ell" & input$plot_level=="English Language Learners Enrolled") {
-      sel_col_num<-c(85, 34)
-      df_colnames<-c("Others", "English Language Learners Enrolled")
+    } else if (input$plot_enrolled=="ell") {
+      sel_col_num<-c(34, 85)
+      df_colnames<-c("English Language Learners Enrolled", "Others")
       
       plot_df <- edum %>%
         filter(school.name==input$plot_school) %>%
@@ -328,9 +334,9 @@ return(sum_df)
       remove_cols<-NULL
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
-    } else if (input$plot_radio=="ell" & input$plot_level=="First Language Not English Enrolled") {
-      sel_col_num<-c(84, 32)
-      df_colnames<-c("Others", "First Language Not English Enrolled")
+    } else if (input$plot_enrolled=="flnl") {
+      sel_col_num<-c(32, 84)
+      df_colnames<-c("First Language Not English Enrolled", "Others")
       
       plot_df <- edum %>%
         filter(school.name==input$plot_school) %>%
@@ -340,10 +346,21 @@ return(sum_df)
       remove_cols<-NULL
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
-    } else if (input$plot_radio=="ell" & input$plot_level=="English Language Learners Mobility Enrollment") {
-      sel_col_num<-c(51, 54)
-      df_colnames<-c("Churn Enrollment for English Language Learning Students",
-                     "Stability Enrollment for English Language Learning Students")
+    }else if (input$plot_enrolled=='disab') {
+      sel_col_num<-c(36, 86)
+      df_colnames<-c( "Students with Disabilities Enrolled", "Others")
+      
+      plot_df <- edum %>%
+        filter(school.name==input$plot_school) %>%
+        select(1,3, 6, sel_col_num) %>% 
+        arrange(school.year)
+      colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
+    } else if (input$plot_enrolled=='low') {
+      sel_col_num<-c(38,87)
+      df_colnames<-c("Low Income Students Enrolled", "Others")
       
       plot_df <- edum %>%
         filter(school.name==input$plot_school) %>%
@@ -354,11 +371,10 @@ return(sum_df)
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
       
-    } else if (input$plot_radio=="ell" & input$plot_level=="English Language Learners Mobility Rate") {
-      sel_col_num<-c(52, 53, 55)
-      df_colnames<-c("Churn Rate for English Language Learning Students",
-                     "Intake Rate for English Language Learning Students",
-                     "Stability Rate for English Language Learning Students")
+    }  #HGIH NEEDS ENROLLED ONLY AVAILABLE IN 2012
+      else if (input$plot_enrolled=='high') {
+      sel_col_num<-c(44, 88)
+      df_colnames<-c("High Needs Students Enrolled","Others")
       
       plot_df <- edum %>%
         filter(school.name==input$plot_school) %>%
@@ -368,179 +384,251 @@ return(sum_df)
       remove_cols<-NULL
       return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
       
-      
-    #DISAB
-  } else if (input$plot_radio=="disab" & input$plot_level=="Students with Disabilities Enrolled") {
-    sel_col_num<-c(86, 36)
-    df_colnames<-c("Others", "Students with Disabilities Enrolled")
-    
-    plot_df <- edum %>%
-      filter(school.name==input$plot_school) %>%
-      select(1,3, 6, sel_col_num) %>% 
-      arrange(school.year)
-    colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-    remove_cols<-NULL
-    return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
-    
-    } else if (input$plot_radio=="disab" & input$plot_level=="Disabilities Mobility Enrollment") {
-    sel_col_num<-c(46, 49)
-    df_colnames<-c("Churn Enrollment for Students with Disabilities",
-                   "Stability Enrollment for Students with Disabilities")
-    
-    plot_df <- edum %>%
-      filter(school.name==input$plot_school) %>%
-      select(1,3, 6, sel_col_num) %>% 
-      arrange(school.year)
-    colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-    remove_cols<-NULL
-    return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
-    
-  
-  } else if (input$plot_radio=="disab" & input$plot_level=="Disabilities Mobility Rate") {
-    sel_col_num<-c(47, 48, 50)
-    df_colnames<-c("Churn Rate for Students with Disabilities",
-                   "Intake Rate for Students with Disabilities",
-                   "Stability Rate for Students with Disabilities")
-    
-    plot_df <- edum %>%
-      filter(school.name==input$plot_school) %>%
-      select(1,3, 6, sel_col_num) %>% 
-      arrange(school.year)
-    colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-    remove_cols<-NULL
-    return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
-    
-    
-  #LowIncome
-} else if (input$plot_radio=="low" & input$plot_level=="Low Income Students Enrolled") {
-  sel_col_num<-c(87, 38)
-  df_colnames<-c("Others", "Low Income Students Enrolled")
-  
-  plot_df <- edum %>%
-    filter(school.name==input$plot_school) %>%
-    select(1,3, 6, sel_col_num) %>% 
-    arrange(school.year)
-  colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-  remove_cols<-NULL
-  return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      }  
   
   
-} else if (input$plot_radio=="low" & input$plot_level=="Low Income Mobility Enrollment") {
-  sel_col_num<-c(61, 64)
-  df_colnames<-c("Churn Enrollment for Low Income Students",
-                 "Stability Enrollment for Low Income Students")
-  
-  plot_df <- edum %>%
-    filter(school.name==input$plot_school) %>%
-    select(1,3, 6, sel_col_num) %>% 
-    arrange(school.year)
-  colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-  remove_cols<-NULL
-  return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
-  
-} else if (input$plot_radio=="low" & input$plot_level=="Low Income Mobility Rate") {
-  sel_col_num<-c(62, 63, 65)
-  df_colnames<-c("Churn Rate for Low Income Students",
-                 "Intake Rate for Low Income Students",
-                 "Stability Rate for Low Income Students")
-  plot_df <- edum %>%
-    filter(school.name==input$plot_school) %>%
-    select(1,3, 6, sel_col_num) %>% 
-    arrange(school.year)
-  colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-  remove_cols<-NULL
-  return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
-  
-  
-#High Needs
-} else if (input$plot_radio=="high" & input$plot_level=="High Needs Students Enrolled") {
-  sel_col_num<-c(88, 44)
-  df_colnames<-c("Others", "High Needs Students Enrolled")
-  
-  plot_df <- edum %>%
-    filter(school.name==input$plot_school) %>%
-    select(1,3, 6, sel_col_num) %>% 
-    arrange(school.year)
-  colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-  remove_cols<-NULL
-  return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
-  
-} else if (input$plot_radio=="high" & input$plot_level=="High Needs Mobility Enrollment") {
-  sel_col_num<-c(56, 59)
-  df_colnames<-c("Churn Enrollment for High Needs Students",
-                 "Stability Enrollment for High Needs Students")
-  
-  plot_df <- edum %>%
-    filter(school.name==input$plot_school) %>%
-    select(1,3, 6, sel_col_num) %>% 
-    arrange(school.year)
-  colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-  remove_cols<-NULL
-  return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
-  
-} else if (input$plot_radio=="high" & input$plot_level=="High Needs Mobility Rate") {
-  sel_col_num<-c(57, 58, 60)
-  df_colnames<-c("Churn Rate for High Needs Students",
-                 "Intake Rate for High Needs Students",
-                 "Stability Rate for High Needs Students")
-  
-  plot_df <- edum %>%
-    filter(school.name==input$plot_school) %>%
-    select(1,3, 6, sel_col_num) %>% 
-    arrange(school.year)
-  colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-  remove_cols<-NULL
-  return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
-  
-  }
-    
-    
-    
-    #drop columns that have nothing in them: only important for grade level, gender and race legend
-    
-    #otherwise keep all selected columns
-    #if any mobilitygroup is chosen, refine columns to get 
-    #-students enrolled (plus total-subgroup) [stacked bar, %]
-    #-enrollment [stacked bar, %]
-          #-rates [stacked bar]
-          
-        
   })
     
   
-  
-  
-  
+  output$percentcolplot<-reactive({
+    #message to be displayed when no school selected
     
-    output$countcolplot<-reactive({
-      #message to be displayed when no school selected
-      
-      r_plot_df<-r_plot_df()
-      
-      validate(
-        need(is.null(input$plot_school)==FALSE, "Please select a school")
-      )
-     
-        list(
-               data=googleDataTable(r_plot_df)
-             )
-        
-      })
+    r_plot<-r_percentplot_df()
+    validate(
+      need(is.null(input$plot_school)==FALSE, "Please select a school")
+    )
     
-    output$percentcolplot<-reactive({
-      #message to be displayed when no school selected
-      
-      r_plot_df<-r_plot_df()
-      
-      validate(
-        need(is.null(input$plot_school)==FALSE, "Please select a school")
-      )
-      
-      list(
-        data=googleDataTable(r_plot_df)
-      )
-      
-    })
+    list(
+      data=googleDataTable(r_plot)
+    )
+    
+  })
+  
+  
+  
+  #ELL Enrollment plots
+    
+#     output$ell_mobenrollment_plot<-reactive({
+#       #message to be displayed when no school selected
+#       
+#       validate(
+#         need(is.null(input$plot_school)==FALSE, "Please select a school")
+#       )
+#      edum<-edum()
+#       
+#      sel_col_num<-c(51, 54)
+#         df_colnames<-c("Churn Enrollment for English Language Learning Students",
+#                        "Stability Enrollment for English Language Learning Students")
+#         
+#         plot_df <- edum %>%
+#           filter(school.name==input$plot_school) %>%
+#           select(1,3, 6, sel_col_num) %>% 
+#           arrange(school.year)
+#         colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+#         
+#       
+#         list(
+#                data=googleDataTable(plot_df)
+#              )
+#         
+#       })
+#     
+#     output$ell_mobrate_plot<-reactive({
+#       #message to be displayed when no school selected
+#       
+#       validate(
+#         need(is.null(input$plot_school)==FALSE, "Please select a school")
+#       )
+#       edum<-edum()
+#       
+#       sel_col_num<-c(52, 53, 55)
+#       df_colnames<-c("Churn Rate for English Language Learning Students",
+#                      "Intake Rate for English Language Learning Students",
+#                      "Stability Rate for English Language Learning Students")
+#       
+#       plot_df <- edum %>%
+#         filter(school.name==input$plot_school) %>%
+#         select(1,3, 6, sel_col_num) %>% 
+#         arrange(school.year)
+#       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+#       
+#       
+#       list(
+#         data=googleDataTable(plot_df)
+#       )
+#       
+#       
+#       
+#     })
+#     
+#     #disab
+#     output$disab_mobenrollment_plot<-reactive({
+#       #message to be displayed when no school selected
+#       
+#       validate(
+#         need(is.null(input$plot_school)==FALSE, "Please select a school")
+#       )
+#       edum<-edum()
+#       
+#       sel_col_num<-c(46, 49)
+#       df_colnames<-c("Churn Enrollment for Students with Disabilities",
+#                      "Stability Enrollment for Students with Disabilities")
+#       
+#       plot_df <- edum %>%
+#         filter(school.name==input$plot_school) %>%
+#         select(1,3, 6, sel_col_num) %>% 
+#         arrange(school.year)
+#       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+#       
+#       
+#       list(
+#         data=googleDataTable(plot_df)
+#       )
+#       
+#       
+#     })
+#     
+#     output$disab_mobrate_plot<-reactive({
+#       #message to be displayed when no school selected
+#       
+#       validate(
+#         need(is.null(input$plot_school)==FALSE, "Please select a school")
+#       )
+#       edum<-edum()
+#       
+#       sel_col_num<-c(47, 48, 50)
+#       df_colnames<-c("Churn Rate for Students with Disabilities",
+#                      "Intake Rate for Students with Disabilities",
+#                      "Stability Rate for Students with Disabilities")
+#       
+#       plot_df <- edum %>%
+#         filter(school.name==input$plot_school) %>%
+#         select(1,3, 6, sel_col_num) %>% 
+#         arrange(school.year)
+#       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+#       
+#       
+#       list(
+#         data=googleDataTable(plot_df)
+#       )
+#       
+#       
+#       
+#     })
+#     
+#     ##LOW
+#     
+#     output$low_mobenrollment_plot<-reactive({
+#       #message to be displayed when no school selected
+#       
+#       validate(
+#         need(is.null(input$plot_school)==FALSE, "Please select a school")
+#       )
+#       edum<-edum()
+#       sel_col_num<-c(61, 64)
+#       df_colnames<-c("Churn Enrollment for Low Income Students",
+#                      "Stability Enrollment for Low Income Students")
+#       
+#       plot_df <- edum %>%
+#         filter(school.name==input$plot_school) %>%
+#         select(1,3, 6, sel_col_num) %>% 
+#         arrange(school.year)
+#       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+#       
+#       
+#       list(
+#         data=googleDataTable(plot_df)
+#       )
+#       
+#       
+#     })
+#     
+#     output$low_mobrate_plot<-reactive({
+#       #message to be displayed when no school selected
+#       
+#       validate(
+#         need(is.null(input$plot_school)==FALSE, "Please select a school")
+#       )
+#       edum<-edum()
+#       
+#       sel_col_num<-c(62, 63, 65)
+#       df_colnames<-c("Churn Rate for Low Income Students",
+#                      "Intake Rate for Low Income Students",
+#                      "Stability Rate for Low Income Students")
+#       plot_df <- edum %>%
+#         filter(school.name==input$plot_school) %>%
+#         select(1,3, 6, sel_col_num) %>% 
+#         arrange(school.year)
+#       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+#       
+#       
+#       list(
+#         data=googleDataTable(plot_df)
+#       )
+#       
+#       
+#       
+#     })
+#     
+#     ##high
+#     output$high_mobenrollment_plot<-reactive({
+#       #message to be displayed when no school selected
+#       
+#       validate(
+#         need(is.null(input$plot_school)==FALSE, "Please select a school")
+#       )
+#       edum<-edum()
+#       
+#       sel_col_num<-c(56, 59)
+#       df_colnames<-c("Churn Enrollment for High Needs Students",
+#                      "Stability Enrollment for High Needs Students")
+#       
+#       plot_df <- edum %>%
+#         filter(school.name==input$plot_school) %>%
+#         select(1,3, 6, sel_col_num) %>% 
+#         arrange(school.year)
+#       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+#       
+#       
+#       list(
+#         data=googleDataTable(plot_df)
+#       )
+#       
+#       
+#     })
+#     
+#     output$high_mobrate_plot<-reactive({
+#       #message to be displayed when no school selected
+#       
+#       validate(
+#         need(is.null(input$plot_school)==FALSE, "Please select a school")
+#       )
+#       edum<-edum()
+#       
+#       sel_col_num<-c(57, 58, 60)
+#       df_colnames<-c("Churn Rate for High Needs Students",
+#                      "Intake Rate for High Needs Students",
+#                      "Stability Rate for High Needs Students")
+#       
+#       plot_df <- edum %>%
+#         filter(school.name==input$plot_school) %>%
+#         select(1,3, 6, sel_col_num) %>% 
+#         arrange(school.year)
+#       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+#       
+#       
+#       list(
+#         data=googleDataTable(plot_df)
+#       )
+#       
+#       })
+#     
+#     
+#     
+#     
+#     
+#     
+    
     
 #   ## for the Google charts plot
 #   output$Emp_plot1 <- reactive({

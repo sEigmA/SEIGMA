@@ -144,6 +144,12 @@ shinyUI(fluidPage(
         conditionalPanel(
                     condition="input.tabs == 'plot'",
                     
+                    ##Select enrollment profile or mobility
+                    selectInput("plot_profile", "Select Data", 
+                                choices=c("Enrollment Profile"="enrolled",
+                                         "Mobility Measures"="mobility"),
+                                selected="enrolled"),
+                    
                     ## Select county
                     selectInput("plot_county", "Select County", 
                                 choices = c(MA_county, " "),
@@ -151,59 +157,37 @@ shinyUI(fluidPage(
                                 multiple=FALSE, selected=" "),
                     
                     ##if county is not chosen, select school from list of all schools
-                    uiOutput("plot_schoolui"),
-                    
+                    uiOutput("plot_schoolui")
+        ), conditionalPanel(
+                    condition="input.tabs== 'plot' && input.plot_profile=='enrolled'",
                     #select variable
-                     radioButtons("plot_radio", "Variables",
+                     radioButtons("plot_enrolled", "Select Profile Variable",
                                  c("Race/Ethnicity"="race", 
                                    "Gender"="gender", 
                                    "Grade Level"="grade",
                                    "English Language Learners"="ell",
+                                   "First Language Not English"="flnl",
                                    "Students with Disabilities"="disab",
-                                   "Low Income"="low", 
-                                   "High Needs"="high"),
-                                 selected=NULL)
-        
-        ),
-                    
-                    #select level, if necessary
-                    conditionalPanel(
-                      condition="input.tabs=='plot' && input.plot_radio =='ell'",
-                                     selectInput("plot_level", "Select Measure",
-                                      c("English Language Learners Enrolled",
-                                      "First Language Not English Enrolled",
-                                      "English Language Learners Mobility Enrollment",
-                                      "English Language Learners Mobility Rate"),
-                                      selected="English Language Learners Enrolled")
-                      ),
-                    
-                    conditionalPanel(
-                      condition="input.tabs=='plot' && input.plot_radio =='disab'",
-                                     selectInput("plot_level", "Select Measure",
-                                       c("Students with Disabilities Enrolled",
-                                       "Disabilities Mobility Enrollment","Disabilities Mobility Rate"),
-                                        selected="Students with Disabilities Enrolled")
-                                     ),
-                                     
-                    conditionalPanel(
-                      condition="input.tabs=='plot' && input.plot_radio =='low'",
-                                     selectInput("plot_level", "Select Measure",
-                                                              c("Low Income Students Enrolled",
-                                                                  "Low Income Mobility Enrollment",
-                                                                  "Low Income Mobility Rate"),
-                                                              selected="Low Income Students Enrolled")
-                                     ),
-                                     
-                    conditionalPanel(
-                      condition="input.tabs=='plot' && input.plot_radio =='high'",
-                                     selectInput("plot_level", "Select Measure",
-                                                 c("High Needs Students Enrolled", 
-                                                   "High Needs Mobility Enrollment",
-                                                   "High Needs Mobility Rate"),
-                                                 selected="High Needs Students Enrolled")
-                                     )
-        
-
+                                   "Low Income"="low"
+                                   #high needs only available data in 2012 - no time series warranted
+                                   , 
+                                   "High Needs"="high"
+                                   ),
+                                 selected='race')
+        ), conditionalPanel(
+           condition="input.tabs== 'plot' && input.plot_profile=='mobility'",
+           #select variable
+           radioButtons("plot_mobility", "Select Interest Group",
+                       c("English Language Learners"="ell",
+                         "Students with Disabilities"="disab",
+                         "Low Income"="low", 
+                         "High Needs"="high"),
+                       selected='ell'),
+           radioButtons("plot_mobility_var", "Select Rate or Enrollment",
+                        c("Rate"="mobrate",
+                          "Enrollment"="mobenrollment"),
+                        selected='mobrate')
+        )
         ,
         tags$hr(),
     
@@ -256,22 +240,43 @@ shinyUI(fluidPage(
                 #percent charts
                 
                   conditionalPanel(
-                   condition="(input.plot_radio =='race'|| input.plot_radio =='gender' || input.plot_radio =='grade' )  ||  
-                   (input.plot_radio== 'ell' && ( input.plot_level == 'English Language Learners Enrolled'  || input.plot_level == 'First Language Not English Enrolled' ) )|| 
-                   (input.plot_radio=='disab' &&  input.plot_level == 'Students with Disabilities Enrolled' ) || 
-                   (input.plot_radio=='low' && input.plot_level == 'Low Income Students Enrolled' )||
-                   (input.plot_radio=='high' &&  input.plot_level == 'High Needs Students Enrolled')",
-                   percentcolchart),
-#                  #count charts
-                 conditionalPanel(
-                   condition="(input.plot_radio!='race' && input.plot_radio!='gender' && input.plot_radio!='grade') && 
-                   (
-                   (input.plot_radio== 'ell' && ( input.plot_level == 'English Language Learners Mobility Enrollment' || input.plot_level == English Language Learners 'Mobility Rate') )|| 
-                   (input.plot_radio== 'disab' && ( input.plot_level == 'Disabilities Mobility Enrollment' || input.plot_level == 'Disabilities Mobility Rate' ) )|| 
-                   (input.plot_radio== 'low' && (input.plot_level == 'Low Income Mobility Enrollment' || input.plot_level == 'Low Income Mobility Rate' ))||
-                   (input.plot_radio=='high' &&  (input.plot_level == 'High Needs Mobility Enrollment' || input.plot_level == 'High Needs Mobility Rate'))
-                   )",
-                   countcolchart)
+                   condition="input.plot_profile=='enrolled",
+                   percentcolchart)
+
+                
+#                 #count charts
+#                 #ell count
+#                  conditionalPanel(
+#                    condition="input.plot_profile=='mobility'",
+#                    #ell
+#                    conditionalPanel(
+#                      condition="input.plot_mobility=='ell' && input.plot_mobility_var=='mobenrollment'",
+#                      ell_mobenrollment_plot_options),
+#                    conditionalPanel(
+#                      condition="input.plot_mobility=='ell' && input.plot_mobility_var=='mobrate'",
+#                      ell_mobrate_plot_options),
+#                    #disab
+#                    conditionalPanel(
+#                      condition="input.plot_mobility=='disab' && input.plot_mobility_var=='mobenrollment'",
+#                      disab_mobenrollment_plot_options),
+#                    conditionalPanel(
+#                      condition="input.plot_mobility=='disab' && input.plot_mobility_var=='mobrate'",
+#                      disab_mobrate_plot_options),
+#                    #low
+#                    conditionalPanel(
+#                      condition="input.plot_mobility=='low' && input.plot_mobility_var=='mobenrollment'",
+#                      low_mobenrollment_plot_options),
+#                    conditionalPanel(
+#                      condition="input.plot_mobility=='low' && input.plot_mobility_var=='mobrate'",
+#                      low_mobrate_plot_options),
+#                    #high
+#                    conditionalPanel(
+#                      condition="input.plot_mobility=='high' && input.plot_mobility_var=='mobenrollment'",
+#                      high_mobenrollment_plot_options),
+#                    conditionalPanel(
+#                      condition="input.plot_mobility=='high' && input.plot_mobility_var=='mobrate'",
+#                      high_mobrate_plot_options)
+#                    )
                ,
                 value="plot")
         ,
