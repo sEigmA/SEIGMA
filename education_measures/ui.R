@@ -240,43 +240,20 @@ shinyUI(fluidPage(
                 #percent charts
                 
                   conditionalPanel(
-                   condition="input.plot_profile=='enrolled",
-                   percentcolchart)
+                   condition="input.plot_profile=='enrolled'",
+                   percentcolchart),
 
+                #count charts 
+                #of mobility enrollment
+                conditionalPanel(
+                  condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobenrollment'",
+                  mobenrollment_plot_options),
+                #of mobility rate
+                conditionalPanel(
+                  condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobrate'",
+                  mobrate_plot_options)
                 
-#                 #count charts
-#                 #ell count
-#                  conditionalPanel(
-#                    condition="input.plot_profile=='mobility'",
-#                    #ell
-#                    conditionalPanel(
-#                      condition="input.plot_mobility=='ell' && input.plot_mobility_var=='mobenrollment'",
-#                      ell_mobenrollment_plot_options),
-#                    conditionalPanel(
-#                      condition="input.plot_mobility=='ell' && input.plot_mobility_var=='mobrate'",
-#                      ell_mobrate_plot_options),
-#                    #disab
-#                    conditionalPanel(
-#                      condition="input.plot_mobility=='disab' && input.plot_mobility_var=='mobenrollment'",
-#                      disab_mobenrollment_plot_options),
-#                    conditionalPanel(
-#                      condition="input.plot_mobility=='disab' && input.plot_mobility_var=='mobrate'",
-#                      disab_mobrate_plot_options),
-#                    #low
-#                    conditionalPanel(
-#                      condition="input.plot_mobility=='low' && input.plot_mobility_var=='mobenrollment'",
-#                      low_mobenrollment_plot_options),
-#                    conditionalPanel(
-#                      condition="input.plot_mobility=='low' && input.plot_mobility_var=='mobrate'",
-#                      low_mobrate_plot_options),
-#                    #high
-#                    conditionalPanel(
-#                      condition="input.plot_mobility=='high' && input.plot_mobility_var=='mobenrollment'",
-#                      high_mobenrollment_plot_options),
-#                    conditionalPanel(
-#                      condition="input.plot_mobility=='high' && input.plot_mobility_var=='mobrate'",
-#                      high_mobrate_plot_options)
-#                    )
+              
                ,
                 value="plot")
         ,

@@ -389,431 +389,111 @@ plot_main_text <- p(strong("Variable Summary:"),
                                                             italic = FALSE)
                                                         ))
  )
-#  
-#  ell_mobenrollment_plot_options<-googleColumnChart("ell_mobenrollment_plot",width="100%", height = "500px",
-#                                   options = list(isStacked=TRUE,
-#                                                  # set fonts
-#                                                  fontName = "Source Sans Pro",
-#                                                  fontSize = font_size,
-#                                                  title = "",
-#                                                  ## set axis titles, ticks, fonts, and ranges
-#                                                  hAxis = list(
-#                                                    title = "Start of School Year",
-#                                                    ticks = seq(2003,2012,1),
-#                                                    format = "####",
-#                                                    textStyle = list(
-#                                                      fontSize = 14),
-#                                                    titleTextStyle = list(
-#                                                      fontSize = 16,
-#                                                      bold = TRUE,
-#                                                      italic = FALSE)
-#                                                  ),
-#                                                  vAxis = list(
-#                                                    title = "Number of students",
-#                                                    ticks = seq(0,1,0.2),
-#                                                    
-#                                                    #viewWindow = list(min=0, max=100),
-#                                                    textStyle = list(
-#                                                      fontSize = font_size),
-#                                                    titleTextStyle = list(
-#                                                      fontSize = font_size+2,
-#                                                      bold = TRUE,
-#                                                      italic = FALSE)
-#                                                  ),
-#                                                  
-#                                                  ## set legend fonts
-#                                                  legend = list(
-#                                                    textStyle = list(
-#                                                      fontSize=font_size),
-#                                                    position = "right"),
-#                                                  
-#                                                  ## set chart area padding
-#                                                  chartArea = list(
-#                                                    top = 50, left = 100,
-#                                                    height = "75%", width = "65%"
-#                                                  ),
-#                                                  
-#                                                  
-#                                                  ## set tooltip font size
-#                                                  ## Hover text font stuff
-#                                                  tooltip = list(
-#                                                    textStyle = list(
-#                                                      fontSize = font_size
-#                                                    ))
-#                                   )
-#  )
-#  
-#  ell_mobrate_plot_options<-googleColumnChart("ell_mobrate_plot",width="100%", height = "500px",
-#                                                    options = list(isStacked=TRUE,
-#                                                                   # set fonts
-#                                                                   fontName = "Source Sans Pro",
-#                                                                   fontSize = font_size,
-#                                                                   title = "",
-#                                                                   ## set axis titles, ticks, fonts, and ranges
-#                                                                   hAxis = list(
-#                                                                     title = "Start of School Year",
-#                                                                     ticks = seq(2003,2012,1),
-#                                                                     format = "####",
-#                                                                     textStyle = list(
-#                                                                       fontSize = 14),
-#                                                                     titleTextStyle = list(
-#                                                                       fontSize = 16,
-#                                                                       bold = TRUE,
-#                                                                       italic = FALSE)
-#                                                                   ),
-#                                                                   vAxis = list(
-#                                                                     title = "Number of students",
-#                                                                     ticks = seq(0,1,0.2),
-#                                                                     
-#                                                                     #viewWindow = list(min=0, max=100),
-#                                                                     textStyle = list(
-#                                                                       fontSize = font_size),
-#                                                                     titleTextStyle = list(
-#                                                                       fontSize = font_size+2,
-#                                                                       bold = TRUE,
-#                                                                       italic = FALSE)
-#                                                                   ),
-#                                                                   
-#                                                                   ## set legend fonts
-#                                                                   legend = list(
-#                                                                     textStyle = list(
-#                                                                       fontSize=font_size),
-#                                                                     position = "right"),
-#                                                                   
-#                                                                   ## set chart area padding
-#                                                                   chartArea = list(
-#                                                                     top = 50, left = 100,
-#                                                                     height = "75%", width = "65%"
-#                                                                   ),
-#                                                                   
-#                                                                   
-#                                                                   ## set tooltip font size
-#                                                                   ## Hover text font stuff
-#                                                                   tooltip = list(
-#                                                                     textStyle = list(
-#                                                                       fontSize = font_size
-#                                                                     ))
-#                                                    )
-#  )
-# 
-#  
-#  disab_mobenrollment_plot_options<-googleColumnChart("disab_mobenrollment_plot",width="100%", height = "500px",
-#                                                    options = list(isStacked=TRUE,
-#                                                                   # set fonts
-#                                                                   fontName = "Source Sans Pro",
-#                                                                   fontSize = font_size,
-#                                                                   title = "",
-#                                                                   ## set axis titles, ticks, fonts, and ranges
-#                                                                   hAxis = list(
-#                                                                     title = "Start of School Year",
-#                                                                     ticks = seq(2003,2012,1),
-#                                                                     format = "####",
-#                                                                     textStyle = list(
-#                                                                       fontSize = 14),
-#                                                                     titleTextStyle = list(
-#                                                                       fontSize = 16,
-#                                                                       bold = TRUE,
-#                                                                       italic = FALSE)
-#                                                                   ),
-#                                                                   vAxis = list(
-#                                                                     title = "Number of students",
-#                                                                     ticks = seq(0,1,0.2),
-#                                                                     
-#                                                                     #viewWindow = list(min=0, max=100),
-#                                                                     textStyle = list(
-#                                                                       fontSize = font_size),
-#                                                                     titleTextStyle = list(
-#                                                                       fontSize = font_size+2,
-#                                                                       bold = TRUE,
-#                                                                       italic = FALSE)
-#                                                                   ),
-#                                                                   
-#                                                                   ## set legend fonts
-#                                                                   legend = list(
-#                                                                     textStyle = list(
-#                                                                       fontSize=font_size),
-#                                                                     position = "right"),
-#                                                                   
-#                                                                   ## set chart area padding
-#                                                                   chartArea = list(
-#                                                                     top = 50, left = 100,
-#                                                                     height = "75%", width = "65%"
-#                                                                   ),
-#                                                                   
-#                                                                   
-#                                                                   ## set tooltip font size
-#                                                                   ## Hover text font stuff
-#                                                                   tooltip = list(
-#                                                                     textStyle = list(
-#                                                                       fontSize = font_size
-#                                                                     ))
-#                                                    )
-#  )
-#  
-#  disab_mobrate_plot_options<-googleColumnChart("disab_mobrate_plot",width="100%", height = "500px",
-#                                              options = list(isStacked=TRUE,
-#                                                             # set fonts
-#                                                             fontName = "Source Sans Pro",
-#                                                             fontSize = font_size,
-#                                                             title = "",
-#                                                             ## set axis titles, ticks, fonts, and ranges
-#                                                             hAxis = list(
-#                                                               title = "Start of School Year",
-#                                                               ticks = seq(2003,2012,1),
-#                                                               format = "####",
-#                                                               textStyle = list(
-#                                                                 fontSize = 14),
-#                                                               titleTextStyle = list(
-#                                                                 fontSize = 16,
-#                                                                 bold = TRUE,
-#                                                                 italic = FALSE)
-#                                                             ),
-#                                                             vAxis = list(
-#                                                               title = "Number of students",
-#                                                               ticks = seq(0,1,0.2),
-#                                                               
-#                                                               #viewWindow = list(min=0, max=100),
-#                                                               textStyle = list(
-#                                                                 fontSize = font_size),
-#                                                               titleTextStyle = list(
-#                                                                 fontSize = font_size+2,
-#                                                                 bold = TRUE,
-#                                                                 italic = FALSE)
-#                                                             ),
-#                                                             
-#                                                             ## set legend fonts
-#                                                             legend = list(
-#                                                               textStyle = list(
-#                                                                 fontSize=font_size),
-#                                                               position = "right"),
-#                                                             
-#                                                             ## set chart area padding
-#                                                             chartArea = list(
-#                                                               top = 50, left = 100,
-#                                                               height = "75%", width = "65%"
-#                                                             ),
-#                                                             
-#                                                             
-#                                                             ## set tooltip font size
-#                                                             ## Hover text font stuff
-#                                                             tooltip = list(
-#                                                               textStyle = list(
-#                                                                 fontSize = font_size
-#                                                               ))
-#                                              )
-#  )
-#  
-#  
-#  low_mobenrollment_plot_options<-googleColumnChart("low_mobenrollment_plot",width="100%", height = "500px",
-#                                                    options = list(isStacked=TRUE,
-#                                                                   # set fonts
-#                                                                   fontName = "Source Sans Pro",
-#                                                                   fontSize = font_size,
-#                                                                   title = "",
-#                                                                   ## set axis titles, ticks, fonts, and ranges
-#                                                                   hAxis = list(
-#                                                                     title = "Start of School Year",
-#                                                                     ticks = seq(2003,2012,1),
-#                                                                     format = "####",
-#                                                                     textStyle = list(
-#                                                                       fontSize = 14),
-#                                                                     titleTextStyle = list(
-#                                                                       fontSize = 16,
-#                                                                       bold = TRUE,
-#                                                                       italic = FALSE)
-#                                                                   ),
-#                                                                   vAxis = list(
-#                                                                     title = "Number of students",
-#                                                                     ticks = seq(0,1,0.2),
-#                                                                     
-#                                                                     #viewWindow = list(min=0, max=100),
-#                                                                     textStyle = list(
-#                                                                       fontSize = font_size),
-#                                                                     titleTextStyle = list(
-#                                                                       fontSize = font_size+2,
-#                                                                       bold = TRUE,
-#                                                                       italic = FALSE)
-#                                                                   ),
-#                                                                   
-#                                                                   ## set legend fonts
-#                                                                   legend = list(
-#                                                                     textStyle = list(
-#                                                                       fontSize=font_size),
-#                                                                     position = "right"),
-#                                                                   
-#                                                                   ## set chart area padding
-#                                                                   chartArea = list(
-#                                                                     top = 50, left = 100,
-#                                                                     height = "75%", width = "65%"
-#                                                                   ),
-#                                                                   
-#                                                                   
-#                                                                   ## set tooltip font size
-#                                                                   ## Hover text font stuff
-#                                                                   tooltip = list(
-#                                                                     textStyle = list(
-#                                                                       fontSize = font_size
-#                                                                     ))
-#                                                    )
-#  )
-#  
-#  low_mobrate_plot_options<-googleColumnChart("low_mobrate_plot",width="100%", height = "500px",
-#                                              options = list(isStacked=TRUE,
-#                                                             # set fonts
-#                                                             fontName = "Source Sans Pro",
-#                                                             fontSize = font_size,
-#                                                             title = "",
-#                                                             ## set axis titles, ticks, fonts, and ranges
-#                                                             hAxis = list(
-#                                                               title = "Start of School Year",
-#                                                               ticks = seq(2003,2012,1),
-#                                                               format = "####",
-#                                                               textStyle = list(
-#                                                                 fontSize = 14),
-#                                                               titleTextStyle = list(
-#                                                                 fontSize = 16,
-#                                                                 bold = TRUE,
-#                                                                 italic = FALSE)
-#                                                             ),
-#                                                             vAxis = list(
-#                                                               title = "Number of students",
-#                                                               ticks = seq(0,1,0.2),
-#                                                               
-#                                                               #viewWindow = list(min=0, max=100),
-#                                                               textStyle = list(
-#                                                                 fontSize = font_size),
-#                                                               titleTextStyle = list(
-#                                                                 fontSize = font_size+2,
-#                                                                 bold = TRUE,
-#                                                                 italic = FALSE)
-#                                                             ),
-#                                                             
-#                                                             ## set legend fonts
-#                                                             legend = list(
-#                                                               textStyle = list(
-#                                                                 fontSize=font_size),
-#                                                               position = "right"),
-#                                                             
-#                                                             ## set chart area padding
-#                                                             chartArea = list(
-#                                                               top = 50, left = 100,
-#                                                               height = "75%", width = "65%"
-#                                                             ),
-#                                                             
-#                                                             
-#                                                             ## set tooltip font size
-#                                                             ## Hover text font stuff
-#                                                             tooltip = list(
-#                                                               textStyle = list(
-#                                                                 fontSize = font_size
-#                                                               ))
-#                                              )
-#  )
-#  
-#  
-#  high_mobenrollment_plot_options<-googleColumnChart("high_mobenrollment_plot",width="100%", height = "500px",
-#                                                    options = list(isStacked=TRUE,
-#                                                                   # set fonts
-#                                                                   fontName = "Source Sans Pro",
-#                                                                   fontSize = font_size,
-#                                                                   title = "",
-#                                                                   ## set axis titles, ticks, fonts, and ranges
-#                                                                   hAxis = list(
-#                                                                     title = "Start of School Year",
-#                                                                     ticks = seq(2003,2012,1),
-#                                                                     format = "####",
-#                                                                     textStyle = list(
-#                                                                       fontSize = 14),
-#                                                                     titleTextStyle = list(
-#                                                                       fontSize = 16,
-#                                                                       bold = TRUE,
-#                                                                       italic = FALSE)
-#                                                                   ),
-#                                                                   vAxis = list(
-#                                                                     title = "Number of students",
-#                                                                     ticks = seq(0,1,0.2),
-#                                                                     
-#                                                                     #viewWindow = list(min=0, max=100),
-#                                                                     textStyle = list(
-#                                                                       fontSize = font_size),
-#                                                                     titleTextStyle = list(
-#                                                                       fontSize = font_size+2,
-#                                                                       bold = TRUE,
-#                                                                       italic = FALSE)
-#                                                                   ),
-#                                                                   
-#                                                                   ## set legend fonts
-#                                                                   legend = list(
-#                                                                     textStyle = list(
-#                                                                       fontSize=font_size),
-#                                                                     position = "right"),
-#                                                                   
-#                                                                   ## set chart area padding
-#                                                                   chartArea = list(
-#                                                                     top = 50, left = 100,
-#                                                                     height = "75%", width = "65%"
-#                                                                   ),
-#                                                                   
-#                                                                   
-#                                                                   ## set tooltip font size
-#                                                                   ## Hover text font stuff
-#                                                                   tooltip = list(
-#                                                                     textStyle = list(
-#                                                                       fontSize = font_size
-#                                                                     ))
-#                                                    )
-#  )
-#  
-#  high_mobrate_plot_options<-googleColumnChart("high_mobrate_plot",width="100%", height = "500px",
-#                                              options = list(isStacked=TRUE,
-#                                                             # set fonts
-#                                                             fontName = "Source Sans Pro",
-#                                                             fontSize = font_size,
-#                                                             title = "",
-#                                                             ## set axis titles, ticks, fonts, and ranges
-#                                                             hAxis = list(
-#                                                               title = "Start of School Year",
-#                                                               ticks = seq(2003,2012,1),
-#                                                               format = "####",
-#                                                               textStyle = list(
-#                                                                 fontSize = 14),
-#                                                               titleTextStyle = list(
-#                                                                 fontSize = 16,
-#                                                                 bold = TRUE,
-#                                                                 italic = FALSE)
-#                                                             ),
-#                                                             vAxis = list(
-#                                                               title = "Number of students",
-#                                                               ticks = seq(0,1,0.2),
-#                                                               
-#                                                               #viewWindow = list(min=0, max=100),
-#                                                               textStyle = list(
-#                                                                 fontSize = font_size),
-#                                                               titleTextStyle = list(
-#                                                                 fontSize = font_size+2,
-#                                                                 bold = TRUE,
-#                                                                 italic = FALSE)
-#                                                             ),
-#                                                             
-#                                                             ## set legend fonts
-#                                                             legend = list(
-#                                                               textStyle = list(
-#                                                                 fontSize=font_size),
-#                                                               position = "right"),
-#                                                             
-#                                                             ## set chart area padding
-#                                                             chartArea = list(
-#                                                               top = 50, left = 100,
-#                                                               height = "75%", width = "65%"
-#                                                             ),
-#                                                             
-#                                                             
-#                                                             ## set tooltip font size
-#                                                             ## Hover text font stuff
-#                                                             tooltip = list(
-#                                                               textStyle = list(
-#                                                                 fontSize = font_size
-#                                                               ))
-#                                              )
-#  )
-#  
+
+  
+  mobenrollment_plot_options<-googleColumnChart("mobenrollment_plot",width="100%", height = "500px",
+                                   options = list(isStacked=FALSE,
+                                                  # set fonts
+                                                  fontName = "Source Sans Pro",
+                                                  fontSize = font_size,
+                                                  title = "",
+                                                  ## set axis titles, ticks, fonts, and ranges
+                                                  hAxis = list(
+                                                    title = "Start of School Year",
+                                                    ticks = seq(2003,2012,1),
+                                                    format = "####",
+                                                    textStyle = list(
+                                                      fontSize = 14),
+                                                    titleTextStyle = list(
+                                                      fontSize = 16,
+                                                      bold = TRUE,
+                                                      italic = FALSE)
+                                                  ),
+                                                  vAxis = list(
+                                                    title = "Number of students",
+                                                    #ticks = seq(0,1,0.2),
+                                                    
+                                                    #viewWindow = list(min=0, max=100),
+                                                    textStyle = list(
+                                                      fontSize = font_size),
+                                                    titleTextStyle = list(
+                                                      fontSize = font_size+2,
+                                                      bold = TRUE,
+                                                      italic = FALSE)
+                                                  ),
+                                                  
+                                                  ## set legend fonts
+                                                  legend = list(
+                                                    textStyle = list(
+                                                      fontSize=font_size),
+                                                    position = "right"),
+                                                  
+                                                  ## set chart area padding
+                                                  chartArea = list(
+                                                    top = 50, left = 100,
+                                                    height = "75%", width = "65%"
+                                                  ),
+                                                  
+                                                  
+                                                  ## set tooltip font size
+                                                  ## Hover text font stuff
+                                                  tooltip = list(
+                                                    textStyle = list(
+                                                      fontSize = font_size
+                                                    ))
+                                   )
+  )
+  
+  mobrate_plot_options<-googleColumnChart("mobrate_plot",width="100%", height = "500px",
+                                                    options = list(isStacked=FALSE,
+                                                                   # set fonts
+                                                                   fontName = "Source Sans Pro",
+                                                                   fontSize = font_size,
+                                                                   title = "",
+                                                                   ## set axis titles, ticks, fonts, and ranges
+                                                                   hAxis = list(
+                                                                     title = "Start of School Year",
+                                                                     ticks = seq(2003,2012,1),
+                                                                     format = "####",
+                                                                     textStyle = list(
+                                                                       fontSize = 14),
+                                                                     titleTextStyle = list(
+                                                                       fontSize = 16,
+                                                                       bold = TRUE,
+                                                                       italic = FALSE)
+                                                                   ),
+                                                                   vAxis = list(
+                                                                     title = "Rate in Percent",
+                                                                     ticks = seq(0,100,20),
+                                                                     
+                                                                     #viewWindow = list(min=0, max=100),
+                                                                     textStyle = list(
+                                                                       fontSize = font_size),
+                                                                     titleTextStyle = list(
+                                                                       fontSize = font_size+2,
+                                                                       bold = TRUE,
+                                                                       italic = FALSE)
+                                                                   ),
+                                                                   
+                                                                   ## set legend fonts
+                                                                   legend = list(
+                                                                     textStyle = list(
+                                                                       fontSize=font_size),
+                                                                     position = "right"),
+                                                                   
+                                                                   ## set chart area padding
+                                                                   chartArea = list(
+                                                                     top = 50, left = 100,
+                                                                     height = "75%", width = "65%"
+                                                                   ),
+                                                                   
+                                                                   
+                                                                   ## set tooltip font size
+                                                                   ## Hover text font stuff
+                                                                   tooltip = list(
+                                                                     textStyle = list(
+                                                                       fontSize = font_size
+                                                                     ))
+                                                    )
+  )
+ 
