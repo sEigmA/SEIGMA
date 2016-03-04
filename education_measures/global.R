@@ -66,9 +66,8 @@ MA_county <- sort(as.character(unique(edu_data$County)))
 # 
 
 ## Set graph colors (special for colorblind people,turquoise)
-cbbPalette <- c("#000000", "red", "green", "blue",
-                "turquoise", "lightblue", "deeppink", "yellow")
-
+ cbbPalette <- c("cyan","darkviolet","deeppink", "blue","green","yellow","darkorange","red",
+                 "darksalmon","deepskyblue","lawngreen","magenta","brown") 
 ## Create maxs and mins for googleCharts/Plot tab
 xlim <- list(
   min = min(edu_data$school.year)-1,
@@ -80,151 +79,15 @@ ylim <- list(
   ##+5 = max Avg monthly employment plus a little extra
   max = max(edu_data$Females, na.rm=T)+5
 )
-# ##when without boston, create ylim for googleCharts/plot
-# ##ylim1<-list(
-#   ##min = min(emp_data$Average_Monthly_Employment[which(emp_data$Municipal!="Boston")], na.rm=T)-5,
-#   ##
-#   ##+5 = max Avg monthly employment plus a little extra
-#   ##max = max(emp_data$Average_Monthly_Employment[which(emp_data$Municipal!="Boston")], na.rm=T)+5
-#   ##)
-# ##Creat ylim for establishments plot
-# ylim_est<-list(
-#   min = min(emp_data$Number_of_Employer_Establishments, na.rm=T)-5,
-#   
-#   ##+5 = max Avg monthly employment plus a little extra
-#   max = max(emp_data$Number_of_Employer_Establishments, na.rm=T)+5
-# )
-# ##when without Boston
-# ylim1_est<-list(
-#   min = min(emp_data$Number_of_Employer_Establishments[which(emp_data$Municipal!="Boston")], na.rm=T)-5,
-#   
-#   ##+5 = max Avg monthly employment plus a little extra
-#   max = max(emp_data$Number_of_Employer_Establishments[which(emp_data$Municipal!="Boston")], na.rm=T)+5
-# )
-# ##Creat ylim for percentage change of employment plot
-# ylim_pct<-list(
-#   min = min(emp_data$Employment_difference, na.rm=T)-0.05,
-#   
-#   ##+5 = max Avg monthly employment plus a little extra
-#   max = max(emp_data$Employment_difference, na.rm=T)+0.05
-# ) 
-# ##Creat ylim for percentage change of establishments plot
-# ylim_pct_est<-list(
-#   min = min(emp_data$Establishment_difference, na.rm=T)-0.05,
-#   
-#   ##+5 = max Avg monthly employment plus a little extra
-#   max = max(emp_data$Establishment_difference, na.rm=T)+0.05
-# ) 
-# 
-# ##Creat ylim for Average Weekly Wages plot
-# ylim_wage<-list(
-#   min = min(emp_data$Inflation_Adjusted_Average_Weekly_Wage, na.rm=T)-5,
-#   
-#   ##+5 = max Avg monthly employment plus a little extra
-#   max = max(emp_data$Inflation_Adjusted_Average_Weekly_Wage, na.rm=T)+5
-# )
-# ##when without Boston
-# ylim1_wage<-list(
-#   min = min(emp_data$Inflation_Adjusted_Average_Weekly_Wage[which(emp_data$Municipal!="Boston")], na.rm=T)-5,
-#   
-#   ##+5 = max Avg monthly employment plus a little extra
-#   max = max(emp_data$Inflation_Adjusted_Average_Weekly_Wage[which(emp_data$Municipal!="Boston")], na.rm=T)+5
-# )
-# ##Creat ylim for percentage change of Inflation_Adjusted_Average_Weekly_Wage plot
-# ylim_pct_wage<-list(
-#   min = min(emp_data$Average_Weekly_Wage_difference, na.rm=T)-0.05,
-#   
-#   ##+5 = max Avg monthly employment plus a little extra
-#   max = max(emp_data$Average_Weekly_Wage_difference, na.rm=T)+0.05
-# )
-# 
-# ####################################################
-# ####################################################
-# 
+
 # ## Colors for a Employment legend
 paint.brush <- colorRampPalette(colors=c("white", "violetred"))
-map_colors <- c(paint.brush(n=5), "black")
+map_colors <- c(paint.brush(n=25), "black")
 # 
-# ## (split into quintiles).  Cuts are quintiles of the total data
-# ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
-# 
-#racemax.val <- max(emp_data$Average_Monthly_Employment, na.rm=TRUE)
-AA_racemax.val <- 100
-#racemin.val <- min(emp_data$Average_Monthly_Employment, na.rm=TRUE)
-AA_racemin.val <- 0
-# 
-# ## Puts each county year in between the cuts (n colors, n+1 cuts)
-# ## length.out will make that many cuts
-# # scuts <- seq(smin.val, smax.val, length.out = length(smap_colors))
-AA_racecuts <- quantile(edu_data$African.American, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
-# 
-# ## Construct break ranges for displaying in the legend
-# ## Creates a data frame
-# ## head = scuts takes everything except for the last one,
-# ## tails = same thing opposite
+#####
+#create min and max values for colors of all variables in the map
+range.table<-data.frame(apply(edu_data[,c(7:65)], 2, FUN=function(x){range(x, na.rm=T)}))
 
-AA_racecolorRanges <- data.frame(
-  from = head(AA_racecuts, length(AA_racecuts)-1),
-  to = tail(AA_racecuts, length(AA_racecuts)-1)
-)
-# 
-# ##Colors for a Establishments legend
-# estcuts <- quantile(emp_data$Number_of_Employer_Establishments, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
-# 
-# ## Construct break ranges for displaying in the legend
-# ## Creates a data frame
-# ## head = scuts takes everything except for the last one,
-# ## tails = same thing opposite
-# estcolorRanges <- data.frame(
-#   from = head(estcuts, length(estcuts)-1),
-#   to = tail(estcuts, length(estcuts)-1)
-# )
-# 
-# ##Colors for a Wages legend
-# wagecuts <- quantile(emp_data$Inflation_Adjusted_Average_Weekly_Wage, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
-# 
-# ## Construct break ranges for displaying in the legend
-# ## Creates a data frame
-# ## head = scuts takes everything except for the last one,
-# ## tails = same thing opposite
-# wagecolorRanges <- data.frame(
-#   from = head(wagecuts, length(wagecuts)-1),
-#   to = tail(wagecuts, length(wagecuts)-1)
-# )
-# 
-# ## colors fade from one color to white to another color, with gray for NAs
-# ## colors for pecentage change since 2003 legend
-# pctpaint.brush <- colorRampPalette(colors=c(cbbPalette[5], "white",cbbPalette[8]))
-# pctmap_colors <- c(pctpaint.brush(n=6), "#999999")
-# 
-# ## find max and min (crude suicide rates) values for each county
-# ##n.rm=FALSE = needed
-# pctmax.val<-max(c(max(emp_data$Employment_difference, na.rm=FALSE),max(emp_data$Establishment_difference, na.rm=FALSE),max(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
-# pctmin.val<-min(c(min(emp_data$Employment_difference, na.rm=FALSE),min(emp_data$Establishment_difference, na.rm=FALSE),min(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
-# ##pctmin.val<--pctmax.val
-# pctcuts1 <- seq(pctmin.val, 0, length.out = 4)
-# pctcuts2 <- seq(0, pctmax.val, length.out = 4)
-# pctcuts<-unique(c(pctcuts1, pctcuts2))
-# # Construct break ranges for displaying in the legend
-# 
-# pctcolorRanges <- data.frame(
-#   from = head(pctcuts, length(pctcuts)-1),
-#   to = tail(pctcuts, length(pctcuts)-1)
-# )
-# # wage pct cut
-# wagepctmax.val<-max(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)
-# wagepctmin.val<-min(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)
-# 
-# wagepctcuts <- seq(wagepctmin.val, wagepctmax.val, length.out = length(pctmap_colors))
-# 
-# # Construct break ranges for displaying in the legend
-# 
-# wagepctcolorRanges <- data.frame(
-#   from = head(wagepctcuts, length(wagepctcuts)-1),
-#   to = tail(wagepctcuts, length(wagepctcuts)-1)
-# )
-# 
-# 
 # 
 # #############################
 # ### Large Text Block Area ###
@@ -357,143 +220,10 @@ plot_main_text <- p(strong("Variable Summary:"),
  
  
  
- percentcolchart <- googleColumnChart("percentcolplot",width="100%", height = "500px",
-                                         options = list(isStacked='percent',
-                                                        # set fonts
-                                                        fontName = "Source Sans Pro",
-                                                        fontSize = font_size,
-                                                        title = "",
-                                                        ## set axis titles, ticks, fonts, and ranges
-                                                        hAxis = list(
-                                                          title = "Start of School Year",
-                                                          format = "####",
-                                                          ticks = seq(2003,2012,1),
-                                                          #  viewWindow = list(min=, max=),
-                                                          textStyle = list(
-                                                            fontSize = 14),
-                                                          titleTextStyle = list(
-                                                            fontSize = 16,
-                                                            bold = TRUE,
-                                                            italic = FALSE)
-                                                        ),
-                                                        vAxis = list(
-                                                          title = "Number of students",
-                                                          ticks = seq(0,1,0.2),
-                                                          
-                                                          #viewWindow = list(min=0, max=100),
-                                                          textStyle = list(
-                                                            fontSize = font_size),
-                                                          titleTextStyle = list(
-                                                            fontSize = font_size+2,
-                                                            bold = TRUE,
-                                                            italic = FALSE)
-                                                        ))
- )
+ percentcolchart <- googleColumnChart("percentcolplot",width="100%", height = "500px")
 
   
-  mobenrollment_plot_options<-googleColumnChart("mobenrollment_plot",width="100%", height = "500px",
-                                   options = list(isStacked=FALSE,
-                                                  # set fonts
-                                                  fontName = "Source Sans Pro",
-                                                  fontSize = font_size,
-                                                  title = "",
-                                                  ## set axis titles, ticks, fonts, and ranges
-                                                  hAxis = list(
-                                                    title = "Start of School Year",
-                                                    ticks = seq(2003,2012,1),
-                                                    format = "####",
-                                                    textStyle = list(
-                                                      fontSize = 14),
-                                                    titleTextStyle = list(
-                                                      fontSize = 16,
-                                                      bold = TRUE,
-                                                      italic = FALSE)
-                                                  ),
-                                                  vAxis = list(
-                                                    title = "Number of students",
-                                                    #ticks = seq(0,1,),
-                                                    
-                                                    #viewWindow = list(min=0, max=100),
-                                                    textStyle = list(
-                                                      fontSize = font_size),
-                                                    titleTextStyle = list(
-                                                      fontSize = font_size+2,
-                                                      bold = TRUE,
-                                                      italic = FALSE)
-                                                  ),
-                                                  
-                                                  ## set legend fonts
-                                                  legend = list(
-                                                    textStyle = list(
-                                                      fontSize=font_size),
-                                                    position = "right"),
-                                                  
-                                                  ## set chart area padding
-                                                  chartArea = list(
-                                                    top = 50, left = 100,
-                                                    height = "75%", width = "65%"
-                                                  ),
-                                                  
-                                                  
-                                                  ## set tooltip font size
-                                                  ## Hover text font stuff
-                                                  tooltip = list(
-                                                    textStyle = list(
-                                                      fontSize = font_size
-                                                    ))
-                                   )
-  )
+  mobenrollment_plot_options<-googleColumnChart("mobenrollment_plot",width="100%", height = "500px")
   
-  mobrate_plot_options<-googleColumnChart("mobrate_plot",width="100%", height = "500px",
-                                                    options = list(isStacked=FALSE,
-                                                                   # set fonts
-                                                                   fontName = "Source Sans Pro",
-                                                                   fontSize = font_size,
-                                                                   title = "",
-                                                                   ## set axis titles, ticks, fonts, and ranges
-                                                                   hAxis = list(
-                                                                     title = "Start of School Year",
-                                                                     ticks = seq(2003,2012,1),
-                                                                     format = "####",
-                                                                     textStyle = list(
-                                                                       fontSize = 14),
-                                                                     titleTextStyle = list(
-                                                                       fontSize = 16,
-                                                                       bold = TRUE,
-                                                                       italic = FALSE)
-                                                                   ),
-                                                                   vAxis = list(
-                                                                     title = "Rate in Percent",
-                                                                     ticks = seq(0,100,20),
-                                                                     
-                                                                     #viewWindow = list(min=0, max=100),
-                                                                     textStyle = list(
-                                                                       fontSize = font_size),
-                                                                     titleTextStyle = list(
-                                                                       fontSize = font_size+2,
-                                                                       bold = TRUE,
-                                                                       italic = FALSE)
-                                                                   ),
-                                                                   
-                                                                   ## set legend fonts
-                                                                   legend = list(
-                                                                     textStyle = list(
-                                                                       fontSize=font_size),
-                                                                     position = "right"),
-                                                                   
-                                                                   ## set chart area padding
-                                                                   chartArea = list(
-                                                                     top = 50, left = 100,
-                                                                     height = "75%", width = "65%"
-                                                                   ),
-                                                                   
-                                                                   
-                                                                   ## set tooltip font size
-                                                                   ## Hover text font stuff
-                                                                   tooltip = list(
-                                                                     textStyle = list(
-                                                                       fontSize = font_size
-                                                                     ))
-                                                    )
-  )
+  mobrate_plot_options<-googleColumnChart("mobrate_plot",width="100%", height = "500px")
  

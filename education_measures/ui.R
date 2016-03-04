@@ -162,27 +162,27 @@ shinyUI(fluidPage(
                     condition="input.tabs== 'plot' && input.plot_profile=='enrolled'",
                     #select variable
                      radioButtons("plot_enrolled", "Select Profile Variable",
-                                 c("Race/Ethnicity"="race", 
-                                   "Gender"="gender", 
-                                   "Grade Level"="grade",
-                                   "English Language Learners"="ell",
-                                   "First Language Not English"="flnl",
-                                   "Students with Disabilities"="disab",
-                                   "Low Income"="low"
+                                 c("Race/Ethnicity"="Race/Ethnicity", 
+                                   "Gender"="Gender", 
+                                   "Grade Level"="Grade Levels",
+                                   "English Language Learners"="English Language Learner Students",
+                                   "First Language Not English"="First Language not English Students",
+                                   "Students with Disabilities"="Students with Disabilities",
+                                   "Low Income"="Low Income Students"
                                    #high needs only available data in 2012 - no time series warranted
                                    , 
-                                   "High Needs"="high"
+                                   "High Needs"="High Needs Students"
                                    ),
-                                 selected='race')
+                                 selected='Race/Ethnicity')
         ), conditionalPanel(
            condition="input.tabs== 'plot' && input.plot_profile=='mobility'",
            #select variable
            radioButtons("plot_mobility", "Select Interest Group",
-                       c("English Language Learners"="ell",
-                         "Students with Disabilities"="disab",
-                         "Low Income"="low", 
-                         "High Needs"="high"),
-                       selected='ell'),
+                       c("English Language Learners"="English Language Learner Students",
+                         "Students with Disabilities"="Students with Disabilities",
+                         "Low Income"="Low Income Students", 
+                         "High Needs"="High Needs Students"),
+                       selected='English Language Learner Students'),
            radioButtons("plot_mobility_var", "Select Rate or Enrollment",
                         c("Rate"="mobrate",
                           "Enrollment"="mobenrollment"),
@@ -277,27 +277,66 @@ tabPanel("Map",
          conditionalPanel(
            condition="input.lmap_level == 'African.American'",
            absolutePanel(
-             right = 10, top = 150, draggable=FALSE, style = "", 
+             right = 5, top = 130, draggable=FALSE, style = "", 
              class = "floater",
-             strong("% African American Students"),
-             tags$table(
-               mapply(function(from, to, color) {
-                 tags$tr(
-                   tags$td(tags$div(
-                     style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
-                   )),
-                   tags$td(prettyNum(round(from), big.mark = ","), "to", 
-                           prettyNum(round(to), big.mark = ","), align = "right")
-                 )
-               }, 
-               AA_racecolorRanges$from, AA_racecolorRanges$to, map_colors[-length(map_colors)],
-               SIMPLIFY=FALSE),
-               tags$tr(
-                 tags$td(tags$div(
-                   style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
-                 )),
-                 tags$td("Data not available", align = "right")))
-           )),
+             strong("% African",br(),"American",br(),"Students"),
+             plotOutput("AAlegend")
+           ))
+           ,
+         conditionalPanel(
+           condition="input.lmap_level == 'Asian'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% Asian",br(),"Students"),
+                    plotOutput("ASlegend")
+             ))
+         ,
+         conditionalPanel(
+           condition="input.lmap_level == 'Hispanic'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% Hispanic",br(),"Students"),
+                    plotOutput("HISPlegend")
+             ))
+         ,
+         conditionalPanel(
+           condition="input.lmap_level == 'White'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% White",br(),"Students"),
+                    plotOutput("WHlegend")
+             ))
+         ,
+         conditionalPanel(
+           condition="input.lmap_level == 'Native.American'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% Native",br(),"American",br(),"Students"),
+                    plotOutput("NAlegend")
+             ))
+         ,
+         conditionalPanel(
+           condition="input.lmap_level == 'Native.Hawaiian.Pacific.Islander'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% Native",br(),"Hawaiian", br(), "Pacific", br(), "Islander",br(),"Students"),
+                    plotOutput("NHlegend")
+             ))
+         ,
+         conditionalPanel(
+           condition="input.lmap_level == 'Multi.Race.Non.Hispanic'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% Multi",br(),"Race", br(), "Non-Hispanic", br(),"Students"),
+                    plotOutput("MRlegend")
+             ))
+         ,
          
          value="lmap"
          )
