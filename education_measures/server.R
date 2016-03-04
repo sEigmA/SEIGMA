@@ -561,12 +561,14 @@ return(sum_df)
     #message to be displayed when no school selected
     
     r_mobenrollplot<-r_mobenrollplot_df()
+    ymax<-max(r_mobenrollplot[,2])
     validate(
       need(is.null(input$plot_school)==FALSE, "Please select a school")
     )
     
     list(
-      data=googleDataTable(r_mobenrollplot)
+      data=googleDataTable(r_mobenrollplot),
+      options=list(vAxis=list(ticks=seq(0, ymax, 10)))
     )
     
   })

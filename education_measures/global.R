@@ -411,7 +411,7 @@ plot_main_text <- p(strong("Variable Summary:"),
                                                   ),
                                                   vAxis = list(
                                                     title = "Number of students",
-                                                    #ticks = seq(0,1,0.2),
+                                                    #ticks = seq(0,1,),
                                                     
                                                     #viewWindow = list(min=0, max=100),
                                                     textStyle = list(
