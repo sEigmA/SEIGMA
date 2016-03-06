@@ -165,13 +165,7 @@ shinyUI(fluidPage(
                                  c("Race/Ethnicity"="Race/Ethnicity", 
                                    "Gender"="Gender", 
                                    "Grade Level"="Grade Levels",
-                                   "English Language Learners"="English Language Learner Students",
-                                   "First Language Not English"="First Language not English Students",
-                                   "Students with Disabilities"="Students with Disabilities",
-                                   "Low Income"="Low Income Students"
-                                   #high needs only available data in 2012 - no time series warranted
-                                   , 
-                                   "High Needs"="High Needs Students"
+                                   "Focus Groups"="Focus Groups"
                                    ),
                                  selected='Race/Ethnicity')
         ), conditionalPanel(
@@ -240,8 +234,11 @@ shinyUI(fluidPage(
                 #percent charts
                 
                   conditionalPanel(
-                   condition="input.plot_profile=='enrolled'",
+                   condition="input.plot_profile=='enrolled' && input.plot_enrolled!='Focus Groups'",
                    percentcolchart),
+                conditionalPanel(
+                  condition="input.plot_profile=='enrolled' && input.plot_enrolled=='Focus Groups'",
+                  countcolchart),
 
                 #count charts 
                 #of mobility enrollment
@@ -275,7 +272,7 @@ tabPanel("Map",
          
          #Legend- African American
          conditionalPanel(
-           condition="input.lmap_level == 'African.American'",
+           condition="input.lmap_level == 'African American'",
            absolutePanel(
              right = 5, top = 130, draggable=FALSE, style = "", 
              class = "floater",
@@ -311,7 +308,7 @@ tabPanel("Map",
              ))
          ,
          conditionalPanel(
-           condition="input.lmap_level == 'Native.American'",
+           condition="input.lmap_level == 'Native American'",
            absolutePanel(
              right = 5, top = 130, draggable=FALSE, style = "", 
              class = "floater",
@@ -320,7 +317,7 @@ tabPanel("Map",
              ))
          ,
          conditionalPanel(
-           condition="input.lmap_level == 'Native.Hawaiian.Pacific.Islander'",
+           condition="input.lmap_level == 'Native Hawaiian/Pacific Islander'",
            absolutePanel(
              right = 5, top = 130, draggable=FALSE, style = "", 
              class = "floater",
@@ -329,7 +326,7 @@ tabPanel("Map",
              ))
          ,
          conditionalPanel(
-           condition="input.lmap_level == 'Multi.Race.Non.Hispanic'",
+           condition="input.lmap_level == 'Multi-Race/Non-Hispanic'",
            absolutePanel(
              right = 5, top = 130, draggable=FALSE, style = "", 
              class = "floater",
@@ -337,6 +334,148 @@ tabPanel("Map",
                     plotOutput("MRlegend")
              ))
          ,
+         conditionalPanel(
+           condition="input.lmap_level == 'Females'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% Female",br(),"Students"),
+             plotOutput("FEMlegend")
+           ))
+         ,
+         conditionalPanel(
+           condition="input.lmap_level == 'Males'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% Male",br(),"Students"),
+             plotOutput("MALlegend")
+           ))
+         ,
+         conditionalPanel(
+           condition="input.lmap_level == 'Pre Kindergarden'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Pre-",br(),"Kindergarteners"),
+             plotOutput("PREKlegend")
+           ))
+         ,
+         
+         conditionalPanel(
+           condition="input.lmap_level == 'Kindergarden'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Kindergarteners"),
+             plotOutput("KINDlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'First Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("First",br(),"Graders"),
+             plotOutput("FIRSTlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Second Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Second",br(),"Graders"),
+             plotOutput("SECONDlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Third Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Third",br(),"Graders"),
+             plotOutput("THIRDlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Fourth Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Fourth",br(),"Graders"),
+             plotOutput("FOURTHlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Fifth Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Fifth",br(),"Graders"),
+             plotOutput("FIFTHlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Sixth Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Sixth",br(),"Graders"),
+             plotOutput("SIXTHlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Seventh Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Seventh",br(),"Graders"),
+             plotOutput("SEVENTHlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Eighth Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Eighth",br(),"Graders"),
+             plotOutput("EIGHTHlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Ninth Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Ninth",br(),"Graders"),
+             plotOutput("NINTHlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Tenth Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Tenth",br(),"Students"),
+             plotOutput("TENTHlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Eleventh Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Eleventh",br(),"Graders"),
+             plotOutput("ELEVENTHlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Twelfth Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Twelfth",br(),"Graders"),
+             plotOutput("TWELFTHlegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Special Ed Beyond 12th Grade'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("Special",br(),"Education", br(), "beyond", br(), "Twelfth", br(), "Graders"),
+             plotOutput("SPEClegend")
+           ))
+         ,
+         
          
          value="lmap"
          )

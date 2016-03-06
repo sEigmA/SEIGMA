@@ -87,7 +87,8 @@ map_colors <- c(paint.brush(n=25), "black")
 #####
 #create min and max values for colors of all variables in the map
 range.table<-data.frame(apply(edu_data[,c(7:65)], 2, FUN=function(x){range(x, na.rm=T)}))
-
+names(range.table)<-gsub(names(range.table), pattern=".", replacement=" ", fixed=T)
+names(range.table)[c(24,25)]<-c("Native Hawaiian/Pacific Islander","Multi-Race/Non-Hispanic")
 # 
 # #############################
 # ### Large Text Block Area ###
@@ -221,6 +222,9 @@ plot_main_text <- p(strong("Variable Summary:"),
  
  
  percentcolchart <- googleColumnChart("percentcolplot",width="100%", height = "500px")
+ 
+ countcolchart <- googleColumnChart("countcolplot",width="100%", height = "500px")
+ 
 
   
   mobenrollment_plot_options<-googleColumnChart("mobenrollment_plot",width="100%", height = "500px")
