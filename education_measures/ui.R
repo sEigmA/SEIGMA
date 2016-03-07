@@ -83,39 +83,7 @@ shinyUI(fluidPage(
              selected="Race/Ethnicity")
                  )
              ,
-             #
-             #map sidebar options
-             #
              
-#               
-#              conditionalPanel(
-#                condition="input.tabs == 'map'",
-#                ## Select year with multiyear slider
-#                
-#                sliderInput("map_year", "Select Year",
-#                              min=2003, max=2012, value=2012,
-#                              sep="")
-#                ,
-#                
-#                radioButtons("map_schooltype", "School Type",
-#                             c("Pre-K" = "prek", "Kindergarten" = "kindergarten",
-#                               "Elementary" = "elementary","Middle School" ="middle","High School" ="high"),
-#                             selected="High School"
-#                ),
-#                
-#                radioButtons("map_radio", "Variables",
-#                             c("Race/Ethnicity"="Race/Ethnicity", 
-#                               "Gender"="Gender", "Grade Level"="Grade Level",
-#                               "English Language Learners"="English Language Learners",
-#                               "Students with Disabilities"="Students with Disabilities",
-#                               "Low Income"="Low Income", "High Needs"="High Needs"),
-#                             selected="Grade Level"
-#                )
-#                 ,
-#                 uiOutput("mapvar_levels")
-#                
-#              )
-#         ,
          conditionalPanel(
            condition="input.tabs == 'lmap'",
            ## Select year with multiyear slider
@@ -124,17 +92,45 @@ shinyUI(fluidPage(
                        min=2003, max=2012, value=2012,
                        sep="")
            ,
+           selectInput("map_profile", "Select Data", 
+                       choices=c("Enrollment Profile"="enrolled",
+                                 "Mobility Measures"="mobility"),
+                       selected="enrolled"),
            
-           
-           radioButtons("lmap_radio", "Variables",
-                        c("Race/Ethnicity"="Race/Ethnicity", 
-                          "Gender"="Gender", "Grade Level"="Grade Level",
-                          "English Language Learners"="English Language Learners",
-                          "Students with Disabilities"="Students with Disabilities",
-                          "Low Income"="Low Income", "High Needs"="High Needs"),
-                        selected="Race/Ethnicity"
-           )
-           ,
+           conditionalPanel(
+             condition="input.tabs== 'lmap' && input.map_profile=='enrolled'",
+             #select variable
+             radioButtons("lmap_radio", "Select Profile Variable",
+                          c("Race/Ethnicity"="Race/Ethnicity", 
+                            "Gender"="Gender", 
+                            "Grade Level"="Grade Levels",
+                            "Interest Groups"="Interest Groups"),
+                          selected="Race/Ethnicity")
+           ), 
+           conditionalPanel(
+             condition="input.tabs== 'lmap' && input.map_profile=='mobility'",
+             #select variable
+             conditionalPanel(condition="input.tabs== 'lmap' && input.map_profile=='mobility' && input.lmap_mobility_var=='mobenrollment'",
+             radioButtons("lmap_radio", "Select Interest Group",
+                          c("English Language Learners"="English Language Learner Mobility Enrollment",
+                            "Students with Disabilities"="Students with Disabilities Mobility Enrollment",
+                            "Low Income"="Low Income Students Mobility Enrollment", 
+                            "High Needs"="High Needs Students Mobility Enrollment"),
+                          selected='English Language Learner Students Mobility Enrollment')
+             ),
+             conditionalPanel(condition="input.tabs== 'lmap' && input.map_profile=='mobility' && input.lmap_mobility_var=='mobrate'",
+                              radioButtons("lmap_radio", "Select Interest Group",
+                                           c("English Language Learners"="English Language Learner Students Mobility Rate",
+                                             "Students with Disabilities"="Students with Disabilities Mobility Rate",
+                                             "Low Income"="Low Income Students Mobility Rate", 
+                                             "High Needs"="High Needs Students Mobility Rate"),
+                                           selected='English Language Learner Students Mobility Rate')
+             ),
+             radioButtons("lmap_mobility_var", "Select Rate or Enrollment",
+                          c("Rate"="mobrate",
+                            "Enrollment"="mobrate"),
+                          selected='mobrate')
+           ),
            uiOutput("lmapvar_levels")
            
          )
@@ -165,7 +161,7 @@ shinyUI(fluidPage(
                                  c("Race/Ethnicity"="Race/Ethnicity", 
                                    "Gender"="Gender", 
                                    "Grade Level"="Grade Levels",
-                                   "Focus Groups"="Focus Groups"
+                                   "Interest Groups"="Interest Groups"
                                    ),
                                  selected='Race/Ethnicity')
         ), conditionalPanel(
