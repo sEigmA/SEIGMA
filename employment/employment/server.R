@@ -372,5 +372,75 @@ output$Est_pct_plot<-reactive({
     }
 
   })
+  
+  ## map legend
+  output$legend2 <- renderPlot({
+    if(input$map_radio == "Unemployment_Rate_Avg"){
+      
+      paint.brush = colorRampPalette(colors=c("white", "violetred"))
+      cols <- paint.brush(25)
+      leg_dat <- data_frame(y = seq(unemin.val, unemax.val,length.out=(length(map_colors1)-1)), x = 1, col = cols)
+      
+      p <- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col,y), x = x), show_guide = FALSE) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+      
+    }
+    return(p)
+  })
+  output$legend3<- renderPlot({
+    if(input$map_display_radio == "Labor_Pct_Change"){
+      
+      paint.brush = colorRampPalette(colors=c("darkgreen", "white", "maroon"))
+      cols <- paint.brush(25)
+      leg_dat <- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      
+      b <- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+        scale_y_continuous(limits = c(pctmin.val, pctmax.val), breaks = seq(pctmin.val, pctmax.val, length.out = 5)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+      
+    }
+    return(b)
+  })
+  output$legend1 <- renderPlot({  
+    if(input$map_radio=="Employment" && input$map_display_radio == "Actual Values"){
+      paint.brush = colorRampPalette(colors=c("white", "violetred"))
+      cols <- paint.brush(length(map_colors)-1)
+      leg_dat<- data_frame(y = seq(empmin.val, empmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+        scale_y_continuous(limits = c(empmin.val, empmax.val), breaks = seq(empmin.val, empmax.val, length.out = 5)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    
+    return(q)
+    
+  })
 
 })

@@ -219,21 +219,24 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_radio == 'Employment' && input.map_display_radio=='Actual Values' && input.action != 0",
                    absolutePanel(
-                     right = 10, top = 150, draggable=FALSE, style = "", 
+                     right = 5, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Average Monthly Employment"),
+                     strong("Average Monthly"),
+                    br(),
+                      strong("Employment"),
+                     plotOutput("legend1"),
                      tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
-                           )),
-                           tags$td(prettyNum(round(from), big.mark = ","), "to", 
-                                   prettyNum(round(to), big.mark = ","), align = "right")
-                         )
-                       }, 
-                       empcolorRanges$from, empcolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
+#                        mapply(function(from, to, color) {
+#                          tags$tr(
+#                            tags$td(tags$div(
+#                              style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
+#                            )),
+#                            tags$td(prettyNum(round(from), big.mark = ","), "to", 
+#                                    prettyNum(round(to), big.mark = ","), align = "right")
+#                          )
+#                        }, 
+#                        empcolorRanges$from, empcolorRanges$to, map_colors[-length(map_colors)],
+#                        SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
@@ -251,17 +254,17 @@ shinyUI(fluidPage(
                      br(),
                      strong("Business Establishments"),
                      tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
-                           )),
-                           tags$td(prettyNum(round(from), big.mark = ","), "to",
-                                   prettyNum(round(to), big.mark = ","),  align = "right")
-                         )
-                       },
-                       estcolorRanges$from, estcolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
+                       #mapply(function(from, to, color) {
+#                          tags$tr(
+#                            tags$td(tags$div(
+#                              style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
+#                            )),
+#                            tags$td(prettyNum(round(from), big.mark = ","), "to",
+#                                    prettyNum(round(to), big.mark = ","),  align = "right")
+#                          )
+#                        },
+#                        estcolorRanges$from, estcolorRanges$to, map_colors[-length(map_colors)],
+#                        SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")

@@ -136,7 +136,7 @@ ylim_pct_wage<-list(
 
 ## Colors for a Employment legend
 paint.brush <- colorRampPalette(colors=c("white", "violetred"))
-map_colors <- c(paint.brush(n=5), "black")
+map_colors <- c(paint.brush(n=25), "black")
 
 ## (split into quintiles).  Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
