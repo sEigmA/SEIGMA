@@ -801,53 +801,53 @@ return(sum_df)
                           ), 
            "Interest Groups"= selectInput("lmap_level","Choose Level to map",
                                                     choices = 
-                                                      c("English Language Learners" = "English.Language.Learner...enrolled..1",
-                                                        "First Language Not English" = "First.Language.Not.English...enrolled..1",
-                                                        "Students with Disabilities" = "Students.with.Disabilities...enrolled..1",
-                                                        "Low Income Students" = "Low.Income...enrolled..1",
-                                                         "High Needs" = "High.Needs.Students...enrolled..1"), 
-                                                        selected="English.Language.Learner...enrolled..1"),
+                                                      c("English Language Learners" = "English Language Learner Enrolled %",
+                                                        "First Language Not English" = "First Language Not English Enrolled %",
+                                                        "Students with Disabilities" = "Students With Disabilities Enrolled %",
+                                                        "Low Income Students" = "Low Income Students Enrolled %",
+                                                         "High Needs" = "High Needs Students Enrolled %"), 
+                                                        selected="English Language Learner Enrolled %"),
                                           
-         "English Language Learner Mobility Enrollment"=selectInput("lmap_level"="Choose Level to map", choices=
-                                  c("Churn Enrollment: English Language Learners"="Churn.Enrollment.for.English.Language.Learning.Students",
-                                    "Stability Enrollment: English Language Learners"="Stability.Enrollment.for.English.Language.Learning.Students"),
-                                  selected="Churn.Enrollment.for.English.Language.Learning.Students"),
+         "English Language Learner Students Mobility Enrollment"=selectInput("lmap_level","Choose Level to map", choices=
+                                  c("Churn Enrollment: English Language Learners"="Churn Enrollment for English Language Learning Students",
+                                    "Stability Enrollment: English Language Learners"="Stability Enrollment for English Language Learning Students"),
+                                  selected="Churn Enrollment for English Language Learning Students"),
          
-         "Students with Disabilities Mobility Enrollment"=selectInput("lmap_level"="Choose Level to map", choices=
-                                                                      c("Churn Enrollment: Students with Disabilities"="Churn.Enrollment.for.Students.with.Disabilities",
-                                                                        "Stability Enrollment: Students with Disabilities"="Stability.Enrollment.for.Students.with.Disabilities"),
-                                                                    selected="Churn.Enrollment.for.Students.with.Disabilities"),
+         "Students with Disabilities Mobility Enrollment"=selectInput("lmap_level","Choose Level to map", choices=
+                                                                      c("Churn Enrollment: Students with Disabilities"="Churn Enrollment for Students with Disabilities",
+                                                                        "Stability Enrollment: Students with Disabilities"="Stability Enrollment for Students with Disabilities"),
+                                                                    selected="Churn Enrollment for Students with Disabilities"),
          
-         "Low Income Students Mobility Enrollment"=selectInput("lmap_level"="Choose Level to map", choices=
-                                                                      c("Churn Enrollment: Low Income Students"="Churn.Enrollment.for.Low.Income.Students",
-                                                                        "Stability Enrollment: Low Income Students"="Stability.Enrollment.for.Low.Income.Students"),
-                                                                    selected="Churn.Enrollment.for.Low.Income.Students"),
+         "Low Income Students Mobility Enrollment"=selectInput("lmap_level","Choose Level to map", choices=
+                                                                      c("Churn Enrollment: Low Income Students"="Churn Enrollment for Low Income Students",
+                                                                        "Stability Enrollment: Low Income Students"="Stability Enrollment for Low Income Students"),
+                                                                    selected="Churn Enrollment for Low Income Students"),
          
-         "High Needs Students Mobility Enrollment"=selectInput("lmap_level"="Choose Level to map", choices=
-                                                                      c("Churn Enrollment: High Needs Students"="Churn.Enrollment.for.High.Needs.Students",
-                                                                        "Stability Enrollment: High Needs Students"="Stability.Enrollment.for.High.Needs.Students"),
-                                                                    selected="Churn.Enrollment.for.High.Needs.Students"),
+         "High Needs Students Mobility Enrollment"=selectInput("lmap_level","Choose Level to map", choices=
+                                                                      c("Churn Enrollment: High Needs Students"="Churn Enrollment for High Needs Students",
+                                                                        "Stability Enrollment: High Needs Students"="Stability Enrollment for High Needs Students"),
+                                                                    selected="Churn Enrollment for High Needs Students"),
          
-         "English Language Learner Students Mobility Rate"=selectInput("lmap_level"="Choose Level to map", choices=
-                                                                         c("Churn Rate: English Language Learners"="Churn.Rate.for.English.Language.Learning.Students",
-                                                                           "Stability Rate: English Language Learners"="Stability.Rate.for.English.Language.Learning.Students",
-                                                                           "Intake Rate: English Language Learners"="Intake.Rate.for.English.Language.Learning.Students"),
-                                                                       selected="Churn.Rate.for.English.Language.Learning.Students"),
-         "Students with Disabilities Mobility Rate"=selectInput("lmap_level"="Choose Level to map", choices=
-                                                                         c("Churn Rate: Students with Disabilities"="Churn.Rate.for.Students.with.Disabilities",
-                                                                           "Stability Rate: Students with Disabilities"="Stability.Rate.for.Students.with.Disabilities",
-                                                                           "Intake Rate: Students with Disabilities"="Intake.Rate.for.Students.with.Disabilities"),
-                                                                       selected="Churn.Rate.for.English.Language.Learning.Students"),
-         "Low Income Students Mobility Rate"=selectInput("lmap_level"="Choose Level to map", choices=
-                                                                         c("Churn Rate: Low Income Students"="Churn.Rate.for.Low.Income.Students",
-                                                                           "Stability Rate: Low Income Students"="Stability.Rate.for.Low.Income.Students",
-                                                                           "Intake Rate: Low Income Students"="Intake.Rate.for.English.Low.Income.Students"),
-                                                                       selected="Churn.Rate.for.Low.Income.Students"),
-         "High Needs Students Mobility Rate"=selectInput("lmap_level"="Choose Level to map", choices=
-                                                                         c("Churn Rate: High Needs Students"="Churn.Rate.for.High.Needs.Students",
-                                                                           "Stability Rate: High Needs Students"="Stability.Rate.for.High.Needs.Students",
-                                                                           "Intake Rate: High Needs Students"="Intake.Rate.for.High.Needs.Students"),
-                                                                       selected="Churn.Rate.for.High.Needs.Students")
+         "English Language Learner Students Mobility Rate"=selectInput("lmap_level","Choose Level to map", choices=
+                                                                         c("Churn Rate: English Language Learners"="Churn Rate for English Language Learning Students",
+                                                                           "Stability Rate: English Language Learners"="Stability Rate for English Language Learning Students",
+                                                                           "Intake Rate: English Language Learners"="Intake Rate for English Language Learning Students"),
+                                                                       selected="Churn Rate for English Language Learning Students"),
+         "Students with Disabilities Mobility Rate"=selectInput("lmap_level","Choose Level to map", choices=
+                                                                         c("Churn Rate: Students with Disabilities"="Churn Rate for Students with Disabilities",
+                                                                           "Stability Rate: Students with Disabilities"="Stability Rate for Students with Disabilities",
+                                                                           "Intake Rate: Students with Disabilities"="Intake Rate for Students with Disabilities"),
+                                                                       selected="Churn Rate for English Language Learning Students"),
+         "Low Income Students Mobility Rate"=selectInput("lmap_level","Choose Level to map", choices=
+                                                                         c("Churn Rate: Low Income Students"="Churn Rate for Low Income Students",
+                                                                           "Stability Rate: Low Income Students"="Stability Rate for Low Income Students",
+                                                                           "Intake Rate: Low Income Students"="Intake Rate for English Low Income Students"),
+                                                                       selected="Churn Rate for Low Income Students"),
+         "High Needs Students Mobility Rate"=selectInput("lmap_level","Choose Level to map", choices=
+                                                                         c("Churn Rate: High Needs Students"="Churn Rate for High Needs Students",
+                                                                           "Stability Rate: High Needs Students"="Stability Rate for High Needs Students",
+                                                                           "Intake Rate: High Needs Students"="Intake Rate for High Needs Students"),
+                                                                       selected="Churn Rate for High Needs Students")
          )
            })
   
@@ -889,32 +889,33 @@ return(sum_df)
            "Twelfth Grade"=sel_col<-20,
            "Special Ed Beyond 12th Grade"=sel_col<-21,
            
-           "English.Language.Learner...enrolled..1"=sel_col<-35,
-           "First.Language.Not.English...enrolled..1"=sel_col<-33,
-           "Students.with.Disabilities...enrolled..1"=sel_col<-37,
-           "Low.Income...enrolled..1"=sel_col<-39,
-           "High.Needs.Students...enrolled..1"=sel_col<-45,
+           "English Language Learner Enrolled %"=sel_col<-35,
+           "First Language Not English Enrolled %"=sel_col<-33,
+           "Students With Disabilities Enrolled %"=sel_col<-37,
+           "Low Income Students Enrolled %"=sel_col<-39,
+           "High Needs Students Enrolled %"=sel_col<-45,
            
-           "Churn.Enrollment.for.English.Language.Learning.Students"=sel_col<-51,
-           "Stability.Enrollment.for.English.Language.Learning.Students"=sel_col<-54,
-           "Churn.Enrollment.for.Students.with.Disabilities"=sel_col<-46,
-           "Stability.Enrollment.for.Students.with.Disabilities"=sel_col<-49,
-           "Churn.Enrollment.for.Low.Income.Students"=sel_col<-61,
-           "Stability.Enrollment.for.Low.Income.Students"=sel_col<-64,
-           "Churn.Enrollment.for.High.Needs.Students"=sel_col<-56,
-           "Stability.Enrollment.for.High.Needs.Students"=sel_col<-59,
-           "Churn.Rate.for.English.Language.Learning.Students"=sel_col<-52,
-           "Stability.Rate.for.English.Language.Learning.Students"=sel_col<-55,
-           "Intake.Rate.for.English.Language.Learning.Students"=sel_col<-53,
-           "Churn.Rate.for.Students.with.Disabilities"=sel_col<-47,
-           "Stability.Rate.for.Students.with.Disabilities"=sel_col<-50,
-           "Intake.Rate.for.Students.with.Disabilities"=sel_col<-48,
-           "Churn.Rate.for.Low.Income.Students"=sel_col<-62,
-           "Stability.Rate.for.Low.Income.Students"=sel_col<-65,
-           "Intake.Rate.for.English.Low.Income.Students"=sel_col<-63,
-           "Churn.Rate.for.High.Needs.Students"=sel_col<-57,
-           "Stability.Rate.for.High.Needs.Students"=sel_col<-60,
-          "Intake.Rate.for.High.Needs.Students"=sel_col<-58
+           "Churn Enrollment for English Language Learning Students"=sel_col<-51,
+           "Stability Enrollment for English Language Learning Students"=sel_col<-54,
+           "Churn Enrollment for Students with Disabilities"=sel_col<-46,
+           "Stability Enrollment for Students with Disabilities"=sel_col<-49,
+           "Churn Enrollment for Low Income Students"=sel_col<-61,
+           "Stability Enrollment for Low Income Students"=sel_col<-64,
+           "Churn Enrollment for High Needs Students"=sel_col<-56,
+           "Stability Enrollment for High Needs Students"=sel_col<-59,
+           
+           "Churn Rate for English Language Learning Students"=sel_col<-52,
+           "Stability Rate for English Language Learning Students"=sel_col<-55,
+           "Intake Rate for English Language Learning Students"=sel_col<-53,
+           "Churn Rate for Students with Disabilities"=sel_col<-47,
+           "Stability Rate for Students with Disabilities"=sel_col<-50,
+           "Intake Rate for Students with Disabilities"=sel_col<-48,
+           "Churn Rate for Low Income Students"=sel_col<-62,
+           "Stability Rate for Low Income Students"=sel_col<-65,
+           "Intake Rate for English Low Income Students"=sel_col<-63,
+           "Churn Rate for High Needs Students"=sel_col<-57,
+           "Stability Rate for High Needs Students"=sel_col<-60,
+           "Intake Rate for High Needs Students"=sel_col<-58
            
            
            )
@@ -1421,6 +1422,107 @@ output$TWELFTHlegend <- renderPlot({
   return(p)
 })
 output$SPEClegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+
+output$P_ELL_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$P_FLNE_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$P_DISAB_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$P_LOW_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$P_HIGH_legend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)

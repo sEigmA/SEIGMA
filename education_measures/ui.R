@@ -95,10 +95,10 @@ shinyUI(fluidPage(
            selectInput("map_profile", "Select Data", 
                        choices=c("Enrollment Profile"="enrolled",
                                  "Mobility Measures"="mobility"),
-                       selected="enrolled"),
-           
+                       selected="enrolled")
+         ),
            conditionalPanel(
-             condition="input.tabs== 'lmap' && input.map_profile=='enrolled'",
+             condition="input.tabs == 'lmap' && input.map_profile=='enrolled'",
              #select variable
              radioButtons("lmap_radio", "Select Profile Variable",
                           c("Race/Ethnicity"="Race/Ethnicity", 
@@ -108,32 +108,35 @@ shinyUI(fluidPage(
                           selected="Race/Ethnicity")
            ), 
            conditionalPanel(
-             condition="input.tabs== 'lmap' && input.map_profile=='mobility'",
+             condition="input.tabs == 'lmap' && input.map_profile=='mobility'",
              #select variable
-             conditionalPanel(condition="input.tabs== 'lmap' && input.map_profile=='mobility' && input.lmap_mobility_var=='mobenrollment'",
-             radioButtons("lmap_radio", "Select Interest Group",
-                          c("English Language Learners"="English Language Learner Mobility Enrollment",
-                            "Students with Disabilities"="Students with Disabilities Mobility Enrollment",
-                            "Low Income"="Low Income Students Mobility Enrollment", 
-                            "High Needs"="High Needs Students Mobility Enrollment"),
-                          selected='English Language Learner Students Mobility Enrollment')
-             ),
-             conditionalPanel(condition="input.tabs== 'lmap' && input.map_profile=='mobility' && input.lmap_mobility_var=='mobrate'",
+             radioButtons("lmap_mobility_var", "Select Rate or Enrollment",
+                          c("Rate"="mobrate",
+                            "Enrollment"="mobenrollment"),
+                          selected="mobrate"),
+             
+             conditionalPanel(condition="input.lmap_mobility_var=='mobrate'",
                               radioButtons("lmap_radio", "Select Interest Group",
                                            c("English Language Learners"="English Language Learner Students Mobility Rate",
                                              "Students with Disabilities"="Students with Disabilities Mobility Rate",
                                              "Low Income"="Low Income Students Mobility Rate", 
                                              "High Needs"="High Needs Students Mobility Rate"),
-                                           selected='English Language Learner Students Mobility Rate')
+                                           selected="English Language Learner Students Mobility Rate")
              ),
-             radioButtons("lmap_mobility_var", "Select Rate or Enrollment",
-                          c("Rate"="mobrate",
-                            "Enrollment"="mobrate"),
-                          selected='mobrate')
+             conditionalPanel(condition="input.lmap_mobility_var=='mobenrollment'",
+                              radioButtons("lmap_radio", "Select Interest Group",
+                                           c("English Language Learners"="English Language Learner Students Mobility Enrollment",
+                                             "Students with Disabilities"="Students with Disabilities Mobility Enrollment",
+                                             "Low Income"="Low Income Students Mobility Enrollment", 
+                                             "High Needs"="High Needs Students Mobility Enrollment"),
+                                           selected="English Language Learner Students Mobility Enrollment")
+             )
+             
            ),
-           uiOutput("lmapvar_levels")
+         conditionalPanel(condition="input.tabs == 'lmap'",
+           uiOutput("lmapvar_levels"))
            
-         )
+         
          ,
                  
                   ## in plot, allow for county and school selection
@@ -230,10 +233,10 @@ shinyUI(fluidPage(
                 #percent charts
                 
                   conditionalPanel(
-                   condition="input.plot_profile=='enrolled' && input.plot_enrolled!='Focus Groups'",
+                   condition="input.plot_profile=='enrolled' && input.plot_enrolled!='Interest Groups'",
                    percentcolchart),
                 conditionalPanel(
-                  condition="input.plot_profile=='enrolled' && input.plot_enrolled=='Focus Groups'",
+                  condition="input.plot_profile=='enrolled' && input.plot_enrolled=='Interest Groups'",
                   countcolchart),
 
                 #count charts 
@@ -469,6 +472,46 @@ tabPanel("Map",
              class = "floater",
              strong("Special",br(),"Education", br(), "beyond", br(), "Twelfth", br(), "Graders"),
              plotOutput("SPEClegend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'English Language Learner Enrolled %'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% English",br(),"Language", br(), "Learners"),
+             plotOutput("P_ELL_legend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'First Language Not English Enrolled %'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% First",br(),"Language", br(), "Not", br(), "English"),
+             plotOutput("P_FLNE_legend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Students With Disabilities Enrolled %'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% Students",br(),"with", br(), "Disabilities"),
+             plotOutput("P_DISAB_legend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'Low Income Students Enrolled %'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% Low",br(),"Income", br(), "Students"),
+             plotOutput("P_LOW_legend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level == 'High Needs Students Enrolled %'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% High",br(),"Needs", br(), "Students"),
+             plotOutput("P_HIGH_legend")
            ))
          ,
          
