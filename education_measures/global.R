@@ -166,13 +166,19 @@ plot_side_text <- conditionalPanel(
   p(strong('Please select the county in which the school you are interested in is located.')),
   tags$br(),
   tags$ul(
-  tags$li("Then select a school for which you are interested in viewing educational measures."),
+    tags$li("Then select the type of data which you are interested in viewing."),
+    tags$br(),
+    tags$li("To view enrollment data such as the percentage of students by race/ethnicity, gender, grade level, or focus group, select 'Enrollment Profile' from the Data drop down menu."),
+    tags$br(),
+    tags$li("To view mobility data such as churn, intake, and stability rates by specific interest group select 'Mobility Profile' from the 'Data' drop down menu."),
+    tags$br(),
+  tags$li("Next, please select a school for which you are interested in viewing educational measures."),
   tags$br(),
-  tags$li("To view the percentage of students by race/ethnicity, gender or grade levels, select 'Race/Ethnicity', 'Gender' or 'Grade Level' from the 'Variables' list."),
+  tags$li("To view the percentage of students by race/ethnicity, gender, grade level, or focus group select 'Race/Ethnicity', 'Gender', 'Grade Level', or 'Focus Group' from the 'Profile Variable' list."),
   tags$br(),
-  tags$li("To view churn and stability rates select either Enlgish Language Learners, Students with Disabilities, Low income, or High Needs."),
+  tags$li("To view churn, intake, and stability rates select either Enlgish Language Learners, Students with Disabilities, Low income, or High Needs."),
   tags$br(),
-  tags$li("Then select a measure from the drop down list called Measures.")
+  tags$li("Then select either 'Rate' or 'Enrollment' from the options to view rates or number of students per interest group.")
   ))
 
 # 
@@ -182,15 +188,17 @@ map_side_text <- conditionalPanel(
   helpText(p(strong("Please select a year, and click on 'Generate Map' to get started"))),
   tags$br(),
   tags$ul(
-
-    tags$li('To view average monthly employment select Employment, then click on a municipality for which you are interested in viewing average monthly employment.'),
+    tags$li("To view the percentage of students by race/ethnicity, gender, grade level or focus group, select 'Race/Ethnicity', 'Gender', 'Grade Level', or 'Focus Group' from the 'Variables' list."),
     tags$br(),
-    tags$li("To view the number of business establishments select Business Establishments, then click on a municipality for which you are interested in viewing the number of business establishments."),
+    tags$li("To view churn, intake, and stability rates select either 'Enlgish Language Learners', 'Students with Disabilities', 'Low income', or 'High Needs' from the 'Variables' list."),
     tags$br(),
-    tags$li("To view average weekly wages select Wages, then click on a municipality for which you are interested in viewing the average weekly wages."),
+    tags$li("Then select the level of information by which you are interested in viewing the data from the 'Choose Level to Map' drop down menu."),
     tags$br(),
-    tags$li("To view the difference in average monthly employment, weekly wage, and number of business establishments between the year you selected and 2003 select Difference Compared to Year 2003.")
-    
+    tags$li("To view the actual number of students within each focus group select any of the 'Count' options from the'Choose Level to Map' drop down menu ."),
+    tags$br(),
+    tags$li("To view the percentage of students within each focus group select any of the 'Percentage' options from the'Choose Level to Map' drop down menu ."),
+    tags$br(),
+    tags$li("To view the churn, intake or Stability rate of the students within each focus group select any of the 'Churn', 'Intake', or 'Stability' options from the'Choose Level to Map' drop down menu .")
   ))
 
 info_side_text <- conditionalPanel(
@@ -203,8 +211,8 @@ info_side_text <- conditionalPanel(
                       tags$br(),
                       tags$ul(
                         tags$li(p(strong("Summary"), "shows the source data in table format.")),
-                        tags$li(p(strong("Plot"), "compares the percentage of students by race/ethnicity, gender or grade levels and student mobility data for each school.")),
-                        tags$li(p(strong("Map"), "visually displays the percentage of students by race/ethnicity, gender or grade levels and student mobility data by school.")),
+                        tags$li(p(strong("Plot"), "compares the percentage of students by race and ethnicity, gender, and grade levels, as well as student mobility profiles for each school.")),
+                        tags$li(p(strong("Map"), "visually displays the percentage of students by race and ethnicity, gender, and grade level, as well as student mobility profiles for each school.")),
                         tags$li(p(strong("More Info"), "describes education measures including formulas and calculations."))
                       ))
 

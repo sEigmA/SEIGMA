@@ -484,24 +484,26 @@ tabPanel("Map",
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                  tags$li(p(strong("Employment"),
-                           " - More than 8,000 employers participated in an annual survey administered by the Executive Office of Labor and Workforce Development, which assessed employment by industry in Massachusetts. All civilians aged 16+ who were working during this survey period were counted.  This includes individuals who worked as paid employees, within their own business, within a farm or family business, and those who had a job but were absent due to illness, bad weather, vacation, or personal reasons. Individuals were excluded if they solely worked around the house or completed unpaid volunteer work for religious, charitable, or similar organizations.")),
+                  tags$li(p(strong("Intake Rate"),
+                           " - Measures the number of students that enroll in the state, a district, or school after the beginning of the school year.  Intake is calculated by dividing the number of students who enroll in school after the start of the school year by all students reported as enrolled in any School Infomartional Management System within that school.")),
                   tags$br(),
-                 tags$li((p(strong("Average Monthly Employment"),
-                            "- To estimate monthly employment, all employees who were paid at any point in the past year are counted (this includes full-time, part-time, seasonal, salaried, and hourly employees).  The total number of employees is then divided by the number of pay periods per calander year at each business establishment."))),
+                 tags$li((p(strong("Churn Rate"),
+                            "-  measures the number students transferring into or out of a public school or district throughout the course of a school year. Churn represents the sum of all students who were transferring in or out, divided by all students reported as enrolled at any point in time during the school year."))),
                  tags$br(),
-                 tags$li((p(strong("Average Weekly Wage"), "- Average weekly wage is calculated by dividing quarterly
-total wages by the average employment level over three months.  This number is then divided by 13, which represents the 13 weeks wihtin the payment quarter.  Wage data can be affected by the ratio of full time to part time employees, the number of higher paid employees within an establishment, and by the number of pay periods within the quarter."))),
+                 tags$li((p(strong("Stability Rate"), "- measures how many students remain in a district or school throughout the school year."))),
                  tags$br(),
-                 tags$li(p(strong("2012 Dollars"), "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2012 to be our constant.")),
+                 tags$li(p(strong("English Language Learners"), "- This focus group is defined as, a student whose first language is a language other than English who is unable to perform ordinary classroom work in English.")),
                  tags$br(),
-                 tags$li((p(strong("Business Establishments"), "- A business establishment is defined as an economic unit which produces goods or services at a single location and engages in predominantly one activity."))),
+                 tags$li((p(strong("First Language Not English"), "- This focus group is defined as those students whose first language is a language other than English."))),
                  tags$br(),
-                 tags$li(p(strong("Change Since 2003"), "- This is calculated by comparing average monthly employment and weekly wages for a specific year to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003."))
+                 tags$li(p(strong("Students With Disabilities"), "- This focus group is defined as all students who have an Individualized Education Program (IEP).")),
+                 tags$br(),
+                 tags$li(p(strong("High Needs"), "- A student is high needs if he or she is either low income (prior to School Year 2015), economically disadvantaged (starting in School Year 2015), an enlgish language learner, or a student with disabilities.")),
+                 tags$br(),
+                 tags$li(p(strong("Low Income"), "- A student of low income status if they meet any of thr following criteria; they are eligible for free or reduced price lunch, they receive Transitional Aid to Families benefits, or the student is eligible for food stamps,"))
                  ),
                  
-                 tags$br(),
-                 p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),
+                
                  
                  
                  
