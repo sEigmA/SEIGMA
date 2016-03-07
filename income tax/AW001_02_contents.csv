@@ -1,0 +1,26 @@
+Alphabetic List of Variables and Attributes,,,,,,
+#,Variable,Type,Len,Format,Informat,Label
+4,AW001_001,Char,5,$5.00 ,$5.00 ,AW001_001: Federal Information Processing Standards (FIPS)
+5,AW001_002,Num,8,,,AW001_002: Personal Income (thousands of dollars)
+6,AW001_003,Num,8,,,AW001_003: Less: Personal Current Taxes (thousands of dollars)
+7,AW001_004,Num,8,,,AW001_004: Equals: Disposable Personal Income (thousands of dollars)
+8,AW001_005,Num,8,,,AW001_005: Population (persons)
+9,AW001_006,Num,8,,,AW001_006: Per Capita Personal Income (dollars)
+10,AW001_007,Num,8,,,AW001_007: Per Capita Disposable Personal Income (dollars)
+11,AW001_008,Num,8,,,AW001_008: Personal Current Taxes (thousands of dollars)
+12,AW001_009,Num,8,,,AW001_009: Personal Current Taxes to Federal Government (thousands of dollars)
+13,AW001_010,Num,8,,,AW001_010: Personal Current Taxes to Federal Government (thousands of dollars): Income Taxes (net of refunds)
+14,AW001_011,Num,8,,,AW001_011: Personal Current Taxes to Federal Government (thousands of dollars): Income Taxes (gross)
+15,AW001_012,Num,8,,,AW001_012: Personal Current Taxes to Federal Government (thousands of dollars): Less: Refunds
+16,AW001_013,Num,8,,,AW001_013: Personal Current Taxes to State Governments (thousands of dollars)
+17,AW001_014,Num,8,,,AW001_014: Personal Current Taxes to State Governments (thousands of dollars): Income Taxes
+18,AW001_015,Num,8,,,AW001_015: Personal Current Taxes to State Governments (thousands of dollars): Motor Vehicle Licenses
+19,AW001_016,Num,8,,,AW001_016: Personal Current Taxes to State Governments (thousands of dollars): Other Taxes
+20,AW001_017,Num,8,,,AW001_017: Personal Current Taxes to Local Governments (thousands of dollars)
+21,AW001_018,Num,8,,,AW001_018: Personal Current Taxes to Local Governments (thousands of dollars): Income Taxes
+22,AW001_019,Num,8,,,AW001_019: Personal Current Taxes to Local Governments (thousands of dollars): Motor Vehicle Licenses
+23,AW001_020,Num,8,,,AW001_020: Personal Current Taxes to Local Governments (thousands of dollars): Other Taxes
+24,AW001_021,Num,8,,,AW001_021: State and Local Personal Property Taxes
+3,C_year,Char,4,,,Calender Year
+2,Region,Char,60,,,Region
+1,State,Char,3,,,State
