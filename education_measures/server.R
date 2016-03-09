@@ -757,169 +757,70 @@ return(sum_df)
   # POINT MAP in LEAFLET
   #######################################################
   
-  output$lmapvar_levels <- renderUI({
-    
-    # Depending on input$input_type, we'll generate a different
-    # UI component and send it to the client.
-    switch(input$lmap_radio,
-           
-           "Race/Ethnicity" = selectInput("lmap_level","Choose Race/Ethnicity to map",
-                                          choices = 
-                                            c("African American" = "African American",
-                                              "Asian" = "Asian",
-                                              "Hispanic" = "Hispanic",
-                                              "White" = "White",
-                                              "Native American" = "Native American",
-                                              "Native Hawaiian/Pacific Islander" = "Native Hawaiian/Pacific Islander",
-                                              "Multi-Race Non-Hispanic" = "Multi-Race/Non-Hispanic"),
-                                          selected = "African American"
-           ), 
-           "Gender"= selectInput("lmap_level","Choose Gender to map",
-                                 choices = 
-                                   c("Females" = "Females",
-                                     "Males" = "Males"),
-                                 selected = "Females"
-           ), 
-           "Grade Levels"= selectInput("lmap_level","Choose Grade Level to map",
-                            choices = 
-                              c("Pre-Kindergarden" = "Pre Kindergarden",
-                                "Kindergarden" = "Kindergarden",
-                                "First Grade" = "First Grade",
-                                "Second Grade" = "Second Grade",
-                                "Third Grade" = "Third Grade",
-                                "Fourth Grade" = "Fourth Grade",
-                                "Fifth Grade" = "Fifth Grade",
-                                "Sixth Grade" = "Sixth Grade", 
-                                "Seventh Grade" = "Seventh Grade",
-                                "Eighth Grade" = "Eighth Grade",
-                                "Ninth Grade" = "Ninth Grade",
-                                "Tenth Grade" = "Tenth Grade",
-                                "Eleventh Grade" = "Eleventh Grade",
-                                "Twelfth Grade" = "Twelfth Grade",
-                                "Special Education Beyond 12th Grade" = "Special Ed Beyond 12th Grade"),
-                            selected = "Pre Kindergarden"
-                          ), 
-           "Interest Groups"= selectInput("lmap_level","Choose Level to map",
-                                                    choices = 
-                                                      c("English Language Learners" = "English Language Learner Enrolled %",
-                                                        "First Language Not English" = "First Language Not English Enrolled %",
-                                                        "Students with Disabilities" = "Students With Disabilities Enrolled %",
-                                                        "Low Income Students" = "Low Income Students Enrolled %",
-                                                         "High Needs" = "High Needs Students Enrolled %"), 
-                                                        selected="English Language Learner Enrolled %"),
-                                          
-         "English Language Learner Students Mobility Enrollment"=selectInput("lmap_level","Choose Level to map", choices=
-                                  c("Churn Enrollment: English Language Learners"="Churn Enrollment for English Language Learning Students",
-                                    "Stability Enrollment: English Language Learners"="Stability Enrollment for English Language Learning Students"),
-                                  selected="Churn Enrollment for English Language Learning Students"),
-         
-         "Students with Disabilities Mobility Enrollment"=selectInput("lmap_level","Choose Level to map", choices=
-                                                                      c("Churn Enrollment: Students with Disabilities"="Churn Enrollment for Students with Disabilities",
-                                                                        "Stability Enrollment: Students with Disabilities"="Stability Enrollment for Students with Disabilities"),
-                                                                    selected="Churn Enrollment for Students with Disabilities"),
-         
-         "Low Income Students Mobility Enrollment"=selectInput("lmap_level","Choose Level to map", choices=
-                                                                      c("Churn Enrollment: Low Income Students"="Churn Enrollment for Low Income Students",
-                                                                        "Stability Enrollment: Low Income Students"="Stability Enrollment for Low Income Students"),
-                                                                    selected="Churn Enrollment for Low Income Students"),
-         
-         "High Needs Students Mobility Enrollment"=selectInput("lmap_level","Choose Level to map", choices=
-                                                                      c("Churn Enrollment: High Needs Students"="Churn Enrollment for High Needs Students",
-                                                                        "Stability Enrollment: High Needs Students"="Stability Enrollment for High Needs Students"),
-                                                                    selected="Churn Enrollment for High Needs Students"),
-         
-         "English Language Learner Students Mobility Rate"=selectInput("lmap_level","Choose Level to map", choices=
-                                                                         c("Churn Rate: English Language Learners"="Churn Rate for English Language Learning Students",
-                                                                           "Stability Rate: English Language Learners"="Stability Rate for English Language Learning Students",
-                                                                           "Intake Rate: English Language Learners"="Intake Rate for English Language Learning Students"),
-                                                                       selected="Churn Rate for English Language Learning Students"),
-         "Students with Disabilities Mobility Rate"=selectInput("lmap_level","Choose Level to map", choices=
-                                                                         c("Churn Rate: Students with Disabilities"="Churn Rate for Students with Disabilities",
-                                                                           "Stability Rate: Students with Disabilities"="Stability Rate for Students with Disabilities",
-                                                                           "Intake Rate: Students with Disabilities"="Intake Rate for Students with Disabilities"),
-                                                                       selected="Churn Rate for English Language Learning Students"),
-         "Low Income Students Mobility Rate"=selectInput("lmap_level","Choose Level to map", choices=
-                                                                         c("Churn Rate: Low Income Students"="Churn Rate for Low Income Students",
-                                                                           "Stability Rate: Low Income Students"="Stability Rate for Low Income Students",
-                                                                           "Intake Rate: Low Income Students"="Intake Rate for English Low Income Students"),
-                                                                       selected="Churn Rate for Low Income Students"),
-         "High Needs Students Mobility Rate"=selectInput("lmap_level","Choose Level to map", choices=
-                                                                         c("Churn Rate: High Needs Students"="Churn Rate for High Needs Students",
-                                                                           "Stability Rate: High Needs Students"="Stability Rate for High Needs Students",
-                                                                           "Intake Rate: High Needs Students"="Intake Rate for High Needs Students"),
-                                                                       selected="Churn Rate for High Needs Students")
-         )
-           })
   
-  #title
-  output$lmap_title <- renderText({
-    paste(input$lmap_level, "in Massachusetts", 
+  #titles: one per map
+  output$lmap_title1 <- renderText({
+    paste(input$lmap_level1, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title2 <- renderText({
+    paste(input$lmap_level2, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title3 <- renderText({
+    paste(input$lmap_level3, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title4 <- renderText({
+    paste(input$lmap_level4, "in Massachusetts", 
           "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
   })
   
+  output$lmap_title5 <- renderText({
+    paste(input$lmap_level5, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title6 <- renderText({
+    paste(input$lmap_level6, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title7 <- renderText({
+    paste(input$lmap_level7, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title8 <- renderText({
+    paste(input$lmap_level8, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
   
+  output$lmap_title9 <- renderText({
+    paste(input$lmap_level9, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title10 <- renderText({
+    paste(input$lmap_level10, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title11 <- renderText({
+    paste(input$lmap_level11, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title12 <- renderText({
+    paste(input$lmap_level12, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
     
-    ## filter dataframe
+    ## filter dataframes - one per map
   
-  map_df<-reactive({
+  map_df1<-reactive({
     
-    switch(input$lmap_level, 
-           "African American"=sel_col<-23,
-           "Asian"=sel_col<-24,
-           "Hispanic"=sel_col<-25,
-           "White"=sel_col<-26,
-           "Native American"=sel_col<-27,
-           "Native Hawaiian/Pacific Islander"=sel_col<-30,
-           "Multi-Race/Non-Hispanic"=sel_col<-31,
-           "Males"=sel_col<-28,
-           "Females"=sel_col<-29,
-           "Pre Kindergarden"=sel_col<-7,
-           "Kindergarden"=sel_col<-8,
-           "First Grade"=sel_col<-9,
-           "Second Grade"=sel_col<-10,
-           "Third Grade"=sel_col<-11,
-           "Fourth Grade"=sel_col<-12,
-           "Fifth Grade"=sel_col<-13,
-           "Sixth Grade"=sel_col<-14, 
-           "Seventh Grade"=sel_col<-15,
-           "Eighth Grade"=sel_col<-16,
-           "Ninth Grade"=sel_col<-17,
-           "Tenth Grade"=sel_col<-18,
-           "Eleventh Grade"=sel_col<-19,
-           "Twelfth Grade"=sel_col<-20,
-           "Special Ed Beyond 12th Grade"=sel_col<-21,
-           
-           "English Language Learner Enrolled %"=sel_col<-35,
-           "First Language Not English Enrolled %"=sel_col<-33,
-           "Students With Disabilities Enrolled %"=sel_col<-37,
-           "Low Income Students Enrolled %"=sel_col<-39,
-           "High Needs Students Enrolled %"=sel_col<-45,
-           
-           "Churn Enrollment for English Language Learning Students"=sel_col<-51,
-           "Stability Enrollment for English Language Learning Students"=sel_col<-54,
-           "Churn Enrollment for Students with Disabilities"=sel_col<-46,
-           "Stability Enrollment for Students with Disabilities"=sel_col<-49,
-           "Churn Enrollment for Low Income Students"=sel_col<-61,
-           "Stability Enrollment for Low Income Students"=sel_col<-64,
-           "Churn Enrollment for High Needs Students"=sel_col<-56,
-           "Stability Enrollment for High Needs Students"=sel_col<-59,
-           
-           "Churn Rate for English Language Learning Students"=sel_col<-52,
-           "Stability Rate for English Language Learning Students"=sel_col<-55,
-           "Intake Rate for English Language Learning Students"=sel_col<-53,
-           "Churn Rate for Students with Disabilities"=sel_col<-47,
-           "Stability Rate for Students with Disabilities"=sel_col<-50,
-           "Intake Rate for Students with Disabilities"=sel_col<-48,
-           "Churn Rate for Low Income Students"=sel_col<-62,
-           "Stability Rate for Low Income Students"=sel_col<-65,
-           "Intake Rate for English Low Income Students"=sel_col<-63,
-           "Churn Rate for High Needs Students"=sel_col<-57,
-           "Stability Rate for High Needs Students"=sel_col<-60,
-           "Intake Rate for High Needs Students"=sel_col<-58
-           
-           
-           )
-           
+         if(input$lmap_level1=="African American"){sel_col<-23}
+    else if(input$lmap_level1=="Asian"){sel_col<-24}
+    else if(input$lmap_level1=="Hispanic"){sel_col<-25}
+    else if(input$lmap_level1=="White"){sel_col<-26}
+    else if(input$lmap_level1=="Native American"){sel_col<-27}
+    else if(input$lmap_level1=="Native Hawaiian/Pacific Islander"){sel_col<-30}
+    else if(input$lmap_level1=="Multi-Race/Non-Hispanic"){sel_col<-31}
     
     edu<-edum()
     map_df <- edu %>%
@@ -928,17 +829,172 @@ return(sum_df)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
+    map_df
+  })
+  map_df2<-reactive({
+         if(input$lmap_level2=="Males"){sel_col<-28}
+    else if(input$lmap_level2=="Females"){sel_col<-29}
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      filter(school.year==input$lmap_year)
     
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    map_df
+  })
+  map_df3<-reactive({
+         if(input$lmap_level3=="Pre Kindergarden"){sel_col<-7}
+    else if(input$lmap_level3=="Kindergarden"){sel_col<-8}
+    else if(input$lmap_level3=="First Grade"){sel_col<-9}
+    else if(input$lmap_level3=="Second Grade"){sel_col<-10}
+    else if(input$lmap_level3=="Third Grade"){sel_col<-11}
+    else if(input$lmap_level3=="Fourth Grade"){sel_col<-12}
+    else if(input$lmap_level3=="Fifth Grade"){sel_col<-13}
+    else if(input$lmap_level3=="Sixth Grade"){sel_col<-14}
+    else if(input$lmap_level3=="Seventh Grade"){sel_col<-15}
+    else if(input$lmap_level3=="Eighth Grade"){sel_col<-16}
+    else if(input$lmap_level3=="Ninth Grade"){sel_col<-17}
+    else if(input$lmap_level3=="Tenth Grade"){sel_col<-18}
+    else if(input$lmap_level3=="Eleventh Grade"){sel_col<-19}
+    else if(input$lmap_level3=="Twelfth Grade"){sel_col<-20}
+    else if(input$lmap_level3=="Special Ed Beyond 12th Grade"){sel_col<-21}
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      filter(school.year==input$lmap_year)
+    
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    map_df
+  })
+  map_df4<-reactive({
+    
+         if(input$lmap_level4=="English Language Learner Enrolled %"){sel_col<-35}
+    else if(input$lmap_level4=="First Language Not English Enrolled %"){sel_col<-33}
+    else if(input$lmap_level4=="Students With Disabilities Enrolled %"){sel_col<-37}
+    else if(input$lmap_level4=="Low Income Students Enrolled %"){sel_col<-39}
+    else if(input$lmap_level4=="High Needs Students Enrolled %"){sel_col<-45}
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      filter(school.year==input$lmap_year)
+    
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    map_df
+  })
+ 
+  map_df9<-reactive({
+         if(input$lmap_level9=="Churn Enrollment for English Language Learning Students"){sel_col<-51}
+    else if(input$lmap_level9=="Stability Enrollment for English Language Learning Students"){sel_col<-54}
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      filter(school.year==input$lmap_year)
+    
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    map_df
+  })
+  map_df10<-reactive({       
+         if(input$lmap_level10=="Churn Enrollment for Students with Disabilities"){sel_col<-46}
+    else if(input$lmap_level10=="Stability Enrollment for Students with Disabilities"){sel_col<-49}
+  edu<-edum()
+  map_df <- edu %>%
+    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    filter(school.year==input$lmap_year)
+  
+  colnames(map_df)[5]<-"var"
+  colnames(map_df)[6]<-"TSE"
+  map_df
+})
+  map_df11<-reactive({       
+    if(input$lmap_level11=="Churn Enrollment for Low Income Students"){sel_col<-61}
+    else if(input$lmap_level11=="Stability Enrollment for Low Income Students"){sel_col<-64}
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      filter(school.year==input$lmap_year)
+    
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    map_df
+})
+  map_df12<-reactive({       
+          if(input$lmap_level12=="Churn Enrollment for High Needs Students"){sel_col<-56}
+    else if(input$lmap_level12=="Stability Enrollment for High Needs Students"){sel_col<-59}
+  edu<-edum()
+  map_df <- edu %>%
+    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    filter(school.year==input$lmap_year)
+  
+  colnames(map_df)[5]<-"var"
+  colnames(map_df)[6]<-"TSE"
+  map_df
+})
+
+  map_df5<-reactive({       
+        if(input$lmap_level5=="Churn Rate for English Language Learning Students"){sel_col<-52}
+    else if(input$lmap_level5=="Stability Rate for English Language Learning Students"){sel_col<-55}
+    else if(input$lmap_level5=="Intake Rate for English Language Learning Students"){sel_col<-53}
+  edu<-edum()
+  map_df <- edu %>%
+    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    filter(school.year==input$lmap_year)
+  
+  colnames(map_df)[5]<-"var"
+  colnames(map_df)[6]<-"TSE"
+  map_df
+})
+  map_df6<-reactive({       
+          if(input$lmap_level6=="Churn Rate for Students with Disabilities"){sel_col<-47}
+    else if(input$lmap_level6=="Stability Rate for Students with Disabilities"){sel_col<-50}
+    else if(input$lmap_level6=="Intake Rate for Students with Disabilities"){sel_col<-48}
+  edu<-edum()
+  map_df <- edu %>%
+    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    filter(school.year==input$lmap_year)
+  
+  colnames(map_df)[5]<-"var"
+  colnames(map_df)[6]<-"TSE"
+  map_df
+})
+  map_df7<-reactive({       
+            if(input$lmap_level7=="Churn Rate for Low Income Students"){sel_col<-62}
+    else if(input$lmap_level7=="Stability Rate for Low Income Students"){sel_col<-65}
+    else if(input$lmap_level7=="Intake Rate for English Low Income Students"){sel_col<-63}
+  edu<-edum()
+  map_df <- edu %>%
+    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    filter(school.year==input$lmap_year)
+  
+  colnames(map_df)[5]<-"var"
+  colnames(map_df)[6]<-"TSE"
+  map_df
+})
+  map_df8<-reactive({       
+              if(input$lmap_level8=="Churn Rate for High Needs Students"){sel_col<-57}
+    else if(input$lmap_level8=="Stability Rate for High Needs Students"){sel_col<-60}
+    else if(input$lmap_level8=="Intake Rate for High Needs Students"){sel_col<-58}
+  edu<-edum()
+  map_df <- edu %>%
+    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    filter(school.year==input$lmap_year)
+  
+  colnames(map_df)[5]<-"var"
+  colnames(map_df)[6]<-"TSE"
+  map_df
+})
+   
+  #create maps in leaflet
+  output$leafmap1<-renderLeaflet({
+    
+    map_df<-map_df1()
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
-    
-      map_df
-  })
-  
-  output$leafmap<-renderLeaflet({
-    map_df<-map_df()
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
@@ -954,16 +1010,248 @@ return(sum_df)
                              "\n", 
                              as.character(var)))
   })
+  output$leafmap2<-renderLeaflet({
+    
+    map_df<-map_df2()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap3<-renderLeaflet({
+    
+    map_df<-map_df3()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap4<-renderLeaflet({
+    
+    map_df<-map_df4()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
   
+  output$leafmap5<-renderLeaflet({
+    
+    map_df<-map_df5()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap6<-renderLeaflet({
+    
+    map_df<-map_df6()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap7<-renderLeaflet({
+    
+    map_df<-map_df7()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap8<-renderLeaflet({
+    
+    map_df<-map_df8()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap9<-renderLeaflet({
+    
+    map_df<-map_df9()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap10<-renderLeaflet({
+    
+    map_df<-map_df10()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap11<-renderLeaflet({
+    
+    map_df<-map_df11()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap12<-renderLeaflet({
+    
+    map_df<-map_df12()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+
   
  
-###map legend
 ## map legend
+  #1
 output$AAlegend <- renderPlot({
 
     paint.brush = colorRampPalette(colors=c("white", "violetred"))
     cols <- paint.brush(25)
-    leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+    leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
                                   length.out=(length(map_colors)-1)), x = 1, col = cols)
     
     p <- ggplot(data = leg_dat) +
@@ -983,7 +1271,7 @@ output$ASlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1003,7 +1291,7 @@ output$HISPlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1023,7 +1311,7 @@ output$WHlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1043,7 +1331,7 @@ output$NAlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1063,7 +1351,7 @@ output$NHlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1083,7 +1371,7 @@ output$MRlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1099,12 +1387,12 @@ output$MRlegend <- renderPlot({
           panel.grid.major = element_blank())
   return(p)
 })
-
+  #1
 output$FEMlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level2], range.table[2,input$lmap_level2],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1124,7 +1412,7 @@ output$MALlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level2], range.table[2,input$lmap_level2],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1140,12 +1428,12 @@ output$MALlegend <- renderPlot({
           panel.grid.major = element_blank())
   return(p)
 })
-
+  #3
 output$PREKlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level2], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1165,7 +1453,7 @@ output$KINDlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level2], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1185,7 +1473,7 @@ output$FIRSTlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1205,7 +1493,7 @@ output$SECONDlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1225,7 +1513,7 @@ output$THIRDlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1245,7 +1533,7 @@ output$FOURTHlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1265,7 +1553,7 @@ output$FIFTHlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1285,7 +1573,7 @@ output$SIXTHlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1305,7 +1593,7 @@ output$SEVENTHlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1325,7 +1613,7 @@ output$EIGHTHlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1345,7 +1633,7 @@ output$NINTHlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1365,7 +1653,7 @@ output$TENTHlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1385,7 +1673,7 @@ output$ELEVENTHlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1405,7 +1693,7 @@ output$TWELFTHlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1425,7 +1713,7 @@ output$SPEClegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1441,12 +1729,12 @@ output$SPEClegend <- renderPlot({
           panel.grid.major = element_blank())
   return(p)
 })
-
+  #4
 output$P_ELL_legend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level4], range.table[2,input$lmap_level4],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1466,7 +1754,7 @@ output$P_FLNE_legend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level4], range.table[2,input$lmap_level4],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1486,7 +1774,7 @@ output$P_DISAB_legend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level4], range.table[2,input$lmap_level4],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1506,7 +1794,7 @@ output$P_LOW_legend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level4], range.table[2,input$lmap_level4],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1526,7 +1814,7 @@ output$P_HIGH_legend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level], range.table[2,input$lmap_level],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level4], range.table[2,input$lmap_level4],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1542,6 +1830,418 @@ output$P_HIGH_legend <- renderPlot({
           panel.grid.major = element_blank())
   return(p)
 })
+
+  #5
+output$CR_ELL_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level5], range.table[2,input$lmap_level5],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SR_ELL_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level5], range.table[2,input$lmap_level5],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$IR_ELL_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level5], range.table[2,input$lmap_level5],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+#6
+output$CR_DISAB_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level6], range.table[2,input$lmap_level6],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SR_DISAB_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level6], range.table[2,input$lmap_level6],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$IR_DISAB_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level6], range.table[2,input$lmap_level6],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+#7
+output$CR_LOW_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level7], range.table[2,input$lmap_level7],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SR_LOW_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level7], range.table[2,input$lmap_level7],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$IR_LOW_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level7], range.table[2,input$lmap_level7],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+#8
+output$CR_HIGH_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level8], range.table[2,input$lmap_level8],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SR_HIGH_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level8], range.table[2,input$lmap_level8],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$IR_HIGH_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level8], range.table[2,input$lmap_level8],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+
+#9
+output$CE_ELL_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level9], range.table[2,input$lmap_level9],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SE_ELL_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level9], range.table[2,input$lmap_level9],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+#10
+output$CE_DISAB_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level10], range.table[2,input$lmap_level10],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SE_DISAB_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level10], range.table[2,input$lmap_level10],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+#11
+output$CE_LOW_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level11], range.table[2,input$lmap_level11],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SE_LOW_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level11], range.table[2,input$lmap_level11],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+#12
+output$CE_HIGH_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level12], range.table[2,input$lmap_level12],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SE_HIGH_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level12], range.table[2,input$lmap_level12],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+
+
 
 
 
