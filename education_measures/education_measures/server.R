@@ -203,7 +203,7 @@ return(sum_df)
     switch(input$plot_county,
            
            " "=selectInput("plot_school", "Choose School",
-                           choices= c(all_schools), multiple = F, selected=NULL),
+                           choices= c(" ", all_schools), multiple = F, selected=" "),
            
            "Barnstable" = selectInput("plot_school","Choose School",
                                       choices = as.character(all_school_table$"Barnstable"),
@@ -322,8 +322,8 @@ return(sum_df)
       return(plot_df[,-c(1,2, 3+remove_cols)])
     
       } else if (input$plot_enrolled=="Interest Groups") {
-      sel_col_num<-c(22, 34, 32, 36, 38, 44)
-      df_colnames<-c("Total Students Enrolled", "English Language Learner", "First Language not English",
+      sel_col_num<-c(34, 32, 36, 38, 44)
+      df_colnames<-c("English Language Learner", "First Language not English",
                      "Disabilities", "Low Income", "High Needs")
       
       plot_df <- edum %>%
@@ -497,7 +497,7 @@ return(sum_df)
     #message to be displayed when no school selected
     
     validate(
-      need(is.null(input$plot_school)==FALSE, "Please select a school")
+      need(input$plot_school!=" ", "Please select a school")
     )
     
     r_plot<-r_percentplot_df()
@@ -556,11 +556,11 @@ return(sum_df)
     #message to be displayed when no school selected
     
     validate(
-      need(is.null(input$plot_school)==FALSE, "Please select a school")
+      need(input$plot_school!=" ", "Please select a school")
     )
     
     r_plot<-r_percentplot_df()
-    tse<-max(r_plot$'Total Students Enrolled')
+    tse<-max(apply(r_plot[,-1], 2, function(x){max(x, na.rm=T)}))
     
     list(
       data=googleDataTable(r_plot),
@@ -615,7 +615,7 @@ return(sum_df)
     #message to be displayed when no school selected
     
     validate(
-      need(is.null(input$plot_school)==FALSE, "Please select a school")
+      need(input$plot_school!=" ", "Please select a school")
     )
     
     r_mobenrollplot<-r_mobenrollplot_df()
@@ -646,7 +646,7 @@ return(sum_df)
                    ),
                    vAxis = list(
                      title = "Number of students",
-                     ticks=seq(0, ymax, 10),
+                     ticks=seq(0, ymax, 25),
                      
                      #viewWindow = list(min=0, max=100),
                      textStyle = list(
@@ -686,7 +686,7 @@ return(sum_df)
   output$mobrate_plot<-reactive({
     #message to be displayed when no school selected
     validate(
-      need(is.null(input$plot_school)==FALSE, "Please select a school")
+      need(input$plot_school!=" ", "Please select a school")
     )
     r_mobrateplot<-r_mobrateplot_df()
     
