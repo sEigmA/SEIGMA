@@ -88,7 +88,12 @@ map_colors <- c(paint.brush(n=25), "black")
 #create min and max values for colors of all variables in the map
 range.table<-data.frame(apply(edu_data[,c(7:65)], 2, FUN=function(x){range(x, na.rm=T)}))
 names(range.table)<-gsub(names(range.table), pattern=".", replacement=" ", fixed=T)
+names(range.table)<-gsub(names(range.table), pattern="enrolled  1", replacement="Enrolled %")
 names(range.table)[c(24,25)]<-c("Native Hawaiian/Pacific Islander","Multi-Race/Non-Hispanic")
+names(range.table)<-gsub(names(range.table), pattern="   ", replacement=" ", fixed=T)
+names(range.table)[c(33,39)]<-c("Low Income Students Enrolled %","High Needs Students Enrolled %")
+
+
 # 
 # #############################
 # ### Large Text Block Area ###
@@ -183,7 +188,7 @@ plot_side_text <- conditionalPanel(
 
 # 
 map_side_text <- conditionalPanel(
-  condition="input.tabs == 'map'",
+  condition="input.tabs == 'lmap'",
   h4("How to use this app:"),
   helpText(p(strong("Please select a year, and click on 'Generate Map' to get started"))),
   tags$br(),
