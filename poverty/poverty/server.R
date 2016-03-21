@@ -221,7 +221,7 @@ shinyServer(function(input, output, session) {
       
       q<- ggplot(data = leg_dat) +
         geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
-        scale_y_continuous(limits = c(povmin.val, povmax.val), breaks = seq(povmin.val, povmax.val, length.out = 5)) +
+        scale_y_continuous(limits = c(povmin.val, povmax.val), breaks = round(seq(povmin.val, povmax.val, length.out = 5),1)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),
               axis.text.y = element_text(size = 12),

@@ -80,8 +80,8 @@ map_colors <- c(paint_brush(n=25), "#999999")
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-povmax.val <- max(labor$Percent_Pov, na.rm=TRUE)
-povmin.val <- min(labor$Percent_Pov, na.rm=TRUE)
+povmax.val <- round(max(labor$Percent_Pov, na.rm=TRUE),1)
+povmin.val <- round(min(labor$Percent_Pov, na.rm=TRUE),1)
 cuts <- quantile(labor$Percent_Pov, probs = seq(0, 1, length.out = length(map_colors)), na.rm=T)
 
 ## Construct break ranges for displaying in the legend

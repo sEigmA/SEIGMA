@@ -248,11 +248,13 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_radio =='Establishments' && input.map_display_radio=='Actual Values' && input.action != 0",
                    absolutePanel(
-                     right = 20, top = 150, draggable=FALSE, style = "",
+                     right = 5, top = 100, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Number of"),
                      br(),
-                     strong("Business Establishments"),
+                     strong("Business"),
+                     br(),
+                     strong("Establishments"),
                      plotOutput("legend2"),
                      tags$table(
                        #mapply(function(from, to, color) {
@@ -270,7 +272,7 @@ shinyUI(fluidPage(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
-                         tags$td("Data not available", align = "right")
+                         tags$td("Data not available", align = "left")
                        )
                      )
                    )),
@@ -278,9 +280,11 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_radio =='Wages' && input.map_display_radio=='Actual Values' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 150, draggable=FALSE, style = "",
+                     right = 5, top = 100, draggable=FALSE, style = "",
                      class = "floater",
-                     strong("Average Weekly Wage"),
+                     strong("Average"),
+                     br(),
+                     strong("Weekly Wage"),
                      plotOutput("legend3"),
                      tags$table(
                        tags$tr(
@@ -296,7 +300,7 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_display_radio=='Change_Pct' && input.action != 0",
                    absolutePanel(
-                     right = 10, top = 130, draggable=FALSE, style = "",
+                     right = 5, top = 100, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Change Since 2003"),
                      plotOutput("legend4"),
