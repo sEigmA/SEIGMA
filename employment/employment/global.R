@@ -154,54 +154,53 @@ empcuts <- quantile(emp_data$Average_Monthly_Employment, probs = seq(0, 1, lengt
 ## head = scuts takes everything except for the last one,
 ## tails = same thing opposite
 
-empcolorRanges <- data.frame(
-  from = head(empcuts, length(empcuts)-1),
-  to = tail(empcuts, length(empcuts)-1)
-)
+#empcolorRanges <- data.frame(
+#  from = head(empcuts, length(empcuts)-1),
+#  to = tail(empcuts, length(empcuts)-1)
+#)
 
 ##Colors for a Establishments legend
+estmax.val <- max(emp_data$Number_of_Employer_Establishments, na.rm=TRUE)
+estmin.val <- min(emp_data$Number_of_Employer_Establishments, na.rm=TRUE)
 estcuts <- quantile(emp_data$Number_of_Employer_Establishments, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
 ## head = scuts takes everything except for the last one,
 ## tails = same thing opposite
-estcolorRanges <- data.frame(
-  from = head(estcuts, length(estcuts)-1),
-  to = tail(estcuts, length(estcuts)-1)
-)
+#estcolorRanges <- data.frame(
+#  from = head(estcuts, length(estcuts)-1),
+#  to = tail(estcuts, length(estcuts)-1)
+#)
 
 ##Colors for a Wages legend
+wagemax.val <- max(emp_data$Inflation_Adjusted_Average_Weekly_Wage, na.rm=TRUE)
+wagemin.val <- min(emp_data$Inflation_Adjusted_Average_Weekly_Wage, na.rm=TRUE)
 wagecuts <- quantile(emp_data$Inflation_Adjusted_Average_Weekly_Wage, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
 ## head = scuts takes everything except for the last one,
 ## tails = same thing opposite
-wagecolorRanges <- data.frame(
-  from = head(wagecuts, length(wagecuts)-1),
-  to = tail(wagecuts, length(wagecuts)-1)
-)
+#wagecolorRanges <- data.frame(
+#  from = head(wagecuts, length(wagecuts)-1),
+#  to = tail(wagecuts, length(wagecuts)-1)
+#)
 
 ## colors fade from one color to white to another color, with gray for NAs
 ## colors for pecentage change since 2003 legend
 pctpaint.brush <- colorRampPalette(colors=c(cbbPalette[5], "white",cbbPalette[8]))
-pctmap_colors <- c(pctpaint.brush(n=6), "#999999")
+pctmap_colors <- c(pctpaint.brush(n=24), "#999999")
 
 ## find max and min (crude suicide rates) values for each county
 ##n.rm=FALSE = needed
 pctmax.val<-max(c(max(emp_data$Employment_difference, na.rm=FALSE),max(emp_data$Establishment_difference, na.rm=FALSE),max(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
 pctmin.val<-min(c(min(emp_data$Employment_difference, na.rm=FALSE),min(emp_data$Establishment_difference, na.rm=FALSE),min(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)))
-##pctmin.val<--pctmax.val
-pctcuts1 <- seq(pctmin.val, 0, length.out = 4)
-pctcuts2 <- seq(0, pctmax.val, length.out = 4)
+pctmin.val2<--pctmax.val
+pctcuts1 <- seq(pctmin.val, 0, length.out = 13)
+pctcuts2 <- seq(0, pctmax.val, length.out = 13)
 pctcuts<-unique(c(pctcuts1, pctcuts2))
-# Construct break ranges for displaying in the legend
 
-pctcolorRanges <- data.frame(
-  from = head(pctcuts, length(pctcuts)-1),
-  to = tail(pctcuts, length(pctcuts)-1)
-)
 # wage pct cut
 wagepctmax.val<-max(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)
 wagepctmin.val<-min(emp_data$Average_Weekly_Wage_difference, na.rm=FALSE)

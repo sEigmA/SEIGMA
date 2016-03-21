@@ -375,14 +375,15 @@ output$Est_pct_plot<-reactive({
   
   ## map legend
   output$legend2 <- renderPlot({
-    if(input$map_radio == "Unemployment_Rate_Avg"){
+    if(input$map_radio=="Establishments" && input$map_display_radio == "Actual Values"){
       
       paint.brush = colorRampPalette(colors=c("white", "violetred"))
       cols <- paint.brush(25)
-      leg_dat <- data_frame(y = seq(unemin.val, unemax.val,length.out=(length(map_colors1)-1)), x = 1, col = cols)
+      leg_dat <- data_frame(y = seq(estmin.val, estmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       p <- ggplot(data = leg_dat) +
         geom_tile(aes(y = y, fill = reorder(col,y), x = x), show_guide = FALSE) +
+        scale_y_continuous(limits = c(estmin.val, estmax.val), breaks = seq(estmin.val, estmax.val, length.out = 5)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),
               axis.text.y = element_text(size = 12),
@@ -396,29 +397,7 @@ output$Est_pct_plot<-reactive({
     }
     return(p)
   })
-  output$legend3<- renderPlot({
-    if(input$map_display_radio == "Labor_Pct_Change"){
-      
-      paint.brush = colorRampPalette(colors=c("darkgreen", "white", "maroon"))
-      cols <- paint.brush(25)
-      leg_dat <- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
-      
-      b <- ggplot(data = leg_dat) +
-        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
-        scale_y_continuous(limits = c(pctmin.val, pctmax.val), breaks = seq(pctmin.val, pctmax.val, length.out = 5)) +
-        scale_fill_manual(values = leg_dat$col) + theme_bw() +
-        theme(axis.text.x = element_blank(),
-              axis.text.y = element_text(size = 12),
-              axis.title.x = element_blank(),
-              axis.title.y = element_blank(),
-              axis.ticks.x = element_blank(),
-              panel.border = element_blank(),
-              panel.grid.minor = element_blank(),
-              panel.grid.major = element_blank())
-      
-    }
-    return(b)
-  })
+  
   output$legend1 <- renderPlot({  
     if(input$map_radio=="Employment" && input$map_display_radio == "Actual Values"){
       paint.brush = colorRampPalette(colors=c("white", "violetred"))
@@ -442,5 +421,52 @@ output$Est_pct_plot<-reactive({
     return(q)
     
   })
+
+output$legend3 <- renderPlot({  
+  if(input$map_radio=="Wages" && input$map_display_radio == "Actual Values"){
+    paint.brush = colorRampPalette(colors=c("white", "violetred"))
+    cols <- paint.brush(length(map_colors)-1)
+    leg_dat<- data_frame(y = seq(wagemin.val, wagemax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+    
+    q<- ggplot(data = leg_dat) +
+      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+      scale_y_continuous(limits = c(wagemin.val, wagemax.val), breaks = seq(wagemin.val, wagemax.val, length.out = 5)) +
+      scale_fill_manual(values = leg_dat$col) + theme_bw() +
+      theme(axis.text.x = element_blank(),
+            axis.text.y = element_text(size = 12),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.ticks.x = element_blank(),
+            panel.border = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.grid.major = element_blank())
+  }
+  
+  return(q)
+  
+})
+output$legend4<- renderPlot({
+  if(input$map_display_radio == "Change_Pct"){
+    
+    paint.brush = colorRampPalette(colors=c(cbbPalette[5], "white",cbbPalette[8]))
+    cols <- paint.brush(25)
+    leg_dat <- data_frame(y = seq(pctmin.val2, pctmax.val,length.out=25), x = 1, col = cols)
+    
+    b <- ggplot(data = leg_dat) +
+      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+      scale_y_continuous(limits = c(pctmin.val, pctmax.val), breaks = unique(c(seq(pctmin.val, 0,length.out = 3),seq(0,pctmax.val, length.out = 3)))) +
+      scale_fill_manual(values = leg_dat$col) + theme_bw() +
+      theme(axis.text.x = element_blank(),
+            axis.text.y = element_text(size = 12),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.ticks.x = element_blank(),
+            panel.border = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.grid.major = element_blank())
+    
+  }
+  return(b)
+})
 
 })

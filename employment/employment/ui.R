@@ -253,6 +253,7 @@ shinyUI(fluidPage(
                      strong("Number of"),
                      br(),
                      strong("Business Establishments"),
+                     plotOutput("legend2"),
                      tags$table(
                        #mapply(function(from, to, color) {
 #                          tags$tr(
@@ -280,18 +281,8 @@ shinyUI(fluidPage(
                      right = 30, top = 150, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Average Weekly Wage"),
+                     plotOutput("legend3"),
                      tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s; border:1px solid black;", color)
-                           )),
-                           tags$td(prettyNum(round(from), big.mark = ","), "to",
-                                   prettyNum(round(to), big.mark = ","),align = "right")
-                         )
-                       },
-                       wagecolorRanges$from, wagecolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
@@ -308,18 +299,19 @@ shinyUI(fluidPage(
                      right = 10, top = 130, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Change Since 2003"),
+                     plotOutput("legend4"),
                      tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
-                           )),
-                           tags$td(prettyNum(round(from, 2)), "% to",
-                                   prettyNum(round(to, 2)), "%", align = "right")
-                         )
-                       },
-                       pctcolorRanges$from, pctcolorRanges$to, pctmap_colors[-length(pctmap_colors)],
-                       SIMPLIFY=FALSE),
+                       #mapply(function(from, to, color) {
+                        # tags$tr(
+                         #  tags$td(tags$div(
+                         #    style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", color)
+                         #  )),
+                          # tags$td(prettyNum(round(from, 2)), "% to",
+                           #        prettyNum(round(to, 2)), "%", align = "right")
+                         #)
+                      # },
+                       #pctcolorRanges$from, pctcolorRanges$to, pctmap_colors[-length(pctmap_colors)],
+                      # SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")

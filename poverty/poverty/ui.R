@@ -196,21 +196,11 @@ bootstrapPage(mainPanel(
            conditionalPanel(
              condition="input.action != 0",
              absolutePanel(
-               right = 30, top = 150, draggable=FALSE, style = "", 
+               right = 10, top = 150, draggable=FALSE, style = "", 
                class = "floater",
                strong("Poverty Rate"),
+               plotOutput("legend1"),
                tags$table(
-                 mapply(function(from, to, color) {
-                   tags$tr(
-                     tags$td(tags$div(
-                       style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                     )),
-                     tags$td(prettyNum(round(from), big.mark = ","), "%", "to", 
-                             prettyNum(round(to), big.mark = ","), "%", align = "right")
-                   )
-                 }, 
-                 colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
-                 SIMPLIFY=FALSE),
                  tags$td(tags$div(
                    style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
                  )),

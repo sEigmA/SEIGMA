@@ -73,13 +73,15 @@ ylim <- list(
 
 ## Colors for a single-year legend
 paint_brush <- colorRampPalette(colors=c("white", "darkmagenta"))
-map_colors <- c(paint_brush(n=7), "#999999")
+map_colors <- c(paint_brush(n=25), "#999999")
 
 ## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
+povmax.val <- max(labor$Percent_Pov, na.rm=TRUE)
+povmin.val <- min(labor$Percent_Pov, na.rm=TRUE)
 cuts <- quantile(labor$Percent_Pov, probs = seq(0, 1, length.out = length(map_colors)), na.rm=T)
 
 ## Construct break ranges for displaying in the legend
