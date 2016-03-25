@@ -1,0 +1,2250 @@
+###########################################
+## Title: Schools                        ##
+## Author(s): Xuelian Li, Emily Ramos,   ## 
+##            Arvind Ramakrishnan,       ##
+##            Jenna Kiridly, Steve Lauer,##
+##            Justin Baldwin             ##
+## Date Created:  12/10/2015             ##
+## Date Modified: 12/10/2015             ##
+###########################################
+
+
+shinyServer(function(input, output, session) {
+  # emp_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
+
+
+  #   sum_df <- emp_df %>%
+  #     filter(Region %in% munis) %>%
+  #     select(4:length(colnames(df)))
+
+  edum<- reactive({
+    ## Filter the data by the chosen Year
+    edum <- edu_data ## %>%
+    ##select(1:6, 9,11,13)
+
+    ## Output reactive dataframe
+    edum
+  })
+  
+  
+  ## Create summary table
+  output$summary <- renderDataTable({
+    ## Make reactive dataframe into regular dataframe
+    edum <- edum()
+
+    ## if a user chooses Single Year, display only data from that year (dpylr)
+    if(input$sum_timespan == "sing.yr"){
+      df <- filter(edum, school.year==input$sum_year)
+    }
+
+    ## if a user chooses Multiple Years, display data from all years in range
+    if(input$sum_timespan == "mult.yrs"){
+      range <- seq(min(input$sum_range), max(input$sum_range), 1)
+      df <- c()
+
+      for(i in 1:length(range)){
+        bbb <- subset(edum, school.year==range[i])
+        df <- rbind.data.frame(df, bbb)
+      }
+    }
+
+    ## make municipals a vector based on input variable
+    ## For when something is clicked
+
+    if(input$sum_county!=" "){
+    county<-input$sum_county}
+else if(input$sum_county==" "){
+  county<-MA_county}
+
+
+    if(!is.null(input$sum_muni))
+      munis <- input$sum_muni
+    ## if none selected, put all municipals in vector
+    ## For nothing clicked
+    if(is.null(input$sum_muni))
+      munis <- MA_municipals
+    
+sum_df <- df %>% filter(County %in% county & Municipal %in% munis)
+    
+
+    ##select columns according input$radio
+    sel_col_num<-c()
+    df_colnames<-c()
+    if (input$sum_radio=="Race/Ethnicity") {
+      sel_col_num<-c(23:27, 30:31)
+      df_colnames<-c("African American", "Asian", "Hispanic", "White", "Native American", "Native Hawaiian Pacific Islander", "Multi-race non-Hispanic")
+    } else if (input$sum_radio=="Gender") {
+      sel_col_num<-c(28:29)
+      df_colnames<-c( "Males", "Females")
+    } else if (input$sum_radio=="Grade Level") {
+      sel_col_num<-c(7:21)
+      df_colnames<-names(edu_data)[7:21]
+    }  else if (input$sum_radio=="English Language Learners") {
+        sel_col_num<-c(32, 34, 51:55)
+        df_colnames<-c("First Language Not English Enrolled", "English Language Learner Enrolled", "Churn Enrollment for English Language Learning Students", "Churn Rate for English Language Learning Students", "Intake Rate for English Language Learning Students", "Stability Enrollment for English Language Learning Students", "Stability Rate for English Language Learning Students")
+    } else if (input$sum_radio=="Students with Disabilities") {
+      sel_col_num<-c(36, 46:50)
+      df_colnames<-c(  "Students with Disabilities Enrolled", "Churn Enrollment for Students With Disabilites", "Churn Rate for Students With Disabilites", "Intake Rate for Students With Disabilites", "Stability Enrollment for Students with Disabilities", "Stability Rate for Students with Disabilities")
+    } else if (input$sum_radio=="Low Income") {
+      sel_col_num<-c(38, 61:65)
+      df_colnames<-c(  "Low Income Enrolled","Churn Enrollment for Low Income Students", "Churn Rate for Low Income Students", "Intake Rate for Low Income Students", "Stability Enrollment for Low Income Students", "Stability Rate for Low Income Students")
+    } else {
+      sel_col_num<-c(44, 56:60)
+      df_colnames<-c("High Needs Enrolled", "Churn Enrollmment for High Needs Students", "Churn Rate for High Needs Students", "Intake Rate for High Needs Students", "Stability Enrollment for High Needs Students", "Stability Rate for High Needs Students")}
+    
+    sum_df <- sum_df %>%
+    arrange(County, Municipal, school.name)%>%
+      select(County, Municipal, school.name, school.year, Total.Students.Enrolled, 
+             sel_col_num)
+    
+    final_colnames<-c("County", "Municipal","School Name","School Year", "Total Number Enrolled",
+                      df_colnames)
+  
+    colnames(sum_df) <- final_colnames
+
+    ## create a dataframe consisting only of counties in vector
+return(sum_df)
+  }, options = list(searching = FALSE, orderClasses = TRUE))
+
+  
+  output$sum_muniui <-renderUI({
+    
+    # Depending on input$input_type, we'll generate a different
+    # UI component and send it to the client.
+  
+    
+    switch(input$sum_county,
+           
+           " "=selectInput("sum_muni", "Choose Municipality",
+                          choices= c(MA_municipals, " " ), multiple = T),
+           
+           "Barnstable" = selectInput("sum_muni","Choose Municipality",
+                                          choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Barnstable")])) 
+                                            ,
+                                          multiple = T
+           ), 
+           "Berkshire" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Berkshire")])) 
+                                      ,
+                                      multiple = T
+           ),
+           "Bristol" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Bristol")])) 
+                                      ,
+                                      multiple = T
+           ), 
+           "Dukes" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Dukes")])) 
+                                      ,
+                                      multiple = T
+           ), 
+            "Essex" = selectInput("sum_muni","Choose Municipality",
+                                        choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Essex")])) 
+                                        ,
+                                        multiple = T
+           ),
+            "Franklin" = selectInput("sum_muni","Choose Municipality",
+                                        choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Franklin")])) 
+                                        ,
+                                        multiple = T
+           ), 
+           "Hampden" = selectInput("sum_muni","Choose Municipality",
+                                         choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Hampden")])) 
+                                         ,
+                                         multiple = T
+           ), 
+           "Hampshire" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Hampshire")])) 
+                                      ,
+                                      multiple = T
+           ), 
+           "Middlesex" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Middlesex")])),
+                                      multiple = T
+           ),
+           "Nantucket" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Nantucket")])) ,
+                                      multiple = T
+           ),
+           "Norfolk" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Norfolk")])) 
+                                      ,
+                                      multiple = T
+           ),
+           "Plymouth" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Plymouth")])) 
+                                      ,
+                                      multiple = T
+           ),
+           "Suffolk" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Suffolk")])) 
+                                      ,
+                                      multiple = T
+           ),
+           "Worcester" = selectInput("sum_muni","Choose Municipality",
+                                      choices = as.character(unique(edu_data$Municipal[which(edu_data$County=="Worcester")])) 
+                                      ,
+                                      multiple = T
+           ))
+  })
+
+
+  
+    
+    ##end of summary
+
+  
+  output$plot_schoolui <-renderUI({
+    
+    # Depending on input$input_type, we'll generate a different
+    # UI component and send it to the client.
+    
+    
+    switch(input$plot_county,
+           
+           " "=selectInput("plot_school", "Choose School",
+                           choices= c(" ", all_schools), multiple = F, selected=" "),
+           
+           "Barnstable" = selectInput("plot_school","Choose School",
+                                      choices = as.character(all_school_table$"Barnstable"),
+                                      selected=as.character(all_school_table$"Barnstable")[1],
+                                      multiple = F), 
+           "Berkshire" = selectInput("plot_school","Choose School",
+                                     choices = as.character(all_school_table$"Berkshire"),
+                                     selected=as.character(all_school_table$"Berkshire")[1],
+                                     multiple = F),
+           "Bristol" = selectInput("plot_school","Choose School",
+                                   choices = as.character(all_school_table$"Bristol"),
+                                   selected=as.character(all_school_table$"Bristol")[1],
+                                   multiple = F), 
+           "Dukes" = selectInput("plot_school","Choose School",
+                                 choices = as.character(all_school_table$"Dukes"),
+                                 selected=as.character(all_school_table$"Dukes")[1],
+                                 multiple = F), 
+           "Essex" = selectInput("plot_school","Choose School",
+                                 choices = as.character(all_school_table$"Essex"),
+                                 selected=as.character(all_school_table$"Essex")[1],
+                                 multiple = F),
+           "Franklin" = selectInput("plot_school","Choose School",
+                                    choices = as.character(all_school_table$"Franklin"),
+                                    selected=as.character(all_school_table$"Franklin")[1],
+                                    multiple = F), 
+           "Hampden" = selectInput("plot_school","Choose School",
+                                   choices = as.character(all_school_table$"Hampden"),
+                                   selected=as.character(all_school_table$"Hampden")[1],
+                                   multiple = F), 
+           "Hampshire" = selectInput("plot_school","Choose School",
+                                     choices = as.character(all_school_table$"Hampshire"),
+                                     selected=as.character(all_school_table$"Hampshire")[1],
+                                     multiple = F), 
+           "Middlesex" = selectInput("plot_school","Choose School",
+                                     choices = as.character(all_school_table$"Middlesex"),
+                                     selected=as.character(all_school_table$"Middlesex")[1],
+                                     multiple = F),
+           "Nantucket" = selectInput("plot_school","Choose School",
+                                     choices = as.character(all_school_table$"Nantucket"),
+                                     selected=as.character(all_school_table$"Nantucket")[1],
+                                     multiple = F),
+           "Norfolk" = selectInput("plot_school","Choose School",
+                                   choices = as.character(all_school_table$"Norfolk"),
+                                   selected=as.character(all_school_table$"Norfolk")[1],
+                                   multiple = F),
+           "Plymouth" = selectInput("plot_school","Choose School",
+                                    choices = as.character(all_school_table$"Plymouth"),
+                                    selected=as.character(all_school_table$"Plymouth")[1],
+                                    multiple = F),
+           "Suffolk" = selectInput("plot_school","Choose School",
+                                   choices = as.character(all_school_table$"Suffolk"),
+                                   selected=as.character(all_school_table$"Suffolk")[1],
+                                   multiple = F),
+           "Worcester" = selectInput("plot_school","Choose School",
+                                     choices = as.character(all_school_table$"Worcester"),
+                                     selected=as.character(all_school_table$"Worcester")[1],
+                                     multiple = F))
+  })
+  
+  
+  
+           
+  #plot dataframe for the percent plot    
+  r_percentplot_df<-reactive({
+    
+    edum<-edum()
+    
+    
+    sel_col_num<-c()
+    df_colnames<-c()
+    
+    #
+    #make dataframe for the enrolled profile plot: each column is a count that will converted to percent
+    #
+    
+    
+    if (input$plot_enrolled=="Race/Ethnicity") {
+      sel_col_num<-c(77:83)
+      df_colnames<-c("African American", "Asian", "Hispanic", "White", "Native American", "Native Hawaiian Pacific Islander", "Multi-race non-Hispanic")
+      
+      plot_df <- edum %>%
+        filter(school.name==input$plot_school) %>%
+        select(1,3, 6, sel_col_num) %>% 
+        arrange(school.year)
+      colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      col_sums<-apply(plot_df[,4:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
+      remove_cols<-as.numeric(which(col_sums==0))
+      return(plot_df[,-c(1,2, 3+remove_cols)])
+      
+      
+    } else if (input$plot_enrolled=="Gender") {
+      sel_col_num<-c(75:76)
+      df_colnames<-c( "Males", "Females")
+      
+      plot_df <- edum %>%
+        filter(school.name==input$plot_school) %>%
+        select(1,3, 6, sel_col_num) %>% 
+        arrange(school.year)
+      colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      col_sums<-apply(plot_df[,4:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
+      remove_cols<-as.numeric(which(col_sums==0))
+      return(plot_df[,-c(1,2, 3+remove_cols)])
+      
+      
+    } else if (input$plot_enrolled=="Grade Levels") {
+      sel_col_num<-c(7:21)
+      df_colnames<-names(edu_data)[7:21]
+      
+      plot_df <- edum %>%
+        filter(school.name==input$plot_school) %>%
+        select(1,3, 6, sel_col_num) %>% 
+        arrange(school.year)
+      colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      col_sums<-apply(plot_df[,4:ncol(plot_df)], 2, FUN=function(x){sum(x, na.rm=T)})
+      remove_cols<-as.numeric(which(col_sums==0))
+      return(plot_df[,-c(1,2, 3+remove_cols)])
+    
+      } else if (input$plot_enrolled=="Interest Groups") {
+      sel_col_num<-c(34, 32, 36, 38, 44)
+      df_colnames<-c("English Language Learner", "First Language not English",
+                     "Disabilities", "Low Income", "High Needs")
+      
+      plot_df <- edum %>%
+        filter(school.name==input$plot_school) %>%
+        select(1,3, 6, sel_col_num) %>% 
+        arrange(school.year)
+      colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      
+      
+      ###melt
+      
+      return(plot_df[,-c(1,2)])
+    }
+    })
+  
+  
+  r_mobenrollplot_df<-reactive({
+    
+    
+    edum<-edum()
+    
+    
+    sel_col_num<-c()
+    df_colnames<-c()
+    
+    #
+    #make dataframe for the enrolled profile plot: each column is a count that will converted to percent
+    #
+    
+    
+    if (input$plot_mobility=="English Language Learner Students") {
+      sel_col_num<-c(51, 54)
+              df_colnames<-c("Churn Enrollment for English Language Learning Students",
+                             "Stability Enrollment for English Language Learning Students")
+              
+              plot_df <- edum %>%
+                filter(school.name==input$plot_school) %>%
+                select(1,3, 6, sel_col_num) %>% 
+                arrange(school.year)
+              colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
+      
+    } else if (input$plot_mobility=="Students with Disabilities") {
+      sel_col_num<-c(46, 49)
+            df_colnames<-c("Churn Enrollment for Students with Disabilities",
+                           "Stability Enrollment for Students with Disabilities")
+            
+            plot_df <- edum %>%
+              filter(school.name==input$plot_school) %>%
+              select(1,3, 6, sel_col_num) %>% 
+              arrange(school.year)
+            colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
+      
+    } else if (input$plot_mobility=="Low Income Students") {
+      sel_col_num<-c(61, 64)
+            df_colnames<-c("Churn Enrollment for Low Income Students",
+                           "Stability Enrollment for Low Income Students")
+            
+            plot_df <- edum %>%
+              filter(school.name==input$plot_school) %>%
+              select(1,3, 6, sel_col_num) %>% 
+              arrange(school.year)
+            colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
+      #ELL
+    } else if (input$plot_mobility=="High Needs Students") {
+      sel_col_num<-c(56, 59)
+            df_colnames<-c("Churn Enrollment for High Needs Students",
+                           "Stability Enrollment for High Needs Students")
+            
+            plot_df <- edum %>%
+              filter(school.name==input$plot_school) %>%
+              select(1,3, 6, sel_col_num) %>% 
+              arrange(school.year)
+            colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
+    } 
+  })
+  
+  r_mobrateplot_df<-reactive({
+    
+    
+    edum<-edum()
+    
+    
+    sel_col_num<-c()
+    df_colnames<-c()
+    
+    #
+    #make dataframe for the enrolled profile plot: each column is a count that will converted to percent
+    #
+    
+    
+    if (input$plot_mobility=="English Language Learner Students") {
+      sel_col_num<-c(52, 53, 55)
+            df_colnames<-c("Churn Rate for English Language Learning Students",
+                           "Intake Rate for English Language Learning Students",
+                           "Stability Rate for English Language Learning Students")
+            
+            plot_df <- edum %>%
+              filter(school.name==input$plot_school) %>%
+              select(1,3, 6, sel_col_num) %>% 
+              arrange(school.year)
+            colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
+      
+    } else if (input$plot_mobility=="Students with Disabilities") {
+      sel_col_num<-c(47, 48, 50)
+            df_colnames<-c("Churn Rate for Students with Disabilities",
+                           "Intake Rate for Students with Disabilities",
+                           "Stability Rate for Students with Disabilities")
+            
+            plot_df <- edum %>%
+              filter(school.name==input$plot_school) %>%
+              select(1,3, 6, sel_col_num) %>% 
+              arrange(school.year)
+            colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
+      
+    } else if (input$plot_mobility=="Low Income Students") {
+      sel_col_num<-c(62, 63, 65)
+            df_colnames<-c("Churn Rate for Low Income Students",
+                           "Intake Rate for Low Income Students",
+                           "Stability Rate for Low Income Students")
+            plot_df <- edum %>%
+              filter(school.name==input$plot_school) %>%
+              select(1,3, 6, sel_col_num) %>% 
+              arrange(school.year)
+            colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+            
+      remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
+      #ELL
+    } else if (input$plot_mobility=="High Needs Students") {
+      sel_col_num<-c(57, 58, 60)
+            df_colnames<-c("Churn Rate for High Needs Students",
+                           "Intake Rate for High Needs Students",
+                           "Stability Rate for High Needs Students")
+            
+            plot_df <- edum %>%
+              filter(school.name==input$plot_school) %>%
+              select(1,3, 6, sel_col_num) %>% 
+              arrange(school.year)
+            colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      remove_cols<-NULL
+      return(plot_df[complete.cases(plot_df),-c(1,2, 3+remove_cols)])
+      
+    } 
+  })
+  
+  
+    
+  #make three plot objects in the output
+  
+  
+  output$percentcolplot<-reactive({
+    #message to be displayed when no school selected
+    
+    validate(
+      need(input$plot_school!=" ", "Please select a school")
+    )
+    
+    r_plot<-r_percentplot_df()
+    
+    
+    list(
+      data=googleDataTable(r_plot),
+      options = list(title=paste("Enrollment Profile: Distribution of ", 
+                                 input$plot_enrolled,
+                                 "at ", 
+                                 input$plot_school),
+                     isStacked='percent',
+                     # set fonts
+                     fontName = "Source Sans Pro",
+                     fontSize = font_size,
+                     ## set axis titles, ticks, fonts, and ranges
+                     hAxis = list(
+                       title = "Start of School Year",
+                       format = "####",
+                       ticks = seq(2003,2012,1),
+                       #  viewWindow = list(min=, max=),
+                       textStyle = list(
+                         fontSize = 14),
+                       titleTextStyle = list(
+                         fontSize = 16,
+                         bold = TRUE,
+                         italic = FALSE)
+                     ),
+                     vAxis = list(
+                       title = "Number of students",
+                       ticks = seq(0,1,0.2),
+                       
+                       #viewWindow = list(min=0, max=100),
+                       textStyle = list(
+                         fontSize = font_size),
+                       titleTextStyle = list(
+                         fontSize = font_size+2,
+                         bold = TRUE,
+                         italic = FALSE)
+                     )
+    ,
+    
+    ## set chart area padding
+    chartArea = list(
+      top = 50, left = 75,
+      height = "75%", width = "70%"
+    ),
+    
+    ## set colors
+    colors = cbbPalette[c(1:9)]
+    ))
+    
+  })
+  
+  output$countcolplot<-reactive({
+    #message to be displayed when no school selected
+    
+    validate(
+      need(input$plot_school!=" ", "Please select a school")
+    )
+    
+    r_plot<-r_percentplot_df()
+    tse<-max(apply(r_plot[,-1], 2, function(x){max(x, na.rm=T)}))
+    
+    list(
+      data=googleDataTable(r_plot),
+      options = list(title=paste("Enrollment Profile: Distribution of Focus Groups", 
+                                 "at ", 
+                                 input$plot_school),
+                     isStacked=FALSE,
+                     # set fonts
+                     fontName = "Source Sans Pro",
+                     fontSize = font_size,
+                     ## set axis titles, ticks, fonts, and ranges
+                     hAxis = list(
+                       title = "Start of School Year",
+                       format = "####",
+                       ticks = seq(2003,2012,1),
+                       #  viewWindow = list(min=, max=),
+                       textStyle = list(
+                         fontSize = 14),
+                       titleTextStyle = list(
+                         fontSize = 16,
+                         bold = TRUE,
+                         italic = FALSE)
+                     ),
+                     vAxis = list(
+                       title = "Number of students",
+                       ticks = seq(0,max(r_plot[,2]),100),
+                       
+                       #viewWindow = list(min=0, max=100),
+                       textStyle = list(
+                         fontSize = font_size),
+                       titleTextStyle = list(
+                         fontSize = font_size+2,
+                         bold = TRUE,
+                         italic = FALSE)
+                     )
+                     ,
+                     
+                     ## set chart area padding
+                     chartArea = list(
+                       top = 50, left = 75,
+                       height = "75%", width = "70%"
+                     ),
+                     
+                     ## set colors
+                     colors = cbbPalette[c(1:9)]
+      ))
+    
+  })
+  
+  
+  output$mobenrollment_plot<-reactive({
+    #message to be displayed when no school selected
+    
+    validate(
+      need(input$plot_school!=" ", "Please select a school")
+    )
+    
+    r_mobenrollplot<-r_mobenrollplot_df()
+    ymax<-max(r_mobenrollplot[,2])
+    
+    list(
+      data=googleDataTable(r_mobenrollplot),
+      options = list(
+                   title=paste("Student Mobility: Mobility Enrollment of ", 
+                               input$plot_mobility,
+                               "at ", 
+                               input$plot_school),
+                   isStacked=FALSE,
+                   # set fonts
+                   fontName = "Source Sans Pro",
+                   fontSize = font_size,
+                   ## set axis titles, ticks, fonts, and ranges
+                   hAxis = list(
+                     title = "Start of School Year",
+                     ticks = seq(2003,2012,1),
+                     format = "####",
+                     textStyle = list(
+                       fontSize = 14),
+                     titleTextStyle = list(
+                       fontSize = 16,
+                       bold = TRUE,
+                       italic = FALSE)
+                   ),
+                   vAxis = list(
+                     title = "Number of students",
+                     ticks=seq(0, ymax, 25),
+                     
+                     #viewWindow = list(min=0, max=100),
+                     textStyle = list(
+                       fontSize = font_size),
+                     titleTextStyle = list(
+                       fontSize = font_size+2,
+                       bold = TRUE,
+                       italic = FALSE)
+                   ),
+                   
+                   ## set legend fonts
+                   legend = list(
+                     textStyle = list(
+                       fontSize=font_size),
+                     position = "right"),
+                   
+                   ## set chart area padding
+                   chartArea = list(
+                     top = 50, left = 100,
+                     height = "75%", width = "65%"
+                   ),
+                   ## set colors
+                   colors = cbbPalette[c(1:9)],
+                   
+                   
+                   ## set tooltip font size
+                   ## Hover text font stuff
+                   tooltip = list(
+                     textStyle = list(
+                       fontSize = font_size
+                     ))
+                   )
+    )
+    
+  })
+  
+  output$mobrate_plot<-reactive({
+    #message to be displayed when no school selected
+    validate(
+      need(input$plot_school!=" ", "Please select a school")
+    )
+    r_mobrateplot<-r_mobrateplot_df()
+    
+    
+    list(
+      data=googleDataTable(r_mobrateplot),
+      options=list(title=paste("Student Mobility: Mobility Rates of ", 
+                  input$plot_mobility,
+                  "at ", 
+                  input$plot_school),
+                  isStacked=FALSE,
+                  # set fonts
+                  fontName = "Source Sans Pro",
+                  fontSize = font_size,
+                  ## set axis titles, ticks, fonts, and ranges
+                  hAxis = list(
+                    title = "Start of School Year",
+                    ticks = seq(2003,2012,1),
+                    format = "####",
+                    textStyle = list(
+                      fontSize = 14),
+                    titleTextStyle = list(
+                      fontSize = 16,
+                      bold = TRUE,
+                      italic = FALSE)
+                  ),
+                  vAxis = list(
+                    title = "Rate in Percent",
+                    ticks = seq(0,100,20),
+                    
+                    #viewWindow = list(min=0, max=100),
+                    textStyle = list(
+                      fontSize = font_size),
+                    titleTextStyle = list(
+                      fontSize = font_size+2,
+                      bold = TRUE,
+                      italic = FALSE)
+                  ),
+                  
+                  ## set legend fonts
+                  legend = list(
+                    textStyle = list(
+                      fontSize=font_size),
+                    position = "right"),
+                  
+                  ## set chart area padding
+                  chartArea = list(
+                    top = 50, left = 100,
+                    height = "75%", width = "65%"
+                  ),
+                  
+                  ## set colors
+                  colors = cbbPalette[c(1:9)],
+                  
+                  ## set tooltip font size
+                  ## Hover text font stuff
+                  tooltip = list(
+                    textStyle = list(
+                      fontSize = font_size
+                    ))
+      )
+    )
+    
+  })
+  
+    
+  ###############################################################
+  # POINT MAP in LEAFLET
+  #######################################################
+  
+  
+  #titles: one per map
+  output$lmap_title1 <- renderText({
+    paste(input$lmap_level1, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title2 <- renderText({
+    paste(input$lmap_level2, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title3 <- renderText({
+    paste(input$lmap_level3, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title4 <- renderText({
+    paste(input$lmap_level4, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  
+  output$lmap_title5 <- renderText({
+    paste(input$lmap_level5, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title6 <- renderText({
+    paste(input$lmap_level6, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title7 <- renderText({
+    paste(input$lmap_level7, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title8 <- renderText({
+    paste(input$lmap_level8, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  
+  output$lmap_title9 <- renderText({
+    paste(input$lmap_level9, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title10 <- renderText({
+    paste(input$lmap_level10, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title11 <- renderText({
+    paste(input$lmap_level11, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+  output$lmap_title12 <- renderText({
+    paste(input$lmap_level12, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  })
+    
+    ## filter dataframes - one per map
+  
+  map_df1<-reactive({
+    
+         if(input$lmap_level1=="African American"){sel_col<-23}
+    else if(input$lmap_level1=="Asian"){sel_col<-24}
+    else if(input$lmap_level1=="Hispanic"){sel_col<-25}
+    else if(input$lmap_level1=="White"){sel_col<-26}
+    else if(input$lmap_level1=="Native American"){sel_col<-27}
+    else if(input$lmap_level1=="Native Hawaiian/Pacific Islander"){sel_col<-30}
+    else if(input$lmap_level1=="Multi-Race/Non-Hispanic"){sel_col<-31}
+    
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      filter(school.year==input$lmap_year)
+    
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    map_df
+  })
+  map_df2<-reactive({
+         if(input$lmap_level2=="Males"){sel_col<-28}
+    else if(input$lmap_level2=="Females"){sel_col<-29}
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      filter(school.year==input$lmap_year)
+    
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    map_df
+  })
+  map_df3<-reactive({
+         if(input$lmap_level3=="Pre Kindergarden"){sel_col<-7}
+    else if(input$lmap_level3=="Kindergarden"){sel_col<-8}
+    else if(input$lmap_level3=="First Grade"){sel_col<-9}
+    else if(input$lmap_level3=="Second Grade"){sel_col<-10}
+    else if(input$lmap_level3=="Third Grade"){sel_col<-11}
+    else if(input$lmap_level3=="Fourth Grade"){sel_col<-12}
+    else if(input$lmap_level3=="Fifth Grade"){sel_col<-13}
+    else if(input$lmap_level3=="Sixth Grade"){sel_col<-14}
+    else if(input$lmap_level3=="Seventh Grade"){sel_col<-15}
+    else if(input$lmap_level3=="Eighth Grade"){sel_col<-16}
+    else if(input$lmap_level3=="Ninth Grade"){sel_col<-17}
+    else if(input$lmap_level3=="Tenth Grade"){sel_col<-18}
+    else if(input$lmap_level3=="Eleventh Grade"){sel_col<-19}
+    else if(input$lmap_level3=="Twelfth Grade"){sel_col<-20}
+    else if(input$lmap_level3=="Special Ed Beyond 12th Grade"){sel_col<-21}
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      filter(school.year==input$lmap_year)
+    
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    map_df
+  })
+  map_df4<-reactive({
+    
+         if(input$lmap_level4=="English Language Learner Enrolled %"){sel_col<-35}
+    else if(input$lmap_level4=="First Language Not English Enrolled %"){sel_col<-33}
+    else if(input$lmap_level4=="Students With Disabilities Enrolled %"){sel_col<-37}
+    else if(input$lmap_level4=="Low Income Students Enrolled %"){sel_col<-39}
+    else if(input$lmap_level4=="High Needs Students Enrolled %"){sel_col<-45}
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      filter(school.year==input$lmap_year)
+    
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    map_df
+  })
+ 
+  map_df9<-reactive({
+         if(input$lmap_level9=="Churn Enrollment for English Language Learning Students"){sel_col<-51}
+    else if(input$lmap_level9=="Stability Enrollment for English Language Learning Students"){sel_col<-54}
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      filter(school.year==input$lmap_year)
+    
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    map_df
+  })
+  map_df10<-reactive({       
+         if(input$lmap_level10=="Churn Enrollment for Students with Disabilities"){sel_col<-46}
+    else if(input$lmap_level10=="Stability Enrollment for Students with Disabilities"){sel_col<-49}
+  edu<-edum()
+  map_df <- edu %>%
+    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    filter(school.year==input$lmap_year)
+  
+  colnames(map_df)[5]<-"var"
+  colnames(map_df)[6]<-"TSE"
+  map_df
+})
+  map_df11<-reactive({       
+    if(input$lmap_level11=="Churn Enrollment for Low Income Students"){sel_col<-61}
+    else if(input$lmap_level11=="Stability Enrollment for Low Income Students"){sel_col<-64}
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      filter(school.year==input$lmap_year)
+    
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    map_df
+})
+  map_df12<-reactive({       
+          if(input$lmap_level12=="Churn Enrollment for High Needs Students"){sel_col<-56}
+    else if(input$lmap_level12=="Stability Enrollment for High Needs Students"){sel_col<-59}
+  edu<-edum()
+  map_df <- edu %>%
+    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    filter(school.year==input$lmap_year)
+  
+  colnames(map_df)[5]<-"var"
+  colnames(map_df)[6]<-"TSE"
+  map_df
+})
+
+  map_df5<-reactive({       
+        if(input$lmap_level5=="Churn Rate for English Language Learning Students"){sel_col<-52}
+    else if(input$lmap_level5=="Stability Rate for English Language Learning Students"){sel_col<-55}
+    else if(input$lmap_level5=="Intake Rate for English Language Learning Students"){sel_col<-53}
+  edu<-edum()
+  map_df <- edu %>%
+    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    filter(school.year==input$lmap_year)
+  
+  colnames(map_df)[5]<-"var"
+  colnames(map_df)[6]<-"TSE"
+  map_df
+})
+  map_df6<-reactive({       
+          if(input$lmap_level6=="Churn Rate for Students with Disabilities"){sel_col<-47}
+    else if(input$lmap_level6=="Stability Rate for Students with Disabilities"){sel_col<-50}
+    else if(input$lmap_level6=="Intake Rate for Students with Disabilities"){sel_col<-48}
+  edu<-edum()
+  map_df <- edu %>%
+    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    filter(school.year==input$lmap_year)
+  
+  colnames(map_df)[5]<-"var"
+  colnames(map_df)[6]<-"TSE"
+  map_df
+})
+  map_df7<-reactive({       
+            if(input$lmap_level7=="Churn Rate for Low Income Students"){sel_col<-62}
+    else if(input$lmap_level7=="Stability Rate for Low Income Students"){sel_col<-65}
+    else if(input$lmap_level7=="Intake Rate for English Low Income Students"){sel_col<-63}
+  edu<-edum()
+  map_df <- edu %>%
+    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    filter(school.year==input$lmap_year)
+  
+  colnames(map_df)[5]<-"var"
+  colnames(map_df)[6]<-"TSE"
+  map_df
+})
+  map_df8<-reactive({       
+              if(input$lmap_level8=="Churn Rate for High Needs Students"){sel_col<-57}
+    else if(input$lmap_level8=="Stability Rate for High Needs Students"){sel_col<-60}
+    else if(input$lmap_level8=="Intake Rate for High Needs Students"){sel_col<-58}
+  edu<-edum()
+  map_df <- edu %>%
+    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    filter(school.year==input$lmap_year)
+  
+  colnames(map_df)[5]<-"var"
+  colnames(map_df)[6]<-"TSE"
+  map_df
+})
+   
+  #create maps in leaflet
+  output$leafmap1<-renderLeaflet({
+    
+    map_df<-map_df1()
+    
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+              lng = ~lon, lat = ~lat, radius=~log(TSE), 
+              color=~pal(var),
+              popup = ~paste(as.character(school.name), 
+                             "\n", 
+                             as.character(var)))
+  })
+  output$leafmap2<-renderLeaflet({
+    
+    map_df<-map_df2()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap3<-renderLeaflet({
+    
+    map_df<-map_df3()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap4<-renderLeaflet({
+    
+    map_df<-map_df4()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  
+  output$leafmap5<-renderLeaflet({
+    
+    map_df<-map_df5()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap6<-renderLeaflet({
+    
+    map_df<-map_df6()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap7<-renderLeaflet({
+    
+    map_df<-map_df7()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap8<-renderLeaflet({
+    
+    map_df<-map_df8()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap9<-renderLeaflet({
+    
+    map_df<-map_df9()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap10<-renderLeaflet({
+    
+    map_df<-map_df10()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap11<-renderLeaflet({
+    
+    map_df<-map_df11()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+  output$leafmap12<-renderLeaflet({
+    
+    map_df<-map_df12()
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leaflet(width="100%", height=500) %>%
+      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner") %>%
+      addCircleMarkers(data=map_df,
+                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
+                       color=~pal(var),
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
+  })
+
+  
+ 
+## map legend
+  #1
+output$AAlegend <- renderPlot({
+
+    paint.brush = colorRampPalette(colors=c("white", "violetred"))
+    cols <- paint.brush(25)
+    leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
+                                  length.out=(length(map_colors)-1)), x = 1, col = cols)
+    
+    p <- ggplot(data = leg_dat) +
+      geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+      scale_fill_manual(values = leg_dat$col) + theme_bw() +
+      theme(axis.text.x = element_blank(),
+            axis.text.y = element_text(size = 12),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.ticks.x = element_blank(),
+            panel.border = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.grid.major = element_blank())
+   return(p)
+  })
+output$ASlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$HISPlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$WHlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$NAlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$NHlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$MRlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level1], range.table[2,input$lmap_level1],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+  #1
+output$FEMlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level2], range.table[2,input$lmap_level2],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$MALlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level2], range.table[2,input$lmap_level2],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+  #3
+output$PREKlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level2], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$KINDlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level2], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$FIRSTlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SECONDlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$THIRDlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$FOURTHlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$FIFTHlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SIXTHlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SEVENTHlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$EIGHTHlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$NINTHlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$TENTHlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$ELEVENTHlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$TWELFTHlegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SPEClegend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+  #4
+output$P_ELL_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level4], range.table[2,input$lmap_level4],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$P_FLNE_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level4], range.table[2,input$lmap_level4],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$P_DISAB_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level4], range.table[2,input$lmap_level4],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$P_LOW_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level4], range.table[2,input$lmap_level4],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$P_HIGH_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level4], range.table[2,input$lmap_level4],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+
+  #5
+output$CR_ELL_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level5], range.table[2,input$lmap_level5],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SR_ELL_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level5], range.table[2,input$lmap_level5],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$IR_ELL_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level5], range.table[2,input$lmap_level5],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+#6
+output$CR_DISAB_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level6], range.table[2,input$lmap_level6],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SR_DISAB_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level6], range.table[2,input$lmap_level6],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$IR_DISAB_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level6], range.table[2,input$lmap_level6],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+#7
+output$CR_LOW_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level7], range.table[2,input$lmap_level7],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SR_LOW_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level7], range.table[2,input$lmap_level7],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$IR_LOW_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level7], range.table[2,input$lmap_level7],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+#8
+output$CR_HIGH_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level8], range.table[2,input$lmap_level8],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SR_HIGH_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level8], range.table[2,input$lmap_level8],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$IR_HIGH_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level8], range.table[2,input$lmap_level8],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+
+#9
+output$CE_ELL_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level9], range.table[2,input$lmap_level9],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SE_ELL_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level9], range.table[2,input$lmap_level9],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+#10
+output$CE_DISAB_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level10], range.table[2,input$lmap_level10],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SE_DISAB_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level10], range.table[2,input$lmap_level10],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+#11
+output$CE_LOW_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level11], range.table[2,input$lmap_level11],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SE_LOW_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level11], range.table[2,input$lmap_level11],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+#12
+output$CE_HIGH_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level12], range.table[2,input$lmap_level12],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SE_HIGH_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level12], range.table[2,input$lmap_level12],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+
+
+
+
+
+
+#finish document
+})

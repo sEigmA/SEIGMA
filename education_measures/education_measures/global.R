@@ -1,5 +1,5 @@
 ###########################################
-## Title: Education Measures             ##
+## Title: Schools                        ##
 ## Author(s): Xuelian Li, Emily Ramos,   ## 
 ##            Arvind Ramakrishnan,       ##
 ##            Jenna Kiridly, Steve Lauer,##
@@ -177,7 +177,7 @@ plot_side_text <- conditionalPanel(
     tags$br(),
     tags$li("To view mobility data such as churn, intake, and stability rates by specific interest group select 'Mobility Profile' from the 'Data' drop down menu."),
     tags$br(),
-  tags$li("Next, please select a school for which you are interested in viewing educational measures."),
+  tags$li("Next, please select a school for which you are interested in viewing data"),
   tags$br(),
   tags$li("To view the percentage of students by race/ethnicity, gender, grade level, or focus group select 'Race/Ethnicity', 'Gender', 'Grade Level', or 'Focus Group' from the 'Profile Variable' list."),
   tags$br(),
@@ -211,14 +211,14 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
- about_main_text <- p(strong("The SEIGMA Educational Measures and Student Mobility App"), "displays the percentage of students by race/ethnicity, gender or grade levels and student mobility data for Massachusetts schools.",
+ about_main_text <- p(strong("The SEIGMA Schools App"), "displays the percentage of students by race/ethnicity, gender or grade levels and student mobility data for Massachusetts schools.",
                       p(strong("Click on different tabs to view the data in different formats.")),
                       tags$br(),
                       tags$ul(
                         tags$li(p(strong("Summary"), "shows the source data in table format.")),
                         tags$li(p(strong("Plot"), "compares the percentage of students by race and ethnicity, gender, and grade levels, as well as student mobility profiles for each school.")),
                         tags$li(p(strong("Map"), "visually displays the percentage of students by race and ethnicity, gender, and grade level, as well as student mobility profiles for each school.")),
-                        tags$li(p(strong("More Info"), "describes education measures including formulas and calculations."))
+                        tags$li(p(strong("More Info"), "describes schools profile and student mobility data including formulas and calculations."))
                       ))
 
 plot_main_text <- p(strong("Variable Summary:"),

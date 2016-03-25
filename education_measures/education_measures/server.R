@@ -1,5 +1,5 @@
 ###########################################
-## Title: Education Measures             ##
+## Title: Schools                        ##
 ## Author(s): Xuelian Li, Emily Ramos,   ## 
 ##            Arvind Ramakrishnan,       ##
 ##            Jenna Kiridly, Steve Lauer,##

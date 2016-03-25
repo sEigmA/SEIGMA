@@ -1,5 +1,5 @@
 ###########################################
-## Title: Education Measures             ##
+## Title: Schools                        ##
 ## Author(s): Xuelian Li, Emily Ramos,   ## 
 ##            Arvind Ramakrishnan,       ##
 ##            Jenna Kiridly, Steve Lauer,##
@@ -23,7 +23,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Education Measures Shiny App"),
+  titlePanel("", windowTitle = "SEIGMA: Schools Shiny App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -298,7 +298,7 @@ shinyUI(fluidPage(
                  
                  ## GitHub link
                  helpText(a("View the data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education_measures", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/schools", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     
