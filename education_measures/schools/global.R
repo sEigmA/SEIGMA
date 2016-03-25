@@ -175,7 +175,7 @@ plot_side_text <- conditionalPanel(
     tags$br(),
     tags$li("To view enrollment data such as the percentage of students by race/ethnicity, gender, grade level, or focus group, select 'Enrollment Profile' from the Data drop down menu."),
     tags$br(),
-    tags$li("To view mobility data such as churn, intake, and stability rates by specific interest group select 'Mobility Profile' from the 'Data' drop down menu."),
+    tags$li("To view mobility data such as churn, intake, and stability rates by specific interest group select 'Mobility Measure' from the 'Data' drop down menu."),
     tags$br(),
   tags$li("Next, please select a school for which you are interested in viewing data"),
   tags$br(),

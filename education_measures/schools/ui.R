@@ -365,7 +365,7 @@ tabPanel("Map",
 
          conditionalPanel("input.lmap_radio=='Race/Ethnicity'",
                           tags$br(),
-                          textOutput("lmap_title1"),
+                          htmlOutput("lmap_title1"),
                           tags$br(),
           leafletOutput("leafmap1"),
          

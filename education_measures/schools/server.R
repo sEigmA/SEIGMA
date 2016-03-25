@@ -72,13 +72,13 @@ sum_df <- df %>% filter(County %in% county & Municipal %in% munis)
     df_colnames<-c()
     if (input$sum_radio=="Race/Ethnicity") {
       sel_col_num<-c(23:27, 30:31)
-      df_colnames<-c("African American", "Asian", "Hispanic", "White", "Native American", "Native Hawaiian Pacific Islander", "Multi-race non-Hispanic")
+      df_colnames<-c("% African American", "% Asian", "% Hispanic", "% White", "% Native American", "% Native Hawaiian Pacific Islander", "% Multi-race non-Hispanic")
     } else if (input$sum_radio=="Gender") {
       sel_col_num<-c(28:29)
-      df_colnames<-c( "Males", "Females")
+      df_colnames<-c( "% Males", "% Females")
     } else if (input$sum_radio=="Grade Level") {
       sel_col_num<-c(7:21)
-      df_colnames<-names(edu_data)[7:21]
+      df_colnames<-paste("# Enrolled in",names(edu_data)[7:21], sep=" ")
     }  else if (input$sum_radio=="English Language Learners") {
         sel_col_num<-c(32, 34, 51:55)
         df_colnames<-c("First Language Not English Enrolled", "English Language Learner Enrolled", "Churn Enrollment for English Language Learning Students", "Churn Rate for English Language Learning Students", "Intake Rate for English Language Learning Students", "Stability Enrollment for English Language Learning Students", "Stability Rate for English Language Learning Students")
@@ -527,7 +527,7 @@ return(sum_df)
                          italic = FALSE)
                      ),
                      vAxis = list(
-                       title = "Number of students",
+                       title = "Proportion of students in %",
                        ticks = seq(0,1,0.2),
                        
                        #viewWindow = list(min=0, max=100),
@@ -714,7 +714,7 @@ return(sum_df)
                       italic = FALSE)
                   ),
                   vAxis = list(
-                    title = "Rate in Percent",
+                    title = "Rate in Percent %",
                     ticks = seq(0,100,20),
                     
                     #viewWindow = list(min=0, max=100),
@@ -759,9 +759,12 @@ return(sum_df)
   
   
   #titles: one per map
-  output$lmap_title1 <- renderText({
-    paste(input$lmap_level1, "in Massachusetts", 
-          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  output$lmap_title1 <- renderUI({
+    HTML(paste("<b>", 
+               input$lmap_level1, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
+          "</b>")
+    )
   })
   output$lmap_title2 <- renderText({
     paste(input$lmap_level2, "in Massachusetts", 
@@ -1004,11 +1007,11 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-              lng = ~lon, lat = ~lat, radius=~log(TSE), 
-              color=~pal(var),
+              lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+              fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
               popup = ~paste(as.character(school.name), 
                              "\n", 
-                             as.character(var)))
+                             as.character(var), "%"))
   })
   output$leafmap2<-renderLeaflet({
     
@@ -1025,11 +1028,11 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
-                       color=~pal(var),
+                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
-                                      as.character(var)))
+                                      as.character(var), "%"))
   })
   output$leafmap3<-renderLeaflet({
     
@@ -1046,11 +1049,11 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
-                       color=~pal(var),
+                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
-                                      as.character(var)))
+                                      as.character(var), "Students"))
   })
   output$leafmap4<-renderLeaflet({
     
@@ -1067,11 +1070,11 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
-                       color=~pal(var),
+                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
-                                      as.character(var)))
+                                      as.character(var), "%"))
   })
   
   output$leafmap5<-renderLeaflet({
@@ -1089,11 +1092,11 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
-                       color=~pal(var),
+                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
-                                      as.character(var)))
+                                      as.character(var), "%"))
   })
   output$leafmap6<-renderLeaflet({
     
@@ -1110,11 +1113,11 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
-                       color=~pal(var),
-                       popup = ~paste(as.character(school.name), 
+                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       popup = ~paste(as.character(school.name),  
                                       "\n", 
-                                      as.character(var)))
+                                      as.character(var), "%"))
   })
   output$leafmap7<-renderLeaflet({
     
@@ -1131,11 +1134,11 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
-                       color=~pal(var),
+                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
-                                      as.character(var)))
+                                      as.character(var), "%"))
   })
   output$leafmap8<-renderLeaflet({
     
@@ -1152,11 +1155,11 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
-                       color=~pal(var),
-                       popup = ~paste(as.character(school.name), 
+                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       popup = ~paste(as.character(school.name),  
                                       "\n", 
-                                      as.character(var)))
+                                      as.character(var), "%"))
   })
   output$leafmap9<-renderLeaflet({
     
@@ -1173,11 +1176,11 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
-                       color=~pal(var),
+                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
-                                      as.character(var)))
+                                      as.character(var), "Students"))
   })
   output$leafmap10<-renderLeaflet({
     
@@ -1194,11 +1197,11 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
-                       color=~pal(var),
+                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
-                                      as.character(var)))
+                                      as.character(var), "Students"))
   })
   output$leafmap11<-renderLeaflet({
     
@@ -1215,11 +1218,11 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
-                       color=~pal(var),
+                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
-                                      as.character(var)))
+                                      as.character(var), "Students"))
   })
   output$leafmap12<-renderLeaflet({
     
@@ -1236,11 +1239,11 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~log(TSE), 
-                       color=~pal(var),
+                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
-                                      as.character(var)))
+                                      as.character(var), "Students"))
   })
 
   
