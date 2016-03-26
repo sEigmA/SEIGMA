@@ -760,57 +760,89 @@ return(sum_df)
   
   #titles: one per map
   output$lmap_title1 <- renderUI({
-    HTML(paste("<b>", 
-               input$lmap_level1, "in Massachusetts", 
+    HTML(paste("<b>%", 
+               input$lmap_level1, "Students in Massachusetts", 
           "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
           "</b>")
     )
   })
-  output$lmap_title2 <- renderText({
-    paste(input$lmap_level2, "in Massachusetts", 
-          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  output$lmap_title2 <- renderUI({
+    HTML(paste("<b>%", 
+               input$lmap_level2, "Students in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year",
+          "</b>")
+    )
   })
-  output$lmap_title3 <- renderText({
-    paste(input$lmap_level3, "in Massachusetts", 
-          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  output$lmap_title3 <- renderUI({
+    HTML(paste("<b>#", 
+               input$lmap_level3, "Students in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year",
+          "</b>")
+    )
   })
-  output$lmap_title4 <- renderText({
-    paste(input$lmap_level4, "in Massachusetts", 
-          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
-  })
-  
-  output$lmap_title5 <- renderText({
-    paste(input$lmap_level5, "in Massachusetts", 
-          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
-  })
-  output$lmap_title6 <- renderText({
-    paste(input$lmap_level6, "in Massachusetts", 
-          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
-  })
-  output$lmap_title7 <- renderText({
-    paste(input$lmap_level7, "in Massachusetts", 
-          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
-  })
-  output$lmap_title8 <- renderText({
-    paste(input$lmap_level8, "in Massachusetts", 
-          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  output$lmap_title4 <- renderUI({
+    HTML(paste("<b>", 
+               input$lmap_level4, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
+          "</b>")
+    )
   })
   
-  output$lmap_title9 <- renderText({
-    paste(input$lmap_level9, "in Massachusetts", 
-          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  output$lmap_title5 <- renderUI({
+    HTML(paste("<b>", 
+               input$lmap_level5, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
+          "</b>")
+         )
   })
-  output$lmap_title10 <- renderText({
-    paste(input$lmap_level10, "in Massachusetts", 
-          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  output$lmap_title6 <- renderUI({
+    HTML(paste("<b>", 
+               input$lmap_level6, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
+          "</b>")
+         )
   })
-  output$lmap_title11 <- renderText({
-    paste(input$lmap_level11, "in Massachusetts", 
-          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  output$lmap_title7 <- renderUI({
+    HTML(paste("<b>", 
+               input$lmap_level7, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
+          "</b>"))
   })
-  output$lmap_title12 <- renderText({
-    paste(input$lmap_level12, "in Massachusetts", 
-          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year")
+  output$lmap_title8 <- renderUI({
+    HTML(paste("<b>", 
+               input$lmap_level8, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
+          "</b>")
+         )
+  })
+  
+  output$lmap_title9 <- renderUI({
+    HTML(paste("<b>", 
+               input$lmap_level9, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
+          "</b>")
+         )
+  })
+  output$lmap_title10 <- renderUI({
+    HTML(paste("<b>", 
+               input$lmap_level10, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
+          "</b>")
+         )
+  })
+  output$lmap_title11 <- renderUI({
+    HTML(paste("<b>", 
+               input$lmap_level11, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
+          "</b>")
+         )
+  })
+  output$lmap_title12 <- renderUI({
+    HTML(paste("<b>", 
+               input$lmap_level12, "in Massachusetts", 
+          "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
+          "</b>")
+         )
   })
     
     ## filter dataframes - one per map
@@ -1008,7 +1040,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
               lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-              fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+              fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
               popup = ~paste(as.character(school.name), 
                              "\n", 
                              as.character(var), "%"))
@@ -1029,7 +1061,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
                        lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
                                       as.character(var), "%"))
@@ -1050,7 +1082,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
                        lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
                                       as.character(var), "Students"))
@@ -1071,7 +1103,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
                        lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
                                       as.character(var), "%"))
@@ -1093,7 +1125,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
                        lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
                                       as.character(var), "%"))
@@ -1114,7 +1146,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
                        lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name),  
                                       "\n", 
                                       as.character(var), "%"))
@@ -1135,7 +1167,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
                        lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
                                       as.character(var), "%"))
@@ -1156,7 +1188,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
                        lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name),  
                                       "\n", 
                                       as.character(var), "%"))
@@ -1177,7 +1209,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
                        lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
                                       as.character(var), "Students"))
@@ -1198,7 +1230,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
                        lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
                                       as.character(var), "Students"))
@@ -1219,7 +1251,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
                        lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
                                       as.character(var), "Students"))
@@ -1240,7 +1272,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
                        lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.5,
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
                                       as.character(var), "Students"))
