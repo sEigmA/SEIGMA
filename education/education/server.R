@@ -3,8 +3,9 @@
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
+##            Xuelian Li             ##
 ## Date Created:  12/4/14            ##
-## Date Modified: 02/24/15  ER       ##
+## Date Modified: 03/24/16  XL       ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -267,6 +268,66 @@ shinyServer(function(input, output, session) {
       tags$h4("% ",var_select, " or higher in ", muni_name, " for ", input$map_year),
       tags$h5(muni_value, "%")
     ))
+  })
+  
+  output$legend1 <- renderPlot({  
+    paint.brush = colorRampPalette(colors=c("white", "darkblue"))
+    cols <- paint.brush(101)
+    leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+    
+    b <- ggplot(data = leg_dat) +
+      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+      scale_fill_manual(values = leg_dat$col) + theme_bw() +
+      theme(axis.text.x = element_blank(),
+            axis.text.y = element_text(size = 12),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.ticks.x = element_blank(),
+            panel.border = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.grid.major = element_blank())
+    return(b)
+    
+  })
+  
+  output$legend2 <- renderPlot({  
+    paint.brush = colorRampPalette(colors=c("white", "darkblue"))
+    cols <- paint.brush(101)
+    leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+    
+    b <- ggplot(data = leg_dat) +
+      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+      scale_fill_manual(values = leg_dat$col) + theme_bw() +
+      theme(axis.text.x = element_blank(),
+            axis.text.y = element_text(size = 12),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.ticks.x = element_blank(),
+            panel.border = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.grid.major = element_blank())
+    return(b)
+    
+  })
+  
+  output$legend3 <- renderPlot({  
+    paint.brush = colorRampPalette(colors=c("white", "darkblue"))
+    cols <- paint.brush(101)
+    leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+    
+    b <- ggplot(data = leg_dat) +
+      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+      scale_fill_manual(values = leg_dat$col) + theme_bw() +
+      theme(axis.text.x = element_blank(),
+            axis.text.y = element_text(size = 12),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.ticks.x = element_blank(),
+            panel.border = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.grid.major = element_blank())
+    return(b)
+    
   })
   
 })

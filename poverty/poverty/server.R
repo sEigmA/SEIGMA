@@ -220,7 +220,7 @@ shinyServer(function(input, output, session) {
       leg_dat<- data_frame(y = seq(povmin.val, povmax.val, length.out = (length(map_colors)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
-        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
         scale_y_continuous(limits = c(povmin.val, povmax.val), breaks = round(seq(povmin.val, povmax.val, length.out = 5),1)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),

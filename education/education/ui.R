@@ -157,22 +157,14 @@ bootstrapPage(mainPanel(
                  conditionalPanel(
                    condition="input.var == 'HS_Pct' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
+                     right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
-                    strong("High School Attainment or Greater"),
+                    strong("High School"),
+                    br(),
+                    strong("Attainment",br(), "or Greater"),
+                    plotOutput("legend1"),
                      tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(prettyNum(round(from, 2)), "% to", 
-                                   prettyNum(round(to, 2)), "%", align = "right")
-                         )
-                       }, 
-                       colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
+                      tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
                          )),
@@ -180,25 +172,18 @@ bootstrapPage(mainPanel(
                        )
                      )
                    )),
-                 #High School
+                 #Colledge
                  conditionalPanel(
                    condition="input.var == 'Bachelors_Pct' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
+                     right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Bachelor's Attainment or Greater"),
+                     strong("Bachelor's",br(), "Attainment"),
+                     br(),
+                     strong("or Greater"),
+                     plotOutput("legend2"),
                      tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(prettyNum(round(from, 2)), "% to", 
-                                   prettyNum(round(to, 2)), "%", align = "right")
-                         )
-                       }, 
-                       colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
+                       
                        tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
@@ -207,25 +192,18 @@ bootstrapPage(mainPanel(
                        )
                      )
                    )),
-                 #High School
+                 #Graduate School
                  conditionalPanel(
                    condition="input.var == 'Grad_Pct' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
+                     right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Graduate Degree Attainment or Greater"),
+                     strong("Graduate Degree"),
+                     br(),
+                     strong("Attainment",br(), "or Greater"),
+                     plotOutput("legend3"),
                      tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(prettyNum(round(from, 2)), "% to", 
-                                   prettyNum(round(to, 2)), "%", align = "right")
-                         )
-                       }, 
-                       colorRanges$from, colorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
+                       
                        tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
