@@ -335,22 +335,14 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_timespan == 'sing.yr' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 150, draggable=FALSE, style = "", 
+                     right = 10, top = 150, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Single Year"),
                      tags$br(),
-                     strong("Age-adjusted Suicide Rate"),
+                     strong("Age-adjusted",br(), "Suicide Rate"),
+                     plotOutput("legend1"),
                      tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
-                         )
-                       }, 
-                       scolorRanges$from, scolorRanges$to, smap.colors[-length(smap.colors)],
-                       SIMPLIFY=FALSE),
+                       
                        tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
@@ -362,23 +354,14 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_timespan == 'mult.yrs' && input.action != 0",
                    absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
+                     right = 10, top = 150, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Multiple Year"),
                      tags$br(),
-                     strong("Increase in Suicide Rate"),
+                     strong("Increase in", br(), "Suicide Rate"),
+                     plotOutput("legend2"),
                      tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(
-                             tags$div(
-                               style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                             )),
-                           tags$td(round(from, 2), "to", round(to, 2), align = "right")
-                         )
-                       }, 
-                       mcolorRanges$from, mcolorRanges$to, mmap.colors[-length(mmap.colors)],
-                       SIMPLIFY=FALSE),
+                       
                        tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")

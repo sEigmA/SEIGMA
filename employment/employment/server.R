@@ -382,7 +382,7 @@ output$Est_pct_plot<-reactive({
       leg_dat <- data_frame(y = seq(estmin.val, estmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       p <- ggplot(data = leg_dat) +
-        geom_tile(aes(y = y, fill = reorder(col,y), x = x), show_guide = FALSE) +
+        geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
         scale_y_continuous(limits = c(estmin.val, estmax.val), breaks = seq(estmin.val, estmax.val, length.out = 5)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),
@@ -405,7 +405,7 @@ output$Est_pct_plot<-reactive({
       leg_dat<- data_frame(y = seq(empmin.val, empmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
-        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
         scale_y_continuous(limits = c(empmin.val, empmax.val), breaks = seq(empmin.val, empmax.val, length.out = 5)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),
@@ -429,7 +429,7 @@ output$legend3 <- renderPlot({
     leg_dat<- data_frame(y = seq(wagemin.val, wagemax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
     
     q<- ggplot(data = leg_dat) +
-      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
       scale_y_continuous(limits = c(wagemin.val, wagemax.val), breaks = seq(wagemin.val, wagemax.val, length.out = 5)) +
       scale_fill_manual(values = leg_dat$col) + theme_bw() +
       theme(axis.text.x = element_blank(),
@@ -453,7 +453,7 @@ output$legend4<- renderPlot({
     leg_dat <- data_frame(y = seq(pctmin.val2, pctmax.val,length.out=25), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
-      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
       scale_y_continuous(limits = c(pctmin.val, pctmax.val), breaks = unique(c(seq(pctmin.val, 0,length.out = 3),seq(0,pctmax.val, length.out = 3)))) +
       scale_fill_manual(values = leg_dat$col) + theme_bw() +
       theme(axis.text.x = element_blank(),

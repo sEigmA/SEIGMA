@@ -333,4 +333,50 @@ values <- reactiveValues(selectedFeature=NULL, highlight=c())
     }
   })
   
+  output$legend1 <- renderPlot({
+    if(input$map_timespan == 'sing.yr') {
+    paint.brush = colorRampPalette(colors=c("white", "red3"))
+    cols <- paint.brush(length(smap.colors)-1)
+    leg_dat<- data_frame(y = seq(smin.val, smax.val, length.out = (length(smap.colors)-1)), x = 1, col = cols)
+    
+    q<- ggplot(data = leg_dat) +
+      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+      scale_y_continuous(limits = c(smin.val, smax.val), breaks = seq(smin.val, smax.val, length.out = 5)) +
+      scale_fill_manual(values = leg_dat$col) + theme_bw() +
+      theme(axis.text.x = element_blank(),
+            axis.text.y = element_text(size = 12),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.ticks.x = element_blank(),
+            panel.border = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.grid.major = element_blank())
+    
+    return(q)
+    } 
+  })
+  
+  output$legend2<- renderPlot({
+    if(input$map_timespan == "mult.yrs"){
+      
+      paint.brush = colorRampPalette(colors=c(cbbPalette[6], "white",cbbPalette[7]))
+      cols <- paint.brush(25)
+      leg_dat <- data_frame(y = seq(mmin.val, mmax.val,length.out=25), x = 1, col = cols)
+      
+      b <- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(mmin.val, mmax.val), breaks = seq(mmin.val, mmax.val, length.out = 5)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+      
+    }
+    return(b)
+  })
 })
