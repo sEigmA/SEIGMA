@@ -406,7 +406,7 @@ output$Est_pct_plot<-reactive({
       
       q<- ggplot(data = leg_dat) +
         geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-        scale_y_continuous(limits = c(empmin.val, empmax.val), breaks = seq(empmin.val, empmax.val, length.out = 5)) +
+        scale_y_continuous(limits = c(empmin.val, empmax.val), breaks = round(seq(empmin.val, empmax.val, length.out = 5),0)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),
               axis.text.y = element_text(size = 12),
@@ -430,7 +430,7 @@ output$legend3 <- renderPlot({
     
     q<- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-      scale_y_continuous(limits = c(wagemin.val, wagemax.val), breaks = seq(wagemin.val, wagemax.val, length.out = 5)) +
+      scale_y_continuous(limits = c(wagemin.val, wagemax.val), breaks = round(seq(wagemin.val, wagemax.val, length.out = 5)),0) +
       scale_fill_manual(values = leg_dat$col) + theme_bw() +
       theme(axis.text.x = element_blank(),
             axis.text.y = element_text(size = 12),
@@ -467,6 +467,12 @@ output$legend4<- renderPlot({
     
   }
   return(b)
+})
+
+output$text1<-renderText({
+  return(as.character(
+    input$map_radio
+  ))
 })
 
 })
