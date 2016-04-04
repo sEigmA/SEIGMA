@@ -221,7 +221,7 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 5, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Average Monthly"),
+                     strong("Average",br(), "Monthly"),
                     br(),
                       strong("Employment"),
                      plotOutput("legend1"),
@@ -241,7 +241,7 @@ shinyUI(fluidPage(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
-                         tags$td("Data not available", align = "right")))
+                         tags$td("Data not",br(), "available", align = "right")))
                    )),
                  
                  ## Establishments Legend
@@ -272,7 +272,7 @@ shinyUI(fluidPage(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
-                         tags$td("Data not available", align = "left")
+                         tags$td(strong("Data not",br(), "available"), align = "left")
                        )
                      )
                    )),
@@ -280,18 +280,18 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_radio =='Wages' && input.map_display_radio=='Actual Values' && input.action != 0",
                    absolutePanel(
-                     right = 5, top = 100, draggable=FALSE, style = "",
+                     right = 5, top = 75, draggable=FALSE, style = "",
                      class = "floater",
                      strong("Average"),
                      br(),
-                     strong("Weekly Wage"),
+                     strong("Weekly",br(), "Wage", br(),"2012 dollars"),
                      plotOutput("legend3"),
                      tags$table(
                        tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
-                         tags$td("Data not available", align = "right")
+                         tags$td("Data not",br(), "available", align = "right")
                        )
                      )
                    )
@@ -302,7 +302,9 @@ shinyUI(fluidPage(
                    absolutePanel(
                      right = 5, top = 100, draggable=FALSE, style = "",
                      class = "floater",
-                     strong("Change Since 2003"),
+                     strong("Change in", br()),
+                     strong(textOutput("text1")), 
+                     strong("Since 2003"),
                      plotOutput("legend4"),
                      tags$table(
                        #mapply(function(from, to, color) {
@@ -320,7 +322,7 @@ shinyUI(fluidPage(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
-                         tags$td("Data not available", align = "right")
+                         tags$td("Data not",br(), "available", align = "right", align = "right")
                        )
                      )
                    ),

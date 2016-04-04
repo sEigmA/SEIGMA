@@ -335,7 +335,7 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.map_timespan == 'sing.yr' && input.action != 0",
                    absolutePanel(
-                     right = 10, top = 150, draggable=FALSE, style = "", 
+                     right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Single Year"),
                      tags$br(),
@@ -347,7 +347,7 @@ shinyUI(fluidPage(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
                          )),
-                         tags$td("Data not available", align = "right")))
+                         tags$td("Data not",br(), "available", align = "right")))
                    )),
                  
                  ## Multi Year Legend
