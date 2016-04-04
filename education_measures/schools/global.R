@@ -31,6 +31,8 @@ edu_data <- read.csv(file="edum_data.csv")
 colnames(edu_data)[7:21]<-gsub(x=names(edu_data)[7:21],pattern=".", replacement=" ", fixed=T)
 colnames(edu_data)[16]<-"Eighth Grade"
 
+
+
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
 # for(i in 1:length(MA_map_muni$features)){
