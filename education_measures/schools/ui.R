@@ -122,7 +122,7 @@ shinyUI(fluidPage(
                                               "Native American" = "Native American",
                                               "Native Hawaiian/Pacific Islander" = "Native Hawaiian/Pacific Islander",
                                               "Multi-Race Non-Hispanic" = "Multi-Race/Non-Hispanic"),
-                                          selected = NULL)),
+                                          selected = "African American")),
              
              conditionalPanel("input.lmap_radio=='Gender'",
                               selectInput("lmap_level2","Choose Gender to map",
