@@ -193,17 +193,21 @@ map_side_text <- conditionalPanel(
   helpText(p(strong("Please select a year, and click on 'Generate Map' to get started"))),
   tags$br(),
   tags$ul(
-    tags$li("To view the percentage of students by race/ethnicity, gender, grade level or focus group, select 'Race/Ethnicity', 'Gender', 'Grade Level', or 'Focus Group' from the 'Variables' list."),
+    tags$li("To zoom in the map press the '+' sign at the top left corner of the map."),
     tags$br(),
-    tags$li("To view churn, intake, and stability rates select either 'Enlgish Language Learners', 'Students with Disabilities', 'Low income', or 'High Needs' from the 'Variables' list."),
+    tags$li("To view enrollment data such as the percentage of students by race/ethnicity, gender, grade level, or focus group, select 'Enrollment Profile' from the Data drop down menu."),
+    tags$br(),
+    tags$li("To view mobility data such as churn, intake, and stability rates by specific interest group select 'Mobility Measure' from the 'Data' drop down menu."),
     tags$br(),
     tags$li("Then select the level of information by which you are interested in viewing the data from the 'Choose Level to Map' drop down menu."),
     tags$br(),
-    tags$li("To view the actual number of students within each focus group select any of the 'Count' options from the'Choose Level to Map' drop down menu ."),
+    tags$li("If you selected 'Enrollment Profile' select either race/ethnicity, gender, grade level, or focus group from the 'Select Profile Variable List'."),
     tags$br(),
-    tags$li("To view the percentage of students within each focus group select any of the 'Percentage' options from the'Choose Level to Map' drop down menu ."),
+    tags$li("Then please select a level to map from 'Choose Level to Map' drop down menu"),
     tags$br(),
-    tags$li("To view the churn, intake or Stability rate of the students within each focus group select any of the 'Churn', 'Intake', or 'Stability' options from the'Choose Level to Map' drop down menu .")
+    tags$li("If you selected 'Mobility Profile' select either 'Rate' or 'Enrollment' then select an intrest group from the 'Select Intrest Group List'."),
+    tags$br(),
+    tags$li("To view the churn, intake or Stability rate of the students within each focus group select any of the 'Churn', 'Intake', or 'Stability' options from the 'Choose Level to Map' drop down menu .")
   ))
 
 info_side_text <- conditionalPanel(
