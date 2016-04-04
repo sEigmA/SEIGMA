@@ -1025,26 +1025,38 @@ return(sum_df)
   #create maps in leaflet
   output$leafmap1<-renderLeaflet({
     
+      leaflet(width="100%", height=500)%>% 
+        setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      addProviderTiles("Stamen.Toner")
+    })
+
+  observe({
+    
     map_df<-map_df1()
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
+    
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leaflet(width="100%", height=500) %>%
-      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("Stamen.Toner") %>%
+    leafletProxy("leafmap1") %>%
+      clearShapes() %>%
       addCircleMarkers(data=map_df,
-              lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
-              fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-              popup = ~paste(as.character(school.name), 
-                             "\n", 
-                             as.character(var), "%"))
+                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var), "%"))
+    
   })
+      
+    
+    
+    
   output$leafmap2<-renderLeaflet({
     
     map_df<-map_df2()
