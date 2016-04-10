@@ -191,7 +191,7 @@ shinyUI(fluidPage(
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank", onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
       
       ## data source citation
-      helpText(a("Data Source: CDC Wonder", href="http://wonder.cdc.gov/wonder/help/cmf.html",
+      helpText(a("Data Source: CDC Wonder", href="http://wonder.cdc.gov/mortsql.html",
                  target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dataSource', 1)")),
       
       ## GitHub link

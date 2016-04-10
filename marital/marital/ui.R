@@ -96,7 +96,7 @@ shinyUI(fluidPage(
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey - Table DP02", href="http://www.census.gov/acs/www/",
+      helpText(a("Data Source: American Community Survey - Table DP02", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S1201&prodType=table",
                  target="_blank")),
       
       ## GitHub link

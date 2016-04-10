@@ -122,7 +122,7 @@ shinyUI(
                    helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
                    
                    ## data source citation
-                   helpText(a("Data Source: American Community Survey: table DP05", href="http://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t",
+                   helpText(a("Data Source: American Community Survey: table DP05", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S2502&prodType=table",
                               target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dataAge', 1)")),
                    
                    ## GitHub link
