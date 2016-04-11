@@ -263,5 +263,65 @@ output$Plot_gender<-reactive({list(
     ))
   })
   ##########################################################
+  output$legend1 <- renderPlot({  
+    paint.brush = colorRampPalette(colors=c("lightgreen","yellow", "red"))
+    cols <- paint.brush(length(map_colors)-1)
+    if(input$map_radio =='Age'){
+      leg_dat<- data_frame(y = seq(agemin.val, agemax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(agemin.val, agemax.val), breaks = round(seq(agemin.val, agemax.val, length.out = 5),0)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    else if(input$map_radio =='Gender'){
+      leg_dat<- data_frame(y = seq(genmin.val, genmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(genmin.val, genmax.val), breaks = round(seq(genmin.val, genmax.val, length.out = 5),1)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    else {
+      leg_dat<- data_frame(y = seq(racemin.val, racemax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(racemin.val, racemax.val), breaks = round(seq(racemin.val, racemax.val, length.out = 5),1)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    
+    return(q)
+    
+  })
+  output$text1<-renderText({
+    return(as.character(
+      input$map_radio
+    ))
+  })
 })
 

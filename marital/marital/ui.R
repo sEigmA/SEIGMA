@@ -176,140 +176,131 @@ shinyUI(fluidPage(
                                  actionButton("action", "Generate Map")
                    )),
                  
-                 ## Married Legend
+                 ## Map Legend
                  conditionalPanel(
-                   condition="input.var == 'Married_Pct' && input.action != 0",
+                   condition="input.action != 0",
                    absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
+                     right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Percent Married"),
-                     tags$br(),
+                     strong("Percent"),
+                     strong(textOutput("text1")),
+                     plotOutput("legend1"),
                      tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
-                         )
-                       }, 
-                       marcolorRanges$from, marcolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
+                      tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
                          )),
-                         tags$td("Data not available", align = "right")))
+                         tags$td("Data not", br(), "available", align = "right")))
                    )),
                  
                  ## Never Married Legend
-                 conditionalPanel(
-                   condition="input.var == 'Never_Married_Pct' && input.action != 0",
-                   absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
-                     class = "floater",
-                     strong("Percent Never Married"),
-                     tags$br(),
-                     #strong("Age Adjusted Suicide Rate"),
-                     tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
-                         )
-                       }, 
-                       nevcolorRanges$from, nevcolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not available", align = "right")))
-                   )),
-                 
-                 ## Separated Legend
-                 conditionalPanel(
-                   condition="input.var == 'Separated_Pct' && input.action != 0",
-                   absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
-                     class = "floater",
-                     strong("Percent Separated"),
-                     tags$br(),
-                     #strong("Age Adjusted Suicide Rate"),
-                     tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
-                         )
-                       }, 
-                       sepcolorRanges$from, sepcolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not available", align = "right")))
-                   )),
-                 
-                 
-                 ## Widowed Legend
-                 conditionalPanel(
-                   condition="input.var == 'Widowed_Pct' && input.action != 0",
-                   absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
-                     class = "floater",
-                     strong("Percent Widowed"),
-                     tags$br(),
-                     #strong("Age Adjusted Suicide Rate"),
-                     tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
-                         )
-                       }, 
-                       widcolorRanges$from, widcolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not available", align = "right")))
-                   )),
-                 
-                 ## Divorced Legend
-                 conditionalPanel(
-                   condition="input.var == 'Divorced_Pct' && input.action != 0",
-                   absolutePanel(
-                     right = 30, top = 215, draggable=FALSE, style = "", 
-                     class = "floater",
-                     strong("Percent Divorced"),
-                     tags$br(),
-                     #strong("Age Adjusted Suicide Rate"),
-                     tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
-                         )
-                       }, 
-                       divcolorRanges$from, divcolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not available", align = "right")))
-                   )),
+#                  conditionalPanel(
+#                    condition="input.var == 'Never_Married_Pct' && input.action != 0",
+#                    absolutePanel(
+#                      right = 30, top = 215, draggable=FALSE, style = "", 
+#                      class = "floater",
+#                      strong("Percent Never Married"),
+#                      tags$br(),
+#                      #strong("Age Adjusted Suicide Rate"),
+#                      tags$table(
+#                        mapply(function(from, to, color) {
+#                          tags$tr(
+#                            tags$td(tags$div(
+#                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+#                            )),
+#                            tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
+#                          )
+#                        }, 
+#                        nevcolorRanges$from, nevcolorRanges$to, map_colors[-length(map_colors)],
+#                        SIMPLIFY=FALSE),
+#                        tags$tr(
+#                          tags$td(tags$div(
+#                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+#                          )),
+#                          tags$td("Data not available", align = "right")))
+#                    )),
+#                  
+#                  ## Separated Legend
+#                  conditionalPanel(
+#                    condition="input.var == 'Separated_Pct' && input.action != 0",
+#                    absolutePanel(
+#                      right = 30, top = 215, draggable=FALSE, style = "", 
+#                      class = "floater",
+#                      strong("Percent Separated"),
+#                      tags$br(),
+#                      #strong("Age Adjusted Suicide Rate"),
+#                      tags$table(
+#                        mapply(function(from, to, color) {
+#                          tags$tr(
+#                            tags$td(tags$div(
+#                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+#                            )),
+#                            tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
+#                          )
+#                        }, 
+#                        sepcolorRanges$from, sepcolorRanges$to, map_colors[-length(map_colors)],
+#                        SIMPLIFY=FALSE),
+#                        tags$tr(
+#                          tags$td(tags$div(
+#                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+#                          )),
+#                          tags$td("Data not available", align = "right")))
+#                    )),
+#                  
+#                  
+#                  ## Widowed Legend
+#                  conditionalPanel(
+#                    condition="input.var == 'Widowed_Pct' && input.action != 0",
+#                    absolutePanel(
+#                      right = 30, top = 215, draggable=FALSE, style = "", 
+#                      class = "floater",
+#                      strong("Percent Widowed"),
+#                      tags$br(),
+#                      #strong("Age Adjusted Suicide Rate"),
+#                      tags$table(
+#                        mapply(function(from, to, color) {
+#                          tags$tr(
+#                            tags$td(tags$div(
+#                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+#                            )),
+#                            tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
+#                          )
+#                        }, 
+#                        widcolorRanges$from, widcolorRanges$to, map_colors[-length(map_colors)],
+#                        SIMPLIFY=FALSE),
+#                        tags$tr(
+#                          tags$td(tags$div(
+#                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+#                          )),
+#                          tags$td("Data not available", align = "right")))
+#                    )),
+#                  
+#                  ## Divorced Legend
+#                  conditionalPanel(
+#                    condition="input.var == 'Divorced_Pct' && input.action != 0",
+#                    absolutePanel(
+#                      right = 30, top = 215, draggable=FALSE, style = "", 
+#                      class = "floater",
+#                      strong("Percent Divorced"),
+#                      tags$br(),
+#                      #strong("Age Adjusted Suicide Rate"),
+#                      tags$table(
+#                        mapply(function(from, to, color) {
+#                          tags$tr(
+#                            tags$td(tags$div(
+#                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+#                            )),
+#                            tags$td(round(from, 2),"%", "to", round(to, 2),"%", align = "right")
+#                          )
+#                        }, 
+#                        divcolorRanges$from, divcolorRanges$to, map_colors[-length(map_colors)],
+#                        SIMPLIFY=FALSE),
+#                        tags$tr(
+#                          tags$td(tags$div(
+#                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+#                          )),
+#                          tags$td("Data not available", align = "right")))
+#                    )),
                  value="map"),
         
         tabPanel("More Info", 

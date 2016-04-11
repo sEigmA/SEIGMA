@@ -208,18 +208,18 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.action != 0",
                    absolutePanel(
-                     right = 10, top = 100, draggable=FALSE, style = "", 
+                     right = 5, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Median Annual"),
                      tags$br(),
-                     strong("Household Income"),
+                     strong("Household", br(), "Income"),
                      plotOutput("legend1"),
                      tags$table(
                        
                        tags$td(tags$div(
                          style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
                        )),
-                       tags$td("Data not available", align = "right")
+                       tags$td("Data not", br(), "available", align = "right")
                      )
                    )),
                  

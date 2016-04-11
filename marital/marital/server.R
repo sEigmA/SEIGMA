@@ -499,4 +499,98 @@ shinyServer(function(input, output, session) {
       tags$h5(muni_value, "%")
     ))
   })
+  #legend
+  output$legend1 <- renderPlot({  
+    paint.brush = colorRampPalette(colors=c("white", "deeppink"))
+    cols <- paint.brush(length(map_colors)-1)
+    if(input$var =='Married_Pct'){
+      leg_dat<- data_frame(y = seq(marmin.val, marmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(marmin.val, marmax.val), breaks = round(seq(marmin.val, marmax.val, length.out = 5),1)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    else if(input$var == 'Never_Married_Pct'){
+      leg_dat<- data_frame(y = seq(nevmin.val, nevmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(nevmin.val, nevmax.val), breaks = round(seq(nevmin.val, nevmax.val, length.out = 5),1)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    else if(input$var=='Separated_Pct'){
+      leg_dat<- data_frame(y = seq(sepmin.val, sepmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(sepmin.val, sepmax.val), breaks = round(seq(sepmin.val, sepmax.val, length.out = 5),1)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    else if(input$var == 'Widowed_Pct'){
+      leg_dat<- data_frame(y = seq(widmin.val, widmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(widmin.val, widmax.val), breaks = round(seq(widmin.val, widmax.val, length.out = 5),1)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    else {
+      leg_dat<- data_frame(y = seq(divmin.val, divmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(divmin.val, divmax.val), breaks = round(seq(divmin.val, divmax.val, length.out = 5),1)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    
+    return(q)
+    
+  })
+  output$text1<-renderText({
+    var_s <- gsub("_Pct", "", input$var)
+    return(as.character(
+      var_s
+    ))
+  })
 })

@@ -82,7 +82,7 @@ ylim <- list(
 
 ## Colors for a five-year legend "#00FF00" "white","#0072B2"#FF0000
 paint_brush <- colorRampPalette(colors=c("lightgreen","yellow", "red"))
-map_colors <- c(paint_brush(n=6), "#999999")
+map_colors <- c(paint_brush(n=25), "#999999")
 
 
 ## Cuts based on Age range 

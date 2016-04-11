@@ -209,10 +209,10 @@ wagepctcuts <- seq(wagepctmin.val, wagepctmax.val, length.out = length(pctmap_co
 
 # Construct break ranges for displaying in the legend
 
-wagepctcolorRanges <- data.frame(
-  from = head(wagepctcuts, length(wagepctcuts)-1),
-  to = tail(wagepctcuts, length(wagepctcuts)-1)
-)
+# wagepctcolorRanges <- data.frame(
+#   from = head(wagepctcuts, length(wagepctcuts)-1),
+#   to = tail(wagepctcuts, length(wagepctcuts)-1)
+# )
 
 
 

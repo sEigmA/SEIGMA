@@ -74,7 +74,7 @@ ylim <- list(
 
 ## Colors for a single-year legend
 paint_brush <- colorRampPalette(colors=c("white", "deeppink"))
-map_colors <- c(paint_brush(n=5), "#999999")
+map_colors <- c(paint_brush(n=25), "#999999")
 
 ## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
@@ -94,8 +94,9 @@ nevcuts <- quantile(mar_data$Never_Married_Pct, probs = seq(0, 1, length.out = l
 
 sepmax.val <- max(mar_data$Separated_Pct, na.rm=TRUE)
 sepmin.val <- min(mar_data$Separated_Pct, na.rm=TRUE)
+##sepmax.val <-20
 
-sepcuts <- quantile(mar_data$Separated_Pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+sepcuts <- seq(sepmin.val, sepmax.val, length.out = length(map_colors))
 
 widmax.val <- max(mar_data$Widowed_Pct, na.rm=TRUE)
 widmin.val <- min(mar_data$Widowed_Pct, na.rm=TRUE)
@@ -116,30 +117,30 @@ divcuts <- quantile(mar_data$Divorced_Pct, probs = seq(0, 1, length.out = length
 ## head = scuts takes everything except for the last one, 
 ## tails = same thing opposite
 
-marcolorRanges <- data.frame(
-  from = head(marcuts, length(marcuts)-1),
-  to = tail(marcuts, length(marcuts)-1)
-)
-
-nevcolorRanges <- data.frame(
-  from = head(nevcuts, length(nevcuts)-1),
-  to = tail(nevcuts, length(nevcuts)-1)
-)
-
-sepcolorRanges <- data.frame(
-  from = head(sepcuts, length(sepcuts)-1),
-  to = tail(sepcuts, length(sepcuts)-1)
-)
-
-widcolorRanges <- data.frame(
-  from = head(widcuts, length(widcuts)-1),
-  to = tail(widcuts, length(widcuts)-1)
-)
-
-divcolorRanges <- data.frame(
-  from = head(divcuts, length(divcuts)-1),
-  to = tail(divcuts, length(divcuts)-1)
-)
+# marcolorRanges <- data.frame(
+#   from = head(marcuts, length(marcuts)-1),
+#   to = tail(marcuts, length(marcuts)-1)
+# )
+# 
+# nevcolorRanges <- data.frame(
+#   from = head(nevcuts, length(nevcuts)-1),
+#   to = tail(nevcuts, length(nevcuts)-1)
+# )
+# 
+# sepcolorRanges <- data.frame(
+#   from = head(sepcuts, length(sepcuts)-1),
+#   to = tail(sepcuts, length(sepcuts)-1)
+# )
+# 
+# widcolorRanges <- data.frame(
+#   from = head(widcuts, length(widcuts)-1),
+#   to = tail(widcuts, length(widcuts)-1)
+# )
+# 
+# divcolorRanges <- data.frame(
+#   from = head(divcuts, length(divcuts)-1),
+#   to = tail(divcuts, length(divcuts)-1)
+# )
 
 
 

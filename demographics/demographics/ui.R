@@ -198,118 +198,75 @@ shinyUI(
                  
                  ## Age Legend
                  conditionalPanel(
-                   condition="input.map_radio =='Age' && input.action != 0",
+                   condition="input.action != 0",
                    absolutePanel(
-                     right = 30, top = 150, draggable=FALSE, style = "",
+                     right = 10, top = 100, draggable=FALSE, style = "",
                      class = "floater",
-                     strong("Age Percentage"),
+                     strong(textOutput("text1")),
+                     strong("Percentage"),
+                     plotOutput("legend1"),
                      tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(prettyNum(round(from, 2)), "% to",
-                                   prettyNum(round(to, 2)), "%", align = "right")
-                         )
-                       },
-                       agecolorRanges$from, agecolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
                        tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
                          )),
-                         tags$td("Data not available", align = "right")
-                       )
-                     )
-                   ),
-                  p(strong("Age"),
-                     " - The number of categories for age has been collapsed to the following six groups; <20, 20-34, 35-54, 55-64, 65-74,75+.  This is done in order to simplify the presentation of data.  To see all age groups please go to the summary tab.") 
-                 ),
-                 ## Gender Legend
-                 conditionalPanel(
-                   condition="input.map_radio =='Gender' && input.action != 0",
-                   absolutePanel(
-                     right = 30, top = 150, draggable=FALSE, style = "",
-                     class = "floater",
-                     strong("Sex Percentage"),
-                     tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(prettyNum(round(from, 2)), "% to",
-                                   prettyNum(round(to, 2)), "%", align = "right")
-                         )
-                       },
-                       gencolorRanges$from, gencolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not available", align = "right")
+                         tags$td("Data not", br(),"available", align = "right")
                        )
                      )
                    )),
+                 ## Gender Legend
+                 conditionalPanel(
+                   condition="input.map_radio =='Age' && input.action != 0",
+                   p(strong("Age"),
+                     " - The number of categories for age has been collapsed to the following six groups; <20, 20-34, 35-54, 55-64, 65-74,75+.  This is done in order to simplify the presentation of data.  To see all age groups please go to the summary tab.") 
+                 ),
                  ## Race Legend
                  conditionalPanel(
                    condition="input.map_radio =='Race' && input.action != 0",
-                   absolutePanel(
-                     right = 30, top = 150, draggable=FALSE, style = "",
-                     class = "floater",
-                     strong("Race Percentage"),
-                     tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(prettyNum(round(from, 2)), "% to",
-                                   prettyNum(round(to, 2)), "%", align = "right")
-                         )
-                       },
-                       racecolorRanges$from, racecolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not available", align = "right")
-                       )
-                     )
-                   ),
+                   #absolutePanel(
+                   #  right = 30, top = 150, draggable=FALSE, style = "",
+                   #  class = "floater",
+                   #  strong("Race Percentage"),
+                   #  tags$table(
+                   #
+                   #    tags$tr(
+                    #     tags$td(tags$div(
+                    #       style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                        # )),
+                        # tags$td("Data not available", align = "right")
+                      # )
+                    # )
+                  # ),
                    p(strong("Race"),
                      " - Race categories are listed here as White, Black, and Asian.  Although the data for other races is available, the percentage is too small to depict in map format accurately.  To view the percentage of other race categories please refer to the Plot or Summary tabs.") 
                  ),
                  ## Ethnicity Legend
-                 conditionalPanel(
-                   condition="input.map_radio =='Ethnicity' && input.action != 0",
-                   absolutePanel(
-                     right = 30, top = 150, draggable=FALSE, style = "",
-                     class = "floater",
-                     strong("Ethnicity Percentage"),
-                     tags$table(
-                       mapply(function(from, to, color) {
-                         tags$tr(
-                           tags$td(tags$div(
-                             style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
-                           )),
-                           tags$td(prettyNum(round(from, 2)), "% to",
-                                   prettyNum(round(to, 2)), "%", align = "right")
-                         )
-                       },
-                       racecolorRanges$from, racecolorRanges$to, map_colors[-length(map_colors)],
-                       SIMPLIFY=FALSE),
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not available", align = "right")
-                       )
-                     )
-                   )),
+#                  conditionalPanel(
+#                    condition="input.map_radio =='Ethnicity' && input.action != 0",
+#                    absolutePanel(
+#                      right = 30, top = 150, draggable=FALSE, style = "",
+#                      class = "floater",
+#                      strong("Ethnicity Percentage"),
+#                      tags$table(
+#                        mapply(function(from, to, color) {
+#                          tags$tr(
+#                            tags$td(tags$div(
+#                              style = sprintf("width: 16px; height: 16px; background-color: %s;", color)
+#                            )),
+#                            tags$td(prettyNum(round(from, 2)), "% to",
+#                                    prettyNum(round(to, 2)), "%", align = "right")
+#                          )
+#                        },
+#                        racecolorRanges$from, racecolorRanges$to, map_colors[-length(map_colors)],
+#                        SIMPLIFY=FALSE),
+#                        tags$tr(
+#                          tags$td(tags$div(
+#                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+#                          )),
+#                          tags$td("Data not available", align = "right")
+#                        )
+#                      )
+#                    )),
                  
                  value="map"
         ),
