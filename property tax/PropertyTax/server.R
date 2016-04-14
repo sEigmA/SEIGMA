@@ -58,35 +58,42 @@ shinyServer(function(input, output, session){
   ## for the Google charts plot
   plot_dat<- reactive({
     ## make reactive dataframe into regular dataframe
+    
     tax_df <- tax_df()
     
-    ## make region a vector based on input variable
-    munis <- input$plot_muni
-    
     ##Choose column according input
+    ##col_sel_num<-c()
     if (input$plot_radio == "Total_Levy") {
+      ## make region a vector based on input variable
+      munis <- input$plot_muni
       col<-input$plot_display_radio
+      col_sel_num<-which( colnames(tax_df)==col )
     }
     else {
-      col<-input$plot_class_radio
+      ## make region a vector based on input variable
+      munis <- input$plot_muni2
+      col_sel_num<-c(22,23,25:27)
     }
     
     ## assign column to each entry in the data frame
-    col_sel_num1<-which( colnames(tax_df)==col )
-    plot_dat1 <- tax_df %>%
+    ##col_sel_num1<-which( colnames(tax_df)==col )
+    plot_dat <- tax_df %>%
       filter(Municipal %in% munis) %>%
-      select(1, 2, col_sel_num1)
-    plot_dat<-plot_dat1%>%
-      spread_("Municipal", col)
+      select(1, 2, col_sel_num)
+    
     return(plot_dat)
     
   })
   
+
   ## for the Google charts plot (Total Tax plot)
   output$TotTax_plot1 <- reactive({
     ## make reactive dataframe into regular dataframe
-    TotTax_df <- plot_dat()
     if (input$plot_radio == "Total_Levy"& input$plot_display_radio=="Total_Levy_Million"){
+    TotTax_df <- plot_dat()
+    TotTax_df<-TotTax_df%>%
+      spread("Municipal", "Total_Levy_Million")
+    
       list(
         data=googleDataTable(TotTax_df))  
     }
@@ -94,19 +101,82 @@ shinyServer(function(input, output, session){
   
   ##change in Total tax Plot
   output$TotTax_plot2 <- reactive({
+    if (input$plot_radio == "Total_Levy"& input$plot_display_radio=="Total_Levy_Pct_Change"){
     ## make reactive dataframe into regular dataframe
     TotTax2_df <- plot_dat()
-    if (input$plot_radio == "Total_Levy"& input$plot_display_radio=="Total_Levy_Pct_Change"){
+    TotTax2_df<-TotTax2_df%>%
+      spread("Municipal", "Total_Levy_Pct_Change")
     list(
       data=googleDataTable(TotTax2_df))
     }
   })
   
   output$pct_plot1 <- reactive({
+    if (input$plot_radio == "Percent_Levy") {
     ## make reactive dataframe into regular dataframe
     pct_df <- plot_dat()
+    ymax<-max(pct_df[,3])+2
+    pct_df1 <- pct_df[,-c(1,3)]
+    colnames(pct_df1) <- gsub("_Million", "", colnames(pct_df1))
     list(
-      data=googleDataTable(pct_df))
+      data=googleDataTable(pct_df1),
+      options = list(
+        ## set fonts
+        fontName = "Source Sans Pro",
+        fontSize = font_size,
+        title = paste("Total Tax Levy and Percent of Levy by Class FY2003-FY2013 (2013 dollars)", 
+                       "at ", input$plot_muni2),
+        ## set axis titles, ticks, fonts, and ranges
+        hAxis = list(
+          title = "",
+          ticks = seq(2003,2012,1),
+          format = "####",
+          textStyle = list(
+            fontSize = font_size),
+          titleTextStyle = list(
+            fontSize = font_size+2,
+            bold = TRUE,
+            italic = FALSE)
+        ),
+        vAxis = list(
+          title = "Tax Levy in $Millions",
+          viewWindow = ymax,
+          textStyle = list(
+            fontSize = font_size),
+          titleTextStyle = list(
+            fontSize = font_size+2,
+            bold = TRUE,
+            italic = FALSE)
+        ),
+        
+        ## set legend fonts
+        legend = list(
+          position = "in"),
+        
+        ## set chart area padding
+        chartArea = list(
+          top = 50, left = 75,
+          height = "75%", width = "70%"
+        ),
+        
+        ## set colors
+        ##colors = cbbPalette[c(3:7)],
+        colors=c("cornflowerblue", "gray", "yellow", "blue"),
+        ## set point size
+        pointSize = 3,
+        
+        ## set tooltip font size
+        ## Hover text font stuff
+        tooltip = list(
+          textStyle = list(
+            fontSize = font_size
+          )
+        ),
+        
+        ## stacked column
+        isStacked= TRUE
+      ))
+    }
   })
   ###################MAP CREATION##############
   map_dat <- reactive({
@@ -319,7 +389,7 @@ shinyServer(function(input, output, session){
       leg_dat<- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
-        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
         scale_y_continuous(limits = c(pctmin.val, pctmax.val), breaks = seq(pctmin.val, pctmax.val, length.out = 5)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),

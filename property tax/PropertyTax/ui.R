@@ -60,9 +60,7 @@ shinyUI(fluidPage(
                  ## in plot, allow for municipal selection
                  conditionalPanel(
                    condition="input.tabs == 'plot'",
-                   ## Select input = List
-                   selectInput("plot_muni", "Select Municipality", 
-                               choices = MA_municipals, selected="Amherst", multiple=TRUE),
+                   
                    radioButtons("plot_radio", "Select Variable of Interest",
                                 c("Total Tax Levy" = "Total_Levy",
                                   "Percent of Levy by Class" = "Percent_Levy"),
@@ -72,15 +70,21 @@ shinyUI(fluidPage(
                      ## In plot, show boxes that will compare to MA average
                      radioButtons("plot_display_radio", "Display Options",
                                   c("Actual Values"="Total_Levy_Million", "Change Since 2003"="Total_Levy_Pct_Change"),
-                                  selected="Total_Levy_Million")),
+                                  selected="Total_Levy_Million"),
+                     ## Select input = List
+                     selectInput("plot_muni", "Select Municipality", 
+                                 choices = MA_municipals, selected="Everett",multiple=TRUE)),
                    
                    conditionalPanel(
                      condition="input.plot_radio == 'Percent_Levy'",
-                     radioButtons("plot_class_radio", "Percent of Levy by Class",
-                                  c("Residential"="Percentage_of_Residential", "Commercial"="Percentage_of_Commercial",
-                                    "Industrial"="Percentage_of_Industrial", "Personal Property"="Percentage_of_Personal_Property"),
-                                  selected="Percentage_of_Residential")
-                   )
+                     ## Select input = List
+                     selectInput("plot_muni2", "Select Municipality", 
+                                 choices = MA_municipals, selected="Everett"))
+#                      radioButtons("plot_class_radio", "Percent of Levy by Class",
+#                                   c("Residential"="Percentage_of_Residential", "Commercial"="Percentage_of_Commercial",
+#                                     "Industrial"="Percentage_of_Industrial", "Personal Property"="Percentage_of_Personal_Property"),
+#                                   selected="Percentage_of_Residential")
+#                    )
                  ),
                  
                  ## in map, allow for timespan selection
@@ -164,14 +168,15 @@ shinyUI(fluidPage(
                      condition="input.plot_display_radio=='Total_Levy_Pct_Change'", 
                      ## make chart title here (otherwise not centered)
                      h4("Change in Total Tax Levy since 2003", align="center"),
-                     TaxCha_plot_options)
+                     TaxCha_plot_options,
+                     p(strong("Change Since 2003"), "- This is calculated by the total annual tax to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
+                   )
                  ),
                  
                  conditionalPanel(
                    condition="input.plot_radio =='Percent_Levy'",
-                   Pct_plot_options,
-                     p(strong("Change Since 2003"), "- This is calculated by the total annual tax to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
-                   ),
+                   Pct_plot_options
+                     ),
                   value="plot"),
         
         ## plot map

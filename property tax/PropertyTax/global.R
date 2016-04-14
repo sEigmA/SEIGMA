@@ -238,6 +238,9 @@ plot_main_text <- p(strong("Variable Summary:"),
 
 font_size <- 14
 
+## stacked column chart
+Pct_plot_options <- googleColumnChart("pct_plot1", width="100%", height="475px") 
+
 TotTax_plot_options <- googleLineChart("TotTax_plot1", width="100%", height="475px", options = list(
   
   ## set fonts
@@ -350,59 +353,59 @@ TaxCha_plot_options<- googleLineChart("TotTax_plot2", width="100%", height="475p
   )
 ))
 
-Pct_plot_options<- googleLineChart("pct_plot1", width="100%", height="475px", options = list(
-  
-  ## set fonts
-  fontName = "Source Sans Pro",
-  fontSize = 14,
-  
-  ## set axis titles, ticks, fonts, and ranges
-  hAxis = list(
-    title = "Year",
-    format = "####",
-    ticks = seq(2003, 2013, 2),
-    viewWindow = xlim,
-    textStyle = list(
-      fontSize = 14),
-    titleTextStyle = list(
-      fontSize = 16,
-      bold = TRUE,
-      italic = FALSE)
-  ),
-  vAxis = list(
-    title = "Percent of Tax Levy by Class (%)",
-    viewWindow = ylim_pct,
-    textStyle = list(
-      fontSize = 14),
-    titleTextStyle = list(
-      fontSize = 16,
-      bold = TRUE,
-      italic = FALSE)
-  ),
-  
-  ## set legend fonts
-  legend = list(
-    textStyle = list(
-      fontSize=14)),
-  
-  ## set chart area padding
-  chartArea = list(
-    top = 50, left = 75,
-    height = "75%", width = "70%"
-  ),
-  
-  ## set colors
-  colors = cbbPalette,
-  
-  ## set point size
-  pointSize = 3,
-  
-  ## set tooltip font size
-  ## Hover text font stuff
-  tooltip = list(
-    textStyle = list(
-      fontSize = 14
-    )
-  )
-))
+# Pct_plot_options<- googleLineChart("pct_plot1", width="100%", height="475px", options = list(
+#   
+#   ## set fonts
+#   fontName = "Source Sans Pro",
+#   fontSize = 14,
+#   
+#   ## set axis titles, ticks, fonts, and ranges
+#   hAxis = list(
+#     title = "Year",
+#     format = "####",
+#     ticks = seq(2003, 2013, 2),
+#     viewWindow = xlim,
+#     textStyle = list(
+#       fontSize = 14),
+#     titleTextStyle = list(
+#       fontSize = 16,
+#       bold = TRUE,
+#       italic = FALSE)
+#   ),
+#   vAxis = list(
+#     title = "Percent of Tax Levy by Class (%)",
+#     viewWindow = ylim_pct,
+#     textStyle = list(
+#       fontSize = 14),
+#     titleTextStyle = list(
+#       fontSize = 16,
+#       bold = TRUE,
+#       italic = FALSE)
+#   ),
+#   
+#   ## set legend fonts
+#   legend = list(
+#     textStyle = list(
+#       fontSize=14)),
+#   
+#   ## set chart area padding
+#   chartArea = list(
+#     top = 50, left = 75,
+#     height = "75%", width = "70%"
+#   ),
+#   
+#   ## set colors
+#   colors = cbbPalette,
+#   
+#   ## set point size
+#   pointSize = 3,
+#   
+#   ## set tooltip font size
+#   ## Hover text font stuff
+#   tooltip = list(
+#     textStyle = list(
+#       fontSize = 14
+#     )
+#   )
+# ))
 
