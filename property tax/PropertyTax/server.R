@@ -116,6 +116,7 @@ shinyServer(function(input, output, session){
     ## make reactive dataframe into regular dataframe
     pct_df <- plot_dat()
     ymax<-max(pct_df[,3])+2
+    pct_df[,2]<-as.character(pct_df[,2])
     pct_df1 <- pct_df[,-c(1,3)]
     colnames(pct_df1) <- gsub("_Million", "", colnames(pct_df1))
     list(
