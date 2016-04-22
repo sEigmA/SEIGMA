@@ -18,7 +18,7 @@ shinyUI(fluidPage(
 #   tags$head(includeScript("googleChartInit.js")),
 #   tags$head(tags$script(src="bindings.js")),
   ## HTML to create generate map button
-  # gen_map_button,
+  gen_map_button,
   ## this starts the googleCharts engine
   googleChartsInit(),
   
@@ -115,14 +115,14 @@ shinyUI(fluidPage(
              conditionalPanel("input.lmap_radio=='Race/Ethnicity'",
                               selectInput("lmap_level1","Choose Race/Ethnicity to map",
                                           choices = 
-                                            c("African American" = "African American",
+                                            c(" ", "African American" = "African American",
                                               "Asian" = "Asian",
                                               "Hispanic" = "Hispanic",
                                               "White" = "White",
                                               "Native American" = "Native American",
                                               "Native Hawaiian/Pacific Islander" = "Native Hawaiian/Pacific Islander",
                                               "Multi-Race Non-Hispanic" = "Multi-Race/Non-Hispanic"),
-                                          selected = "African American")),
+                                          selected = " ")),
              
              conditionalPanel("input.lmap_radio=='Gender'",
                               selectInput("lmap_level2","Choose Gender to map",
@@ -365,10 +365,14 @@ tabPanel("Map",
 
          conditionalPanel("input.lmap_radio=='Race/Ethnicity'",
                           tags$br(),
-                          htmlOutput("lmap_title1"),
+                          conditionalPanel("input.lmap_level1==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level1!=' ' ",
+                          htmlOutput("lmap_title1")),
                           tags$br(),
-          leafletOutput("leafmap1"),
-         
+                   
+          leafletOutput("leafmap1")
+                   ,
          
          #Legend- African American
          conditionalPanel(

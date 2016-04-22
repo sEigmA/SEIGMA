@@ -1,0 +1,12 @@
+Alphabetic List of Variables and Attributes,,,,,,
+#,Variable,Type,Len,Format,Informat,Label
+5,AR003_001,Char,19,$19.00 ,$19.00 ,AR003_001: ID Number
+6,AR003_002,Num,8,,,AR003_002: ID Number 2
+7,AR003_003,Char,65,$65.00 ,$65.00 ,AR003_003: Geography
+10,AR003_004,Char,9,,,AR003_004: Five Year Average
+8,AR003_005,Num,8,,,AR003_005: Estimate; Median Contract Rent in Inflation Adjusted Dollars (5yr Average)
+9,AR003_006,Num,8,,,AR003_006: Margin of Error; Median Contract Rent (5yr Average)
+2,County,Char,18,,,County
+1,Municipal,Char,21,,,Municipal
+4,Region,Char,60,,,Region
+3,State,Char,3,,,State

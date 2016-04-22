@@ -848,8 +848,8 @@ return(sum_df)
     ## filter dataframes - one per map
   
   map_df1<-reactive({
-    
-         if(input$lmap_level1=="African American"){sel_col<-23}
+         if(input$lmap_level1==" "){sel_col<-23}
+    else if(input$lmap_level1=="African American"){sel_col<-23}
     else if(input$lmap_level1=="Asian"){sel_col<-24}
     else if(input$lmap_level1=="Hispanic"){sel_col<-25}
     else if(input$lmap_level1=="White"){sel_col<-26}
@@ -859,19 +859,20 @@ return(sum_df)
     
     edu<-edum()
     map_df <- edu %>%
-      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      select(1,3,4,6, sel_col, 22,90,91,74) %>%
       filter(school.year==input$lmap_year)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
     map_df
   })
+  
   map_df2<-reactive({
          if(input$lmap_level2=="Males"){sel_col<-28}
     else if(input$lmap_level2=="Females"){sel_col<-29}
     edu<-edum()
     map_df <- edu %>%
-      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      select(1,3,4,6, sel_col, 22,90,91,74) %>%
       filter(school.year==input$lmap_year)
     
     colnames(map_df)[5]<-"var"
@@ -896,7 +897,7 @@ return(sum_df)
     else if(input$lmap_level3=="Special Ed Beyond 12th Grade"){sel_col<-21}
     edu<-edum()
     map_df <- edu %>%
-      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      select(1,3,4,6, sel_col, 22,90,91,74) %>%
       filter(school.year==input$lmap_year)
     
     colnames(map_df)[5]<-"var"
@@ -912,7 +913,7 @@ return(sum_df)
     else if(input$lmap_level4=="High Needs Students Enrolled %"){sel_col<-45}
     edu<-edum()
     map_df <- edu %>%
-      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      select(1,3,4,6, sel_col, 22,90,91,74) %>%
       filter(school.year==input$lmap_year)
     
     colnames(map_df)[5]<-"var"
@@ -925,7 +926,7 @@ return(sum_df)
     else if(input$lmap_level9=="Stability Enrollment for English Language Learning Students"){sel_col<-54}
     edu<-edum()
     map_df <- edu %>%
-      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      select(1,3,4,6, sel_col, 22,90,91,74) %>%
       filter(school.year==input$lmap_year)
     
     colnames(map_df)[5]<-"var"
@@ -937,7 +938,7 @@ return(sum_df)
     else if(input$lmap_level10=="Stability Enrollment for Students with Disabilities"){sel_col<-49}
   edu<-edum()
   map_df <- edu %>%
-    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    select(1,3,4,6, sel_col, 22,90,91,74) %>%
     filter(school.year==input$lmap_year)
   
   colnames(map_df)[5]<-"var"
@@ -949,7 +950,7 @@ return(sum_df)
     else if(input$lmap_level11=="Stability Enrollment for Low Income Students"){sel_col<-64}
     edu<-edum()
     map_df <- edu %>%
-      select(1,3,4,6, sel_col, 22,67,68,74) %>%
+      select(1,3,4,6, sel_col, 22,90,91,74) %>%
       filter(school.year==input$lmap_year)
     
     colnames(map_df)[5]<-"var"
@@ -961,7 +962,7 @@ return(sum_df)
     else if(input$lmap_level12=="Stability Enrollment for High Needs Students"){sel_col<-59}
   edu<-edum()
   map_df <- edu %>%
-    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    select(1,3,4,6, sel_col, 22,90,91,74) %>%
     filter(school.year==input$lmap_year)
   
   colnames(map_df)[5]<-"var"
@@ -975,7 +976,7 @@ return(sum_df)
     else if(input$lmap_level5=="Intake Rate for English Language Learning Students"){sel_col<-53}
   edu<-edum()
   map_df <- edu %>%
-    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    select(1,3,4,6, sel_col, 22,90,91,74) %>%
     filter(school.year==input$lmap_year)
   
   colnames(map_df)[5]<-"var"
@@ -988,7 +989,7 @@ return(sum_df)
     else if(input$lmap_level6=="Intake Rate for Students with Disabilities"){sel_col<-48}
   edu<-edum()
   map_df <- edu %>%
-    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    select(1,3,4,6, sel_col, 22,90,91,74) %>%
     filter(school.year==input$lmap_year)
   
   colnames(map_df)[5]<-"var"
@@ -1001,7 +1002,7 @@ return(sum_df)
     else if(input$lmap_level7=="Intake Rate for English Low Income Students"){sel_col<-63}
   edu<-edum()
   map_df <- edu %>%
-    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    select(1,3,4,6, sel_col, 22,90,91,74) %>%
     filter(school.year==input$lmap_year)
   
   colnames(map_df)[5]<-"var"
@@ -1014,7 +1015,7 @@ return(sum_df)
     else if(input$lmap_level8=="Intake Rate for High Needs Students"){sel_col<-58}
   edu<-edum()
   map_df <- edu %>%
-    select(1,3,4,6, sel_col, 22,67,68,74) %>%
+    select(1,3,4,6, sel_col, 22,90,91,74) %>%
     filter(school.year==input$lmap_year)
   
   colnames(map_df)[5]<-"var"
@@ -1030,7 +1031,7 @@ return(sum_df)
       addProviderTiles("Stamen.Toner")
     })
 
-  observe({
+  observeEvent(input$lmap_level1, {
     
     map_df<-map_df1()
     
@@ -1046,12 +1047,12 @@ return(sum_df)
     leafletProxy("leafmap1") %>%
       clearShapes() %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
                        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
                                       as.character(var), "%"))
-    
+ 
   })
       
     
@@ -1072,7 +1073,7 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
                        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
@@ -1093,7 +1094,7 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
                        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
@@ -1114,7 +1115,7 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
                        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
@@ -1136,7 +1137,7 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
                        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
@@ -1157,7 +1158,7 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
                        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name),  
                                       "\n", 
@@ -1178,7 +1179,7 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
                        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
@@ -1199,7 +1200,7 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
                        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name),  
                                       "\n", 
@@ -1220,7 +1221,7 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
                        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
@@ -1241,7 +1242,7 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
                        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
@@ -1262,7 +1263,7 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
                        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
@@ -1283,7 +1284,7 @@ return(sum_df)
       setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
       addProviderTiles("Stamen.Toner") %>%
       addCircleMarkers(data=map_df,
-                       lng = ~lon, lat = ~lat, radius=~1.5*log(TSE), color="#000", 
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
                        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
                        popup = ~paste(as.character(school.name), 
                                       "\n", 
