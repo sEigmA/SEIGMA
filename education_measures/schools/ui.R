@@ -254,8 +254,8 @@ shinyUI(fluidPage(
                                 multiple=FALSE, selected=" "),
                     
                     ##if county is not chosen, select school from list of all schools
-                    selectizeInput("plot_school", "Choose School",
-                                       "", options = list(maxOptions = 2000)
+                    selectizeInput("plot_school", "Choose School",selected=" ",
+                                       choices="", options = list(maxOptions = 2000)
                     )
                     
                     
@@ -336,7 +336,8 @@ shinyUI(fluidPage(
                 
                   conditionalPanel(
                    condition="input.plot_profile=='enrolled' && input.plot_enrolled!='Interest Groups'",
-                   percentcolchart),
+                   percentcolchart,
+                   htmlOutput("activeschool")),
                 conditionalPanel(
                   condition="input.plot_profile=='enrolled' && input.plot_enrolled=='Interest Groups'",
                   countcolchart),

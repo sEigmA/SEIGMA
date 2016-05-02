@@ -270,19 +270,20 @@ return(sum_df)
       schoolz
     })
   
-    observe({
-      # This will change the value of input$partnerName to searchResult()[,1]
+    observeEvent( input$plot_county, {
+      # This will change the value of input$partnerName to 
       updateSelectizeInput(session, "plot_school", 
                       choices=chosenschools()
       )
     })
     
-           
+    output$activeschool<-renderPrint(c(input$plot_school, input$plot_county))
+    #output$activeplotdf<-renderPrint(head(r_percentplot_df))       
   #plot dataframe for the percent plot    
   r_percentplot_df<-reactive({
     
-    edum<-edum()
-    
+    edum<-edu_data
+    edum<-edum %>% filter(school.name==input$plot_school)
     
     sel_col_num<-c()
     df_colnames<-c()
@@ -297,7 +298,7 @@ return(sum_df)
       df_colnames<-c("African American", "Asian", "Hispanic", "White", "Native American", "Native Hawaiian Pacific Islander", "Multi-race non-Hispanic")
       
       plot_df <- edum %>%
-        filter(school.name==input$plot_school) %>%
+        
         select(1,3, 6, sel_col_num) %>% 
         arrange(school.year)
       colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
