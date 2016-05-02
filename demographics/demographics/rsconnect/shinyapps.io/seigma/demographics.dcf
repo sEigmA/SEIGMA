@@ -2,3 +2,4 @@ name: demographics
 account: seigma
 bundleId: 415569
 url: https://seigma.shinyapps.io/demographics/
+server: shinyapps.io

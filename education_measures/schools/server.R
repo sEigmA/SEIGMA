@@ -848,7 +848,7 @@ return(sum_df)
     ## filter dataframes - one per map
   
   map_df1<-reactive({
-         if(input$lmap_level1==" "){sel_col<-23}
+         if(input$lmap_level1==" "){sel_col=23}
     else if(input$lmap_level1=="African American"){sel_col<-23}
     else if(input$lmap_level1=="Asian"){sel_col<-24}
     else if(input$lmap_level1=="Hispanic"){sel_col<-25}
@@ -864,11 +864,13 @@ return(sum_df)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
-    map_df
+    map_df[complete.cases(map_df),]
   })
   
   map_df2<-reactive({
-         if(input$lmap_level2=="Males"){sel_col<-28}
+        if(input$lmap_level2==" "){sel_col=23}
+    
+    else if(input$lmap_level2=="Males"){sel_col<-28}
     else if(input$lmap_level2=="Females"){sel_col<-29}
     edu<-edum()
     map_df <- edu %>%
@@ -877,10 +879,12 @@ return(sum_df)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
-    map_df
+    map_df[complete.cases(map_df),]
   })
   map_df3<-reactive({
-         if(input$lmap_level3=="Pre Kindergarden"){sel_col<-7}
+          if(input$lmap_level3==" "){sel_col=23}
+    
+    else if(input$lmap_level3=="Pre Kindergarden"){sel_col<-7}
     else if(input$lmap_level3=="Kindergarden"){sel_col<-8}
     else if(input$lmap_level3=="First Grade"){sel_col<-9}
     else if(input$lmap_level3=="Second Grade"){sel_col<-10}
@@ -902,11 +906,12 @@ return(sum_df)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
-    map_df
+    map_df[complete.cases(map_df),]
   })
   map_df4<-reactive({
-    
-         if(input$lmap_level4=="English Language Learner Enrolled %"){sel_col<-35}
+         if(input$lmap_level4==" "){sel_col=23}
+
+    else if(input$lmap_level4=="English Language Learner Enrolled %"){sel_col<-35}
     else if(input$lmap_level4=="First Language Not English Enrolled %"){sel_col<-33}
     else if(input$lmap_level4=="Students With Disabilities Enrolled %"){sel_col<-37}
     else if(input$lmap_level4=="Low Income Students Enrolled %"){sel_col<-39}
@@ -918,11 +923,13 @@ return(sum_df)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
-    map_df
+    map_df[complete.cases(map_df),]
   })
  
   map_df9<-reactive({
-         if(input$lmap_level9=="Churn Enrollment for English Language Learning Students"){sel_col<-51}
+        if(input$lmap_level9==" "){sel_col=23}
+    
+    else if(input$lmap_level9=="Churn Enrollment for English Language Learning Students"){sel_col<-51}
     else if(input$lmap_level9=="Stability Enrollment for English Language Learning Students"){sel_col<-54}
     edu<-edum()
     map_df <- edu %>%
@@ -931,10 +938,12 @@ return(sum_df)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
-    map_df
+    map_df[complete.cases(map_df),]
   })
-  map_df10<-reactive({       
-         if(input$lmap_level10=="Churn Enrollment for Students with Disabilities"){sel_col<-46}
+  map_df10<-reactive({   
+          if(input$lmap_level10==" "){sel_col=23}
+    
+    else if(input$lmap_level10=="Churn Enrollment for Students with Disabilities"){sel_col<-46}
     else if(input$lmap_level10=="Stability Enrollment for Students with Disabilities"){sel_col<-49}
   edu<-edum()
   map_df <- edu %>%
@@ -943,10 +952,12 @@ return(sum_df)
   
   colnames(map_df)[5]<-"var"
   colnames(map_df)[6]<-"TSE"
-  map_df
-})
-  map_df11<-reactive({       
-    if(input$lmap_level11=="Churn Enrollment for Low Income Students"){sel_col<-61}
+  map_df[complete.cases(map_df),]
+  })
+  map_df11<-reactive({  
+    if(input$lmap_level11==" "){sel_col=23}
+    
+    else if(input$lmap_level11=="Churn Enrollment for Low Income Students"){sel_col<-61}
     else if(input$lmap_level11=="Stability Enrollment for Low Income Students"){sel_col<-64}
     edu<-edum()
     map_df <- edu %>%
@@ -955,10 +966,12 @@ return(sum_df)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
-    map_df
-})
-  map_df12<-reactive({       
-          if(input$lmap_level12=="Churn Enrollment for High Needs Students"){sel_col<-56}
+    map_df[complete.cases(map_df),]
+  })
+  map_df12<-reactive({  
+          if(input$lmap_level12==" "){sel_col=23}
+    
+    else if(input$lmap_level12=="Churn Enrollment for High Needs Students"){sel_col<-56}
     else if(input$lmap_level12=="Stability Enrollment for High Needs Students"){sel_col<-59}
   edu<-edum()
   map_df <- edu %>%
@@ -967,11 +980,13 @@ return(sum_df)
   
   colnames(map_df)[5]<-"var"
   colnames(map_df)[6]<-"TSE"
-  map_df
-})
+  map_df[complete.cases(map_df),]
+  })
 
-  map_df5<-reactive({       
-        if(input$lmap_level5=="Churn Rate for English Language Learning Students"){sel_col<-52}
+  map_df5<-reactive({ 
+    if(input$lmap_level5==" "){sel_col=23}
+    
+    else if(input$lmap_level5=="Churn Rate for English Language Learning Students"){sel_col<-52}
     else if(input$lmap_level5=="Stability Rate for English Language Learning Students"){sel_col<-55}
     else if(input$lmap_level5=="Intake Rate for English Language Learning Students"){sel_col<-53}
   edu<-edum()
@@ -981,10 +996,12 @@ return(sum_df)
   
   colnames(map_df)[5]<-"var"
   colnames(map_df)[6]<-"TSE"
-  map_df
-})
-  map_df6<-reactive({       
-          if(input$lmap_level6=="Churn Rate for Students with Disabilities"){sel_col<-47}
+  map_df[complete.cases(map_df),]
+  })
+  map_df6<-reactive({ 
+    if(input$lmap_level6==" "){sel_col=23}
+    
+    else if(input$lmap_level6=="Churn Rate for Students with Disabilities"){sel_col<-47}
     else if(input$lmap_level6=="Stability Rate for Students with Disabilities"){sel_col<-50}
     else if(input$lmap_level6=="Intake Rate for Students with Disabilities"){sel_col<-48}
   edu<-edum()
@@ -994,10 +1011,11 @@ return(sum_df)
   
   colnames(map_df)[5]<-"var"
   colnames(map_df)[6]<-"TSE"
-  map_df
-})
-  map_df7<-reactive({       
-            if(input$lmap_level7=="Churn Rate for Low Income Students"){sel_col<-62}
+  map_df[complete.cases(map_df),]
+  })
+  map_df7<-reactive({   
+    if(input$lmap_level7==" "){sel_col=23}
+    else if(input$lmap_level7=="Churn Rate for Low Income Students"){sel_col<-62}
     else if(input$lmap_level7=="Stability Rate for Low Income Students"){sel_col<-65}
     else if(input$lmap_level7=="Intake Rate for English Low Income Students"){sel_col<-63}
   edu<-edum()
@@ -1007,10 +1025,11 @@ return(sum_df)
   
   colnames(map_df)[5]<-"var"
   colnames(map_df)[6]<-"TSE"
-  map_df
-})
-  map_df8<-reactive({       
-              if(input$lmap_level8=="Churn Rate for High Needs Students"){sel_col<-57}
+  map_df[complete.cases(map_df),]
+  })
+  map_df8<-reactive({  
+    if(input$lmap_level8==" "){sel_col=23}
+    else if(input$lmap_level8=="Churn Rate for High Needs Students"){sel_col<-57}
     else if(input$lmap_level8=="Stability Rate for High Needs Students"){sel_col<-60}
     else if(input$lmap_level8=="Intake Rate for High Needs Students"){sel_col<-58}
   edu<-edum()
@@ -1020,19 +1039,21 @@ return(sum_df)
   
   colnames(map_df)[5]<-"var"
   colnames(map_df)[6]<-"TSE"
-  map_df
-})
+  map_df[complete.cases(map_df),]
+  })
    
   #create maps in leaflet
+    
   output$leafmap1<-renderLeaflet({
     
-      leaflet(width="100%", height=500)%>% 
-        setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
+      leaflet(width="100%", height="120%")%>% 
+      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
       addProviderTiles("Stamen.Toner")
     })
-
-  observeEvent(input$lmap_level1, {
+  
+  observe({
     
+      
     map_df<-map_df1()
     
     validate(
@@ -1044,15 +1065,16 @@ return(sum_df)
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap1") %>%
-      clearShapes() %>%
-      addCircleMarkers(data=map_df,
-                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-                       popup = ~paste(as.character(school.name), 
-                                      "\n", 
-                                      as.character(var), "%"))
- 
+    leafletProxy("leafmap1", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
+        fillOpacity=0.2,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+  
   })
       
     
@@ -1060,237 +1082,358 @@ return(sum_df)
     
   output$leafmap2<-renderLeaflet({
     
+    leaflet(width="100%", height="120%")%>% 
+      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
     map_df<-map_df2()
+    
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
+    
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leaflet(width="100%", height=500) %>%
-      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("Stamen.Toner") %>%
-      addCircleMarkers(data=map_df,
-                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-                       popup = ~paste(as.character(school.name), 
-                                      "\n", 
-                                      as.character(var), "%"))
+    leafletProxy("leafmap2", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
+        fillOpacity=0.2,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+    
   })
+  
   output$leafmap3<-renderLeaflet({
     
+    leaflet(width="100%", height="120%")%>% 
+      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
     map_df<-map_df3()
+    
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
+    
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leaflet(width="100%", height=500) %>%
-      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("Stamen.Toner") %>%
-      addCircleMarkers(data=map_df,
-                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-                       popup = ~paste(as.character(school.name), 
-                                      "\n", 
-                                      as.character(var), "Students"))
+    leafletProxy("leafmap3", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
+        fillOpacity=0.2,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "")) 
+    
+    
   })
   output$leafmap4<-renderLeaflet({
     
+    leaflet(width="100%", height="120%")%>% 
+      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
     map_df<-map_df4()
+    
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
+    
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leaflet(width="100%", height=500) %>%
-      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("Stamen.Toner") %>%
-      addCircleMarkers(data=map_df,
-                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-                       popup = ~paste(as.character(school.name), 
-                                      "\n", 
-                                      as.character(var), "%"))
+    leafletProxy("leafmap4", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
+        fillOpacity=0.2,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+    
   })
   
   output$leafmap5<-renderLeaflet({
     
+    leaflet(width="100%", height="120%")%>% 
+      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
     map_df<-map_df5()
+    
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
+    
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leaflet(width="100%", height=500) %>%
-      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("Stamen.Toner") %>%
-      addCircleMarkers(data=map_df,
-                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-                       popup = ~paste(as.character(school.name), 
-                                      "\n", 
-                                      as.character(var), "%"))
+    leafletProxy("leafmap5", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
+        fillOpacity=0.2,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+    
   })
   output$leafmap6<-renderLeaflet({
     
+    leaflet(width="100%", height="120%")%>% 
+      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
     map_df<-map_df6()
+    
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
+    
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leaflet(width="100%", height=500) %>%
-      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("Stamen.Toner") %>%
-      addCircleMarkers(data=map_df,
-                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-                       popup = ~paste(as.character(school.name),  
-                                      "\n", 
-                                      as.character(var), "%"))
+    leafletProxy("leafmap6", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
+        fillOpacity=0.2,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+    
   })
   output$leafmap7<-renderLeaflet({
     
+    leaflet(width="100%", height="120%")%>% 
+      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
     map_df<-map_df7()
+    
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
+    
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leaflet(width="100%", height=500) %>%
-      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("Stamen.Toner") %>%
-      addCircleMarkers(data=map_df,
-                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-                       popup = ~paste(as.character(school.name), 
-                                      "\n", 
-                                      as.character(var), "%"))
+    leafletProxy("leafmap7", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
+        fillOpacity=0.2,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+    
   })
   output$leafmap8<-renderLeaflet({
     
+    leaflet(width="100%", height="120%")%>% 
+      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
     map_df<-map_df8()
+    
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
+    
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leaflet(width="100%", height=500) %>%
-      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("Stamen.Toner") %>%
-      addCircleMarkers(data=map_df,
-                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-                       popup = ~paste(as.character(school.name),  
-                                      "\n", 
-                                      as.character(var), "%"))
+    leafletProxy("leafmap8", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
+        fillOpacity=0.2,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+    
   })
   output$leafmap9<-renderLeaflet({
     
+    leaflet(width="100%", height="120%")%>% 
+      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
     map_df<-map_df9()
+    
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
+    
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leaflet(width="100%", height=500) %>%
-      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("Stamen.Toner") %>%
-      addCircleMarkers(data=map_df,
-                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-                       popup = ~paste(as.character(school.name), 
-                                      "\n", 
-                                      as.character(var), "Students"))
+    leafletProxy("leafmap9", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
+        fillOpacity=0.2,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+    
   })
   output$leafmap10<-renderLeaflet({
     
+    leaflet(width="100%", height="120%")%>% 
+      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
     map_df<-map_df10()
+    
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
+    
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leaflet(width="100%", height=500) %>%
-      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("Stamen.Toner") %>%
-      addCircleMarkers(data=map_df,
-                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-                       popup = ~paste(as.character(school.name), 
-                                      "\n", 
-                                      as.character(var), "Students"))
+    leafletProxy("leafmap10", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
+        fillOpacity=0.2,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+    
   })
   output$leafmap11<-renderLeaflet({
     
+    leaflet(width="100%", height="120%")%>% 
+      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
     map_df<-map_df11()
+    
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
+    
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leaflet(width="100%", height=500) %>%
-      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("Stamen.Toner") %>%
-      addCircleMarkers(data=map_df,
-                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-                       popup = ~paste(as.character(school.name), 
-                                      "\n", 
-                                      as.character(var), "Students"))
+    leafletProxy("leafmap11", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
+        fillOpacity=0.2,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+    
   })
   output$leafmap12<-renderLeaflet({
     
+    leaflet(width="100%", height="120%")%>% 
+      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
     map_df<-map_df12()
+    
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
            "Please choose another variable to display"))
+    
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leaflet(width="100%", height=500) %>%
-      setView(lng = -71.65, lat = 42.08, zoom = 8) %>%
-      addProviderTiles("Stamen.Toner") %>%
-      addCircleMarkers(data=map_df,
-                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-                       fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,fillOpacity=0.2,
-                       popup = ~paste(as.character(school.name), 
-                                      "\n", 
-                                      as.character(var), "Students"))
+    leafletProxy("leafmap12", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
+        fillOpacity=0.2,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+    
   })
-
   
  
 ## map legend
@@ -1481,7 +1624,7 @@ output$PREKlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level2], range.table[2,input$lmap_level3],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +
@@ -1501,7 +1644,7 @@ output$KINDlegend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
   cols <- paint.brush(25)
-  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level2], range.table[2,input$lmap_level3],
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level3], range.table[2,input$lmap_level3],
                                 length.out=(length(map_colors)-1)), x = 1, col = cols)
   
   p <- ggplot(data = leg_dat) +

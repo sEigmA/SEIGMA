@@ -126,14 +126,14 @@ shinyUI(fluidPage(
              
              conditionalPanel("input.lmap_radio=='Gender'",
                               selectInput("lmap_level2","Choose Gender to map",
-                                   choices = c("Females" = "Females",
+                                   choices = c(" ", "Females" = "Females",
                                                "Males" = "Males"),
-                                   selected = "Females")),
+                                   selected = " ")),
              
              conditionalPanel("input.lmap_radio=='Grade Levels'",
                               selectInput("lmap_level3","Choose Grade Level to map",
                                          choices = 
-                                           c("Pre-Kindergarden" = "Pre Kindergarden",
+                                           c(" ","Pre-Kindergarden" = "Pre Kindergarden",
                                              "Kindergarden" = "Kindergarden",
                                              "First Grade" = "First Grade",
                                              "Second Grade" = "Second Grade",
@@ -148,16 +148,16 @@ shinyUI(fluidPage(
                                              "Eleventh Grade" = "Eleventh Grade",
                                              "Twelfth Grade" = "Twelfth Grade",
                                              "Special Education Beyond 12th Grade" = "Special Ed Beyond 12th Grade"),
-                                         selected = "Pre Kindergarden")),
+                                         selected = " ")),
              conditionalPanel("input.lmap_radio=='Interest Groups'",
                               selectInput("lmap_level4","Choose Level to map",
                                             choices = 
-                                              c("English Language Learners" = "English Language Learner Enrolled %",
+                                              c(" ", "English Language Learners" = "English Language Learner Enrolled %",
                                                 "First Language Not English" = "First Language Not English Enrolled %",
                                                 "Students with Disabilities" = "Students With Disabilities Enrolled %",
                                                 "Low Income Students" = "Low Income Students Enrolled %",
                                                 "High Needs" = "High Needs Students Enrolled %"), 
-                                            selected="English Language Learner Enrolled %"))
+                                            selected=" "))
              
            )
          
@@ -183,28 +183,28 @@ shinyUI(fluidPage(
                               
                              conditionalPanel("input.lmap_radio2=='English Language Learner Students Mobility Rate'",
                                               selectInput("lmap_level5","Choose Level to map", choices=
-                                                            c("Churn Rate: English Language Learners"="Churn Rate for English Language Learning Students",
+                                                            c(" ", "Churn Rate: English Language Learners"="Churn Rate for English Language Learning Students",
                                                               "Stability Rate: English Language Learners"="Stability Rate for English Language Learning Students",
                                                               "Intake Rate: English Language Learners"="Intake Rate for English Language Learning Students"),
-                                                          selected="Churn Rate for English Language Learning Students")),
+                                                          selected=" ")),
                              conditionalPanel("input.lmap_radio2=='Students with Disabilities Mobility Rate'",
                                               selectInput("lmap_level6","Choose Level to map", choices=
-                                                            c("Churn Rate: Students with Disabilities"="Churn Rate for Students with Disabilities",
+                                                            c(" ", "Churn Rate: Students with Disabilities"="Churn Rate for Students with Disabilities",
                                                               "Stability Rate: Students with Disabilities"="Stability Rate for Students with Disabilities",
                                                               "Intake Rate: Students with Disabilities"="Intake Rate for Students with Disabilities"),
-                                                          selected="Churn Rate for English Language Learning Students")),
+                                                          selected=" ")),
                              conditionalPanel("input.lmap_radio2=='Low Income Students Mobility Rate'",
                                               selectInput("lmap_level7","Choose Level to map", choices=
-                                                            c("Churn Rate: Low Income Students"="Churn Rate for Low Income Students",
+                                                            c(" ","Churn Rate: Low Income Students"="Churn Rate for Low Income Students",
                                                               "Stability Rate: Low Income Students"="Stability Rate for Low Income Students",
                                                               "Intake Rate: Low Income Students"="Intake Rate for English Low Income Students"),
-                                                          selected="Churn Rate for Low Income Students")),
+                                                          selected=" ")),
                              conditionalPanel("input.lmap_radio2=='High Needs Students Mobility Rate'",
                                               selectInput("lmap_level8","Choose Level to map", choices=
-                                                            c("Churn Rate: High Needs Students"="Churn Rate for High Needs Students",
+                                                            c(" ","Churn Rate: High Needs Students"="Churn Rate for High Needs Students",
                                                               "Stability Rate: High Needs Students"="Stability Rate for High Needs Students",
                                                               "Intake Rate: High Needs Students"="Intake Rate for High Needs Students"),
-                                                          selected="Churn Rate for High Needs Students"))
+                                                          selected=" "))
              ),
              conditionalPanel(condition="input.tabs == 'lmap' && input.map_profile=='mobility' && input.lmap_mobility_var=='mobenrollment'",
                               radioButtons("lmap_radio3", "Select Interest Group",
@@ -215,24 +215,24 @@ shinyUI(fluidPage(
                                            selected="English Language Learner Students Mobility Enrollment"),
                               conditionalPanel("input.lmap_radio3=='English Language Learner Students Mobility Enrollment'",
                                                selectInput("lmap_level9","Choose Level to map", choices=
-                                                             c("Churn Enrollment: English Language Learners"="Churn Enrollment for English Language Learning Students",
+                                                             c(" ","Churn Enrollment: English Language Learners"="Churn Enrollment for English Language Learning Students",
                                                                "Stability Enrollment: English Language Learners"="Stability Enrollment for English Language Learning Students"),
-                                                           selected="Churn Enrollment for English Language Learning Students")),
+                                                           selected=" ")),
                               conditionalPanel("input.lmap_radio3=='Students with Disabilities Mobility Enrollment'",
                                                selectInput("lmap_level10","Choose Level to map", choices=
-                                                             c("Churn Enrollment: Students with Disabilities"="Churn Enrollment for Students with Disabilities",
+                                                             c(" ","Churn Enrollment: Students with Disabilities"="Churn Enrollment for Students with Disabilities",
                                                                "Stability Enrollment: Students with Disabilities"="Stability Enrollment for Students with Disabilities"),
-                                                           selected="Churn Enrollment for Students with Disabilities")),
+                                                           selected=" ")),
                               conditionalPanel("input.lmap_radio3=='Low Income Students Mobility Enrollment'",
                                                selectInput("lmap_level11","Choose Level to map", choices=
-                                                             c("Churn Enrollment: Low Income Students"="Churn Enrollment for Low Income Students",
+                                                             c(" ","Churn Enrollment: Low Income Students"="Churn Enrollment for Low Income Students",
                                                                "Stability Enrollment: Low Income Students"="Stability Enrollment for Low Income Students"),
-                                                           selected="Churn Enrollment for Low Income Students")),
+                                                           selected=" ")),
                               conditionalPanel("input.lmap_radio3=='High Needs Students Mobility Enrollment'",
                                                selectInput("lmap_level12","Choose Level to map", choices=
-                                                             c("Churn Enrollment: High Needs Students"="Churn Enrollment for High Needs Students",
+                                                             c(" ","Churn Enrollment: High Needs Students"="Churn Enrollment for High Needs Students",
                                                                "Stability Enrollment: High Needs Students"="Stability Enrollment for High Needs Students"),
-                                                           selected="Churn Enrollment for High Needs Students"))
+                                                           selected=" "))
              )
              
           ,
@@ -371,8 +371,9 @@ tabPanel("Map",
                           htmlOutput("lmap_title1")),
                           tags$br(),
                    
-          leafletOutput("leafmap1")
-                   ,
+          leafletOutput("leafmap1"),
+          
+                         
          
          #Legend- African American
          conditionalPanel(
@@ -441,8 +442,12 @@ tabPanel("Map",
          
          conditionalPanel("input.lmap_radio=='Gender'",
                           tags$br(),
-                          htmlOutput("lmap_title2"),
+                          conditionalPanel("input.lmap_level2==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level2!=' ' ",
+                                           htmlOutput("lmap_title2")),
                           tags$br(),
+                          
                           leafletOutput("leafmap2"),
                           
          conditionalPanel(
@@ -467,8 +472,12 @@ tabPanel("Map",
          
          conditionalPanel("input.lmap_radio=='Grade Levels'",
                           tags$br(),
-                          htmlOutput("lmap_title3"),
+                          conditionalPanel("input.lmap_level3==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level3!=' ' ",
+                                           htmlOutput("lmap_title3")),
                           tags$br(),
+                          
                           leafletOutput("leafmap3"),
                           
          conditionalPanel(
@@ -595,8 +604,12 @@ tabPanel("Map",
          ),
          conditionalPanel("input.lmap_radio=='Interest Groups'",
                           tags$br(),
-                          htmlOutput("lmap_title4"),
+                          conditionalPanel("input.lmap_level4==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level4!=' ' ",
+                                           htmlOutput("lmap_title4")),
                           tags$br(),
+                          
                           leafletOutput("leafmap4"),
          conditionalPanel(
            condition="input.lmap_level4 == 'English Language Learner Enrolled %'",
@@ -643,8 +656,12 @@ tabPanel("Map",
          conditionalPanel("input.map_profile=='mobility'  &&  input.lmap_mobility_var=='mobrate'",
          conditionalPanel("input.lmap_radio2=='English Language Learner Students Mobility Rate'",
                           tags$br(),
-                          htmlOutput("lmap_title5"),
+                          conditionalPanel("input.lmap_level5==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level5!=' ' ",
+                                           htmlOutput("lmap_title5")),
                           tags$br(),
+                          
                           leafletOutput("leafmap5"),
                           conditionalPanel(
                             condition="input.lmap_level5 == 'Churn Rate for English Language Learning Students'",
@@ -673,8 +690,12 @@ tabPanel("Map",
          ),
          conditionalPanel("input.lmap_radio2=='Students with Disabilities Mobility Rate'",
                           tags$br(),
-                          htmlOutput("lmap_title6"),
+                          conditionalPanel("input.lmap_level6==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level6!=' ' ",
+                                           htmlOutput("lmap_title6")),
                           tags$br(),
+                          
                           leafletOutput("leafmap6"),
                           conditionalPanel(
                             condition="input.lmap_level6 == 'Churn Rate for Students with Disabilities'",
@@ -703,8 +724,12 @@ tabPanel("Map",
          ),
          conditionalPanel("input.lmap_radio2=='Low Income Students Mobility Rate'",
                           tags$br(),
-                          htmlOutput("lmap_title7"),
+                          conditionalPanel("input.lmap_level7==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level7!=' ' ",
+                                           htmlOutput("lmap_title7")),
                           tags$br(),
+                          
                           leafletOutput("leafmap7"),
                           conditionalPanel(
                             condition="input.lmap_level7 == 'Churn Rate for Low Income Students'",
@@ -733,8 +758,12 @@ tabPanel("Map",
          ),
          conditionalPanel("input.lmap_radio2=='High Needs Students Mobility Rate'",
                           tags$br(),
-                          htmlOutput("lmap_title8"),
+                          conditionalPanel("input.lmap_level8==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level8!=' ' ",
+                                           htmlOutput("lmap_title8")),
                           tags$br(),
+                          
                           leafletOutput("leafmap8"),
                           conditionalPanel(
                             condition="input.lmap_level8 == 'Churn Rate for High Needs Students Students'",
@@ -765,8 +794,12 @@ tabPanel("Map",
          conditionalPanel("input.map_profile=='mobility'  &&  input.lmap_mobility_var=='mobenrollment'",
          conditionalPanel("input.lmap_radio3=='English Language Learner Students Mobility Enrollment'",
                           tags$br(),
-                          htmlOutput("lmap_title9"),
+                          conditionalPanel("input.lmap_level9==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level9!=' ' ",
+                                           htmlOutput("lmap_title9")),
                           tags$br(),
+                          
                           leafletOutput("leafmap9"),
                           conditionalPanel(
                             condition="input.lmap_level9 == 'Churn Enrollment for English Language Learning Students'",
@@ -787,8 +820,12 @@ tabPanel("Map",
          ),
          conditionalPanel("input.lmap_radio3=='Students with Disabilities Mobility Enrollment'",
                           tags$br(),
-                          htmlOutput("lmap_title10"),
+                          conditionalPanel("input.lmap_level10==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level10!=' ' ",
+                                           htmlOutput("lmap_title10")),
                           tags$br(),
+                          
                           leafletOutput("leafmap10"),
                           conditionalPanel(
                             condition="input.lmap_level10 == 'Churn Enrollment for Students with Disabilities'",
@@ -809,8 +846,12 @@ tabPanel("Map",
                          ),
          conditionalPanel("input.lmap_radio3=='Low Income Students Mobility Enrollment'",
                           tags$br(),
-                          htmlOutput("lmap_title11"),
+                          conditionalPanel("input.lmap_level11==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level11!=' ' ",
+                                           htmlOutput("lmap_title11")),
                           tags$br(),
+                          
                           leafletOutput("leafmap11"),
                           conditionalPanel(
                             condition="input.lmap_level11 == 'Churn Enrollment for Low Income Students'",
@@ -831,8 +872,12 @@ tabPanel("Map",
          ),
          conditionalPanel("input.lmap_radio3=='High Needs Students Mobility Enrollment'",
                           tags$br(),
-                          htmlOutput("lmap_title12"),
+                          conditionalPanel("input.lmap_level12==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level12!=' ' ",
+                                           htmlOutput("lmap_title12")),
                           tags$br(),
+                          
                           leafletOutput("leafmap12"),
                           conditionalPanel(
                             condition="input.lmap_level12 == 'Churn Enrollment for High Needs Students Students'",
