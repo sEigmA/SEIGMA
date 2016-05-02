@@ -55,7 +55,9 @@ colnames(edu_data)[16]<-"Eighth Grade"
 MA_county <- sort(as.character(unique(edu_data$County)))
  MA_municipals <- sort(as.character(unique(edu_data$Municipal)))
  all_schools<-as.character(unique(edu_data$school.name))
- all_school_table<-lapply(split(edu_data, edu_data$County), FUN=function(x){unique(x$school.name)})
+ all_school_table<-lapply(split(edu_data, edu_data$County), FUN=function(x){c(" ",as.character(unique(x$school.name)))})
+ all_school_table[[" "]]<-c(" ",all_schools)
+ 
 # for(i in 1:length(MA_map_muni$features)){
 #   MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 # }
@@ -152,8 +154,8 @@ summary_side_text <- conditionalPanel(
   ## Creates text
 
   helpText(p(strong('Please select the years for which you are interested in viewing Massachusetts school profiles and student mobility data.'))),
-  tags$br(),
-  tags$ul(
+  #tags$br(),
+  #tags$ul(
     tags$br(),
     tags$li('Select a county then select one or multiple municipalities.'),
     tags$br(),
@@ -161,9 +163,11 @@ summary_side_text <- conditionalPanel(
     tags$br(),
     tags$li('To look at the student mobility of English language learning students, students with disabilities, low income students or students with high needs, select "English Language Learners", "Students with Disabilities", "Low Income" or "High Needs" from the "Variables" list.'),
     tags$br(),
-    tags$li('Sort columns in ascending or descending order by clicking on the column or variable title.')
+    tags$li('Sort columns in ascending or descending order by clicking on the column or variable title.'),
+    tags$br()
+  
 
-  )
+  #)
 )
 
 ## Same concept

@@ -81,16 +81,16 @@ sum_df <- df %>% filter(County %in% county & Municipal %in% munis)
       df_colnames<-paste("# Enrolled in",names(edu_data)[7:21], sep=" ")
     }  else if (input$sum_radio=="English Language Learners") {
         sel_col_num<-c(32, 34, 51:55)
-        df_colnames<-c("First Language Not English Enrolled", "English Language Learner Enrolled", "Churn Enrollment for English Language Learning Students", "Churn Rate for English Language Learning Students", "Intake Rate for English Language Learning Students", "Stability Enrollment for English Language Learning Students", "Stability Rate for English Language Learning Students")
+        df_colnames<-c("First Language Not English Enrolled", "English Language Learner Enrolled", "Churn Enrollment for English Language Learning Students", "Churn Rate for English Language Learning Students %", "Intake Rate for English Language Learning Students %", "Stability Enrollment for English Language Learning Students", "Stability Rate for English Language Learning Students %")
     } else if (input$sum_radio=="Students with Disabilities") {
       sel_col_num<-c(36, 46:50)
-      df_colnames<-c(  "Students with Disabilities Enrolled", "Churn Enrollment for Students With Disabilites", "Churn Rate for Students With Disabilites", "Intake Rate for Students With Disabilites", "Stability Enrollment for Students with Disabilities", "Stability Rate for Students with Disabilities")
+      df_colnames<-c(  "Students with Disabilities Enrolled", "Churn Enrollment for Students With Disabilites", "Churn Rate for Students With Disabilites %", "Intake Rate for Students With Disabilites %", "Stability Enrollment for Students with Disabilities", "Stability Rate for Students with Disabilities %")
     } else if (input$sum_radio=="Low Income") {
       sel_col_num<-c(38, 61:65)
-      df_colnames<-c(  "Low Income Enrolled","Churn Enrollment for Low Income Students", "Churn Rate for Low Income Students", "Intake Rate for Low Income Students", "Stability Enrollment for Low Income Students", "Stability Rate for Low Income Students")
+      df_colnames<-c(  "Low Income Enrolled","Churn Enrollment for Low Income Students", "Churn Rate for Low Income Students %", "Intake Rate for Low Income Students %", "Stability Enrollment for Low Income Students", "Stability Rate for Low Income Students %")
     } else {
       sel_col_num<-c(44, 56:60)
-      df_colnames<-c("High Needs Enrolled", "Churn Enrollmment for High Needs Students", "Churn Rate for High Needs Students", "Intake Rate for High Needs Students", "Stability Enrollment for High Needs Students", "Stability Rate for High Needs Students")}
+      df_colnames<-c("High Needs Enrolled", "Churn Enrollmment for High Needs Students", "Churn Rate for High Needs Students %", "Intake Rate for High Needs Students %", "Stability Enrollment for High Needs Students", "Stability Rate for High Needs Students %")}
     
     sum_df <- sum_df %>%
     arrange(County, Municipal, school.name)%>%
@@ -194,77 +194,89 @@ return(sum_df)
     ##end of summary
 
   
-  output$plot_schoolui <-renderUI({
+  #output$plot_schoolui <-renderUI({
     
     # Depending on input$input_type, we'll generate a different
     # UI component and send it to the client.
+#     
+#     
+#     switch(input$plot_county,
+#            
+#            " "=selectizeInput("plot_school", "Choose School",
+#                            choices= c(" ", all_schools), multiple = F, selected=" ", options = list(maxOptions = 2000)),
+#            
+#            "Barnstable" = selectizeInput("plot_school","Choose School",
+#                                       choices = c(" ",as.character(all_school_table$"Barnstable")),
+#                                       selected=" ",
+#                                       multiple = F), 
+#            "Berkshire" = selectizeInput("plot_school","Choose School",
+#                                      choices = c(" ",as.character(all_school_table$"Berkshire")),
+#                                      selected=" ",
+#                                      multiple = F),
+#            "Bristol" = selectizeInput("plot_school","Choose School",
+#                                    choices = c(" ",as.character(all_school_table$"Bristol")),
+#                                    selected=" ",
+#                                    multiple = F), 
+#            "Dukes" = selectizeInput("plot_school","Choose School",
+#                                  choices = c(" ",as.character(all_school_table$"Dukes")),
+#                                  selected= " ",
+#                                  multiple = F), 
+#            "Essex" = selectizeInput("plot_school","Choose School",
+#                                  choices = c(" ",as.character(all_school_table$"Essex")),
+#                                  selected= " ",
+#                                  multiple = F),
+#            "Franklin" = selectizeInput("plot_school","Choose School",
+#                                     choices = c(" ",as.character(all_school_table$"Franklin")),
+#                                     selected= " ",
+#                                     multiple = F), 
+#            "Hampden" = selectizeInput("plot_school","Choose School",
+#                                    choices = c(" ",as.character(all_school_table$"Hampden")),
+#                                    selected= " ",
+#                                    multiple = F), 
+#            "Hampshire" = selectizeInput("plot_school","Choose School",
+#                                      choices = c(" ",as.character(all_school_table$"Hampshire")),
+#                                      selected= " ",
+#                                      multiple = F), 
+#            "Middlesex" = selectizeInput("plot_school","Choose School",
+#                                      choices = c(" ",as.character(all_school_table$"Middlesex")),
+#                                      selected= " ",
+#                                      multiple = F),
+#            "Nantucket" = selectizeInput("plot_school","Choose School",
+#                                      choices = c(" ",as.character(all_school_table$"Nantucket")),
+#                                      selected= " ",
+#                                      multiple = F),
+#            "Norfolk" = selectizeInput("plot_school","Choose School",
+#                                    choices = c(" ",as.character(all_school_table$"Norfolk")),
+#                                    selected= " ",
+#                                    multiple = F),
+#            "Plymouth" = selectizeInput("plot_school","Choose School",
+#                                     choices = c(" ",as.character(all_school_table$"Plymouth")),
+#                                     selected= " ",
+#                                     multiple = F),
+#            "Suffolk" = selectizeInput("plot_school","Choose School",
+#                                    choices = c(" ",as.character(all_school_table$"Suffolk")),
+#                                    selected= " ",
+#                                    multiple = F),
+#            "Worcester" = selectizeInput("plot_school","Choose School",
+#                                      choices = c(" ",as.character(all_school_table$"Worcester")),
+#                                      selected= " ",
+#                                      multiple = F))
+#   })
+#   
+#   
+    chosenschools<-reactive({
+      
+      schoolz=all_school_table[input$plot_county]
+      schoolz
+    })
+  
+    observe({
+      # This will change the value of input$partnerName to searchResult()[,1]
+      updateSelectizeInput(session, "plot_school", 
+                      choices=chosenschools()
+      )
+    })
     
-    
-    switch(input$plot_county,
-           
-           " "=selectInput("plot_school", "Choose School",
-                           choices= c(" ", all_schools), multiple = F, selected=" "),
-           
-           "Barnstable" = selectInput("plot_school","Choose School",
-                                      choices = as.character(all_school_table$"Barnstable"),
-                                      selected=as.character(all_school_table$"Barnstable")[1],
-                                      multiple = F), 
-           "Berkshire" = selectInput("plot_school","Choose School",
-                                     choices = as.character(all_school_table$"Berkshire"),
-                                     selected=as.character(all_school_table$"Berkshire")[1],
-                                     multiple = F),
-           "Bristol" = selectInput("plot_school","Choose School",
-                                   choices = as.character(all_school_table$"Bristol"),
-                                   selected=as.character(all_school_table$"Bristol")[1],
-                                   multiple = F), 
-           "Dukes" = selectInput("plot_school","Choose School",
-                                 choices = as.character(all_school_table$"Dukes"),
-                                 selected=as.character(all_school_table$"Dukes")[1],
-                                 multiple = F), 
-           "Essex" = selectInput("plot_school","Choose School",
-                                 choices = as.character(all_school_table$"Essex"),
-                                 selected=as.character(all_school_table$"Essex")[1],
-                                 multiple = F),
-           "Franklin" = selectInput("plot_school","Choose School",
-                                    choices = as.character(all_school_table$"Franklin"),
-                                    selected=as.character(all_school_table$"Franklin")[1],
-                                    multiple = F), 
-           "Hampden" = selectInput("plot_school","Choose School",
-                                   choices = as.character(all_school_table$"Hampden"),
-                                   selected=as.character(all_school_table$"Hampden")[1],
-                                   multiple = F), 
-           "Hampshire" = selectInput("plot_school","Choose School",
-                                     choices = as.character(all_school_table$"Hampshire"),
-                                     selected=as.character(all_school_table$"Hampshire")[1],
-                                     multiple = F), 
-           "Middlesex" = selectInput("plot_school","Choose School",
-                                     choices = as.character(all_school_table$"Middlesex"),
-                                     selected=as.character(all_school_table$"Middlesex")[1],
-                                     multiple = F),
-           "Nantucket" = selectInput("plot_school","Choose School",
-                                     choices = as.character(all_school_table$"Nantucket"),
-                                     selected=as.character(all_school_table$"Nantucket")[1],
-                                     multiple = F),
-           "Norfolk" = selectInput("plot_school","Choose School",
-                                   choices = as.character(all_school_table$"Norfolk"),
-                                   selected=as.character(all_school_table$"Norfolk")[1],
-                                   multiple = F),
-           "Plymouth" = selectInput("plot_school","Choose School",
-                                    choices = as.character(all_school_table$"Plymouth"),
-                                    selected=as.character(all_school_table$"Plymouth")[1],
-                                    multiple = F),
-           "Suffolk" = selectInput("plot_school","Choose School",
-                                   choices = as.character(all_school_table$"Suffolk"),
-                                   selected=as.character(all_school_table$"Suffolk")[1],
-                                   multiple = F),
-           "Worcester" = selectInput("plot_school","Choose School",
-                                     choices = as.character(all_school_table$"Worcester"),
-                                     selected=as.character(all_school_table$"Worcester")[1],
-                                     multiple = F))
-  })
-  
-  
-  
            
   #plot dataframe for the percent plot    
   r_percentplot_df<-reactive({

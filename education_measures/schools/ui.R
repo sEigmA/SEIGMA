@@ -254,7 +254,11 @@ shinyUI(fluidPage(
                                 multiple=FALSE, selected=" "),
                     
                     ##if county is not chosen, select school from list of all schools
-                    uiOutput("plot_schoolui")
+                    selectizeInput("plot_school", "Choose School",
+                                       "", options = list(maxOptions = 2000)
+                    )
+                    
+                    
         ), conditionalPanel(
                     condition="input.tabs== 'plot' && input.plot_profile=='enrolled'",
                     #select variable
