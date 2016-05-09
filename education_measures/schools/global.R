@@ -201,34 +201,31 @@ map_side_text <- conditionalPanel(
   tags$ul(
     tags$li("To zoom in the map press the '+' sign at the top left corner of the map."),
     tags$br(),
-    tags$li("To view enrollment data such as the percentage of students by race/ethnicity, gender, grade level, or focus group, select 'Enrollment Profile' from the Data drop down menu."),
+    tags$li("Select a year for which you are interested in viewing the data."),
     tags$br(),
-    tags$li("To view mobility data such as churn, intake, and stability rates by specific interest group select 'Mobility Measure' from the 'Data' drop down menu."),
+    tags$li("To view enrollment data such as the percentage of students by race/ethnicity, gender, or grade level, select 'Enrollment Profile' from the Data drop down menu."),
+    tags$br(),
+    tags$li("To view mobility data such as churn, intake, and stability rates by specific profile variable select 'Mobility Measure' from the 'Data' drop down menu."),
     tags$br(),
     tags$li("Then select the level of information by which you are interested in viewing the data from the 'Choose Level to Map' drop down menu."),
     tags$br(),
-    tags$li("If you selected 'Enrollment Profile' select either race/ethnicity, gender, grade level, or focus group from the 'Select Profile Variable List'."),
-    tags$br(),
-    tags$li("Then please select a level to map from 'Choose Level to Map' drop down menu"),
-    tags$br(),
-    tags$li("If you selected 'Mobility Profile' select either 'Rate' or 'Enrollment' then select an intrest group from the 'Select Intrest Group List'."),
-    tags$br(),
-    tags$li("To view the churn, intake or Stability rate of the students within each focus group select any of the 'Churn', 'Intake', or 'Stability' options from the 'Choose Level to Map' drop down menu .")
+    tags$li("If you selected 'Mobility Profile' select either 'Rate' or 'Enrollment' to view the profile variable you are interested in.")
   ))
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
   h4("How to use this app:"),
-  helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
+  helpText(p(strong('This tab contains more detailed information regarding the variable of interest.'))))
 
- about_main_text <- p(strong("The SEIGMA Schools App"), "displays the percentage of students by race/ethnicity, gender or grade levels and student mobility data for Massachusetts schools.",
-                      p(strong("Click on different tabs to view the data in different formats.")),
+about_main_text <- p(strong("The SEIGMA Schools App"), "displays enrollment and mobility data for Massachusetts schools and includes:",
                       tags$br(),
                       tags$ul(
-                        tags$li(p(strong("Summary"), "shows the source data in table format.")),
-                        tags$li(p(strong("Plot"), "compares the percentage of students by race and ethnicity, gender, and grade levels, as well as student mobility profiles for each school.")),
-                        tags$li(p(strong("Map"), "visually displays the percentage of students by race and ethnicity, gender, and grade level, as well as student mobility profiles for each school.")),
-                        tags$li(p(strong("More Info"), "describes schools profile and student mobility data including formulas and calculations."))
+                        tags$li("General information about students enrolled in Massachusetts schools including race/ ethnicity, gender, and grade level."),
+                        tags$br(),
+                        tags$li("Enrollment information about english language learners, students whose first language is not english, students with disabilities, low income students, and students classified as high needs."),
+                        tags$br(),
+                        tags$li("Information about student mobility, including intake (number of students entering schools), churn (number of new students entering into and transferring out of schools), and stability (the number of students that remian in a school over the course of a school year).")
+                        
                       ))
 
 plot_main_text <- p(strong("Variable Summary:"),
