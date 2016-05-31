@@ -498,7 +498,8 @@ return(sum_df)
   })
   
   output$countcolplot<-reactive({
-    
+    if(is.null(input$plot_school)==F){
+      
     r_plot<-r_percentplot_df()
     
     tse<-max(apply(r_plot[,-1], 2, function(x){max(x, na.rm=T)}))
@@ -548,7 +549,7 @@ return(sum_df)
                      ## set colors
                      colors = cbbPalette[c(1:9)]
       ))
-    
+    }
   })
   
   
@@ -556,20 +557,26 @@ return(sum_df)
    #   observeEvent(input$plot_school,{
   output$mobenrollment_plot<-reactive({
     
-    #input$actionButton
+    if(is.null(input$plot_school)==F){
+      
     
     
     
-    
-    #message to be displayed when variable full of NAs selected
-    validate(
-      need(is.null(r_mobrateplot_df())==FALSE, "No data available, please select a different variable  and regenerate plot"),
-      need(nrow(r_mobrateplot_df())>0, "No data available, please select a different variable  and regenerate plot")
-    )
-    
+#     
+#     #message to be displayed when variable full of NAs selected
+#     validate(
+#       need(is.null(r_mobrateplot_df())==FALSE, "No data available, please select a different variable  and regenerate plot"),
+#       need(nrow(r_mobrateplot_df())>0, "No data available, please select a different variable  and regenerate plot")
+#     )
+#     
     
     
     #if(is.null(r_mobenrollplot )==F & nrow(r_mobenrollplot)>0){
+      maxout<-function(x){
+        m<-max(x)
+        if(is.na(m)==T | is.null(m)==T){m<-100}
+        m
+      }
     ymax<-maxout(unlist(r_mobenrollplot_df()[,-1]))
 
     list(
@@ -631,7 +638,7 @@ return(sum_df)
                      ))
                    )
     )
-    #}  
+    }  
   })
     #  }) })
  

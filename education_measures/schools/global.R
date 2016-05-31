@@ -293,8 +293,4 @@ plot_main_text <- p(strong("Variable Summary:"),
  
  mobrate_plot_options<-googleColumnChart("mobrate_plot",width="100%", height = "500px")
  
- maxout<-function(x){
-   m<-max(x)
-   if(is.na(m)==T){m<-100}
-   m
- }
+ 
