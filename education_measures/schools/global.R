@@ -55,8 +55,52 @@ colnames(edu_data)[16]<-"Eighth Grade"
 MA_county <- sort(as.character(unique(edu_data$County)))
  MA_municipals <- sort(as.character(unique(edu_data$Municipal)))
  all_schools<-as.character(unique(edu_data$school.name))
- all_school_table<-lapply(split(edu_data, edu_data$County), FUN=function(x){c(" ",as.character(unique(x$school.name)))})
+ #subtract those with no mobility data
+ nodata<-c("Cuttyhunk Elementary", "Ma Academy for Math and Science School",
+           "Monterey", "Pathways Early College Innovation School",
+           "Peter Fitzpatrick School", "South Egremont")
+ all_schools<-all_schools[-which(all_schools %in% nodata)]
+ all_school_table<-lapply(split(edu_data, edu_data$County), FUN=function(x){
+   sk<-as.character(unique(x$school.name))
+   okschools<-sk[!sk %in% nodata]
+   c(" ",okschools)})
  all_school_table[[" "]]<-c(" ",all_schools)
+ 
+ #ut the interest groups that have non data in the mobility data in a list
+ 
+#  school_availabilitytable<-lapply(split(edu_data[,46:65], edu_data$school.name),
+#                                   FUN=function(x){
+#                                     
+#                                     names<-colnames(x)
+#                                     colnas<-apply(x,2, function(y){sum(is.na(y))})
+#                                     names[which(colnas!=nrow(x))]
+#                                   })
+#  school_availabilitytable<-lapply(school_availabilitytable,
+#                                   function(x){
+#                                     available<-c()
+#                                     
+#                                     n.disab<-sum(grepl(x, pattern="Disabilities"))
+#                                     n.high<-sum(grepl(x, pattern="High"))
+#                                     n.low<-sum(grepl(x, pattern="Low"))
+#                                     n.english<-sum(grepl(x, pattern="English"))
+#                                     
+#                                     if(n.english!=0){available<-append(available, "English Language Learner Students")}
+#                                     if(n.disab!=0){available<-append(available, "Students with Disabilities")}
+#                                     if(n.low!=0){available<-append(available, "Low Income Students")}
+#                                     if(n.high!=0){available<-append(available, "High Needs Students")}
+#                                     
+#                                     available
+#                                   })
+# school_availabilitytable[[" "]]<-c("English Language Learner Students", "Students with Disabilities" ,
+#                                    "Low Income Students",  "High Needs Students")
+# school_availabilitytable<-school_availabilitytable[-which(names(school_availabilitytable) %in% nodata)]
+#   
+#  > howmanyopts[howmanyopts==0]
+#  Cuttyhunk Elementary   Ma Academy for Math and Science School                                 Monterey 
+#  0                                        0                                        0 
+#  Pathways Early College Innovation School                 Peter Fitzpatrick School                           South Egremont 
+#  0                                        0                                        0 
+#  > 
  
 # for(i in 1:length(MA_map_muni$features)){
 #   MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
@@ -174,34 +218,34 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the county in which the school you are interested in is located.')),
+  p(strong('Please the school you are interested in')),
   tags$br(),
   tags$ul(
-    tags$li("Then select the type of data which you are interested in viewing."),
+    
+    tags$li("First select the type of data which you are interested in viewing."),
     tags$br(),
-    tags$li("To view enrollment data such as the percentage of students by race/ethnicity, gender, grade level, or focus group, select 'Enrollment Profile' from the Data drop down menu."),
+    tags$li("To view school enrollment data such as the percentage of students by race/ethnicity, gender, grade level, or focus group, select 'Enrollment Profile' from the 'Data' drop down menu."),
     tags$br(),
-    tags$li("To view mobility data such as churn, intake, and stability rates by specific interest group select 'Mobility Measure' from the 'Data' drop down menu."),
+    tags$li("To view student mobility data such as churn, intake, and stability rates by specific interest group select 'Mobility Measure' from the 'Data' drop down menu."),
     tags$br(),
-  tags$li("Next, please select a school for which you are interested in viewing data"),
+    tags$li("Next, please select a school for which you are interested in viewing data (You can narrow down the list of schools to choose from by first selecting the county where the school is located)"),
+    tags$br(),
+    
+    tags$li("To view student mobility data from an interest group select either English Language Learners, Students with Disabilities, Low income, or High Needs."),
   tags$br(),
-  tags$li("To view the percentage of students by race/ethnicity, gender, grade level, or focus group select 'Race/Ethnicity', 'Gender', 'Grade Level', or 'Focus Group' from the 'Profile Variable' list."),
+  tags$li("Then select either 'Rate' or 'Enrollment' from the options to view mobility rates or mobility enrollment"),
   tags$br(),
-  tags$li("To view churn, intake, and stability rates select either Enlgish Language Learners, Students with Disabilities, Low income, or High Needs."),
-  tags$br(),
-  tags$li("Then select either 'Rate' or 'Enrollment' from the options to view rates or number of students per interest group.")
+  tags$li("If the plot is empty, the school did not report the data selected")
   ))
 
 # 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'lmap'",
   h4("How to use this app:"),
-  helpText(p(strong("Please select a year, and click on 'Generate Map' to get started"))),
+  helpText(p(strong("Please select a year to get started"))),
   tags$br(),
   tags$ul(
     tags$li("To zoom in the map press the '+' sign at the top left corner of the map."),
-    tags$br(),
-    tags$li("Select a year for which you are interested in viewing the data."),
     tags$br(),
     tags$li("To view enrollment data such as the percentage of students by race/ethnicity, gender, or grade level, select 'Enrollment Profile' from the Data drop down menu."),
     tags$br(),
@@ -239,15 +283,18 @@ plot_main_text <- p(strong("Variable Summary:"),
  font_size <- 14
 # 
  
- 
- 
  percentcolchart <- googleColumnChart("percentcolplot",width="100%", height = "500px")
  
  countcolchart <- googleColumnChart("countcolplot",width="100%", height = "500px")
  
-
-  
-  mobenrollment_plot_options<-googleColumnChart("mobenrollment_plot",width="100%", height = "500px")
-  
-  mobrate_plot_options<-googleColumnChart("mobrate_plot",width="100%", height = "500px")
  
+ mobenrollment_plot_options<-googleColumnChart("mobenrollment_plot",width="100%", height = "500px")
+
+ 
+ mobrate_plot_options<-googleColumnChart("mobrate_plot",width="100%", height = "500px")
+ 
+ maxout<-function(x){
+   m<-max(x)
+   if(is.na(m)==T){m<-100}
+   m
+ }

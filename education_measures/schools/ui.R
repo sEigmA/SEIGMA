@@ -255,8 +255,9 @@ shinyUI(fluidPage(
                     
                     ##if county is not chosen, select school from list of all schools
                     selectizeInput("plot_school", "Choose School",selected=" ",
-                                       choices="", options = list(maxOptions = 2000)
+                                      choices="", options = list(maxOptions = 2000)
                     )
+                    #uiOutput("plot_schoolui")
                     
                     
         ), conditionalPanel(
@@ -272,6 +273,8 @@ shinyUI(fluidPage(
         ), conditionalPanel(
            condition="input.tabs== 'plot' && input.plot_profile=='mobility'",
            #select variable
+
+#            
            radioButtons("plot_mobility", "Select Interest Group",
                        c("English Language Learners"="English Language Learner Students",
                          "Students with Disabilities"="Students with Disabilities",
@@ -281,8 +284,7 @@ shinyUI(fluidPage(
            radioButtons("plot_mobility_var", "Select Rate or Enrollment",
                         c("Rate"="mobrate",
                           "Enrollment"="mobenrollment"),
-                        selected='mobrate')
-        )
+                        selected='mobrate'))
         ,
         tags$hr(),
     
@@ -350,20 +352,20 @@ shinyUI(fluidPage(
                 #count charts 
                 #of mobility enrollment
                 conditionalPanel(
-                  condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobenrollment' && input.plot_school!=' '",
-                  mobenrollment_plot_options)
-                ,conditionalPanel(
-                  condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobenrollment' && input.plot_school==' '",
+                  condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobenrollment'  && input.plot_school!=' '",
+                  mobenrollment_plot_options),
+                conditionalPanel(
+                  condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobenrollment'  && input.plot_school==' '",
                   HTML("Please select a school")),
+                
                 #of mobility rate
                 conditionalPanel(
-                  condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobrate' && input.plot_school!=' '",
+                  condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobrate'  && input.plot_school!=' '",
                   mobrate_plot_options),
                 conditionalPanel(
-                  condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobrate' && input.plot_school==' '",
+                  condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobrate'  && input.plot_school==' '",
                   HTML("Please select a school"))
                 
-              
                ,
                 value="plot")
         ,

@@ -193,94 +193,34 @@ return(sum_df)
     
     ##end of summary
 
-  
-  #output$plot_schoolui <-renderUI({
-    
-    # Depending on input$input_type, we'll generate a different
-    # UI component and send it to the client.
-#     
-#     
-#     switch(input$plot_county,
-#            
-#            " "=selectizeInput("plot_school", "Choose School",
-#                            choices= c(" ", all_schools), multiple = F, selected=" ", options = list(maxOptions = 2000)),
-#            
-#            "Barnstable" = selectizeInput("plot_school","Choose School",
-#                                       choices = c(" ",as.character(all_school_table$"Barnstable")),
-#                                       selected=" ",
-#                                       multiple = F), 
-#            "Berkshire" = selectizeInput("plot_school","Choose School",
-#                                      choices = c(" ",as.character(all_school_table$"Berkshire")),
-#                                      selected=" ",
-#                                      multiple = F),
-#            "Bristol" = selectizeInput("plot_school","Choose School",
-#                                    choices = c(" ",as.character(all_school_table$"Bristol")),
-#                                    selected=" ",
-#                                    multiple = F), 
-#            "Dukes" = selectizeInput("plot_school","Choose School",
-#                                  choices = c(" ",as.character(all_school_table$"Dukes")),
-#                                  selected= " ",
-#                                  multiple = F), 
-#            "Essex" = selectizeInput("plot_school","Choose School",
-#                                  choices = c(" ",as.character(all_school_table$"Essex")),
-#                                  selected= " ",
-#                                  multiple = F),
-#            "Franklin" = selectizeInput("plot_school","Choose School",
-#                                     choices = c(" ",as.character(all_school_table$"Franklin")),
-#                                     selected= " ",
-#                                     multiple = F), 
-#            "Hampden" = selectizeInput("plot_school","Choose School",
-#                                    choices = c(" ",as.character(all_school_table$"Hampden")),
-#                                    selected= " ",
-#                                    multiple = F), 
-#            "Hampshire" = selectizeInput("plot_school","Choose School",
-#                                      choices = c(" ",as.character(all_school_table$"Hampshire")),
-#                                      selected= " ",
-#                                      multiple = F), 
-#            "Middlesex" = selectizeInput("plot_school","Choose School",
-#                                      choices = c(" ",as.character(all_school_table$"Middlesex")),
-#                                      selected= " ",
-#                                      multiple = F),
-#            "Nantucket" = selectizeInput("plot_school","Choose School",
-#                                      choices = c(" ",as.character(all_school_table$"Nantucket")),
-#                                      selected= " ",
-#                                      multiple = F),
-#            "Norfolk" = selectizeInput("plot_school","Choose School",
-#                                    choices = c(" ",as.character(all_school_table$"Norfolk")),
-#                                    selected= " ",
-#                                    multiple = F),
-#            "Plymouth" = selectizeInput("plot_school","Choose School",
-#                                     choices = c(" ",as.character(all_school_table$"Plymouth")),
-#                                     selected= " ",
-#                                     multiple = F),
-#            "Suffolk" = selectizeInput("plot_school","Choose School",
-#                                    choices = c(" ",as.character(all_school_table$"Suffolk")),
-#                                    selected= " ",
-#                                    multiple = F),
-#            "Worcester" = selectizeInput("plot_school","Choose School",
-#                                      choices = c(" ",as.character(all_school_table$"Worcester")),
-#                                      selected= " ",
-#                                      multiple = F))
-#   })
-#   
-#   
-    chosenschools<-reactive({
-      
-      schoolz=all_school_table[input$plot_county]
-      schoolz
-    })
-  
-    observeEvent( input$plot_county, {
-      # This will change the value of input$partnerName to 
+#   #this makes the school selection dependent on the county selection
+
+  chosenschools<-reactive({
+    schoolz=all_school_table[input$plot_county]
+    schoolz
+  })
+  observeEvent(input$plot_county,{
+    # This will change the value of input$school 
       updateSelectizeInput(session, "plot_school", 
                       choices=chosenschools()
       )
     })
+#     
+  # I can't get googlecharts to use validate in order to deal with missing data
+  # so I'll limit the selections of options to avoid passing an empty dataframe to googlecharts
+   
+#     observeEvent(input$plot_school,{
+#       vars=school_availabilitytable[input$plot_school]
+#       v3$chosenschool_vars<-vars
+#     
+#         # This will change the choices for input$plot_mobility2w 
+#       updateSelectInput(session, "plot_mobility2", 
+#                            choices=v3$chosenschool_vars)
+#     })
     
-
-  
+    ########
+    # create reactive dataframes
   r_percentplot_df<-reactive({
-    
     edum<-edum() %>% filter(school.name==input$plot_school)
     
     sel_col_num<-c()
@@ -347,13 +287,11 @@ return(sum_df)
       ###melt
       
       return(plot_df[,-c(1,2)])
-    }
+      }
+    
     })
   
-  
   r_mobenrollplot_df<-reactive({
-    if(input$plot_school!=" "){
-      
     
     edum<-edum() %>% filter(school.name==input$plot_school)
     
@@ -373,21 +311,21 @@ return(sum_df)
                 select(1,3, 6, sel_col_num) %>% 
                 arrange(school.year)
               colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-      
-      return(plot_df[ ,-c(1,2)])
-      
+              plot_df<-(plot_df[ ,-c(1,2)])
+              
+              return(plot_df)
       
     } else if (input$plot_mobility=="Students with Disabilities") {
       sel_col_num<-c(46, 49)
             df_colnames<-c("Churn Enrollment for Students with Disabilities",
                            "Stability Enrollment for Students with Disabilities")
             plot_df <- edum %>%
-              
               select(1,3, 6, sel_col_num) %>% 
               arrange(school.year)
             colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-      
-      return(plot_df[ ,-c(1,2)])
+            plot_df<-(plot_df[ ,-c(1,2)])
+            
+            return(plot_df)
       
       
     } else if (input$plot_mobility=="Low Income Students") {
@@ -398,27 +336,35 @@ return(sum_df)
               select(1,3, 6, sel_col_num) %>% 
               arrange(school.year)
             colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-      
-      return(plot_df[ ,-c(1,2)])
+            plot_df<-(plot_df[ ,-c(1,2)])
+            
+            return(plot_df)
       
       #ELL
     } else if (input$plot_mobility=="High Needs Students") {
       sel_col_num<-c(56, 59)
             df_colnames<-c("Churn Enrollment for High Needs Students",
                            "Stability Enrollment for High Needs Students")
-            plot_df <- edum %>%
+    
+        
+    
+    
+    plot_df <- edum %>%
               select(1,3, 6, sel_col_num) %>% 
               arrange(school.year)
             colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-      
-      return(plot_df[ ,-c(1,2)])
-    }
-    } 
+            plot_df<-(plot_df[ ,-c(1,2)])
+            
+            
+            return(plot_df)}
+    
+    
+     
   })
   
   r_mobrateplot_df<-reactive({
-    if(input$plot_school!=" "){
-    edum<-edum() %>% filter(school.name==input$plot_school)    
+  
+  edum<-edum() %>% filter(school.name==input$plot_school)    
     
     sel_col_num<-c()
     df_colnames<-c()
@@ -433,73 +379,71 @@ return(sum_df)
             df_colnames<-c("Churn Rate for English Language Learning Students",
                            "Intake Rate for English Language Learning Students",
                            "Stability Rate for English Language Learning Students")
-            
-            
             plot_df <- edum %>%
-            
+              
               select(1,3, 6, sel_col_num) %>% 
               arrange(school.year)
             colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-      
-      return(plot_df[ ,-c(1,2)])
-      
+            plot_df<-(plot_df[ ,-c(1,2)])
+            
+            return(plot_df)
+            
       
     } else if (input$plot_mobility=="Students with Disabilities") {
       sel_col_num<-c(47, 48, 50)
             df_colnames<-c("Churn Rate for Students with Disabilities",
                            "Intake Rate for Students with Disabilities",
                            "Stability Rate for Students with Disabilities")
-            
-            
             plot_df <- edum %>%
-            
+              
               select(1,3, 6, sel_col_num) %>% 
               arrange(school.year)
             colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-      
-      return(plot_df[ ,-c(1,2)])
-      
+            plot_df<-(plot_df[ ,-c(1,2)])
+            
+            return(plot_df)
+            
+            
       
     } else if (input$plot_mobility=="Low Income Students") {
       sel_col_num<-c(62, 63, 65)
             df_colnames<-c("Churn Rate for Low Income Students",
                            "Intake Rate for Low Income Students",
                            "Stability Rate for Low Income Students")
-            
             plot_df <- edum %>%
-            
+              
               select(1,3, 6, sel_col_num) %>% 
               arrange(school.year)
             colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+            plot_df<-(plot_df[ ,-c(1,2)])
+            return(plot_df)
             
-      return(plot_df[ ,-c(1,2)])
-      
       #ELL
     } else if (input$plot_mobility=="High Needs Students") {
       sel_col_num<-c(57, 58, 60)
             df_colnames<-c("Churn Rate for High Needs Students",
                            "Intake Rate for High Needs Students",
                            "Stability Rate for High Needs Students")
-            
+        
             
             plot_df <- edum %>%
             
               select(1,3, 6, sel_col_num) %>% 
               arrange(school.year)
             colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
-      
-      return(plot_df[ ,-c(1,2)])
-      
-    } 
+            plot_df<-(plot_df[ ,-c(1,2)])
+            
+           return(plot_df)
     }
-    })
-  
-  
+     
     
+    })
   #make three plot objects in the output
   
+
   
   output$percentcolplot<-reactive({
+    if(is.null(input$plot_school)==F){
       
     r_plot<-r_percentplot_df()
     
@@ -550,7 +494,7 @@ return(sum_df)
     ## set colors
     colors = cbbPalette[c(1:9)]
     ))
-    
+    }
   })
   
   output$countcolplot<-reactive({
@@ -608,19 +552,28 @@ return(sum_df)
   })
   
   
+  #observeEvent(input$plot_mobility,{
+   #   observeEvent(input$plot_school,{
   output$mobenrollment_plot<-reactive({
-    #message to be displayed when no school selected
-#     
-#     validate(
-#       need(nrow(r_mobenrollplot_df())>1, "Please select a different variable")
-#     )
-#     
-    r_mobenrollplot<-r_mobenrollplot_df()
-    ymax<-max(apply(r_mobenrollplot[,-1], 2, function(x){max(x, na.rm=T)}))
-    if(ymax=="Inf"){ymax<-100}
     
+    #input$actionButton
+    
+    
+    
+    
+    #message to be displayed when variable full of NAs selected
+    validate(
+      need(is.null(r_mobrateplot_df())==FALSE, "No data available, please select a different variable  and regenerate plot"),
+      need(nrow(r_mobrateplot_df())>0, "No data available, please select a different variable  and regenerate plot")
+    )
+    
+    
+    
+    #if(is.null(r_mobenrollplot )==F & nrow(r_mobenrollplot)>0){
+    ymax<-maxout(unlist(r_mobenrollplot_df()[,-1]))
+
     list(
-      data=googleDataTable(r_mobenrollplot),
+      data=googleDataTable(r_mobenrollplot_df()),
       options = list(
                    title=paste("Student Mobility: Mobility Enrollment of ", 
                                input$plot_mobility,
@@ -678,20 +631,30 @@ return(sum_df)
                      ))
                    )
     )
-    
+    #}  
   })
+    #  }) })
+ 
+  
+  
   
   output$mobrate_plot<-reactive({
-    #message to be displayed when no school selected
-#     validate(
-#       need(nrow(r_mobrateplot_df())>1, "Please select a different variable")
-#     )
-#     
-    r_mobrateplot<-r_mobrateplot_df()
     
+
+    
+    #message to be displayed when variable full of NAs selected
+    validate(
+      need(is.null(r_mobenrollplot_df())==FALSE, "No data available, please select a different variable and regenerate plot"),
+      need(nrow(r_mobenrollplot_df())>0, "No data available, please select a different variable  and regenerate plot")
+      
+    )
+#     
+    
+    
+    #if(is.null(r_mobrateplot)==F & nrow(r_mobrateplot)>0){
     
     list(
-      data=googleDataTable(r_mobrateplot),
+      data=googleDataTable(r_mobrateplot_df()),
       options=list(title=paste("Student Mobility: Mobility Rates of ", 
                   input$plot_mobility,
                   "at ", 
@@ -749,9 +712,13 @@ return(sum_df)
       )
     )
     
-  })
-  
+    #}
     
+  })
+      
+  ##################################
+  
+  
   ###############################################################
   # POINT MAP in LEAFLET
   #######################################################
