@@ -168,7 +168,7 @@ bootstrapPage(mainPanel(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
                          )),
-                         tags$td("Data not available", align = "right")
+                         tags$td("Data not", br(), "available", align = "right")
                        )
                      )
                    )),
@@ -188,7 +188,7 @@ bootstrapPage(mainPanel(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
                          )),
-                         tags$td("Data not available", align = "right")
+                         tags$td("Data not", br(), "available", align = "right")
                        )
                      )
                    )),
@@ -208,7 +208,7 @@ bootstrapPage(mainPanel(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
                          )),
-                         tags$td("Data not available", align = "right")
+                         tags$td("Data not", br(), "available", align = "right")
                        )
                      )
                    )),
