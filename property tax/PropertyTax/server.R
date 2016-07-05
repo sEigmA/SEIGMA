@@ -130,7 +130,7 @@ shinyServer(function(input, output, session){
         ## set axis titles, ticks, fonts, and ranges
         hAxis = list(
           title = "",
-          ticks = seq(2003,2012,1),
+          ticks = seq(2003,2013,1),
           format = "####",
           textStyle = list(
             fontSize = font_size),
