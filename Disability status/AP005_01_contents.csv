@@ -1,0 +1,36 @@
+Alphabetic List of Variables and Attributes,,,,,,
+#,Variable,Type,Len,Format,Informat,Label
+1,GEO_id,Char,19,$19.00 ,$19.00 ,ID Number
+2,GEO_id2,Num,8,,,ID Number 2
+3,GEO_display_label,Char,65,$65.00 ,$65.00 ,Geography
+4,Municipal,Char,21,,,Municipal
+5,County,Char,18,,,County
+6,State,Char,3,,,State
+7,Region,Char,60,,,Region
+8,Year,Char,9,,,Five Year Average
+9,AP005_001,Num,8,,,Total; Estimate; Civilian population 18 years and over
+10,AP005_002,Num,8,,,Total; Margin of Error; Civilian population 18 years and over
+11,AP005_003,Num,8,,,Total; Estimate; EMPLOYMENT STATUS - Labor force participation rate
+12,AP005_004,Num,8,,,Total; Margin of Error; EMPLOYMENT STATUS - Labor force participation rate
+13,AP005_005,Num,8,,,Veterans; Estimate; EMPLOYMENT STATUS - Labor force participation rate
+14,AP005_006,Num,8,,,Veterans; Margin of Error; EMPLOYMENT STATUS - Labor force participation rate
+15,AP005_007,Num,8,,,Nonveterans; Estimate; EMPLOYMENT STATUS - Labor force participation rate
+16,AP005_008,Num,8,,,Nonveterans; Margin of Error; EMPLOYMENT STATUS - Labor force participation rate
+17,AP005_009,Num,8,,,Total; Estimate; EMPLOYMENT STATUS - Labor force participation rate - Civilian labor force 18 to 64 years
+18,AP005_010,Num,8,,,Total; Margin of Error; EMPLOYMENT STATUS - Labor force participation rate - Civilian labor force 18 to 64 years
+19,AP005_011,Num,8,,,Veterans; Estimate; EMPLOYMENT STATUS - Labor force participation rate - Civilian labor force 18 to 64 years
+20,AP005_012,Num,8,,,Veterans; Margin of Error; EMPLOYMENT STATUS - Labor force participation rate - Civilian labor force 18 to 64 years
+21,AP005_013,Num,8,,,Nonveterans; Estimate; EMPLOYMENT STATUS - Labor force participation rate - Civilian labor force 18 to 64 years
+22,AP005_014,Num,8,,,Nonveterans; Margin of Error; EMPLOYMENT STATUS - Labor force participation rate - Civilian labor force 18 to 64 years
+23,AP005_015,Char,74,$74.00 ,$74.00 ,Total; Estimate; DISABILITY STATUS - Civilian population 18 years and over
+24,AP005_016,Char,81,$81.00 ,$81.00 ,Total; Margin of Error; DISABILITY STATUS - Civilian population 18 years and over
+25,AP005_017,Char,77,$77.00 ,$77.00 ,Veterans; Estimate; DISABILITY STATUS - Civilian population 18 years and over
+26,AP005_018,Char,84,$84.00 ,$84.00 ,Veterans; Margin of Error; DISABILITY STATUS - Civilian population 18 years and over
+27,AP005_019,Char,80,$80.00 ,$80.00 ,Nonveterans; Estimate; DISABILITY STATUS - Civilian population 18 years and over
+28,AP005_020,Char,87,$87.00 ,$87.00 ,Nonveterans; Margin of Error; DISABILITY STATUS - Civilian population 18 years and over
+29,AP005_021,Char,96,$96.00 ,$96.00 ,Total; Estimate; DISABILITY STATUS - With any disability
+30,AP005_022,Char,103,$103.00 ,$103.00 ,Total; Margin of Error; DISABILITY STATUS - With any disability
+31,AP005_023,Char,99,$99.00 ,$99.00 ,Veterans; Estimate; DISABILITY STATUS - With any disability
+32,AP005_024,Char,106,$106.00 ,$106.00 ,Veterans; Margin of Error; DISABILITY STATUS - With any disability
+33,AP005_025,Char,102,$102.00 ,$102.00 ,Nonveterans; Estimate; DISABILITY STATUS - With any disability
+34,AP005_026,Char,109,$109.00 ,$109.00 ,Nonveterans; Margin of Error; DISABILITY STATUS - With any disability

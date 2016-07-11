@@ -1,0 +1,15 @@
+Alphabetic List of Variables and Attributes,,,,,,
+#,Variable,Type,Len,Format,Informat,Label
+5,AR001_001,Num,8,DOLLAR23.2,DOLLAR23.2,AR001_001: Residential Value (in dollars)
+6,AR001_002,Num,8,DOLLAR23.2,DOLLAR23.2,AR001_002: Open Space Value (in dollars)
+7,AR001_003,Num,8,DOLLAR23.2,DOLLAR23.2,AR001_003: Commercial Value (in dollars)
+8,AR001_004,Num,8,DOLLAR23.2,DOLLAR23.2,AR001_004: Industrial Value (in dollars)
+9,AR001_005,Num,8,DOLLAR23.2,DOLLAR23.2,AR001_005: Personal Property Value (in dollars)
+10,AR001_006,Num,8,DOLLAR23.2,DOLLAR23.2,AR001_006: Total Assessed Value (in dollars)
+11,AR001_007,Num,8,,,AR001_007: R/O as % of Total Value
+12,AR001_008,Num,8,,,AR001_008: CIP as % of Total Value
+2,County,Char,18,,,County
+4,F_year,Char,4,,,Fiscal Year
+1,Municipal,Char,21,$21.00 ,$21.00 ,Municipal
+3,State,Char,3,$3.00 ,,State
+,,,,,,

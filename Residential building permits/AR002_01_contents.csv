@@ -1,0 +1,40 @@
+Alphabetic List of Variables and Attributes,,,,,,
+#,Variable,Type,Len,Format,Informat,Label
+5,AR002_001,Num,8,,,AR002_001: Number of Months Reported
+6,AR002_002,Char,26,$26.00 ,$26.00 ,AR002_002: Area Name
+7,AR002_003,Num,8,,,AR002_003: Single Family Buildings- Reported Data plus Data Imputed for Non-Reporters & Partial Reporters
+8,AR002_004,Num,8,,,AR002_004: Single Family Units- Reported Data plus Data Imputed for Non-Reporters & Partial Reporters
+9,AR002_005,Num,8,DOLLAR21.2,DOLLAR21.2,AR002_005: Single Family Valuation- Reported Data plus Data Imputed for Non-Reporters & Partial Reporters
+10,AR002_006,Num,8,,,AR002_006: 2 Family Buildings- Reported Data plus Data Imputed for Non-Reporters & Partial Reporters
+11,AR002_007,Num,8,,,AR002_007: 2 Family Units- Reported Data plus Data Imputed for Non-Reporters & Partial Reporters
+12,AR002_008,Num,8,DOLLAR21.2,DOLLAR21.2,AR002_008: 2 Family Valuation- Reported Data plus Data Imputed for Non-Reporters & Partial Reporters
+13,AR002_009,Num,8,,,AR002_009: 3+4 Family Buildings- Reported Data plus Data Imputed for Non-Reporters & Partial Reporters
+14,AR002_010,Num,8,,,AR002_010: 3+4 Family Units- Reported Data plus Data Imputed for Non-Reporters & Partial Reporters
+15,AR002_011,Num,8,DOLLAR21.2,DOLLAR21.2,AR002_011: 3+4 Family Valuation- Reported Data plus Data Imputed for Non-Reporters & Partial Reporters
+16,AR002_012,Num,8,,,AR002_012: 5+ Family Buildings- Reported Data plus Data Imputed for Non-Reporters & Partial Reporters
+17,AR002_013,Num,8,,,AR002_013: 5+ Family Units- Reported Data plus Data Imputed for Non-Reporters & Partial Reporters
+18,AR002_014,Num,8,DOLLAR21.2,DOLLAR21.2,AR002_014: 5+ Family Valuation- Reported Data plus Data Imputed for Non-Reporters & Partial Reporters
+19,AR002_015,Num,8,,,AR002_015: Single Family Buildings- Reported Data Only
+20,AR002_016,Num,8,,,AR002_016: Single Family Units- Reported Data Only
+21,AR002_017,Num,8,DOLLAR21.2,DOLLAR21.2,AR002_017: Single Family Valuation- Reported Data Only
+22,AR002_018,Num,8,,,AR002_018: 2 Family Buildings- Reported Data Only
+23,AR002_019,Num,8,,,AR002_019: 2 Family Units- Reported Data Only
+24,AR002_020,Num,8,DOLLAR21.2,DOLLAR21.2,AR002_020: 2 Family Valuation- Reported Data Only
+25,AR002_021,Num,8,,,AR002_021: 3+4 Family Buildings- Reported Data Only
+26,AR002_022,Num,8,,,AR002_022: 3+4 Family Units- Reported Data Only
+27,AR002_023,Num,8,DOLLAR21.2,DOLLAR21.2,AR002_023: 3+4 Family Valuation- Reported Data Only
+28,AR002_024,Num,8,,,AR002_024: 5+ Family Buildings- Reported Data Only
+29,AR002_025,Num,8,,,AR002_025: 5+ Family Units- Reported Data Only
+30,AR002_026,Num,8,DOLLAR21.2,DOLLAR21.2,AR002_026: 5+ Family Valuation- Reported Data Only
+31,AR002_027,Num,8,,,AR002_027: Total Buildings- Reported plus Imputed Data
+32,AR002_028,Num,8,,,AR002_028: Total Units- Reported plus Imputed Data
+33,AR002_029,Num,8,DOLLAR21.2,DOLLAR21.2,AR002_029: Total Valuation- Reported plus Imputed Data
+34,AR002_030,Num,8,DOLLAR21.2,DOLLAR21.2,AR002_030: Average Valuation Per Unit- Reported plus Imputed Data
+35,AR002_031,Num,8,,,AR002_031: Total Buildings- Reported Data Only
+36,AR002_032,Num,8,,,AR002_032: Total Units- Reported Data Only
+37,AR002_033,Num,8,DOLLAR21.2,DOLLAR21.2,AR002_033: Total Valuation- Reported Data Only
+38,AR002_034,Num,8,DOLLAR21.2,DOLLAR21.2,AR002_034: Average Valuation Per Unit- Reported Data Only
+4,C_year,Char,4,$4.00 ,$4.00 ,Calender Year
+2,County,Char,18,,,County
+1,Municipal,Char,21,,,Municipal
+3,State,Char,2,$3.00 ,,State
