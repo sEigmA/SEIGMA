@@ -9,17 +9,17 @@ require(sas7bdat)
 require(dplyr)
 
 ## load SAS data
-tax <- read.sas7bdat("aw002_01.sas7bdat")
+building_permit <- read.sas7bdat("ar002_01.sas7bdat")
 
 ## give columns relevant titles
-column_titles <- read.csv("AW002_01_contents.csv", skip=1)
-colnames(tax)[3:9] <- as.character(column_titles$Label[1:7])
+column_titles <- read.csv("AR002_01_contents.csv", skip=1)
+colnames(building_permit)[5:38] <- as.character(column_titles$Label[1:34])
 
 ## remove unnecessary characters from column names
-colnames(tax)[3:9] <- substring(colnames(tax)[3:9], first=12)
-tax[,1:2]<-apply(tax[,1:2],2, function(x) replace(x, x=="N/A", NA))
+colnames(building_permit)[5:38] <- substring(colnames(building_permit)[5:38], first=12)
+building_permit[,1:3]<-apply(building_permit[,1:3],2, function(x) replace(x, x=="N/A", NA))
 
-write.csv(tax, file="taxdata1.csv",row.names=FALSE)
+write.csv(building_permit, file="buildingdata1.csv",row.names=FALSE)
 
 ##calculate the inflation adjusted Residential
 Adjusted_index<-data.frame(Year=2003:2013, Annual=c(184.0,188.9,195.3,201.6,207.342,215.303,214.537,218.056,224.939,229.594, 232.957
