@@ -21,7 +21,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted pValue data
 pValue_data <- read.csv(file="pValuedata2.csv")
-colnames(pValue_data)[2:3]<-c("Year", "Total_Budget")
+colnames(pValue_data)[4:10]<-c("Year","Residential","Open_Space", "Commercial", "Industrial", "Personal_Property", "Total_Assessed")
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -62,21 +62,21 @@ xlim <- list(
 ylim <- list(
   min = 0,
   ##+5 = max rate plus a little extra
-  max = max(pValue_data$Total_Levy_Million, na.rm=T)+5
+  max = max(pValue_data$Total_Assessed_Million, na.rm=T)+5
 )
 
 ## create ylim for the Percent of Levy by Class 
-ylim_pct<-list(
-  min = 0,
+##ylim_pct<-list(
+##  min = 0,
   
-  max = max(pValue_data$Percentage_of_Residential, na.rm=T)+0.5
-)
+##  max = max(pValue_data$Percentage_of_Residential, na.rm=T)+0.5
+##)
 
 ## create ylim for the change of pValue total levy since 2003
 ylim_cha<-list(
-  min = min(pValue_data$Total_Levy_Pct_Change, na.rm=T)-0.5,
+  min = min(pValue_data$Total_Assessed_Pct_Change, na.rm=T)-0.5,
   
-  max = max(pValue_data$Total_Levy_Pct_Change, na.rm=T)+0.5
+  max = max(pValue_data$Total_Assessed_Pct_Change, na.rm=T)+0.5
 )
 
 #################################################################
@@ -88,16 +88,15 @@ paint.brush <- colorRampPalette(colors=c("white", "violetred"))
 map_colors <- c(paint.brush(n=25), "black")
 
 ##Cuts for Inflation_Adjusted_Total_Levy 
-TotpValuemax.val <- max(pValue_data$Inflation_Adjusted_Total_Levy, na.rm=TRUE)
-TotpValuemin.val <- min(pValue_data$Inflation_Adjusted_Total_Levy, na.rm=TRUE)
+TotpValuemax.val <- max(pValue_data$Inflation_Adjusted_Total_Assessed, na.rm=TRUE)
+TotpValuemin.val <- min(pValue_data$Inflation_Adjusted_Total_Assessed, na.rm=TRUE)
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-TotpValuecuts <- quantile(pValue_data$Inflation_Adjusted_Total_Levy, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+TotpValuecuts <- quantile(pValue_data$Inflation_Adjusted_Total_Assessed, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
 ##Cuts for change in Total_Levy since 2003
-pValueChamax.val <- max(pValue_data$Total_Levy_Pct_Change, na.rm=TRUE)
-pValueChamin.val<--pValueChamax.val
-##pValueChamin.val <- min(pValue_data$Total_Levy_Pct_Change, na.rm=TRUE)
+pValueChamax.val <- max(pValue_data$Total_Assessed_Pct_Change, na.rm=TRUE)
+pValueChamin.val <- min(pValue_data$Total_Assessed_Pct_Change, na.rm=TRUE)
 pValueChacuts <- seq(pValueChamin.val, pValueChamax.val, length.out = length(map_colors1))
 
 ##Cuts for the Percent of Levy by Class
@@ -162,17 +161,17 @@ summary_side_text <- conditionalPanel(
   h4("How to use this app:"),
   ## Creates text
   
-  helpText(p(strong('Please select the years for which you are interested in viewing the annual total pValue levy and percent pValue levy by class.'))),
+  helpText(p(strong('Please select the years for which you are interested in viewing the annual total assessed property values and percent assessed property values by class.'))),
   tags$br(),
   tags$ul(
     tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To look at the annual total pValue levy and percent pValue levy by class for a single year, select single year from the drop down menu.'),
+    tags$li('To look at the annual total assessed property values and percent assessed property values by class for a single year, select single year from the drop down menu.'),
     tags$br(),
-    tags$li('To look at the annual total pValue levy and percent pValue levy by class over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
+    tags$li('To look at the annual total assessed property values and percent assessed property values by class over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
     tags$br(),
-    tags$li('Sort the annual total pValue levy and percent pValue levy by class in ascending and descending order by clicking on the column or variable title.')
+    tags$li('Sort the annual total assessed property values and percent assessed property values by class in ascending and descending order by clicking on the column or variable title.')
     
   )
 )
@@ -181,18 +180,18 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the municipality for which you are interested in viewing the annual total pValue levy and percent of the total pValue levy by class. Please do not select more than ten municipalities at a time.')),
+  p(strong('Please select the municipality for which you are interested in viewing the annual total assessed property values and percent of the total assessed property values by class. Please do not select more than ten municipalities at a time.')),
   tags$br(),
   tags$ul(
-    tags$li('Once you have selected the municipalities which you are interested in viewing the annual total pValue levy and percent of the total pValue levy by class, select a Variable of Interest.'),
+    tags$li('Once you have selected the municipalities which you are interested in viewing the annual total assessed property values and percent of the total assessed property values by class, select a Variable of Interest.'),
     tags$br(),
-    tags$li("To view the annual total pValue levy, select Total pValue Levy."),
+    tags$li("To view the annual total assessed property values, select Total Assessed Property Values."),
     tags$br(),
-    tags$li("To view the percent total pValue levy by class, select Percent of Levy by Class."),
+    tags$li("To view the percent assessed property values by class, select Percent of Assessed Property Values by Class."),
     tags$br(),
-    tags$li("Select Actual Values from the Display Options to view the annual total pValue levy for the years 2003-2012."),
+    tags$li("Select Actual Values from the Display Options to view the annual total assessed property values for the years 2003-2013."),
     tags$br(),
-    tags$li("Select Change Since 2003 from the Display Options to view the percent change in the the annual total pValue levy each year for the years 2003-2012.")
+    tags$li("Select Change Since 2003 from the Display Options to view the percent change in the the annual total assessed property values each year for the years 2003-2013.")
   ))
 
 
@@ -203,13 +202,13 @@ map_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
     
-    tags$li('To view the annual total pValue levy select Total pValue Levy, then click on a municipality for which you are interested in viewing the annual total pValue levy.'),
+    tags$li('To view the annual total assessed property values select Total assessed property values, then click on a municipality for which you are interested in viewing the annual total assessed property values.'),
     tags$br(),
-    tags$li("To view the percent total pValue levy by class select Percent of Levy by Class, then click on a municipality for which you are interested in viewing the percent total pValue levy."),
+    tags$li("To view the percent assessed property values by class select Percent of assessed property values by Class, then click on a municipality for which you are interested in viewing the percent assessed property values by class."),
     tags$br(),
-    tags$li("To view the annual total pValue levy between the year you selected and 2003 select Change Since 2003."),
+    tags$li("To view the annual total assessed property values change between the year you selected and year 2003 select Change Since 2003."),
     tags$br(),
-    tags$li("To view the percent total pValue levy by a specific class select a specific class from the Percent of Levy by Class list.")
+    tags$li("To view the percent assessed property values by a specific class select a specific class from the Percent of assessed property values by Class list.")
   ))
 
 info_side_text <- conditionalPanel(
@@ -217,14 +216,14 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Property pValue App"), "displays the total pValue levy and percent pValue levy by class in Massachusetts' municipalities annually.",
+about_main_text <- p(strong("The SEIGMA Assessed Property Values App"), "displays the total assessed property values and percent assessed property values by class in Massachusetts' municipalities annually.",
                      p(strong("Click on different tabs to see the data in different forms.")),
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
-                       tags$li(p(strong("Plot"), "compares the annual total pValue levy and percent pValue levy by class for each municipality to state rates.")),
-                       tags$li(p(strong("Map"), "visually displays the annual total pValue levy and percent pValue levy by class for each municipality")),
-                       tags$li(p(strong("More Info"), "describes the annual total pValue levy and percent pValue levy by class, including formulas and calculations."))
+                       tags$li(p(strong("Plot"), "compares the annual total assessed property values and percent assessed property values by class for each municipality to state rates.")),
+                       tags$li(p(strong("Map"), "visually displays the annual total assessed property values and percent assessed property values by class for each municipality")),
+                       tags$li(p(strong("More Info"), "describes the annual total assessed property values and percent assessed property values by class, including formulas and calculations."))
                      ))
 
 plot_main_text <- p(strong("Variable Summary:"),
@@ -240,7 +239,7 @@ font_size <- 14
 ## stacked column chart
 Pct_plot_options <- googleColumnChart("pct_plot1", width="100%", height="475px") 
 
-TotpValue_plot_options <- googleLineChart("TotpValue_plot1", width="100%", height="475px", options = list(
+pValue_plot_options <- googleLineChart("pValue_plot1", width="100%", height="475px", options = list(
   
   ## set fonts
   fontName = "Source Sans Pro",
@@ -260,7 +259,7 @@ TotpValue_plot_options <- googleLineChart("TotpValue_plot1", width="100%", heigh
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Total pValue Levy (2013 dollars, Million)",
+    title = "Total Assessed Property Values (2013 dollars, Million)",
     viewWindow = ylim,
     textStyle = list(
       fontSize = 14),
@@ -278,7 +277,7 @@ TotpValue_plot_options <- googleLineChart("TotpValue_plot1", width="100%", heigh
   ## set chart area padding
   chartArea = list(
     top = 50, left = 75,
-    height = "75%", width = "70%"
+    height = "80%", width = "70%"
   ),
   
   ## set colors
@@ -296,7 +295,7 @@ TotpValue_plot_options <- googleLineChart("TotpValue_plot1", width="100%", heigh
   )
 ))
 
-pValueCha_plot_options<- googleLineChart("TotpValue_plot2", width="100%", height="475px", options = list(
+pValueCha_plot_options<- googleLineChart("pValue_plot2", width="100%", height="475px", options = list(
   
   ## set fonts
   fontName = "Source Sans Pro",
@@ -316,7 +315,7 @@ pValueCha_plot_options<- googleLineChart("TotpValue_plot2", width="100%", height
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Chang in Total pValue Levy since 2003 (%)",
+    title = "Chang in Total Assessed Property Values since 2003 (%)",
     viewWindow = ylim_cha,
     textStyle = list(
       fontSize = 14),

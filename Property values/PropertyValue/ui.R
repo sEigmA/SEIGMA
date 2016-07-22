@@ -1,9 +1,9 @@
 #######################################
-## Title: Property Tax ui.R          ##
-## Author(s): Xuelian Li, Jenna      ##
-##            Kiridly                ## 
-## Date Created:  01/07/16           ##
-## Date Modified: 01/07/16 XL        ##
+## Title: Property Value ui.R        ##
+## Author(s): Xuelian Li             ##
+##                                   ## 
+## Date Created:  07/22/16           ##
+## Date Modified: 07/22/16 XL        ##
 #######################################
 shinyUI(fluidPage(
   ## HTML to create generate map button
@@ -12,7 +12,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Property Tax App"),
+  titlePanel("", windowTitle = "SEIGMA: Assessed Property Values App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -62,29 +62,24 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'plot'",
                    
                    radioButtons("plot_radio", "Select Variable of Interest",
-                                c("Total Tax Levy" = "Total_Levy",
-                                  "Percent of Levy by Class" = "Percent_Levy"),
-                                selected="Total_Levy"),
+                                c("Total Assessed Property Values" = "Total_Assessed",
+                                  "Percent of Assessed Property Values by Class" = "Percent_Assessed"),
+                                selected="Total_Assessed"),
                    conditionalPanel(
-                     condition="input.plot_radio == 'Total_Levy'",
+                     condition="input.plot_radio == 'Total_Assessed'",
                      ## In plot, show boxes that will compare to MA average
                      radioButtons("plot_display_radio", "Display Options",
-                                  c("Actual Values"="Total_Levy_Million", "Change Since 2003"="Total_Levy_Pct_Change"),
-                                  selected="Total_Levy_Million"),
+                                  c("Actual Values"="Total_Assessed_Million", "Change Since 2003"="Total_Assessed_Pct_Change"),
+                                  selected="Total_Assessed_Million"),
                      ## Select input = List
                      selectInput("plot_muni", "Select Municipality", 
                                  choices = MA_municipals, selected="Everett",multiple=TRUE)),
                    
                    conditionalPanel(
-                     condition="input.plot_radio == 'Percent_Levy'",
+                     condition="input.plot_radio == 'Percent_Assessed'",
                      ## Select input = List
                      selectInput("plot_muni2", "Select Municipality", 
                                  choices = MA_municipals, selected="Everett"))
-#                      radioButtons("plot_class_radio", "Percent of Levy by Class",
-#                                   c("Residential"="Percentage_of_Residential", "Commercial"="Percentage_of_Commercial",
-#                                     "Industrial"="Percentage_of_Industrial", "Personal Property"="Percentage_of_Personal_Property"),
-#                                   selected="Percentage_of_Residential")
-#                    )
                  ),
                  
                  ## in map, allow for timespan selection
@@ -95,18 +90,18 @@ shinyUI(fluidPage(
                                min=2003, max=2013, value=2013,
                                sep=""),
                    radioButtons("map_radio", "Select Variable of Interest",
-                                c("Total Tax Levy" = "Total_Levy",
-                                  "Percent of Levy by Class" = "Percent_Levy"),
-                                selected="Total_Levy"),
+                                c("Total Assessed Property Values" = "Total_Assessed",
+                                  "Percent of Assessed Property Values by Class" = "Percent_Assessed"),
+                                selected="Total_Assessed"),
                    conditionalPanel(
-                     condition="input.map_radio == 'Total_Levy'",
+                     condition="input.map_radio == 'Total_Assessed'",
                      ## In plot, show boxes that will compare to MA average
                      radioButtons("map_display_radio", "Display Options",
-                                  c("Actual Values"="Inflation_Adjusted_Total_Levy", "Change Since 2003"="Total_Levy_Pct_Change"),
-                                  selected="Inflation_Adjusted_Total_Levy")),
+                                  c("Actual Values"="Inflation_Adjusted_Total_Assessed", "Change Since 2003"="Total_Assessed_Pct_Change"),
+                                  selected="Inflation_Adjusted_Total_Assessed")),
                    conditionalPanel(
-                     condition="input.map_radio == 'Percent_Levy'",
-                     radioButtons("map_class_radio", "Percent of Levy by Class",
+                     condition="input.map_radio == 'Percent_Assessed'",
+                     radioButtons("map_class_radio", "Percent of Assessed Property Values by Class",
                                   c("Residential"="Percentage_of_Residential", "Commercial"="Percentage_of_Commercial",
                                     "Industrial"="Percentage_of_Industrial", "Personal Property"="Percentage_of_Personal_Property"),
                                   selected="Percentage_of_Residential"))
@@ -117,7 +112,7 @@ shinyUI(fluidPage(
                  
                  ## author line
                  
-                 helpText("Created by Xuelian Li, Jenna F. Kiridly"),
+                 helpText("Created by Xuelian Li"),
                  
                  
                  ## email feedback link
@@ -125,12 +120,12 @@ shinyUI(fluidPage(
                  helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
                  
                  ## data source citation
-                 helpText(a("Data Source: Massachusetts Department of Revenue", href="https://dlsgateway.dor.state.ma.us/reports/rdPage.aspx?rdReport=PropertyTaxInformation.taxratesbyclass.taxratesbyclass_main",
+                 helpText(a("Data Source: Massachusetts Department of Revenue (MA DOR) Division of Local Services", href="https://dlsgateway.dor.state.ma.us/reports/rdPage.aspx?rdReport=PropertyTaxInformation.taxratesbyclass.taxratesbyclass_main",
                             target="_blank")),
                  
                  ## GitHub link
                  helpText(a("View the data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/property%20tax", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/Property%20values", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -158,23 +153,23 @@ shinyUI(fluidPage(
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
                  conditionalPanel(
-                   condition="input.plot_radio =='Total_Levy'",
+                   condition="input.plot_radio =='Total_Assessed'",
                    conditionalPanel(
-                     condition="input.plot_display_radio=='Total_Levy_Million'", 
+                     condition="input.plot_display_radio=='Total_Assessed_Million'", 
                    ## make chart title here (otherwise not centered)
-                   h4("Annual Total Tax Levy by Region Over Time", align="center"),
-                   TotTax_plot_options),
+                   h4("Annual Total Assessed Property Values by Region Over Time", align="center"),
+                   pValue_plot_options),
                    conditionalPanel(
-                     condition="input.plot_display_radio=='Total_Levy_Pct_Change'", 
+                     condition="input.plot_display_radio=='Total_Assessed_Pct_Change'", 
                      ## make chart title here (otherwise not centered)
-                     h4("Change in Total Tax Levy since 2003", align="center"),
-                     TaxCha_plot_options,
-                     p(strong("Change Since 2003"), "- This is calculated by the total annual tax to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
+                     h4("Change in Total Assessed Property Values since 2003", align="center"),
+                     pValueCha_plot_options,
+                     p(strong("Change Since 2003"), "- This is calculated by the total annual Assessed Property Values to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
                    )
                  ),
                  
                  conditionalPanel(
-                   condition="input.plot_radio =='Percent_Levy'",
+                   condition="input.plot_radio =='Percent_Assessed'",
                    Pct_plot_options
                      ),
                   value="plot"),
@@ -208,25 +203,25 @@ shinyUI(fluidPage(
                  
                  ## Total_Levy Legend
                  conditionalPanel(
-                   condition="input.map_radio == 'Total_Levy' && input.map_display_radio == 'Inflation_Adjusted_Total_Levy' && input.action != 0",
+                   condition="input.map_radio == 'Total_Assessed' && input.map_display_radio == 'Inflation_Adjusted_Total_Assessed' && input.action != 0",
                    absolutePanel(
                      right = 5, top = 130, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Annual Total"),
                      br(),
-                     strong("Tax Levy"),
+                     strong("Assessed Values"),
                      plotOutput("legend1")
                    )),
                  
                  ## Total_Levy Change Legend
                  conditionalPanel(
-                   condition="input.map_radio == 'Total_Levy' && input.map_display_radio == 'Total_Levy_Pct_Change' && input.action != 0",
+                   condition="input.map_radio == 'Total_Assessed' && input.map_display_radio == 'Total_Assessed_Pct_Change' && input.action != 0",
                    absolutePanel(
                      right = 5, top = 130, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Change in"),
                      br(),
-                     strong("Total Levy"),
+                     strong("Total Assessed Values"),
                      br(),
                      strong("Since 2003"),
                      plotOutput("legend3")
@@ -234,13 +229,15 @@ shinyUI(fluidPage(
                  
                  ## Percent_Levy Legend
                  conditionalPanel(
-                   condition="input.map_radio == 'Percent_Levy' && input.action != 0",
+                   condition="input.map_radio == 'Percent_Assessed' && input.action != 0",
                    absolutePanel(
                      right = 5, top = 130, draggable=FALSE, style = "", 
                      class = "floater",
                      strong("Percent of"),
                      br(),
-                     strong("Levy by Class"),
+                     strong("Assessed Values"),
+                     br(),
+                     strong("by Class"),
                      plotOutput("legend2")
                    )),
                  
@@ -252,7 +249,7 @@ shinyUI(fluidPage(
                  tags$br(),
                 
                    
-                   p(strong("Total Tax Levy"), 
+                   p(strong("Total Assessed Property Values"), 
                              "-a levy, or tax, on property that the owner is required to pay. The tax is given by the region in which the property is located."),
                    tags$br(),
                    p(strong('Class - Residential'),
