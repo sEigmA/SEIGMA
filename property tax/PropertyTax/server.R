@@ -318,7 +318,7 @@ shinyServer(function(input, output, session){
     if (input$map_radio == "Total_Levy") {
       if(input$map_display_radio == "Inflation_Adjusted_Total_Levy"){
       return(as.character(tags$div(
-        tags$h4("Annual Total Tax Levy in", muni_name, " for ", input$map_year),
+        tags$h4("Annual Total Tax Levy (2013 dollars) in", muni_name, " for ", input$map_year),
         tags$h5(muni_value)
       )))
     }
@@ -331,7 +331,7 @@ shinyServer(function(input, output, session){
   }
     else{
           return(as.character(tags$div(
-          tags$h4(var_select, "in", muni_name, " for ", input$map_year),
+          tags$h4(var_select, "property tax in", muni_name, " for ", input$map_year),
           tags$h5(muni_value, "%")
         )))
       }
@@ -346,7 +346,7 @@ shinyServer(function(input, output, session){
       leg_dat <- data_frame(y = seq(TotTaxmin.val, TotTaxmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       p <- ggplot(data = leg_dat) +
-        geom_tile(aes(y = y, fill = reorder(col,y), x = x), show_guide = FALSE) +
+        geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),
               axis.text.y = element_text(size = 12),
@@ -368,7 +368,7 @@ shinyServer(function(input, output, session){
       leg_dat <- data_frame(y = seq(TaxChamin.val, TaxChamax.val,length.out=(length(map_colors1)-1)), x = 1, col = cols)
       
       b <- ggplot(data = leg_dat) +
-        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show_guide = FALSE) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
         scale_y_continuous(limits = c(TaxChamin.val, TaxChamax.val), breaks = seq(TaxChamin.val, TaxChamax.val, length.out = 5)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),

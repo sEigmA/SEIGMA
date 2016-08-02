@@ -221,7 +221,7 @@ about_main_text <- p(strong("The SEIGMA Assessed Property Values App"), "display
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
-                       tags$li(p(strong("Plot"), "compares the annual total assessed property values and percent assessed property values by class for each municipality to state rates.")),
+                       tags$li(p(strong("Plot"), "compares the annual total assessed property values and percent assessed property values by class for each municipality over time.")),
                        tags$li(p(strong("Map"), "visually displays the annual total assessed property values and percent assessed property values by class for each municipality")),
                        tags$li(p(strong("More Info"), "describes the annual total assessed property values and percent assessed property values by class, including formulas and calculations."))
                      ))

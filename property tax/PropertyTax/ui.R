@@ -263,7 +263,15 @@ shinyUI(fluidPage(
                  tags$br(),
                  p(strong('Class- Industrial'), 
                    "-Property involved in manufacturing or processing. This includes porperty used for storage, transmission, and the regulated generation of utilities."),
-                 tags$
+                 
+                 tags$br(),
+                 p(strong('Class- Personal property'), 
+                   "-Property not permanently affixed to real estate. Personal property is movable and can be removed without serious damage either to the real estate or to the item being removed."),
+                 
+                 tags$br(),
+                 p(strong('2013 Dollars'), 
+                   "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2013 to be our constant."),
+                 tags$br(),
                  
                  #tags$br(),
                  # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),                  

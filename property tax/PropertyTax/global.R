@@ -223,7 +223,7 @@ about_main_text <- p(strong("The SEIGMA Property Tax App"), "displays the total 
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
-                       tags$li(p(strong("Plot"), "compares the annual total tax levy and percent tax levy by class for each municipality to state rates.")),
+                       tags$li(p(strong("Plot"), "compares the annual total tax levy and percent tax levy by class for each municipality over time.")),
                        tags$li(p(strong("Map"), "visually displays the annual total tax levy and percent tax levy by class for each municipality")),
                        tags$li(p(strong("More Info"), "describes the annual total tax levy and percent tax levy by class, including formulas and calculations."))
                      ))

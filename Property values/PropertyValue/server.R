@@ -318,7 +318,7 @@ shinyServer(function(input, output, session){
     if (input$map_radio == "Total_Assessed") {
       if(input$map_display_radio == "Inflation_Adjusted_Total_Assessed"){
       return(as.character(tags$div(
-        tags$h4("Annual Total Assessed Property Values in", muni_name, " for ", input$map_year),
+        tags$h4("Annual Total Assessed Property Values (2013 dollars) in", muni_name, " for ", input$map_year),
         tags$h5(muni_value)
       )))
     }
@@ -331,7 +331,7 @@ shinyServer(function(input, output, session){
   }
     else{
           return(as.character(tags$div(
-          tags$h4(var_select, "in", muni_name, " for ", input$map_year),
+          tags$h4(var_select, "property value in", muni_name, " for ", input$map_year),
           tags$h5(muni_value, "%")
         )))
       }
