@@ -450,7 +450,7 @@ output$legend4<- renderPlot({
     
     paint.brush = colorRampPalette(colors=c(cbbPalette[5], "white",cbbPalette[8]))
     cols <- paint.brush(25)
-    leg_dat <- data_frame(y = seq(pctmin.val2, pctmax.val,length.out=25), x = 1, col = cols)
+    leg_dat <- data_frame(y = seq(pctmin.val, pctmax.val,length.out=25), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
