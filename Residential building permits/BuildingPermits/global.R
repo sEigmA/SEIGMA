@@ -198,7 +198,7 @@ summary_side_text <- conditionalPanel(
     tags$br(),
     tags$li("To compare data to the Massachusetts data, select the corresponding box."),
     tags$br(),
-    tags$li("o	Data is based on reported data plus data imputed for non-reporters and partial reporters.")
+    tags$li("Data is based on reported data plus data imputed for non-reporters and partial reporters.")
   )
 )
 
@@ -230,7 +230,7 @@ map_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
     
-    tags$li('To view the annual total number of new housing units authorized by building permits select total number of new housing units authorized by building permits, then click on a municipality for which you are interested in viewing the annual total number of new housing units authorized by building permits.'),
+    tags$li('To view the annual total number of new housing units authorized by building permits select total number of new housing units, then click on a municipality for which you are interested in viewing the annual total number of new housing units.'),
     tags$br(),
     tags$li("To view the number of new housing units by structure size select number of new housing units by structure size, then click on a municipality for which you are interested in viewing the number of new housing units by structure size."),
     tags$br(),

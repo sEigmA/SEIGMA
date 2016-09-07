@@ -12,7 +12,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Assessed Property Values App"),
+  titlePanel("", windowTitle = "SEIGMA: Residential Building Permits App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -185,7 +185,7 @@ shinyUI(fluidPage(
                    Pct_plot_options
                      ),
                   value="plot",
-                p(strong("o	Data is based on reported data plus data imputed for non-reporters and partial reporters."))
+                p(strong("Data is based on reported data plus data imputed for non-reporters and partial reporters."))
 ),
         
         ## plot map
@@ -269,7 +269,7 @@ shinyUI(fluidPage(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", "maroon")
                          )),
-                         tags$td("Increasing", align = "right")
+                         tags$td("Increase", align = "right")
                        ),
                        tags$tr(
                          tags$td(tags$div(
@@ -281,13 +281,13 @@ shinyUI(fluidPage(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;border:1px solid black;", "green")
                          )),
-                         tags$td("Decreasing", align = "right")
+                         tags$td("Decrease", align = "right")
                        ),
                        tags$tr(
                          tags$td(tags$div(
                            style = sprintf("width: 16px; height: 16px; background-color: %s;", "black")
                          )),
-                         tags$td("Data not",br(), "available", align = "right")
+                         tags$td("Data not available", align = "right")
                        )
                      )
                    ),
@@ -315,7 +315,7 @@ shinyUI(fluidPage(
                        )
                      )
                    ),
-                   p(strong("o	This is calculated by dividing the annual total number of new housing units for a specific year by the population for that year. For years 2000-2009, the estimated population by 2000 census was used. For years 2010-2011, the estimated population by 2010 census was used"))
+                   p(strong("This is calculated by dividing the annual total number of new housing units for a specific year by the population for that year. For years 2000-2009, the estimated population by 2000 census was used. For years 2010-2011, the estimated population by 2010 census was used."))
         ),
                  
                  ## Percent by structure Legend
@@ -342,7 +342,7 @@ shinyUI(fluidPage(
                  
                   #plot_main_text,
                  value="map",
-                p(strong("o	Data is based on reported data plus data imputed for non-reporters and partial reporters."))
+                p(strong("Data is based on reported data plus data imputed for non-reporters and partial reporters."))
         ),
         
         tabPanel("More Info", 
@@ -365,6 +365,10 @@ shinyUI(fluidPage(
                  p(strong('2011 Dollars'), 
                           "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2011 to be our constant."),
                  tags$br(),
+                 
+                 p(strong("Total number of new housing units per 1000 population-"),
+                 " is calculated by dividing the annual total number of new housing units for a specific year by the population for that year. For years 2000-2009, the estimated population by 2000 census was used. For years 2010-2011, the estimated population by 2010 census was used."),
+                 
                  #tags$br(),
                  # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),                  
                  
