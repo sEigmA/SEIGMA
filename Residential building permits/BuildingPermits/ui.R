@@ -351,26 +351,23 @@ shinyUI(fluidPage(
                 
                    
                  strong("Annual residential building permits-"),
-                 " Data are obtained from the U.S. Census Bureau's Survey of Construction. Building permits data are collected from individual permit offices, most of which are municipalities.  The statistics are based on reports submitted by local building permit officials in response to a mail survey and imputed data.",
+                 " Data are obtained from the U.S. Census Bureau's Survey of Construction. Building permits data are collected from individual permit offices, most of which are municipalities. The statistics are based on reports submitted by local building permit officials in response to a mail survey and imputed data.",
                  
                  tags$br(),
                  tags$br(),
-                 p(strong('Class- Single Family unit'), 
+                 p(strong('Class- Single family unit'), 
                    "-means that the building is usually occupied by just one household or family, and consists of just one dwelling unit or suite."),
                  
                  tags$br(),
-                   p(strong('Class - Multifamily units'),
-                             "-is a classification of housing where multiple separate housing units for residential inhabitants are contained within one building or several buildings within one complex. "),
+                   p(strong('Class - Multi-family units'),
+                             "-is a classification of housing where multiple separate housing units for residents are contained within one building or several buildings within one complex. "),
                  tags$br(),
                  p(strong('2011 Dollars'), 
-                          "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2011 to be our constant."),
+                          "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, we convert  them from current dollar values to constant dollar values. For this app we used the dollar values from 2011 to be our constant."),
                  tags$br(),
                  
-                 p(strong("Total number of new housing units per 1000 population-"),
-                 " is calculated by dividing the annual total number of new housing units for a specific year by the population for that year. For years 2000-2009, the estimated population by 2000 census was used. For years 2010-2011, the estimated population by 2010 census was used."),
-                 
-                 #tags$br(),
-                 # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),                  
+                 p(strong("Total number of new housing units per 1000 inhabitants-"),
+                 " is calculated by dividing the annual total number of new housing units for a specific year by the population for that year. For the years 2000-2009, we used the estimated population size from the 2000 census. For years 2010-2011, the estimated population size from the  2010 census was used."),
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),

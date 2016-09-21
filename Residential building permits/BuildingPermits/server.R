@@ -53,8 +53,9 @@ shinyServer(function(input, output, session){
       select(1:19)
       sum_df[,c(6,9,12,15,18,19)]<-apply(sum_df[,c(6,9,12,15,18,19)],2,function(x)prettyNum(x,big.mark = ","))
     colnames(sum_df)[3:19] <- c("Number of Months Reported" ,"1-Family Buildings","1-Family Units","1-Family Validation (2011 dollars)","2-Family Buildings","2-Family Units","2-Family Validation (2011 dollars)","3-4-Family Buildings","3-4-Family Units","3-4-Family Validation (2011 dollars)","5+ Family Buildings","5+ Family Units","5+ Family Validation(2011 dollars)", "Total Buildings", "Total Units", "Total Validation (2011 dollars)", "Average Validation (2011 dollars)")
-    
-    return(sum_df)
+    sum_df1<-sum_df%>%
+      select(1:3,16:19, 4:15)
+    return(sum_df1)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
   ##############################################
@@ -160,7 +161,7 @@ shinyServer(function(input, output, session){
         ## set fonts
         fontName = "Source Sans Pro",
         fontSize = font_size,
-        title =paste("Number of new Housing units by structure size for 2000-2011 ", 
+        title =paste("Number of New Housing Units by Structure Size for 2000-2011 ", 
                        "in ", input$plot_muni2),
           titleTextStyle = list(
             fontSize = font_size+8,
@@ -404,12 +405,13 @@ shinyServer(function(input, output, session){
     if(input$map_radio == "Total_Permits"&input$map_display_radio == "Total_Units_Reported_Imputed"){
       
       paint.brush = colorRampPalette(colors=c("white", "violetred"))
-      cols <- paint.brush(25)
-      leg_dat <- data_frame(y = seq(TotUnitsmin.val, TotUnitsmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      cols <- paint.brush(22)
+      leg_dat <- data_frame(y = TotUnitscuts, x = 1, col = cols)
       
       p <- ggplot(data = leg_dat) +
         geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
-        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+                scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        scale_y_log10(limits = c(1, max(TotUnitscuts)), breaks = round(TotUnitscuts,0))+
         theme(axis.text.x = element_blank(),
               axis.text.y = element_text(size = 12),
               axis.title.x = element_blank(),
@@ -497,12 +499,13 @@ shinyServer(function(input, output, session){
     if(input$map_radio == "Permits_Per_1000_Population"){
       
       paint.brush = colorRampPalette(colors=c("white", "violetred"))
-      cols <- paint.brush(25)
-      leg_dat <- data_frame(y = seq(UniPerPopmin.val, UniPerPopmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      cols <- paint.brush(22)
+      leg_dat <- data_frame(y = UniPerPopcuts, x = 1, col = cols)
       
       e <- ggplot(data = leg_dat) +
         geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        scale_y_log10(limits = c(1, max(UniPerPopcuts)), breaks = round(UniPerPopcuts,0))+
         theme(axis.text.x = element_blank(),
               axis.text.y = element_text(size = 12),
               axis.title.x = element_blank(),

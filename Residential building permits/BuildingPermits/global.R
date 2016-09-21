@@ -93,19 +93,23 @@ paint.brush1 <- colorRampPalette(colors=c("darkgreen", "white", "maroon"))
 map_colors1 <- c(paint.brush1(n=9), "#999999")
 
 paint.brush <- colorRampPalette(colors=c("white", "violetred"))
-map_colors <- c(paint.brush(n=25), "black")
+map_colors <- c(paint.brush(n=20), "black")
 
 ##Cuts for Total Units reported and imputed 
 TotUnitsmax.val <- max(bPermit_data$Total_Units_Reported_Imputed, na.rm=TRUE)
 TotUnitsmin.val <- min(bPermit_data$Total_Units_Reported_Imputed, na.rm=TRUE)
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-TotUnitscuts <- quantile(bPermit_data$Total_Units_Reported_Imputed, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
-
+##TotUnitscuts <- quantile(bPermit_data$Total_Units_Reported_Imputed, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+TotUnitsLogcuts<-seq(0,log10(TotUnitsmax.val), length.out=length(map_colors))
+TotUnitscuts1<-10^(TotUnitsLogcuts)
+TotUnitscuts <- unique(c(0, TotUnitscuts1))
 ##Cuts for Permits Per 1,000 Population
 UniPerPopmax.val <- max(bPermit_data$Permits_Per_1000_Population, na.rm=TRUE)
 UniPerPopmin.val <- min(bPermit_data$Permits_Per_1000_Population, na.rm=TRUE)
-UniPerPopcuts <- seq(UniPerPopmin.val, UniPerPopmax.val, length.out = length(map_colors))
+UniPerPopLogcuts<-seq(0,log10(UniPerPopmax.val), length.out=length(map_colors))
+UniPerPopcuts1<-10^(UniPerPopLogcuts)
+UniPerPopcuts <- unique(c(0, UniPerPopcuts1))
 
 ##Cuts for change in Total_Units since 2000
 # TotUniChamax.val <- max(bPermit_data$Total_Pct_Change, na.rm=TRUE)
@@ -192,7 +196,7 @@ summary_side_text <- conditionalPanel(
     tags$br(),
     tags$li('To look at the number of residential building permits, number of new housing units authorized by building permits and number of new housing units by structure size for a single year, select single year from the drop down menu.'),
     tags$br(),
-    tags$li('To look at the number of residential building permits, number of new housing units authorized by building permits and number of new housing units by structure size over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
+    tags$li('To look at the data over a specific time period select multiple years from the drop down menu. Then use the sliding bar to select a range.'),
     tags$br(),
     tags$li('Sort the number of residential building permits, number of new housing units authorized by building permits and number of new housing units by structure size in ascending and descending order by clicking on the column or variable title.'),
     tags$br(),
@@ -245,14 +249,14 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Residential Building Permits App"), "displays the total number of residential building permits,total number of new housing units authorized by building permits and number of housing units by structure size in Massachusetts' municipalities annually.",
+about_main_text <- p(strong("The SEIGMA Residential Building Permits App"), "displays the total number of residential building permits, total number of new housing units authorized by building permits and number of housing units by structure size in Massachusetts' municipalities between 2000 and 2012.",
                      p(strong("Click on different tabs to see the data in different forms.")),
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
-                       tags$li(p(strong("Plot"), "compares the annual total number of new housing units authorized by building permits and number of new housing units by structure size for each municipality over time.")),
-                       tags$li(p(strong("Map"), "visually displays the annual total number of new housing units authorized by building permits, total number of new housing units per 1000 population, and number of new housing units by structure size for each municipality")),
-                       tags$li(p(strong("More Info"), "describes the annual total number of new housing units authorized by building permits, total number of new housing units per 1000 population, and number of new housing units by structure size, including formulas and calculations."))
+                       tags$li(p(strong("Plot"), "displays measuresfor each municipality over time: Choose between viewing the annual total number of new housing units authorized by building permits or the number of new housing units, grouped by structure size.")),
+                       tags$li(p(strong("Map"), "displays the geographic pattern in total number of new housing units authorized by building permits, total number of new housing units per 1000 inhabitants, and number of new housing units by structure size for each municipality for the years 2000-2012.")),
+                       tags$li(p(strong("More Info"), "describes the annual total number of new housing units authorized by building permits, total number of new housing units per 1000 inhabitants, and number of new housing units by structure size, including formulas and calculations."))
                      ))
 
 plot_main_text <- p(strong("Variable Summary:"),
