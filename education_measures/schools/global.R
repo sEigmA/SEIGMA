@@ -26,12 +26,23 @@ require(tidyr)
 # ## load map data
 # #MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 # MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
-edu_data <- read.csv(file="edum_data.csv")
+edu_data <- read.csv(file="BF001_001.csv")
+edu_data<-edu_data[,-1]
 #put this in data cleaning
 colnames(edu_data)[7:21]<-gsub(x=names(edu_data)[7:21],pattern=".", replacement=" ", fixed=T)
-colnames(edu_data)[16]<-"Eighth Grade"
+#colnames(edu_data)[16]<-"Eighth Grade"
 
-
+edu_data$school.year<-as.numeric(substr(edu_data$school.year, 1, 4))
+#reorder dataframe to match old dataframe and save work
+edu_data<-cbind(edu_data[,c(1:65, 2, 68, 67)] ,
+                     "PREK"=rep(NA, nrow(edu_data)),
+                     "KIND"=rep(NA, nrow(edu_data)),
+                     "ELEM"=rep(NA, nrow(edu_data)),
+                     "MIDD"=rep(NA, nrow(edu_data)),
+                     "HIGH"=rep(NA, nrow(edu_data)),
+              edu_data[,c(71:85,66:71)] 
+)
+names(edu_data)[c(67:68,74, 91, 94)]<-c("lon", "lat", "LatLong", "Lng", "loc")
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -55,10 +66,37 @@ colnames(edu_data)[16]<-"Eighth Grade"
 MA_county <- sort(as.character(unique(edu_data$County)))
  MA_municipals <- sort(as.character(unique(edu_data$Municipal)))
  all_schools<-as.character(unique(edu_data$school.name))
+ 
+ #When a school has no mobility data that needs to not show up in options
+ #on the side bar. Due to formatting issues there's this if else puzzle to do
+ 
+ nodata<-unlist(sapply(split(edu_data, edu_data$school.name), FUN=
+   function(x){ifelse(
+     #if there's only one year
+     nrow(x)==1,
+    ifelse(
+     #are all mobility data missing? if yes T
+     all(apply(t(data.frame(apply(x[,46:65], 2, FUN=is.na))), 1, all))==T,
+     #return school name
+      return(as.character(x$school.name[1])),
+     #else
+     return(NULL)),
+    
+    #if there are multiple years of data for a school
+    ifelse(
+      #are all mobility data missing? if yes T
+      all(apply(data.frame(apply(x[,46:65], 2, FUN=is.na)), 1, all))==T,
+      #return school name
+      return(as.character(x$school.name[1])),
+      #else
+      return(NULL))
+   )
+    
+    }
+ ))
+ 
  #subtract those with no mobility data
- nodata<-c("Cuttyhunk Elementary", "Ma Academy for Math and Science School",
-           "Monterey", "Pathways Early College Innovation School",
-           "Peter Fitzpatrick School", "South Egremont")
+ 
  all_schools<-all_schools[-which(all_schools %in% nodata)]
  all_school_table<-lapply(split(edu_data, edu_data$County), FUN=function(x){
    sk<-as.character(unique(x$school.name))
