@@ -327,7 +327,7 @@ shinyUI(fluidPage(
         
         ## summary tab
         tabPanel("Summary", 
-                 dataTableOutput("summary"), value="summary", 
+                 DT::dataTableOutput("summary"), value="summary", 
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
         
         
@@ -338,13 +338,15 @@ shinyUI(fluidPage(
                 
                   conditionalPanel(
                    condition="input.plot_profile=='enrolled' && input.plot_enrolled!='Interest Groups' && input.plot_school!=' '",
-                   percentcolchart)
+                   percentcolchart,
+                   HTML("Data are only shown from years in which schools were in operation and reported data"))
                 ,conditionalPanel(
                   condition="input.plot_profile=='enrolled' && input.plot_enrolled!='Interest Groups' && input.plot_school==' '",
                   HTML("Please select a school")),
                 conditionalPanel(
                   condition="input.plot_profile=='enrolled' && input.plot_enrolled=='Interest Groups' && input.plot_school!=' '",
-                  countcolchart)
+                  countcolchart,
+                  HTML("Data are only shown from years in which schools were in operation and reported data"))
                 ,conditionalPanel(
                   condition="input.plot_profile=='enrolled' && input.plot_enrolled=='Interest Groups' && input.plot_school==' '",
                   HTML("Please select a school")),
@@ -353,7 +355,8 @@ shinyUI(fluidPage(
                 #of mobility enrollment
                 conditionalPanel(
                   condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobenrollment'  && input.plot_school!=' '",
-                  mobenrollment_plot_options),
+                  mobenrollment_plot_options,
+                  HTML("Data are only shown from years in which schools were in operation and reported data")),
                 conditionalPanel(
                   condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobenrollment'  && input.plot_school==' '",
                   HTML("Please select a school")),
@@ -361,7 +364,8 @@ shinyUI(fluidPage(
                 #of mobility rate
                 conditionalPanel(
                   condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobrate'  && input.plot_school!=' '",
-                  mobrate_plot_options),
+                  mobrate_plot_options,
+                  HTML("Data are only shown from years in which schools were in operation and reported data")),
                 conditionalPanel(
                   condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobrate'  && input.plot_school==' '",
                   HTML("Please select a school"))
@@ -390,7 +394,7 @@ tabPanel("Map",
                           tags$br(),
                    
           leafletOutput("leafmap1"),
-          
+          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                          
          
          #Legend- African American
@@ -467,6 +471,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap2"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           
          conditionalPanel(
            condition="input.lmap_level2 == 'Females'",
@@ -497,6 +502,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap3"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           
          conditionalPanel(
            condition="input.lmap_level3 == 'Pre Kindergarden'",
@@ -629,6 +635,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap4"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
          conditionalPanel(
            condition="input.lmap_level4 == 'English Language Learner Enrolled %'",
            absolutePanel(
@@ -681,6 +688,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap5"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level5 == 'Churn Rate for English Language Learning Students'",
                             absolutePanel(
@@ -715,6 +723,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap6"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level6 == 'Churn Rate for Students with Disabilities'",
                             absolutePanel(
@@ -749,6 +758,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap7"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level7 == 'Churn Rate for Low Income Students'",
                             absolutePanel(
@@ -783,6 +793,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap8"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level8 == 'Churn Rate for High Needs Students Students'",
                             absolutePanel(
@@ -819,6 +830,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap9"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level9 == 'Churn Enrollment for English Language Learning Students'",
                             absolutePanel(
@@ -845,6 +857,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap10"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level10 == 'Churn Enrollment for Students with Disabilities'",
                             absolutePanel(
@@ -871,6 +884,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap11"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level11 == 'Churn Enrollment for Low Income Students'",
                             absolutePanel(
@@ -897,6 +911,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap12"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level12 == 'Churn Enrollment for High Needs Students Students'",
                             absolutePanel(

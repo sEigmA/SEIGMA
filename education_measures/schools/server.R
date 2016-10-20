@@ -28,7 +28,7 @@ shinyServer(function(input, output, session) {
   
   
   ## Create summary table
-  output$summary <- renderDataTable({
+  output$summary <- DT::renderDataTable({
     ## Make reactive dataframe into regular dataframe
     edum <- edum()
 
@@ -104,7 +104,13 @@ sum_df <- df %>% filter(County %in% county & Municipal %in% munis)
 
     ## create a dataframe consisting only of counties in vector
 return(sum_df)
-  }, options = list(searching = FALSE, orderClasses = TRUE))
+  }, options = list(
+    searching = FALSE, 
+    orderClasses = TRUE,
+    autoWidth=TRUE,
+    scrollX=TRUE,
+    columnDefs = list(list(width = '300px', targets = 2))
+    ), rownames=F)
 
   
   output$sum_muniui <-renderUI({
@@ -1017,6 +1023,12 @@ return(sum_df)
    
   #create maps in leaflet
     
+  #opacity (circle rim opacity)
+  op=0.5
+  #fill opacity (color of circles)
+  fop=0.7
+  
+  
   output$leafmap1<-renderLeaflet({
     
       leaflet(width="100%", height="120%")%>% 
@@ -1041,8 +1053,8 @@ return(sum_df)
     leafletProxy("leafmap1", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
-        fillOpacity=0.2,
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "%")) 
@@ -1077,8 +1089,8 @@ return(sum_df)
     leafletProxy("leafmap2", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
-        fillOpacity=0.2,
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "%")) 
@@ -1110,8 +1122,8 @@ return(sum_df)
     leafletProxy("leafmap3", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
-        fillOpacity=0.2,
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "")) 
@@ -1142,8 +1154,8 @@ return(sum_df)
     leafletProxy("leafmap4", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
-        fillOpacity=0.2,
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "%")) 
@@ -1175,8 +1187,8 @@ return(sum_df)
     leafletProxy("leafmap5", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
-        fillOpacity=0.2,
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "%")) 
@@ -1207,8 +1219,8 @@ return(sum_df)
     leafletProxy("leafmap6", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
-        fillOpacity=0.2,
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "%")) 
@@ -1239,8 +1251,8 @@ return(sum_df)
     leafletProxy("leafmap7", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
-        fillOpacity=0.2,
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "%")) 
@@ -1271,8 +1283,8 @@ return(sum_df)
     leafletProxy("leafmap8", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
-        fillOpacity=0.2,
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "%")) 
@@ -1303,8 +1315,8 @@ return(sum_df)
     leafletProxy("leafmap9", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
-        fillOpacity=0.2,
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "%")) 
@@ -1335,8 +1347,8 @@ return(sum_df)
     leafletProxy("leafmap10", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
-        fillOpacity=0.2,
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "%")) 
@@ -1367,8 +1379,8 @@ return(sum_df)
     leafletProxy("leafmap11", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
-        fillOpacity=0.2,
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "%")) 
@@ -1399,8 +1411,8 @@ return(sum_df)
     leafletProxy("leafmap12", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=0.5,
-        fillOpacity=0.2,
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "%")) 
