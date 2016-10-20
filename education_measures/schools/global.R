@@ -28,7 +28,7 @@ require(DT)
 # #MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 # MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 edu_data <- read.csv(file="BF001_001.csv")
-edu_data<-edu_data[,-1]
+edu_data<-edu_data[,-c(1:2)]
 #put this in data cleaning
 colnames(edu_data)[7:21]<-gsub(x=names(edu_data)[7:21],pattern=".", replacement=" ", fixed=T)
 #colnames(edu_data)[16]<-"Eighth Grade"
