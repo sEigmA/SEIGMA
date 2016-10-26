@@ -393,7 +393,7 @@ tabPanel("Map",
                           htmlOutput("lmap_title1")),
                           tags$br(),
                    
-          leafletOutput("leafmap1"),
+          leafletOutput("leafmap1", width=750, height=500),
           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                          
          
@@ -470,7 +470,7 @@ tabPanel("Map",
                                            htmlOutput("lmap_title2")),
                           tags$br(),
                           
-                          leafletOutput("leafmap2"),
+                          leafletOutput("leafmap2", width=750, height=500),
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           
          conditionalPanel(
@@ -501,7 +501,7 @@ tabPanel("Map",
                                            htmlOutput("lmap_title3")),
                           tags$br(),
                           
-                          leafletOutput("leafmap3"),
+                          leafletOutput("leafmap3", width=750, height=500),
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           
          conditionalPanel(
@@ -634,7 +634,7 @@ tabPanel("Map",
                                            htmlOutput("lmap_title4")),
                           tags$br(),
                           
-                          leafletOutput("leafmap4"),
+                          leafletOutput("leafmap4", width=750, height=500),
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
          conditionalPanel(
            condition="input.lmap_level4 == 'English Language Learner Enrolled %'",
@@ -687,7 +687,7 @@ tabPanel("Map",
                                            htmlOutput("lmap_title5")),
                           tags$br(),
                           
-                          leafletOutput("leafmap5"),
+                          leafletOutput("leafmap5", width=750, height=500),
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level5 == 'Churn Rate for English Language Learning Students'",
@@ -722,7 +722,7 @@ tabPanel("Map",
                                            htmlOutput("lmap_title6")),
                           tags$br(),
                           
-                          leafletOutput("leafmap6"),
+                          leafletOutput("leafmap6", width=750, height=500),
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level6 == 'Churn Rate for Students with Disabilities'",
@@ -757,7 +757,7 @@ tabPanel("Map",
                                            htmlOutput("lmap_title7")),
                           tags$br(),
                           
-                          leafletOutput("leafmap7"),
+                          leafletOutput("leafmap7", width=750, height=500),
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level7 == 'Churn Rate for Low Income Students'",
@@ -792,7 +792,7 @@ tabPanel("Map",
                                            htmlOutput("lmap_title8")),
                           tags$br(),
                           
-                          leafletOutput("leafmap8"),
+                          leafletOutput("leafmap8", width=750, height=500),
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level8 == 'Churn Rate for High Needs Students Students'",
@@ -829,7 +829,7 @@ tabPanel("Map",
                                            htmlOutput("lmap_title9")),
                           tags$br(),
                           
-                          leafletOutput("leafmap9"),
+                          leafletOutput("leafmap9", width=750, height=500),
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level9 == 'Churn Enrollment for English Language Learning Students'",
@@ -856,7 +856,7 @@ tabPanel("Map",
                                            htmlOutput("lmap_title10")),
                           tags$br(),
                           
-                          leafletOutput("leafmap10"),
+                          leafletOutput("leafmap10", width=750, height=500),
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level10 == 'Churn Enrollment for Students with Disabilities'",
@@ -883,7 +883,7 @@ tabPanel("Map",
                                            htmlOutput("lmap_title11")),
                           tags$br(),
                           
-                          leafletOutput("leafmap11"),
+                          leafletOutput("leafmap11", width=750, height=500),
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level11 == 'Churn Enrollment for Low Income Students'",
@@ -910,7 +910,7 @@ tabPanel("Map",
                                            htmlOutput("lmap_title12")),
                           tags$br(),
                           
-                          leafletOutput("leafmap12"),
+                          leafletOutput("leafmap12", width=750, height=500),
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
                             condition="input.lmap_level12 == 'Churn Enrollment for High Needs Students Students'",
@@ -948,12 +948,12 @@ tabPanel("Map",
                  tags$br(),
                  tags$li(p(strong("Students With Disabilities"), "- students who have received Individualized Education Program (IEP).")),
                  tags$br(),
-                 tags$li(p(strong("High Needs"), "- A student is considered high needs if he or she is either low income (prior to School Year 2015), economically disadvantaged (starting in School Year 2015), an English language learner, or a student with disabilities.")),
+                 tags$li(p(strong("High Needs"), "- A student is considered high needs if he or she is either low income (prior to School Year 2015), economically disadvantaged (starting in School Year 2015), an English language learner, or a student with disabilities. Data on High Needs students were not collected until 2012.")),
                  tags$br(),
-                 tags$li(p(strong("Low Income"), "- A student is considered low income if he or she meets any of thr following criteria: they are eligible for free or reduced price lunch, they receive Transitional Aid to Families (TANF) benefits, or are eligible to receive food stamps,")),
+                 tags$li(p(strong("Low Income"), "- A student is considered low income if he or she meets any of thr following criteria: they are eligible for free or reduced price lunch, they receive Transitional Aid to Families (TANF) benefits, or are eligible to receive food stamps.")),
                  tags$br(),
                  tags$li(p(strong("Intake Rate"),
-                           " - Measures the number of students that enroll in a school after the official start of the school year. Intake rate is calculated by dividing the number of students who enroll in a school after the official start of the shcool year by the total number of students that enrolled in that school.  Intake rates are collected from each school's School Information Management System.")),
+                           " - Measures the number of students that enroll in a school after the official start of the school year. Intake rate is calculated by dividing the number of students who enroll in a school after the official start of the school year by the total number of students that enrolled in that school.  Intake rates are collected from each school's School Information Management System.")),
                  tags$br(),
                  tags$li((p(strong("Churn Rate"),
                             "-  Measures the number of students who transfer in or out of a school durign the course of a single school year. Churn rate is calculated by dividing by the total number of students enrolled in that school."))),

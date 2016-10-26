@@ -1031,8 +1031,8 @@ return(sum_df)
   
   output$leafmap1<-renderLeaflet({
     
-      leaflet(width="100%", height="120%")%>% 
-      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+      leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.Toner")
     })
   
@@ -1067,8 +1067,8 @@ return(sum_df)
     
   output$leafmap2<-renderLeaflet({
     
-    leaflet(width="100%", height="120%")%>% 
-      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.Toner")
   })
   
@@ -1100,8 +1100,8 @@ return(sum_df)
   
   output$leafmap3<-renderLeaflet({
     
-    leaflet(width="100%", height="120%")%>% 
-      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.Toner")
   })
   
@@ -1131,9 +1131,8 @@ return(sum_df)
     
   })
   output$leafmap4<-renderLeaflet({
-    
-    leaflet(width="100%", height="120%")%>% 
-      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.Toner")
   })
   
@@ -1164,9 +1163,8 @@ return(sum_df)
   })
   
   output$leafmap5<-renderLeaflet({
-    
-    leaflet(width="100%", height="120%")%>% 
-      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.Toner")
   })
   
@@ -1196,9 +1194,8 @@ return(sum_df)
     
   })
   output$leafmap6<-renderLeaflet({
-    
-    leaflet(width="100%", height="120%")%>% 
-      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.Toner")
   })
   
@@ -1228,9 +1225,8 @@ return(sum_df)
     
   })
   output$leafmap7<-renderLeaflet({
-    
-    leaflet(width="100%", height="120%")%>% 
-      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.Toner")
   })
   
@@ -1260,9 +1256,8 @@ return(sum_df)
     
   })
   output$leafmap8<-renderLeaflet({
-    
-    leaflet(width="100%", height="120%")%>% 
-      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.Toner")
   })
   
@@ -1292,9 +1287,8 @@ return(sum_df)
     
   })
   output$leafmap9<-renderLeaflet({
-    
-    leaflet(width="100%", height="120%")%>% 
-      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.Toner")
   })
   
@@ -1324,9 +1318,8 @@ return(sum_df)
     
   })
   output$leafmap10<-renderLeaflet({
-    
-    leaflet(width="100%", height="120%")%>% 
-      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.Toner")
   })
   
@@ -1356,9 +1349,8 @@ return(sum_df)
     
   })
   output$leafmap11<-renderLeaflet({
-    
-    leaflet(width="100%", height="120%")%>% 
-      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.Toner")
   })
   
@@ -1388,9 +1380,8 @@ return(sum_df)
     
   })
   output$leafmap12<-renderLeaflet({
-    
-    leaflet(width="100%", height="120%")%>% 
-      fitBounds(lng1=-73.5, lng2=-70, lat1=43, lat2=41) %>% 
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.Toner")
   })
   

@@ -102,8 +102,9 @@ MA_county <- sort(as.character(unique(edu_data$County)))
  all_school_table<-lapply(split(edu_data, edu_data$County), FUN=function(x){
    sk<-as.character(unique(x$school.name))
    okschools<-sk[!sk %in% nodata]
-   c(" ",okschools)})
- all_school_table[[" "]]<-c(" ",all_schools)
+   l=c(" ",okschools)
+   l[order(l)]})
+ all_school_table[[" "]]<-c(" ",all_schools)[order(c(" ",all_schools))]
  
  #ut the interest groups that have non data in the mobility data in a list
  
