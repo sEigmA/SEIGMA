@@ -656,11 +656,11 @@ return(sum_df)
 
     
     #message to be displayed when variable full of NAs selected
-    validate(
-      need(is.null(r_mobenrollplot_df())==FALSE, "No data available, please select a different variable and regenerate plot"),
-      need(nrow(r_mobenrollplot_df())>0, "No data available, please select a different variable  and regenerate plot")
-      
-    )
+    #validate(
+    #  need(is.null(r_mobenrollplot_df())==FALSE, "No data available, please select a different variable and regenerate plot"),
+    #  need(nrow(r_mobenrollplot_df())>0, "No data available, please select a different variable  and regenerate plot")
+    #  
+    #)
 #     
     
     
