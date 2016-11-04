@@ -11,7 +11,7 @@ shinyServer(function(input, output, session) {
   ## rent_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
   rent_df <- reactive({
     ## Filter the data by the chosen Five Year Range 
-    rent_df <- rent_data %>%
+    rent_df <- rent %>%
       filter(Five.Year.Range == input$sum_year) %>%
       select(c(1:5))
 
@@ -51,58 +51,85 @@ shinyServer(function(input, output, session) {
     
     colnames(rent_df) <- gsub(".", " ", colnames(rent_df), fixed=T)
     
+    
 #     rent_df[,3] <- prettyNum(rent_df[,3], big.mark=",")
 #     rent_df[,4] <- prettyNum(rent_df[,4], big.mark=",")
 #     
     return(rent_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
+  
 #   
-#   ## create the plot of the data
-#   
-#   plot_rent_df <- reactive({
-#     ## Filter the data by the chosen Five Year Range 
-#     plot_rent_df <- rent_data %>%
-#       filter(Five.Year.Range == input$plot_year) %>%
-#       select(1:4, Five.Year.Range, Median.Rent, Rent.Margin.of.Error)
-#     
-#     ## Output reactive dataframe
-#     plot_rent_df    
-#   })
-#   
-#   ## for the Google charts plot
-#   output$plot <- reactive({
-#     ## make reactive dataframe into regular dataframe
-#     plot_rent_df <- plot_rent_df()
-#     
+  ## create the plot of the data
+
+  plot_rent_df <- reactive({
+    munis_p<-input$plot_muni
+    
+    if(input$US_mean_p){
+      if(input$MA_mean_p){
+        munis_p <- c("USA", "MA", munis_p) ## US and MA  
+      } else{
+        munis_p <- c("USA", munis_p) ## US only
+      }
+    } else{
+      if(input$MA_mean_p){
+        munis_p <- c("MA", munis_p) ## US only ## MA only
+      }
+    }
+    
+    
+    
+    ## Filter the data by the chosen Five Year Range
+    plot_rent_df <- rent %>%
+      filter(Municipal %in% munis_p) %>%
+      select(c(1,3,4)) %>%
+      spread(Municipal, Median.Rent)
+    #add ribbons
+    #plot_rent_df_e <- rent %>%
+    #  filter(Municipal %in% munis_p) %>%
+    #  select(c(1,3,5)) %>%
+    #  spread(Municipal, Rent.Margin.of.Error)
+    #plot_rent_df_e<-plot_rent_df_e[,-1]
+    #names(plot_rent_df_e)<-paste(names(plot_rent_df_e), "error", sep="_")
+    #plot_rent_df<-cbind(plot_rent_df, plot_rent_df_e)
+    
+    ## Output reactive dataframe
+    plot_rent_df
+  })
+
+  ## for the Google charts plot
+  output$plot <- reactive({
+    ## make reactive dataframe into regular dataframe
+    
+# 
 #     county <- as.character(plot_rent_df$County[which(plot_rent_df$Municipal==input$plot_muni)])
-#     
+# 
 #     ## make counties a vector based on input variable
 #     munis <- c(input$plot_muni, county, "MA", "United States")
-#     
+# 
 #     muni_index <- c()
-#     
+# 
 #     for(i in 1:length(munis)){
 #       muni_index[i] <- match(munis[i], plot_rent_df$Region)
 #     }
 #     #     browser()
 #     plot_df <- plot_rent_df[muni_index,] %>%
 #       select(Region, Median.Rent)
-#     
+# 
 #     colnames(plot_df) <- gsub("_", " ", colnames(plot_df))
-#     
-#     #     plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
-#     
-#     list(
-#       data=googleDataTable(plot_df))
-#   })
+
+    #     plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
+
+    list(
+      data=googleDataTable(plot_rent_df()))
+  })
 #   
 #   
 #   #####################################MAP CREATION##############
 #   
 #   map_rent_df <- reactive({
 #     ## Filter the data by the chosen Five Year Range 
-#     map_rent_df <- rent_data %>%
+#     map_rent_df <- rent %>%
 #       filter(Five.Year.Range == input$map_year) %>%
 #       select(1:4, Five.Year.Range, Median.Rent, Rent.Margin.of.Error)
 #     

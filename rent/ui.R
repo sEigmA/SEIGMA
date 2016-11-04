@@ -16,7 +16,7 @@ shinyUI(fluidPage(
   googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Household Income Shiny App"),
+  titlePanel("", windowTitle = "SEIGMA: RENT Shiny App"),
   
   ## Create sidebar
   sidebarLayout(
@@ -34,14 +34,14 @@ shinyUI(fluidPage(
                  
                  ## Choose range for year.
                  ## Initializing a single slider
-                 conditionalPanel(
-                   condition="input.tabs == 'map'",
-                   selectInput("map_year", "Select Five Year Range",
-                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
-                 ),
-                 
-                 
+                 # conditionalPanel(
+                 #   condition="input.tabs == 'map'",
+                 #   selectInput("map_year", "Select Five Year Range",
+                 #               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
+                 #                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
+                 # ),
+                 # 
+                 # 
                  ## in summary, allow for municipal selection
                  conditionalPanel(
                    condition="input.tabs == 'summary'",
@@ -61,20 +61,20 @@ shinyUI(fluidPage(
                    
                  ),
                  
-                 ## in plot, allow for municipal selection
-                 conditionalPanel(
-                   condition="input.tabs == 'plot'",
-                   ## Select input = List
-                   selectInput("plot_year", "Select Five Year Range",
-                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
-                   selectInput("plot_muni", "Select Municipality", 
-                               choices = MA_municipals)
-                   
-                 
-                 ),
+                  ## in plot, allow for municipal selection
+                  conditionalPanel(
+                    condition="input.tabs == 'plot'",
+                    ## Select input = List
+                    
+                    selectInput("plot_muni", "Select Municipality",
+                                choices = MA_municipals, selected = NULL, multiple = T),
+                    checkboxInput("MA_mean_p", "Compare to MA Median", TRUE),
+                    checkboxInput("US_mean_p", "Compare to US Median", FALSE)
                  
                  
+                  ),
+                 
+
                  tags$hr(),
                  
                  ## author line
@@ -111,71 +111,26 @@ shinyUI(fluidPage(
         
         ## summary tab
         tabPanel("Summary", 
-                 dataTableOutput("summary"), value="summary", 
+                 
+                 dataTableOutput("summary")
+                 
+                 
+                 
+                 , value="summary", 
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
         
 #         ## plot tab with google chart options
-#         tabPanel("Plot",
-#                  ## make chart title here (otherwise not centered)
-#                  h4("Median Annual Household Income by Region Over Selected Five Year Period", align="center"),
-#                  ## make a row to put two charts in
-#                  
-#                  googleColumnChart("plot", width="100%", height="475px", options = list(
-#                    ## set fonts
-#                    fontName = "Source Sans Pro",
-#                    fontSize = font_size,
-#                    title = "",
-#                    ## set axis titles, ticks, fonts, and ranges
-#                    hAxis = list(
-#                      title = "",
-#                      textStyle = list(
-#                        fontSize = font_size),
-#                      titleTextStyle = list(
-#                        fontSize = font_size+2,
-#                        bold = TRUE,
-#                        italic = FALSE)
-#                    ),
-#                    vAxis = list(
-#                      title = "Median Annual Household Income",
-#                      viewWindow = ylim,
-#                      textStyle = list(
-#                        fontSize = font_size),
-#                      titleTextStyle = list(
-#                        fontSize = font_size+2,
-#                        bold = TRUE,
-#                        italic = FALSE)
-#                    ),
-#                    
-#                    ## set legend fonts
-#                    legend = list(
-#                      position = "none"),
-#                    
-#                    ## set chart area padding
-#                    chartArea = list(
-#                      top = 50, left = 75,
-#                      height = "75%", width = "70%"
-#                    ),
-#                    
-#                    domain = list(
-#                      role = c("domain", "data", "style")),
-#                    
-#                    ## set colors
-#                    colors = cbbPalette[4:8],
-#                    
-#                    ## set point size
-#                    pointSize = 3,
-#                    
-#                    ## set tooltip font size
-#                    ## Hover text font stuff
-#                    tooltip = list(
-#                      textStyle = list(
-#                        fontSize = font_size
-#                      )
-#                    )
-#                  )),
-#                  ## add text about the variables
-#                  #                  plot_main_text,
-#                  value="plot"),
+        tabPanel("Plot",
+                 ## make chart title here (otherwise not centered)
+                 h4("Median Annual Household Income by Region Over Selected Five Year Period", align="center"),
+                 ## make a row to put two charts in
+# 
+lplot,
+                  #textOutput("plot_df")
+
+                 ## add text about the variables
+                 #                  plot_main_text,
+                 value="plot"),
 #         
 #         ## plot map
 #         tabPanel("Map",

@@ -28,7 +28,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted Income status data
 ## -1 eliminates first column [rows,columns]
-rent_data <- read.csv(file="rent.csv")
+rent <- read.csv(file="rent.csv")
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
@@ -48,7 +48,7 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% rent_data$Region)
+idx_leftovers <- which(!MA_municipals_map %in% rent$Region)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
   MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
@@ -59,7 +59,7 @@ for(i in 1:length(leftover_munis)){
 # for(i in 1:length(MA_map_muni$features)){
 #   MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 # }
-# idx_leftovers2 <- which(!MA_municipals %in% rent_data$Municipal)
+# idx_leftovers2 <- which(!MA_municipals %in% rent$Municipal)
 # leftover_munis_map <- MA_municipals[idx_leftovers2]
 # MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
@@ -73,7 +73,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
   min = 0,
-  max = max(rent_data$Median.Rent)
+  max = max(rent$Median.Rent)
 )
 
 ## Colors for a single-year legend
@@ -83,7 +83,7 @@ map_colors <- c(paint_brush(n=25), "#999999")
 ##Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-max_val <- max(rent_data$Median.Rent)
+max_val <- max(rent$Median.Rent)
 min_val <- 0
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
@@ -221,3 +221,64 @@ plot_main_text <- p(strong("Variable Summary:"),
                       " - Average median annual household income over a five year period for each municipality."))
 
 font_size <- 14
+
+
+
+
+##############################################################################
+
+
+
+lplot<-googleLineChart("plot", width="100%", height="475px", options = list(
+  ## set fonts
+  fontName = "Source Sans Pro",
+  fontSize = font_size,
+  title = "",
+  ## set axis titles, ticks, fonts, and ranges
+  hAxis = list(
+    title = "",
+    textStyle = list(
+      fontSize = font_size),
+    titleTextStyle = list(
+      fontSize = font_size+2,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  vAxis = list(
+    title = "Median Annual Household Income",
+    viewWindow = ylim,
+    textStyle = list(
+      fontSize = font_size),
+    titleTextStyle = list(
+      fontSize = font_size+2,
+      bold = TRUE,
+      italic = FALSE)
+  ),
+  
+  ## set legend fonts
+  legend = list(
+    position = "none"),
+  
+  ## set chart area padding
+  chartArea = list(
+    top = 50, left = 75,
+    height = "75%", width = "70%"
+  ),
+  
+  domain = list(
+    role = c("domain", "data", "style")),
+  
+  ## set colors
+  colors = cbbPalette[4:8],
+  
+  ## set point size
+  pointSize = 3,
+  
+  ## set tooltip font size
+  ## Hover text font stuff
+  tooltip = list(
+    textStyle = list(
+      fontSize = font_size
+    )
+  )
+))

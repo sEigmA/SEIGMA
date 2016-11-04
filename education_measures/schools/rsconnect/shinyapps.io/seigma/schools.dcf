@@ -2,6 +2,6 @@ name: schools
 account: seigma
 server: shinyapps.io
 appId: 90525
-bundleId: 594361
+bundleId: 597351
 url: https://seigma.shinyapps.io/schools/
-when: 1477253091.26453
+when: 1477499855.08466
