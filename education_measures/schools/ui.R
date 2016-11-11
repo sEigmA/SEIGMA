@@ -52,7 +52,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'sing.yr'",
                       ## Initializing a single slider
                      sliderInput("sum_year", "Select Year",
-                                 min=2003, max=2012, value=2012,
+                                 min=2003, max=2015, value=2015,
                                  sep="")
                    ),
                    conditionalPanel(
@@ -60,7 +60,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'mult.yrs'",
                      ## Slider starts from 2010-2012
                      sliderInput("sum_range", "Select Years",
-                                 min=2003, max=2012, value=c(2003,2012),
+                                 min=2003, max=2015, value=c(2003,2015),
                                  sep="")
                    )
                  ,
@@ -79,7 +79,8 @@ shinyUI(fluidPage(
                               "Gender"="Gender", "Grade Level"="Grade Level",
                               "English Language Learners"="English Language Learners",
                               "Students with Disabilities"="Students with Disabilities",
-                              "Low Income"="Low Income", "High Needs"="High Needs"),
+                              "Low Income"="Low Income", "Economically Disadvantaged"="Economically Disadvantaged",
+                              "High Needs"="High Needs"),
              selected="Race/Ethnicity")
                  )
              ,
@@ -90,7 +91,7 @@ shinyUI(fluidPage(
            
 
            sliderInput("lmap_year", "Select Year",
-                       min=2003, max=2012, value=2012,
+                       min=2003, max=2015, value=2015,
                        sep="")
            ,
            selectInput("map_profile", "Select Data", 
@@ -156,6 +157,7 @@ shinyUI(fluidPage(
                                                 "First Language Not English" = "First Language Not English Enrolled %",
                                                 "Students with Disabilities" = "Students With Disabilities Enrolled %",
                                                 "Low Income Students" = "Low Income Students Enrolled %",
+                                                "Economically Disadvantaged Students" = "Economically Disadvantaged Students Enrolled %",
                                                 "High Needs" = "High Needs Students Enrolled %"), 
                                             selected=" "))
              
@@ -178,6 +180,7 @@ shinyUI(fluidPage(
                                            c("English Language Learners"="English Language Learner Students Mobility Rate",
                                              "Students with Disabilities"="Students with Disabilities Mobility Rate",
                                              "Low Income"="Low Income Students Mobility Rate", 
+                                             "Economically Disadvantaged"="Economically Disadvantaged Students Mobility Rate", 
                                              "High Needs"="High Needs Students Mobility Rate"),
                                            selected="English Language Learner Students Mobility Rate"),
                               
@@ -197,7 +200,13 @@ shinyUI(fluidPage(
                                               selectInput("lmap_level7","Choose Level to map", choices=
                                                             c(" ","Churn Rate: Low Income Students"="Churn Rate for Low Income Students",
                                                               "Stability Rate: Low Income Students"="Stability Rate for Low Income Students",
-                                                              "Intake Rate: Low Income Students"="Intake Rate for English Low Income Students"),
+                                                              "Intake Rate: Low Income Students"="Intake Rate for Low Income Students"),
+                                                          selected=" ")),
+                             conditionalPanel("input.lmap_radio2=='Economically Disadvantaged Students Mobility Rate'",
+                                              selectInput("lmap_level13","Choose Level to map", choices=
+                                                            c(" ","Churn Rate: Economically Disadvantaged Students"="Churn Rate for Economically Disadvantaged Students",
+                                                              "Stability Rate: Economically Disadvantaged Students"="Stability Rate for Economically Disadvantaged Students",
+                                                              "Intake Rate: Economically Disadvantaged Students"="Intake Rate for Economically Disadvantaged Students"),
                                                           selected=" ")),
                              conditionalPanel("input.lmap_radio2=='High Needs Students Mobility Rate'",
                                               selectInput("lmap_level8","Choose Level to map", choices=
@@ -211,6 +220,7 @@ shinyUI(fluidPage(
                                            c("English Language Learners"="English Language Learner Students Mobility Enrollment",
                                              "Students with Disabilities"="Students with Disabilities Mobility Enrollment",
                                              "Low Income"="Low Income Students Mobility Enrollment", 
+                                             "Economically Disadvantaged"="Economically Disadvantaged Students Mobility Enrollment", 
                                              "High Needs"="High Needs Students Mobility Enrollment"),
                                            selected="English Language Learner Students Mobility Enrollment"),
                               conditionalPanel("input.lmap_radio3=='English Language Learner Students Mobility Enrollment'",
@@ -227,6 +237,11 @@ shinyUI(fluidPage(
                                                selectInput("lmap_level11","Choose Level to map", choices=
                                                              c(" ","Churn Enrollment: Low Income Students"="Churn Enrollment for Low Income Students",
                                                                "Stability Enrollment: Low Income Students"="Stability Enrollment for Low Income Students"),
+                                                           selected=" ")),
+                              conditionalPanel("input.lmap_radio3=='Economically Disadvantaged Students Mobility Enrollment'",
+                                               selectInput("lmap_level14","Choose Level to map", choices=
+                                                             c(" ","Churn Enrollment: Economically Disadvantaged Students"="Churn Enrollment for Economically Disadvantaged Students",
+                                                               "Stability Enrollment: Economically Disadvantaged Students"="Stability Enrollment for Economically Disadvantaged Students"),
                                                            selected=" ")),
                               conditionalPanel("input.lmap_radio3=='High Needs Students Mobility Enrollment'",
                                                selectInput("lmap_level12","Choose Level to map", choices=
@@ -279,6 +294,7 @@ shinyUI(fluidPage(
                        c("English Language Learners"="English Language Learner Students",
                          "Students with Disabilities"="Students with Disabilities",
                          "Low Income"="Low Income Students", 
+                         "Economically Disadvantaged"="Economically Disadvantaged Students", 
                          "High Needs"="High Needs Students"),
                        selected='English Language Learner Students'),
            radioButtons("plot_mobility_var", "Select Rate or Enrollment",
@@ -635,7 +651,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap4", width=750, height=500),
-                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled.  Data on Economically Disadvantaged students replaced data on Low Income students in the 2014-2015 school year."),
          conditionalPanel(
            condition="input.lmap_level4 == 'English Language Learner Enrolled %'",
            absolutePanel(
@@ -667,6 +683,14 @@ tabPanel("Map",
              class = "floater",
              strong("% Low",br(),"Income", br(), "Students"),
              plotOutput("P_LOW_legend")
+           ))
+         ,conditionalPanel(
+           condition="input.lmap_level4 == 'Economically Disadvantaged Students Enrolled %'",
+           absolutePanel(
+             right = 5, top = 130, draggable=FALSE, style = "", 
+             class = "floater",
+             strong("% Economically",br(),"Disadvantaged", br(), "Students"),
+             plotOutput("P_ECODIS_legend")
            ))
          ,conditionalPanel(
            condition="input.lmap_level4 == 'High Needs Students Enrolled %'",
@@ -758,7 +782,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap7", width=750, height=500),
-                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled. Data on Economically Disadvantaged students replaced data on Low Income students in the 2014-2015 school year."),
                           conditionalPanel(
                             condition="input.lmap_level7 == 'Churn Rate for Low Income Students'",
                             absolutePanel(
@@ -784,6 +808,42 @@ tabPanel("Map",
                               plotOutput("IR_LOW_legend")
                             ))
          ),
+         conditionalPanel("input.lmap_radio2=='Economically Disadvantaged Students Mobility Rate'",
+                          tags$br(),
+                          conditionalPanel("input.lmap_level13==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level13!=' ' ",
+                                           htmlOutput("lmap_title13")),
+                          tags$br(),
+                          
+                          leafletOutput("leafmap13", width=750, height=500),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled. Data on Economically Disadvantaged students replaced data on Low Income students in the 2014-2015 school year."),
+                          conditionalPanel(
+                            condition="input.lmap_level13 == 'Churn Rate for Economically Disadvantaged Students'",
+                            absolutePanel(
+                              right = 5, top = 130, draggable=FALSE, style = "", 
+                              class = "floater",
+                              strong("Churn Rate", br(), "Economically",br(),"Disadvantaged", br(), "Students"),
+                              plotOutput("CR_ECODIS_legend")
+                            )),
+                          conditionalPanel(
+                            condition="input.lmap_level13 == 'Stability Rate for Economically Disadvantaged Students'",
+                            absolutePanel(
+                              right = 5, top = 130, draggable=FALSE, style = "", 
+                              class = "floater",
+                              strong("Stability Rate", br(), "Economically",br(),"Disadvantaged", br(), "Students"),
+                              plotOutput("SR_ECODIS_legend")
+                            )),
+                          conditionalPanel(
+                            condition="input.lmap_level13 == 'Intake Rate for Economically Disadvantaged Students'",
+                            absolutePanel(
+                              right = 5, top = 130, draggable=FALSE, style = "", 
+                              class = "floater",
+                              strong("Intake Rate", br(), "Economically",br(),"Disadvantaged", br(), "Students"),
+                              plotOutput("IR_ECODIS_legend")
+                            ))
+         ),
+         
          conditionalPanel("input.lmap_radio2=='High Needs Students Mobility Rate'",
                           tags$br(),
                           conditionalPanel("input.lmap_level8==' ' ",
@@ -884,7 +944,7 @@ tabPanel("Map",
                           tags$br(),
                           
                           leafletOutput("leafmap11", width=750, height=500),
-                          HTML("The relative size of the circle markers indicates the total number of students enrolled"),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled.  Data on Economically Disadvantaged students replaced data on Low Income students in the 2014-2015 school year."),
                           conditionalPanel(
                             condition="input.lmap_level11 == 'Churn Enrollment for Low Income Students'",
                             absolutePanel(
@@ -900,6 +960,33 @@ tabPanel("Map",
                               class = "floater",
                               strong("Stability Enrollment", br(), "Low",br(),"Income", br(), "Students"),
                               plotOutput("SE_LOW_legend")
+                            ))
+         ),
+         conditionalPanel("input.lmap_radio3=='Economically Disadvantaged Students Mobility Enrollment'",
+                          tags$br(),
+                          conditionalPanel("input.lmap_level14==' ' ",
+                                           HTML("<b>Please choose a variable to map</b>")),
+                          conditionalPanel("input.lmap_level14!=' ' ",
+                                           htmlOutput("lmap_title14")),
+                          tags$br(),
+                          
+                          leafletOutput("leafmap14", width=750, height=500),
+                          HTML("The relative size of the circle markers indicates the total number of students enrolled. Data on Economically Disadvantaged students replaced data on Low Income students in the 2014-2015 school year."),
+                          conditionalPanel(
+                            condition="input.lmap_level14 == 'Churn Enrollment for Economically Disadvantaged Students'",
+                            absolutePanel(
+                              right = 5, top = 130, draggable=FALSE, style = "", 
+                              class = "floater",
+                              strong("Churn Enrollment", br(), "Economically",br(),"Disadvantaged", br(), "Students"),
+                              plotOutput("CE_ECODIS_legend")
+                            )),
+                          conditionalPanel(
+                            condition="input.lmap_level14 == 'Stability Enrollment for Economically Disadvantaged Students'",
+                            absolutePanel(
+                              right = 5, top = 130, draggable=FALSE, style = "", 
+                              class = "floater",
+                              strong("Stability Enrollment", br(), "Economically",br(),"Disadvantaged", br(), "Students"),
+                              plotOutput("SE_ECODIS_legend")
                             ))
          ),
          conditionalPanel("input.lmap_radio3=='High Needs Students Mobility Enrollment'",
@@ -948,9 +1035,11 @@ tabPanel("Map",
                  tags$br(),
                  tags$li(p(strong("Students With Disabilities"), "- students who have received Individualized Education Program (IEP).")),
                  tags$br(),
-                 tags$li(p(strong("High Needs"), "- A student is considered high needs if he or she is either low income (prior to School Year 2015), economically disadvantaged (starting in School Year 2015), an English language learner, or a student with disabilities. Data on High Needs students were not collected until 2012.")),
+                 tags$li(p(strong("High Needs"), "- A student is considered high needs if he or she is either low income (prior to School Year 2014-2015), economically disadvantaged (starting in School Year 2014-2015), an English language learner, or a student with disabilities. Data on High Needs students were not collected until 2012-2013.")),
                  tags$br(),
                  tags$li(p(strong("Low Income"), "- A student is considered low income if he or she meets any of thr following criteria: they are eligible for free or reduced price lunch, they receive Transitional Aid to Families (TANF) benefits, or are eligible to receive food stamps.")),
+                 tags$br(),
+                 tags$li(p(strong("Economically Disadvantaged"), "- A student is considered economically disadvantaged if he or she participates in any of the following state programs: Supplemental Nutrition Assistance Program (SNAP), the Transitional Assistance for Families with Dependent Children (TAFDC), the Department of Children and Families' (DCF) foster care program and MassHealth (Medicaid)")),
                  tags$br(),
                  tags$li(p(strong("Intake Rate"),
                            " - Measures the number of students that enroll in a school after the official start of the school year. Intake rate is calculated by dividing the number of students who enroll in a school after the official start of the school year by the total number of students that enrolled in that school.  Intake rates are collected from each school's School Information Management System.")),

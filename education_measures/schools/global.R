@@ -27,23 +27,23 @@ require(DT)
 # ## load map data
 # #MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 # MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
-edu_data <- read.csv(file="BF001_001.csv")
-edu_data<-edu_data[,-c(1:2)]
+edu_data <- read.csv(file="BF001_002.csv")
+#edu_data<-edu_data[,-c(1:2)]
 #put this in data cleaning
 colnames(edu_data)[7:21]<-gsub(x=names(edu_data)[7:21],pattern=".", replacement=" ", fixed=T)
 #colnames(edu_data)[16]<-"Eighth Grade"
 
 edu_data$school.year<-as.numeric(substr(edu_data$school.year, 1, 4))
 #reorder dataframe to match old dataframe and save work
-edu_data<-cbind(edu_data[,c(1:65, 2, 68, 67)] ,
-                     "PREK"=rep(NA, nrow(edu_data)),
-                     "KIND"=rep(NA, nrow(edu_data)),
-                     "ELEM"=rep(NA, nrow(edu_data)),
-                     "MIDD"=rep(NA, nrow(edu_data)),
-                     "HIGH"=rep(NA, nrow(edu_data)),
-              edu_data[,c(71:85,66:71)] 
-)
-names(edu_data)[c(67:68,74, 91, 94)]<-c("lon", "lat", "LatLong", "Lng", "loc")
+# edu_data<-cbind(edu_data[,c(1:65, 2, 68, 67)] ,
+#                      "PREK"=rep(NA, nrow(edu_data)),
+#                      "KIND"=rep(NA, nrow(edu_data)),
+#                      "ELEM"=rep(NA, nrow(edu_data)),
+#                      "MIDD"=rep(NA, nrow(edu_data)),
+#                      "HIGH"=rep(NA, nrow(edu_data)),
+#               edu_data[,c(71:85,66:71)] 
+# )
+names(edu_data)[c(75,74, 78)]<-c("Lng", "Lat", "loc")
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -77,7 +77,7 @@ MA_county <- sort(as.character(unique(edu_data$County)))
      nrow(x)==1,
     ifelse(
      #are all mobility data missing? if yes T
-     all(apply(t(data.frame(apply(x[,46:65], 2, FUN=is.na))), 1, all))==T,
+     all(apply(t(data.frame(apply(x[,48:72], 2, FUN=is.na))), 1, all))==T,
      #return school name
       return(as.character(x$school.name[1])),
      #else
@@ -86,7 +86,7 @@ MA_county <- sort(as.character(unique(edu_data$County)))
     #if there are multiple years of data for a school
     ifelse(
       #are all mobility data missing? if yes T
-      all(apply(data.frame(apply(x[,46:65], 2, FUN=is.na)), 1, all))==T,
+      all(apply(data.frame(apply(x[,48:72], 2, FUN=is.na)), 1, all))==T,
       #return school name
       return(as.character(x$school.name[1])),
       #else
@@ -174,12 +174,12 @@ map_colors <- c(paint.brush(n=25), "black")
 # 
 #####
 #create min and max values for colors of all variables in the map
-range.table<-data.frame(apply(edu_data[,c(7:65)], 2, FUN=function(x){range(x, na.rm=T)}))
+range.table<-data.frame(apply(edu_data[,c(7:72)], 2, FUN=function(x){range(x, na.rm=T)}))
 names(range.table)<-gsub(names(range.table), pattern=".", replacement=" ", fixed=T)
 names(range.table)<-gsub(names(range.table), pattern="enrolled  1", replacement="Enrolled %")
 names(range.table)[c(24,25)]<-c("Native Hawaiian/Pacific Islander","Multi-Race/Non-Hispanic")
 names(range.table)<-gsub(names(range.table), pattern="   ", replacement=" ", fixed=T)
-names(range.table)[c(33,39)]<-c("Low Income Students Enrolled %","High Needs Students Enrolled %")
+names(range.table)[c(33,39, 41)]<-c("Low Income Students Enrolled %","High Needs Students Enrolled %", "Economically Disadvantaged Students Enrolled %")
 
 
 # 
@@ -245,7 +245,7 @@ summary_side_text <- conditionalPanel(
     tags$br(),
     tags$li('To look at the enrollment profile of a school by race/ethnicity, gender or grade levels, select "Race/Ethnicity", "Gender" or "Grade Level" from the "Variables" list.'),
     tags$br(),
-    tags$li('To look at the student mobility of English language learning students, students with disabilities, low income students or students with high needs, select "English Language Learners", "Students with Disabilities", "Low Income" or "High Needs" from the "Variables" list.'),
+    tags$li('To look at the student mobility of English language learning students, students with disabilities, low income students or students with high needs, select "English Language Learners", "Students with Disabilities", "Low Income", "Economically Disadvantaged" or "High Needs" from the "Variables" list.'),
     tags$br(),
     tags$li('Sort columns in ascending or descending order by clicking on the column or variable title.'),
     tags$br()
@@ -271,7 +271,7 @@ plot_side_text <- conditionalPanel(
     tags$li("Next, please select a school for which you are interested in viewing data (You can narrow down the list of schools to choose from by first selecting the county where the school is located)"),
     tags$br(),
     
-    tags$li("To view student mobility data from an interest group select either English Language Learners, Students with Disabilities, Low income, or High Needs."),
+    tags$li("To view student mobility data from an interest group select either English Language Learners, Students with Disabilities, Low income, Economically Disadvantaged or High Needs."),
   tags$br(),
   tags$li("Then select either 'Rate' or 'Enrollment' from the options to view mobility rates or mobility enrollment"),
   tags$br(),
@@ -306,7 +306,7 @@ about_main_text <- p(strong("The SEIGMA Schools App"), "displays enrollment and 
                       tags$ul(
                         tags$li("General information about students enrolled in Massachusetts schools including race/ ethnicity, gender, and grade level."),
                         tags$br(),
-                        tags$li("Enrollment information about english language learners, students whose first language is not english, students with disabilities, low income students, and students classified as high needs."),
+                        tags$li("Enrollment information about english language learners, students whose first language is not english, students with disabilities, low income students, economically disadvantaged students and students classified as high needs."),
                         tags$br(),
                         tags$li("Information about student mobility, including intake (number of students entering schools), churn (number of new students entering into and transferring out of schools), and stability (the number of students that remian in a school over the course of a school year).")
                         

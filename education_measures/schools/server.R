@@ -80,16 +80,19 @@ sum_df <- df %>% filter(County %in% county & Municipal %in% munis)
       sel_col_num<-c(7:21)
       df_colnames<-paste("# Enrolled in",names(edu_data)[7:21], sep=" ")
     }  else if (input$sum_radio=="English Language Learners") {
-        sel_col_num<-c(32, 34, 51:55)
+        sel_col_num<-c(32, 34, 53:57)
         df_colnames<-c("First Language Not English Enrolled", "English Language Learner Enrolled", "Churn Enrollment for English Language Learning Students", "Churn Rate for English Language Learning Students %", "Intake Rate for English Language Learning Students %", "Stability Enrollment for English Language Learning Students", "Stability Rate for English Language Learning Students %")
     } else if (input$sum_radio=="Students with Disabilities") {
-      sel_col_num<-c(36, 46:50)
+      sel_col_num<-c(36, 48:52)
       df_colnames<-c(  "Students with Disabilities Enrolled", "Churn Enrollment for Students With Disabilites", "Churn Rate for Students With Disabilites %", "Intake Rate for Students With Disabilites %", "Stability Enrollment for Students with Disabilities", "Stability Rate for Students with Disabilities %")
     } else if (input$sum_radio=="Low Income") {
-      sel_col_num<-c(38, 61:65)
+      sel_col_num<-c(38, 63:67)
       df_colnames<-c(  "Low Income Enrolled","Churn Enrollment for Low Income Students", "Churn Rate for Low Income Students %", "Intake Rate for Low Income Students %", "Stability Enrollment for Low Income Students", "Stability Rate for Low Income Students %")
+    } else if (input$sum_radio=="Economically Disadvantaged") {
+      sel_col_num<-c(46, 68:72)
+      df_colnames<-c(  "Economically Disadvantaged Enrolled","Churn Enrollment for Economically Disadvantaged Students", "Churn Rate for Economically Disadvantaged Students %", "Intake Rate for Low Economically Disadvantaged Students %", "Stability Enrollment for Economically Disadvantaged Students", "Stability Rate for Economically Disadvantaged Students %")
     } else {
-      sel_col_num<-c(44, 56:60)
+      sel_col_num<-c(44, 58:62)
       df_colnames<-c("High Needs Enrolled", "Churn Enrollmment for High Needs Students", "Churn Rate for High Needs Students %", "Intake Rate for High Needs Students %", "Stability Enrollment for High Needs Students", "Stability Rate for High Needs Students %")}
     
     sum_df <- sum_df %>%
@@ -238,7 +241,7 @@ return(sum_df)
     
     
     if (input$plot_enrolled=="Race/Ethnicity") {
-      sel_col_num<-c(77:83)
+      sel_col_num<-c(81:87)
       df_colnames<-c("African American", "Asian", "Hispanic", "White", "Native American", "Native Hawaiian Pacific Islander", "Multi-race non-Hispanic")
       
       plot_df <- edum %>%
@@ -252,7 +255,7 @@ return(sum_df)
       
       
     } else if (input$plot_enrolled=="Gender") {
-      sel_col_num<-c(75:76)
+      sel_col_num<-c(80, 79)
       df_colnames<-c( "Males", "Females")
       
       plot_df <- edum %>%
@@ -279,9 +282,9 @@ return(sum_df)
       return(plot_df[,-c(1,2, 3+remove_cols)])
     
       } else if (input$plot_enrolled=="Interest Groups") {
-      sel_col_num<-c(34, 32, 36, 38, 44)
+      sel_col_num<-c(34, 32, 36, 38, 46, 44)
       df_colnames<-c("English Language Learner", "First Language not English",
-                     "Disabilities", "Low Income", "High Needs")
+                     "Disabilities", "Low Income", "Economically Disadvantaged", "High Needs")
       
       plot_df <- edum %>%
         filter(school.name==input$plot_school) %>%
@@ -310,7 +313,7 @@ return(sum_df)
     
     
     if (input$plot_mobility=="English Language Learner Students") {
-      sel_col_num<-c(51, 54)
+      sel_col_num<-c(53, 56)
               df_colnames<-c("Churn Enrollment for English Language Learning Students",
                              "Stability Enrollment for English Language Learning Students")
               plot_df <- edum %>%
@@ -322,7 +325,7 @@ return(sum_df)
               return(plot_df)
       
     } else if (input$plot_mobility=="Students with Disabilities") {
-      sel_col_num<-c(46, 49)
+      sel_col_num<-c(48, 51)
             df_colnames<-c("Churn Enrollment for Students with Disabilities",
                            "Stability Enrollment for Students with Disabilities")
             plot_df <- edum %>%
@@ -335,7 +338,7 @@ return(sum_df)
       
       
     } else if (input$plot_mobility=="Low Income Students") {
-      sel_col_num<-c(61, 64)
+      sel_col_num<-c(63, 66)
             df_colnames<-c("Churn Enrollment for Low Income Students",
                            "Stability Enrollment for Low Income Students")
             plot_df <- edum %>%
@@ -345,10 +348,22 @@ return(sum_df)
             plot_df<-(plot_df[ ,-c(1,2)])
             
             return(plot_df)
+            
+    } else if (input$plot_mobility=="Economically Disadvantaged Students") {
+      sel_col_num<-c(68, 71)
+      df_colnames<-c("Churn Enrollment for Economically Disadvantaged Students",
+                     "Stability Enrollment for Economically Disadvantaged Students")
+      plot_df <- edum %>%
+        select(1,3, 6, sel_col_num) %>% 
+        arrange(school.year)
+      colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      plot_df<-(plot_df[ ,-c(1,2)])
+      
+      return(plot_df)
       
       #ELL
     } else if (input$plot_mobility=="High Needs Students") {
-      sel_col_num<-c(56, 59)
+      sel_col_num<-c(58, 61)
             df_colnames<-c("Churn Enrollment for High Needs Students",
                            "Stability Enrollment for High Needs Students")
     
@@ -381,7 +396,7 @@ return(sum_df)
     
     
     if (input$plot_mobility=="English Language Learner Students") {
-      sel_col_num<-c(52, 53, 55)
+      sel_col_num<-c(54, 55, 57)
             df_colnames<-c("Churn Rate for English Language Learning Students",
                            "Intake Rate for English Language Learning Students",
                            "Stability Rate for English Language Learning Students")
@@ -396,7 +411,7 @@ return(sum_df)
             
       
     } else if (input$plot_mobility=="Students with Disabilities") {
-      sel_col_num<-c(47, 48, 50)
+      sel_col_num<-c(49, 50, 51)
             df_colnames<-c("Churn Rate for Students with Disabilities",
                            "Intake Rate for Students with Disabilities",
                            "Stability Rate for Students with Disabilities")
@@ -412,7 +427,7 @@ return(sum_df)
             
       
     } else if (input$plot_mobility=="Low Income Students") {
-      sel_col_num<-c(62, 63, 65)
+      sel_col_num<-c(64, 65, 67)
             df_colnames<-c("Churn Rate for Low Income Students",
                            "Intake Rate for Low Income Students",
                            "Stability Rate for Low Income Students")
@@ -424,9 +439,22 @@ return(sum_df)
             plot_df<-(plot_df[ ,-c(1,2)])
             return(plot_df)
             
+    } else if (input$plot_mobility=="Economically Disadvantaged Students") {
+      sel_col_num<-c(69, 70, 72)
+      df_colnames<-c("Churn Rate for Economically Disadvantaged Students",
+                     "Intake Rate for Economically Disadvantaged Students",
+                     "Stability Rate for Economically Disadvantaged Students")
+      plot_df <- edum %>%
+        
+        select(1,3, 6, sel_col_num) %>% 
+        arrange(school.year)
+      colnames(plot_df)[4:ncol(plot_df)]<-c(df_colnames)
+      plot_df<-(plot_df[ ,-c(1,2)])
+      return(plot_df)
+            
       #ELL
     } else if (input$plot_mobility=="High Needs Students") {
-      sel_col_num<-c(57, 58, 60)
+      sel_col_num<-c(59, 60, 62)
             df_colnames<-c("Churn Rate for High Needs Students",
                            "Intake Rate for High Needs Students",
                            "Stability Rate for High Needs Students")
@@ -468,7 +496,7 @@ return(sum_df)
                      hAxis = list(
                        title = "Start of School Year",
                        format = "####",
-                       ticks = seq(2003,2012,1),
+                       ticks = seq(2003,2015,1),
                        #  viewWindow = list(min=, max=),
                        textStyle = list(
                          fontSize = 14),
@@ -523,7 +551,7 @@ return(sum_df)
                      hAxis = list(
                        title = "Start of School Year",
                        format = "####",
-                       ticks = seq(2003,2012,1),
+                       ticks = seq(2003,2015,1),
                        #  viewWindow = list(min=, max=),
                        textStyle = list(
                          fontSize = 14),
@@ -599,7 +627,7 @@ return(sum_df)
                    ## set axis titles, ticks, fonts, and ranges
                    hAxis = list(
                      title = "Start of School Year",
-                     ticks = seq(2003,2012,1),
+                     ticks = seq(2003,2015,1),
                      format = "####",
                      textStyle = list(
                        fontSize = 14),
@@ -679,7 +707,7 @@ return(sum_df)
                   ## set axis titles, ticks, fonts, and ranges
                   hAxis = list(
                     title = "Start of School Year",
-                    ticks = seq(2003,2012,1),
+                    ticks = seq(2003,2015,1),
                     format = "####",
                     textStyle = list(
                       fontSize = 14),
@@ -823,6 +851,20 @@ return(sum_df)
           "</b>")
          )
   })
+  output$lmap_title13 <- renderUI({
+    HTML(paste("<b>", 
+               input$lmap_level13, "in Massachusetts", 
+               "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
+               "</b>")
+    )
+  })
+  output$lmap_title14 <- renderUI({
+    HTML(paste("<b>", 
+               input$lmap_level14, "in Massachusetts", 
+               "schools during the", input$lmap_year, "to", c(input$lmap_year+1), "school year", 
+               "</b>")
+    )
+  })
     
     ## filter dataframes - one per map
   
@@ -838,7 +880,7 @@ return(sum_df)
     
     edu<-edum()
     map_df <- edu %>%
-      select(1,3,4,6, sel_col, 22,90,91,74) %>%
+      select(1,3,4,6, sel_col, 22,74,75) %>%
       filter(school.year==input$lmap_year)
     
     colnames(map_df)[5]<-"var"
@@ -853,7 +895,7 @@ return(sum_df)
     else if(input$lmap_level2=="Females"){sel_col<-29}
     edu<-edum()
     map_df <- edu %>%
-      select(1,3,4,6, sel_col, 22,90,91,74) %>%
+      select(1,3,4,6, sel_col, 22,74,75) %>%
       filter(school.year==input$lmap_year)
     
     colnames(map_df)[5]<-"var"
@@ -880,7 +922,7 @@ return(sum_df)
     else if(input$lmap_level3=="Special Ed Beyond 12th Grade"){sel_col<-21}
     edu<-edum()
     map_df <- edu %>%
-      select(1,3,4,6, sel_col, 22,90,91,74) %>%
+      select(1,3,4,6, sel_col, 22,74,75) %>%
       filter(school.year==input$lmap_year)
     
     colnames(map_df)[5]<-"var"
@@ -894,25 +936,37 @@ return(sum_df)
     else if(input$lmap_level4=="First Language Not English Enrolled %"){sel_col<-33}
     else if(input$lmap_level4=="Students With Disabilities Enrolled %"){sel_col<-37}
     else if(input$lmap_level4=="Low Income Students Enrolled %"){sel_col<-39}
+    else if(input$lmap_level4=="Economically Disadvantaged Students Enrolled %"){sel_col<-47}
     else if(input$lmap_level4=="High Needs Students Enrolled %"){sel_col<-45}
     edu<-edum()
     map_df <- edu %>%
-      select(1,3,4,6, sel_col, 22,90,91,74) %>%
+      select(1,3,4,6, sel_col, 22,74, 75) %>%
       filter(school.year==input$lmap_year)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
-    map_df[complete.cases(map_df),]
+    rbind(
+    map_df[complete.cases(map_df),],
+    data.frame("school.name"=NA,
+               "Municipal"=NA,
+               "County"=NA,
+               "school.year"=input$lmap_year,
+               "var"=c(0),
+               "TSE"=c(0),
+               "Lat"=c(42),
+               "Lng"=c(-71.75))
+    )
+    
   })
  
   map_df9<-reactive({
         if(input$lmap_level9==" "){sel_col=23}
     
-    else if(input$lmap_level9=="Churn Enrollment for English Language Learning Students"){sel_col<-51}
-    else if(input$lmap_level9=="Stability Enrollment for English Language Learning Students"){sel_col<-54}
+    else if(input$lmap_level9=="Churn Enrollment for English Language Learning Students"){sel_col<-53}
+    else if(input$lmap_level9=="Stability Enrollment for English Language Learning Students"){sel_col<-56}
     edu<-edum()
     map_df <- edu %>%
-      select(1,3,4,6, sel_col, 22,90,91,74) %>%
+      select(1,3,4,6, sel_col, 22,74, 75) %>%
       filter(school.year==input$lmap_year)
     
     colnames(map_df)[5]<-"var"
@@ -922,11 +976,11 @@ return(sum_df)
   map_df10<-reactive({   
           if(input$lmap_level10==" "){sel_col=23}
     
-    else if(input$lmap_level10=="Churn Enrollment for Students with Disabilities"){sel_col<-46}
-    else if(input$lmap_level10=="Stability Enrollment for Students with Disabilities"){sel_col<-49}
+    else if(input$lmap_level10=="Churn Enrollment for Students with Disabilities"){sel_col<-48}
+    else if(input$lmap_level10=="Stability Enrollment for Students with Disabilities"){sel_col<-51}
   edu<-edum()
   map_df <- edu %>%
-    select(1,3,4,6, sel_col, 22,90,91,74) %>%
+    select(1,3,4,6, sel_col, 22,74, 75) %>%
     filter(school.year==input$lmap_year)
   
   colnames(map_df)[5]<-"var"
@@ -936,25 +990,58 @@ return(sum_df)
   map_df11<-reactive({  
     if(input$lmap_level11==" "){sel_col=23}
     
-    else if(input$lmap_level11=="Churn Enrollment for Low Income Students"){sel_col<-61}
-    else if(input$lmap_level11=="Stability Enrollment for Low Income Students"){sel_col<-64}
+    else if(input$lmap_level11=="Churn Enrollment for Low Income Students"){sel_col<-63}
+    else if(input$lmap_level11=="Stability Enrollment for Low Income Students"){sel_col<-66}
     edu<-edum()
     map_df <- edu %>%
-      select(1,3,4,6, sel_col, 22,90,91,74) %>%
+      select(1,3,4,6, sel_col, 22,74, 75) %>%
       filter(school.year==input$lmap_year)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
-    map_df[complete.cases(map_df),]
-  })
+    rbind(
+      map_df[complete.cases(map_df),],
+      data.frame("school.name"=NA,
+                 "Municipal"=NA,
+                 "County"=NA,
+                 "school.year"=input$lmap_year,
+                 "var"=c(0),
+                 "TSE"=c(0),
+                 "Lat"=c(42),
+                 "Lng"=c(-71.75))
+    )  })
+  map_df14<-reactive({  
+    if(input$lmap_level14==" "){sel_col=23}
+    
+    else if(input$lmap_level14=="Churn Enrollment for Economically Disadvantaged Students"){sel_col<-68}
+    else if(input$lmap_level14=="Stability Enrollment for Economically Disadvantaged Students"){sel_col<-71}
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,74, 75) %>%
+      filter(school.year==input$lmap_year)
+    
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    rbind(
+      map_df[complete.cases(map_df),],
+      data.frame("school.name"=NA,
+                 "Municipal"=NA,
+                 "County"=NA,
+                 "school.year"=input$lmap_year,
+                 "var"=c(0),
+                 "TSE"=c(0),
+                 "Lat"=c(42),
+                 "Lng"=c(-71.75))
+    )  })
+  
   map_df12<-reactive({  
           if(input$lmap_level12==" "){sel_col=23}
     
-    else if(input$lmap_level12=="Churn Enrollment for High Needs Students"){sel_col<-56}
-    else if(input$lmap_level12=="Stability Enrollment for High Needs Students"){sel_col<-59}
+    else if(input$lmap_level12=="Churn Enrollment for High Needs Students"){sel_col<-58}
+    else if(input$lmap_level12=="Stability Enrollment for High Needs Students"){sel_col<-61}
   edu<-edum()
   map_df <- edu %>%
-    select(1,3,4,6, sel_col, 22,90,91,74) %>%
+    select(1,3,4,6, sel_col, 22,74,75) %>%
     filter(school.year==input$lmap_year)
   
   colnames(map_df)[5]<-"var"
@@ -965,12 +1052,12 @@ return(sum_df)
   map_df5<-reactive({ 
     if(input$lmap_level5==" "){sel_col=23}
     
-    else if(input$lmap_level5=="Churn Rate for English Language Learning Students"){sel_col<-52}
-    else if(input$lmap_level5=="Stability Rate for English Language Learning Students"){sel_col<-55}
-    else if(input$lmap_level5=="Intake Rate for English Language Learning Students"){sel_col<-53}
+    else if(input$lmap_level5=="Churn Rate for English Language Learning Students"){sel_col<-54}
+    else if(input$lmap_level5=="Stability Rate for English Language Learning Students"){sel_col<-57}
+    else if(input$lmap_level5=="Intake Rate for English Language Learning Students"){sel_col<-55}
   edu<-edum()
   map_df <- edu %>%
-    select(1,3,4,6, sel_col, 22,90,91,74) %>%
+    select(1,3,4,6, sel_col, 22,74,75) %>%
     filter(school.year==input$lmap_year)
   
   colnames(map_df)[5]<-"var"
@@ -980,12 +1067,12 @@ return(sum_df)
   map_df6<-reactive({ 
     if(input$lmap_level6==" "){sel_col=23}
     
-    else if(input$lmap_level6=="Churn Rate for Students with Disabilities"){sel_col<-47}
-    else if(input$lmap_level6=="Stability Rate for Students with Disabilities"){sel_col<-50}
-    else if(input$lmap_level6=="Intake Rate for Students with Disabilities"){sel_col<-48}
+    else if(input$lmap_level6=="Churn Rate for Students with Disabilities"){sel_col<-49}
+    else if(input$lmap_level6=="Stability Rate for Students with Disabilities"){sel_col<-52}
+    else if(input$lmap_level6=="Intake Rate for Students with Disabilities"){sel_col<-50}
   edu<-edum()
   map_df <- edu %>%
-    select(1,3,4,6, sel_col, 22,90,91,74) %>%
+    select(1,3,4,6, sel_col, 22,74,75) %>%
     filter(school.year==input$lmap_year)
   
   colnames(map_df)[5]<-"var"
@@ -994,26 +1081,58 @@ return(sum_df)
   })
   map_df7<-reactive({   
     if(input$lmap_level7==" "){sel_col=23}
-    else if(input$lmap_level7=="Churn Rate for Low Income Students"){sel_col<-62}
-    else if(input$lmap_level7=="Stability Rate for Low Income Students"){sel_col<-65}
-    else if(input$lmap_level7=="Intake Rate for English Low Income Students"){sel_col<-63}
+    else if(input$lmap_level7=="Churn Rate for Low Income Students"){sel_col<-64}
+    else if(input$lmap_level7=="Stability Rate for Low Income Students"){sel_col<-67}
+    else if(input$lmap_level7=="Intake Rate for Low Income Students"){sel_col<-65}
   edu<-edum()
   map_df <- edu %>%
-    select(1,3,4,6, sel_col, 22,90,91,74) %>%
+    select(1,3,4,6, sel_col, 22,74,75) %>%
     filter(school.year==input$lmap_year)
   
   colnames(map_df)[5]<-"var"
   colnames(map_df)[6]<-"TSE"
-  map_df[complete.cases(map_df),]
-  })
+  rbind(
+    map_df[complete.cases(map_df),],
+    data.frame("school.name"=NA,
+               "Municipal"=NA,
+               "County"=NA,
+               "school.year"=input$lmap_year,
+               "var"=c(0),
+               "TSE"=c(0),
+               "Lat"=c(42),
+               "Lng"=c(-71.75))
+  )  })
+  map_df13<-reactive({   
+    if(input$lmap_level13==" "){sel_col=23}
+    else if(input$lmap_level13=="Churn Rate for Economically Disadvantaged Students"){sel_col<-69}
+    else if(input$lmap_level13=="Stability Rate for Economically Disadvantaged Students"){sel_col<-72}
+    else if(input$lmap_level13=="Intake Rate for Economically Disadvantaged Students"){sel_col<-70}
+    edu<-edum()
+    map_df <- edu %>%
+      select(1,3,4,6, sel_col, 22,74,75) %>%
+      filter(school.year==input$lmap_year)
+    
+    colnames(map_df)[5]<-"var"
+    colnames(map_df)[6]<-"TSE"
+    rbind(
+      map_df[complete.cases(map_df),],
+      data.frame("school.name"=NA,
+                 "Municipal"=NA,
+                 "County"=NA,
+                 "school.year"=input$lmap_year,
+                 "var"=c(0),
+                 "TSE"=c(0),
+                 "Lat"=c(42),
+                 "Lng"=c(-71.75))
+    )  })
   map_df8<-reactive({  
     if(input$lmap_level8==" "){sel_col=23}
-    else if(input$lmap_level8=="Churn Rate for High Needs Students"){sel_col<-57}
-    else if(input$lmap_level8=="Stability Rate for High Needs Students"){sel_col<-60}
-    else if(input$lmap_level8=="Intake Rate for High Needs Students"){sel_col<-58}
+    else if(input$lmap_level8=="Churn Rate for High Needs Students"){sel_col<-59}
+    else if(input$lmap_level8=="Stability Rate for High Needs Students"){sel_col<-62}
+    else if(input$lmap_level8=="Intake Rate for High Needs Students"){sel_col<-60}
   edu<-edum()
   map_df <- edu %>%
-    select(1,3,4,6, sel_col, 22,90,91,74) %>%
+    select(1,3,4,6, sel_col, 22,74,75) %>%
     filter(school.year==input$lmap_year)
   
   colnames(map_df)[5]<-"var"
@@ -1400,6 +1519,70 @@ return(sum_df)
     
     ## Map Creation
     leafletProxy("leafmap12", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+    
+  })
+  
+  output$leafmap13<-renderLeaflet({
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
+    map_df<-map_df13()
+    
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leafletProxy("leafmap13", data=map_df) %>% clearMarkers()  %>% 
+      addCircleMarkers(
+        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+        fillOpacity=fop,
+        popup = ~paste(as.character(school.name), 
+                       "\n", 
+                       as.character(var), "%")) 
+    
+    
+  })
+  
+  output$leafmap14<-renderLeaflet({
+    leaflet()%>% 
+      setView(lng= -71.75, lat= 42, zoom=8) %>% 
+      addProviderTiles("Stamen.Toner")
+  })
+  
+  observe({
+    
+    
+    map_df<-map_df14()
+    
+    validate(
+      need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
+           "Please choose another variable to display"))
+    
+    pal <- colorNumeric(
+      palette = c("white", "violetred"),
+      domain = c(range(map_df[,"var"], na.rm=T)))
+    
+    ## Map Creation
+    leafletProxy("leafmap14", data=map_df) %>% clearMarkers()  %>% 
       addCircleMarkers(
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
         fillColor=~pal(var), stroke=T, weight=1, opacity=op,
@@ -1977,6 +2160,26 @@ output$P_LOW_legend <- renderPlot({
           panel.grid.major = element_blank())
   return(p)
 })
+output$P_ECODIS_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level4], range.table[2,input$lmap_level4],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
 output$P_HIGH_legend <- renderPlot({
   
   paint.brush = colorRampPalette(colors=c("white", "violetred"))
@@ -2181,6 +2384,69 @@ output$IR_LOW_legend <- renderPlot({
           panel.grid.major = element_blank())
   return(p)
 })
+#13
+output$CR_ECODIS_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level13], range.table[2,input$lmap_level13],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SR_ECODIS_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level13], range.table[2,input$lmap_level13],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$IR_ECODIS_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level13], range.table[2,input$lmap_level13],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+
+
 #8
 output$CR_HIGH_legend <- renderPlot({
   
@@ -2366,6 +2632,49 @@ output$SE_LOW_legend <- renderPlot({
           panel.grid.major = element_blank())
   return(p)
 })
+#14
+output$CE_ECODIS_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level14], range.table[2,input$lmap_level14],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+output$SE_ECODIS_legend <- renderPlot({
+  
+  paint.brush = colorRampPalette(colors=c("white", "violetred"))
+  cols <- paint.brush(25)
+  leg_dat <- data_frame(y = seq(range.table[1,input$lmap_level14], range.table[2,input$lmap_level14],
+                                length.out=(length(map_colors)-1)), x = 1, col = cols)
+  
+  p <- ggplot(data = leg_dat) +
+    geom_tile(aes(y = y, fill = reorder(col,y), x = x), show.legend = FALSE) +
+    scale_fill_manual(values = leg_dat$col) + theme_bw() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.border = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank())
+  return(p)
+})
+
+
 #12
 output$CE_HIGH_legend <- renderPlot({
   
