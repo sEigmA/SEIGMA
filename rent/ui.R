@@ -32,16 +32,16 @@ shinyUI(fluidPage(
                  
                  ## in map, allow for variable selection
                  
-                 ## Choose range for year.
-                 ## Initializing a single slider
-                 # conditionalPanel(
-                 #   condition="input.tabs == 'map'",
-                 #   selectInput("map_year", "Select Five Year Range",
-                 #               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                 #                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
-                 # ),
-                 # 
-                 # 
+                 # Choose range for year.
+                 # Initializing a single slider
+                 conditionalPanel(
+                   condition="input.tabs == 'map'",
+                   selectInput("map_year", "Select Five Year Range",
+                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
+                 ),
+
+
                  ## in summary, allow for municipal selection
                  conditionalPanel(
                    condition="input.tabs == 'summary'",
@@ -53,7 +53,6 @@ shinyUI(fluidPage(
                                choices = MA_municipals,
                                ## Multiple allows for multi-county selection
                                multiple=TRUE),
-                   
                    
                      ## In summary, show boxes that will compare to MA or US median
                    checkboxInput("MA_mean", "Compare to MA Median", FALSE),
@@ -67,7 +66,7 @@ shinyUI(fluidPage(
                     ## Select input = List
                     
                     selectInput("plot_muni", "Select Municipality",
-                                choices = MA_municipals, selected = NULL, multiple = T),
+                                choices = MA_municipals[order(MA_municipals)], selected = NULL, multiple = T),
                     checkboxInput("MA_mean_p", "Compare to MA Median", TRUE),
                     checkboxInput("US_mean_p", "Compare to US Median", FALSE)
                  
@@ -85,7 +84,7 @@ shinyUI(fluidPage(
                  helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
                  
                  ## data source citation
-                 helpText(a("Data Source: American Community Survey- Table B19013", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1903&prodType=table",
+                 helpText(a("Data Source: American Community Survey- Table B25056", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_B25056&prodType=table",
                             target="_blank")),
                  
                  ## GitHub link
@@ -122,7 +121,7 @@ shinyUI(fluidPage(
 #         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Median Annual Household Income by Region Over Selected Five Year Period", align="center"),
+                 h4("Median Annual Rent Over Selected Five Year Period", align="center"),
                  ## make a row to put two charts in
 # 
 lplot,
@@ -133,64 +132,64 @@ lplot,
                  value="plot"),
 #         
 #         ## plot map
-#         tabPanel("Map",
-#                  
-#                  ## Add a little CSS to make the map background pure white
-#                  tags$head(tags$style("
-#                                       #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
-#                                       .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
-#                                       ")),
-#                  ## Map Creation
-#                  leafletMap("map", width="100%", height=500, 
-#                             options=list(center = c(42.15, -71.65), zoom=8, 
-#                                          ##Bounds for the map for when zoomed in on mass
-#                                          maxBounds = list(list(41, -73.5), 
-#                                                           list(43, -70)))),
-#                  ## Info Box 
-#                  conditionalPanel(
-#                    condition="input.action != 0",
-#                    absolutePanel(left=100, top=450, width=300, class="floater",
-#                                  htmlOutput("details"))),
-#                  
-#                  conditionalPanel(
-#                    condition="input.tabs == 'map' && input.action == 0",
-#                    ## within the map area, you can create an action button.  similar to initializing the legend but just putting a button instead.
-#                    absolutePanel(right = 400, top = 300, class = "floater",
-#                                  actionButton("action", "Generate Map")
-#                    )),
-#                  
-#                  ## Legend
-#                  conditionalPanel(
-#                    condition="input.action != 0",
-#                    absolutePanel(
-#                      right = 5, top = 100, draggable=FALSE, style = "", 
-#                      class = "floater",
-#                      strong("Median Annual"),
-#                      tags$br(),
-#                      strong("Household", br(), "Income"),
-#                      plotOutput("legend1"),
-#                      tags$table(
-#                        
-#                        tags$td(tags$div(
-#                          style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-#                        )),
-#                        tags$td("Data not", br(), "available", align = "right")
-#                      )
-#                    )),
-#                  
-#                  #                plot_main_text,
-#                  value="map"),
+        tabPanel("Map",
+
+                 ## Add a little CSS to make the map background pure white
+                 tags$head(tags$style("
+                                      #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
+                                      .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+                                      ")),
+                 ## Map Creation
+                 leafletMap("map", width="100%", height=500,
+                            options=list(center = c(42.15, -71.65), zoom=8,
+                                         ##Bounds for the map for when zoomed in on mass
+                                         maxBounds = list(list(41, -73.5),
+                                                          list(43, -70)))),
+                 ## Info Box
+                 conditionalPanel(
+                   condition="input.action != 0",
+                   absolutePanel(left=100, top=450, width=300, class="floater",
+                                 htmlOutput("details"))),
+
+                 conditionalPanel(
+                   condition="input.tabs == 'map' && input.action == 0",
+                   ## within the map area, you can create an action button.  similar to initializing the legend but just putting a button instead.
+                   absolutePanel(right = 400, top = 300, class = "floater",
+                                 actionButton("action", "Generate Map")
+                   )),
+
+                 ## Legend
+                 conditionalPanel(
+                   condition="input.action != 0",
+                   absolutePanel(
+                     right = 5, top = 100, draggable=FALSE, style = "",
+                     class = "floater",
+                     strong("Median"),
+                     tags$br(),
+                     strong("Contract", br(), "Rent"),
+                     plotOutput("legend1"),
+                     tags$table(
+
+                       tags$td(tags$div(
+                         style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                       )),
+                       tags$td("Data not", br(), "available", align = "right")
+                     )
+                   )),
+
+                 #                plot_main_text,
+                 value="map"),
 #         
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Median Annual Household Income"), "-This includes the income of the household and all other individuals ages 15 and over. Median annual household income provides a clear trend to assess residents' household income overtime. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
+                   tags$li(p(strong("Median Contract Rent"), "-Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2015. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.")),
             
                    tags$br(),
-                   tags$li(p(strong("Median"),"-The median divides the distribution of median annual household income into two equal parts; half that fall below the median for median annual household income and half that fall above the median annual household income.")),
+                   tags$li(p(strong("Median"),"-The median divides the distribution of median contract rent into two equal parts; half that fall below the median for contract rent and half that fall above.")),
                    tags$br(),
-                   tags$li(p(strong("Five- Year Estimates"),"-Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.")
+                   tags$li(p(strong("Five-Year Estimates"),"-Survey information is collected every year and then aggregated over a specific time period, in this case, five years at the municipality level.  Yearly estimates of median contract rent are available only at the county level to acheive a representative sample. ")
                    )
                  ),
                  #tags$br(),

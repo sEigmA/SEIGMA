@@ -51,7 +51,7 @@ shinyUI(fluidPage(
                    conditionalPanel(
                      condition="input.sum_timespan == 'sing.yr'",
                       ## Initializing a single slider
-                     sliderInput("sum_year", "Select Year",
+                     sliderInput("sum_year", "Select School Year beginning in",
                                  min=2003, max=2015, value=2015,
                                  sep="")
                    ),
@@ -59,7 +59,7 @@ shinyUI(fluidPage(
                      ## Initializes a multi-year slider (range)
                      condition="input.sum_timespan == 'mult.yrs'",
                      ## Slider starts from 2010-2012
-                     sliderInput("sum_range", "Select Years",
+                     sliderInput("sum_range", "Select School Years beginning in",
                                  min=2003, max=2015, value=c(2003,2015),
                                  sep="")
                    )
@@ -90,7 +90,7 @@ shinyUI(fluidPage(
            ## Select year with multiyear slider
            
 
-           sliderInput("lmap_year", "Select Year",
+           sliderInput("lmap_year", "Select School Year beginning in",
                        min=2003, max=2015, value=2015,
                        sep="")
            ,
@@ -123,7 +123,8 @@ shinyUI(fluidPage(
                                               "Native American" = "Native American",
                                               "Native Hawaiian/Pacific Islander" = "Native Hawaiian/Pacific Islander",
                                               "Multi-Race Non-Hispanic" = "Multi-Race/Non-Hispanic"),
-                                          selected = " ")),
+                                          selected = " "),
+                              checkboxInput("lmap_cas1", "Display Casinos", value=TRUE)),
              
              conditionalPanel("input.lmap_radio=='Gender'",
                               selectInput("lmap_level2","Choose Gender to map",
@@ -344,7 +345,10 @@ shinyUI(fluidPage(
         ## summary tab
         tabPanel("Summary", 
                  DT::dataTableOutput("summary"), value="summary", 
-                 tags$style(type="text/css", '#summary tfoot {display:none;}')),
+                 tags$style(type="text/css", '#summary tfoot {display:none;}'),
+                 
+                 HTML("Starting in the school year 2014-2015, the definition of 'low income' students was expanded and renamed 'economically disadvantaged' (See 'More Info' tab).")
+                 ),
         
         
         ## plot tab with google chart options
@@ -355,6 +359,8 @@ shinyUI(fluidPage(
                   conditionalPanel(
                    condition="input.plot_profile=='enrolled' && input.plot_enrolled!='Interest Groups' && input.plot_school!=' '",
                    percentcolchart,
+                   conditionalPanel(condition="input.plot_enrolled=='Interest Groups'",
+                                  HTML("Starting in the school year 2014-2015, the definition of 'low income' students was expanded and renamed 'economically disadvantaged' (See 'More Info' tab).")),
                    HTML("Data are only shown from years in which schools were in operation and reported data"))
                 ,conditionalPanel(
                   condition="input.plot_profile=='enrolled' && input.plot_enrolled!='Interest Groups' && input.plot_school==' '",
@@ -362,6 +368,8 @@ shinyUI(fluidPage(
                 conditionalPanel(
                   condition="input.plot_profile=='enrolled' && input.plot_enrolled=='Interest Groups' && input.plot_school!=' '",
                   countcolchart,
+                  conditionalPanel(condition="input.plot_enrolled=='Interest Groups'",
+                                   HTML("Starting in the school year 2014-2015, the definition of 'low income' students was expanded and renamed 'economically disadvantaged' (See 'More Info' tab).")),
                   HTML("Data are only shown from years in which schools were in operation and reported data"))
                 ,conditionalPanel(
                   condition="input.plot_profile=='enrolled' && input.plot_enrolled=='Interest Groups' && input.plot_school==' '",
@@ -372,6 +380,7 @@ shinyUI(fluidPage(
                 conditionalPanel(
                   condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobenrollment'  && input.plot_school!=' '",
                   mobenrollment_plot_options,
+                  HTML("Starting in the school year 2014-2015, the definition of 'low income' students was expanded and renamed 'economically disadvantaged' (See 'More Info' tab)."),
                   HTML("Data are only shown from years in which schools were in operation and reported data")),
                 conditionalPanel(
                   condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobenrollment'  && input.plot_school==' '",
@@ -381,6 +390,7 @@ shinyUI(fluidPage(
                 conditionalPanel(
                   condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobrate'  && input.plot_school!=' '",
                   mobrate_plot_options,
+                  HTML("Starting in the school year 2014-2015, the definition of 'low income' students was expanded and renamed 'economically disadvantaged' (See 'More Info' tab)."),
                   HTML("Data are only shown from years in which schools were in operation and reported data")),
                 conditionalPanel(
                   condition="input.plot_profile=='mobility' && input.plot_mobility_var=='mobrate'  && input.plot_school==' '",
@@ -1035,7 +1045,7 @@ tabPanel("Map",
                  tags$br(),
                  tags$li(p(strong("Students With Disabilities"), "- students who have received Individualized Education Program (IEP).")),
                  tags$br(),
-                 tags$li(p(strong("High Needs"), "- A student is considered high needs if he or she is either low income (prior to School Year 2014-2015), economically disadvantaged (starting in School Year 2014-2015), an English language learner, or a student with disabilities. Data on High Needs students were not collected until 2012-2013.")),
+                 tags$li(p(strong("High Needs"), "- A student is considered high needs if he or she is either low income (prior to School Year 2014-2015), economically disadvantaged (starting in School Year 2014-2015), an English language learner, or a student with disabilities. Data on High Needs students were not collected until 2011-2012.")),
                  tags$br(),
                  tags$li(p(strong("Low Income"), "- A student is considered low income if he or she meets any of thr following criteria: they are eligible for free or reduced price lunch, they receive Transitional Aid to Families (TANF) benefits, or are eligible to receive food stamps.")),
                  tags$br(),

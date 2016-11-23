@@ -258,7 +258,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please the school you are interested in')),
+  p(strong('Please choose the school you are interested in')),
   tags$br(),
   tags$ul(
     
@@ -333,4 +333,20 @@ plot_main_text <- p(strong("Variable Summary:"),
  
  mobrate_plot_options<-googleColumnChart("mobrate_plot",width="100%", height = "500px")
  
+ ##################################
+ # Add map casino icons
  
+ casinos <- data.frame("Name"=c("Wynn Boston Harbor",
+                                "Plainridge Park Casino",
+                                "MGM Springfield"),
+                       "Lat"=c(42.394964,42.0330381,42.1006063),
+                       "Lon"=c(-71.066760,-71.3039442,-72.5870506))
+ MGMicon <- makeIcon( iconUrl = "www/mgm_logo.png",
+                      iconWidth = 100, iconHeight = 100,
+                      iconAnchorX = 50, iconAnchorY = 50)
+ Plainicon <- makeIcon( iconUrl = "www/plainridge_logo.png",
+                      iconWidth = 120, iconHeight = 50,
+                      iconAnchorX = 60, iconAnchorY = 25)
+ Wynnicon <- makeIcon( iconUrl = "www/wynn_logo.png",
+                      iconWidth = 120, iconHeight = 50,
+                      iconAnchorX = 60, iconAnchorY = 25)

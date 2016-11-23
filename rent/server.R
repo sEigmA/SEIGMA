@@ -77,13 +77,14 @@ shinyServer(function(input, output, session) {
       }
     }
     
-    
-    
     ## Filter the data by the chosen Five Year Range
+    if(is.null(munis_p)){munis_p <-"MA"}
+      
     plot_rent_df <- rent %>%
       filter(Municipal %in% munis_p) %>%
       select(c(1,3,4)) %>%
       spread(Municipal, Median.Rent)
+    
     #add ribbons
     #plot_rent_df_e <- rent %>%
     #  filter(Municipal %in% munis_p) %>%
@@ -123,206 +124,207 @@ shinyServer(function(input, output, session) {
     list(
       data=googleDataTable(plot_rent_df()))
   })
-#   
-#   
-#   #####################################MAP CREATION##############
-#   
-#   map_rent_df <- reactive({
-#     ## Filter the data by the chosen Five Year Range 
-#     map_rent_df <- rent %>%
-#       filter(Five.Year.Range == input$map_year) %>%
-#       select(1:4, Five.Year.Range, Median.Rent, Rent.Margin.of.Error)
-#     
-#     ## Output reactive dataframe
-#     map_rent_df    
-#   })
-#   
-#   
-#   ## set map colors
-#   map_dat <- reactive({
-#     
-#     ## Browser command - Stops the app right when it's about to break
-#     ## make reactive dataframe into regular dataframe
-#     map_rent_df <- map_rent_df()
-#     
-#     ## take US, MA, and counties out of map_dat
-#     map_dat <- map_rent_df %>%
-#       filter(!is.na(Municipal))
-#     
-#     ## assign colors to each entry in the data frame
-#     color <- as.integer(cut2(map_dat[,"Median.Rent"],cuts=cuts))
-#     map_dat <- cbind.data.frame(map_dat, color)
-#     map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors), 
-#                             map_dat$color)
-#     map_dat$opacity <- 0.7
-#     
-#     ## find missing counties in data subset and assign NAs to all values
-#     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
-#     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-#                              Region = missing_munis, Five.Year.Range = input$map_year, 
-#                              Median.Rent = NA, Rent.Margin.of.Error = NA,
-#                              color=length(map_colors), opacity = 0)
-#     
-#     na_munis <- setdiff(MA_municipals_map, map_dat$Region)
-#     na_df <- data.frame(Municipal = na_munis, County = NA, State = "MA", 
-#                         Region = na_munis, Five.Year.Range = input$map_year, 
-#                         Median.Rent = NA, Rent.Margin.of.Error = NA,
-#                         color=length(map_colors), opacity = 0.7)
-#     
-#     
-#     # combine data subset with missing counties data
-#     map_dat <- rbind.data.frame(map_dat, missing_df, na_df)
-#     map_dat$color <- map_colors[map_dat$color]
-#     return(map_dat)
-#   })
-#   
-#   values <- reactiveValues(selectedFeature=NULL, highlight=c())
-#   
-#   #############################################
-#   # observe({
-#   #   values$highlight <- input$map_shape_mouseover$id
-#   #   #browser()
-#   # })
-#   
-#   # # Dynamically render the box in the upper-right
-#   # output$countyInfo <- renderUI({
-#   #   
-#   #   if (is.null(values$highlight)) {
-#   #     return(tags$div("Hover over a county"))
-#   #   } else {
-#   #     # Get a properly formatted state name
-#   #     countyName <- names(MAcounties)[values$highlight]
-#   #     return(tags$div(
-#   #       tags$strong(countyName),
-#   #       tags$div(density[countyName], HTML("people/m<sup>2</sup>"))
-#   #     ))
-#   #   }
-#   # })
-#   
-#   # lastHighlighted <- c()
-#   # # When values$highlight changes, unhighlight the old state (if any) and
-#   # # highlight the new state
-#   # observe({
-#   # #   if (length(lastHighlighted) > 0)
-#   # #     drawStates(getStateName(lastHighlighted), FALSE)
-#   #   lastHighlighted <<- values$highlight
-#   #   
-#   #   if (is.null(values$highlight))
-#   #     return()
-#   #   
-#   #   isolate({
-#   #     drawStates(getStateName(values$highlight), TRUE)
-#   #   })
-#   # })
-#   
-#   ###########################################
-#   
-#   ## draw leaflet map
-#   map <- createLeafletMap(session, "map")
-#   
-#   ## the functions within observe are called when any of the inputs are called
-#   
-#   ## Does nothing until called (done with action button)
-#   observe({
-#     input$action
-#     
-#     ## load in relevant map data
-#     map_dat <- map_dat()
-#     
-#     ## All functions which are isolated, will not run until the above observe function is activated
-#     isolate({
-#       ## Duplicate MAmap to x
-#       x <- MA_map_muni
-#       #     browser()
-#       ## for each county in the map, attach the Crude Rate and colors associated
-#       for(i in 1:length(x$features)){
-#         ## Each feature is a county
-#         x$features[[i]]$properties["Median.Rent"] <- 
-#           map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Median.Rent"]
-#         ## Style properties
-#         x$features[[i]]$properties$style <- list(
-#           fill=TRUE, 
-#           ## Fill color has to be equal to the map_dat color and is matched by county
-#           fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
-#           ## "#000000" = Black, "#999999"=Grey, 
-#           weight=1, stroke=TRUE, 
-#           opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
-#           color="#000000", 
-#           fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)])
-#       }
-#       
-#       map$addGeoJSON(x) # draw map
-#     })
-#   })
-#   
-#   observe({
-#     ## EVT = Mouse Click
-#     evt <- input$map_click
-#     if(is.null(evt))
-#       return()
-#     
-#     isolate({
-#       values$selectedFeature <- NULL
-#     })
-#   })
-#   
-#   observe({
-#     evt <- input$map_geojson_click
-#     if(is.null(evt))
-#       return()
-#     map_dat <- map_dat()
-#     isolate({
-#       values$selectedFeature <- evt$properties
-#       region <- evt$properties$NAMELSAD10
-#       values$selectedFeature["Median.Rent"] <- map_dat[match(region, map_dat$Region), "Median.Rent"]
-#     })
-#   })
-#   ##  This function is what creates info box
-#   output$details <- renderText({
-#     
-#     ## Before a county is clicked, display a message
-#     if(is.null(values$selectedFeature)){
-#       return(as.character(tags$div(
-#         tags$div(
-#           h4("Click on a town or city"))
-#       )))
-#     }
-#     #     browser()
-#     muni_name <- values$selectedFeature$NAMELSAD10
-#     muni_value <- prettyNum(values$selectedFeature["Median.Rent"], big.mark = ",")
-#     
-#     ## If clicked county has no crude rate, display a message
-#     if(muni_value == "NULL"){
-#       return(as.character(tags$div(
-#         tags$h5("Median Annual Household Income in ", muni_name, "is not available for this timespan"))))
-#     }
-#     ## For a single year when county is clicked, display a message
-#     as.character(tags$div(
-#       tags$h4("Median Annual Household Income in ", muni_name, " for ", input$map_year),
-#       tags$h5("$",muni_value)
-#     ))
-#   })
-#   
-#   output$legend1 <- renderPlot({  
-#     paint.brush = colorRampPalette(colors=c("white", "#009E73"))
-#     cols <- paint.brush(length(map_colors)-1)
-#     leg_dat<- data_frame(y = seq(min_val, max_val, length.out = (length(map_colors)-1)), x = 1, col = cols)
-#     
-#     q<- ggplot(data = leg_dat) +
-#       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-#       scale_y_continuous(limits = c(min_val, max_val), breaks = round(seq(min_val, max_val, length.out = 5),0)) +
-#       scale_fill_manual(values = leg_dat$col) + theme_bw() +
-#       theme(axis.text.x = element_blank(),
-#             axis.text.y = element_text(size = 12),
-#             axis.title.x = element_blank(),
-#             axis.title.y = element_blank(),
-#             axis.ticks.x = element_blank(),
-#             panel.border = element_blank(),
-#             panel.grid.minor = element_blank(),
-#             panel.grid.major = element_blank())
-#     
-#     return(q)
-#     
-#   })
-#   
+
+
+  #####################################MAP CREATION##############
+
+  map_rent_df <- reactive({
+    ## Filter the data by the chosen Five Year Range
+    map_rent_df <- rent %>%
+      filter(Five.Year.Range == input$map_year) %>%
+      select(1:4, Five.Year.Range, Median.Rent, Rent.Margin.of.Error)
+
+    ## Output reactive dataframe
+    map_rent_df
+  })
+
+
+  ## set map colors
+  map_dat <- reactive({
+
+    ## Browser command - Stops the app right when it's about to break
+    ## make reactive dataframe into regular dataframe
+    map_rent_df <- map_rent_df()
+
+    ## take US, MA, and counties out of map_dat
+    map_dat <- map_rent_df %>%
+      filter(!is.na(Municipal))
+
+    ## assign colors to each entry in the data frame
+    color <- as.integer(cut2(map_dat[,"Median.Rent"],cuts=cuts))
+    map_dat <- cbind.data.frame(map_dat, color)
+    map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors),
+                            map_dat$color)
+    map_dat$opacity <- 0.7
+
+    ## find missing counties in data subset and assign NAs to all values
+    missing_munis <- setdiff(leftover_munis_map, map_dat$Municipal)
+    missing_df <- data.frame(Municipal = missing_munis, County = NA, Five.Year.Range = input$map_year,
+                             Median.Rent = NA, Rent.Margin.of.Error = NA,
+                             color=length(map_colors), opacity = 0)
+
+    na_munis <- setdiff(MA_municipals_map, map_dat$Municipal)
+    na_munis <- na_munis[na_munis!= "County subdivisions not defined"]
+    na_df <- data.frame(Municipal = na_munis, County = NA, Five.Year.Range = input$map_year,
+                        Median.Rent = NA, Rent.Margin.of.Error = NA,
+                        color=length(map_colors), opacity = 0.7)
+
+
+    # combine data subset with missing counties data
+    map_dat <- rbind.data.frame(map_dat, missing_df, na_df)
+    map_dat$color <- map_colors[map_dat$color]
+    return(map_dat)
+  })
+
+  values <- reactiveValues(selectedFeature=NULL, highlight=c())
+
+  #############################################
+  # observe({
+  #   values$highlight <- input$map_shape_mouseover$id
+  #   #browser()
+  # })
+
+  # # Dynamically render the box in the upper-right
+  # output$countyInfo <- renderUI({
+  #
+  #   if (is.null(values$highlight)) {
+  #     return(tags$div("Hover over a county"))
+  #   } else {
+  #     # Get a properly formatted state name
+  #     countyName <- names(MAcounties)[values$highlight]
+  #     return(tags$div(
+  #       tags$strong(countyName),
+  #       tags$div(density[countyName], HTML("people/m<sup>2</sup>"))
+  #     ))
+  #   }
+  # })
+
+  # lastHighlighted <- c()
+  # # When values$highlight changes, unhighlight the old state (if any) and
+  # # highlight the new state
+  # observe({
+  # #   if (length(lastHighlighted) > 0)
+  # #     drawStates(getStateName(lastHighlighted), FALSE)
+  #   lastHighlighted <<- values$highlight
+  #
+  #   if (is.null(values$highlight))
+  #     return()
+  #
+  #   isolate({
+  #     drawStates(getStateName(values$highlight), TRUE)
+  #   })
+  # })
+
+  ###########################################
+
+  # draw leaflet map
+  map <- createLeafletMap(session, "map")
+
+  ## the functions within observe are called when any of the inputs are called
+
+  ## Does nothing until called (done with action button)
+  observe({
+    input$action
+
+    ## load in relevant map data
+    map_dat <- map_dat()
+
+    ## All functions which are isolated, will not run until the above observe function is activated
+    isolate({
+      ## Duplicate MAmap to x
+      x <- MA_map_muni
+      #     browser()
+      ## for each county in the map, attach the Crude Rate and colors associated
+      for(i in 1:length(x$features)){
+        ## Each feature is a county
+        x$features[[i]]$properties["Median.Rent"] <-
+          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal), "Median.Rent"]
+        ## Style properties
+        x$features[[i]]$properties$style <- list(
+          fill=TRUE,
+          ## Fill color has to be equal to the map_dat color and is matched by county
+          fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)],
+          ## "#000000" = Black, "#999999"=Grey,
+          weight=1, stroke=TRUE,
+          opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)],
+          color="#000000",
+          fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)])
+      }
+
+      map$addGeoJSON(x) # draw map
+    })
+  })
+
+  observe({
+    ## EVT = Mouse Click
+    evt <- input$map_click
+    if(is.null(evt))
+      return()
+
+    isolate({
+      values$selectedFeature <- NULL
+    })
+  })
+
+  observe({
+    evt <- input$map_geojson_click
+    if(is.null(evt))
+      return()
+    map_dat <- map_dat()
+    isolate({
+      values$selectedFeature <- evt$properties
+      clickmuni <- evt$properties$NAMELSAD10
+      values$selectedFeature["Median.Rent"] <- map_dat[match(clickmuni, map_dat$Municipal), "Median.Rent"]
+      values$selectedFeature["Rent.Margin.of.Error"] <- map_dat[match(clickmuni, map_dat$Municipal), "Rent.Margin.of.Error"]
+    })
+  })
+  ##  This function is what creates info box
+  output$details <- renderText({
+
+    ## Before a county is clicked, display a message
+    if(is.null(values$selectedFeature)){
+      return(as.character(tags$div(
+        tags$div(
+          h4("Click on a town or city"))
+      )))
+    }
+    #     browser()
+    muni_name <- values$selectedFeature$NAMELSAD10
+    muni_value <- prettyNum(values$selectedFeature["Median.Rent"], big.mark = ",")
+    muni_margin<- prettyNum(values$selectedFeature["Rent.Margin.of.Error"], big.mark = ",")
+
+    ## If clicked county has no crude rate, display a message
+    if(muni_value == "NA"){
+      return(as.character(tags$div(
+        tags$h5("Median Annual Household Income in ", muni_name, "is not available for this timespan"))))
+    }
+    ## For a single year when county is clicked, display a message
+    as.character(tags$div(
+      tags$h4("Median Annual Household Income in ", muni_name, " for ", input$map_year),
+      tags$h5("$",muni_value, "+-", muni_margin)
+    ))
+  })
+
+  output$legend1 <- renderPlot({
+    paint.brush = colorRampPalette(colors=c("white", "#009E73"))
+    cols <- paint.brush(length(map_colors)-1)
+    leg_dat<- data_frame(y = seq(min_val, max_val, length.out = (length(map_colors)-1)), x = 1, col = cols)
+
+    q<- ggplot(data = leg_dat) +
+      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+      scale_y_continuous(limits = c(min_val, max_val), breaks = round(seq(min_val, max_val, length.out = 5),0)) +
+      scale_fill_manual(values = leg_dat$col) + theme_bw() +
+      theme(axis.text.x = element_blank(),
+            axis.text.y = element_text(size = 12),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.ticks.x = element_blank(),
+            panel.border = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.grid.major = element_blank())
+
+    return(q)
+
+  })
+
 })

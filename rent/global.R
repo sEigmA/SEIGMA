@@ -40,7 +40,7 @@ rent <- read.csv(file="rent.csv")
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
 for(i in 1:length(MA_map_muni$features)){
-  MA_map_muni$features[[i]]$properties$NAMELSAD10 <- substr(MA_map_muni$features[[i]]$properties$NAMELSAD10, 1, nchar(MA_map_muni$features[[i]]$properties$NAMELSAD10)-5)
+  MA_map_muni$features[[i]]$properties$NAMELSAD10 <- gsub(MA_map_muni$features[[i]]$properties$NAMELSAD10, pattern=c(" [Tt]own| [Cc]ity"), replacement = "")
 }
 
 MA_municipals_map <- c()
@@ -48,20 +48,26 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% rent$Region)
+idx_leftovers <- which(!MA_municipals_map %in% rent$Municipal)
 leftover_munis <- MA_municipals_map[idx_leftovers]
-for(i in 1:length(leftover_munis)){
-  MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
-    substr(leftover_munis[i], 1, nchar(leftover_munis[i])-5)
-}
 
-# MA_municipals <- c()
+#eliminate county subdivision lines (coasts, no land, etc)
+
+# save_list <- list("features"=list())
 # for(i in 1:length(MA_map_muni$features)){
-#   MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
+#   if(
+#   MA_map_muni$features[[i]]$properties$NAMELSAD10=="!County subdivisions not defined"
+#   ){save_list$features[[i]]  <- MA_map_muni$features[[i]]}
 # }
-# idx_leftovers2 <- which(!MA_municipals %in% rent$Municipal)
-# leftover_munis_map <- MA_municipals[idx_leftovers2]
-# MA_municipals <- sort(MA_municipals[-idx_leftovers2])
+
+MA_municipals <- c()
+for(i in 1:length(MA_map_muni$features)){
+  MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
+}
+idx_leftovers2 <- which(!MA_municipals %in% rent$Municipal)
+leftover_munis_map <- MA_municipals[idx_leftovers2]
+leftover_munis_map <- leftover_munis_map[leftover_munis_map=="County subdivisions not defined"]
+MA_municipals <- sort(MA_municipals[-which(MA_municipals=="County subdivisions not defined")])
 
 MA_municipals<-unique(rent$Municipal[-c(grep(rent$Municipal, pattern = "County"),which(rent$Municipal %in% c("MA", "USA")))])
 
@@ -179,10 +185,10 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the five- year range and municipality for which you are interested in viewing median annual household income.')),
+  p(strong('Please select the five- year range and municipality for which you are interested in viewing median contract rent')),
   tags$br(),
   tags$ul(
-    tags$li("For a five-year period, you can compare a municipalitiy's median annual household income to the country, state, and national median.")
+    tags$li("For a five-year period, you can compare a municipalitiy's median contract rent to the country, state, and national median.")
   ))
 
 map_side_text <- conditionalPanel(
@@ -191,7 +197,7 @@ map_side_text <- conditionalPanel(
   helpText(p(strong("Please select a five- year range, and click on 'Generate Map' to get started. "))),
   tags$br(),
   tags$ul(
-    tags$li('Clicking on a municipality will display the median annual household income for the five-year range that you selected.')
+    tags$li('Clicking on a municipality will display the median contract rent for the five-year range that you selected.')
   ))
 
 info_side_text <- conditionalPanel(
@@ -201,14 +207,14 @@ info_side_text <- conditionalPanel(
 
 
 
-about_main_text <- p(strong("The SEIGMA Household Income App"), "displays median annual household income for municipalities in Massachusetts.",
+about_main_text <- p(strong("The SEIGMA Household Income App"), "displays median contract rent for municipalities in Massachusetts.",
                      tags$br(),
                      p(strong("Click on different tabs to view the data in different formats.")),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
-                       tags$li(p(strong("Plot"), "compares municipality's median annual household income to county, state, and national medians.")),
-                       tags$li(p(strong("Map"), "visually displays median annual household income by municipality.")),
-                       tags$li(p(strong("More Info"), "describes median annual household income, including, formulas and calculations."))
+                       tags$li(p(strong("Plot"), "compares municipality's  median contract rent to county, state, and national medians.")),
+                       tags$li(p(strong("Map"), "visually displays  median contract rent by municipality.")),
+                       tags$li(p(strong("More Info"), "describes  median contract rent."))
                      )
 )
 
@@ -245,7 +251,7 @@ lplot<-googleLineChart("plot", width="100%", height="475px", options = list(
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Median Annual Household Income",
+    title = "Median Rent (inflation-adjusted $)",
     viewWindow = ylim,
     textStyle = list(
       fontSize = font_size),
@@ -257,7 +263,7 @@ lplot<-googleLineChart("plot", width="100%", height="475px", options = list(
   
   ## set legend fonts
   legend = list(
-    position = "none"),
+    position = "right"),
   
   ## set chart area padding
   chartArea = list(

@@ -1152,8 +1152,31 @@ return(sum_df)
     
       leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
-    })
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=MGMicon,data=casinos[3,], layerId="mgm") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=Plainicon,data=casinos[2,], layerId="pla") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=Wynnicon,data=casinos[1,], layerId="wynn")
+  })
+  
+  observeEvent(input$lmap_cas1, {
+    if(input$lmap_cas1==FALSE){
+    leafletProxy("leafmap1")  %>%
+      removeMarker(layerId='mgm') %>%
+      removeMarker(layerId='pla') %>%
+      removeMarker(layerId='wynn')
+    } else(
+      
+      leafletProxy("leafmap1")  %>%
+        addMarkers(lng=~Lon, lat=~Lat, icon=MGMicon,data=casinos[3,], layerId="mgm") %>%
+        addMarkers(lng=~Lon, lat=~Lat, icon=Plainicon,data=casinos[2,], layerId="pla") %>%
+        addMarkers(lng=~Lon, lat=~Lat, icon=Wynnicon,data=casinos[1,], layerId="wynn")
+    )
+  })
+    
+    
+    
+    
+    
   
   observe({
     
@@ -1176,9 +1199,17 @@ return(sum_df)
         fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
-                       as.character(var), "%")) 
+                       as.character(var), "%"))
+    isolate({
+      if(input$lmap_cas1==T){
+        leafletProxy("leafmap1", data=map_df) %>%
+          addMarkers(lng=~Lon, lat=~Lat, icon=MGMicon,data=casinos[3,], layerId="mgm") %>%
+          addMarkers(lng=~Lon, lat=~Lat, icon=Plainicon,data=casinos[2,], layerId="pla") %>%
+          addMarkers(lng=~Lon, lat=~Lat, icon=Wynnicon,data=casinos[1,], layerId="wynn")
+      }  
+      
+    })
     
-  
   })
       
     
