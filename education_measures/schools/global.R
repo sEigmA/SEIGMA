@@ -28,6 +28,7 @@ require(DT)
 # #MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 # MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 edu_data <- read.csv(file="BF001_002.csv")
+names(edu_data)[58] <- "Churn.Enrollment.for.High.Needs.Students" 
 #edu_data<-edu_data[,-c(1:2)]
 #put this in data cleaning
 colnames(edu_data)[7:21]<-gsub(x=names(edu_data)[7:21],pattern=".", replacement=" ", fixed=T)
@@ -262,18 +263,18 @@ plot_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
     
-    tags$li("First select the type of data which you are interested in viewing."),
+    tags$li("First select the type of data which you are interested in viewing"),
     tags$br(),
-    tags$li("To view school enrollment data such as the percentage of students by race/ethnicity, gender, grade level, or focus group, select 'Enrollment Profile' from the 'Data' drop down menu."),
+    tags$li("To view school enrollment data such as the percentage of students by race/ethnicity, gender, grade level, or focus group, select 'Enrollment Profile' from the 'Data' drop down men."),
     tags$br(),
-    tags$li("To view student mobility data such as churn, intake, and stability rates by specific interest group select 'Mobility Measure' from the 'Data' drop down menu."),
+    tags$li("To view student mobility data such as churn, intake, and stability rates by specific interest group select 'Mobility Measure' from the 'Data' drop down menu"),
     tags$br(),
-    tags$li("Next, please select a school for which you are interested in viewing data (You can narrow down the list of schools to choose from by first selecting the county where the school is located)"),
+    tags$li("Select a school for which you are interested in viewing data (You can narrow down the list of schools to choose from by first selecting the county where the school is located)"),
     tags$br(),
     
-    tags$li("To view student mobility data from an interest group select either English Language Learners, Students with Disabilities, Low income, Economically Disadvantaged or High Needs."),
+    tags$li("To view student mobility data from an interest group select either English Language Learners, Students with Disabilities, Low income, Economically Disadvantaged or High Needs"),
   tags$br(),
-  tags$li("Then select either 'Rate' or 'Enrollment' from the options to view mobility rates or mobility enrollment"),
+  tags$li("Then select either mobility rate or enrollment"),
   tags$br(),
   tags$li("If the plot is empty, the school did not report the data selected")
   ))
@@ -336,17 +337,30 @@ plot_main_text <- p(strong("Variable Summary:"),
  ##################################
  # Add map casino icons
  
- casinos <- data.frame("Name"=c("Wynn Boston Harbor",
+ MAcasinos <- data.frame("Name"=c("Wynn Boston Harbor",
                                 "Plainridge Park Casino",
                                 "MGM Springfield"),
                        "Lat"=c(42.394964,42.0330381,42.1006063),
                        "Lon"=c(-71.066760,-71.3039442,-72.5870506))
- MGMicon <- makeIcon( iconUrl = "www/mgm_logo.png",
-                      iconWidth = 100, iconHeight = 100,
-                      iconAnchorX = 50, iconAnchorY = 50)
- Plainicon <- makeIcon( iconUrl = "www/plainridge_logo.png",
-                      iconWidth = 120, iconHeight = 50,
-                      iconAnchorX = 60, iconAnchorY = 25)
- Wynnicon <- makeIcon( iconUrl = "www/wynn_logo.png",
-                      iconWidth = 120, iconHeight = 50,
-                      iconAnchorX = 60, iconAnchorY = 25)
+ star <- makeIcon( iconUrl = "www/star.png",
+                      iconWidth = 50, iconHeight = 50,
+                      iconAnchorX = 25, iconAnchorY = 25)
+ 
+ casinosOPEN <- data.frame("Name"=c("Mohegan Sun",
+                                  "Foxwoods"),
+                         "Lat"=c(41.491549,41.473775),
+                         "Lon"=c(-72.091842,-71.960177))
+ casinosCLOSED <- data.frame("Name"=c(
+   "Tiverton",
+   "River Casino"),
+   "Lat"=c(41.660301,42.824163),
+   "Lon"=c(-71.155845,-73.937884))
+ 
+ 
+ 
+ #Plainicon <- makeIcon( iconUrl = "www/plainridge_logo.png",
+#                      iconWidth = 120, iconHeight = 50,
+ #                     iconAnchorX = 60, iconAnchorY = 25)
+ #Wynnicon <- makeIcon( iconUrl = "www/wynn_logo.png",
+#                      iconWidth = 120, iconHeight = 50,
+#                      iconAnchorX = 60, iconAnchorY = 25)

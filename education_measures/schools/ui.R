@@ -130,13 +130,14 @@ shinyUI(fluidPage(
                               selectInput("lmap_level2","Choose Gender to map",
                                    choices = c(" ", "Females" = "Females",
                                                "Males" = "Males"),
-                                   selected = " ")),
+                                   selected = " "),
+                              checkboxInput("lmap_cas2", "Display Casinos", value=TRUE)),
              
              conditionalPanel("input.lmap_radio=='Grade Levels'",
                               selectInput("lmap_level3","Choose Grade Level to map",
                                          choices = 
-                                           c(" ","Pre-Kindergarden" = "Pre Kindergarden",
-                                             "Kindergarden" = "Kindergarden",
+                                           c(" ","Pre-Kindergarten" = "Pre Kindergarten",
+                                             "Kindergarten" = "Kindergarten",
                                              "First Grade" = "First Grade",
                                              "Second Grade" = "Second Grade",
                                              "Third Grade" = "Third Grade",
@@ -150,7 +151,8 @@ shinyUI(fluidPage(
                                              "Eleventh Grade" = "Eleventh Grade",
                                              "Twelfth Grade" = "Twelfth Grade",
                                              "Special Education Beyond 12th Grade" = "Special Ed Beyond 12th Grade"),
-                                         selected = " ")),
+                                         selected = " "),
+                              checkboxInput("lmap_cas3", "Display Casinos", value=TRUE)),
              conditionalPanel("input.lmap_radio=='Interest Groups'",
                               selectInput("lmap_level4","Choose Level to map",
                                             choices = 
@@ -160,7 +162,8 @@ shinyUI(fluidPage(
                                                 "Low Income Students" = "Low Income Students Enrolled %",
                                                 "Economically Disadvantaged Students" = "Economically Disadvantaged Students Enrolled %",
                                                 "High Needs" = "High Needs Students Enrolled %"), 
-                                            selected=" "))
+                                            selected=" "),
+                              checkboxInput("lmap_cas4", "Display Casinos", value=TRUE))
              
            )
          
@@ -190,31 +193,36 @@ shinyUI(fluidPage(
                                                             c(" ", "Churn Rate: English Language Learners"="Churn Rate for English Language Learning Students",
                                                               "Stability Rate: English Language Learners"="Stability Rate for English Language Learning Students",
                                                               "Intake Rate: English Language Learners"="Intake Rate for English Language Learning Students"),
-                                                          selected=" ")),
+                                                          selected=" "),
+                                              checkboxInput("lmap_cas5", "Display Casinos", value=TRUE)),
                              conditionalPanel("input.lmap_radio2=='Students with Disabilities Mobility Rate'",
                                               selectInput("lmap_level6","Choose Level to map", choices=
                                                             c(" ", "Churn Rate: Students with Disabilities"="Churn Rate for Students with Disabilities",
                                                               "Stability Rate: Students with Disabilities"="Stability Rate for Students with Disabilities",
                                                               "Intake Rate: Students with Disabilities"="Intake Rate for Students with Disabilities"),
-                                                          selected=" ")),
+                                                          selected=" "),
+                                              checkboxInput("lmap_cas6", "Display Casinos", value=TRUE)),
                              conditionalPanel("input.lmap_radio2=='Low Income Students Mobility Rate'",
                                               selectInput("lmap_level7","Choose Level to map", choices=
                                                             c(" ","Churn Rate: Low Income Students"="Churn Rate for Low Income Students",
                                                               "Stability Rate: Low Income Students"="Stability Rate for Low Income Students",
                                                               "Intake Rate: Low Income Students"="Intake Rate for Low Income Students"),
-                                                          selected=" ")),
+                                                          selected=" "),
+                                              checkboxInput("lmap_cas7", "Display Casinos", value=TRUE)),
                              conditionalPanel("input.lmap_radio2=='Economically Disadvantaged Students Mobility Rate'",
                                               selectInput("lmap_level13","Choose Level to map", choices=
                                                             c(" ","Churn Rate: Economically Disadvantaged Students"="Churn Rate for Economically Disadvantaged Students",
                                                               "Stability Rate: Economically Disadvantaged Students"="Stability Rate for Economically Disadvantaged Students",
                                                               "Intake Rate: Economically Disadvantaged Students"="Intake Rate for Economically Disadvantaged Students"),
-                                                          selected=" ")),
+                                                          selected=" "),
+                                              checkboxInput("lmap_cas13", "Display Casinos", value=TRUE)),
                              conditionalPanel("input.lmap_radio2=='High Needs Students Mobility Rate'",
                                               selectInput("lmap_level8","Choose Level to map", choices=
                                                             c(" ","Churn Rate: High Needs Students"="Churn Rate for High Needs Students",
                                                               "Stability Rate: High Needs Students"="Stability Rate for High Needs Students",
                                                               "Intake Rate: High Needs Students"="Intake Rate for High Needs Students"),
-                                                          selected=" "))
+                                                          selected=" "),
+                                              checkboxInput("lmap_cas8", "Display Casinos", value=TRUE))
              ),
              conditionalPanel(condition="input.tabs == 'lmap' && input.map_profile=='mobility' && input.lmap_mobility_var=='mobenrollment'",
                               radioButtons("lmap_radio3", "Select Interest Group",
@@ -228,27 +236,32 @@ shinyUI(fluidPage(
                                                selectInput("lmap_level9","Choose Level to map", choices=
                                                              c(" ","Churn Enrollment: English Language Learners"="Churn Enrollment for English Language Learning Students",
                                                                "Stability Enrollment: English Language Learners"="Stability Enrollment for English Language Learning Students"),
-                                                           selected=" ")),
+                                                           selected=" "),
+                                               checkboxInput("lmap_cas9", "Display Casinos", value=TRUE)),
                               conditionalPanel("input.lmap_radio3=='Students with Disabilities Mobility Enrollment'",
                                                selectInput("lmap_level10","Choose Level to map", choices=
                                                              c(" ","Churn Enrollment: Students with Disabilities"="Churn Enrollment for Students with Disabilities",
                                                                "Stability Enrollment: Students with Disabilities"="Stability Enrollment for Students with Disabilities"),
-                                                           selected=" ")),
+                                                           selected=" "),
+                                               checkboxInput("lmap_cas10", "Display Casinos", value=TRUE)),
                               conditionalPanel("input.lmap_radio3=='Low Income Students Mobility Enrollment'",
                                                selectInput("lmap_level11","Choose Level to map", choices=
                                                              c(" ","Churn Enrollment: Low Income Students"="Churn Enrollment for Low Income Students",
                                                                "Stability Enrollment: Low Income Students"="Stability Enrollment for Low Income Students"),
-                                                           selected=" ")),
+                                                           selected=" "),
+                                               checkboxInput("lmap_cas11", "Display Casinos", value=TRUE)),
                               conditionalPanel("input.lmap_radio3=='Economically Disadvantaged Students Mobility Enrollment'",
                                                selectInput("lmap_level14","Choose Level to map", choices=
                                                              c(" ","Churn Enrollment: Economically Disadvantaged Students"="Churn Enrollment for Economically Disadvantaged Students",
                                                                "Stability Enrollment: Economically Disadvantaged Students"="Stability Enrollment for Economically Disadvantaged Students"),
-                                                           selected=" ")),
+                                                           selected=" "),
+                                               checkboxInput("lmap_cas14", "Display Casinos", value=TRUE)),
                               conditionalPanel("input.lmap_radio3=='High Needs Students Mobility Enrollment'",
                                                selectInput("lmap_level12","Choose Level to map", choices=
                                                              c(" ","Churn Enrollment: High Needs Students"="Churn Enrollment for High Needs Students",
                                                                "Stability Enrollment: High Needs Students"="Stability Enrollment for High Needs Students"),
-                                                           selected=" "))
+                                                           selected=" "),
+                                               checkboxInput("lmap_cas12", "Display Casinos", value=TRUE))
              )
              
           ,
@@ -531,7 +544,7 @@ tabPanel("Map",
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           
          conditionalPanel(
-           condition="input.lmap_level3 == 'Pre Kindergarden'",
+           condition="input.lmap_level3 == 'Pre Kindergarten'",
            absolutePanel(
              right = 5, top = 130, draggable=FALSE, style = "", 
              class = "floater",
@@ -540,7 +553,7 @@ tabPanel("Map",
            ))
          ,
          conditionalPanel(
-           condition="input.lmap_level3 == 'Kindergarden'",
+           condition="input.lmap_level3 == 'Kindergarten'",
            absolutePanel(
              right = 5, top = 130, draggable=FALSE, style = "", 
              class = "floater",
@@ -1010,7 +1023,7 @@ tabPanel("Map",
                           leafletOutput("leafmap12", width=750, height=500),
                           HTML("The relative size of the circle markers indicates the total number of students enrolled"),
                           conditionalPanel(
-                            condition="input.lmap_level12 == 'Churn Enrollment for High Needs Students Students'",
+                            condition="input.lmap_level12 == 'Churn Enrollment for High Needs Students'",
                             absolutePanel(
                               right = 5, top = 130, draggable=FALSE, style = "", 
                               class = "floater",
@@ -1018,7 +1031,7 @@ tabPanel("Map",
                               plotOutput("CE_HIGH_legend")
                             )),
                           conditionalPanel(
-                            condition="input.lmap_level12 == 'Stability Enrollment for High Needs Students Students'",
+                            condition="input.lmap_level12 == 'Stability Enrollment for High Needs Students'",
                             absolutePanel(
                               right = 5, top = 130, draggable=FALSE, style = "", 
                               class = "floater",
@@ -1043,19 +1056,21 @@ tabPanel("Map",
                  tags$br(),
                  tags$li((p(strong("First Language Not English"), "- Students whose first language is a language other than English, and who are able to perform ordinary classroom work in English."))),
                  tags$br(),
-                 tags$li(p(strong("Students With Disabilities"), "- students who have received Individualized Education Program (IEP).")),
+                 tags$li(p(strong("Students With Disabilities"), "- Students who have received Individualized Education Program (IEP).")),
                  tags$br(),
                  tags$li(p(strong("High Needs"), "- A student is considered high needs if he or she is either low income (prior to School Year 2014-2015), economically disadvantaged (starting in School Year 2014-2015), an English language learner, or a student with disabilities. Data on High Needs students were not collected until 2011-2012.")),
                  tags$br(),
                  tags$li(p(strong("Low Income"), "- A student is considered low income if he or she meets any of thr following criteria: they are eligible for free or reduced price lunch, they receive Transitional Aid to Families (TANF) benefits, or are eligible to receive food stamps.")),
                  tags$br(),
-                 tags$li(p(strong("Economically Disadvantaged"), "- A student is considered economically disadvantaged if he or she participates in any of the following state programs: Supplemental Nutrition Assistance Program (SNAP), the Transitional Assistance for Families with Dependent Children (TAFDC), the Department of Children and Families' (DCF) foster care program and MassHealth (Medicaid)")),
+                 tags$li(p(strong("Economically Disadvantaged"), "- A student is considered economically disadvantaged if he or she participates in any of the following state programs: Supplemental Nutrition Assistance Program (SNAP), the Transitional Assistance for Families with Dependent Children (TAFDC), the Department of Children and Families' (DCF) foster care program and MassHealth (Medicaid).")),
+                 tags$br(),
+                 tags$li(p(strong("Mobility Data"), "Mobility data were first reported for the 2007-2008 school year.")),
                  tags$br(),
                  tags$li(p(strong("Intake Rate"),
                            " - Measures the number of students that enroll in a school after the official start of the school year. Intake rate is calculated by dividing the number of students who enroll in a school after the official start of the school year by the total number of students that enrolled in that school.  Intake rates are collected from each school's School Information Management System.")),
                  tags$br(),
                  tags$li((p(strong("Churn Rate"),
-                            "-  Measures the number of students who transfer in or out of a school durign the course of a single school year. Churn rate is calculated by dividing by the total number of students enrolled in that school."))),
+                            "-  Measures the number of students who transfer in or out of a school during the course of a single school year. Churn rate is calculated by dividing by the total number of students enrolled in that school."))),
                  tags$br(),
                  tags$li((p(strong("Stability Rate"), "- Measures how many students remain in a district or school throughout the school year.")))
                  ),

@@ -885,8 +885,15 @@ return(sum_df)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
-    map_df[complete.cases(map_df),]
-  })
+    
+    nullrow <- map_df[c(1:2),]
+    nullrow$var <- c(0,100)
+    nullrow$TSE <- 0
+    
+    rbind(
+      map_df[complete.cases(map_df),],
+      nullrow)  
+    })
   
   map_df2<-reactive({
         if(input$lmap_level2==" "){sel_col=23}
@@ -900,13 +907,22 @@ return(sum_df)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
-    map_df[complete.cases(map_df),]
+    
+    
+    nullrow <- map_df[c(1:2),]
+    nullrow$var <- c(0,100)
+    nullrow$TSE <- 0
+    
+    rbind(
+    map_df[complete.cases(map_df),],
+    nullrow)
+    
   })
   map_df3<-reactive({
           if(input$lmap_level3==" "){sel_col=23}
     
-    else if(input$lmap_level3=="Pre Kindergarden"){sel_col<-7}
-    else if(input$lmap_level3=="Kindergarden"){sel_col<-8}
+    else if(input$lmap_level3=="Pre Kindergarten"){sel_col<-7}
+    else if(input$lmap_level3=="Kindergarten"){sel_col<-8}
     else if(input$lmap_level3=="First Grade"){sel_col<-9}
     else if(input$lmap_level3=="Second Grade"){sel_col<-10}
     else if(input$lmap_level3=="Third Grade"){sel_col<-11}
@@ -945,17 +961,15 @@ return(sum_df)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
+    
+    nullrow <- map_df[c(1:2),]
+    nullrow$var <- c(0,100)
+    nullrow$TSE <- 0
+    
     rbind(
-    map_df[complete.cases(map_df),],
-    data.frame("school.name"=NA,
-               "Municipal"=NA,
-               "County"=NA,
-               "school.year"=input$lmap_year,
-               "var"=c(0),
-               "TSE"=c(0),
-               "Lat"=c(42),
-               "Lng"=c(-71.75))
-    )
+      map_df[complete.cases(map_df),],
+      nullrow)
+    
     
   })
  
@@ -1062,7 +1076,14 @@ return(sum_df)
   
   colnames(map_df)[5]<-"var"
   colnames(map_df)[6]<-"TSE"
-  map_df[complete.cases(map_df),]
+  
+  nullrow <- map_df[c(1:2),]
+  nullrow$var <- c(0,100)
+  nullrow$TSE <- 0
+  
+  rbind(
+    map_df[complete.cases(map_df),],
+    nullrow)
   })
   map_df6<-reactive({ 
     if(input$lmap_level6==" "){sel_col=23}
@@ -1077,8 +1098,14 @@ return(sum_df)
   
   colnames(map_df)[5]<-"var"
   colnames(map_df)[6]<-"TSE"
-  map_df[complete.cases(map_df),]
-  })
+  
+  nullrow <- map_df[c(1:2),]
+  nullrow$var <- c(0,100)
+  nullrow$TSE <- 0
+  
+  rbind(
+    map_df[complete.cases(map_df),],
+    nullrow)  })
   map_df7<-reactive({   
     if(input$lmap_level7==" "){sel_col=23}
     else if(input$lmap_level7=="Churn Rate for Low Income Students"){sel_col<-64}
@@ -1091,17 +1118,14 @@ return(sum_df)
   
   colnames(map_df)[5]<-"var"
   colnames(map_df)[6]<-"TSE"
+  
+  nullrow <- map_df[c(1:2),]
+  nullrow$var <- c(0,100)
+  nullrow$TSE <- 0
   rbind(
     map_df[complete.cases(map_df),],
-    data.frame("school.name"=NA,
-               "Municipal"=NA,
-               "County"=NA,
-               "school.year"=input$lmap_year,
-               "var"=c(0),
-               "TSE"=c(0),
-               "Lat"=c(42),
-               "Lng"=c(-71.75))
-  )  })
+    nullrow)  
+  })
   map_df13<-reactive({   
     if(input$lmap_level13==" "){sel_col=23}
     else if(input$lmap_level13=="Churn Rate for Economically Disadvantaged Students"){sel_col<-69}
@@ -1114,17 +1138,14 @@ return(sum_df)
     
     colnames(map_df)[5]<-"var"
     colnames(map_df)[6]<-"TSE"
+    
+    nullrow <- map_df[c(1:2),]
+    nullrow$var <- c(0,100)
+    nullrow$TSE <- 0
+    
     rbind(
       map_df[complete.cases(map_df),],
-      data.frame("school.name"=NA,
-                 "Municipal"=NA,
-                 "County"=NA,
-                 "school.year"=input$lmap_year,
-                 "var"=c(0),
-                 "TSE"=c(0),
-                 "Lat"=c(42),
-                 "Lng"=c(-71.75))
-    )  })
+      nullrow)  })
   map_df8<-reactive({  
     if(input$lmap_level8==" "){sel_col=23}
     else if(input$lmap_level8=="Churn Rate for High Needs Students"){sel_col<-59}
@@ -1137,7 +1158,14 @@ return(sum_df)
   
   colnames(map_df)[5]<-"var"
   colnames(map_df)[6]<-"TSE"
-  map_df[complete.cases(map_df),]
+  
+  nullrow <- map_df[c(1:2),]
+  nullrow$var <- c(0,100)
+  nullrow$TSE <- 0
+  
+  rbind(
+    map_df[complete.cases(map_df),],
+    nullrow)
   })
    
   #create maps in leaflet
@@ -1153,24 +1181,32 @@ return(sum_df)
       leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
       addProviderTiles("Stamen.TonerLite") %>%
-      addMarkers(lng=~Lon, lat=~Lat, icon=MGMicon,data=casinos[3,], layerId="mgm") %>%
-      addMarkers(lng=~Lon, lat=~Lat, icon=Plainicon,data=casinos[2,], layerId="pla") %>%
-      addMarkers(lng=~Lon, lat=~Lat, icon=Wynnicon,data=casinos[1,], layerId="wynn")
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+    
+      
+  
   
   observeEvent(input$lmap_cas1, {
-    if(input$lmap_cas1==FALSE){
-    leafletProxy("leafmap1")  %>%
-      removeMarker(layerId='mgm') %>%
-      removeMarker(layerId='pla') %>%
-      removeMarker(layerId='wynn')
-    } else(
-      
-      leafletProxy("leafmap1")  %>%
-        addMarkers(lng=~Lon, lat=~Lat, icon=MGMicon,data=casinos[3,], layerId="mgm") %>%
-        addMarkers(lng=~Lon, lat=~Lat, icon=Plainicon,data=casinos[2,], layerId="pla") %>%
-        addMarkers(lng=~Lon, lat=~Lat, icon=Wynnicon,data=casinos[1,], layerId="wynn")
-    )
+     
+        
+      if(input$lmap_cas1) {leafletProxy("leafmap1")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+      else {leafletProxy("leafmap1")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
   })
     
     
@@ -1185,42 +1221,67 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level1!=" ", "Please choose a variable to display")
+      )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap1", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
+    leafletProxy("leafmap1", data=map_df) %>% clearGroup(group="data")  %>% 
+      addCircleMarkers(group="data",
         lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
         fillColor=~pal(var), stroke=T, weight=1, opacity=op,
         fillOpacity=fop,
         popup = ~paste(as.character(school.name), 
                        "\n", 
                        as.character(var), "%"))
-    isolate({
-      if(input$lmap_cas1==T){
-        leafletProxy("leafmap1", data=map_df) %>%
-          addMarkers(lng=~Lon, lat=~Lat, icon=MGMicon,data=casinos[3,], layerId="mgm") %>%
-          addMarkers(lng=~Lon, lat=~Lat, icon=Plainicon,data=casinos[2,], layerId="pla") %>%
-          addMarkers(lng=~Lon, lat=~Lat, icon=Wynnicon,data=casinos[1,], layerId="wynn")
-      }  
-      
-    })
     
   })
       
     
     
     
+  
   output$leafmap2<-renderLeaflet({
     
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas2, {
+    
+    
+    if(input$lmap_cas2) {leafletProxy("leafmap2")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap2")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1229,31 +1290,63 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level2!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap2", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "%")) 
-    
-    
+    leafletProxy("leafmap2", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var), "%"))
+   
   })
   
   output$leafmap3<-renderLeaflet({
     
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas3, {
+    
+    
+    if(input$lmap_cas3) {leafletProxy("leafmap3")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap3")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1262,29 +1355,64 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level3!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap3", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "")) 
+    leafletProxy("leafmap3", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
     
     
   })
+  
   output$leafmap4<-renderLeaflet({
+    
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas4, {
+    
+    
+    if(input$lmap_cas4) {leafletProxy("leafmap4")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap4")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1293,30 +1421,65 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level4!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap4", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "%")) 
-    
+    proxy=leafletProxy("leafmap4", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var), "%"))
+  
     
   })
   
+  
   output$leafmap5<-renderLeaflet({
+    
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas5, {
+    
+    
+    if(input$lmap_cas5) {leafletProxy("leafmap5")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap5")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1325,29 +1488,65 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level5!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap5", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "%")) 
+   leafletProxy("leafmap5", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var), "%"))
     
     
   })
+  
+  
   output$leafmap6<-renderLeaflet({
+    
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas6, {
+    
+    
+    if(input$lmap_cas6) {leafletProxy("leafmap6")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap6")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1356,29 +1555,68 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level6!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap6", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "%")) 
+    leafletProxy("leafmap6", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var), "%"))
     
     
   })
+  
+  
+  
+  
+  
   output$leafmap7<-renderLeaflet({
+    
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas7, {
+    
+    
+    if(input$lmap_cas7) {leafletProxy("leafmap7")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap7")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1387,29 +1625,65 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level7!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap7", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "%")) 
-    
+    leafletProxy("leafmap7", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var), "%"))
+   
     
   })
+  
+  
   output$leafmap8<-renderLeaflet({
+    
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas8, {
+    
+    
+    if(input$lmap_cas8) {leafletProxy("leafmap8")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap8")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1418,29 +1692,65 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level8!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap8", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "%")) 
+   leafletProxy("leafmap8", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var), "%"))
     
     
   })
+  
+  
   output$leafmap9<-renderLeaflet({
+    
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas9, {
+    
+    
+    if(input$lmap_cas9) {leafletProxy("leafmap9")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap9")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1449,29 +1759,65 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level9!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap9", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "%")) 
+    leafletProxy("leafmap9", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
     
     
   })
+  
+  
   output$leafmap10<-renderLeaflet({
+    
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas10, {
+    
+    
+    if(input$lmap_cas10) {leafletProxy("leafmap10")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap10")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1480,29 +1826,64 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level10!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap10", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "%")) 
-    
+   leafletProxy("leafmap10", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
     
   })
+  
+  
   output$leafmap11<-renderLeaflet({
+    
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas11, {
+    
+    
+    if(input$lmap_cas11) {leafletProxy("leafmap11")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap11")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1511,29 +1892,69 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level11!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap11", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "%")) 
+    leafletProxy("leafmap11", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
     
     
   })
+  
+  
+  
+  
+  
+  
   output$leafmap12<-renderLeaflet({
+    
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas12, {
+    
+    
+    if(input$lmap_cas12) {leafletProxy("leafmap12")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap12")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1542,30 +1963,65 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level12!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap12", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "%")) 
+    leafletProxy("leafmap12", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
     
     
   })
   
+  
   output$leafmap13<-renderLeaflet({
+    
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas13, {
+    
+    
+    if(input$lmap_cas13) {leafletProxy("leafmap13")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap13")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1574,30 +2030,65 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level13!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap13", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "%")) 
-    
+   leafletProxy("leafmap13", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var), "%"))
+   
     
   })
   
+  
   output$leafmap14<-renderLeaflet({
+    
     leaflet()%>% 
       setView(lng= -71.75, lat= 42, zoom=8) %>% 
-      addProviderTiles("Stamen.Toner")
+      addProviderTiles("Stamen.TonerLite") %>%
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0,
+                       popup = ~paste(as.character(Name))) %>%
+      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       color="green", stroke=T, weight=4,opacity=op,
+                       fillOpacity=0.7,fillColor="green",
+                       popup = ~paste(as.character(Name)))
   })
+  
+  
+  
+  
+  observeEvent(input$lmap_cas14, {
+    
+    
+    if(input$lmap_cas14) {leafletProxy("leafmap14")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("leafmap14")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
+  
+  
+  
   
   observe({
     
@@ -1606,21 +2097,23 @@ return(sum_df)
     
     validate(
       need(!Inf %in% range(map_df$var, na.rm=T) & !-Inf %in% range(map_df$var, na.rm=T), 
-           "Please choose another variable to display"))
+           "Please choose another variable to display"),
+      need(input$lmap_level2!=" ", "Please choose a variable to display")
+    )
     
     pal <- colorNumeric(
       palette = c("white", "violetred"),
       domain = c(range(map_df[,"var"], na.rm=T)))
     
     ## Map Creation
-    leafletProxy("leafmap14", data=map_df) %>% clearMarkers()  %>% 
-      addCircleMarkers(
-        lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
-        fillColor=~pal(var), stroke=T, weight=1, opacity=op,
-        fillOpacity=fop,
-        popup = ~paste(as.character(school.name), 
-                       "\n", 
-                       as.character(var), "%")) 
+    leafletProxy("leafmap14", data=map_df) %>% clearGroup("data")  %>% 
+      addCircleMarkers(group="data",
+                       lng = ~Lng, lat = ~Lat, radius=~1.5*log(TSE), color="#000", 
+                       fillColor=~pal(var), stroke=T, weight=1, opacity=op,
+                       fillOpacity=fop,
+                       popup = ~paste(as.character(school.name), 
+                                      "\n", 
+                                      as.character(var)))
     
     
   })
