@@ -1183,13 +1183,11 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
                        popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                       icon=gc2,
                        popup = ~paste(as.character(Name)))
   })
     
@@ -1252,14 +1250,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   
@@ -1317,14 +1313,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   
@@ -1383,14 +1377,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   
@@ -1450,14 +1442,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   
@@ -1517,14 +1507,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   
@@ -1587,14 +1575,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   
@@ -1654,14 +1640,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   
@@ -1721,14 +1705,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   
@@ -1788,14 +1770,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   
@@ -1854,14 +1834,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   
@@ -1925,14 +1903,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   
@@ -1992,14 +1968,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   
@@ -2059,14 +2033,12 @@ return(sum_df)
       addProviderTiles("Stamen.TonerLite") %>%
       addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
                  popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0,
-                       popup = ~paste(as.character(Name))) %>%
-      addCircleMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                       color="green", stroke=T, weight=4,opacity=op,
-                       fillOpacity=0.7,fillColor="green",
-                       popup = ~paste(as.character(Name)))
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
   })
   
   

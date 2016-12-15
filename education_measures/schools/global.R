@@ -265,13 +265,14 @@ plot_side_text <- conditionalPanel(
     
     tags$li("First select the type of data which you are interested in viewing"),
     tags$br(),
-    tags$li("To view school enrollment data such as the percentage of students by race/ethnicity, gender, grade level, or focus group, select 'Enrollment Profile' from the 'Data' drop down men."),
+    tags$li("To view school enrollment data such as the percentage of students by race/ethnicity, gender, grade level, or focus group, select 'Enrollment Profile' from the 'Data' drop down menu"),
     tags$br(),
     tags$li("To view student mobility data such as churn, intake, and stability rates by specific interest group select 'Mobility Measure' from the 'Data' drop down menu"),
     tags$br(),
-    tags$li("Select a school for which you are interested in viewing data (You can narrow down the list of schools to choose from by first selecting the county where the school is located)"),
+    tags$li("Select a school for which you are interested in viewing data"),
     tags$br(),
-    
+    tags$li("You can narrow down the list of schools to choose from by first selecting the county where the school is located"),
+    tags$br(),
     tags$li("To view student mobility data from an interest group select either English Language Learners, Students with Disabilities, Low income, Economically Disadvantaged or High Needs"),
   tags$br(),
   tags$li("Then select either mobility rate or enrollment"),
@@ -343,18 +344,26 @@ plot_main_text <- p(strong("Variable Summary:"),
                        "Lat"=c(42.394964,42.0330381,42.1006063),
                        "Lon"=c(-71.066760,-71.3039442,-72.5870506))
  star <- makeIcon( iconUrl = "www/star.png",
-                      iconWidth = 50, iconHeight = 50,
-                      iconAnchorX = 25, iconAnchorY = 25)
+                      iconWidth = 30, iconHeight = 30,
+                      iconAnchorX = 15, iconAnchorY = 15)
  
  casinosOPEN <- data.frame("Name"=c("Mohegan Sun",
                                   "Foxwoods"),
                          "Lat"=c(41.491549,41.473775),
                          "Lon"=c(-72.091842,-71.960177))
+ gc2 <- makeIcon( iconUrl = "www/greencircle2.gif",
+                   iconWidth = 20, iconHeight = 20,
+                   iconAnchorX = 10, iconAnchorY = 10)
+ 
+ 
  casinosCLOSED <- data.frame("Name"=c(
    "Tiverton",
    "River Casino"),
    "Lat"=c(41.660301,42.824163),
    "Lon"=c(-71.155845,-73.937884))
+ gc1 <- makeIcon( iconUrl = "www/greencircle1.png",
+                  iconWidth = 20, iconHeight = 20,
+                  iconAnchorX = 10, iconAnchorY = 10)
  
  
  
