@@ -21,6 +21,7 @@ require(leaflet)
 require(RJSONIO)
 ##require(rCharts)
 require(tidyr)
+require(plotly)
 
 ## load map data
 #MA_map_county <- fromJSON("County_2010Census_DP1.geojson")

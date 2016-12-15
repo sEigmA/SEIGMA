@@ -82,8 +82,12 @@ shinyServer(function(input, output, session) {
       
     plot_rent_df <- rent %>%
       filter(Municipal %in% munis_p) %>%
-      select(c(1,3,4)) %>%
-      spread(Municipal, Median.Rent)
+      select(c(1,3,4,5)) 
+    # %>%
+    #   spread(Municipal, Median.Rent)
+    # 
+    plot_rent_df$Year <- as.numeric(sapply(strsplit(as.character(plot_rent_df$Five.Year.Range), split="-"), FUN=function(x){x[1]}))+2
+    
     
     #add ribbons
     #plot_rent_df_e <- rent %>%
@@ -98,8 +102,13 @@ shinyServer(function(input, output, session) {
     plot_rent_df
   })
 
+  
+  
+  
+  
+  
   ## for the Google charts plot
-  output$plot <- reactive({
+  output$plot <- renderPlot({
     ## make reactive dataframe into regular dataframe
     
 # 
@@ -121,10 +130,41 @@ shinyServer(function(input, output, session) {
 
     #     plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
 
-    list(
-      data=googleDataTable(plot_rent_df()))
-  })
+    # list(
+    #   data=googleDataTable(plot_rent_df()))
+    # 
+    pdf <- plot_rent_df()
+    ap=0.5
+    sz=1
+    
+    p=ggplot(pdf, aes(x=Year, y=Median.Rent, colour=Municipal))+
+      geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Municipal),alpha=ap/2, size=sz/2)+
+      geom_errorbar(aes(ymin = Median.Rent-Rent.Margin.of.Error, ymax = Median.Rent+Rent.Margin.of.Error,colour=Municipal),alpha=ap,size=sz, width=0.125)+
+      ylab("Median Rent ($)")+
+      scale_color_manual(values=cbbPalette, guide="legend")+
+      geom_point(aes(colour=Municipal),size=4,alpha=1)+
+      geom_line(aes(colour=Municipal),size=2,alpha=1)+
+      theme_bw() + 
+      theme(plot.background = element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank() )+
+      theme(panel.border= element_blank())+
+      theme(axis.line.x = element_line(color="black", size = 0.5),
+            axis.line.y = element_line(color="black", size = 0.5))
 
+      #guides(colour = guide_legend(override.aes = list(colour = NA)))+
+      #guides(colour = guide_legend(override.aes = list(colour = cbbPalette[1:length(unique(pdf$Municipal))])))
+    p
+    
+    
+  })
+  
+  ##### interactive stuff on the plot
+  # output$event <- renderPrint({
+  #   d <- event_data("plotly_hover")
+  #   if (is.null(d)) "Hover on a point!" else d
+  # })
+  # 
 
   #####################################MAP CREATION##############
 

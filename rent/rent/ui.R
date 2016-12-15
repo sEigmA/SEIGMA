@@ -123,8 +123,11 @@ shinyUI(fluidPage(
                  ## make chart title here (otherwise not centered)
                  h4("Median Annual Rent Over Selected Five Year Period", align="center"),
                  ## make a row to put two charts in
+                 
+                 plotOutput("plot"),
+                 #verbatimTextOutput("event"),
 # 
-lplot,
+#lplot,
                   #textOutput("plot_df")
 
                  ## add text about the variables
