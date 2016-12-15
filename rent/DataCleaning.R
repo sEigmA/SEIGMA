@@ -21,4 +21,4 @@ rent<-rent[is.na(rent$`Median Rent`)==F,]
 rent<-rent[order(rent$County),]
 
 
-write.csv(rent, "rent.csv", row.names=F)
+
