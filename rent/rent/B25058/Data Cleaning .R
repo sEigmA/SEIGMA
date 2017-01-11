@@ -10,7 +10,7 @@
 require(shiny)
 require(dplyr)
 require(tidyr)
-# require(readr)
+require(readr)
 require(devtools)
 setwd( "~/Desktop/Fall 2016/Seigma/seigma/rent/rent/B25058")
 path <- "~/Desktop/Fall 2016/Seigma/seigma/rent/rent/B25058" #change to local
@@ -51,7 +51,7 @@ Adjusted_index<-data.frame(Year=2003:2015, Annual=c(184.0,188.9,195.3,201.6,207.
 
 Adjusted_index$Inflation_rate<-237/Adjusted_index$Annual
 Rent$Inflation_Adjusted_Rent<-rep(0,nrow(Rent)) 
-for (i in 2003:2015) {
+for (i in 2005:2015) {
   Rent$Inflation_Adjusted_Rent[which(Rent$`Five Year Range`==i)]<-Rent$`Median Rent`[which(Rent$`Five Year Range`==i)]*Adjusted_index$Inflation_rate[i-2002]
 }
 Rent$Inflation_Adjusted_Median_Rent<-round(Rent$Inflation_Adjusted_Rent,0)
