@@ -6,9 +6,12 @@
 ## Date Modified: 12/15/16               ##
 ###########################################
 
+
+require(shiny)
 require(dplyr)
 require(tidyr)
-require(read)
+# require(readr)
+require(devtools)
 setwd( "~/Desktop/Fall 2016/Seigma/seigma/rent/rent/B25058")
 path <- "~/Desktop/Fall 2016/Seigma/seigma/rent/rent/B25058" #change to local
 files <- list.files(path="~/Desktop/Fall 2016/Seigma/seigma/rent/rent/B25058", pattern="*_ann.csv") 
