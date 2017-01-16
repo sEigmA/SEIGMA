@@ -46,24 +46,23 @@ Rent$`Five Year Range` <- as.numeric(Rent$`Five Year Range`)
 Rent$`Median Rent` <- as.numeric(Rent$`Median Rent`)
 Rent$`Rent Margin of Error` <- as.numeric(Rent$`Rent Margin of Error`)
 
-#adjust median rent for inflation 
+# Inflation 
 Adjusted_index<-data.frame(Year=2005:2015, Annual=c(195.3,201.6,207.342,215.303,214.537,218.056,224.939,229.594, 232.957,
                                                     236.736,237))
 
 
 Adjusted_index$Inflation_rate<-237/Adjusted_index$Annual
 Adjusted_index <- data.frame(apply(Adjusted_index, 2, as.numeric))
+
+# Adjust median rent for inflation
 Rent$IA_Med_Rent<-rep(0,nrow(Rent))
-
-
 for (i in 2005:2010) {
   Rent$IA_Med_Rent[which(Rent$`Five Year Range`==i)]<-Rent$`Median Rent`[which(Rent$`Five Year Range`==i)]*Adjusted_index$Inflation_rate[which(Adjusted_index$Year==i)]
 }
 
 Rent$IA_Med_Rent<-round(Rent$IA_Med_Rent,0)
 
-#adjust margin of error for inflation
-
+# Adjust margin of error for inflation
 Rent$IA_Rent_Error<-rep(0,nrow(Rent))
 for (i in 2005:2010) {
   Rent$IA_Rent_Error[which(Rent$`Five Year Range`==i)]<-Rent$`Rent Margin of Error`[which(Rent$`Five Year Range`==i)]*Adjusted_index$Inflation_rate[which(Adjusted_index$Year==i)]
@@ -80,6 +79,5 @@ Rent <- subset(Rent, Municipal != "County subdivisions not defined")
 Rent$`Median Rent`<- ifelse(Rent$`Median Rent`!=as.numeric(Rent$`Median Rent`), "NA", as.numeric(Rent$`Median Rent`))
 Rent$`Rent Margin of Error` <- ifelse(Rent$`Rent Margin of Error`!=as.numeric(Rent$`Rent Margin of Error`), "NA", as.numeric(Rent$`Rent Margin of Error`))
 
-
-
 write.csv(Rent, "AR003_03_5yr")
+
