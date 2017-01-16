@@ -9,8 +9,12 @@
 
 require(dplyr)
 require(tidyr)
+<<<<<<< HEAD
 require(readr)
 require(devtools)
+=======
+#require(read)
+>>>>>>> 21fc4e4c1614716c21e4e602648b7c687a6f187a
 setwd( "~/Desktop/Fall 2016/Seigma/seigma/rent/rent/B25058")
 path <- "~/Desktop/Fall 2016/Seigma/seigma/rent/rent/B25058" #change to local
 files <- list.files(path="~/Desktop/Fall 2016/Seigma/seigma/rent/rent/B25058", pattern="*_ann.csv")
