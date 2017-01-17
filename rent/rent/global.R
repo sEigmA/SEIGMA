@@ -1,10 +1,7 @@
 #######################################
 ## Title: RENT   global.R            ##
-## Author(s): Emily Ramos, Arvind    ##
-##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/05/2014         ##
-## Date Modified: 04/22/2015 AR      ##
+## Author(s): JWB, BF                ## 
+## Date Created:  12/01/2016         ##
 #######################################
 
 ##First file run - Environment Setup

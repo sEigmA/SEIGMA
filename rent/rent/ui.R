@@ -1,10 +1,7 @@
 #######################################
 ## Title: RENT   ui.R                ##
-## Author(s): Emily Ramos, Arvind    ##
-##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/05/2014         ##
-## Date Modified: 04/22/2015 AR      ##
+## Author(s): JWB, BF                ## 
+## Date Created:  12/01/2016         ##
 #######################################
 
 shinyUI(fluidPage(
@@ -77,7 +74,7 @@ shinyUI(fluidPage(
                  tags$hr(),
                  
                  ## author line
-                 helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
+                 helpText("Created by Justin Baldwin and Brook Frye"),
                  
                  ## email feedback link
                  ## To develop a link in HTML
@@ -125,6 +122,7 @@ shinyUI(fluidPage(
                  ## make a row to put two charts in
                  
                  plotOutput("plot"),
+                 HTML("Horizontal grey bars indicate the span of five-year estimates, vertical grey bars with hinges indicate the standard errors"),
                  #verbatimTextOutput("event"),
 # 
 #lplot,

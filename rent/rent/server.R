@@ -1,10 +1,7 @@
 #######################################
 ## Title: RENT   server.R            ##
-## Author(s): Emily Ramos, Arvind    ##
-##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
-## Date Created:  11/05/2014         ##
-## Date Modified: 04/22/2015 AR      ##
+## Author(s): JWB, BF                ## 
+## Date Created:  12/01/2016         ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -150,7 +147,13 @@ shinyServer(function(input, output, session) {
             panel.grid.minor = element_blank() )+
       theme(panel.border= element_blank())+
       theme(axis.line.x = element_line(color="black", size = 0.5),
-            axis.line.y = element_line(color="black", size = 0.5))
+            axis.line.y = element_line(color="black", size = 0.5))+
+      theme(axis.title.x = element_text(size = 16),
+            axis.title.y = element_text(size = 16),
+            axis.text.x = element_text(size = 14),
+            axis.text.y = element_text(size = 14))+
+      theme(legend.title=element_text(size=16),
+            legend.text=element_text(size=14))
 
       #guides(colour = guide_legend(override.aes = list(colour = NA)))+
       #guides(colour = guide_legend(override.aes = list(colour = cbbPalette[1:length(unique(pdf$Municipal))])))
