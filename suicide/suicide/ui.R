@@ -132,13 +132,13 @@ shinyUI(fluidPage(
           condition="input.sum_timespan == 'sing.yr'",
           ## Initializing a single slider
           sliderInput("sum_year", "Select Year",
-                      min=1999, max=2012, value=2012, sep="")),
+                      min=1999, max=2015, value=2015, sep="")),
         conditionalPanel(
           ## Initializes a multi-year slider (range)
           condition="input.sum_timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("sum_range", "Select Years",
-                      min=1999, max=2012, value=c(2010,2012), sep="")
+                      min=1999, max=2015, value=c(2010,2015), sep="")
         ),
         selectInput("sum_county", "Select County", 
                     names(table(suidata[,1]))[c(1:7, 9:12,14)], 
@@ -159,13 +159,13 @@ shinyUI(fluidPage(
           
           ## Initializing a single slider
           sliderInput("map_year", "Select Year",
-                      min=1999, max=2012, value=2012, sep="")),
+                      min=1999, max=2015, value=2015, sep="")),
         conditionalPanel(
           ## Initializes a multi-year slider (range)
           condition="input.map_timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("map_range", "Select Years",
-                      min=1999, max=2012, value=c(2010,2012), sep="")
+                      min=1999, max=2015, value=c(2010,2015), sep="")
         )
       ),
       
@@ -184,7 +184,7 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, Sophie E. O'Brien and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, Sophie E. O'Brien, Stephen A. Lauer and Justin Baldwin"),
       
       ## email feedback link
       ## To develop a link in HTML
@@ -213,7 +213,7 @@ shinyUI(fluidPage(
       tabsetPanel(
         tabPanel("About", 
                  ## strong=bold, p=paragraph, em=emboss/italicised or bold italicized, 
-                 p(strong("The SEIGMA Suicide App"), "displays the age-adjusted suicide rate for Massachusetts by county for a given year or multiple years from 1999-2012.",
+                 p(strong("The SEIGMA Suicide App"), "displays the age-adjusted suicide rate for Massachusetts by county for a given year or multiple years from 1999-2015.",
                    tags$br(),
                    p(strong("Click on different tabs to see the data in different formats.")),
                    ##tags$ul and tags$li are to create bullet points using HTML
@@ -250,7 +250,7 @@ shinyUI(fluidPage(
                    hAxis = list(
                      title = "Year",
                      format = "####",
-                     ticks = seq(1999, 2012, 2),
+                     ticks = seq(1999, 2015, 2),
                      viewWindow = xlim,
                      textStyle = list(
                        fontSize = 14),
