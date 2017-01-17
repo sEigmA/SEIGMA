@@ -35,11 +35,11 @@ Rent$`Five Year Range`<- parse_number(Rent$`Five Year Range`)
 Rent$`Five Year Range` <- Rent$`Five Year Range`+1996 # create starting years
 Rent$`Five Year Range` <- as.numeric(Rent$`Five Year Range`)
 Rent$`Median Rent` <- as.numeric(Rent$`Median Rent`)
+Rent$`Rent Margin of Error` <- as.numeric(Rent$`Rent Margin of Error`)
 
 # Inflation 
 Adjusted_index<-data.frame(Year=2005:2015, Annual=c(195.3,201.6,207.342,215.303,214.537,218.056,224.939,229.594, 232.957,
                                                     236.736,237))
-
 
 Adjusted_index$Inflation_rate<-237/Adjusted_index$Annual
 Adjusted_index <- data.frame(apply(Adjusted_index, 2, as.numeric))
@@ -72,6 +72,7 @@ Rent$`Median Rent`<- ifelse(Rent$`Median Rent`!=as.numeric(Rent$`Median Rent`), 
 Rent$`Rent Margin of Error` <- ifelse(Rent$`Rent Margin of Error`!=as.numeric(Rent$`Rent Margin of Error`), "NA", as.numeric(Rent$`Rent Margin of Error`))
 
 
-write.csv(Rent, "AR003_03_5yr")
+write.csv(Rent, "AR003_03_5yr.csv")
+
 
 
