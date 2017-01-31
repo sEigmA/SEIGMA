@@ -2,3 +2,4 @@ name: marital
 account: seigma
 bundleId: 422909
 url: https://seigma.shinyapps.io/marital/
+server: shinyapps.io

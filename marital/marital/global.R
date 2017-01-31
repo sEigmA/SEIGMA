@@ -2,9 +2,10 @@
 ## Title: Marital global.R           ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
-##            Kiridly, Steve Lauer   ## 
+##            Kiridly, Steve Lauer,` ##
+##            Justin Baldwin         ## 
 ## Date Created:  10/22/2014         ##
-## Date Modified: 02/24/2015 ER      ##
+## Date Modified: 01/31/2017 JB      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -26,7 +27,9 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted marital status data
 ## -1 eliminates first column [rows,columns]
-mar_data <- read.csv(file="marriagedata.csv")[,-1]
+mar_data <- read.csv(file="BA002_02_marriagedata.csv")
+
+names(mar_data)[10:12] <- gsub("Now_", "", names(mar_data)[10:12])
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
@@ -82,31 +85,31 @@ map_colors <- c(paint_brush(n=25), "#999999")
 #max_val <- 100
 #min_val <- 0
 
-marmax.val <- max(mar_data$Married_Pct, na.rm=TRUE)
-marmin.val <- min(mar_data$Married_Pct, na.rm=TRUE)
+marmax.val <- max(mar_data$Married_pct, na.rm=TRUE)
+marmin.val <- min(mar_data$Married_pct, na.rm=TRUE)
 
-marcuts <- quantile(mar_data$Married_Pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+marcuts <- quantile(mar_data$Married_pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
-nevmax.val <- max(mar_data$Never_Married_Pct, na.rm=TRUE)
-nevmin.val <- min(mar_data$Never_Married_Pct, na.rm=TRUE)
+nevmax.val <- max(mar_data$Never_Married_pct, na.rm=TRUE)
+nevmin.val <- min(mar_data$Never_Married_pct, na.rm=TRUE)
 
-nevcuts <- quantile(mar_data$Never_Married_Pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+nevcuts <- quantile(mar_data$Never_Married_pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
-sepmax.val <- max(mar_data$Separated_Pct, na.rm=TRUE)
-sepmin.val <- min(mar_data$Separated_Pct, na.rm=TRUE)
+sepmax.val <- max(mar_data$Separated_pct, na.rm=TRUE)
+sepmin.val <- min(mar_data$Separated_pct, na.rm=TRUE)
 ##sepmax.val <-20
 
 sepcuts <- seq(sepmin.val, sepmax.val, length.out = length(map_colors))
 
-widmax.val <- max(mar_data$Widowed_Pct, na.rm=TRUE)
-widmin.val <- min(mar_data$Widowed_Pct, na.rm=TRUE)
+widmax.val <- max(mar_data$Widowed_pct, na.rm=TRUE)
+widmin.val <- min(mar_data$Widowed_pct, na.rm=TRUE)
 
-widcuts <- quantile(mar_data$Widowed_Pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+widcuts <- quantile(mar_data$Widowed_pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
-divmax.val <- max(mar_data$Divorced_Pct, na.rm=TRUE)
-divmin.val <- min(mar_data$Divorced_Pct, na.rm=TRUE)
+divmax.val <- max(mar_data$Divorced_pct, na.rm=TRUE)
+divmin.val <- min(mar_data$Divorced_pct, na.rm=TRUE)
 
-divcuts <- quantile(mar_data$Divorced_Pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+divcuts <- quantile(mar_data$Divorced_pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts

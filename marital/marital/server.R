@@ -3,9 +3,10 @@
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ##
-##            Xuelian Li             ##
+##            Xuelian Li, Justin     ##
+##            Baldwin                ##
 ## Date Created:  10/22/2014         ##
-## Date Modified: 04/22/2015  AR     ##
+## Date Modified: 01/31/2017  JB     ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -14,8 +15,10 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range 
     mar_df <- mar_data %>%
       filter(Five_Year_Range == input$sum_year) %>%
-      select(1:4, Gender, Five_Year_Range, Population, Never_Married_Pct, Married_Pct,
-             Separated_Pct, Widowed_Pct, Divorced_Pct) %>%
+      select(1:4, Gender, Five_Year_Range, Population, Never_Married_pct, Never_Married_pct_error, 
+             Married_pct,Married_pct_error,
+             Separated_pct,Separated_pct_error, Widowed_pct, Widowed_pct_error, 
+             Divorced_pct, Divorced_pct_error) %>%
       arrange(Region, Gender)
     ## Output reactive dataframe
     mar_df    
@@ -59,7 +62,8 @@ shinyServer(function(input, output, session) {
       select(4:length(colnames(mar_df)))
     
     colnames(mar_df) <- gsub("_", " ", colnames(mar_df))
-    colnames(mar_df) <- gsub("Pct", "%", colnames(mar_df))
+    colnames(mar_df) <- gsub("pct error", "error %", colnames(mar_df))
+    colnames(mar_df) <- gsub("pct", "%", colnames(mar_df))
     
     return(mar_df)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
@@ -69,8 +73,8 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range 
     mar_plot_df <- mar_data %>%
       filter(Five_Year_Range == input$plot_year) %>%
-      select(1:4, Gender, Five_Year_Range, Population, Never_Married_Pct, Married_Pct,
-             Separated_Pct, Widowed_Pct, Divorced_Pct) %>%
+      select(1:4, Gender, Five_Year_Range, Population, Never_Married_pct, Married_pct,
+             Separated_pct, Widowed_pct, Divorced_pct) %>%
       arrange(Region, Gender)
     ## Output reactive dataframe
     mar_plot_df    
@@ -90,12 +94,12 @@ shinyServer(function(input, output, session) {
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
-                                            "Widowed_Pct", "Divorced_Pct"),
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
+                           measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
+                                            "Widowed_pct", "Divorced_pct"),
+                           variable.name = "Marital_Status", value.name = "Population_pct")
     
     g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_Pct")
+               value.var = "Population_pct")
     
     g$Marital_Status <- gsub("_", " ", g$Marital_Status)
     g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
@@ -119,12 +123,12 @@ shinyServer(function(input, output, session) {
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
-                                            "Widowed_Pct", "Divorced_Pct"),
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
+                           measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
+                                            "Widowed_pct", "Divorced_pct"),
+                           variable.name = "Marital_Status", value.name = "Population_pct")
     
     g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_Pct")
+               value.var = "Population_pct")
     
     g$Marital_Status <- gsub("_", " ", g$Marital_Status)
     g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
@@ -149,12 +153,12 @@ shinyServer(function(input, output, session) {
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
-                                            "Widowed_Pct", "Divorced_Pct"),
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
+                           measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
+                                            "Widowed_pct", "Divorced_pct"),
+                           variable.name = "Marital_Status", value.name = "Population_pct")
     
     g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_Pct")
+               value.var = "Population_pct")
     
     g$Marital_Status <- gsub("_", " ", g$Marital_Status)
     g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
@@ -178,12 +182,12 @@ shinyServer(function(input, output, session) {
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_Pct", "Married_Pct", "Separated_Pct", 
-                                            "Widowed_Pct", "Divorced_Pct"),
-                           variable.name = "Marital_Status", value.name = "Population_Pct")
+                           measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
+                                            "Widowed_pct", "Divorced_pct"),
+                           variable.name = "Marital_Status", value.name = "Population_pct")
     
     g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_Pct")
+               value.var = "Population_pct")
     
     g$Marital_Status <- gsub("_", " ", g$Marital_Status)
     g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
@@ -194,14 +198,85 @@ shinyServer(function(input, output, session) {
         title = paste("Marital Status Statistics for", munis)))
   })
   
+  #############################################################################################
+  #       ggplot
+  #       dataframe
+  #       make one for males and one for females
   
+  plot_rent_df <- reactive({
+    munis_p<-input$plot_muni
+    
+    if(input$US_mean_p){
+      if(input$MA_mean_p){
+        munis_p <- c("USA", "MA", munis_p) ## US and MA  
+      } else{
+        munis_p <- c("USA", munis_p) ## US only
+      }
+    } else{
+      if(input$MA_mean_p){
+        munis_p <- c("MA", munis_p) ## US only ## MA only
+      }
+    }
+    
+    ## Filter the data by the chosen Five Year Range
+    if(is.null(munis_p)){munis_p <-"MA"}
+    
+    plot_rent_df <- rent %>%
+      filter(Municipal %in% munis_p) %>%
+      select(c(1,3,4,5)) 
+    # %>%
+    #   spread(Municipal, Median.Rent)
+    # 
+    plot_rent_df$Year <- as.numeric(sapply(strsplit(as.character(plot_rent_df$Five.Year.Range), split="-"), FUN=function(x){x[1]}))+2
+    
+    
+    ## Output reactive dataframe
+    plot_rent_df
+  })
+  
+  output$fplot <- renderPlot({
+    
+    #make one for males and one for females
+    
+    # 
+    pdf <- plot_rent_df()
+    ap=0.5
+    sz=1
+    
+    p=ggplot(pdf, aes(x=Year, y=Median.Rent, colour=Municipal))+
+      geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Municipal),alpha=ap/2, size=sz/2)+
+      geom_errorbar(aes(ymin = Median.Rent-Rent.Margin.of.Error, ymax = Median.Rent+Rent.Margin.of.Error,colour=Municipal),alpha=ap,size=sz, width=0.125)+
+      ylab("Median Rent ($)")+
+      scale_color_manual(values=cbbPalette, guide="legend")+
+      geom_point(aes(colour=Municipal),size=4,alpha=1)+
+      geom_line(aes(colour=Municipal),size=2,alpha=1)+
+      theme_bw() + 
+      theme(plot.background = element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank() )+
+      theme(panel.border= element_blank())+
+      theme(axis.line.x = element_line(color="black", size = 0.5),
+            axis.line.y = element_line(color="black", size = 0.5))+
+      theme(axis.title.x = element_text(size = 16),
+            axis.title.y = element_text(size = 16),
+            axis.text.x = element_text(size = 14),
+            axis.text.y = element_text(size = 14))+
+      theme(legend.title=element_text(size=16),
+            legend.text=element_text(size=14))
+    
+    #guides(colour = guide_legend(override.aes = list(colour = NA)))+
+    #guides(colour = guide_legend(override.aes = list(colour = cbbPalette[1:length(unique(pdf$Municipal))])))
+    p
+    
+    
+  })
   
   mar_map_df <- reactive({
     ## Filter the data by the chosen Five Year Range 
     mar_map_df <- mar_data %>%
       filter(Five_Year_Range == input$map_year) %>%
-      select(1:4, Gender, Five_Year_Range, Population, Never_Married_Pct, Married_Pct,
-             Separated_Pct, Widowed_Pct, Divorced_Pct) %>%
+      select(1:4, Gender, Five_Year_Range, Population, Never_Married_pct, Married_pct,
+             Separated_pct, Widowed_pct, Divorced_pct) %>%
       arrange(Region, Gender)
     ## Output reactive dataframe
     mar_map_df    
@@ -222,11 +297,11 @@ shinyServer(function(input, output, session) {
       filter(!is.na(Municipal), Gender == input$map_gender)
     
     ## for single year maps...
-    if(input$var == "Married_Pct"){
+    if(input$var == "Married_pct"){
       
       ## subset the data by the var selected
-      #      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Married_Pct)
-      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Married_Pct)
+      #      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Married_pct)
+      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Married_pct)
       
       ## assign colors to each entry in the data frame
       
@@ -241,7 +316,7 @@ shinyServer(function(input, output, session) {
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
                                Five_Year_Range = input$map_year, Population = NA,
-                               Married_Pct = NA, color=length(map_colors), opacity = 0)
+                               Married_pct = NA, color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       marmap_dat <- rbind.data.frame(marmap_dat, missing_df)
       marmap_dat$color <- map_colors[marmap_dat$color]
@@ -249,10 +324,10 @@ shinyServer(function(input, output, session) {
       
     }
     
-    if(input$var == "Never_Married_Pct"){
+    if(input$var == "Never_Married_pct"){
       
       ## subset the data by the var selected
-      nevmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Never_Married_Pct)
+      nevmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Never_Married_pct)
       
       ## assign colors to each entry in the data frame
       
@@ -266,7 +341,7 @@ shinyServer(function(input, output, session) {
       missing_munis <- setdiff(leftover_munis_map, nevmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$map_year, Population = NA, Never_Married_Pct = NA,
+                               Five_Year_Range = input$map_year, Population = NA, Never_Married_pct = NA,
                                color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       nevmap_dat <- rbind.data.frame(nevmap_dat, missing_df)
@@ -275,10 +350,10 @@ shinyServer(function(input, output, session) {
       
     }
     
-    if(input$var == "Separated_Pct"){
+    if(input$var == "Separated_pct"){
       
       ## subset the data by the var selected
-      sepmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Separated_Pct)
+      sepmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Separated_pct)
       
       ## assign colors to each entry in the data frame
       
@@ -292,17 +367,17 @@ shinyServer(function(input, output, session) {
       missing_munis <- setdiff(leftover_munis_map, sepmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$map_year, Population = NA, Separated_Pct = NA, color=length(map_colors), opacity = 0)
+                               Five_Year_Range = input$map_year, Population = NA, Separated_pct = NA, color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       sepmap_dat <- rbind.data.frame(sepmap_dat, missing_df)
       sepmap_dat$color <- map_colors[sepmap_dat$color]
       return(sepmap_dat)
     }
     
-    if(input$var == "Widowed_Pct"){
+    if(input$var == "Widowed_pct"){
       
       ## subset the data by the year selected
-      widmap_dat <- select(map_dat,  Municipal, County, State, Region, Gender, Five_Year_Range, Population, Widowed_Pct)
+      widmap_dat <- select(map_dat,  Municipal, County, State, Region, Gender, Five_Year_Range, Population, Widowed_pct)
       
       ## assign colors to each entry in the data frame
       
@@ -316,7 +391,7 @@ shinyServer(function(input, output, session) {
       missing_munis <- setdiff(leftover_munis_map, widmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$map_year, Population = NA, Widowed_Pct = NA, 
+                               Five_Year_Range = input$map_year, Population = NA, Widowed_pct = NA, 
                                color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       widmap_dat <- rbind.data.frame(widmap_dat, missing_df)
@@ -324,10 +399,10 @@ shinyServer(function(input, output, session) {
       return(widmap_dat)
     }
     
-    if(input$var == "Divorced_Pct"){
+    if(input$var == "Divorced_pct"){
       
       ## subset the data by the year selected
-      divmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Divorced_Pct)
+      divmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Divorced_pct)
       
       ## assign colors to each entry in the data frame
       
@@ -342,7 +417,7 @@ shinyServer(function(input, output, session) {
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
                                Five_Year_Range = input$map_year, Population = NA, 
-                               Divorced_Pct = NA, color=length(map_colors), opacity = 0)
+                               Divorced_pct = NA, color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       divmap_dat <- rbind.data.frame(divmap_dat, missing_df)
       divmap_dat$color <- map_colors[divmap_dat$color]
@@ -361,9 +436,9 @@ shinyServer(function(input, output, session) {
   #     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
   #     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
   #                              Region = missing_munis, Gender = input$map_gender, 
-  #                              Five_Year_Range = input$year, Population = NA, Never_Married_Pct = NA,
-  #                              Married_Pct = NA, Separated_Pct = NA, Widowed_Pct = NA, 
-  #                              Divorced_Pct = NA, color=length(map_colors), opacity = 0)
+  #                              Five_Year_Range = input$year, Population = NA, Never_Married_pct = NA,
+  #                              Married_pct = NA, Separated_pct = NA, Widowed_pct = NA, 
+  #                              Divorced_pct = NA, color=length(map_colors), opacity = 0)
   #     
   #     # combine data subset with missing counties data
   #     map_dat <- rbind.data.frame(map_dat, missing_df)
@@ -504,7 +579,7 @@ shinyServer(function(input, output, session) {
   output$legend1 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "deeppink"))
     cols <- paint.brush(length(map_colors)-1)
-    if(input$var =='Married_Pct'){
+    if(input$var =='Married_pct'){
       leg_dat<- data_frame(y = seq(marmin.val, marmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
@@ -520,7 +595,7 @@ shinyServer(function(input, output, session) {
               panel.grid.minor = element_blank(),
               panel.grid.major = element_blank())
     }
-    else if(input$var == 'Never_Married_Pct'){
+    else if(input$var == 'Never_Married_pct'){
       leg_dat<- data_frame(y = seq(nevmin.val, nevmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
@@ -536,7 +611,7 @@ shinyServer(function(input, output, session) {
               panel.grid.minor = element_blank(),
               panel.grid.major = element_blank())
     }
-    else if(input$var=='Separated_Pct'){
+    else if(input$var=='Separated_pct'){
       leg_dat<- data_frame(y = seq(sepmin.val, sepmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
@@ -552,7 +627,7 @@ shinyServer(function(input, output, session) {
               panel.grid.minor = element_blank(),
               panel.grid.major = element_blank())
     }
-    else if(input$var == 'Widowed_Pct'){
+    else if(input$var == 'Widowed_pct'){
       leg_dat<- data_frame(y = seq(widmin.val, widmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
@@ -589,7 +664,7 @@ shinyServer(function(input, output, session) {
     
   })
   output$text1<-renderText({
-    var_s <- gsub("_Pct", "", input$var)
+    var_s <- gsub("_pct", "", input$var)
     return(as.character(
       var_s
     ))

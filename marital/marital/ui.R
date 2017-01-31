@@ -3,9 +3,10 @@
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer,  ##
-##            Xuelian Li             ##
+##            Xuelian Li, Justin     ##
+##            Baldwin                ##
 ## Date Created:  10/22/2014         ##
-## Date Modified: 04/12/2016  XL     ##
+## Date Modified: 01/31/2017  JB     ##
 #######################################
 
 shinyUI(fluidPage(
@@ -42,16 +43,20 @@ shinyUI(fluidPage(
        condition="input.tabs == 'map'",
 
        selectInput("map_year", "Select Five Year Range",
-                   choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                  "2008-2012" = "2008-2012")),
+                   choices = list("2006-2010" = "2006-2010", 
+                                  "2007-2011" = "2007-2011",
+                                  "2008-2012" = "2008-2012",
+                                  "2009-2013" = "2009-2013",
+                                  "2010-2014" = "2010-2014",
+                                  "2011-2015" = "2011-2015")),
        selectInput("map_gender", "Select Gender",
                    choices = list("Female", "Male")),
        selectInput("var", "Select Variable of Interest",
-                   choices = list("Never Married" = "Never_Married_Pct", 
-                                  "Married" = "Married_Pct",
-                                  "Separated" = "Separated_Pct",
-                                  "Widowed" = "Widowed_Pct",
-                                  "Divorced" = "Divorced_Pct"))
+                   choices = list("Never Married" = "Never_Married_pct", 
+                                  "Married" = "Married_pct",
+                                  "Separated" = "Separated_pct",
+                                  "Widowed" = "Widowed_pct",
+                                  "Divorced" = "Divorced_pct"))
               
       ),
       
@@ -59,11 +64,17 @@ shinyUI(fluidPage(
       ## Initializing a single slider
       conditionalPanel(
         condition="input.tabs == 'plot'",
-      selectInput("plot_year", "Select Five Year Range",
-                  choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                 "2008-2012" = "2008-2012")),
+        selectInput("var", "Select Variable of Interest",
+                    choices = list("Never Married" = "Never_Married_pct", 
+                                   "Married" = "Married_pct",
+                                   "Separated" = "Separated_pct",
+                                   "Widowed" = "Widowed_pct",
+                                   "Divorced" = "Divorced_pct")),
+        
       selectInput("plot_muni", "Select Municipality", 
-                  choices = MA_municipals)
+                  choices = MA_municipals),
+      checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+      checkboxInput("US_mean", "Compare to US Average", FALSE)
       
       ),
       
@@ -72,8 +83,12 @@ shinyUI(fluidPage(
        condition="input.tabs == 'summary'",
 
        selectInput("sum_year", "Select Five Year Range",
-                   choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                  "2008-2012" = "2008-2012")),
+                   choices = list("2006-2010" = "2006-2010", 
+                                  "2007-2011" = "2007-2011",
+                                  "2008-2012" = "2008-2012",
+                                  "2009-2013" = "2009-2013",
+                                  "2010-2014" = "2010-2014",
+                                  "2011-2015" = "2011-2015")),
        selectInput("sum_gender", "Select Gender",
                    choices = list("Female" = "Female", "Male" = "Male"), multiple=TRUE),
        selectInput("sum_muni", "Select Municipality", 
@@ -95,7 +110,7 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, Justin Baldwin and Stephen A. Lauer"),
       
       ## email feedback link
       ## To develop a link in HTML
@@ -144,13 +159,11 @@ shinyUI(fluidPage(
                  h4("Marital Status as a Percentage of the Population by Region and Gender Over Selected Five Year Period", align="center"),
                  ## make a row to put two charts in
                  div(class = "row",
-                     div(muni_plot_options, class = "span6"),
-                     div(county_plot_options, class = "span6")
+                     div(plotOutput("fplot"), class = "span6"),
+                     div(plotOutput("mplot"), class = "span6")
                  ),
-                 div(class = "row",
-                     div(MA_plot_options, class = "span6"),
-                     div(US_plot_options, class = "span6")
-                 ),
+                 HTML("Horizontal grey bars indicate the span of five-year estimates, vertical grey bars with hinges indicate the standard errors"),
+                 
                  ## add text about the variables
                  #                  plot_main_text,
                  value="plot"),
@@ -201,7 +214,7 @@ shinyUI(fluidPage(
                  
                  ## Never Married Legend
 #                  conditionalPanel(
-#                    condition="input.var == 'Never_Married_Pct' && input.action != 0",
+#                    condition="input.var == 'Never_Married_pct' && input.action != 0",
 #                    absolutePanel(
 #                      right = 30, top = 215, draggable=FALSE, style = "", 
 #                      class = "floater",
@@ -228,7 +241,7 @@ shinyUI(fluidPage(
 #                  
 #                  ## Separated Legend
 #                  conditionalPanel(
-#                    condition="input.var == 'Separated_Pct' && input.action != 0",
+#                    condition="input.var == 'Separated_pct' && input.action != 0",
 #                    absolutePanel(
 #                      right = 30, top = 215, draggable=FALSE, style = "", 
 #                      class = "floater",
@@ -256,7 +269,7 @@ shinyUI(fluidPage(
 #                  
 #                  ## Widowed Legend
 #                  conditionalPanel(
-#                    condition="input.var == 'Widowed_Pct' && input.action != 0",
+#                    condition="input.var == 'Widowed_pct' && input.action != 0",
 #                    absolutePanel(
 #                      right = 30, top = 215, draggable=FALSE, style = "", 
 #                      class = "floater",
@@ -283,7 +296,7 @@ shinyUI(fluidPage(
 #                  
 #                  ## Divorced Legend
 #                  conditionalPanel(
-#                    condition="input.var == 'Divorced_Pct' && input.action != 0",
+#                    condition="input.var == 'Divorced_pct' && input.action != 0",
 #                    absolutePanel(
 #                      right = 30, top = 215, draggable=FALSE, style = "", 
 #                      class = "floater",
