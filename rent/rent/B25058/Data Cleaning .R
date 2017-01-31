@@ -70,9 +70,22 @@ for(i in 1:length(Rent$Municipal)) {
 Rent <- subset(Rent, Municipal != "County subdivisions not defined")
 Rent$`Median Rent`<- ifelse(Rent$`Median Rent`!=as.numeric(Rent$`Median Rent`), "NA", as.numeric(Rent$`Median Rent`))
 Rent$`Rent Margin of Error` <- ifelse(Rent$`Rent Margin of Error`!=as.numeric(Rent$`Rent Margin of Error`), "NA", as.numeric(Rent$`Rent Margin of Error`))
+Rent <- Rent[order(Rent$County, Rent$Municipal, Rent$`Five Year Range`),]
+Rent$County <- gsub("County", "", Rent$County)
+Rent$`Median Rent` <- Rent$IA_Med_Rent
+Rent$`Rent Margin of Error` <- Rent$IA_Rent_Error
 
+
+Rent <- Rent[,1:5]
+colnames(Rent) <- c("Municipal","County", "Median.Rent","Rent.Margin.of.Error","Five.Year.Range")
+Rent <- Rent[,c("Municipal", "County", "Five.Year.Range", "Median.Rent", "Rent.Margin.of.Error")]
 
 write.csv(Rent, "AR003_03_5yr.csv")
+
+setwd("/Users/brookfrye/Desktop/Fall 2016/Seigma/seigma/rent/rent")
+
+write.csv(Rent, "rent.csv")
+
 
 
 

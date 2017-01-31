@@ -3,6 +3,12 @@ title:
 account: seigma
 server: shinyapps.io
 appId: 139722
+<<<<<<< HEAD
 bundleId: 651574
 url: https://seigma.shinyapps.io/rent/
 when: 1481822191.0618
+=======
+bundleId: 674715
+url: https://seigma.shinyapps.io/rent/
+when: 1484053753.85798
+>>>>>>> 21fc4e4c1614716c21e4e602648b7c687a6f187a
