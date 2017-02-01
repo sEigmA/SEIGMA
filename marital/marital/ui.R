@@ -64,7 +64,7 @@ shinyUI(fluidPage(
       ## Initializing a single slider
       conditionalPanel(
         condition="input.tabs == 'plot'",
-        selectInput("var", "Select Variable of Interest",
+        selectInput("plotvar", "Select Variable of Interest",
                     choices = list("Never Married" = "Never_Married_pct", 
                                    "Married" = "Married_pct",
                                    "Separated" = "Separated_pct",
@@ -72,9 +72,9 @@ shinyUI(fluidPage(
                                    "Divorced" = "Divorced_pct")),
         
       selectInput("plot_muni", "Select Municipality", 
-                  choices = MA_municipals),
-      checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-      checkboxInput("US_mean", "Compare to US Average", FALSE)
+                  choices = MA_municipals, multiple = TRUE),
+      checkboxInput("plotMA_mean", "Compare to MA Average", FALSE),
+      checkboxInput("plotUS_mean", "Compare to US Average", FALSE)
       
       ),
       
@@ -156,10 +156,13 @@ shinyUI(fluidPage(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Marital Status as a Percentage of the Population by Region and Gender Over Selected Five Year Period", align="center"),
+                 h4("Marital Status as a Percentage of the Population by  Gender", align="center"),
                  ## make a row to put two charts in
                  div(class = "row",
                      div(plotOutput("fplot"), class = "span6"),
+                     div(tableOutput("fplottab"), class = "span6"),
+                     
+                     
                      div(plotOutput("mplot"), class = "span6")
                  ),
                  HTML("Horizontal grey bars indicate the span of five-year estimates, vertical grey bars with hinges indicate the standard errors"),

@@ -203,17 +203,17 @@ shinyServer(function(input, output, session) {
   #       dataframe
   #       make one for males and one for females
   
-  plot_rent_df <- reactive({
+  plot_mar_df <- reactive({
     munis_p<-input$plot_muni
     
-    if(input$US_mean_p){
-      if(input$MA_mean_p){
+    if(input$plotUS_mean){
+      if(input$plotMA_mean){
         munis_p <- c("USA", "MA", munis_p) ## US and MA  
       } else{
         munis_p <- c("USA", munis_p) ## US only
       }
     } else{
-      if(input$MA_mean_p){
+      if(input$plotMA_mean){
         munis_p <- c("MA", munis_p) ## US only ## MA only
       }
     }
@@ -221,17 +221,24 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range
     if(is.null(munis_p)){munis_p <-"MA"}
     
-    plot_rent_df <- rent %>%
-      filter(Municipal %in% munis_p) %>%
-      select(c(1,3,4,5)) 
+    pvars <- c(input$plotvar, paste(input$plotvar, "error", sep="_"))
+    vars <- which(names(mar_data) %in% pvars)
+    
+    plot_mar_df <- mar_data %>%
+      filter(Region %in% munis_p) %>%
+      select(c(22,4,5,vars)) 
     # %>%
     #   spread(Municipal, Median.Rent)
     # 
-    plot_rent_df$Year <- as.numeric(sapply(strsplit(as.character(plot_rent_df$Five.Year.Range), split="-"), FUN=function(x){x[1]}))+2
-    
+    plot_mar_df$Year <- as.numeric(sapply(strsplit(as.character(plot_mar_df$Five_Year_Range), split="-"), FUN=function(x){x[1]}))+2
+    names(plot_mar_df)[c(4,5)] <- c("Var", "Error")
     
     ## Output reactive dataframe
-    plot_rent_df
+    plot_mar_df
+  })
+  
+  output$fplottab <- renderTable({
+    plot_mar_df()
   })
   
   output$fplot <- renderPlot({
@@ -239,17 +246,19 @@ shinyServer(function(input, output, session) {
     #make one for males and one for females
     
     # 
-    pdf <- plot_rent_df()
+    pdf <- plot_mar_df()
+    pdff <- subset(pdf, pdf$Gender=="Female")
+    
     ap=0.5
     sz=1
     
-    p=ggplot(pdf, aes(x=Year, y=Median.Rent, colour=Municipal))+
-      geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Municipal),alpha=ap/2, size=sz/2)+
-      geom_errorbar(aes(ymin = Median.Rent-Rent.Margin.of.Error, ymax = Median.Rent+Rent.Margin.of.Error,colour=Municipal),alpha=ap,size=sz, width=0.125)+
+    p=ggplot(pdff, aes(x=Year, y=Var, colour=Region))+
+      geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Region),alpha=ap/2, size=sz/2)+
+      geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
       ylab("Median Rent ($)")+
       scale_color_manual(values=cbbPalette, guide="legend")+
-      geom_point(aes(colour=Municipal),size=4,alpha=1)+
-      geom_line(aes(colour=Municipal),size=2,alpha=1)+
+      geom_point(aes(colour=Region),size=4,alpha=1)+
+      geom_line(aes(colour=Region),size=2,alpha=1)+
       theme_bw() + 
       theme(plot.background = element_blank(),
             panel.grid.major = element_blank(),
