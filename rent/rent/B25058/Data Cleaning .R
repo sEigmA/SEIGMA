@@ -9,13 +9,12 @@
 
 require(dplyr)
 require(tidyr)
-<<<<<<< HEAD
 require(readr)
 require(devtools)
-=======
 #require(read)
->>>>>>> 21fc4e4c1614716c21e4e602648b7c687a6f187a
-setwd( "~/Desktop/Fall 2016/Seigma/seigma/rent/rent/B25058")
+
+
+setwd("~/Desktop/Fall 2016/Seigma/seigma/rent/rent/B25058")
 path <- "~/Desktop/Fall 2016/Seigma/seigma/rent/rent/B25058" #change to local
 files <- list.files(path="~/Desktop/Fall 2016/Seigma/seigma/rent/rent/B25058", pattern="*_ann.csv")
 DF <- NULL
@@ -25,6 +24,7 @@ for (f in files) {
   DF <- rbind(DF, dat)
 }
 DF <- (DF)[-1,]
+
 colnames(DF) <- DF[1,]
 DF <- DF[-1,]
 
@@ -39,23 +39,23 @@ Rent$`Rent Margin of Error` <- as.numeric(Rent$`Rent Margin of Error`)
 
 # Inflation 
 Adjusted_index<-data.frame(Year=2005:2015, Annual=c(195.3,201.6,207.342,215.303,214.537,218.056,224.939,229.594, 232.957,
-                                                    236.736,237))
+                                                    236.736,237)) # this needs to be updated each year 
 
 Adjusted_index$Inflation_rate<-237/Adjusted_index$Annual
 Adjusted_index <- data.frame(apply(Adjusted_index, 2, as.numeric))
 Rent$IA_Med_Rent<-rep(0,nrow(Rent))
 
-# Adjust median rent for inflation
-for (i in 2005:2010) {
+# Adjust median rent for inflation -- end year needs to updated as new data is downloaded
+for (i in 2005:2011) {
   Rent$IA_Med_Rent[which(Rent$`Five Year Range`==i)]<-Rent$`Median Rent`[which(Rent$`Five Year Range`==i)]*Adjusted_index$Inflation_rate[which(Adjusted_index$Year==i)]
 }
 
 Rent$IA_Med_Rent<-round(Rent$IA_Med_Rent,0)
 
 
-# Adjust margin of error for inflation
+# Adjust margin of error for inflation end year needs to be updated as new data is downloaded
 Rent$IA_Rent_Error<-rep(0,nrow(Rent))
-for (i in 2005:2010) {
+for (i in 2005:2011) {
   Rent$IA_Rent_Error[which(Rent$`Five Year Range`==i)]<-Rent$`Rent Margin of Error`[which(Rent$`Five Year Range`==i)]*Adjusted_index$Inflation_rate[which(Adjusted_index$Year==i)]
 }
 
