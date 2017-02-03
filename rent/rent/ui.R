@@ -86,7 +86,7 @@ shinyUI(fluidPage(
                  
                  ## GitHub link
                  helpText(a("View our data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/income", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/rent", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),

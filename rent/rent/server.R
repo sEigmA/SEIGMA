@@ -339,11 +339,11 @@ shinyServer(function(input, output, session) {
     ## If clicked county has no crude rate, display a message
     if(muni_value == "NA"){
       return(as.character(tags$div(
-        tags$h5("Median Annual Household Income in ", muni_name, "is not available for this timespan"))))
+        tags$h5("Median Contract Rent in", muni_name, "is not available for this timespan"))))
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4("Median Annual Household Income in ", muni_name, " for ", input$map_year),
+      tags$h4("Median Contract Rent in ", muni_name, " for ", input$map_year),
       tags$h5("$",muni_value, "+-", muni_margin)
     ))
   })

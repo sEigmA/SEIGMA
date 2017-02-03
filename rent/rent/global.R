@@ -26,7 +26,7 @@ require(plotly)
 #MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
-## Load formatted Income status data
+## Load formatted Rent data
 ## -1 eliminates first column [rows,columns]
 rent <- read.csv(file="rent.csv")
 
@@ -207,7 +207,7 @@ info_side_text <- conditionalPanel(
 
 
 
-about_main_text <- p(strong("The SEIGMA Household Income App"), "displays median contract rent for municipalities in Massachusetts.",
+about_main_text <- p(strong("The SEIGMA Median Contract Rent App"), "displays median contract rent for municipalities in Massachusetts.",
                      tags$br(),
                      p(strong("Click on different tabs to view the data in different formats.")),
                      tags$ul(
@@ -223,8 +223,8 @@ about_main_text <- p(strong("The SEIGMA Household Income App"), "displays median
 plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
-                    p(strong("Median Annual Household income"),
-                      " - Average median annual household income over a five year period for each municipality."))
+                    p(strong("Median Contract Rent"),
+                      " - Average median contract rent over a five year period for each municipality."))
 
 font_size <- 14
 
