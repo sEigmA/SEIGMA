@@ -35,7 +35,8 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'map'",
                    selectInput("map_year", "Select Five Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", "2009-2013" = "2009-2013",
+                                              "2010-2014" = "2010-2014","2011-2015" = "2011-2015"))
                  ),
 
 
@@ -45,7 +46,8 @@ shinyUI(fluidPage(
                    ## Select input = List
                    selectInput("sum_year", "Select Five Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", "2009-2013" = "2009-2013",
+                                              "2010-2014" = "2010-2014","2011-2015" = "2011-2015")),
                    selectInput("sum_muni", "Select Municipality", 
                                choices = MA_municipals,
                                ## Multiple allows for multi-county selection
@@ -185,7 +187,7 @@ shinyUI(fluidPage(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Median Contract Rent"), "-Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2015. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.")),
+                   tags$li(p(strong("Median Contract Rent Adjusted to 2015 Dollar"), "-Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2015. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.")),
             
                    tags$br(),
                    tags$li(p(strong("Median"),"-The median divides the distribution of median contract rent into two equal parts; half that fall below the median for contract rent and half that fall above.")),
