@@ -88,7 +88,8 @@ shinyUI(fluidPage(
                                   "2008-2012" = "2008-2012",
                                   "2009-2013" = "2009-2013",
                                   "2010-2014" = "2010-2014",
-                                  "2011-2015" = "2011-2015")),
+                                  "2011-2015" = "2011-2015"),
+                   multiple = TRUE),
        selectInput("sum_gender", "Select Gender",
                    choices = list("Female" = "Female", "Male" = "Male"), multiple=TRUE),
        selectInput("sum_muni", "Select Municipality", 
@@ -160,8 +161,7 @@ shinyUI(fluidPage(
                  ## make a row to put two charts in
                  div(class = "row",
                      div(plotOutput("fplot"), class = "span6"),
-                     div(tableOutput("fplottab"), class = "span6"),
-                     
+
                      
                      div(plotOutput("mplot"), class = "span6")
                  ),

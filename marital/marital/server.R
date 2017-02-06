@@ -12,9 +12,19 @@
 shinyServer(function(input, output, session) {
   ## mar_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
   mar_df <- reactive({
+    
+    
+    ## make year a vector based on input variable
+    if(!is.null(input$sum_year))
+      years <- input$sum_year
+    ## if none selected, put all years in vector
+    if(is.null(input$sum_year))
+      years <- c("2006-2010","2007-2011", "2008-2012","2009-2013", "2010-2014",
+                 "2011-2015")
+    
     ## Filter the data by the chosen Five Year Range 
     mar_df <- mar_data %>%
-      filter(Five_Year_Range == input$sum_year) %>%
+      filter(Five_Year_Range %in% years) %>%
       select(1:4, Gender, Five_Year_Range, Population, Never_Married_pct, Never_Married_pct_error, 
              Married_pct,Married_pct_error,
              Separated_pct,Separated_pct_error, Widowed_pct, Widowed_pct_error, 
@@ -68,136 +78,136 @@ shinyServer(function(input, output, session) {
     return(mar_df)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
-  
-  mar_plot_df <- reactive({
-    ## Filter the data by the chosen Five Year Range 
-    mar_plot_df <- mar_data %>%
-      filter(Five_Year_Range == input$plot_year) %>%
-      select(1:4, Gender, Five_Year_Range, Population, Never_Married_pct, Married_pct,
-             Separated_pct, Widowed_pct, Divorced_pct) %>%
-      arrange(Region, Gender)
-    ## Output reactive dataframe
-    mar_plot_df    
-  })
-  
-  ## create the plot of the data
-  ## for the Google charts plot
-  output$plot_US <- reactive({
-    ## make reactive dataframe into regular dataframe
-    mar_plot_df <- mar_plot_df()
-    
-    ## make counties a vector based on input variable
-    munis <- "United States"
-    
-    plot_df <- mar_plot_df %>%
-      filter(Region %in% munis)
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
-                                            "Widowed_pct", "Divorced_pct"),
-                           variable.name = "Marital_Status", value.name = "Population_pct")
-    
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_pct")
-    
-    g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
-    
-    ## this outputs the google data to be used in the UI to create the dataframe
-    list(
-      data=googleDataTable(g))
-  })
-  
-  
-  ## create the plot of the MA data
-  output$plot_MA <- reactive({
-    ## make reactive dataframe into regular dataframe
-    mar_plot_df <- mar_plot_df()
-    
-    ## make counties a vector based on input variable
-    munis <- "MA"
-    
-    plot_df <- mar_plot_df %>%
-      filter(Region %in% munis)
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
-                                            "Widowed_pct", "Divorced_pct"),
-                           variable.name = "Marital_Status", value.name = "Population_pct")
-    
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_pct")
-    
-    g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
-    
-    ## this outputs the google data to be used in the UI to create the dataframe
-    list(
-      data=googleDataTable(g))
-  })
-  
-  ## create the plot of the MA data
-  output$plot_county <- reactive({
-    ## make reactive dataframe into regular dataframe
-    mar_plot_df <- mar_plot_df()
-    
-    ## find the county of the municipal
-    county <- mar_plot_df$County[which(mar_plot_df$Municipal==input$plot_muni)]
-    ## make counties a vector based on input variable
-    munis <- mar_plot_df$Region[match(county, mar_plot_df$Region)]
-    
-    plot_df <- mar_plot_df %>%
-      filter(Region %in% munis)
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
-                                            "Widowed_pct", "Divorced_pct"),
-                           variable.name = "Marital_Status", value.name = "Population_pct")
-    
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_pct")
-    
-    g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
-    
-    ## this outputs the google data to be used in the UI to create the dataframe
-    list(
-      data = googleDataTable(g), options = list(
-        title = paste("Marital Status Statisics for", munis[1])))
-  })
-  
-  ## create the plot of the MA data
-  output$plot_muni <- reactive({
-    ## make reactive dataframe into regular dataframe
-    mar_plot_df <- mar_plot_df()
-    
-    ## make counties a vector based on input variable
-    munis <- input$plot_muni
-    
-    plot_df <- mar_plot_df %>%
-      filter(Region %in% munis)
-    
-    ## put data into form that googleCharts understands (this unmelts the dataframe)
-    melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-                           measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
-                                            "Widowed_pct", "Divorced_pct"),
-                           variable.name = "Marital_Status", value.name = "Population_pct")
-    
-    g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-               value.var = "Population_pct")
-    
-    g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-    g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
-    
-    ## this outputs the google data to be used in the UI to create the dataframe
-    list(
-      data = googleDataTable(g), options = list(
-        title = paste("Marital Status Statistics for", munis)))
-  })
-  
+  # 
+  # mar_plot_df <- reactive({
+  #   ## Filter the data by the chosen Five Year Range 
+  #   mar_plot_df <- mar_data %>%
+  #     filter(Five_Year_Range == input$plot_year) %>%
+  #     select(1:4, Gender, Five_Year_Range, Population, Never_Married_pct, Married_pct,
+  #            Separated_pct, Widowed_pct, Divorced_pct) %>%
+  #     arrange(Region, Gender)
+  #   ## Output reactive dataframe
+  #   mar_plot_df    
+  # })
+  # 
+  # ## create the plot of the data
+  # ## for the Google charts plot
+  # output$plot_US <- reactive({
+  #   ## make reactive dataframe into regular dataframe
+  #   mar_plot_df <- mar_plot_df()
+  #   
+  #   ## make counties a vector based on input variable
+  #   munis <- "United States"
+  #   
+  #   plot_df <- mar_plot_df %>%
+  #     filter(Region %in% munis)
+  #   
+  #   ## put data into form that googleCharts understands (this unmelts the dataframe)
+  #   melted_plot_df <- melt(plot_df, id.vars = "Gender", 
+  #                          measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
+  #                                           "Widowed_pct", "Divorced_pct"),
+  #                          variable.name = "Marital_Status", value.name = "Population_pct")
+  #   
+  #   g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
+  #              value.var = "Population_pct")
+  #   
+  #   g$Marital_Status <- gsub("_", " ", g$Marital_Status)
+  #   g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
+  #   
+  #   ## this outputs the google data to be used in the UI to create the dataframe
+  #   list(
+  #     data=googleDataTable(g))
+  # })
+  # 
+  # 
+  # ## create the plot of the MA data
+  # output$plot_MA <- reactive({
+  #   ## make reactive dataframe into regular dataframe
+  #   mar_plot_df <- mar_plot_df()
+  #   
+  #   ## make counties a vector based on input variable
+  #   munis <- "MA"
+  #   
+  #   plot_df <- mar_plot_df %>%
+  #     filter(Region %in% munis)
+  #   
+  #   ## put data into form that googleCharts understands (this unmelts the dataframe)
+  #   melted_plot_df <- melt(plot_df, id.vars = "Gender", 
+  #                          measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
+  #                                           "Widowed_pct", "Divorced_pct"),
+  #                          variable.name = "Marital_Status", value.name = "Population_pct")
+  #   
+  #   g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
+  #              value.var = "Population_pct")
+  #   
+  #   g$Marital_Status <- gsub("_", " ", g$Marital_Status)
+  #   g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
+  #   
+  #   ## this outputs the google data to be used in the UI to create the dataframe
+  #   list(
+  #     data=googleDataTable(g))
+  # })
+  # 
+  # ## create the plot of the MA data
+  # output$plot_county <- reactive({
+  #   ## make reactive dataframe into regular dataframe
+  #   mar_plot_df <- mar_plot_df()
+  #   
+  #   ## find the county of the municipal
+  #   county <- mar_plot_df$County[which(mar_plot_df$Municipal==input$plot_muni)]
+  #   ## make counties a vector based on input variable
+  #   munis <- mar_plot_df$Region[match(county, mar_plot_df$Region)]
+  #   
+  #   plot_df <- mar_plot_df %>%
+  #     filter(Region %in% munis)
+  #   
+  #   ## put data into form that googleCharts understands (this unmelts the dataframe)
+  #   melted_plot_df <- melt(plot_df, id.vars = "Gender", 
+  #                          measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
+  #                                           "Widowed_pct", "Divorced_pct"),
+  #                          variable.name = "Marital_Status", value.name = "Population_pct")
+  #   
+  #   g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
+  #              value.var = "Population_pct")
+  #   
+  #   g$Marital_Status <- gsub("_", " ", g$Marital_Status)
+  #   g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
+  #   
+  #   ## this outputs the google data to be used in the UI to create the dataframe
+  #   list(
+  #     data = googleDataTable(g), options = list(
+  #       title = paste("Marital Status Statisics for", munis[1])))
+  # })
+  # 
+  # ## create the plot of the MA data
+  # output$plot_muni <- reactive({
+  #   ## make reactive dataframe into regular dataframe
+  #   mar_plot_df <- mar_plot_df()
+  #   
+  #   ## make counties a vector based on input variable
+  #   munis <- input$plot_muni
+  #   
+  #   plot_df <- mar_plot_df %>%
+  #     filter(Region %in% munis)
+  #   
+  #   ## put data into form that googleCharts understands (this unmelts the dataframe)
+  #   melted_plot_df <- melt(plot_df, id.vars = "Gender", 
+  #                          measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
+  #                                           "Widowed_pct", "Divorced_pct"),
+  #                          variable.name = "Marital_Status", value.name = "Population_pct")
+  #   
+  #   g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
+  #              value.var = "Population_pct")
+  #   
+  #   g$Marital_Status <- gsub("_", " ", g$Marital_Status)
+  #   g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
+  #   
+  #   ## this outputs the google data to be used in the UI to create the dataframe
+  #   list(
+  #     data = googleDataTable(g), options = list(
+  #       title = paste("Marital Status Statistics for", munis)))
+  # })
+  # 
   #############################################################################################
   #       ggplot
   #       dataframe
@@ -230,7 +240,7 @@ shinyServer(function(input, output, session) {
     # %>%
     #   spread(Municipal, Median.Rent)
     # 
-    plot_mar_df$Year <- as.numeric(sapply(strsplit(as.character(plot_mar_df$Five_Year_Range), split="-"), FUN=function(x){x[1]}))+2
+    plot_mar_df$Year <- as.integer(sapply(strsplit(as.character(plot_mar_df$Five_Year_Range), split="-"), FUN=function(x){x[1]}))+2
     names(plot_mar_df)[c(4,5)] <- c("Var", "Error")
     
     ## Output reactive dataframe
@@ -255,7 +265,7 @@ shinyServer(function(input, output, session) {
     p=ggplot(pdff, aes(x=Year, y=Var, colour=Region))+
       geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Region),alpha=ap/2, size=sz/2)+
       geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
-      ylab("Median Rent ($)")+
+      ylab("Percent of Female Marital Status (%)")+
       scale_color_manual(values=cbbPalette, guide="legend")+
       geom_point(aes(colour=Region),size=4,alpha=1)+
       geom_line(aes(colour=Region),size=2,alpha=1)+
@@ -271,7 +281,48 @@ shinyServer(function(input, output, session) {
             axis.text.x = element_text(size = 14),
             axis.text.y = element_text(size = 14))+
       theme(legend.title=element_text(size=16),
-            legend.text=element_text(size=14))
+            legend.text=element_text(size=14))+
+      ggtitle("Female Marital Status")
+    
+    #guides(colour = guide_legend(override.aes = list(colour = NA)))+
+    #guides(colour = guide_legend(override.aes = list(colour = cbbPalette[1:length(unique(pdf$Municipal))])))
+    p
+    
+    
+  })
+  
+  output$mplot <- renderPlot({
+    
+    #make one for males and one for females
+    
+    # 
+    pdf <- plot_mar_df()
+    pdfm <- subset(pdf, pdf$Gender=="Male")
+    
+    ap=0.5
+    sz=1
+    
+    p=ggplot(pdfm, aes(x=Year, y=Var, colour=Region))+
+      geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Region),alpha=ap/2, size=sz/2)+
+      geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
+      ylab("Percent of Male Marital Status (%)")+
+      scale_color_manual(values=cbbPalette, guide="legend")+
+      geom_point(aes(colour=Region),size=4,alpha=1)+
+      geom_line(aes(colour=Region),size=2,alpha=1)+
+      theme_bw() + 
+      theme(plot.background = element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank() )+
+      theme(panel.border= element_blank())+
+      theme(axis.line.x = element_line(color="black", size = 0.5),
+            axis.line.y = element_line(color="black", size = 0.5))+
+      theme(axis.title.x = element_text(size = 16),
+            axis.title.y = element_text(size = 16),
+            axis.text.x = element_text(size = 14),
+            axis.text.y = element_text(size = 14))+
+      theme(legend.title=element_text(size=16),
+            legend.text=element_text(size=14))+
+      ggtitle("Male Marital Status")
     
     #guides(colour = guide_legend(override.aes = list(colour = NA)))+
     #guides(colour = guide_legend(override.aes = list(colour = cbbPalette[1:length(unique(pdf$Municipal))])))
