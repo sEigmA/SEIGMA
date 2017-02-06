@@ -2,3 +2,4 @@ name: educational_attainment
 account: seigma
 bundleId: 497002
 url: https://seigma.shinyapps.io/educational_attainment/
+server: shinyapps.io
