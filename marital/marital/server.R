@@ -590,6 +590,7 @@ shinyServer(function(input, output, session) {
   ## draw leaflet map
   map <- createLeafletMap(session, "map")
   
+  
   ## the functions within observe are called when any of the inputs are called
   
   ## Does nothing until called (done with action button)
@@ -647,6 +648,32 @@ shinyServer(function(input, output, session) {
       values$selectedFeature[input$var] <- map_dat[match(region, map_dat$Region), input$var]
     })
   })
+  
+  
+  
+  observeEvent(input$lmap_cas, {
+    
+    leafletProxy("map")  %>% 
+      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
+                 icon=gc1,
+                 popup = ~paste(as.character(Name))) %>%
+      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
+                 icon=gc2,
+                 popup = ~paste(as.character(Name)))
+    
+    if(input$lmap_cas) {leafletProxy("map")  %>% 
+        showGroup('MAcasinos') %>%
+        showGroup('casinosCLOSED') %>%
+        showGroup('casinosOPEN')}
+    else {leafletProxy("map")   %>% 
+        hideGroup('MAcasinos') %>%
+        hideGroup('casinosCLOSED') %>%
+        hideGroup('casinosOPEN')}
+  })
+  
+  
   ##  This function is what creates info box
   output$details <- renderText({
     

@@ -56,7 +56,9 @@ shinyUI(fluidPage(
                                   "Married" = "Married_pct",
                                   "Separated" = "Separated_pct",
                                   "Widowed" = "Widowed_pct",
-                                  "Divorced" = "Divorced_pct"))
+                                  "Divorced" = "Divorced_pct")),
+      checkboxInput("lmap_cas", "Display Casinos", value=TRUE)
+      
               
       ),
       

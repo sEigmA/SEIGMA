@@ -490,3 +490,34 @@ muni_plot_options <- googleColumnChart("plot_muni", width="100%", height="475px"
     )
   )
 ))
+
+
+##################################
+# Add map casino icons
+
+MAcasinos <- data.frame("Name"=c("Wynn Boston Harbor",
+                                 "Plainridge Park Casino",
+                                 "MGM Springfield"),
+                        "Lat"=c(42.394964,42.0330381,42.1006063),
+                        "Lon"=c(-71.066760,-71.3039442,-72.5870506))
+star <- makeIcon( iconUrl = "www/star.png",
+                  iconWidth = 30, iconHeight = 30,
+                  iconAnchorX = 15, iconAnchorY = 15)
+
+casinosOPEN <- data.frame("Name"=c("Mohegan Sun",
+                                   "Foxwoods"),
+                          "Lat"=c(41.491549,41.473775),
+                          "Lon"=c(-72.091842,-71.960177))
+gc2 <- makeIcon( iconUrl = "www/greencircle2.gif",
+                 iconWidth = 20, iconHeight = 20,
+                 iconAnchorX = 10, iconAnchorY = 10)
+
+
+casinosCLOSED <- data.frame("Name"=c(
+  "Tiverton",
+  "River Casino"),
+  "Lat"=c(41.660301,42.824163),
+  "Lon"=c(-71.155845,-73.937884))
+gc1 <- makeIcon( iconUrl = "www/greencircle1.png",
+                 iconWidth = 20, iconHeight = 20,
+                 iconAnchorX = 10, iconAnchorY = 10)
