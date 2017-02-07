@@ -7,7 +7,7 @@
 ##First file run - Environment Setup
 ## load necessary libraries
 require(devtools)
-install_github("rstudio/shinyapps")
+#install_github("rstudio/shinyapps")
 require(dplyr)
 require(sp)
 require(maptools)
@@ -74,7 +74,7 @@ MA_municipals<-unique(rent$Municipal[-c(grep(rent$Municipal, pattern = "County")
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
-                "#0072B2", "#D55E00", "#CC79A7")
+                "#0072B2", "#D55E00", "#CC79A7", "#CC79A7", "#CC79A7")
 
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
@@ -89,7 +89,7 @@ map_colors <- c(paint_brush(n=25), "#999999")
 ##Cuts are quintiles of the total data
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-max_val <- max(rent$Median.Rent)
+max_val <- max(rent$Median.Rent, na.rm = TRUE)
 min_val <- 0
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)

@@ -84,7 +84,7 @@ write.csv(Rent, "AR003_03_5yr.csv")
 
 setwd("/Users/brookfrye/Desktop/Fall 2016/Seigma/seigma/rent/rent")
 
-write.csv(Rent, "rent.csv")
+write.csv(Rent, "rent.csv", row.names = FALSE)
 
 
 

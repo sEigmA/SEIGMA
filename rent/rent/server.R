@@ -208,6 +208,11 @@ shinyServer(function(input, output, session) {
 
     na_munis <- setdiff(MA_municipals_map, map_dat$Municipal)
     na_munis <- na_munis[na_munis!= "County subdivisions not defined"]
+    input$map_year <- "2005-2009" # Debug 
+    County <- "Barnstable" # Debug
+    Median.Rent <- 200
+    Rent.Margin.of.Error <- 2
+    
     na_df <- data.frame(Municipal = na_munis, County = NA, Five.Year.Range = input$map_year,
                         Median.Rent = NA, Rent.Margin.of.Error = NA,
                         color=length(map_colors), opacity = 0.7)
@@ -219,7 +224,7 @@ shinyServer(function(input, output, session) {
     return(map_dat)
   })
 
-  values <- reactiveValues(selectedFeature=NULL, highlight=c())
+  # values <- reactiveValues(selectedFeature=NULL, highlight=c())
 
   #############################################
   # observe({
