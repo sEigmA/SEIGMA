@@ -85,29 +85,29 @@ map_colors <- c(paint_brush(n=25), "#999999")
 #max_val <- 100
 #min_val <- 0
 
-marmax.val <- max(mar_data$Married_pct, na.rm=TRUE)
-marmin.val <- min(mar_data$Married_pct, na.rm=TRUE)
+marmax.val <- tapply(mar_data$Married_pct, mar_data$Gender, FUN=function(x){max(x, na.rm=T)})
+marmin.val <- tapply(mar_data$Married_pct, mar_data$Gender, FUN=function(x){min(x, na.rm=T)})
 
 marcuts <- quantile(mar_data$Married_pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
-nevmax.val <- max(mar_data$Never_Married_pct, na.rm=TRUE)
-nevmin.val <- min(mar_data$Never_Married_pct, na.rm=TRUE)
+nevmax.val <- tapply(mar_data$Never_Married_pct, mar_data$Gender, FUN=function(x){max(x, na.rm=T)})
+nevmin.val <- tapply(mar_data$Never_Married_pct, mar_data$Gender, FUN=function(x){min(x, na.rm=T)})
 
 nevcuts <- quantile(mar_data$Never_Married_pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
-sepmax.val <- max(mar_data$Separated_pct, na.rm=TRUE)
-sepmin.val <- min(mar_data$Separated_pct, na.rm=TRUE)
+sepmax.val <- tapply(mar_data$Separated_pct, mar_data$Gender, FUN=function(x){max(x, na.rm=T)})
+sepmin.val <- tapply(mar_data$Separated_pct, mar_data$Gender, FUN=function(x){min(x, na.rm=T)})
 ##sepmax.val <-20
 
-sepcuts <- seq(sepmin.val, sepmax.val, length.out = length(map_colors))
+#sepcuts <- seq(sepmin.val, sepmax.val, length.out = length(map_colors))
 
-widmax.val <- max(mar_data$Widowed_pct, na.rm=TRUE)
-widmin.val <- min(mar_data$Widowed_pct, na.rm=TRUE)
+widmax.val <- tapply(mar_data$Widowed_pct, mar_data$Gender, FUN=function(x){max(x, na.rm=T)})
+widmin.val <- tapply(mar_data$Widowed_pct, mar_data$Gender, FUN=function(x){min(x, na.rm=T)})
 
 widcuts <- quantile(mar_data$Widowed_pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 
-divmax.val <- max(mar_data$Divorced_pct, na.rm=TRUE)
-divmin.val <- min(mar_data$Divorced_pct, na.rm=TRUE)
+divmax.val <- tapply(mar_data$Divorced_pct, mar_data$Gender, FUN=function(x){max(x, na.rm=T)})
+divmin.val <- tapply(mar_data$Divorced_pct, mar_data$Gender, FUN=function(x){max(x, na.rm=T)})
 
 divcuts <- quantile(mar_data$Divorced_pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
 

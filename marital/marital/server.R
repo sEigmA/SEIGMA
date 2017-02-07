@@ -375,8 +375,11 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range 
     mar_map_df <- mar_data %>%
       filter(Five_Year_Range == input$map_year) %>%
-      select(1:4, Gender, Five_Year_Range, Population, Never_Married_pct, Married_pct,
-             Separated_pct, Widowed_pct, Divorced_pct) %>%
+      select(1:4, Gender, Five_Year_Range, Population, 
+             Never_Married_pct,Never_Married_pct_error, Married_pct,Married_pct_error,
+             Separated_pct,Separated_pct_error,  
+             Widowed_pct, Widowed_pct_error, 
+             Divorced_pct, Divorced_pct_error) %>%
       arrange(Region, Gender)
     ## Output reactive dataframe
     mar_map_df    
@@ -386,6 +389,7 @@ shinyServer(function(input, output, session) {
   ## set map colors
   map_dat <- reactive({
     
+    op <- 0.8
     # browser()
     
     ## Browser command - Stops the app right when it's about to break
@@ -401,7 +405,7 @@ shinyServer(function(input, output, session) {
       
       ## subset the data by the var selected
       #      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Married_pct)
-      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Married_pct)
+      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Married_pct, Married_pct_error)
       
       ## assign colors to each entry in the data frame
       
@@ -409,14 +413,14 @@ shinyServer(function(input, output, session) {
       marmap_dat <- cbind.data.frame(marmap_dat, color)
       marmap_dat$color <- ifelse(is.na(marmap_dat$color), length(map_colors), 
                                  marmap_dat$color)
-      marmap_dat$opacity <- 0.7
+      marmap_dat$opacity <- op
       
       ## find missing counties in data subset and assign NAs to all values
       missing_munis <- setdiff(leftover_munis_map, marmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
                                Five_Year_Range = input$map_year, Population = NA,
-                               Married_pct = NA, color=length(map_colors), opacity = 0)
+                               Married_pct = NA, Married_pct_error = NA, color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       marmap_dat <- rbind.data.frame(marmap_dat, missing_df)
       marmap_dat$color <- map_colors[marmap_dat$color]
@@ -427,7 +431,7 @@ shinyServer(function(input, output, session) {
     if(input$var == "Never_Married_pct"){
       
       ## subset the data by the var selected
-      nevmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Never_Married_pct)
+      nevmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Never_Married_pct,Never_Married_pct_error)
       
       ## assign colors to each entry in the data frame
       
@@ -435,13 +439,13 @@ shinyServer(function(input, output, session) {
       nevmap_dat <- cbind.data.frame(nevmap_dat, color)
       nevmap_dat$color <- ifelse(is.na(nevmap_dat$color), length(map_colors), 
                                  nevmap_dat$color)
-      nevmap_dat$opacity <- 0.7
+      nevmap_dat$opacity <- op
       
       ## find missing counties in data subset and assign NAs to all values
       missing_munis <- setdiff(leftover_munis_map, nevmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$map_year, Population = NA, Never_Married_pct = NA,
+                               Five_Year_Range = input$map_year, Population = NA, Never_Married_pct = NA, Never_Married_pct_error=NA,
                                color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       nevmap_dat <- rbind.data.frame(nevmap_dat, missing_df)
@@ -453,7 +457,7 @@ shinyServer(function(input, output, session) {
     if(input$var == "Separated_pct"){
       
       ## subset the data by the var selected
-      sepmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Separated_pct)
+      sepmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Separated_pct,Separated_pct_error)
       
       ## assign colors to each entry in the data frame
       
@@ -461,13 +465,13 @@ shinyServer(function(input, output, session) {
       sepmap_dat <- cbind.data.frame(sepmap_dat, color)
       sepmap_dat$color <- ifelse(is.na(sepmap_dat$color), length(map_colors), 
                                  sepmap_dat$color)
-      sepmap_dat$opacity <- 0.7
+      sepmap_dat$opacity <- op
       
       ## find missing counties in data subset and assign NAs to all values
       missing_munis <- setdiff(leftover_munis_map, sepmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$map_year, Population = NA, Separated_pct = NA, color=length(map_colors), opacity = 0)
+                               Five_Year_Range = input$map_year, Population = NA, Separated_pct = NA,Separated_pct_error=NA, color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       sepmap_dat <- rbind.data.frame(sepmap_dat, missing_df)
       sepmap_dat$color <- map_colors[sepmap_dat$color]
@@ -477,7 +481,7 @@ shinyServer(function(input, output, session) {
     if(input$var == "Widowed_pct"){
       
       ## subset the data by the year selected
-      widmap_dat <- select(map_dat,  Municipal, County, State, Region, Gender, Five_Year_Range, Population, Widowed_pct)
+      widmap_dat <- select(map_dat,  Municipal, County, State, Region, Gender, Five_Year_Range, Population, Widowed_pct,Widowed_pct_error)
       
       ## assign colors to each entry in the data frame
       
@@ -485,13 +489,13 @@ shinyServer(function(input, output, session) {
       widmap_dat <- cbind.data.frame(widmap_dat, color)
       widmap_dat$color <- ifelse(is.na(widmap_dat$color), length(map_colors), 
                                  widmap_dat$color)
-      widmap_dat$opacity <- 0.7
+      widmap_dat$opacity <- op
       
       ## find missing counties in data subset and assign NAs to all values
       missing_munis <- setdiff(leftover_munis_map, widmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$map_year, Population = NA, Widowed_pct = NA, 
+                               Five_Year_Range = input$map_year, Population = NA, Widowed_pct = NA, Widowed_pct_error=NA,
                                color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       widmap_dat <- rbind.data.frame(widmap_dat, missing_df)
@@ -502,7 +506,7 @@ shinyServer(function(input, output, session) {
     if(input$var == "Divorced_pct"){
       
       ## subset the data by the year selected
-      divmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Divorced_pct)
+      divmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Divorced_pct,Divorced_pct_error)
       
       ## assign colors to each entry in the data frame
       
@@ -510,14 +514,14 @@ shinyServer(function(input, output, session) {
       divmap_dat <- cbind.data.frame(divmap_dat, color)
       divmap_dat$color <- ifelse(is.na(divmap_dat$color), length(map_colors), 
                                  divmap_dat$color)
-      divmap_dat$opacity <- 0.7
+      divmap_dat$opacity <- op
       
       ## find missing counties in data subset and assign NAs to all values
       missing_munis <- setdiff(leftover_munis_map, divmap_dat$Region)
       missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
                                Region = missing_munis, Gender = input$map_gender, 
                                Five_Year_Range = input$map_year, Population = NA, 
-                               Divorced_pct = NA, color=length(map_colors), opacity = 0)
+                               Divorced_pct = NA,Divorced_pct_error = NA, color=length(map_colors), opacity = 0)
       # combine data subset with missing counties data
       divmap_dat <- rbind.data.frame(divmap_dat, missing_df)
       divmap_dat$color <- map_colors[divmap_dat$color]
@@ -645,10 +649,15 @@ shinyServer(function(input, output, session) {
     isolate({
       values$selectedFeature <- evt$properties
       region <- evt$properties$NAMELSAD10
-      values$selectedFeature[input$var] <- map_dat[match(region, map_dat$Region), input$var]
+      values$selectedFeature[c(input$var,paste(input$var, c("error"), sep="_"))] <- map_dat[match(region, map_dat$Region), c(input$var,paste(input$var, c("error"), sep="_"))]
+      
+      
     })
   })
   
+  output$maptab <- renderTable({
+map_dat()    
+  })
   
   
   observeEvent(input$lmap_cas, {
@@ -686,9 +695,11 @@ shinyServer(function(input, output, session) {
     }
     
     muni_name <- values$selectedFeature$NAMELSAD10
-    muni_value <- values$selectedFeature[input$var]
+    muni_value <- prettyNum(values$selectedFeature[input$var], big.mark = ",")
+    muni_error <- prettyNum(values$selectedFeature[paste(input$var, c("error"), sep="_")], big.mark = ",")
+    
     var_select <- gsub("_", " ", input$var)
-    var_select <- gsub("Pct", "", var_select)
+    var_select <- gsub("pct", "", var_select)
     
     ## If clicked county has no crude rate, display a message
     if(is.null(values$selectedFeature[input$var])){
@@ -699,19 +710,24 @@ shinyServer(function(input, output, session) {
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
       tags$h4("% ", input$map_gender, var_select, " in ", muni_name, " for ", input$map_year),
-      tags$h5(muni_value, "%")
+      tags$h5(muni_value,"+-",muni_error,  "%")
     ))
   })
+  
+  
   #legend
+  whichgender <- reactive({switch(input$map_gender,"Female"=1,  "Male"=2)})
+  
+  
   output$legend1 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "deeppink"))
     cols <- paint.brush(length(map_colors)-1)
     if(input$var =='Married_pct'){
-      leg_dat<- data_frame(y = seq(marmin.val, marmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      leg_dat<- data_frame(y = seq(marmin.val[whichgender()], marmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
         geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-        scale_y_continuous(limits = c(marmin.val, marmax.val), breaks = round(seq(marmin.val, marmax.val, length.out = 5),1)) +
+        scale_y_continuous(limits = c(marmin.val[whichgender()], marmax.val[whichgender()]), breaks = round(seq(marmin.val[whichgender()], marmax.val[whichgender()], length.out = 5),1)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),
               axis.text.y = element_text(size = 12),
@@ -723,11 +739,11 @@ shinyServer(function(input, output, session) {
               panel.grid.major = element_blank())
     }
     else if(input$var == 'Never_Married_pct'){
-      leg_dat<- data_frame(y = seq(nevmin.val, nevmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      leg_dat<- data_frame(y = seq(nevmin.val[whichgender()], nevmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
         geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-        scale_y_continuous(limits = c(nevmin.val, nevmax.val), breaks = round(seq(nevmin.val, nevmax.val, length.out = 5),1)) +
+        scale_y_continuous(limits = c(nevmin.val[whichgender()], nevmax.val[whichgender()]), breaks = round(seq(nevmin.val[whichgender()], nevmax.val[whichgender()], length.out = 5),1)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),
               axis.text.y = element_text(size = 12),
@@ -739,11 +755,11 @@ shinyServer(function(input, output, session) {
               panel.grid.major = element_blank())
     }
     else if(input$var=='Separated_pct'){
-      leg_dat<- data_frame(y = seq(sepmin.val, sepmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      leg_dat<- data_frame(y = seq(sepmin.val[whichgender()], sepmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
         geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-        scale_y_continuous(limits = c(sepmin.val, sepmax.val), breaks = round(seq(sepmin.val, sepmax.val, length.out = 5),1)) +
+        scale_y_continuous(limits = c(sepmin.val[whichgender()], sepmax.val[whichgender()]), breaks = round(seq(sepmin.val[whichgender()], sepmax.val[whichgender()], length.out = 5),1)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),
               axis.text.y = element_text(size = 12),
@@ -755,11 +771,11 @@ shinyServer(function(input, output, session) {
               panel.grid.major = element_blank())
     }
     else if(input$var == 'Widowed_pct'){
-      leg_dat<- data_frame(y = seq(widmin.val, widmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      leg_dat<- data_frame(y = seq(widmin.val[whichgender()], widmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
         geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-        scale_y_continuous(limits = c(widmin.val, widmax.val), breaks = round(seq(widmin.val, widmax.val, length.out = 5),1)) +
+        scale_y_continuous(limits = c(widmin.val[whichgender()], widmax.val[whichgender()]), breaks = round(seq(widmin.val[whichgender()], widmax.val[whichgender()], length.out = 5),1)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),
               axis.text.y = element_text(size = 12),
@@ -771,11 +787,11 @@ shinyServer(function(input, output, session) {
               panel.grid.major = element_blank())
     }
     else {
-      leg_dat<- data_frame(y = seq(divmin.val, divmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+      leg_dat<- data_frame(y = seq(divmin.val[whichgender()], divmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       q<- ggplot(data = leg_dat) +
         geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-        scale_y_continuous(limits = c(divmin.val, divmax.val), breaks = round(seq(divmin.val, divmax.val, length.out = 5),1)) +
+        scale_y_continuous(limits = c(divmin.val[whichgender()], divmax.val[whichgender()]), breaks = round(seq(divmin.val[whichgender()], divmax.val[whichgender()], length.out = 5),1)) +
         scale_fill_manual(values = leg_dat$col) + theme_bw() +
         theme(axis.text.x = element_blank(),
               axis.text.y = element_text(size = 12),
@@ -793,7 +809,8 @@ shinyServer(function(input, output, session) {
   output$text1<-renderText({
     var_s <- gsub("_pct", "", input$var)
     return(as.character(
-      var_s
+      gsub("_"," ", var_s)
     ))
   })
 })
+

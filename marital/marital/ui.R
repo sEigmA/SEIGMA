@@ -335,6 +335,8 @@ shinyUI(fluidPage(
 #                          )),
 #                          tags$td("Data not available", align = "right")))
 #                    )),
+
+tableOutput("maptab"),
                  value="map"),
         
         tabPanel("More Info", 
