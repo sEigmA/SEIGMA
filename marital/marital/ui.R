@@ -75,7 +75,8 @@ shinyUI(fluidPage(
                   choices = MA_municipals, multiple = TRUE),
       checkboxInput("plotMA_mean", "Compare to MA Average", FALSE),
       checkboxInput("plotUS_mean", "Compare to US Average", FALSE),
-      checkboxInput("combinegender", "Show Combined Genders", FALSE)
+      selectInput("plotcombine", "Show Combined Genders", choices = list("Separate" = "Separate", 
+                                                                         "Together" = "Together"))
       
       
       ),
@@ -157,18 +158,21 @@ shinyUI(fluidPage(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Marital Status as a Percentage of the Population by  Gender", align="center"),
+                 conditionalPanel(
+                   condition="input.plotcombine=='Separate'",
+                                  h4("Marital Status as a Percentage of the Population by  Gender", align="center"),                 
+                                  
                  ## make a row to put two charts in
                  
                                   plotOutput("fplot"), 
                                   plotOutput("mplot")
-                                  
+                 )
                  ,
-                 conditionalPanel(condition=" input.combinegender == TRUE",
-                                  absolutePanel(left=100, top=450, width=300, class="floater",
+                 conditionalPanel(condition = "input.plotcombine=='Together'",
+                                  h4("Marital Status as a Percentage of the Population by  Gender", align="center"),                 
                    plotOutput("fmplot")
                                   )
-                 )
+                 
                  
                  ,
                  HTML("Horizontal grey bars indicate the span of five-year estimates, vertical grey bars with hinges indicate the standard errors. Population includes individuals aged 15 years and older."),
