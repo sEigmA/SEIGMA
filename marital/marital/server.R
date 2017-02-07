@@ -218,9 +218,9 @@ shinyServer(function(input, output, session) {
     
     if(input$plotUS_mean){
       if(input$plotMA_mean){
-        munis_p <- c("USA", "MA", munis_p) ## US and MA  
+        munis_p <- c("United States", "MA", munis_p) ## US and MA  
       } else{
-        munis_p <- c("USA", munis_p) ## US only
+        munis_p <- c("United States", munis_p) ## US only
       }
     } else{
       if(input$plotMA_mean){
@@ -247,9 +247,47 @@ shinyServer(function(input, output, session) {
     plot_mar_df
   })
   
-  output$fplottab <- renderTable({
-    plot_mar_df()
+  output$fmplot <- renderPlot({
+    
+    #make one for males and one for females
+    
+    # 
+    pdf <- plot_mar_df()
+
+    ap=0.5
+    sz=1
+    
+    p=ggplot(pdf, aes(x=Year, y=Var, colour=Region))+
+      geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Region),alpha=ap/2, size=sz/2)+
+      geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
+      ylab("Percent of Marital Status (%)")+
+      scale_color_manual(values=cbbPalette, guide="legend")+
+      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
+      geom_point(aes(colour=Region),size=4,alpha=1)+
+      geom_line(aes(colour=Region, linetype=Gender),size=2,alpha=1)+
+      theme_bw() + 
+      theme(plot.background = element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank() )+
+      theme(panel.border= element_blank())+
+      theme(axis.line.x = element_line(color="black", size = 0.5),
+            axis.line.y = element_line(color="black", size = 0.5))+
+      theme(axis.title.x = element_text(size = 16),
+            axis.title.y = element_text(size = 16),
+            axis.text.x = element_text(size = 14),
+            axis.text.y = element_text(size = 14))+
+      theme(legend.title=element_text(size=16),
+            legend.text=element_text(size=14))+
+      ggtitle("Marital Status")
+    
+    #guides(colour = guide_legend(override.aes = list(colour = NA)))+
+    #guides(colour = guide_legend(override.aes = list(colour = cbbPalette[1:length(unique(pdf$Municipal))])))
+    p
+    
+    
   })
+  
+  
   
   output$fplot <- renderPlot({
     
@@ -267,6 +305,7 @@ shinyServer(function(input, output, session) {
       geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
       ylab("Percent of Female Marital Status (%)")+
       scale_color_manual(values=cbbPalette, guide="legend")+
+      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
       geom_point(aes(colour=Region),size=4,alpha=1)+
       geom_line(aes(colour=Region),size=2,alpha=1)+
       theme_bw() + 
@@ -307,6 +346,7 @@ shinyServer(function(input, output, session) {
       geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
       ylab("Percent of Male Marital Status (%)")+
       scale_color_manual(values=cbbPalette, guide="legend")+
+      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
       geom_point(aes(colour=Region),size=4,alpha=1)+
       geom_line(aes(colour=Region),size=2,alpha=1)+
       theme_bw() + 

@@ -74,7 +74,9 @@ shinyUI(fluidPage(
       selectInput("plot_muni", "Select Municipality", 
                   choices = MA_municipals, multiple = TRUE),
       checkboxInput("plotMA_mean", "Compare to MA Average", FALSE),
-      checkboxInput("plotUS_mean", "Compare to US Average", FALSE)
+      checkboxInput("plotUS_mean", "Compare to US Average", FALSE),
+      checkboxInput("combinegender", "Show Combined Genders", FALSE)
+      
       
       ),
       
@@ -147,9 +149,7 @@ shinyUI(fluidPage(
         tabPanel("Summary", 
                  dataTableOutput("summary"),
                  tags$br(),
-                 tags$ul(
-                   tags$li(p(strong("Population includes individuals 15 years and older.")))
-                 ),
+                 HTML("Population includes individuals aged 15 years and older."),
                  tags$br(),
                  value="summary", 
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
@@ -159,13 +159,19 @@ shinyUI(fluidPage(
                  ## make chart title here (otherwise not centered)
                  h4("Marital Status as a Percentage of the Population by  Gender", align="center"),
                  ## make a row to put two charts in
-                 div(class = "row",
-                     div(plotOutput("fplot"), class = "span6"),
-
-                     
-                     div(plotOutput("mplot"), class = "span6")
-                 ),
-                 HTML("Horizontal grey bars indicate the span of five-year estimates, vertical grey bars with hinges indicate the standard errors"),
+                 
+                                  plotOutput("fplot"), 
+                                  plotOutput("mplot")
+                                  
+                 ,
+                 conditionalPanel(condition=" input.combinegender == TRUE",
+                                  absolutePanel(left=100, top=450, width=300, class="floater",
+                   plotOutput("fmplot")
+                                  )
+                 )
+                 
+                 ,
+                 HTML("Horizontal grey bars indicate the span of five-year estimates, vertical grey bars with hinges indicate the standard errors. Population includes individuals aged 15 years and older."),
                  
                  ## add text about the variables
                  #                  plot_main_text,
