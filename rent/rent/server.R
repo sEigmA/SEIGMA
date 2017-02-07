@@ -206,25 +206,25 @@ shinyServer(function(input, output, session) {
                              Median.Rent = NA, Rent.Margin.of.Error = NA,
                              color=length(map_colors), opacity = 0)
 
-    na_munis <- setdiff(MA_municipals_map, map_dat$Municipal)
-    na_munis <- na_munis[na_munis!= "County subdivisions not defined"]
-    input$map_year <- "2005-2009" # Debug 
-    County <- "Barnstable" # Debug
-    Median.Rent <- 200
-    Rent.Margin.of.Error <- 2
-    
-    na_df <- data.frame(Municipal = na_munis, County = NA, Five.Year.Range = input$map_year,
-                        Median.Rent = NA, Rent.Margin.of.Error = NA,
-                        color=length(map_colors), opacity = 0.7)
+    # na_munis <- setdiff(MA_municipals_map, map_dat$Municipal)
+    # na_munis <- na_munis[na_munis!= "County subdivisions not defined"]
+    # input$map_year <- "2005-2009" # Debug 
+    # County <- "Barnstable" # Debug
+    # Median.Rent <- 200 # Debug
+    # Rent.Margin.of.Error <- 2 # Debug
+    # 
+    # na_df <- data.frame(Municipal = na_munis, County = NA, Five.Year.Range = input$map_year,
+    #                     Median.Rent = NA, Rent.Margin.of.Error = NA,
+    #                     color=length(map_colors), opacity = 0.7)
 
 
     # combine data subset with missing counties data
-    map_dat <- rbind.data.frame(map_dat, missing_df, na_df)
+    map_dat <- rbind.data.frame(map_dat, missing_df)
     map_dat$color <- map_colors[map_dat$color]
     return(map_dat)
   })
 
-  # values <- reactiveValues(selectedFeature=NULL, highlight=c())
+  values <- reactiveValues(selectedFeature=NULL, highlight=c())
 
   #############################################
   # observe({
