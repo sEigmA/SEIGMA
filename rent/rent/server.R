@@ -7,9 +7,12 @@
 shinyServer(function(input, output, session) {
   ## rent_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
   rent_df <- reactive({
+    years <- input$sum_year
+    if(is.null(years)==TRUE){years <- paste(c(2005:2011), c(2005:2011)+4, sep="-")}
+    
     ## Filter the data by the chosen Five Year Range 
     rent_df <- rent %>%
-      filter(Five.Year.Range == input$sum_year) %>%
+      filter(Five.Year.Range %in% years) %>%
       select(c(1:5))
 
     ## Output reactive dataframe
@@ -64,18 +67,18 @@ shinyServer(function(input, output, session) {
     
     if(input$US_mean_p){
       if(input$MA_mean_p){
-        munis_p <- c("USA", "MA", munis_p) ## US and MA  
+        munis_p <- c("USA", "Massachusetts", munis_p) ## US and MA  
       } else{
         munis_p <- c("USA", munis_p) ## US only
       }
     } else{
       if(input$MA_mean_p){
-        munis_p <- c("MA", munis_p) ## US only ## MA only
+        munis_p <- c("Massachusetts", munis_p) ## US only ## MA only
       }
     }
     
     ## Filter the data by the chosen Five Year Range
-    if(is.null(munis_p)){munis_p <-"MA"}
+    #if(is.null(munis_p)){munis_p <-"MA"}
       
     plot_rent_df <- rent %>%
       filter(Municipal %in% munis_p) %>%
@@ -206,13 +209,13 @@ shinyServer(function(input, output, session) {
                              Median.Rent = NA, Rent.Margin.of.Error = NA,
                              color=length(map_colors), opacity = 0)
 
-    # na_munis <- setdiff(MA_municipals_map, map_dat$Municipal)
-    # na_munis <- na_munis[na_munis!= "County subdivisions not defined"]
-    # input$map_year <- "2005-2009" # Debug 
+    na_munis <- setdiff(MA_municipals_map, map_dat$Municipal)
+    na_munis <- na_munis[na_munis!= "County subdivisions not defined"]
+    # input$map_year <- "2005-2009" # Debug
     # County <- "Barnstable" # Debug
     # Median.Rent <- 200 # Debug
     # Rent.Margin.of.Error <- 2 # Debug
-    # 
+
     # na_df <- data.frame(Municipal = na_munis, County = NA, Five.Year.Range = input$map_year,
     #                     Median.Rent = NA, Rent.Margin.of.Error = NA,
     #                     color=length(map_colors), opacity = 0.7)
