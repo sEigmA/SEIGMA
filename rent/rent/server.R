@@ -141,6 +141,7 @@ shinyServer(function(input, output, session) {
       geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Municipal),alpha=ap/2, size=sz/2)+
       geom_errorbar(aes(ymin = Median.Rent-Rent.Margin.of.Error, ymax = Median.Rent+Rent.Margin.of.Error,colour=Municipal),alpha=ap,size=sz, width=0.125)+
       ylab("Median Rent ($)")+
+      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
       scale_color_manual(values=cbbPalette, guide="legend")+
       geom_point(aes(colour=Municipal),size=4,alpha=1)+
       geom_line(aes(colour=Municipal),size=2,alpha=1)+
