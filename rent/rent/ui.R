@@ -120,7 +120,7 @@ shinyUI(fluidPage(
 #         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Median Annual Rent Over Selected Five Year Period", align="center"),
+                 h4("Inflation-Adjusted Median Annual Rent Over Selected Five Year Period", align="center"),
                  ## make a row to put two charts in
                  
                  plotOutput("plot"),
@@ -187,12 +187,12 @@ shinyUI(fluidPage(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Median Contract Rent Adjusted to 2015 Dollar"), "-Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2015. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.")),
+                   tags$li(p(strong("Inflation-Adjusted Median Contract Rent Adjusted to 2015 Dollar"), "-Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2015 and adjusted for inlation to the 2015 dollar. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.")),
             
                    tags$br(),
-                   tags$li(p(strong("Median"),"-The median divides the distribution of median contract rent into two equal parts; half that fall below the median for contract rent and half that fall above.")),
+                   tags$li(p(strong("Median"),"-The median divides the distribution of inflation-adjusted median contract rent into two equal parts; half that fall below the median for contract rent and half that fall above.")),
                    tags$br(),
-                   tags$li(p(strong("Five-Year Estimates"),"-Survey information is collected every year and then aggregated over a specific time period, in this case, five years at the municipality level.  Yearly estimates of median contract rent are available only at the county level to acheive a representative sample. ")
+                   tags$li(p(strong("Five-Year Estimates"),"-Survey information is collected every year and then aggregated over a specific time period, in this case, five years at the municipality level.  Yearly estimates of inflation-adjusted median contract rent are available only at the county level to acheive a representative sample. ")
                    )
                  ),
                  #tags$br(),
