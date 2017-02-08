@@ -6,7 +6,7 @@
 
 ##First file run - Environment Setup
 ## load necessary libraries
-require(devtools)
+#require(devtools)
 #install_github("rstudio/shinyapps")
 require(dplyr)
 require(sp)
