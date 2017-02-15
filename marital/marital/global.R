@@ -521,3 +521,10 @@ casinosCLOSED <- data.frame("Name"=c(
 gc1 <- makeIcon( iconUrl = "www/greencircle1.png",
                  iconWidth = 20, iconHeight = 20,
                  iconAnchorX = 10, iconAnchorY = 10)
+
+
+
+########################
+#variable plot titles
+
+#plot.titles <- data.frame("plotvar"=c("Never_Married_pct", "Married_pct", "Separated_pct", "Widowed_pct", "Divorced_pct"))

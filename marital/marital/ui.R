@@ -75,9 +75,9 @@ shinyUI(fluidPage(
         
       selectInput("plot_muni", "Select Municipality", 
                   choices = MA_municipals, multiple = TRUE),
-      checkboxInput("plotMA_mean", "Compare to MA Average", FALSE),
+      checkboxInput("plotMA_mean", "Compare to MA Average", TRUE),
       checkboxInput("plotUS_mean", "Compare to US Average", FALSE),
-      selectInput("plotcombine", "Show Combined Genders", choices = list("Separate" = "Separate", 
+      selectInput("plotcombine", "Show Plots by Gender", choices = list("Separated" = "Separate", 
                                                                          "Together" = "Together"))
       
       
