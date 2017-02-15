@@ -218,13 +218,13 @@ shinyServer(function(input, output, session) {
     
     if(input$plotUS_mean){
       if(input$plotMA_mean){
-        munis_p <- c("United States", "MA", munis_p) ## US and MA  
+        munis_p <- c(munis_p, "United States", "MA") ## US and MA  
       } else{
-        munis_p <- c("United States", munis_p) ## US only
+        munis_p <- c(munis_p, "United States") ## US only
       }
     } else{
       if(input$plotMA_mean){
-        munis_p <- c("MA", munis_p) ## US only ## MA only
+        munis_p <- c(munis_p, "MA") ## US only ## MA only
       }
     }
     
@@ -243,8 +243,10 @@ shinyServer(function(input, output, session) {
     plot_mar_df$Year <- as.integer(sapply(strsplit(as.character(plot_mar_df$Five_Year_Range), split="-"), FUN=function(x){x[1]}))+2
     names(plot_mar_df)[c(4,5)] <- c("Var", "Error")
     
-    ## Output reactive dataframe
-    plot_mar_df
+    ## Output reactive dataframe, sorted like selected munis
+    order=match(munis_p, plot_mar_df$Region)+rep(seq(from=0,to=c(nrow(plot_mar_df)-1), by=length(munis_p)), each=length(munis_p))
+    plot_mar_df=    plot_mar_df[ order,]
+    
   })
   
   output$fmplot <- renderPlot({
@@ -253,6 +255,8 @@ shinyServer(function(input, output, session) {
     
     # 
     pdf <- plot_mar_df()
+    row.names(pdf) <- 1:nrow(pdf)
+    pdf$Region <- factor(pdf$Region, levels = rev(pdf$Region[order(pdf$Region)]),ordered = TRUE)
 
     ap=0.5
     sz=1
@@ -260,7 +264,7 @@ shinyServer(function(input, output, session) {
     p=ggplot(pdf, aes(x=Year, y=Var, colour=Region))+
       geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Region),alpha=ap/2, size=sz/2)+
       geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
-      ylab("Percent of Marital Status (%)")+
+      ylab(paste("Percent of",gsub("_", " ", gsub("_pct", "", input$plotvar)),"Population (%)", sep=" "))+
       scale_color_manual(values=cbbPalette, guide="legend")+
       scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
       geom_point(aes(colour=Region),size=4,alpha=1)+
@@ -278,7 +282,8 @@ shinyServer(function(input, output, session) {
             axis.text.y = element_text(size = 14))+
       theme(legend.title=element_text(size=16),
             legend.text=element_text(size=14))+
-      ggtitle("Marital Status")
+      ggtitle(paste("Percent of",gsub("_", " ", gsub("_pct", "", input$plotvar)),"Population (%)", sep=" "))
+      
     
     #guides(colour = guide_legend(override.aes = list(colour = NA)))+
     #guides(colour = guide_legend(override.aes = list(colour = cbbPalette[1:length(unique(pdf$Municipal))])))
@@ -295,7 +300,10 @@ shinyServer(function(input, output, session) {
     
     # 
     pdf <- plot_mar_df()
+    row.names(pdf) <- 1:nrow(pdf)
     pdff <- subset(pdf, pdf$Gender=="Female")
+    pdff$Region <- factor(pdff$Region, levels = rev(pdff$Region[order(pdff$Region)]),ordered = TRUE)
+    
     
     ap=0.5
     sz=1
@@ -303,7 +311,7 @@ shinyServer(function(input, output, session) {
     p=ggplot(pdff, aes(x=Year, y=Var, colour=Region))+
       geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Region),alpha=ap/2, size=sz/2)+
       geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
-      ylab("Percent of Female Marital Status (%)")+
+      ylab(paste("Percent of",gsub("_", " ", gsub("_pct", "", input$plotvar)),"Females (%)", sep=" "))+
       scale_color_manual(values=cbbPalette, guide="legend")+
       scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
       geom_point(aes(colour=Region),size=4,alpha=1)+
@@ -321,7 +329,8 @@ shinyServer(function(input, output, session) {
             axis.text.y = element_text(size = 14))+
       theme(legend.title=element_text(size=16),
             legend.text=element_text(size=14))+
-      ggtitle("Female Marital Status")
+      ggtitle(paste("Percent of",gsub("_", " ", gsub("_pct", "", input$plotvar)),"Females (%)", sep=" "))
+      
     
     #guides(colour = guide_legend(override.aes = list(colour = NA)))+
     #guides(colour = guide_legend(override.aes = list(colour = cbbPalette[1:length(unique(pdf$Municipal))])))
@@ -336,7 +345,10 @@ shinyServer(function(input, output, session) {
     
     # 
     pdf <- plot_mar_df()
+    row.names(pdf) <- 1:nrow(pdf)
     pdfm <- subset(pdf, pdf$Gender=="Male")
+    pdfm$Region <- factor(pdfm$Region, levels = rev(pdfm$Region[order(pdfm$Region)]),ordered = TRUE)
+    
     
     ap=0.5
     sz=1
@@ -344,7 +356,7 @@ shinyServer(function(input, output, session) {
     p=ggplot(pdfm, aes(x=Year, y=Var, colour=Region))+
       geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Region),alpha=ap/2, size=sz/2)+
       geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
-      ylab("Percent of Male Marital Status (%)")+
+      ylab(paste("Percent of",gsub("_", " ", gsub("_pct", "", input$plotvar)),"Males (%)", sep=" "))+
       scale_color_manual(values=cbbPalette, guide="legend")+
       scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
       geom_point(aes(colour=Region),size=4,alpha=1)+
@@ -362,7 +374,7 @@ shinyServer(function(input, output, session) {
             axis.text.y = element_text(size = 14))+
       theme(legend.title=element_text(size=16),
             legend.text=element_text(size=14))+
-      ggtitle("Male Marital Status")
+      ggtitle(paste("Percent of",gsub("_", " ", gsub("_pct", "", input$plotvar)),"Males (%)", sep=" "))
     
     #guides(colour = guide_legend(override.aes = list(colour = NA)))+
     #guides(colour = guide_legend(override.aes = list(colour = cbbPalette[1:length(unique(pdf$Municipal))])))

@@ -80,13 +80,37 @@ Rent <- Rent[,1:5]
 colnames(Rent) <- c("Municipal","County", "Median.Rent","Rent.Margin.of.Error","Five.Year.Range")
 Rent <- Rent[,c("Municipal", "County", "Five.Year.Range", "Median.Rent", "Rent.Margin.of.Error")]
 
+<<<<<<< HEAD
 
 
 write.csv(Rent, "AR003_03_5yr.csv")
+=======
+#BLACKHOLE OF BLANDFORD
+munis <- unique(Rent$Municipal)
+years <- unique(Rent$Five.Year.Range)
+
+plug.the.blackhole <- function(x, y){
+  
+  muniyears <- unique(x$Five.Year.Range)
+  whichyearsmissing <- setdiff(y, muniyears)
+  x <- rbind(x, data.frame("Municipal"=rep(x$Municipal[1],length(whichyearsmissing)),
+                           "County"=rep(x$County[1],length(whichyearsmissing)),
+                           "Five.Year.Range"=whichyearsmissing,
+                            "Median.Rent"=rep(NA, length(whichyearsmissing)),
+                            "Rent.Margin.of.Error"=rep(NA, length(whichyearsmissing))))
+             x
+             
+  
+}
+
+Rent2 <- do.call(rbind, lapply(split(Rent, Rent$Municipal), FUN=function(x, y){plug.the.blackhole(x, y=years)}))
+
+write.csv(Rent2, "AR003_03_5yr.csv", row.names = FALSE)
+>>>>>>> 75122c293875e4147726cc478d4b53867088f473
 
 setwd("/Users/brookfrye/Desktop/Fall 2016/Seigma/seigma/rent/rent")
 
-write.csv(Rent, "rent.csv", row.names = FALSE)
+write.csv(Rent2, "rent.csv", row.names = FALSE)
 
 
 
