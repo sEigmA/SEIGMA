@@ -257,6 +257,8 @@ shinyServer(function(input, output, session) {
     pdf <- plot_mar_df()
     row.names(pdf) <- 1:nrow(pdf)
     pdf$Region <- factor(pdf$Region, levels = rev(pdf$Region[order(pdf$Region)]),ordered = TRUE)
+    # fuck with the levels statement
+    ##
 
     ap=0.5
     sz=1
