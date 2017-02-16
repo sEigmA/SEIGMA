@@ -214,7 +214,10 @@ shinyServer(function(input, output, session) {
   #       make one for males and one for females
   
   plot_mar_df <- reactive({
-    munis_p<-input$plot_muni
+    munis_p<-c(input$plot_muni)
+    if(is.null(munis_p)==F){
+    munis_p<-c(munis_p, input$plot_muni)} 
+  
     
     if(input$plotUS_mean){
       if(input$plotMA_mean){
@@ -223,7 +226,7 @@ shinyServer(function(input, output, session) {
         munis_p <- c(munis_p, "United States") ## US only
       }
     } else{
-      if(input$plotMA_mean){
+      if(input$plotMA_mean==T && any(grepl(x=munis_p, pattern = "MA"))==F){
         munis_p <- c(munis_p, "MA") ## US only ## MA only
       }
     }
@@ -236,7 +239,8 @@ shinyServer(function(input, output, session) {
     
     plot_mar_df <- mar_data %>%
       filter(Region %in% munis_p) %>%
-      select(c(22,4,5,vars)) 
+      select(c(22,4,5,vars)) %>%
+      arrange(Region)
     # %>%
     #   spread(Municipal, Median.Rent)
     # 
@@ -244,7 +248,7 @@ shinyServer(function(input, output, session) {
     names(plot_mar_df)[c(4,5)] <- c("Var", "Error")
     
     ## Output reactive dataframe, sorted like selected munis
-    order=match(munis_p, plot_mar_df$Region)+rep(seq(from=0,to=c(nrow(plot_mar_df)-1), by=length(munis_p)), each=length(munis_p))
+    order=unlist(lapply(match(munis_p, plot_mar_df$Region), FUN=function(x){x+0:((nrow(plot_mar_df))/(length(munis_p))-1)}))
     plot_mar_df=    plot_mar_df[ order,]
     
   })
@@ -256,7 +260,7 @@ shinyServer(function(input, output, session) {
     # 
     pdf <- plot_mar_df()
     row.names(pdf) <- 1:nrow(pdf)
-    pdf$Region <- factor(pdf$Region, levels = rev(pdf$Region[order(pdf$Region)]),ordered = TRUE)
+    pdf$Region <- factor(pdf$Region, levels = pdf$Region,ordered = TRUE)
     # fuck with the levels statement
     ##
 
@@ -304,7 +308,7 @@ shinyServer(function(input, output, session) {
     pdf <- plot_mar_df()
     row.names(pdf) <- 1:nrow(pdf)
     pdff <- subset(pdf, pdf$Gender=="Female")
-    pdff$Region <- factor(pdff$Region, levels = rev(pdff$Region[order(pdff$Region)]),ordered = TRUE)
+    pdff$Region <- factor(pdff$Region, levels = pdff$Region, ordered = TRUE)
     
     
     ap=0.5
@@ -349,7 +353,7 @@ shinyServer(function(input, output, session) {
     pdf <- plot_mar_df()
     row.names(pdf) <- 1:nrow(pdf)
     pdfm <- subset(pdf, pdf$Gender=="Male")
-    pdfm$Region <- factor(pdfm$Region, levels = rev(pdfm$Region[order(pdfm$Region)]),ordered = TRUE)
+    pdfm$Region <- factor(pdfm$Region, levels = pdfm$Region,ordered = TRUE)
     
     
     ap=0.5
