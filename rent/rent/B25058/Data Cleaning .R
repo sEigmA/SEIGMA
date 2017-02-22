@@ -80,7 +80,7 @@ Rent <- Rent[,1:5]
 colnames(Rent) <- c("Municipal","County", "Median.Rent","Rent.Margin.of.Error","Five.Year.Range")
 Rent <- Rent[,c("Municipal", "County", "Five.Year.Range", "Median.Rent", "Rent.Margin.of.Error")]
 
-<<<<<<< HEAD
+# <<<<<<< HEAD
 
 
 write.csv(Rent, "AR003_03_5yr.csv")
