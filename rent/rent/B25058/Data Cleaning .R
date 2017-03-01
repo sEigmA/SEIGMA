@@ -1,7 +1,7 @@
 
 ###########################################
 ## Title: Rent Data Cleaning             ##
-## Author(s): BF, JB                     ## 
+## Author(s): JWB, BF                    ## 
 ## Date Created:  12/16/17               ##
 ## Date Modified: 1/12/17                ##
 ###########################################
