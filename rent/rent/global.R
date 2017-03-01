@@ -185,10 +185,10 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the five- year range and municipality for which you are interested in viewing inflation-adjusted median contract rent')),
+  p(strong('Please select the five- year range and municipality for which you are interested in viewing inflation-adjusted median contract rent (adjusted to 2015 dollar)')),
   tags$br(),
   tags$ul(
-    tags$li("For a five-year period, you can compare a municipalitiy's inflation-adjusted median contract rent to the country, state, and national median.")
+    tags$li("For a five-year period, you can compare a municipalitiy's inflation-adjusted median contract rent (adjusted to 2015 dollar) to the country, state, and national median.")
   ))
 
 map_side_text <- conditionalPanel(
@@ -197,7 +197,7 @@ map_side_text <- conditionalPanel(
   helpText(p(strong("Please select a five- year range, and click on 'Generate Map' to get started. "))),
   tags$br(),
   tags$ul(
-    tags$li('Clicking on a municipality will display the inflation-adjusted median contract rent for the five-year range that you selected.')
+    tags$li('Clicking on a municipality will display the inflation-adjusted median contract rent  (adjusted to 2015 dollar) for the five-year range that you selected.')
   ))
 
 info_side_text <- conditionalPanel(
@@ -207,12 +207,12 @@ info_side_text <- conditionalPanel(
 
 
 
-about_main_text <- p(strong("The SEIGMA Median Contract Rent App"), "displays inflation-adjusted median contract rent for municipalities in Massachusetts.",
+about_main_text <- p(strong("The SEIGMA Median Contract Rent App"), "displays inflation-adjusted median contract rent (adjusted to 2015 dollar) for municipalities in Massachusetts.",
                      tags$br(),
                      p(strong("Click on different tabs to view the data in different formats.")),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
-                       tags$li(p(strong("Plot"), "compares municipality's  inflation-adjusted median contract rent to county, state, and national medians.")),
+                       tags$li(p(strong("Plot"), "compares municipality's  inflation-adjusted median contract rent (adjusted to 2015 dollar) to county, state, and national medians.")),
                        tags$li(p(strong("Map"), "visually displays  inflation-adjusted median contract rent by municipality.")),
                        tags$li(p(strong("More Info"), "describes  inflation-adjusted median contract rent."))
                      )
@@ -224,7 +224,7 @@ plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
                     p(strong("Median Contract Rent"),
-                      " - Average inflation-adjusted median contract rent over a five year period for each municipality."))
+                      " - Average inflation-adjusted median contract rent (adjusted to 2015 dollar) over a five year period for each municipality."))
 
 font_size <- 14
 
@@ -251,7 +251,7 @@ lplot<-googleLineChart("plot", width="100%", height="475px", options = list(
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Median Rent (inflation-adjusted $)",
+    title = "Median Rent (inflation-adjusted to 2015 $)",
     viewWindow = ylim,
     textStyle = list(
       fontSize = font_size),

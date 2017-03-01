@@ -46,7 +46,7 @@ Adjusted_index <- data.frame(apply(Adjusted_index, 2, as.numeric))
 Rent$IA_Med_Rent<-rep(0,nrow(Rent))
 
 # Adjust median rent for inflation -- end year needs to updated as new data is downloaded
-for (i in 2005:2011) {
+for (i in 2005:2015) {
   Rent$IA_Med_Rent[which(Rent$`Five Year Range`==i)]<-Rent$`Median Rent`[which(Rent$`Five Year Range`==i)]*Adjusted_index$Inflation_rate[which(Adjusted_index$Year==i)]
 }
 
@@ -55,7 +55,7 @@ Rent$IA_Med_Rent<-round(Rent$IA_Med_Rent,0)
 
 # Adjust margin of error for inflation -- end year needs to be updated as new data is downloaded
 Rent$IA_Rent_Error<-rep(0,nrow(Rent))
-for (i in 2005:2011) {
+for (i in 2005:2015) {
   Rent$IA_Rent_Error[which(Rent$`Five Year Range`==i)]<-Rent$`Rent Margin of Error`[which(Rent$`Five Year Range`==i)]*Adjusted_index$Inflation_rate[which(Adjusted_index$Year==i)]
 }
 
