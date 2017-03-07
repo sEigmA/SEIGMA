@@ -74,7 +74,7 @@ shinyUI(fluidPage(
                                    "Divorced" = "Divorced_pct")),
         
       selectInput("plot_muni", "Select Municipality", 
-                  choices = MA_municipals, multiple = TRUE),
+                  choices = c(MA_municipals, "United States"), multiple = TRUE, selected = "MA"),
       checkboxInput("plotMA_mean", "Compare to MA Average", TRUE),
       checkboxInput("plotUS_mean", "Compare to US Average", FALSE),
       selectInput("plotcombine", "Show Plots by Gender", choices = list("Separated" = "Separate", 
@@ -173,8 +173,9 @@ shinyUI(fluidPage(
                  conditionalPanel(condition = "input.plotcombine=='Together'",
                                   h4("Marital Status as a Percentage of the Population by  Gender", align="center"),                 
                    plotOutput("fmplot")
-                                  )
-                 
+                                  ),
+                 textOutput("ordermunis2"),
+                 textOutput("ordermunis")
                  
                  ,
                  HTML("Horizontal grey bars indicate the span of five-year estimates, vertical grey bars with hinges indicate the standard errors. Population includes individuals aged 15 years and older."),
