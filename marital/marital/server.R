@@ -213,34 +213,42 @@ shinyServer(function(input, output, session) {
   #       dataframe
   #       make one for males and one for females
   
-  plot_mar_df <- reactive({
-    munis_p<-c(input$plot_muni)
-    if(is.null(munis_p)==F){
-    munis_p<-c(munis_p, input$plot_muni)} 
-  
+  munis_p <- reactive({
+
+    munis_p <- input$plot_muni
     
-    if(input$plotUS_mean){
-      if(input$plotMA_mean){
-        munis_p <- c(munis_p, "United States", "MA") ## US and MA  
-      } else{
-        munis_p <- c(munis_p, "United States") ## US only
-      }
-    } else{
+    # if(input$plotUS_mean){
+    #   if(input$plotMA_mean){
+    #     munis_p <- c(munis_p, "United States", "MA") ## US and MA  
+    #   } else{
+    #     munis_p <- c(munis_p, "United States") ## US only
+    #   }
+    # } else{
       if(input$plotMA_mean==T && any(grepl(x=munis_p, pattern = "MA"))==F){
-        munis_p <- c(munis_p, "MA") ## US only ## MA only
+        return(c("MA", munis_p[!(munis_p =="MA")])) ## US only ## MA only
       }
-    }
+      if(input$plotMA_mean==F && any(grepl(x=munis_p, pattern = "MA"))==T){
+        return(munis_p[!(munis_p =="MA")]) ## remove MA
+      }
+  #  munis_p<-c(munis_p, input$plot_muni)
+    
+    # }
+    
+    #return(c("MA", munis_p[!(munis_p =="MA")]))
+    
+  })
+  
+  plot_mar_df <- reactive({
     
     ## Filter the data by the chosen Five Year Range
-    if(is.null(munis_p)){munis_p <-"MA"}
     
     pvars <- c(input$plotvar, paste(input$plotvar, "error", sep="_"))
     vars <- which(names(mar_data) %in% pvars)
     
+    selmun <- munis_p()
     plot_mar_df <- mar_data %>%
-      filter(Region %in% munis_p) %>%
-      select(c(22,4,5,vars)) %>%
-      arrange(Region)
+      filter(Region %in% selmun) %>%
+      select(c(22,4,5,vars))
     # %>%
     #   spread(Municipal, Median.Rent)
     # 
@@ -248,8 +256,21 @@ shinyServer(function(input, output, session) {
     names(plot_mar_df)[c(4,5)] <- c("Var", "Error")
     
     ## Output reactive dataframe, sorted like selected munis
-    order=unlist(lapply(match(munis_p, plot_mar_df$Region), FUN=function(x){x+0:((nrow(plot_mar_df))/(length(munis_p))-1)}))
-    plot_mar_df=    plot_mar_df[ order,]
+    #order=unlist(lapply(match(munis_p, plot_mar_df$Region), FUN=function(x){x+0:((nrow(plot_mar_df))/(length(munis_p))-1)}))
+    return(plot_mar_df[order(match(plot_mar_df$Region, selmun)),])
+    
+  })
+  
+  output$ordermunis <- renderPrint({
+    
+  o=plot_mar_df()
+  unique(o$Region)
+    
+  })
+  
+  output$ordermunis2 <- renderPrint({
+    
+    unlist(munis_p())
     
   })
   
