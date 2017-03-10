@@ -65,28 +65,28 @@ shinyServer(function(input, output, session) {
   plot_rent_df <- reactive({
     munis_p<-input$plot_muni
     
-    if(input$MA_mean_p==T && any(grepl(x=munis_p, pattern = "Massachusetts"))==F){
-      return(c("Massachusetts", munis_p[!(munis_p =="Massachusetts")])) ## US only ## MA only
-    }
-    if(input$MA_mean_p==F && any(grepl(x=munis_p, pattern = "MA"))==T){
-      return(munis_p[!(munis_p =="Massachusetts")]) ## remove MA
-    }
-    selmun <- munis_p()
-    plot_rent_df <- rent_df %>%
-      filter(Region %in% selmun) %>%
-      select(c(22,4,5,vars))
-    
-    # if(input$US_mean_p){
-    #   if(input$MA_mean_p){
-    #     munis_p <- c("USA", "Massachusetts", munis_p) ## US and MA  
-    #   } else{
-    #     munis_p <- c("USA", munis_p) ## US only
-    #   }
-    # } else{
-    #   if(input$MA_mean_p){
-    #     munis_p <- c("Massachusetts", munis_p) ## US only ## MA only
-    #   }
+    # if(input$MA_mean_p==T && any(grepl(x=munis_p, pattern = "Massachusetts"))==F){
+    #   return(c("Massachusetts", munis_p[!(munis_p =="Massachusetts")])) ## US only ## MA only
     # }
+    # if(input$MA_mean_p==F && any(grepl(x=munis_p, pattern = "MA"))==T){
+    #   return(munis_p[!(munis_p =="Massachusetts")]) ## remove MA
+    # }
+    # selmun <- munis_p()
+    # plot_rent_df <- rent_df %>%
+    #   filter(Region %in% selmun) %>%
+    #   select(c(22,4,5,vars))
+    # 
+    if(input$US_mean_p){
+      if(input$MA_mean_p){
+        munis_p <- c("USA", "Massachusetts", munis_p) ## US and MA
+      } else{
+        munis_p <- c("USA", munis_p) ## US only
+      }
+    } else{
+      if(input$MA_mean_p){
+        munis_p <- c("Massachusetts", munis_p) ## US only ## MA only
+      }
+    }
     
     ## Filter the data by the chosen Five Year Range
     #if(is.null(munis_p)){munis_p <-"MA"}
@@ -110,7 +110,8 @@ shinyServer(function(input, output, session) {
     #plot_rent_df<-cbind(plot_rent_df, plot_rent_df_e)
     
     ## Output reactive dataframe
-    return(plot_rent_df[order(match(plot_rent_df$Region, selmun)),])
+    # return(plot_rent_df[order(match(plot_rent_df$Region, selmun)),])
+    plot_rent_df
   })
 
   
@@ -151,7 +152,7 @@ shinyServer(function(input, output, session) {
     p=ggplot(pdf, aes(x=Year, y=Median.Rent, colour=Municipal))+
       #geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Municipal),alpha=ap/2, size=sz/2)+
       #geom_errorbar(aes(ymin = Median.Rent-Rent.Margin.of.Error, ymax = Median.Rent+Rent.Margin.of.Error,colour=Municipal),alpha=ap,size=sz, width=0.125)+
-      ylab("Median Rent ($)")+
+      ylab("Median Rent (Inflation-adjusted to 2015 $)")+
       scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
       scale_color_manual(values=cbbPalette, guide="legend")+
       geom_point(aes(colour=Municipal),size=4,alpha=1)+
