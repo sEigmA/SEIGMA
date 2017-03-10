@@ -74,7 +74,7 @@ shinyUI(fluidPage(
                                    "Divorced" = "Divorced_pct")),
         
       selectInput("plot_muni", "Select Municipality", 
-                  choices = c(MA_municipals, "United States"), multiple = TRUE, selected = "MA"),
+                  choices = c(MA_municipals), multiple = TRUE, selected = "MA"),
       checkboxInput("plotMA_mean", "Compare to MA Average", TRUE),
       checkboxInput("plotUS_mean", "Compare to US Average", FALSE),
       selectInput("plotcombine", "Show Plots by Gender", choices = list("Separated" = "Separate", 
@@ -193,11 +193,11 @@ shinyUI(fluidPage(
     .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
   ")),
                  ## Map Creation
-                 leafletMap("map", width="100%", height=500, 
-                            options=list(center = c(42.15, -71.65), zoom=8, 
-                                         ##Bounds for the map for when zoomed in on mass
-                                         maxBounds = list(list(41, -73.5), 
-                                                          list(43, -70)))),
+                 # leafletMap("map", width="100%", height=500, 
+                 #            options=list(center = c(42.15, -71.65), zoom=8, 
+                 #                         ##Bounds for the map for when zoomed in on mass
+                 #                         maxBounds = list(list(41, -73.5), 
+                 #                                          list(43, -70)))),
                  ## Info Box 
                  conditionalPanel(
                    condition="input.action != 0",

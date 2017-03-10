@@ -215,26 +215,35 @@ shinyServer(function(input, output, session) {
   
   munis_p <- reactive({
 
-    munis_p <- input$plot_muni
+    munis_p2 <- input$plot_muni
     
-    # if(input$plotUS_mean){
-    #   if(input$plotMA_mean){
-    #     munis_p <- c(munis_p, "United States", "MA") ## US and MA  
-    #   } else{
-    #     munis_p <- c(munis_p, "United States") ## US only
-    #   }
-    # } else{
-      if(input$plotMA_mean==T && any(grepl(x=munis_p, pattern = "MA"))==F){
-        return(c("MA", munis_p[!(munis_p =="MA")])) ## US only ## MA only
+   #MA
+      if(input$plotMA_mean==T && any(grepl(x=munis_p2, pattern = "MA"))==F){
+        return(c("MA", munis_p2[!(munis_p2 =="MA")])) ## US only ## MA only
+      }else if(input$plotMA_mean==T && any(grepl(x=munis_p2, pattern = "MA"))==T){
+        return(c("MA", munis_p2[!(munis_p2 =="MA")])) ## US only ## MA only
       }
-      if(input$plotMA_mean==F && any(grepl(x=munis_p, pattern = "MA"))==T){
-        return(munis_p[!(munis_p =="MA")]) ## remove MA
+      else if(input$plotMA_mean==F && any(grepl(x=munis_p2, pattern = "MA"))==T){
+        return(munis_p2[!(munis_p2 =="MA")]) ## remove MA
+      } else if(input$plotMA_mean==F && any(grepl(x=munis_p2, pattern = "MA"))==F){
+      return(munis_p2[!(munis_p2 =="MA")]) ## remove MA
       }
-  #  munis_p<-c(munis_p, input$plot_muni)
-    
-    # }
-    
-    #return(c("MA", munis_p[!(munis_p =="MA")]))
+  })
+  
+  munis_pfinal <- reactive({
+    munis_p3 <- munis_p()
+    #AMERICA FWURST
+    if(input$plotUS_mean==T && any(grepl(x=munis_p3, pattern = "United States"))==F){
+      return(c("United States", munis_p3[!(munis_p3 =="United States")])) ##  United States
+    }else if(input$plotUS_mean==T && any(grepl(x=munis_p3, pattern = "United States"))==T){
+      return(c("United States", munis_p3[!(munis_p3 =="United States")])) ## US  United States
+    }
+    else if(input$plotUS_mean==F && any(grepl(x=munis_p3, pattern = "United States"))==T){
+      return(munis_p3[!(munis_p3 =="United States")]) ## remove United States
+    } else if(input$plotUS_mean==F && any(grepl(x=munis_p3, pattern = "United States"))==F){
+      return(munis_p3[!(munis_p3 =="United States")]) ## remove  United States
+    }
+  
     
   })
   
@@ -245,7 +254,7 @@ shinyServer(function(input, output, session) {
     pvars <- c(input$plotvar, paste(input$plotvar, "error", sep="_"))
     vars <- which(names(mar_data) %in% pvars)
     
-    selmun <- munis_p()
+    selmun <- munis_pfinal()
     plot_mar_df <- mar_data %>%
       filter(Region %in% selmun) %>%
       select(c(22,4,5,vars))
@@ -327,7 +336,7 @@ shinyServer(function(input, output, session) {
     
     # 
     pdf <- plot_mar_df()
-    row.names(pdf) <- 1:nrow(pdf)
+    #row.names(pdf) <- 1:nrow(pdf)
     pdff <- subset(pdf, pdf$Gender=="Female")
     pdff$Region <- factor(pdff$Region, levels = pdff$Region, ordered = TRUE)
     
@@ -372,7 +381,7 @@ shinyServer(function(input, output, session) {
     
     # 
     pdf <- plot_mar_df()
-    row.names(pdf) <- 1:nrow(pdf)
+    #row.names(pdf) <- 1:nrow(pdf)
     pdfm <- subset(pdf, pdf$Gender=="Male")
     pdfm$Region <- factor(pdfm$Region, levels = pdfm$Region,ordered = TRUE)
     
@@ -630,109 +639,111 @@ shinyServer(function(input, output, session) {
   
   ###########################################
   
-  ## draw leaflet map
-  map <- createLeafletMap(session, 'map')
+  #line 632-735
   
-  
-  add_casinos_to_map <- function(df, icon, groupname){
-    map$addMarkers(
-      lng=df$Lon, lat=df$Lat, icon=icon, group=groupname,
-                   popup = paste(as.character(df$Name)))
-    }
-  show.casinos <- function(groupname){
-    map$showGroup(groupname)}
-  hide.casinos <- function(groupname){
-    map$hideGroup(groupname)}
-  
-  
-  
-  ## the functions within observe are called when any of the inputs are called
-  
-  ## Does nothing until called (done with action button)
-  observe({
-    # input$action
-    
-    ## load in relevant map data
-    map_dat <- map_dat()
-    
-    ## All functions which are isolated, will not run until the above observe function is activated
-    isolate({
-      ## Duplicate MAmap to x
-      x <- MA_map_muni
-      
-      ## for each county in the map, attach the Crude Rate and colors associated
-      for(i in 1:length(x$features)){
-        ## Each feature is a county
-        x$features[[i]]$properties[input$var] <- 
-          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), input$var]
-        ## Style properties
-        x$features[[i]]$properties$style <- list(
-          fill=TRUE, 
-          ## Fill color has to be equal to the map_dat color and is matched by county
-          fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
-          ## "#000000" = Black, "#999999"=Grey, 
-          weight=1, stroke=TRUE, 
-          opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
-          color="#000000", 
-          fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)])
-      }
-      
-      map$addGeoJSON(x) # draw map
-      
-      
-      # add_casinos_to_map(df=MAcasinos, icon=star, groupname="MAcasinos")
-      # add_casinos_to_map(df=casinosCLOSED, icon=gc1, groupname="casinosCLOSED")
-      # add_casinos_to_map(df=casinosOPEN, icon=gc1, groupname="casinosOPEN")
-      # isolate({
-      #   if(input$lmap_cas) {
-      #     show.casinos("MAcasinos")
-      #     show.casinos("casinosCLOSED")
-      #     show.casinos("casinosOPEN")
-      #   }
-      #   else {
-      #     hide.casinos("MAcasinos")
-      #     hide.casinos("casinosCLOSED")
-      #     hide.casinos("casinosOPEN")
-      #   }
-      # })
-      # 
-    })
-    map$addMarkers(
-      lng=MAcasinos$Lon, lat=MAcasinos$Lat,  icon=icon, group="MAcasinos",
-      popup = paste(as.character(MAcasinos$Name)))
-  })
-  
-  observe({
-    ## EVT = Mouse Click
-    evt <- input$map_click
-    if(is.null(evt))
-      return()
-    
-    isolate({
-      values$selectedFeature <- NULL
-    })
-  })
-  
-  observe({
-    evt <- input$map_geojson_click
-    if(is.null(evt))
-      return()
-    map_dat <- map_dat()
-    isolate({
-      values$selectedFeature <- evt$properties
-      region <- evt$properties$NAMELSAD10
-      values$selectedFeature[c(input$var,paste(input$var, c("error"), sep="_"))] <- map_dat[match(region, map_dat$Region), c(input$var,paste(input$var, c("error"), sep="_"))]
-      
-      
-    })
-  })
-  
-  output$maptab <- renderTable({
-map_dat()    
-  })
-  
-  
-  
+#   ## draw leaflet map
+#   map <- createLeafletMap(session, 'map')
+#   
+#   
+#   add_casinos_to_map <- function(df, icon, groupname){
+#     map$addMarkers(
+#       lng=df$Lon, lat=df$Lat, icon=icon, group=groupname,
+#                    popup = paste(as.character(df$Name)))
+#     }
+#   show.casinos <- function(groupname){
+#     map$showGroup(groupname)}
+#   hide.casinos <- function(groupname){
+#     map$hideGroup(groupname)}
+#   
+#   
+#   
+#   ## the functions within observe are called when any of the inputs are called
+#   
+#   ## Does nothing until called (done with action button)
+#   observe({
+#     # input$action
+#     
+#     ## load in relevant map data
+#     map_dat <- map_dat()
+#     
+#     ## All functions which are isolated, will not run until the above observe function is activated
+#     isolate({
+#       ## Duplicate MAmap to x
+#       x <- MA_map_muni
+#       
+#       ## for each county in the map, attach the Crude Rate and colors associated
+#       for(i in 1:length(x$features)){
+#         ## Each feature is a county
+#         x$features[[i]]$properties[input$var] <- 
+#           map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), input$var]
+#         ## Style properties
+#         x$features[[i]]$properties$style <- list(
+#           fill=TRUE, 
+#           ## Fill color has to be equal to the map_dat color and is matched by county
+#           fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
+#           ## "#000000" = Black, "#999999"=Grey, 
+#           weight=1, stroke=TRUE, 
+#           opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
+#           color="#000000", 
+#           fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)])
+#       }
+#       
+#       map$addGeoJSON(x) # draw map
+#       
+#       
+#       # add_casinos_to_map(df=MAcasinos, icon=star, groupname="MAcasinos")
+#       # add_casinos_to_map(df=casinosCLOSED, icon=gc1, groupname="casinosCLOSED")
+#       # add_casinos_to_map(df=casinosOPEN, icon=gc1, groupname="casinosOPEN")
+#       # isolate({
+#       #   if(input$lmap_cas) {
+#       #     show.casinos("MAcasinos")
+#       #     show.casinos("casinosCLOSED")
+#       #     show.casinos("casinosOPEN")
+#       #   }
+#       #   else {
+#       #     hide.casinos("MAcasinos")
+#       #     hide.casinos("casinosCLOSED")
+#       #     hide.casinos("casinosOPEN")
+#       #   }
+#       # })
+#       # 
+#     })
+#     map$addMarkers(
+#       lng=MAcasinos$Lon, lat=MAcasinos$Lat,  icon=icon, group="MAcasinos",
+#       popup = paste(as.character(MAcasinos$Name)))
+#   })
+#   
+#   observe({
+#     ## EVT = Mouse Click
+#     evt <- input$map_click
+#     if(is.null(evt))
+#       return()
+#     
+#     isolate({
+#       values$selectedFeature <- NULL
+#     })
+#   })
+#   
+#   observe({
+#     evt <- input$map_geojson_click
+#     if(is.null(evt))
+#       return()
+#     map_dat <- map_dat()
+#     isolate({
+#       values$selectedFeature <- evt$properties
+#       region <- evt$properties$NAMELSAD10
+#       values$selectedFeature[c(input$var,paste(input$var, c("error"), sep="_"))] <- map_dat[match(region, map_dat$Region), c(input$var,paste(input$var, c("error"), sep="_"))]
+#       
+#       
+#     })
+#   })
+#   
+#   output$maptab <- renderTable({
+# map_dat()    
+#   })
+#   
+#   
+#   
 
   
   ##  This function is what creates info box
