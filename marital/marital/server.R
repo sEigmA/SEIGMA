@@ -269,20 +269,20 @@ shinyServer(function(input, output, session) {
     return(plot_mar_df[order(match(plot_mar_df$Region, selmun)),])
     
   })
-  
-  output$ordermunis <- renderPrint({
-    
-  o=plot_mar_df()
-  unique(o$Region)
-    
-  })
-  
-  output$ordermunis2 <- renderPrint({
-    
-    unlist(munis_p())
-    
-  })
-  
+  # 
+  # output$ordermunis <- renderPrint({
+  #   
+  # o=plot_mar_df()
+  # unique(o$Region)
+  #   
+  # })
+  # 
+  # output$ordermunis2 <- renderPrint({
+  #   
+  #   unlist(munis_p())
+  #   
+  # })
+  # 
   output$fmplot <- renderPlot({
     
     #make one for males and one for females

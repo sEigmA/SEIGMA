@@ -174,10 +174,10 @@ shinyUI(fluidPage(
                                   h4("Marital Status as a Percentage of the Population by  Gender", align="center"),                 
                    plotOutput("fmplot")
                                   ),
-                 textOutput("ordermunis2"),
-                 textOutput("ordermunis")
-                 
-                 ,
+                 # textOutput("ordermunis2"),
+                 # textOutput("ordermunis")
+                 # 
+                 # ,
                  HTML("Horizontal grey bars indicate the span of five-year estimates, vertical grey bars with hinges indicate the standard errors. Population includes individuals aged 15 years and older."),
                  
                  ## add text about the variables
