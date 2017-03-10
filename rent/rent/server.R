@@ -62,7 +62,8 @@ shinyServer(function(input, output, session) {
 #   
   ## create the plot of the data
 
-  plot_rent_df <- reactive({
+   plot_rent_df <- reactive({
+     plot_rent_df <- rent_df()
     munis_p<-input$plot_muni
     
     # if(input$MA_mean_p==T && any(grepl(x=munis_p, pattern = "Massachusetts"))==F){
@@ -88,17 +89,7 @@ shinyServer(function(input, output, session) {
       }
     }
     
-    ## Filter the data by the chosen Five Year Range
-    #if(is.null(munis_p)){munis_p <-"MA"}
-    #   
-    # plot_rent_df <- rent %>%
-    #   filter(Municipal %in% munis_p) %>%
-    #   select(c(1,3,4,5)) 
-    # %>%
-    #   spread(Municipal, Median.Rent)
-    # 
     plot_rent_df$Year <- as.numeric(sapply(strsplit(as.character(plot_rent_df$Five.Year.Range), split="-"), FUN=function(x){x[1]}))+2
-    
     
     #add ribbons
     #plot_rent_df_e <- rent %>%
@@ -111,9 +102,18 @@ shinyServer(function(input, output, session) {
     
     ## Output reactive dataframe
     # return(plot_rent_df[order(match(plot_rent_df$Region, selmun)),])
-    plot_rent_df
-  })
 
+    # Filter the data by the chosen Five Year Range
+    if(is.null(munis_p)){munis_p <-"MA"}
+    
+    plot_rent_df <- plot_rent_df %>%
+      filter(Municipal %in% munis_p) %>%
+      select(c(1,2,3,4,5))%>%
+      spread(Municipal, Median.Rent)
+    
+    
+    plot_rent_df  
+   })
   
   
   
