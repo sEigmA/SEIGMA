@@ -62,12 +62,24 @@ shinyServer(function(input, output, session) {
 #   
   ## create the plot of the data
 
-  plot_rent_df <- reactive({
+   plot_rent_df <- reactive({
+     plot_rent_df <- rent_df()
     munis_p<-input$plot_muni
     
+    # if(input$MA_mean_p==T && any(grepl(x=munis_p, pattern = "Massachusetts"))==F){
+    #   return(c("Massachusetts", munis_p[!(munis_p =="Massachusetts")])) ## US only ## MA only
+    # }
+    # if(input$MA_mean_p==F && any(grepl(x=munis_p, pattern = "MA"))==T){
+    #   return(munis_p[!(munis_p =="Massachusetts")]) ## remove MA
+    # }
+    # selmun <- munis_p()
+    # plot_rent_df <- rent_df %>%
+    #   filter(Region %in% selmun) %>%
+    #   select(c(22,4,5,vars))
+    # 
     if(input$US_mean_p){
       if(input$MA_mean_p){
-        munis_p <- c("USA", "Massachusetts", munis_p) ## US and MA  
+        munis_p <- c("USA", "Massachusetts", munis_p) ## US and MA
       } else{
         munis_p <- c("USA", munis_p) ## US only
       }
@@ -77,17 +89,7 @@ shinyServer(function(input, output, session) {
       }
     }
     
-    ## Filter the data by the chosen Five Year Range
-    #if(is.null(munis_p)){munis_p <-"MA"}
-      
-    plot_rent_df <- rent %>%
-      filter(Municipal %in% munis_p) %>%
-      select(c(1,3,4,5)) 
-    # %>%
-    #   spread(Municipal, Median.Rent)
-    # 
     plot_rent_df$Year <- as.numeric(sapply(strsplit(as.character(plot_rent_df$Five.Year.Range), split="-"), FUN=function(x){x[1]}))+2
-    
     
     #add ribbons
     #plot_rent_df_e <- rent %>%
@@ -99,9 +101,19 @@ shinyServer(function(input, output, session) {
     #plot_rent_df<-cbind(plot_rent_df, plot_rent_df_e)
     
     ## Output reactive dataframe
-    plot_rent_df
-  })
+    # return(plot_rent_df[order(match(plot_rent_df$Region, selmun)),])
 
+    # Filter the data by the chosen Five Year Range
+    if(is.null(munis_p)){munis_p <-"MA"}
+    
+    plot_rent_df <- plot_rent_df %>%
+      filter(Municipal %in% munis_p) %>%
+      select(c(1,2,3,4,5))%>%
+      spread(Municipal, Median.Rent)
+    
+    
+    plot_rent_df  
+   })
   
   
   
@@ -138,14 +150,14 @@ shinyServer(function(input, output, session) {
     sz=1
     
     p=ggplot(pdf, aes(x=Year, y=Median.Rent, colour=Municipal))+
-      geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Municipal),alpha=ap/2, size=sz/2)+
-      geom_errorbar(aes(ymin = Median.Rent-Rent.Margin.of.Error, ymax = Median.Rent+Rent.Margin.of.Error,colour=Municipal),alpha=ap,size=sz, width=0.125)+
-      ylab("Median Rent ($)")+
+      #geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Municipal),alpha=ap/2, size=sz/2)+
+      #geom_errorbar(aes(ymin = Median.Rent-Rent.Margin.of.Error, ymax = Median.Rent+Rent.Margin.of.Error,colour=Municipal),alpha=ap,size=sz, width=0.125)+
+      ylab("Median Rent (Inflation-adjusted to 2015 $)")+
       scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
       scale_color_manual(values=cbbPalette, guide="legend")+
       geom_point(aes(colour=Municipal),size=4,alpha=1)+
       geom_line(aes(colour=Municipal),size=2,alpha=1)+
-      theme_bw() + 
+      theme_bw() +
       theme(plot.background = element_blank(),
             panel.grid.major = element_blank(),
             panel.grid.minor = element_blank() )+
