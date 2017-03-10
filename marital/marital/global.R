@@ -21,6 +21,13 @@ require(googleCharts)
 require(leaflet)
 require(RJSONIO)
 
+library(maps)
+library(lubridate)
+library(gbm)
+library(markdown)
+
+
+
 ## load map data
 #MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")

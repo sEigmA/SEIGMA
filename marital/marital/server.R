@@ -631,14 +631,26 @@ shinyServer(function(input, output, session) {
   ###########################################
   
   ## draw leaflet map
-  map <- createLeafletMap(session, "map")
+  map <- createLeafletMap(session, 'map')
+  
+  
+  add_casinos_to_map <- function(df, icon, groupname){
+    map$addMarkers(
+      lng=df$Lon, lat=df$Lat, icon=icon, group=groupname,
+                   popup = paste(as.character(df$Name)))
+    }
+  show.casinos <- function(groupname){
+    map$showGroup(groupname)}
+  hide.casinos <- function(groupname){
+    map$hideGroup(groupname)}
+  
   
   
   ## the functions within observe are called when any of the inputs are called
   
   ## Does nothing until called (done with action button)
   observe({
-    input$action
+    # input$action
     
     ## load in relevant map data
     map_dat <- map_dat()
@@ -666,7 +678,28 @@ shinyServer(function(input, output, session) {
       }
       
       map$addGeoJSON(x) # draw map
+      
+      
+      # add_casinos_to_map(df=MAcasinos, icon=star, groupname="MAcasinos")
+      # add_casinos_to_map(df=casinosCLOSED, icon=gc1, groupname="casinosCLOSED")
+      # add_casinos_to_map(df=casinosOPEN, icon=gc1, groupname="casinosOPEN")
+      # isolate({
+      #   if(input$lmap_cas) {
+      #     show.casinos("MAcasinos")
+      #     show.casinos("casinosCLOSED")
+      #     show.casinos("casinosOPEN")
+      #   }
+      #   else {
+      #     hide.casinos("MAcasinos")
+      #     hide.casinos("casinosCLOSED")
+      #     hide.casinos("casinosOPEN")
+      #   }
+      # })
+      # 
     })
+    map$addMarkers(
+      lng=MAcasinos$Lon, lat=MAcasinos$Lat,  icon=icon, group="MAcasinos",
+      popup = paste(as.character(MAcasinos$Name)))
   })
   
   observe({
@@ -699,28 +732,8 @@ map_dat()
   })
   
   
-  observeEvent(input$lmap_cas, {
-    
-    leafletProxy("map")  %>% 
-      addMarkers(lng=~Lon, lat=~Lat, icon=star,data=MAcasinos, group="MAcasinos",
-                 popup = ~paste(as.character(Name))) %>%
-      addMarkers(lng=~Lon, lat=~Lat, data=casinosCLOSED, group="casinosCLOSED",
-                 icon=gc1,
-                 popup = ~paste(as.character(Name))) %>%
-      addMarkers(lng=~Lon, lat=~Lat, data=casinosOPEN, group="casinosOPEN",
-                 icon=gc2,
-                 popup = ~paste(as.character(Name)))
-    
-    if(input$lmap_cas) {leafletProxy("map")  %>% 
-        showGroup('MAcasinos') %>%
-        showGroup('casinosCLOSED') %>%
-        showGroup('casinosOPEN')}
-    else {leafletProxy("map")   %>% 
-        hideGroup('MAcasinos') %>%
-        hideGroup('casinosCLOSED') %>%
-        hideGroup('casinosOPEN')}
-  })
   
+
   
   ##  This function is what creates info box
   output$details <- renderText({
