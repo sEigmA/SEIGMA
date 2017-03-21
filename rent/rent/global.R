@@ -242,7 +242,7 @@ lplot<-googleLineChart("plot", width="100%", height="475px", options = list(
   title = "",
   ## set axis titles, ticks, fonts, and ranges
   hAxis = list(
-    title = "",
+    title = "Median Rent (inflation-adjusted to 2015 $)",
     textStyle = list(
       fontSize = font_size),
     titleTextStyle = list(
