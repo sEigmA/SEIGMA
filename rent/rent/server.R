@@ -22,6 +22,7 @@ shinyServer(function(input, output, session) {
   ## Create summary table
   output$summary <- renderDataTable({
     ## Make reactive dataframe into regular dataframe
+    
     rent_df <- rent_df()
     
     ## make municipals a vector based on input variable
