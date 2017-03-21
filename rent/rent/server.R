@@ -64,7 +64,7 @@ shinyServer(function(input, output, session) {
   ## create the plot of the data
 
    plot_rent_df <- reactive({
-     plot_rent_df <- rent_df()
+     rent_for_plot <- rent
     munis_p<-input$plot_muni
     
     # if(input$MA_mean_p==T && any(grepl(x=munis_p, pattern = "Massachusetts"))==F){
@@ -90,7 +90,7 @@ shinyServer(function(input, output, session) {
       }
     }
     
-    plot_rent_df$Year <- as.numeric(sapply(strsplit(as.character(plot_rent_df$Five.Year.Range), split="-"), FUN=function(x){x[1]}))+2
+    rent_for_plot$Year <- as.numeric(sapply(strsplit(as.character(rent_for_plot$Five.Year.Range), split="-"), FUN=function(x){x[1]}))+2
     
     #add ribbons
     #plot_rent_df_e <- rent %>%
@@ -107,13 +107,12 @@ shinyServer(function(input, output, session) {
     # Filter the data by the chosen Five Year Range
     if(is.null(munis_p)){munis_p <-"MA"}
     
-    plot_rent_df <- plot_rent_df %>%
+    rent_for_plot <- rent_for_plot %>%
       filter(Municipal %in% munis_p) %>%
-      select(c(1,2,3,4,5))%>%
-      spread(Municipal, Median.Rent)
+      select(1,4,5,6)
     
     
-    plot_rent_df  
+    rent_for_plot  
    })
   
   
@@ -151,8 +150,8 @@ shinyServer(function(input, output, session) {
     sz=1
     
     p=ggplot(pdf, aes(x=Year, y=Median.Rent, colour=Municipal))+
-      #geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Municipal),alpha=ap/2, size=sz/2)+
-      #geom_errorbar(aes(ymin = Median.Rent-Rent.Margin.of.Error, ymax = Median.Rent+Rent.Margin.of.Error,colour=Municipal),alpha=ap,size=sz, width=0.125)+
+      geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Municipal),alpha=ap/2, size=sz/2)+
+      geom_errorbar(aes(ymin = Median.Rent-Rent.Margin.of.Error, ymax = Median.Rent+Rent.Margin.of.Error,colour=Municipal),alpha=ap,size=sz, width=0.125)+
       ylab("Median Rent (Inflation-adjusted to 2015 $)")+
       scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
       scale_color_manual(values=cbbPalette, guide="legend")+
