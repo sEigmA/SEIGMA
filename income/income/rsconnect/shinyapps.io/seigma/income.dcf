@@ -2,3 +2,4 @@ name: income
 account: seigma
 bundleId: 415556
 url: https://seigma.shinyapps.io/income/
+server: shinyapps.io

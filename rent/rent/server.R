@@ -35,13 +35,13 @@ shinyServer(function(input, output, session) {
     ## if the user checks the meanUS box or the meanMA box, add those to counties vector
     if(input$US_mean){
       if(input$MA_mean){
-        munis <- c("USA", "MA", munis) ## US and MA  
+        munis <- c("USA", "Massachusetts", munis) ## US and MA  
       } else{
         munis <- c("USA", munis) ## US only
       }
     } else{
       if(input$MA_mean){
-        munis <- c("MA", munis) ## US only ## MA only
+        munis <- c("Massachusetts", munis) ## US only ## MA only
       }
     }
     #     browser( )
@@ -51,6 +51,8 @@ shinyServer(function(input, output, session) {
       select(c(2,1,3,4,5))
     
     colnames(rent_df) <- gsub(".", " ", colnames(rent_df), fixed=T)
+    colnames(rent_df)[4] <- "Median Rent (2015$)"
+    colnames(rent_df)[5] <- "Median Margin of Error (2015$)"
     
     
 #     rent_df[,3] <- prettyNum(rent_df[,3], big.mark=",")
@@ -59,66 +61,76 @@ shinyServer(function(input, output, session) {
     return(rent_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
-  
-#   
+
   ## create the plot of the data
 
-   plot_rent_df <- reactive({
-     rent_for_plot <- rent
-    munis_p<-input$plot_muni
-    
-    # if(input$MA_mean_p==T && any(grepl(x=munis_p, pattern = "Massachusetts"))==F){
-    #   return(c("Massachusetts", munis_p[!(munis_p =="Massachusetts")])) ## US only ## MA only
-    # }
-    # if(input$MA_mean_p==F && any(grepl(x=munis_p, pattern = "MA"))==T){
-    #   return(munis_p[!(munis_p =="Massachusetts")]) ## remove MA
-    # }
-    # selmun <- munis_p()
-    # plot_rent_df <- rent_df %>%
-    #   filter(Region %in% selmun) %>%
-    #   select(c(22,4,5,vars))
-    # 
-    if(input$US_mean_p){
-      if(input$MA_mean_p){
-        munis_p <- c("USA", "Massachusetts", munis_p) ## US and MA
-      } else{
-        munis_p <- c("USA", munis_p) ## US only
-      }
-    } else{
-      if(input$MA_mean_p){
-        munis_p <- c("Massachusetts", munis_p) ## US only ## MA only
-      }
-    }
-    
-    rent_for_plot$Year <- as.numeric(sapply(strsplit(as.character(rent_for_plot$Five.Year.Range), split="-"), FUN=function(x){x[1]}))+2
-    
-    #add ribbons
-    #plot_rent_df_e <- rent %>%
-    #  filter(Municipal %in% munis_p) %>%
-    #  select(c(1,3,5)) %>%
-    #  spread(Municipal, Rent.Margin.of.Error)
-    #plot_rent_df_e<-plot_rent_df_e[,-1]
-    #names(plot_rent_df_e)<-paste(names(plot_rent_df_e), "error", sep="_")
-    #plot_rent_df<-cbind(plot_rent_df, plot_rent_df_e)
-    
-    ## Output reactive dataframe
-    # return(plot_rent_df[order(match(plot_rent_df$Region, selmun)),])
+   
 
-    # Filter the data by the chosen Five Year Range
-    if(is.null(munis_p)){munis_p <-"MA"}
     
-    rent_for_plot <- rent_for_plot %>%
-      filter(Municipal %in% munis_p) %>%
-      select(1,4,5,6)
+    # if(input$US_mean_p){
+    #   if(input$MA_mean_p){
+    #     munis_p <- c("USA", "Massachusetts", munis_p) ## US and MA
+    #   } else{
+    #     munis_p <- c("USA", munis_p) ## US only
+    #   }
+    # } else{
+    #   if(input$MA_mean_p){
+    #     munis_p <- c("Massachusetts", munis_p) ## US only ## MA only
+    #   }
+    # }
+  
+  
+    munis_p <- reactive({
+      
+      munis_p2 <- input$plot_muni
+      #MA
+      if(input$MA_mean_p==T && any(grepl(x=munis_p2, pattern = "Massachusetts"))==F){
+        return(c("Massachusetts", munis_p2[!(munis_p2 =="Massachusetts")])) ## US only ## MA only
+      }else if(input$MA_mean_p==T && any(grepl(x=munis_p2, pattern = "Massachusetts"))==T){
+        return(c("Massachusetts", munis_p2[!(munis_p2 =="Massachusetts")])) ## US only ## MA only
+      }
+      else if(input$MA_mean_p==F && any(grepl(x=munis_p2, pattern = "Massachusetts"))==T){
+        return(munis_p2[!(munis_p2 =="Massachusetts")]) ## remove MA
+      } else if(input$MA_mean_p==F && any(grepl(x=munis_p2, pattern = "Massachusetts"))==F){
+        return(munis_p2[!(munis_p2 =="Massachusetts")]) ## remove MA
+      }
     
-    
-    rent_for_plot  
+   
    })
   
+    munis_pfinal <- reactive({
+     munis_p3 <- munis_p()
+     #AMERICA FWURST
+     if(input$US_mean_p==T && any(grepl(x=munis_p3, pattern = "United States"))==F){
+       return(c("United States", munis_p3[!(munis_p3 =="United States")])) ##  United States
+     }else if(input$US_mean_p==T && any(grepl(x=munis_p3, pattern = "United States"))==T){
+       return(c("United States", munis_p3[!(munis_p3 =="United States")])) ## US  United States
+     }
+     else if(input$US_mean_p==F && any(grepl(x=munis_p3, pattern = "United States"))==T){
+       return(munis_p3[!(munis_p3 =="United States")]) ## remove United States
+     } else if(input$US_mean_p==F && any(grepl(x=munis_p3, pattern = "United States"))==F){
+       return(munis_p3[!(munis_p3 =="United States")]) ## remove  United States
+     }
+     
+     
+   })
   
-  
-  
-  
+    plot_rent_df <- reactive({
+      rent_for_plot <- rent  
+      rent_for_plot$Year <- as.numeric(sapply(strsplit(as.character(rent_for_plot$Five.Year.Range), split="-"), FUN=function(x){x[1]}))+2    
+     
+      selmun <- munis_pfinal()
+      rent_for_plot <- rent_for_plot %>%
+        filter(Municipal %in% selmun) %>%
+        select(c(1,6,4,5)) 
+      names(rent_for_plot)[c(3,4)] <- c("Var", "Error")
+      
+      ## Output reactive dataframe, sorted like selected munis
+      #order=unlist(lapply(match(munis_p, plot_mar_df$Region), FUN=function(x){x+0:((nrow(plot_mar_df))/(length(munis_p))-1)}))
+      return(rent_for_plot[order(match(rent_for_plot$Municipal, selmun)),])
+      
+    })
+      
   ## for the Google charts plot
   output$plot <- renderPlot({
     ## make reactive dataframe into regular dataframe
@@ -149,10 +161,10 @@ shinyServer(function(input, output, session) {
     ap=0.5
     sz=1
     
-    p=ggplot(pdf, aes(x=Year, y=Median.Rent, colour=Municipal))+
+    p=ggplot(pdf, aes(x=Year, y=Var, colour=Municipal)) +
       geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Municipal),alpha=ap/2, size=sz/2)+
-      geom_errorbar(aes(ymin = Median.Rent-Rent.Margin.of.Error, ymax = Median.Rent+Rent.Margin.of.Error,colour=Municipal),alpha=ap,size=sz, width=0.125)+
-      ylab("Median Rent (Inflation-adjusted to 2015 $)")+
+      geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Municipal),alpha=ap,size=sz, width=0.125)+
+      ylab("Median Rent (2015 $)")+
       scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
       scale_color_manual(values=cbbPalette, guide="legend")+
       geom_point(aes(colour=Municipal),size=4,alpha=1)+
@@ -191,11 +203,12 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range
     map_rent_df <- rent %>%
       filter(Five.Year.Range == input$map_year) %>%
-      select(1:4, Five.Year.Range, Median.Rent, Rent.Margin.of.Error)
+      select(1:4, Five.Year.Range, Median.Rent.2015.Dollar, Rent.Margin.of.Error.2015.Dollar)
 
     ## Output reactive dataframe
     map_rent_df
   })
+
 
 
   ## set map colors
@@ -210,7 +223,7 @@ shinyServer(function(input, output, session) {
       filter(!is.na(Municipal))
 
     ## assign colors to each entry in the data frame
-    color <- as.integer(cut2(map_dat[,"Median.Rent"],cuts=cuts))
+    color <- as.integer(cut2(map_dat[,"Median.Rent.2015.Dollar"],cuts=cuts))
     map_dat <- cbind.data.frame(map_dat, color)
     map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors),
                             map_dat$color)
@@ -219,7 +232,7 @@ shinyServer(function(input, output, session) {
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Municipal)
     missing_df <- data.frame(Municipal = missing_munis, County = NA, Five.Year.Range = input$map_year,
-                             Median.Rent = NA, Rent.Margin.of.Error = NA,
+                             Median.Rent.2015.Dollar = NA, Rent.Margin.of.Error.2015.Dollar = NA,
                              color=length(map_colors), opacity = 0)
 
     na_munis <- setdiff(MA_municipals_map, map_dat$Municipal)

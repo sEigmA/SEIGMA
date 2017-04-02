@@ -78,6 +78,8 @@ shinyServer(function(input, output, session) {
     return(mar_df)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
+  
+  
   # 
   # mar_plot_df <- reactive({
   #   ## Filter the data by the chosen Five Year Range 
@@ -269,6 +271,7 @@ shinyServer(function(input, output, session) {
     return(plot_mar_df[order(match(plot_mar_df$Region, selmun)),])
     
   })
+  
   # 
   # output$ordermunis <- renderPrint({
   #   

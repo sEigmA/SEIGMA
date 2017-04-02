@@ -230,7 +230,7 @@ shinyUI(fluidPage(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Median Annual Household Income"), "-This includes the income of the household and all other individuals ages 15 and over. Median annual household income provides a clear trend to assess residents' household income overtime. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
+                   tags$li(p(strong("Median Annual Household Income"), "-This includes the income of the household and all other individuals ages 15 and over. Median annual household income is adjusted to the 2015 $ and provides a clear trend to assess residents' household income overtime. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
             
                    tags$br(),
                    tags$li(p(strong("Median"),"-The median divides the distribution of median annual household income into two equal parts; half that fall below the median for median annual household income and half that fall above the median annual household income.")),

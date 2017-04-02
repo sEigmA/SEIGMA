@@ -66,7 +66,7 @@ shinyUI(fluidPage(
                     ## Select input = List
                     
                     selectInput("plot_muni", "Select Municipality",
-                                choices = MA_municipals[order(MA_municipals)], selected = NULL, multiple = T),
+                                choices = MA_municipals, multiple = T),
                     checkboxInput("MA_mean_p", "Compare to MA Median", TRUE),
                     checkboxInput("US_mean_p", "Compare to US Median", FALSE)
                  
@@ -121,7 +121,7 @@ shinyUI(fluidPage(
 #         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Inflation-Adjusted Median Annual Rent Over Selected Five Year Period", align="center"),
+                 h4("Inflation-Adjusted (2015 $) Median Annual Rent Over Selected Five Year Period", align="center"),
                  ## make a row to put two charts in
                  
                  plotOutput("plot"),
@@ -170,7 +170,7 @@ shinyUI(fluidPage(
                      class = "floater",
                      strong("Median"),
                      tags$br(),
-                     strong("Contract", br(), "Rent"),
+                     strong("Contract", br(), "Rent 2015$"),
                      plotOutput("legend1"),
                      tags$table(
 
@@ -188,7 +188,7 @@ shinyUI(fluidPage(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Inflation-Adjusted Median Contract Rent Adjusted to 2015 Dollar"), "-Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2015 and adjusted for inlation to the 2015 dollar. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.")),
+                   tags$li(p(strong("Inflation-Adjusted (2015 $) Median Contract Rent"), "-Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2015 and adjusted for inlation to the 2015 dollar. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.")),
             
                    tags$br(),
                    tags$li(p(strong("Median"),"-The median divides the distribution of inflation-adjusted median contract rent into two equal parts; half that fall below the median for contract rent and half that fall above.")),
