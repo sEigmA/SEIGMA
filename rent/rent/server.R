@@ -158,6 +158,8 @@ shinyServer(function(input, output, session) {
     #   data=googleDataTable(plot_rent_df()))
     # 
     pdf <- plot_rent_df()
+    row.names(pdf) <- 1:nrow(pdf)
+    pdf$Municipal <- factor(pdf$Municipal, levels = pdf$Municipal,ordered = TRUE)
     ap=0.5
     sz=1
     
