@@ -421,165 +421,166 @@ shinyServer(function(input, output, session) {
     
     
   })
-  
-  mar_map_df <- reactive({
-    ## Filter the data by the chosen Five Year Range 
-    mar_map_df <- mar_data %>%
-      filter(Five_Year_Range == input$map_year) %>%
-      select(1:4, Gender, Five_Year_Range, Population, 
-             Never_Married_pct,Never_Married_pct_error, Married_pct,Married_pct_error,
-             Separated_pct,Separated_pct_error,  
-             Widowed_pct, Widowed_pct_error, 
-             Divorced_pct, Divorced_pct_error) %>%
-      arrange(Region, Gender)
-    ## Output reactive dataframe
-    mar_map_df    
-  })
-  
-  
-  ## set map colors
-  map_dat2 <- reactive({
-    
-    op <- 0.8
-    # browser()
-    
-    ## Browser command - Stops the app right when it's about to break
-    ## make reactive dataframe into regular dataframe
-    mar_map_df <- mar_map_df()
-    
-    ## take US, MA, and counties out of map_dat
-    map_dat <- mar_map_df %>%
-      filter(!is.na(Municipal), Gender == input$map_gender)
-    
-    ## for single year maps...
-    if(input$var == "Married_pct"){
-      
-      ## subset the data by the var selected
-      #      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Married_pct)
-      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Married_pct, Married_pct_error)
-      
-      ## assign colors to each entry in the data frame
-      
-      color <- as.integer(cut2(marmap_dat[,input$var],cuts=marcuts))
-      marmap_dat <- cbind.data.frame(marmap_dat, color)
-      marmap_dat$color <- ifelse(is.na(marmap_dat$color), length(map_colors), 
-                                 marmap_dat$color)
-      marmap_dat$opacity <- op
-      
-      ## find missing counties in data subset and assign NAs to all values
-      missing_munis <- setdiff(leftover_munis_map, marmap_dat$Region)
-      missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                               Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$map_year, Population = NA,
-                               Married_pct = NA, Married_pct_error = NA, color=length(map_colors), opacity = 0)
-      # combine data subset with missing counties data
-      marmap_dat <- rbind.data.frame(marmap_dat, missing_df)
-      marmap_dat$color <- map_colors[marmap_dat$color]
-      return(marmap_dat)
-      
-    }
-    
-    if(input$var == "Never_Married_pct"){
-      
-      ## subset the data by the var selected
-      nevmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Never_Married_pct,Never_Married_pct_error)
-      
-      ## assign colors to each entry in the data frame
-      
-      color <- as.integer(cut2(nevmap_dat[,input$var],cuts=nevcuts))
-      nevmap_dat <- cbind.data.frame(nevmap_dat, color)
-      nevmap_dat$color <- ifelse(is.na(nevmap_dat$color), length(map_colors), 
-                                 nevmap_dat$color)
-      nevmap_dat$opacity <- op
-      
-      ## find missing counties in data subset and assign NAs to all values
-      missing_munis <- setdiff(leftover_munis_map, nevmap_dat$Region)
-      missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                               Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$map_year, Population = NA, Never_Married_pct = NA, Never_Married_pct_error=NA,
-                               color=length(map_colors), opacity = 0)
-      # combine data subset with missing counties data
-      nevmap_dat <- rbind.data.frame(nevmap_dat, missing_df)
-      nevmap_dat$color <- map_colors[nevmap_dat$color]
-      return(nevmap_dat)
-      
-    }
-    
-    if(input$var == "Separated_pct"){
-      
-      ## subset the data by the var selected
-      sepmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Separated_pct,Separated_pct_error)
-      
-      ## assign colors to each entry in the data frame
-      
-      color <- as.integer(cut2(sepmap_dat[,input$var],cuts=sepcuts))
-      sepmap_dat <- cbind.data.frame(sepmap_dat, color)
-      sepmap_dat$color <- ifelse(is.na(sepmap_dat$color), length(map_colors), 
-                                 sepmap_dat$color)
-      sepmap_dat$opacity <- op
-      
-      ## find missing counties in data subset and assign NAs to all values
-      missing_munis <- setdiff(leftover_munis_map, sepmap_dat$Region)
-      missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                               Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$map_year, Population = NA, Separated_pct = NA,Separated_pct_error=NA, color=length(map_colors), opacity = 0)
-      # combine data subset with missing counties data
-      sepmap_dat <- rbind.data.frame(sepmap_dat, missing_df)
-      sepmap_dat$color <- map_colors[sepmap_dat$color]
-      return(sepmap_dat)
-    }
-    
-    if(input$var == "Widowed_pct"){
-      
-      ## subset the data by the year selected
-      widmap_dat <- select(map_dat,  Municipal, County, State, Region, Gender, Five_Year_Range, Population, Widowed_pct,Widowed_pct_error)
-      
-      ## assign colors to each entry in the data frame
-      
-      color <- as.integer(cut2(widmap_dat[,input$var],cuts=widcuts))
-      widmap_dat <- cbind.data.frame(widmap_dat, color)
-      widmap_dat$color <- ifelse(is.na(widmap_dat$color), length(map_colors), 
-                                 widmap_dat$color)
-      widmap_dat$opacity <- op
-      
-      ## find missing counties in data subset and assign NAs to all values
-      missing_munis <- setdiff(leftover_munis_map, widmap_dat$Region)
-      missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                               Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$map_year, Population = NA, Widowed_pct = NA, Widowed_pct_error=NA,
-                               color=length(map_colors), opacity = 0)
-      # combine data subset with missing counties data
-      widmap_dat <- rbind.data.frame(widmap_dat, missing_df)
-      widmap_dat$color <- map_colors[widmap_dat$color]
-      return(widmap_dat)
-    }
-    
-    if(input$var == "Divorced_pct"){
-      
-      ## subset the data by the year selected
-      divmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Divorced_pct,Divorced_pct_error)
-      
-      ## assign colors to each entry in the data frame
-      
-      color <- as.integer(cut2(divmap_dat[,input$var],cuts=divcuts))
-      divmap_dat <- cbind.data.frame(divmap_dat, color)
-      divmap_dat$color <- ifelse(is.na(divmap_dat$color), length(map_colors), 
-                                 divmap_dat$color)
-      divmap_dat$opacity <- op
-      
-      ## find missing counties in data subset and assign NAs to all values
-      missing_munis <- setdiff(leftover_munis_map, divmap_dat$Region)
-      missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
-                               Region = missing_munis, Gender = input$map_gender, 
-                               Five_Year_Range = input$map_year, Population = NA, 
-                               Divorced_pct = NA,Divorced_pct_error = NA, color=length(map_colors), opacity = 0)
-      # combine data subset with missing counties data
-      divmap_dat <- rbind.data.frame(divmap_dat, missing_df)
-      divmap_dat$color <- map_colors[divmap_dat$color]
-      return(divmap_dat)
-    }
-  })
-  
+  # 
+  # mar_map_df <- reactive({
+  #   ## Filter the data by the chosen Five Year Range 
+  #   mar_map_df <- mar_data %>%
+  #     filter(Five_Year_Range == input$map_year) %>%
+  #     select(1:4, Gender, Five_Year_Range, Population, 
+  #            Never_Married_pct,Never_Married_pct_error, Married_pct,Married_pct_error,
+  #            Separated_pct,Separated_pct_error,  
+  #            Widowed_pct, Widowed_pct_error, 
+  #            Divorced_pct, Divorced_pct_error) %>%
+  #     arrange(Region, Gender)
+  #   ## Output reactive dataframe
+  #   mar_map_df    
+  # })
+  # 
+  # 
+  # ## set map colors
+  # map_dat2 <- reactive({
+  #   
+  #   op <- 0.8
+  #   # browser()
+  #   
+  #   ## Browser command - Stops the app right when it's about to break
+  #   ## make reactive dataframe into regular dataframe
+  #   mar_map_df <- mar_map_df()
+  #   
+  #   ## take US, MA, and counties out of map_dat
+  #   map_dat <- mar_map_df %>%
+  #     filter(!is.na(Municipal), Gender == input$map_gender)
+  #   
+  #   ## for single year maps...
+  #   if(input$var == "Married_pct"){
+  #     
+  #     ## subset the data by the var selected
+  #     #      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Married_pct)
+  #     marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Married_pct, Married_pct_error)
+  #     
+  #     ## assign colors to each entry in the data frame
+  #     
+  #     color <- as.integer(cut2(marmap_dat[,input$var],cuts=marcuts))
+  #     marmap_dat <- cbind.data.frame(marmap_dat, color)
+  #     marmap_dat$color <- ifelse(is.na(marmap_dat$color), length(map_colors), 
+  #                                marmap_dat$color)
+  #     marmap_dat$opacity <- op
+  #     
+  #     ## find missing counties in data subset and assign NAs to all values
+  #     missing_munis <- setdiff(leftover_munis_map, marmap_dat$Region)
+  #     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
+  #                              Region = missing_munis, Gender = input$map_gender, 
+  #                              Five_Year_Range = input$map_year, Population = NA,
+  #                              Married_pct = NA, Married_pct_error = NA, color=length(map_colors), opacity = 0)
+  #     # combine data subset with missing counties data
+  #     marmap_dat <- rbind.data.frame(marmap_dat, missing_df)
+  #     marmap_dat$color <- map_colors[marmap_dat$color]
+  #     return(marmap_dat)
+  #     
+  #   }
+  #   
+  #   if(input$var == "Never_Married_pct"){
+  #     
+  #     ## subset the data by the var selected
+  #     nevmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Never_Married_pct,Never_Married_pct_error)
+  #     
+  #     ## assign colors to each entry in the data frame
+  #     
+  #     color <- as.integer(cut2(nevmap_dat[,input$var],cuts=nevcuts))
+  #     nevmap_dat <- cbind.data.frame(nevmap_dat, color)
+  #     nevmap_dat$color <- ifelse(is.na(nevmap_dat$color), length(map_colors), 
+  #                                nevmap_dat$color)
+  #     nevmap_dat$opacity <- op
+  #     
+  #     ## find missing counties in data subset and assign NAs to all values
+  #     missing_munis <- setdiff(leftover_munis_map, nevmap_dat$Region)
+  #     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
+  #                              Region = missing_munis, Gender = input$map_gender, 
+  #                              Five_Year_Range = input$map_year, Population = NA, Never_Married_pct = NA, Never_Married_pct_error=NA,
+  #                              color=length(map_colors), opacity = 0)
+  #     # combine data subset with missing counties data
+  #     nevmap_dat <- rbind.data.frame(nevmap_dat, missing_df)
+  #     nevmap_dat$color <- map_colors[nevmap_dat$color]
+  #     return(nevmap_dat)
+  #     
+  #   }
+  #   
+  #   if(input$var == "Separated_pct"){
+  #     
+  #     ## subset the data by the var selected
+  #     sepmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Separated_pct,Separated_pct_error)
+  #     
+  #     ## assign colors to each entry in the data frame
+  #     
+  #     color <- as.integer(cut2(sepmap_dat[,input$var],cuts=sepcuts))
+  #     sepmap_dat <- cbind.data.frame(sepmap_dat, color)
+  #     sepmap_dat$color <- ifelse(is.na(sepmap_dat$color), length(map_colors), 
+  #                                sepmap_dat$color)
+  #     sepmap_dat$opacity <- op
+  #     
+  #     ## find missing counties in data subset and assign NAs to all values
+  #     missing_munis <- setdiff(leftover_munis_map, sepmap_dat$Region)
+  #     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
+  #                              Region = missing_munis, Gender = input$map_gender, 
+  #                              Five_Year_Range = input$map_year, Population = NA, Separated_pct = NA,Separated_pct_error=NA, color=length(map_colors), opacity = 0)
+  #     # combine data subset with missing counties data
+  #     sepmap_dat <- rbind.data.frame(sepmap_dat, missing_df)
+  #     sepmap_dat$color <- map_colors[sepmap_dat$color]
+  #     return(sepmap_dat)
+  #   }
+  #   
+  #   if(input$var == "Widowed_pct"){
+  #     
+  #     ## subset the data by the year selected
+  #     widmap_dat <- select(map_dat,  Municipal, County, State, Region, Gender, Five_Year_Range, Population, Widowed_pct,Widowed_pct_error)
+  #     
+  #     ## assign colors to each entry in the data frame
+  #     
+  #     color <- as.integer(cut2(widmap_dat[,input$var],cuts=widcuts))
+  #     widmap_dat <- cbind.data.frame(widmap_dat, color)
+  #     widmap_dat$color <- ifelse(is.na(widmap_dat$color), length(map_colors), 
+  #                                widmap_dat$color)
+  #     widmap_dat$opacity <- op
+  #     
+  #     ## find missing counties in data subset and assign NAs to all values
+  #     missing_munis <- setdiff(leftover_munis_map, widmap_dat$Region)
+  #     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
+  #                              Region = missing_munis, Gender = input$map_gender, 
+  #                              Five_Year_Range = input$map_year, Population = NA, Widowed_pct = NA, Widowed_pct_error=NA,
+  #                              color=length(map_colors), opacity = 0)
+  #     # combine data subset with missing counties data
+  #     widmap_dat <- rbind.data.frame(widmap_dat, missing_df)
+  #     widmap_dat$color <- map_colors[widmap_dat$color]
+  #     return(widmap_dat)
+  #   }
+  #   
+  #   if(input$var == "Divorced_pct"){
+  #     
+  #     ## subset the data by the year selected
+  #     divmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Divorced_pct,Divorced_pct_error)
+  #     
+  #     ## assign colors to each entry in the data frame
+  #     
+  #     color <- as.integer(cut2(divmap_dat[,input$var],cuts=divcuts))
+  #     divmap_dat <- cbind.data.frame(divmap_dat, color)
+  #     divmap_dat$color <- ifelse(is.na(divmap_dat$color), length(map_colors), 
+  #                                divmap_dat$color)
+  #     divmap_dat$opacity <- op
+  #     
+  #     ## find missing counties in data subset and assign NAs to all values
+  #     missing_munis <- setdiff(leftover_munis_map, divmap_dat$Region)
+  #     missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA", 
+  #                              Region = missing_munis, Gender = input$map_gender, 
+  #                              Five_Year_Range = input$map_year, Population = NA, 
+  #                              Divorced_pct = NA,Divorced_pct_error = NA, color=length(map_colors), opacity = 0)
+  #     # combine data subset with missing counties data
+  #     divmap_dat <- rbind.data.frame(divmap_dat, missing_df)
+  #     divmap_dat$color <- map_colors[divmap_dat$color]
+  #     return(divmap_dat)
+  #   }
+  # })
+  # 
+  # 
   # map_dat2<- reactive({
   #   map_dat <- map_dat()
   #     ## assign colors to each entry in the data frame
@@ -605,7 +606,7 @@ shinyServer(function(input, output, session) {
   #     return(map_dat)
   #  })
   
-  values <- reactiveValues(selectedFeature=NULL, highlight=c())
+  # values <- reactiveValues(selectedFeature=NULL, highlight=c())
   
   #############################################
   # observe({
@@ -648,108 +649,125 @@ shinyServer(function(input, output, session) {
   
   #line 632-735
   
+  
+  # 
+  # Xmap <- reactive({
+  #   map_dat <- map_dat2()
+  #   
+  #   # Duplicate MAmap to x
+  #   x <- MA_map_muni
+  #   
+  #   ## for each county in the map, attach the Crude Rate and colors associated
+  #   for(i in 1:length(x$features)){
+  #     ## Each feature is a county
+  #     x$features[[i]]$properties[input$var] <-
+  #       map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), input$var]
+  #     ## Style properties
+  #     x$features[[i]]$properties$style <- list(
+  #       fill=TRUE,
+  #       ## Fill color has to be equal to the map_dat color and is matched by county
+  #       fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)],
+  #       ## "#000000" = Black, "#999999"=Grey,
+  #       weight=1, stroke=TRUE,
+  #       opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)],
+  #       color="#000000",
+  #       fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)])
+  #   }
+  #   x
+  # })
+  # 
+  # output$mapdata1 <- renderPrint({
+  #   o=map_dat2()
+  #   o[o$Municipal=="Easton",]
+  # })
+  # output$mapdata2 <- renderPrint({
+  #   Xmap()$features[1]
+  #   })
+  # output$mapdata3 <- renderPrint({
+  #   MA_map_muni$features[1]
+  #   })
+  
   ## draw leaflet map
   output$map <- renderLeaflet({
-  leaflet() %>% addTiles() %>% fitBounds(0,0,11,11) %>%  clearControls()
-      # addMarkers(lng=MAcasinos$Lon, lat=MAcasinos$Lat,  icon=star, group="MAcasinos",
-      # popup = paste(as.character(MAcasinos$Name))) %>% 
-      
-    })
-  observeEvent(input$action,{
-    
-    leafletProxy("map", data=MAcasinos) %>% clearShapes() %>%  
-     addMarkers(lng=~Lon, lat=~Lat,  icon=star, group="MAcasinos",
-     popup = paste(as.character(~Name))) %>% clearControls()
-    
-  })
+  leaflet() %>% addTiles() %>% fitBounds(0,0,11,11) 
+      })
+  # 
+  # observeEvent(input$action2,{
+  #   Xmap2 <- Xmap()
+  #   leafletProxy("map") %>%
+  #     clearShapes() %>%
+  #     addGeoJSON(Xmap2)
+  # })
+  # 
+  # observeEvent(input$lmap_cas,{
+  #   
+  #   leafletProxy("map") %>% clearShapes() %>%  
+  #    addMarkers(data=MAcasinos, lng=~Lon, lat=~Lat,  icon=star, group="MAcasinos",
+  #    popup = paste(as.character(~Name)))
+  #   
+  # })
+  # 
+  # 
+
   
-  
-
-
-
   ## the functions within observe are called when any of the inputs are called
 
   ## Does nothing until called (done with action button)
-  # observe({
-  #    
-  # 
-  #   ## load in relevant map data
-  #   map_dat <- map_dat2()
-  # 
-  #   ## All functions which are isolated, will not run until the above observe function is activated
-  #   isolate({
-  #     ## Duplicate MAmap to x
-  #     x <- MA_map_muni
-  # 
-  #     ## for each county in the map, attach the Crude Rate and colors associated
-  #     for(i in 1:length(x$features)){
-  #       ## Each feature is a county
-  #       x$features[[i]]$properties[input$var] <-
-  #         map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), input$var]
-  #       ## Style properties
-  #       x$features[[i]]$properties$style <- list(
-  #         fill=TRUE,
-  #         ## Fill color has to be equal to the map_dat color and is matched by county
-  #         fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)],
-  #         ## "#000000" = Black, "#999999"=Grey,
-  #         weight=1, stroke=TRUE,
-  #         opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)],
-  #         color="#000000",
-  #         fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)])
-  #     }
-  #     
-  #     leafletProxy("map", data=mar_data) %>% clearShapes() %>% addGeoJSON(x)  
-  #       # addMarkers(lng=MAcasinos$Lon, lat=MAcasinos$Lat,  icon=star, group="MAcasinos",
-  #       # popup = paste(as.character(MAcasinos$Name))) %>% clearControls()
-  # 
-  #     
-  #     # draw map
-  # 
-  # 
-  #     # add_casinos_to_map(df=MAcasinos, icon=star, groupname="MAcasinos")
-  #     # add_casinos_to_map(df=casinosCLOSED, icon=gc1, groupname="casinosCLOSED")
-  #     # add_casinos_to_map(df=casinosOPEN, icon=gc1, groupname="casinosOPEN")
-  #     # isolate({
-  #     #   if(input$lmap_cas) {
-  #     #     show.casinos("MAcasinos")
-  #     #     show.casinos("casinosCLOSED")
-  #     #     show.casinos("casinosOPEN")
-  #     #   }
-  #     #   else {
-  #     #     hide.casinos("MAcasinos")
-  #     #     hide.casinos("casinosCLOSED")
-  #     #     hide.casinos("casinosOPEN")
-  #     #   }
-  #     # })
-  #     #
-  #  })
-  #   
-  # })
-
-  observe({
-    ## EVT = Mouse Click
-    evt <- input$map_click
-    if(is.null(evt))
-      return()
-
-    isolate({
-      values$selectedFeature <- NULL
-    })
-  })
-
-  observe({
-    evt <- input$map_geojson_click
-    if(is.null(evt))
-      return()
-    map_dat <- map_dat()
-    isolate({
-      values$selectedFeature <- evt$properties
-      region <- evt$properties$NAMELSAD10
-      values$selectedFeature[c(input$var,paste(input$var, c("error"), sep="_"))] <- map_dat[match(region, map_dat$Region), c(input$var,paste(input$var, c("error"), sep="_"))]
 
 
-    })
-  })
+
+    ## load in relevant map data
+    
+
+        # addMarkers(lng=MAcasinos$Lon, lat=MAcasinos$Lat,  icon=star, group="MAcasinos",
+        # popup = paste(as.character(MAcasinos$Name))) %>% clearControls()
+
+
+      # draw map
+
+
+      # add_casinos_to_map(df=MAcasinos, icon=star, groupname="MAcasinos")
+      # add_casinos_to_map(df=casinosCLOSED, icon=gc1, groupname="casinosCLOSED")
+      # add_casinos_to_map(df=casinosOPEN, icon=gc1, groupname="casinosOPEN")
+      # isolate({
+      #   if(input$lmap_cas) {
+      #     show.casinos("MAcasinos")
+      #     show.casinos("casinosCLOSED")
+      #     show.casinos("casinosOPEN")
+      #   }
+      #   else {
+      #     hide.casinos("MAcasinos")
+      #     hide.casinos("casinosCLOSED")
+      #     hide.casinos("casinosOPEN")
+      #   }
+      # })
+      #
+# 
+# 
+#   observe({
+#     ## EVT = Mouse Click
+#     evt <- input$map_click
+#     if(is.null(evt))
+#       return()
+# 
+#     isolate({
+#       values$selectedFeature <- NULL
+#     })
+#   })
+# 
+#   observe({
+#     evt <- input$map_geojson_click
+#     if(is.null(evt))
+#       return()
+#     map_dat <- map_dat2()
+#     isolate({
+#       values$selectedFeature <- evt$properties
+#       region <- evt$properties$NAMELSAD10
+#       values$selectedFeature[c(input$var,paste(input$var, c("error"), sep="_"))] <- map_dat[match(region, map_dat$Region), c(input$var,paste(input$var, c("error"), sep="_"))]
+# 
+# 
+#     })
+#   })
 
   # 
   # add_casinos_to_map <- function(df, icon, groupname){
@@ -772,35 +790,35 @@ shinyServer(function(input, output, session) {
 
   
   ##  This function is what creates info box
-  output$details <- renderText({
-    
-    ## Before a county is clicked, display a message
-    if(is.null(values$selectedFeature)){
-      return(as.character(tags$div(
-        tags$div(
-          h4("Click on a town or city"))
-      )))
-    }
-    
-    muni_name <- values$selectedFeature$NAMELSAD10
-    muni_value <- prettyNum(values$selectedFeature[input$var], big.mark = ",")
-    muni_error <- prettyNum(values$selectedFeature[paste(input$var, c("error"), sep="_")], big.mark = ",")
-    
-    var_select <- gsub("_", " ", input$var)
-    var_select <- gsub("pct", "", var_select)
-    
-    ## If clicked county has no crude rate, display a message
-    if(is.null(values$selectedFeature[input$var])){
-      return(as.character(tags$div(
-        tags$h5("% ", input$map_gender, var_select, " in ", muni_name, "is not available for this timespan"))))
-    }
-    
-    ## For a single year when county is clicked, display a message
-    as.character(tags$div(
-      tags$h4("% ", input$map_gender, var_select, " in ", muni_name, " for ", input$map_year),
-      tags$h5(muni_value,"+-",muni_error,  "%")
-    ))
-  })
+  # output$details <- renderText({
+  #   
+  #   ## Before a county is clicked, display a message
+  #   if(is.null(values$selectedFeature)){
+  #     return(as.character(tags$div(
+  #       tags$div(
+  #         h4("Click on a town or city"))
+  #     )))
+  #   }
+  #   
+  #   muni_name <- values$selectedFeature$NAMELSAD10
+  #   muni_value <- prettyNum(values$selectedFeature[input$var], big.mark = ",")
+  #   muni_error <- prettyNum(values$selectedFeature[paste(input$var, c("error"), sep="_")], big.mark = ",")
+  #   
+  #   var_select <- gsub("_", " ", input$var)
+  #   var_select <- gsub("pct", "", var_select)
+  #   
+  #   ## If clicked county has no crude rate, display a message
+  #   if(is.null(values$selectedFeature[input$var])){
+  #     return(as.character(tags$div(
+  #       tags$h5("% ", input$map_gender, var_select, " in ", muni_name, "is not available for this timespan"))))
+  #   }
+  #   
+  #   ## For a single year when county is clicked, display a message
+  #   as.character(tags$div(
+  #     tags$h4("% ", input$map_gender, var_select, " in ", muni_name, " for ", input$map_year),
+  #     tags$h5(muni_value,"+-",muni_error,  "%")
+  #   ))
+  # })
   
   
   #legend

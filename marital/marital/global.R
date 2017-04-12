@@ -11,65 +11,43 @@
 ##First file run - Environment Setup
 ## load necessary libraries
 require(dplyr)
-require(sp)
-require(maptools)
-require(rgeos)
-require(Hmisc)
+# require(sp)
+# require(maptools)
+# require(rgeos)
+# require(Hmisc)
 require(reshape2)
 require(shiny)
 require(googleCharts)
 require(leaflet)
-require(RJSONIO)
+require(geojsonio)
+# require(RJSONIO)
 
-library(maps)
+#library(maps)
 library(lubridate)
-library(gbm)
+#library(gbm)
 library(markdown)
 
 
 
 ## load map data
-#MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
-MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
+MA_map_muni <- geojson_read("Muni_2010Census_DP1.geojson", what = "sp")
 
 ## Load formatted marital status data
-## -1 eliminates first column [rows,columns]
 mar_data <- read.csv(file="BA002_02_marriagedata.csv")
 
 names(mar_data)[10:12] <- gsub("Now_", "", names(mar_data)[10:12])
 
-## Find order of counties in geojson files
-## Each county is a separate feature
-# MA_counties <- c()
-# for(i in 1:length(MA_map_county$features)){
-#   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-# }
+MA_map_muni$NAMELSAD10 <- as.character(MA_map_muni$NAMELSAD10)
+MA_map_muni$NAMELSAD10 <- gsub(MA_map_muni$NAMELSAD10, pattern = " [Tt]own| city", replacement = "")
 
-## Find order of municipals in geojson files
-## Each municipal is a separate feature
-for(i in 1:length(MA_map_muni$features)){
-  MA_map_muni$features[[i]]$properties$NAMELSAD10 <- substr(MA_map_muni$features[[i]]$properties$NAMELSAD10, 1, nchar(MA_map_muni$features[[i]]$properties$NAMELSAD10)-5)
-}
-
-MA_municipals_map <- c()
-for(i in 1:length(MA_map_muni$features)){
-  MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
-}
-
-idx_leftovers <- which(!MA_municipals_map %in% mar_data$Region)
-leftover_munis <- MA_municipals_map[idx_leftovers]
-for(i in 1:length(leftover_munis)){
- MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
-  substr(leftover_munis[i], 1, nchar(leftover_munis[i])-5)
-}
-
-MA_municipals <- c()
-for(i in 1:length(MA_map_muni$features)){
- MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
-}
-idx_leftovers2 <- which(!MA_municipals %in% mar_data$Region)
+#removes municipalities that are absent in the WHOLE DATASET
+MA_municipals <- unique(MA_map_muni$NAMELSAD10)
+idx_leftovers2 <- MA_municipals[which(!MA_municipals %in% mar_data$Region)]
 leftover_munis_map <- MA_municipals[idx_leftovers2]
-MA_municipals <- sort(MA_municipals[-idx_leftovers2])
+
+#this does not apply to this dataset: other datasets may need this, 
+# ours does not. 
+#MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
