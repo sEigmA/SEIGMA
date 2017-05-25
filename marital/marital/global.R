@@ -42,8 +42,7 @@ MA_map_muni$NAMELSAD10 <- gsub(MA_map_muni$NAMELSAD10, pattern = " [Tt]own| city
 
 #removes municipalities that are absent in the WHOLE DATASET
 MA_municipals <- unique(MA_map_muni$NAMELSAD10)
-idx_leftovers2 <- MA_municipals[which(!MA_municipals %in% mar_data$Region)]
-leftover_munis_map <- MA_municipals[idx_leftovers2]
+leftover_munis_map <- MA_municipals[which(!MA_municipals %in% mar_data$Region)]
 
 #this does not apply to this dataset: other datasets may need this, 
 # ours does not. 
@@ -53,6 +52,9 @@ leftover_munis_map <- MA_municipals[idx_leftovers2]
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
 cbbPalette <- c("black", "orange", "blue", "green", "yellow", 
                 "darkblue", "red", "pink")
+
+pal <- colorNumeric("viridis", NULL)
+
 
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
@@ -84,7 +86,9 @@ sepmax.val <- tapply(mar_data$Separated_pct, mar_data$Gender, FUN=function(x){ma
 sepmin.val <- tapply(mar_data$Separated_pct, mar_data$Gender, FUN=function(x){min(x, na.rm=T)})
 ##sepmax.val <-20
 
-sepcuts <- quantile(mar_data$Separated_pct, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+#asking for 26 cuts in the range of separated (0-13%) returns a ton of small values that get rounded to 0.0
+#non-unique values for cuts are problematic, so we shrink the scale to 10 colors.
+sepcuts <- quantile(mar_data$Separated_pct, probs = seq(0, 1, length.out = 10), na.rm=TRUE)
 
 widmax.val <- tapply(mar_data$Widowed_pct, mar_data$Gender, FUN=function(x){max(x, na.rm=T)})
 widmin.val <- tapply(mar_data$Widowed_pct, mar_data$Gender, FUN=function(x){min(x, na.rm=T)})

@@ -41,26 +41,26 @@ shinyUI(fluidPage(
       ## in map, allow for variable selection
       conditionalPanel(
        condition="input.tabs == 'map'"
-       # ,
+       ,
 
-      #  selectInput("map_year", "Select Five Year Range",
-      #              choices = list("2006-2010" = "2006-2010", 
-      #                             "2007-2011" = "2007-2011",
-      #                             "2008-2012" = "2008-2012",
-      #                             "2009-2013" = "2009-2013",
-      #                             "2010-2014" = "2010-2014",
-      #                             "2011-2015" = "2011-2015")),
-      #  selectInput("map_gender", "Select Gender",
-      #              choices = list("Female", "Male")),
-      #  selectInput("var", "Select Variable of Interest",
-      #              choices = list("Never Married" = "Never_Married_pct", 
-      #                             "Married" = "Married_pct",
-      #                             "Separated" = "Separated_pct",
-      #                             "Widowed" = "Widowed_pct",
-      #                             "Divorced" = "Divorced_pct")),
-      # checkboxInput("lmap_cas", "Display Casinos", value=TRUE),
-      # actionButton("action2", "PUSH THE BUTTON REDRAW THE MAP")
-      # 
+       selectInput("map_year", "Select Five Year Range",
+                   choices = list("2006-2010" = "2006-2010",
+                                  "2007-2011" = "2007-2011",
+                                  "2008-2012" = "2008-2012",
+                                  "2009-2013" = "2009-2013",
+                                  "2010-2014" = "2010-2014",
+                                  "2011-2015" = "2011-2015")),
+       selectInput("map_gender", "Select Gender",
+                   choices = list("Female", "Male")),
+       selectInput("var", "Select Variable of Interest",
+                   choices = list("Never Married" = "Never_Married_pct",
+                                  "Married" = "Married_pct",
+                                  "Separated" = "Separated_pct",
+                                  "Widowed" = "Widowed_pct",
+                                  "Divorced" = "Divorced_pct")),
+      checkboxInput("lmap_cas", "Display Casinos", value=TRUE),
+      actionButton("action2", "PUSH THE BUTTON REDRAW THE MAP")
+
       
               
       ),
@@ -196,7 +196,9 @@ shinyUI(fluidPage(
     .floater { background-color: white; padding: 8px; opacity: 1; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
   ")),
                  
-                  leafletOutput("map")
+                  leafletOutput("map"),
+                 
+                 tableOutput("map_tab")
                  
                  # Map Creation
                  # verbatimTextOutput("mapdata1"),
