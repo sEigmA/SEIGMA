@@ -12,6 +12,7 @@ require(leaflet)
 require(geojsonio)
 require(lubridate)
 require(markdown)
+require(RJSONIO)
 
 
 MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
