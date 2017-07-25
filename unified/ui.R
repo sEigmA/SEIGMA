@@ -75,6 +75,19 @@ shinyUI(
           ## create tabs
           tabsetPanel(
             
+            
+            
+            tabPanel("Plot",
+                     ## make chart title here (otherwise not centered)
+
+                     plotOutput("colplot", click="plot_click"),
+                     
+                     plotOutput("tsplot"),
+                     
+                     #htmlOutput("counties"),
+ 
+                     value="plot"),
+            
             ## summary tab
             tabPanel("Data Table",
                      
@@ -87,15 +100,6 @@ shinyUI(
                      value = "summary"),
             
             ## plot tab with google chart options
-            
-            tabPanel("Plot",
-                     ## make chart title here (otherwise not centered)
-
-                     HTML("Some column selector"),
-                     
-                     HTML("Show the plots"),
- 
-                     value="plot"),
             
             # ## plot map
             # tabPanel("Map",
