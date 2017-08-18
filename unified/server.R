@@ -29,13 +29,13 @@ shinyServer(function(input, output, session) {
       addPolygons(stroke = TRUE, smoothFactor = 0.3, fillOpacity = 1,
                   label = ~NAMELSAD10)
   })
-  
+  clrs <- c("")
   output$colplot <- renderPlot({
-    ggplot(topics, aes(x=x, y=y, label=Labels))+ geom_point(size=3) +
+    ggplot(topics, aes(x=x, y=y, label=Labels))+ geom_point(size=4) +
       
-      geom_label_repel(aes(x, y, fill= Labels, label = Labels),
+      geom_label_repel(aes(x, y, fill= "dark red", label = Labels),
         fontface = 'bold', color = 'white',
-        box.padding = unit(0.15, "lines"),
+        box.padding = unit(0.10, "lines"),
         point.padding = unit(0.15, "lines"),
         segment.color = 'grey50') +
       
@@ -80,7 +80,8 @@ output$tsplot <- renderPlot({
     
     plot_df <- df %>% filter(Municipal == input$one_muni) %>% select(1,60,col_selector, c(col_selector+1))
     names(plot_df)[3] <- "Var"
-    p <- ggplot(plot_df, aes(x=Year, y=Var))+geom_point()+geom_line()+ylab(sel_lab)
+    p <- ggplot(plot_df, aes(x=Year, y=Var))+geom_point()+geom_line()+ylab(sel_lab) +
+    theme(panel.background = element_rect(fill = "white"))
   }
   
   
