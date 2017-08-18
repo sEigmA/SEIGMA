@@ -20,7 +20,7 @@ require(tidyr)
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted pValue data
-pValue_data <- read.csv(file="pValuedata2.csv")
+pValue_data <- read.csv(file="pValuedata3.csv")
 colnames(pValue_data)[4:10]<-c("Year","Residential","Open_Space", "Commercial", "Industrial", "Personal_Property", "Total_Assessed")
 
 ## Find order of municipals in geojson files
@@ -80,12 +80,12 @@ ylim_cha<-list(
 )
 
 #################################################################
-## Colors for unemployment rate legend
+## Colors for legend
 paint.brush1 <- colorRampPalette(colors=c("darkgreen", "white", "maroon"))
-map_colors1 <- c(paint.brush1(n=25), "#999999")
+map_colors1 <- c(paint.brush1(n=30), "#999999")
 
 paint.brush <- colorRampPalette(colors=c("white", "violetred"))
-map_colors <- c(paint.brush(n=25), "black")
+map_colors <- c(paint.brush(n=30), "black")
 
 ##Cuts for Inflation_Adjusted_Total_Levy 
 TotpValuemax.val <- max(pValue_data$Inflation_Adjusted_Total_Assessed, na.rm=TRUE)

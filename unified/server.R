@@ -31,11 +31,29 @@ shinyServer(function(input, output, session) {
   })
   
   output$colplot <- renderPlot({
-    ggplot(topics, aes(x=x, y=y, label=Labels))+geom_point()+geom_text_repel(size=6)+facet_grid(~App)
+    ggplot(topics, aes(x=x, y=y, label=Labels))+ geom_point(size=3) +
+      
+      geom_label_repel(aes(x, y, fill= Labels, label = Labels),
+        fontface = 'bold', color = 'white',
+        box.padding = unit(0.15, "lines"),
+        point.padding = unit(0.15, "lines"),
+        segment.color = 'grey50') +
+      
+    theme(panel.background = element_rect(fill = "white"),legend.position="none",
+          axis.title.x=element_blank(),
+          axis.title.y=element_blank(),
+          axis.text.x=element_blank(),
+          axis.ticks.x=element_blank(), 
+          axis.text.y = element_blank(), 
+          axis.ticks.y = element_blank(),
+          axis.ticks = element_blank()) +
+    
+    facet_grid(~App)
+    
     #adding ylim breaks the interactivity!
     })
   
-
+#geom_text_repel(size=4)+ use instead of geomlabel repel 
 
 selected_variable <- reactive({
   nearPoints(topics, input$plot_click, threshold = 10, maxpoints = 1, addDist = T)$Variables

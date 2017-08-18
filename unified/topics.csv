@@ -1,31 +1,31 @@
 "App","Variables","Labels","x","y"
-"Demographics","Total_Population","Total Population",-2,4
-"Demographics","Male_Pct","Male %",-1,4
-"Demographics","Female_Pct","Female %",0,4
-"Demographics","Age_under_5_Pct","Age under 5 %",2,3
-"Demographics","Age_5-9_Pct","Age 5-9 %",3,3
-"Demographics","Age_10-14_Pct","Age 10-14 %",4,3
-"Demographics","Age_15-19_Pct","Age 15-19 %",5,3
-"Demographics","Age_20-24_Pct","Age 20-24 %",6,3
-"Demographics","Age_25-34_Pct","Age 25-34 %",7,3
-"Demographics","Age_35-44_Pct","Age 35-44 %",8,3
-"Demographics","Age_45-54_Pct","Age 45-54 %",9,3
-"Demographics","Age_55-59_Pct","Age 55-59 %",10,3
-"Demographics","Age_60-64_Pct","Age 60-64 %",11,3
-"Demographics","Age_65-74_Pct","Age 65-74 %",12,3
-"Demographics","Age_75-84_Pct","Age 75-84 %",13,3
-"Demographics","Age_85+Pct","Age 85+%",14,3
-"Demographics","White_Pct","White %",16,2
-"Demographics","Black_Pct","Black %",17,2
-"Demographics","American_Indian_and_Alaska_Native_Pct","American Indian and Alaska Native %",18,2
-"Demographics","Asian_Pct","Asian %",19,2
-"Demographics","Hawaiian_and_Other_Pacific_Islander_Pct","Hawaiian and Other Pacific Islander %",20,2
-"Demographics","Others_Pct","Others %",21,2
-"Demographics","Hispanic_Pct","Hispanic %",22,2
-"Demographics","Not_Hispanic_Pct","Not Hispanic %",23,2
-"Demographics","Age_under_20_Pct_plot","Age under 20 % plot",25,1
-"Demographics","Age_20-34_Pct_plot","Age 20-34 % plot",26,1
-"Demographics","Age_35-54_Pct_plot","Age 35-54 % plot",27,1
-"Demographics","Age_55-64_Pct_plot","Age 55-64 % plot",28,1
-"Demographics","Age_65-74_Pct_plot","Age 65-74 % plot",29,1
-"Demographics","Age_75+Pct_plot","Age 75+% plot",30,1
+"Demographics","Total_Population","Total Population",-2,1
+"Demographics","Male_Pct","Male ",1,2
+"Demographics","Female_Pct","Female ",4,3
+"Demographics","Age_under_5_Pct","Age under 5 ",7,4
+"Demographics","Age_5-9_Pct","Age 5-9 ",10,5
+"Demographics","Age_10-14_Pct","Age 10-14 ",13,1
+"Demographics","Age_15-19_Pct","Age 15-19 ",16,2
+"Demographics","Age_20-24_Pct","Age 20-24 ",19,3
+"Demographics","Age_25-34_Pct","Age 25-34 ",22,4
+"Demographics","Age_35-44_Pct","Age 35-44 ",25,5
+"Demographics","Age_45-54_Pct","Age 45-54 ",28,1
+"Demographics","Age_55-59_Pct","Age 55-59 ",31,2
+"Demographics","Age_60-64_Pct","Age 60-64 ",34,3
+"Demographics","Age_65-74_Pct","Age 65-74 ",37,4
+"Demographics","Age_75-84_Pct","Age 75-84 ",40,5
+"Demographics","Age_85+Pct","Age 85+",43,1
+"Demographics","White_Pct","White ",46,2
+"Demographics","Black_Pct","Black ",49,3
+"Demographics","American_Indian_and_Alaska_Native_Pct","American Indian and Alaska Native ",52,4
+"Demographics","Asian_Pct","Asian ",55,5
+"Demographics","Hawaiian_and_Other_Pacific_Islander_Pct","Hawaiian and Other Pacific Islander ",58,1
+"Demographics","Others_Pct","Others ",61,2
+"Demographics","Hispanic_Pct","Hispanic ",64,3
+"Demographics","Not_Hispanic_Pct","Not Hispanic ",67,4
+"Demographics","Age_under_20_Pct_plot","Age under 20  plot",70,5
+"Demographics","Age_20-34_Pct_plot","Age 20-34  plot",73,1
+"Demographics","Age_35-54_Pct_plot","Age 35-54  plot",76,2
+"Demographics","Age_55-64_Pct_plot","Age 55-64  plot",79,3
+"Demographics","Age_65-74_Pct_plot","Age 65-74  plot",82,4
+"Demographics","Age_75+Pct_plot","Age 75+ plot",85,5

@@ -47,7 +47,7 @@ shinyServer(function(input, output, session){
       filter(Municipal %in% munis) %>%
       select(Municipal, Year, Inflation_Adjusted_Total_Assessed, Inflation_Adjusted_Residential, Inflation_Adjusted_Open_Space, Inflation_Adjusted_Commercial, Inflation_Adjusted_Industrial, Inflation_Adjusted_Personal_Property)
       sum_df[3:8]<-apply(sum_df[3:8],2,function(x)prettyNum(x,big.mark = ","))
-    colnames(sum_df) <- c("Municipal","F-Year", "Total Assessed Values (2013 dollars)", "Residential (2013 dollars)", "Open Space (2013 dollars) ", "Commercial (2013 dollars)", "Industrial (2013 dollars)", "Personal Property (2013 dollars)")
+    colnames(sum_df) <- c("Municipal","F-Year", "Total Assessed Values (2016 dollars)", "Residential (2016 dollars)", "Open Space (2016 dollars) ", "Commercial (2016 dollars)", "Industrial (2016 dollars)", "Personal Property (2016 dollars)")
     
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
@@ -125,12 +125,12 @@ shinyServer(function(input, output, session){
         ## set fonts
         fontName = "Source Sans Pro",
         fontSize = font_size,
-        title = paste("Total Assessed Property Values and Percent of Assessed Property Values by Class FY2003-FY2013 (2013 dollars)", 
+        title = paste("Total Assessed Property Values and Percent of Assessed Property Values by Class FY2003-FY2016 (2016 dollars)", 
                        "at ", input$plot_muni2),
         ## set axis titles, ticks, fonts, and ranges
         hAxis = list(
           title = "",
-          ticks = seq(2003,2013,1),
+          ticks = seq(2003,2016,1),
           format = "####",
           textStyle = list(
             fontSize = font_size),
@@ -318,7 +318,7 @@ shinyServer(function(input, output, session){
     if (input$map_radio == "Total_Assessed") {
       if(input$map_display_radio == "Inflation_Adjusted_Total_Assessed"){
       return(as.character(tags$div(
-        tags$h4("Annual Total Assessed Property Values (2013 dollars) in", muni_name, " for ", input$map_year),
+        tags$h4("Annual Total Assessed Property Values (2016 dollars) in", muni_name, " for ", input$map_year),
         tags$h5(muni_value)
       )))
     }

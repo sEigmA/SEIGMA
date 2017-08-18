@@ -39,7 +39,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'sing.yr'",
                      ## Initializing a single slider
                      sliderInput("sum_year", "Select Year",
-                                 min=2003, max=2013, value=2013,
+                                 min=2003, max=2016, value=2016,
                                  sep="")
                    ),
                    conditionalPanel(
@@ -47,7 +47,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'mult.yrs'",
                      ## Slider starts from 2010-2012
                      sliderInput("sum_range", "Select Years",
-                                 min=2003, max=2013, value=c(2010,2013),
+                                 min=2003, max=2016, value=c(2010,2016),
                                  sep="")
                    ),
                    ## in summary, allow for municipal selection
@@ -87,7 +87,7 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'map'",
                    ## Initializing a single slider
                    sliderInput("map_year", "Select Year",
-                               min=2003, max=2013, value=2013,
+                               min=2003, max=2013, value=2016,
                                sep=""),
                    radioButtons("map_radio", "Select Variable of Interest",
                                 c("Total Assessed Property Values" = "Total_Assessed",
@@ -266,7 +266,7 @@ shinyUI(fluidPage(
                    "-Property not permanently affixed to real estate. Personal property is movable and can be removed without serious damage either to the real estate or to the item being removed."),
                  
                  tags$br(),
-                 p(strong('2013 Dollars'), 
+                 p(strong('2016 Dollars'), 
                           "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2013 to be our constant."),
                  tags$br(),
                  #tags$br(),
