@@ -14,7 +14,7 @@ require(lubridate)
 require(markdown)
 require(RJSONIO)
 require(ggrepel)
-
+require(ggplot2)
 
 MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- geojson_read("Muni_2010Census_DP1.geojson", what = "sp")

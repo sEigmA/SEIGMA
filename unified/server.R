@@ -31,13 +31,15 @@ shinyServer(function(input, output, session) {
   })
   clrs <- c("")
   output$colplot <- renderPlot({
-    ggplot(topics, aes(x=x, y=y, label=Labels))+ geom_point(size=4) +
+    ggplot(topics, aes(x=x, y=y, label=Labels))+ 
+      # geom_point() +
+      geom_label(colour="dark red") +
       
-      geom_label_repel(aes(x, y, fill= "dark red", label = Labels),
-        fontface = 'bold', color = 'white',
-        box.padding = unit(0.10, "lines"),
-        point.padding = unit(0.15, "lines"),
-        segment.color = 'grey50') +
+      # geom_label_repel(aes(x, y, fill= "dark red", label = Labels),
+      #   fontface = 'bold', color = 'white',
+      #   box.padding = unit(0.10, "lines"),
+      #   point.padding = unit(0.15, "lines"),
+      #   segment.color = 'grey50') +
       
     theme(panel.background = element_rect(fill = "white"),legend.position="none",
           axis.title.x=element_blank(),
