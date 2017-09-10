@@ -27,7 +27,7 @@ shinyServer(function(input, output, session) {
     
     ## make municipals a vector based on input variable
     if(!is.null(input$sum_muni))
-      munis <- input$sum_muni
+      munis <- MA_municipals
     ## if none selected, put all municipals in vector
     if(is.null(input$sum_muni))
       munis <- MA_municipals
@@ -65,20 +65,6 @@ shinyServer(function(input, output, session) {
   ## create the plot of the data
 
    
-
-    
-    # if(input$US_mean_p){
-    #   if(input$MA_mean_p){
-    #     munis_p <- c("USA", "Massachusetts", munis_p) ## US and MA
-    #   } else{
-    #     munis_p <- c("USA", munis_p) ## US only
-    #   }
-    # } else{
-    #   if(input$MA_mean_p){
-    #     munis_p <- c("Massachusetts", munis_p) ## US only ## MA only
-    #   }
-    # }
-  
   
     munis_p <- reactive({
       
@@ -135,28 +121,6 @@ shinyServer(function(input, output, session) {
   output$plot <- renderPlot({
     ## make reactive dataframe into regular dataframe
     
-# 
-#     county <- as.character(plot_rent_df$County[which(plot_rent_df$Municipal==input$plot_muni)])
-# 
-#     ## make counties a vector based on input variable
-#     munis <- c(input$plot_muni, county, "MA", "United States")
-# 
-#     muni_index <- c()
-# 
-#     for(i in 1:length(munis)){
-#       muni_index[i] <- match(munis[i], plot_rent_df$Region)
-#     }
-#     #     browser()
-#     plot_df <- plot_rent_df[muni_index,] %>%
-#       select(Region, Median.Rent)
-# 
-#     colnames(plot_df) <- gsub("_", " ", colnames(plot_df))
-
-    #     plot_df[,"pop.html.tooltip"] <- paste0("$", prettyNum(plot_df[,2], big.mark = ","))
-
-    # list(
-    #   data=googleDataTable(plot_rent_df()))
-    # 
     pdf <- plot_rent_df()
     row.names(pdf) <- 1:nrow(pdf)
     pdf$Municipal <- factor(pdf$Municipal, levels = pdf$Municipal,ordered = TRUE)

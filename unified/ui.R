@@ -17,12 +17,19 @@ shinyUI(
                    HTML("<center><h1>What's going on in my community?</h1></center>"),
                    
                    radioButtons("how_onemuniselect", "Choose a municpality from the list or from a map",
-                                c("List" = "List", "Map" = "Map"),
-                                selected="List"),
+                                c("plot" = "plot", "Map" = "Map"),
+                                selected="plot"),
                    
-                   conditionalPanel("input.how_onemuniselect=='List'",
-                   selectInput("one_muni", "Select Municipality",
-                               choices = MA_municipals, multiple=FALSE)
+                   conditionalPanel(
+                     condition="input.how_onemuniselect == 'plot'",
+                     ## Select input = List
+                     
+                     selectInput("one_muni", "Select Municipality",
+                                 choices = MA_municipals, multiple = T),
+                     checkboxInput("MA_mean", "Compare to MA Median", TRUE),
+                     checkboxInput("US_mean", "Compare to US Median", FALSE)
+                     
+                   
                    ),
                    
                    conditionalPanel("input.how_onemuniselect=='Map'",
@@ -37,8 +44,8 @@ shinyUI(
                    
                    tags$hr(),
                    
-                   selectInput("multi_muni", "Select multiple municipalities",
-                               choices = MA_municipals, multiple=TRUE),
+                   # selectInput("multi_muni", "Select multiple municipalities",
+                   #             choices = MA_municipals, multiple=TRUE),
                    
                    
                    

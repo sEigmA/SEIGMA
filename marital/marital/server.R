@@ -79,142 +79,7 @@ shinyServer(function(input, output, session) {
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
   
-  
-  # 
-  # mar_plot_df <- reactive({
-  #   ## Filter the data by the chosen Five Year Range 
-  #   mar_plot_df <- mar_data %>%
-  #     filter(Five_Year_Range == input$plot_year) %>%
-  #     select(1:4, Gender, Five_Year_Range, Population, Never_Married_pct, Married_pct,
-  #            Separated_pct, Widowed_pct, Divorced_pct) %>%
-  #     arrange(Region, Gender)
-  #   ## Output reactive dataframe
-  #   mar_plot_df    
-  # })
-  # 
-  # ## create the plot of the data
-  # ## for the Google charts plot
-  # output$plot_US <- reactive({
-  #   ## make reactive dataframe into regular dataframe
-  #   mar_plot_df <- mar_plot_df()
-  #   
-  #   ## make counties a vector based on input variable
-  #   munis <- "United States"
-  #   
-  #   plot_df <- mar_plot_df %>%
-  #     filter(Region %in% munis)
-  #   
-  #   ## put data into form that googleCharts understands (this unmelts the dataframe)
-  #   melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-  #                          measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
-  #                                           "Widowed_pct", "Divorced_pct"),
-  #                          variable.name = "Marital_Status", value.name = "Population_pct")
-  #   
-  #   g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-  #              value.var = "Population_pct")
-  #   
-  #   g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-  #   g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
-  #   
-  #   ## this outputs the google data to be used in the UI to create the dataframe
-  #   list(
-  #     data=googleDataTable(g))
-  # })
-  # 
-  # 
-  # ## create the plot of the MA data
-  # output$plot_MA <- reactive({
-  #   ## make reactive dataframe into regular dataframe
-  #   mar_plot_df <- mar_plot_df()
-  #   
-  #   ## make counties a vector based on input variable
-  #   munis <- "MA"
-  #   
-  #   plot_df <- mar_plot_df %>%
-  #     filter(Region %in% munis)
-  #   
-  #   ## put data into form that googleCharts understands (this unmelts the dataframe)
-  #   melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-  #                          measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
-  #                                           "Widowed_pct", "Divorced_pct"),
-  #                          variable.name = "Marital_Status", value.name = "Population_pct")
-  #   
-  #   g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-  #              value.var = "Population_pct")
-  #   
-  #   g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-  #   g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
-  #   
-  #   ## this outputs the google data to be used in the UI to create the dataframe
-  #   list(
-  #     data=googleDataTable(g))
-  # })
-  # 
-  # ## create the plot of the MA data
-  # output$plot_county <- reactive({
-  #   ## make reactive dataframe into regular dataframe
-  #   mar_plot_df <- mar_plot_df()
-  #   
-  #   ## find the county of the municipal
-  #   county <- mar_plot_df$County[which(mar_plot_df$Municipal==input$plot_muni)]
-  #   ## make counties a vector based on input variable
-  #   munis <- mar_plot_df$Region[match(county, mar_plot_df$Region)]
-  #   
-  #   plot_df <- mar_plot_df %>%
-  #     filter(Region %in% munis)
-  #   
-  #   ## put data into form that googleCharts understands (this unmelts the dataframe)
-  #   melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-  #                          measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
-  #                                           "Widowed_pct", "Divorced_pct"),
-  #                          variable.name = "Marital_Status", value.name = "Population_pct")
-  #   
-  #   g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-  #              value.var = "Population_pct")
-  #   
-  #   g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-  #   g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
-  #   
-  #   ## this outputs the google data to be used in the UI to create the dataframe
-  #   list(
-  #     data = googleDataTable(g), options = list(
-  #       title = paste("Marital Status Statisics for", munis[1])))
-  # })
-  # 
-  # ## create the plot of the MA data
-  # output$plot_muni <- reactive({
-  #   ## make reactive dataframe into regular dataframe
-  #   mar_plot_df <- mar_plot_df()
-  #   
-  #   ## make counties a vector based on input variable
-  #   munis <- input$plot_muni
-  #   
-  #   plot_df <- mar_plot_df %>%
-  #     filter(Region %in% munis)
-  #   
-  #   ## put data into form that googleCharts understands (this unmelts the dataframe)
-  #   melted_plot_df <- melt(plot_df, id.vars = "Gender", 
-  #                          measure.vars = c("Never_Married_pct", "Married_pct", "Separated_pct", 
-  #                                           "Widowed_pct", "Divorced_pct"),
-  #                          variable.name = "Marital_Status", value.name = "Population_pct")
-  #   
-  #   g <- dcast(melted_plot_df, Marital_Status ~ Gender, 
-  #              value.var = "Population_pct")
-  #   
-  #   g$Marital_Status <- gsub("_", " ", g$Marital_Status)
-  #   g$Marital_Status <- gsub("Pct", "%", g$Marital_Status)
-  #   
-  #   ## this outputs the google data to be used in the UI to create the dataframe
-  #   list(
-  #     data = googleDataTable(g), options = list(
-  #       title = paste("Marital Status Statistics for", munis)))
-  # })
-  # 
-  #############################################################################################
-  #       ggplot
-  #       dataframe
-  #       make one for males and one for females
-  
+
   munis_p <- reactive({
 
     munis_p2 <- input$plot_muni
@@ -295,7 +160,7 @@ shinyServer(function(input, output, session) {
     pdf <- plot_mar_df()
     row.names(pdf) <- 1:nrow(pdf)
     pdf$Region <- factor(pdf$Region, levels = pdf$Region,ordered = TRUE)
-    # fuck with the levels statement
+    # mess with the levels statement
     ##
 
     ap=0.5
