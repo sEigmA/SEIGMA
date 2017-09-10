@@ -23,7 +23,7 @@ shinyServer(function(input, output, session) {
     }
     else if(input$MA_mean==F && any(grepl(x=munis_p2, pattern = "MA"))==T){
       return(munis_p2[!(munis_p2 =="MA")]) ## remove MA
-    } else if(input$plotMA_mean==F && any(grepl(x=munis_p2, pattern = "MA"))==F){
+    } else if(input$MA_mean==F && any(grepl(x=munis_p2, pattern = "MA"))==F){
       return(munis_p2[!(munis_p2 =="MA")]) ## remove MA
     }
   })

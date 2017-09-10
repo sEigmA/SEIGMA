@@ -26,8 +26,8 @@ shinyUI(
                      
                      selectInput("one_muni", "Select Municipality",
                                  choices = MA_municipals, multiple = T),
-                     checkboxInput("MA_mean", "Compare to MA Median", TRUE),
-                     checkboxInput("US_mean", "Compare to US Median", FALSE)
+                     checkboxInput("MA_mean", "Compare to MA Median", T),
+                     checkboxInput("US_mean", "Compare to US Median", F)
                      
                    
                    ),
