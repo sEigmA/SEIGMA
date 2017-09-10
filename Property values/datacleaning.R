@@ -13,8 +13,8 @@ require(readr)
       
 
 ## load SAS data
-pV <- read_csv("~/Desktop/Fall 2016/Seigma/seigma/Property values/AR001_02.csv")
-pValue <- read_sas("~/Desktop/Fall 2016/Seigma/seigma/Property values/ar001_01.sas7bdat")
+pV <- read_csv("AR001_02.csv")
+pValue <- read_sas("ar001_01.sas7bdat")
 
 inds <- which(is.na(pV$Year))
 pV2 <- pV[-inds,]
@@ -57,46 +57,46 @@ pValue[,1:2]<-apply(pValue[,1:2],2, function(x) replace(x, x=="N/A", NA))
 write.csv(pValue, file="pValueData2.csv",row.names=FALSE)
 
 ##calculate the inflation adjusted Residential NEED $ for 2013-2016
-Adjusted_index<-data.frame(Year=2003:2016, Annual=c(184.0,188.9,195.3,201.6,207.342,215.303,214.537,218.056,224.939,229.594, 232.957,
-                                                    236.736,237.017,240.007))
+Adjusted_index<-data.frame(Year=2003:2017, Annual=c(184.0,188.9,195.3,201.6,207.342,215.303,214.537,218.056,224.939,229.594, 232.957,
+                                                    236.736,237.017,240.007,240.007))
 Adjusted_index$Inflation_rate<-240.007/Adjusted_index$Annual
 pValue$Inflation_Adjusted_Residential<-rep(0,5265)
-for (i in 2003:2016) {
+for (i in 2003:2017) {
   pValue$Inflation_Adjusted_Residential[which(pValue$Year==i)]<-pValue$Residential[which(pValue$Year==i)]*Adjusted_index$Inflation_rate[i-2002]
 }
 pValue$Inflation_Adjusted_Residential<-round(pValue$Inflation_Adjusted_Residential,0)
 
 ##calculate the inflation adjusted Open.Space
 pValue$Inflation_Adjusted_Open_Space<-rep(0,5265)
-for (i in 2003:2016) {
+for (i in 2003:2017) {
   pValue$Inflation_Adjusted_Open_Space[which(pValue$Year==i)]<-pValue$Open.Space[which(pValue$Year==i)]*Adjusted_index$Inflation_rate[i-2002]
 }
 pValue$Inflation_Adjusted_Open_Space<-round(pValue$Inflation_Adjusted_Open_Space,0)
 
 ##calculate the inflation adjusted Commercial
 pValue$Inflation_Adjusted_Commercial<-rep(0,5265)
-for (i in 2003:2016) {
+for (i in 2003:2017) {
   pValue$Inflation_Adjusted_Commercial[which(pValue$Year==i)]<-pValue$Commercial [which(pValue$Year==i)]*Adjusted_index$Inflation_rate[i-2002]
 }
 pValue$Inflation_Adjusted_Commercial<-round(pValue$Inflation_Adjusted_Commercial,0)
 
 ##calculate the inflation adjusted Industrial
 pValue$Inflation_Adjusted_Industrial<-rep(0,5265)
-for (i in 2003:2016) {
+for (i in 2003:2017) {
   pValue$Inflation_Adjusted_Industrial[which(pValue$Year==i)]<-pValue$Industrial[which(pValue$Year==i)]*Adjusted_index$Inflation_rate[i-2002]
 }
 pValue$Inflation_Adjusted_Industrial<-round(pValue$Inflation_Adjusted_Industrial,0)
 
 ##calculate the inflation adjusted Personal.Property
 pValue$Inflation_Adjusted_Personal_Property<-rep(0,5265)
-for (i in 2003:2016) {
+for (i in 2003:2017) {
   pValue$Inflation_Adjusted_Personal_Property[which(pValue$Year==i)]<-pValue$Personal.Property[which(pValue$Year==i)]*Adjusted_index$Inflation_rate[i-2002]
 }
 pValue$Inflation_Adjusted_Personal_Property<-round(pValue$Inflation_Adjusted_Personal_Property,0)
 
 ##calculate the inflation adjusted Total.Assessed
 pValue$Inflation_Adjusted_Total_Assessed<-rep(0,5265)
-for (i in 2003:2016) {
+for (i in 2003:2017) {
   pValue$Inflation_Adjusted_Total_Assessed[which(pValue$Year==i)]<-pValue$Total.Assessed[which(pValue$Year==i)]*Adjusted_index$Inflation_rate[i-2002]
 }
 pValue$Inflation_Adjusted_Total_Assessed<-round(pValue$Inflation_Adjusted_Total_Assessed,0)
