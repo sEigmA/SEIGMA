@@ -1,6 +1,8 @@
 name: PropertyValue
+title:
 account: seigma
-bundleId: 522058
-url:
-    https://seigma.shinyapps.io/PropertyValue/
 server: shinyapps.io
+appId: 116536
+bundleId: 975470
+url: https://seigma.shinyapps.io/PropertyValue/
+when: 1505076290.13973

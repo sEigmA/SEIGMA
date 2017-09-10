@@ -189,9 +189,9 @@ plot_side_text <- conditionalPanel(
     tags$br(),
     tags$li("To view the percent assessed property values by class, select Percent of Assessed Property Values by Class."),
     tags$br(),
-    tags$li("Select Actual Values from the Display Options to view the annual total assessed property values for the years 2003-2013."),
+    tags$li("Select Actual Values from the Display Options to view the annual total assessed property values for the years 2003-2017."),
     tags$br(),
-    tags$li("Select Change Since 2003 from the Display Options to view the percent change in the the annual total assessed property values each year for the years 2003-2013.")
+    tags$li("Select Change Since 2003 from the Display Options to view the percent change in the the annual total assessed property values each year for the years 2003-2017.")
   ))
 
 
@@ -249,7 +249,7 @@ pValue_plot_options <- googleLineChart("pValue_plot1", width="100%", height="475
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2013, 2),
+    ticks = seq(2003, 2017, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -259,7 +259,7 @@ pValue_plot_options <- googleLineChart("pValue_plot1", width="100%", height="475
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Total Assessed Property Values (2013 dollars, Million)",
+    title = "Total Assessed Property Values (2017 dollars, Million)",
     viewWindow = ylim,
     textStyle = list(
       fontSize = 14),
@@ -305,7 +305,7 @@ pValueCha_plot_options<- googleLineChart("pValue_plot2", width="100%", height="4
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2013, 2),
+    ticks = seq(2003, 2017, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),

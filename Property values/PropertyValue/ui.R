@@ -87,7 +87,7 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'map'",
                    ## Initializing a single slider
                    sliderInput("map_year", "Select Year",
-                               min=2003, max=2013, value=2016,
+                               min=2003, max=2016, value=2016,
                                sep=""),
                    radioButtons("map_radio", "Select Variable of Interest",
                                 c("Total Assessed Property Values" = "Total_Assessed",
