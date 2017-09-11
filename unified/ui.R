@@ -17,11 +17,11 @@ shinyUI(
                    HTML("<center><h1>What's going on in my community?</h1></center>"),
                    
                    radioButtons("how_onemuniselect", "Choose a municpality from the list or from a map",
-                                c("plot" = "plot", "Map" = "Map", "summary"="Summary"),
+                                c("list" = "list", "Map" = "Map"),
                                 selected="Municipality"),
                    
                    conditionalPanel(
-                     condition="input.how_onemuniselect == 'plot'",
+                     condition="input.how_onemuniselect == 'list'",
                      ## Select input = List
                      
                      selectInput("one_muni", "Select Municipality",
@@ -41,7 +41,7 @@ shinyUI(
                    ),
                    
                    conditionalPanel(
-                     condition="input.how_onemuniselect == 'summary'",
+                     condition="input.how_onemuniselect == 'list'",
                      HTML("Click on a municipality")
                      
                      # selectInput("sum_year", "Select Five Year Range",
