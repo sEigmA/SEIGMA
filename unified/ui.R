@@ -17,8 +17,8 @@ shinyUI(
                    HTML("<center><h1>What's going on in my community?</h1></center>"),
                    
                    radioButtons("how_onemuniselect", "Choose a municpality from the list or from a map",
-                                c("list" = "list", "Map" = "Map"),
-                                selected="Municipality"),
+                                c("List" = "list", "Map" = "Map"),
+                                selected="list"),
                    
                    conditionalPanel(
                      condition="input.how_onemuniselect == 'list'",
