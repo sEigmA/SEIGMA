@@ -17,8 +17,8 @@ shinyUI(
                    HTML("<center><h1>What's going on in my community?</h1></center>"),
                    
                    radioButtons("how_onemuniselect", "Choose a municpality from the list or from a map",
-                                c("plot" = "plot", "Map" = "Map"),
-                                selected="plot"),
+                                c("plot" = "plot", "Map" = "Map", "summary"="Summary"),
+                                selected="Municipality"),
                    
                    conditionalPanel(
                      condition="input.how_onemuniselect == 'plot'",
@@ -38,6 +38,26 @@ shinyUI(
                                     leafletOutput("map")
                                     
                                     
+                   ),
+                   
+                   conditionalPanel(
+                     condition="input.how_onemuniselect == 'summary'",
+                     HTML("Click on a municipality")
+                     
+                     # selectInput("sum_year", "Select Five Year Range",
+                     #             choices = list("2006-2010" = "2006-2010", 
+                     #                            "2007-2011" = "2007-2011",
+                     #                            "2008-2012" = "2008-2012",
+                     #                            "2009-2013" = "2009-2013",
+                     #                            "2010-2014" = "2010-2014",
+                     #                            "2011-2015" = "2011-2015"),
+                     #             multiple = TRUE),
+                     # selectInput("sum_muni", "Select Municipality", choices = MA_municipals, multiple = T),
+                     # 
+                     # ## False at the end means it starts off unchecked
+                     # checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+                     # checkboxInput("US_mean", "Compare to US Average", FALSE)
+                     
                    ),
                    tags$hr(),
                    HTML("<center>OR</center>"),
@@ -97,12 +117,12 @@ shinyUI(
             
             ## summary tab
             tabPanel("Data Table",
+                     dataTableOutput("summary"),
                      
-                     HTML("Some column selector"),
-                     HTML("can this be interactive ? https://shiny.rstudio.com/gallery/word-cloud.html"),
+                     #HTML("Some column selector"),
                      
                      
-                     
+                
                      tags$style(type="text/css", '#summary tfoot {display:none;}'),
                      value = "summary"),
             

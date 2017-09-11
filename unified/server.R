@@ -10,6 +10,44 @@ shinyServer(function(input, output, session) {
    
 
   })
+  
+  
+  output$summary <- renderDataTable({
+    ## Make reactive dataframe into regular dataframe
+    uni_df <- unified_df()
+    
+    ## make municipals a vector based on input variable
+    if(!is.null(input$one_muni))
+      munis <- input$one_muni
+    ## if none selected, put all municipals in vector
+    if(is.null(input$one_muni))
+      munis <- MA_municipals
+    
+    ## if the user checks the meanUS box or the meanMA box, add those to counties vector
+    if(input$US_mean){
+      if(input$MA_mean){
+        munis <- c("United States", "MA", munis) ## US and MA  
+      } else{
+        munis <- c("United States", munis) ## US only
+      }
+    } else{
+      if(input$MA_mean){
+        munis <- c("MA", munis) ## US only ## MA only
+      }
+    }
+    
+    ## create a dataframe consisting only of counties in vector
+    uni_df <- uni_df %>%
+      filter(Region %in% munis) 
+    # %>%
+    #   select(4:length(colnames(mar_df)))
+    # 
+    # colnames(mar_df) <- gsub("_", " ", colnames(mar_df))
+    # colnames(mar_df) <- gsub("pct error", "error %", colnames(mar_df))
+    # colnames(mar_df) <- gsub("pct", "%", colnames(mar_df))
+    # 
+    return(uni_df)
+  }, options=list(searching = FALSE, orderClasses = TRUE))
 
   munis_p <- reactive({
     

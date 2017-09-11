@@ -14,8 +14,8 @@ The goal of this document is to produce a clean data frame of all data, one chap
 -----------
 
 ```{r}
-setwd("C:/Users/Justin/Desktop/Research/SEIGMA/unified")
-Dem_data <- read.csv(file="../demographics/demographics/demodata.csv")
+#setwd("C:/Users/Justin/Desktop/Research/SEIGMA/unified")
+Dem_data <- read.csv(file="../demographics/demographics/demodata1.csv")
 colnames(Dem_data)[12:37] <- c("Age_under_5_Pct","Margin_Error_under_5_Pct","Age_5-9_Pct", "Margin_Error_5-9_Pct",
                                "Age_10-14_Pct","Margin_Error_10-14_Pct","Age_15-19_Pct", "Margin_Error_15-19_Pct",
                                "Age_20-24_Pct","Margin_Error_20-24_Pct","Age_25-34_Pct", "Margin_Error_25-34_Pct",
