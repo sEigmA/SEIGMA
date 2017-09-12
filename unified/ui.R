@@ -40,10 +40,10 @@ shinyUI(
                                     
                    ),
                    
-                   conditionalPanel(
-                     condition="input.how_onemuniselect == 'list'",
-                     HTML("Click on a municipality")
-                     
+                   # conditionalPanel(
+                   #   condition="input.how_onemuniselect == 'list'",
+                   #   HTML("Click on a municipality")
+                   #   
                      # selectInput("sum_year", "Select Five Year Range",
                      #             choices = list("2006-2010" = "2006-2010", 
                      #                            "2007-2011" = "2007-2011",
@@ -58,11 +58,11 @@ shinyUI(
                      # checkboxInput("MA_mean", "Compare to MA Average", FALSE),
                      # checkboxInput("US_mean", "Compare to US Average", FALSE)
                      
-                   ),
-                   tags$hr(),
-                   HTML("<center>OR</center>"),
-                   
-                   tags$hr(),
+                   # ),
+                   # tags$hr(),
+                   # HTML("<center>OR</center>"),
+                   # 
+                   # tags$hr(),
                    
                    # selectInput("multi_muni", "Select multiple municipalities",
                    #             choices = MA_municipals, multiple=TRUE),
