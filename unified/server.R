@@ -162,7 +162,7 @@ output$tsplot <- renderPlot({
         select(4,60,col_selector, c(col_selector+1))
                              names(plot_df)[3] <- "Var"
     
-                             p <- ggplot(plot_df, aes(x=Year, y=Var, colour=Region))+ geom_point()+ geom_line() + ylab(sel_lab) +
+                             p <- ggplot(plot_df, aes(x=Year, y=Var, colour=Region))+ geom_point()+ geom_line() + ylab(paste0(sel_lab," (Unit: Percent %) ")) + xlab("Average Data Point of Five Year Period")
     theme(panel.background = element_rect(fill = "white"))
   }
   
