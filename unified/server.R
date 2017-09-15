@@ -38,14 +38,12 @@ shinyServer(function(input, output, session) {
     
     ## create a dataframe consisting only of counties in vector
     uni_df <- uni_df %>%
-      filter(Region %in% munis) 
-    # %>%
-    #   select(4:length(colnames(mar_df)))
-    # 
-    # colnames(mar_df) <- gsub("_", " ", colnames(mar_df))
-    # colnames(mar_df) <- gsub("pct error", "error %", colnames(mar_df))
-    # colnames(mar_df) <- gsub("pct", "%", colnames(mar_df))
-    # 
+      filter(Region %in% munis) %>% select(4:length(colnames(uni_df)))
+
+    colnames(uni_df) <- gsub("_", " ", colnames(uni_df))
+    # colnames(uni_df) <- gsub("pct error", "error %", colnames(uni_df))
+    colnames(uni_df) <- gsub("pct", "%", colnames(uni_df))
+
     return(uni_df)
   }, options=list(searching = FALSE, orderClasses = TRUE))
 
