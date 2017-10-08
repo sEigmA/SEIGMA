@@ -12,6 +12,7 @@ library(leaflet)
 library(RJSONIO)
 library(tidyr)
 library(ggplot2)
+library(ggmap)
 
 # Load formatted data, -1 eliminates first column [rows,columns]
 inc_data <- read.csv(file="incomedata.csv")[,-1]
@@ -46,20 +47,28 @@ idx_leftovers2 <- which(!MA_municipals %in% inc_data$Region)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
-# store municipal coordinates into one data frame
-muni_num <- length(MA_map_muni$features)
-MA_muni_lat <- MA_muni_lng <- rep(NA, muni_num)
-for(i in 1:muni_num){
-    lat <- lng <- c()
-    for(c in 1:length(MA_map_muni$features[[i]]$geometry$coordinates[[1]][[1]])){
-        lat <- c(lat, MA_map_muni$features[[i]]$geometry$coordinates[[1]][[1]][[c]][1])
-        lng <- c(lng, MA_map_muni$features[[i]]$geometry$coordinates[[1]][[1]][[c]][2])
-        MA_muni_lat[i] <- median(lat)
-        MA_muni_lng[i] <- median(lng)
-    }
-}
-coor_data=data.frame(x=MA_muni_lat, y=MA_muni_lng, id=MA_municipals_map)
-coor_data <- subset(coor_data, coor_data$id != "County subdivisions not de")
+# muni_num <- length(MA_map_muni$features)
+# MA_muni_lat <- MA_muni_lng <- rep(NA, muni_num)
+# for(i in 1:muni_num){
+#     lat <- lng <- c()
+#     for(c in 1:length(MA_map_muni$features[[i]]$geometry$coordinates[[1]][[1]])){
+#         lat <- c(lat, MA_map_muni$features[[i]]$geometry$coordinates[[1]][[1]][[c]][1])
+#         lng <- c(lng, MA_map_muni$features[[i]]$geometry$coordinates[[1]][[1]][[c]][2])
+#         MA_muni_lat[i] <- median(lat)
+#         MA_muni_lng[i] <- median(lng)
+#     }
+# }
+
+# # get city name lat/lng from google map
+# MA_muni_name <- paste(MA_municipals_map, "ma usa", sep=" ")
+# muni_gg <- geocode(MA_muni_name)
+# coor_data=data.frame(x = muni_gg$lon, y=muni_gg$lat, id=MA_municipals_map)
+# coor_data <- subset(coor_data, coor_data$id != "County subdivisions not de")
+# coor_data[201,1:2] <- geocode("sunderland ma usa")
+# sum(is.na(coor_data))
+# save(coor_data, file = "muni_coor.csv")
+
+load("muni_coor.csv")
 
 ### USER INTERFACE ###
 ui <- fluidPage(
@@ -154,7 +163,7 @@ server <- function(input, output) {
         
         ggplot(muni_df, aes(x=(Year), y = Median.Rent.2015.Dollar)) + 
             geom_line() +
-            ggtitle(paste0("Inflation-Adjusted (2015) Median Annual Rent in ",my_place)) + 
+            ggtitle(paste0("Inflation-Adjusted (2015) Annual Median Rent in ",my_place)) + 
             xlab("Average Data Point of Five Year Period") + 
             ylab("Dollar") + 
             theme(plot.title = element_text(size=14, face="bold"))
@@ -185,7 +194,7 @@ server <- function(input, output) {
         
         ggplot(muni_df, aes(x=(Year), y = Percent_Pov)) + 
             geom_line() +
-            ggtitle(paste0("Poverty Rates in ",my_place)) + 
+            ggtitle(paste0("Annual Poverty Rates in ",my_place)) + 
             xlab("Average Data Point of Five Year Period") + 
             ylab("Percentile") + 
             theme(plot.title = element_text(size=14, face="bold"))
