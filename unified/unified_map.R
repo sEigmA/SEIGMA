@@ -65,14 +65,25 @@ coor_data <- subset(coor_data, coor_data$id != "County subdivisions not de")
 ui <- fluidPage(
     
     # blank title, but put in a special title for window tab
-    titlePanel("", windowTitle = "SEIGMA: Unified Shiny App"),
+    titlePanel("", windowTitle = "SEIGMA Unified Shiny App"),
     
     # Create sidebar
     sidebarLayout(
         sidebarPanel(
-            helpText("Click a Municipal of Interest:"),
-            leafletOutput("map", height="600px")
-            ),
+            helpText("Please click a Municipal of Interest:"),
+            leafletOutput("map", height="600px"),
+            ## email feedback link
+            ## To develop a link in HTML
+            helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
+            ## data source citation
+            helpText(a("Data Source: American Community Survey: table DP05", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S2502&prodType=table",
+                       target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dataAge', 1)")),
+            ## GitHub link
+            helpText(a("View our data and code on GitHub",
+                       href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/unified", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
+            ## author line
+            helpText("Created by Zhenning Kang")
+        ),
         # mainpanel
         mainPanel(
             fluidRow(
