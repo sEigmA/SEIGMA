@@ -35,7 +35,7 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.tabs == 'summary'",
                    selectInput("sum_year", "Select Five Year Range",
-                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
+                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
                    selectInput("sum_muni", "Select Municipality", 
                                choices = MA_municipals,
                                ## Multiple allows for multi-county selection
@@ -50,7 +50,7 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.tabs == 'plot'",
                    selectInput("plot_year", "Select Five Year Range",
-                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
+                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
                    ## Select input = List
                    selectInput("plot_muni", "Select Municipality", 
                                choices = MA_municipals)),
@@ -59,14 +59,14 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.tabs == 'map'",
                    selectInput("map_year", "Select Five Year Range",
-                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010","2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
+                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010","2007-2011" = "2007-2011", "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015"))
                    ),
                  
                 
                  tags$hr(),
                  
                  ## author line
-                 helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly and Xeulian Li "),
+                 helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly and Xeulian Li",  "Updated by Valerie Evans"),
       
       ## email feedback link
       ## To develop a link in HTML
