@@ -1,6 +1,12 @@
-# unified_map APP 
+#############################
+## Title: Unified Map APP  ##
+## Author: Zhenning Kang   ##
+## Date Created: 09/25/17  ##
+## Last Modified: 10/15/17 ##
+#############################
 
 ### SETTINGS ###
+setwd("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/unified/unified_map")
 library(shiny)
 library(dplyr)
 library(sp)
@@ -15,6 +21,9 @@ library(ggplot2)
 library(ggmap)
 
 # Load formatted data, -1 eliminates first column [rows,columns]
+edu_data <- read.csv(file="edudata.csv")[,-1]
+edu_data$Year <- as.factor(as.numeric(substr(edu_data$Five_Year_Range, 1, 4))+2)
+
 inc_data <- read.csv(file="incomedata.csv")[,-1]
 rent <- read.csv(file="rent.csv")
 unemp_data <- read.csv(file="unempdata2.csv")
@@ -47,18 +56,7 @@ idx_leftovers2 <- which(!MA_municipals %in% inc_data$Region)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
-# muni_num <- length(MA_map_muni$features)
-# MA_muni_lat <- MA_muni_lng <- rep(NA, muni_num)
-# for(i in 1:muni_num){
-#     lat <- lng <- c()
-#     for(c in 1:length(MA_map_muni$features[[i]]$geometry$coordinates[[1]][[1]])){
-#         lat <- c(lat, MA_map_muni$features[[i]]$geometry$coordinates[[1]][[1]][[c]][1])
-#         lng <- c(lng, MA_map_muni$features[[i]]$geometry$coordinates[[1]][[1]][[c]][2])
-#         MA_muni_lat[i] <- median(lat)
-#         MA_muni_lng[i] <- median(lng)
-#     }
-# }
-
+### Only Run Once, data saved in csv
 # # get city name lat/lng from google map
 # MA_muni_name <- paste(MA_municipals_map, "ma usa", sep=" ")
 # muni_gg <- geocode(MA_muni_name)
@@ -95,29 +93,45 @@ ui <- fluidPage(
         ),
         # mainpanel
         mainPanel(
-            fluidRow(
-                ## put in logo for title
-                a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/")
-                ),
-            fluidRow(
-                column(width = 6,
-                       plotOutput("plot_inc", height="300px")
-                ),
-                column(width = 6,
-                       plotOutput("plot_rent", height="300px")
-                )
-            ),
-            fluidRow(
-                column(width = 6,
-                       plotOutput("plot_une", height="300px")
-                ),
-                column(width = 6,
-                       plotOutput("plot_pov", height="300px")
-                )
+          ## put in logo for title
+          a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/"),
+          
+          ## create tabs
+          tabsetPanel(
+            tabPanel("Demographics",
+                     fluidRow(
+                       column(width = 6,
+                               plotOutput("plot_inc", height="300px")
+                              ),
+                       column(width = 6,
+                               plotOutput("plot_rent", height="300px")
+                              )),
+                     fluidRow(
+                       column(width = 6,
+                               plotOutput("plot_une", height="300px")
+                              ),
+                       column(width = 6,
+                               plotOutput("plot_pov", height="300px")
+                              ))),
+            tabPanel("Social",
+                     fluidRow(
+                       column(width = 6,
+                              plotOutput("plot_inc", height="300px")
+                              ),
+                       column(width = 6,
+                              plotOutput("plot_rent", height="300px")
+                              )),
+                     fluidRow(
+                       column(width = 6,
+                              plotOutput("plot_une", height="300px")
+                              ),
+                       column(width = 6,
+                              plotOutput("plot_pov", height="300px")
+                              )))
             )
+          )
         )
     )
-)
 
 
 ### SERVER ###
@@ -127,10 +141,11 @@ server <- function(input, output) {
     
     # Leaflet map with markers
     output$map <- renderLeaflet({
-        leaflet() %>% 
-            setView(lng = -71.4, lat = 42.4,  zoom = 8) %>%
+        leaflet(data=coor_data) %>% 
+            setView(lng = -71.4, lat = 42.4,  zoom = 7) %>%
             addTiles(options = providerTileOptions(noWrap = TRUE)) %>%
-            addCircleMarkers(data=coor_data, ~x , ~y, layerId=~id, popup=~id, radius=10 , color="red",  fillColor="orange", stroke = TRUE, fillOpacity = 0.8)
+            addCircleMarkers(~x , ~y, layerId=~id, popup=, radius=1 , color="white",  fillColor="white", stroke = TRUE, fillOpacity = 0) %>% 
+            addMarkers(~x , ~y, popup = ~id, label = ~id)
     })
     
     # store the click
@@ -138,16 +153,22 @@ server <- function(input, output) {
         data_of_click$clickedMarker <- input$map_marker_click
     })
     
+    # set default plot with MA and USA
+    my_place <- data_of_click$clickedMarker$id
+    if(is.null(my_place)){my_place <- c("MA", "United States")}
+    
+    # education plot
+    muni_df <- subset(edu_data, edu_data$Region %in% my_place)
+
+    
     # income plot
     output$plot_inc=renderPlot({
-        my_place=data_of_click$clickedMarker$id
-        if(is.null(my_place)){my_place="MA"}
-        
-        muni_df <- subset(inc_data, inc_data$Region==my_place)
-        
-        ggplot(muni_df, aes(x=(Five_Year_Average-2), y = Median_Annual_Household_Income)) + 
+      
+      muni_df <- subset(inc_data, inc_data$Region==my_place)
+      theme_set(theme_classic())
+      ggplot(muni_df, aes(x=(Five_Year_Average-2), y = Median_Annual_Household_Income)) + 
             geom_line() +
-            ggtitle(paste0("Median Annual Household Income in ",my_place)) + 
+            ggtitle(paste0("Median Annual Household Income in ", my_place)) + 
             xlab("Average Data Point of Five Year Period") + 
             ylab("Dollar") + 
             theme(plot.title = element_text(size=14, face="bold"))
