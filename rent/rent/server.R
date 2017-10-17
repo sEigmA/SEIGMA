@@ -35,9 +35,9 @@ shinyServer(function(input, output, session) {
     ## if the user checks the meanUS box or the meanMA box, add those to counties vector
     if(input$US_mean){
       if(input$MA_mean){
-        munis <- c("USA", "Massachusetts", munis) ## US and MA  
+        munis <- c("United States", "Massachusetts", munis) ## US and MA  
       } else{
-        munis <- c("USA", munis) ## US only
+        munis <- c("United States", munis) ## US only
       }
     } else{
       if(input$MA_mean){
@@ -123,7 +123,7 @@ shinyServer(function(input, output, session) {
     
     pdf <- plot_rent_df()
     row.names(pdf) <- 1:nrow(pdf)
-    pdf$Municipal <- factor(pdf$Municipal, levels = pdf$Municipal,ordered = TRUE)
+    pdf$Municipal <- factor(pdf$Municipal, levels = unique(pdf$Municipal,ordered = TRUE))
     ap=0.5
     sz=1
     
@@ -317,8 +317,8 @@ shinyServer(function(input, output, session) {
     isolate({
       values$selectedFeature <- evt$properties
       clickmuni <- evt$properties$NAMELSAD10
-      values$selectedFeature["Median.Rent"] <- map_dat[match(clickmuni, map_dat$Municipal), "Median.Rent"]
-      values$selectedFeature["Rent.Margin.of.Error"] <- map_dat[match(clickmuni, map_dat$Municipal), "Rent.Margin.of.Error"]
+      values$selectedFeature["Median.Rent.2015.Dollar"] <- map_dat[match(clickmuni, map_dat$Municipal), "Median.Rent.2015.Dollar"]
+      values$selectedFeature["Rent.Margin.of.Error.2015.Dollar"] <- map_dat[match(clickmuni, map_dat$Municipal), "Rent.Margin.of.Error.2015.Dollar"]
     })
   })
   ##  This function is what creates info box
@@ -333,8 +333,8 @@ shinyServer(function(input, output, session) {
     }
     #     browser()
     muni_name <- values$selectedFeature$NAMELSAD10
-    muni_value <- prettyNum(values$selectedFeature["Median.Rent"], big.mark = ",")
-    muni_margin<- prettyNum(values$selectedFeature["Rent.Margin.of.Error"], big.mark = ",")
+    muni_value <- prettyNum(values$selectedFeature["Median.Rent.2015.Dollar"], big.mark = ",")
+    muni_margin<- prettyNum(values$selectedFeature["Rent.Margin.of.Error.2015.Dollar"], big.mark = ",")
 
     ## If clicked county has no crude rate, display a message
     if(muni_value == "NA"){
