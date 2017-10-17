@@ -47,7 +47,7 @@ shinyServer(function(input, output, session){
       filter(Municipal %in% munis) %>%
       select(Municipal, Year, Inflation_Adjusted_Total_Assessed, Inflation_Adjusted_Residential, Inflation_Adjusted_Open_Space, Inflation_Adjusted_Commercial, Inflation_Adjusted_Industrial, Inflation_Adjusted_Personal_Property)
       sum_df[3:8]<-apply(sum_df[3:8],2,function(x)prettyNum(x,big.mark = ","))
-    colnames(sum_df) <- c("Municipal","F-Year", "Total Assessed Values (2016 dollars)", "Residential (2016 dollars)", "Open Space (2016 dollars) ", "Commercial (2016 dollars)", "Industrial (2016 dollars)", "Personal Property (2016 dollars)")
+    colnames(sum_df) <- c("Municipal","Fiscal Year", "Total Assessed Values (2016 dollars)", "Residential (2016 dollars)", "Open Space (2016 dollars) ", "Commercial (2016 dollars)", "Industrial (2016 dollars)", "Personal Property (2016 dollars)")
     
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
@@ -342,7 +342,7 @@ shinyServer(function(input, output, session){
     if(input$map_radio == "Total_Assessed"&input$map_display_radio == "Inflation_Adjusted_Total_Assessed"){
       
       paint.brush = colorRampPalette(colors=c("white", "violetred"))
-      cols <- paint.brush(25)
+      cols <- paint.brush(30)
       leg_dat <- data_frame(y = seq(TotpValuemin.val, TotpValuemax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
       
       p <- ggplot(data = leg_dat) +

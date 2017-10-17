@@ -259,7 +259,7 @@ pValue_plot_options <- googleLineChart("pValue_plot1", width="100%", height="475
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Total Assessed Property Values (2017 dollars, Million)",
+    title = "Total Assessed Property Values (2016 dollars, Million)",
     viewWindow = ylim,
     textStyle = list(
       fontSize = 14),
