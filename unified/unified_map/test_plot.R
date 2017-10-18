@@ -65,7 +65,13 @@ ui <- fluidPage(
       ## create tabs
       tabsetPanel(
         tabPanel("Demographics",
-                 br(),
+                 # app link
+                 fluidRow(
+                   column(4),
+                   column(4,
+                          helpText(a("Please view more details through Demographics App.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)"))),
+                   column(4)
+                 ),
                  fluidRow(
                    column(6,
                           plotOutput("plot_gen")
@@ -105,7 +111,7 @@ ui <- fluidPage(
                             ))),
                    column(6,
                           plotOutput("plot_his"))
-                 )),
+                   )                 ),
         tabPanel("Social",
                  br(),
                  fluidRow(
