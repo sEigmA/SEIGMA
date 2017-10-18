@@ -72,7 +72,10 @@ ui <- fluidPage(
                           ),
                    column(6,
                           fluidRow(
-                            column(2,
+                            column(9,
+                                   plotOutput("plot_age")
+                            ),
+                            column(3,
                                    radioButtons("age", "Select an Age:",
                                                 c("Under 20" = "under20",
                                                   "20 to 34" = "under34",
@@ -81,15 +84,15 @@ ui <- fluidPage(
                                                   "65 to 74" = "under74",
                                                   "Over 75" = "over75"),
                                                 inline=F)
-                                   ),
-                            column(10,
-                                   plotOutput("plot_age")
                                    ))
                    )),
                  br(),
                  fluidRow(
                    column(6,
                           fluidRow(
+                            column(9,
+                                   plotOutput("plot_rac")
+                            ),
                             column(3,
                                    radioButtons("race", "Select Race:",
                                                 c("White" = "white",
@@ -99,9 +102,6 @@ ui <- fluidPage(
                                                   "Asian" = "asian",
                                                   "Others" = "other"),
                                                 inline=F)
-                            ),
-                            column(9,
-                                   plotOutput("plot_rac")
                             ))),
                    column(6,
                           plotOutput("plot_his"))
@@ -256,12 +256,13 @@ server <- function(input, output){
   his_df <- reactive({
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Hispanic_Pct, Not_Hispanic_Pct, Year)
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
+    colnames(muni_df) <- gsub("_", " ", colnames(muni_df))
     muni_df <- melt(muni_df)
     muni_df
   })
   
   output$plot_his <- renderPlot({
-    dat <- gen_df() 
+    dat <- his_df() 
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
       geom_line() + 
