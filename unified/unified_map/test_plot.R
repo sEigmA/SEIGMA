@@ -2,10 +2,11 @@
 ## Codes for All Plots     ##
 ## Author: Zhenning Kang   ##
 ## Date Created: 10/15/17  ##
-## Last Modified: 10/15/17 ##
+## Last Modified: 10/19/17 ##
 #############################
 
 ### SETTINGS
+library(geojsonio)
 library(shiny)
 library(dplyr)
 library(reshape2)
@@ -51,12 +52,12 @@ ui <- fluidPage(
            a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/")
            ),
     column(4,
-           helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832020/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
+           helpText(a("Comments or Feedback", href="http://www.surveygizmo.com/s3/1832020/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
            ## data source citation
-           helpText(a("Data Source: American Community Survey: table DP05", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S2502&prodType=table",
+           helpText(a("Data Source", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S2502&prodType=table",
                       target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dataAge', 1)")),
            ## GitHub link
-           helpText(a("View our data and code on GitHub",
+           helpText(a("Codes on GitHub",
                       href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/unified", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
            ## author line
            helpText("Created by Zhenning Kang")
@@ -69,7 +70,7 @@ ui <- fluidPage(
                  fluidRow(
                    column(4),
                    column(4,
-                          helpText(a("Please view more details through Demographics App.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)"))),
+                          helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)"))),
                    column(4)
                  ),
                  fluidRow(
@@ -117,33 +118,35 @@ ui <- fluidPage(
                  fluidRow(
                    column(6,
                           fluidRow(
-                            radioButtons("education", "Choose a Level of Interest:",
-                                         c("High School" = "hs",
-                                           "Bachelor" = "bac",
-                                           "Graduate" = "grad"),
-                                         inline=T)
-                          ),
-                          fluidRow(
-                            plotOutput("plot_edu")
-                            ),
+                            column(9,
+                                   plotOutput("plot_edu")
+                                   ),
+                            column(3,
+                                   radioButtons("education", "Choose a Level:",
+                                                c("High School" = "hs",
+                                                  "Bachelor" = "bac",
+                                                  "Graduate" = "grad"),
+                                                inline=T)
+                                   )),
                           # app link
-                          helpText(a("Please view more details through Education App.", href="https://seigma.shinyapps.io/educational_attainment/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'edu_app', 1)"))
+                          helpText(a("More information about Education.", href="https://seigma.shinyapps.io/educational_attainment/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'edu_app', 1)"))
                           ),
                    column(6,
                           fluidRow(
-                            radioButtons("status", "Choose a Status of Interest:",
-                                         c("Married" = "married",
-                                           "Separated" = "separated",
-                                           "Divorced" = "divorced",
-                                           "Widowed" = "widowed",
-                                           "Never" = "never"),
-                                           inline=T)
-                            ),
-                          fluidRow(
-                            plotOutput("plot_mar")
-                            ),
+                            column(9,
+                                   plotOutput("plot_mar")
+                                   ),
+                            column(3,
+                                   radioButtons("status", "Choose a Status:",
+                                                c("Married" = "married",
+                                                  "Separated" = "separated",
+                                                  "Divorced" = "divorced",
+                                                  "Widowed" = "widowed",
+                                                  "Never" = "never"),
+                                                inline=T)
+                                   )),
                           # app link
-                          helpText(a("Please view more details through Marital App.",
+                          helpText(a("More information about Marital.",
                                      href="https://seigma.shinyapps.io/marital/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'mar_app', 1)"))
                    )),
                  br(),
@@ -151,12 +154,12 @@ ui <- fluidPage(
                    column(6,
                           plotOutput("plot_sui"),
                           # app link
-                          helpText(a("Please view more details through Suicide App.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)"))
+                          helpText(a("More information about Suicide.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)"))
                    ),
                    column(6,
                           plotOutput("plot_vet"),
                           # app link
-                          helpText(a("Please view more details through Veteran App.", href="https://seigma.shinyapps.io/va_status/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'vet_app', 1)"))
+                          helpText(a("More information about Veteran.", href="https://seigma.shinyapps.io/va_status/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'vet_app', 1)"))
                    ))
                  )
       )
@@ -181,8 +184,8 @@ server <- function(input, output){
       geom_line() + 
       geom_point() + 
       facet_grid(. ~ variable) + 
-      labs(title = "Gender Distribution of the Region", 
-           x = "Mid-Year of Five Year Periods",
+      labs(title = "Gender Distribution", 
+           x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) 
@@ -217,8 +220,8 @@ server <- function(input, output){
     p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
       geom_line() + 
       geom_point() + 
-      labs(title = paste(age,"Distribution of the Region"), 
-           x = "Mid-Year of Five Year Periods",
+      labs(title = paste(age,"Distribution"), 
+           x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) 
@@ -251,8 +254,8 @@ server <- function(input, output){
     p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
       geom_line() + 
       geom_point() + 
-      labs(title = paste(race,"Distribution of the Region"), 
-           x = "Mid-Year of Five Year Periods",
+      labs(title = paste(race,"Distribution"), 
+           x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) 
@@ -274,8 +277,8 @@ server <- function(input, output){
       geom_line() + 
       geom_point() + 
       facet_grid(. ~ variable) + 
-      labs(title = "Ethnicity Distribution of the Region", 
-           x = "Mid-Year of Five Year Periods",
+      labs(title = "Ethnicity Distribution", 
+           x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) 
@@ -304,8 +307,8 @@ server <- function(input, output){
     p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
       geom_line() + 
       geom_point() + 
-      labs(title = "Educational Attainment by Region", 
-           x = "Mid-Year of Five Year Periods",
+      labs(title = "Educational Attainment", 
+           x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) 
@@ -338,8 +341,8 @@ server <- function(input, output){
     # p<- ggplot(dat, aes(x=Year, y=value, fill=variable)) +
     #   geom_bar(stat='density', position='dodge') +
     #   facet_grid(. ~ Region) + 
-    #   labs(title = "Educational Attainment by Region", 
-    #        x = "Mid-Year of Five Year Periods",
+    #   labs(title = "Educational Attainment", 
+    #        x = "Mid-Year of Five Year Range",
     #        y = "% Population")
     # print(p)  
 
@@ -348,8 +351,8 @@ server <- function(input, output){
       geom_line() + 
       geom_point() + 
       facet_grid(. ~ Gender) + 
-      labs(title = paste("Marital Status (",status,") of the Population"), 
-           x = "Mid-Year of Five Year Periods",
+      labs(title = paste("Marital Status (",status,")"), 
+           x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) 
@@ -367,8 +370,8 @@ server <- function(input, output){
     p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = County, colour=County)) + 
       geom_line() + 
       geom_point() + 
-      labs(title = "Age-adjusted Suicide Rate Over Time (per 100,000 population)", 
-           x = "Mid-Year of Five Year Periods",
+      labs(title = "Age-adjusted Suicide Rate (per 100,000 population)", 
+           x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) 
@@ -376,6 +379,12 @@ server <- function(input, output){
   })
   
   vet_df <- reactive({
+    
+
+
+
+
+    
     muni_df <- filter(vet_data, Region %in% my_place) %>% select(Region, Percent_Vet, Year)
     muni_df <- melt(muni_df)
     muni_df
@@ -387,8 +396,8 @@ server <- function(input, output){
     p <- ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
       geom_line() + 
       geom_point() + 
-      labs(title = "Civilian Veteran's Status by Region", 
-           x = "Mid-Year of Five Year Periods",
+      labs(title = "Civilian Veteran's Status", 
+           x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) 
