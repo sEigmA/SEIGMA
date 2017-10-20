@@ -13,24 +13,24 @@ library(ggplot2)
 
 ### DATA ###
 ### DEMOGRAPHIC TAB
-dem_data <- read.csv(file="demodata.csv")
+dem_data <- read.csv(file="data/demodata.csv")
 dem_data$Year <- as.factor(as.numeric(substr(dem_data$Five_Year_Range, 1, 4))+2)
 
 ### SOCIAL TAB
 # data for education plot
-edu_data <- read.csv(file="edudata.csv")[,-1]
+edu_data <- read.csv(file="data/edudata.csv")[,-1]
 edu_data$Year <- as.factor(as.numeric(substr(edu_data$Five_Year_Range, 1, 4))+2)
 
 # data for vetaran plot
-vet_data <- read.csv(file="vetstatusdata.csv")[,-1]
+vet_data <- read.csv(file="data/vetstatusdata.csv")[,-1]
 vet_data$Year <- as.factor(as.numeric(substr(vet_data$Five_Year_Range, 1, 4))+2)
 
 # data for married status plot
-mar_data <- read.csv(file="BA002_02_marriagedata.csv")
+mar_data <- read.csv(file="data/BA002_02_marriagedata.csv")
 mar_data$Year <- as.factor(as.numeric(substr(mar_data$Five_Year_Range, 1, 4))+2)
 
 # data for suicide plot
-sui_data <- read.csv(file="SASuicidedata_Updated2017.csv")[,-1]
+sui_data <- read.csv(file="data/SASuicidedata_Updated2017.csv")[,-1]
 #If there is no age adjusted rate, get rid of the bounds and standard errors
 sui_data$Age.Adjusted.Rate.Lower.Bound[is.na(sui_data$Age.Adjusted.Rate)] <- NA
 sui_data$Age.Adjusted.Rate.Upper.Bound[is.na(sui_data$Age.Adjusted.Rate)] <- NA
