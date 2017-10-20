@@ -4,9 +4,11 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Xuelian Li    ## 
 ##            Steve Lauer            ##
-##    Date Created:  12/04/14        ##
+## Date Created:  12/04/14           ##
 ## Date Modified: 04/04/15  XL       ##
+## Data Updated: 10/20/2017 VE       ##
 #######################################
+
 
 shinyUI(fluidPage(
   ## embed the google analytics script in the app
@@ -36,7 +38,8 @@ shinyUI(fluidPage(
         condition="input.tabs == 'summary'",
       selectInput("sum_year", "Select Five Year Range",
                   choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                 "2008-2012" = "2008-2012")),
+                                 "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", 
+                                 "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
       selectInput("sum_muni", "Select Municipality", 
                   choices = MA_municipals,
                   ## Multiple allows for multi-county selection
@@ -52,7 +55,8 @@ shinyUI(fluidPage(
         condition="input.tabs == 'plot'",
         selectInput("plot_year", "Select Five Year Range",
                     choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                   "2008-2012" = "2008-2012")),
+                                   "2008-2012" = "2008-2012", "2009-2013" = "2009-2013",
+                                   "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
         ## Select input = List
         selectInput("plot_muni", "Select Municipality", 
                     choices = MA_municipals)),
@@ -62,7 +66,8 @@ shinyUI(fluidPage(
         condition="input.tabs == 'map'",
         selectInput("map_year", "Select Five Year Range",
                     choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                   "2008-2012" = "2008-2012")),
+                                   "2008-2012" = "2008-2012", "2009-2013" = "2009-2013",
+                                   "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
         ## in map, allow for variable selection
         selectInput("var", "Select Variable of Interest",
                     choices = list("High School Diploma or Higher" = "HS_Pct", 
@@ -74,7 +79,7 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer", "Updated by Valerie Evans"),
       
       ## email feedback link
       ## To develop a link in HTML
