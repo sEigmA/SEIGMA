@@ -2,18 +2,14 @@
 ## Unified Municipal App   ##
 ## Author: Zhenning Kang   ##
 ## Date Created: 10/19/17  ##
-## Last Modified: 10/19/17 ##
+## Last Modified: 10/20/17 ##
 #############################
 
 ### SETTINGS ###
-library(geojsonio)
-require(RJSONIO)
 library(shiny)
 library(dplyr)
 library(reshape2)
 library(ggplot2)
-
-setwd("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/unified/unified_map")
 
 ### DATA ###
 ### DEMOGRAPHIC TAB
@@ -42,18 +38,19 @@ sui_data$Age.Adjusted.Rate.Standard.Error[is.na(sui_data$Age.Adjusted.Rate)] <- 
 sui_data$County <- gsub("US", "United States", sui_data$County)
 
 ### REGIONS
-MA_map_muni <- geojson_read("Muni_2010Census_DP1.geojson", what = "sp")
-MA_municipals <- as.character(unique(MA_map_muni$NAMELSAD10))
-MA_municipals <- gsub(MA_municipals, pattern = " [Tt]own| city", replacement = "")
-MA_municipals <- sort(MA_municipals[-grep(MA_municipals, pattern = "County subdivisions not defined")])
-
-MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
-MA_counties <- c()
-for(i in 1:length(MA_map_county$features)){
-  MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
-}
-
+MA_municipals <- as.character(na.omit(unique(dem_data$Municipal)))
 muni_county <- data.frame(unique(na.omit(subset(dem_data, select = c("Municipal", "County")))))
+
+# MA_map_muni <- geojson_read("Muni_2010Census_DP1.geojson", what = "sp")
+# MA_municipals <- as.character(unique(MA_map_muni$NAMELSAD10))
+# MA_municipals <- gsub(MA_municipals, pattern = " [Tt]own| city", replacement = "")
+# MA_municipals <- sort(MA_municipals[-grep(MA_municipals, pattern = "County subdivisions not defined")])
+# 
+# MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
+# MA_counties <- c()
+# for(i in 1:length(MA_map_county$features)){
+#   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
+# }
 
 ### USER INTERFACE ###
 ui <- fluidPage(
@@ -62,7 +59,9 @@ ui <- fluidPage(
   fluidRow(
     column(2,
            selectInput("muni", "Select Municipality",
-                       choices = MA_municipals, multiple = T)
+                       choices = MA_municipals, 
+                       selected = "Abington",
+                       multiple = T)
            ),
     column(8,
            ## put in logo for title
@@ -413,16 +412,17 @@ server <- function(input, output){
   })
   
   sui_df <- reactive({
+    
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
 
     if(!is.null(input$muni))
       county <- c()
-      for (i in 1:351){
-        county[i] <- ifelse(input$muni == as.character(muni_county$Municipal[i]), as.character(muni_county$County[i]), NA)
+      for (m in 1:length(input$muni)){
+        county[m] <- as.character(muni_county$County[muni_county$Municipal==input$muni[m]])
       }
     county <- gsub(" County", "", county)
-      my_place <- c(county[!is.na(county)], "MA", "United States") 
-    if(is.null(input$muni))
-      my_place <- c("MA", "United States")
+      my_place <- c(county, "MA", "United States")
     
     muni_df <- filter(sui_data, County %in% my_place) %>% select(County, Age.Adjusted.Rate, Year)
     muni_df
