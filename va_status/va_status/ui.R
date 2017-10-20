@@ -39,7 +39,7 @@ shinyUI(fluidPage(
         condition="input.tabs == 'summary'",
       selectInput("sum_year", "Select Five Year Range",
                   choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                 "2008-2012" = "2008-2102", "2009-2013" = "2009-2013", 
+                                 "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", 
                                  "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
       selectInput("sum_muni", "Select Municipality", 
                   choices = MA_municipals,
@@ -56,7 +56,7 @@ shinyUI(fluidPage(
         ## Select input = List
         selectInput("map_year", "Select Five Year Range",
                     choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                   "2008-2012" = "2008-2102", "2009-2013" = "2009-2013", 
+                                   "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", 
                                    "2010-2014" = "2010-2014", "2011-2015" = "2011-2015"))
       ),
       
@@ -66,7 +66,7 @@ shinyUI(fluidPage(
         ## Select input = List
         selectInput("plot_year", "Select Five Year Range",
                     choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                   "2008-2012" = "2008-2102", "2009-2013" = "2009-2013", 
+                                   "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", 
                                    "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
         
         selectInput("plot_muni", "Select Municipality", 
