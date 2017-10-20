@@ -1,19 +1,17 @@
 #############################
-## Codes for All Plots     ##
+## Unified Municipal App   ##
 ## Author: Zhenning Kang   ##
-## Date Created: 10/15/17  ##
-## Last Modified: 10/19/17 ##
+## Date Created: 10/19/17  ##
+## Last Modified: 10/20/17 ##
 #############################
 
-### SETTINGS
-library(geojsonio)
+### SETTINGS ###
 library(shiny)
 library(dplyr)
 library(reshape2)
 library(ggplot2)
 
-setwd("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/unified/unified_map")
-
+### DATA ###
 ### DEMOGRAPHIC TAB
 dem_data <- read.csv(file="demodata.csv")
 dem_data$Year <- as.factor(as.numeric(substr(dem_data$Five_Year_Range, 1, 4))+2)
@@ -39,19 +37,37 @@ sui_data$Age.Adjusted.Rate.Upper.Bound[is.na(sui_data$Age.Adjusted.Rate)] <- NA
 sui_data$Age.Adjusted.Rate.Standard.Error[is.na(sui_data$Age.Adjusted.Rate)] <- NA
 sui_data$County <- gsub("US", "United States", sui_data$County)
 
-# show MA and USA data only
-my_place <- c("MA", "United States") 
+### REGIONS
+MA_municipals <- as.character(na.omit(unique(dem_data$Municipal)))
+muni_county <- data.frame(unique(na.omit(subset(dem_data, select = c("Municipal", "County")))))
 
-### USER INTERFACE 
+# MA_map_muni <- geojson_read("Muni_2010Census_DP1.geojson", what = "sp")
+# MA_municipals <- as.character(unique(MA_map_muni$NAMELSAD10))
+# MA_municipals <- gsub(MA_municipals, pattern = " [Tt]own| city", replacement = "")
+# MA_municipals <- sort(MA_municipals[-grep(MA_municipals, pattern = "County subdivisions not defined")])
+# 
+# MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
+# MA_counties <- c()
+# for(i in 1:length(MA_map_county$features)){
+#   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
+# }
+
+### USER INTERFACE ###
 ui <- fluidPage(
   # blank title, but put in a special title for window tab
   titlePanel("", windowTitle = "SEIGMA Unified Shiny App"),
   fluidRow(
+    column(2,
+           selectInput("muni", "Select Municipality",
+                       choices = MA_municipals, 
+                       selected = "Abington",
+                       multiple = T)
+           ),
     column(8,
            ## put in logo for title
            a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/")
            ),
-    column(4,
+    column(2,
            helpText(a("Comments or Feedback", href="http://www.surveygizmo.com/s3/1832020/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
            ## data source citation
            helpText(a("Data Source", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S2502&prodType=table",
@@ -171,6 +187,12 @@ ui <- fluidPage(
 server <- function(input, output){
 
   gen_df <- reactive({
+    
+    if(!is.null(input$muni))
+      my_place <- c(input$muni, "MA", "United States") 
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States") 
+    
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Male_Pct, Female_Pct, Year)
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
     muni_df <- melt(muni_df)
@@ -193,6 +215,12 @@ server <- function(input, output){
   })
   
   age_df <- reactive({
+    
+    if(!is.null(input$muni))
+      my_place <- c(input$muni, "MA", "United States") 
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
+    
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Age_under_20_Pct_plot, Age_20_34_Pct_plot, Age_35_54_Pct_plot, Age_55_64_Pct_plot, Age_65_74_Pct_plot, Age_over_75_Pct_plot, Year)
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("0_3", "0 to 3", muni_df$variable)
@@ -229,6 +257,12 @@ server <- function(input, output){
   })
 
   rac_df <- reactive({
+    
+    if(!is.null(input$muni))
+      my_place <- c(input$muni, "MA", "United States") 
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
+    
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, White_Pct, Black_Pct, American_Indian_and_Alaska_Native_Pct, Asian_Pct, Hawaiian_and_Other_Pacific_Islander_Pct, Others_Pct, Year)
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("_Pct", "", muni_df$variable)
@@ -263,6 +297,12 @@ server <- function(input, output){
   })
     
   his_df <- reactive({
+    
+    if(!is.null(input$muni))
+      my_place <- c(input$muni, "MA", "United States") 
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
+    
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Hispanic_Pct, Not_Hispanic_Pct, Year)
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
     colnames(muni_df) <- gsub("_", " ", colnames(muni_df))
@@ -286,6 +326,12 @@ server <- function(input, output){
   })
   
   edu_df <- reactive({
+    
+    if(!is.null(input$muni))
+      my_place <- c(input$muni, "MA", "United States") 
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
+    
     muni_df <- filter(edu_data, Region %in% my_place) %>% select(Region, HS_Pct, Bachelors_Pct, Grad_Pct, Year)
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("_Pct", " %", muni_df$variable)
@@ -316,6 +362,12 @@ server <- function(input, output){
     })
   
   mar_df <- reactive({
+    
+    if(!is.null(input$muni))
+      my_place <- c(input$muni, "MA", "United States") 
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
+    
     mar_df <- filter(mar_data, Region %in% my_place) %>% select(Region, Never_Married_pct, Now_Married_pct, Separated_pct, Widowed_pct, Divorced_pct, Gender, Year)
     names(mar_df) <- gsub("_", " ", names(mar_df))
     names(mar_df) <- gsub("pct", "%", names(mar_df))
@@ -360,6 +412,18 @@ server <- function(input, output){
   })
   
   sui_df <- reactive({
+    
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
+
+    if(!is.null(input$muni))
+      county <- c()
+      for (m in 1:length(input$muni)){
+        county[m] <- as.character(muni_county$County[muni_county$Municipal==input$muni[m]])
+      }
+    county <- gsub(" County", "", county)
+      my_place <- c(county, "MA", "United States")
+    
     muni_df <- filter(sui_data, County %in% my_place) %>% select(County, Age.Adjusted.Rate, Year)
     muni_df
   })
@@ -380,10 +444,10 @@ server <- function(input, output){
   
   vet_df <- reactive({
     
-
-
-
-
+    if(!is.null(input$muni))
+      my_place <- c(input$muni, "MA", "United States") 
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
     
     muni_df <- filter(vet_data, Region %in% my_place) %>% select(Region, Percent_Vet, Year)
     muni_df <- melt(muni_df)
