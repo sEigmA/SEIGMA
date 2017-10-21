@@ -1,0 +1,12 @@
+name: dashboard
+title: dashboard
+username:
+account: seigma
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 227482
+bundleId: 1037490
+url: https://seigma.shinyapps.io/dashboard/
+when: 1508553723.25161
+asMultiple: FALSE
+asStatic: FALSE
