@@ -66,9 +66,9 @@ sidebar <- dashboardSidebar(
     menuItem("Comments or Feedback", icon = icon("envelope-o"),
              href="http://www.surveygizmo.com/s3/1832020/ShinyApp-Evaluation"),
     menuItem("Data Source", icon = icon("file-code-o"), 
-             href = "http://www.surveygizmo.com/s3/1832020/ShinyApp-Evaluation"),
+             href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S2502&prodType=table"),
     menuItem("Codes on Github", icon = icon("code-fork"), 
-             href = "http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S2502&prodType=table"),
+             href = "https://github.com/sEigmA/SEIGMA/tree/gh-pages/dashboard"),
     menuItem(
       helpText("Created by Zhenning Kang")
     )
