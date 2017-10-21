@@ -51,7 +51,7 @@ shinyServer(function(input, output, session) {
       select(4:length(colnames(va_df)))
     
     colnames(sum_df) <- c("Region","Five_Year_Range", "Civilian Over 18 Population", "Civilian Veteran Population", 
-                         "Civilain Veteran Percentage", "Margin of Error")
+                         "Civilian Veteran Percentage", "Margin of Error")
     
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
