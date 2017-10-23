@@ -231,7 +231,7 @@ server <- function(input, output){
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 12))
     
-    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Group: ", dat$variable, "\n", "Region: ", dat$Region, sep="")    
+    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")    
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" )
   })
@@ -386,7 +386,7 @@ server <- function(input, output){
       theme(axis.text=element_text(size=12))+ 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size=12))
-    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Group: ", dat$variable, "\n", "Region: ", dat$Region, sep="")    
+    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" , "\n", "Region: ", dat$Region, sep="")    
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" )
   })
