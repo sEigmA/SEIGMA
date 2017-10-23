@@ -10,6 +10,7 @@ library(shiny)
 library(dplyr)
 library(reshape2)
 library(ggplot2)
+library(plotly)
 
 ### DATA ###
 ### DEMOGRAPHIC TAB
@@ -90,7 +91,7 @@ ui <- fluidPage(
                  ),
                  fluidRow(
                    column(5,
-                          plotOutput("plot_gen")
+                          plotlyOutput("plot_gen")
                           ),
                    column(7,
                           fluidRow(
@@ -118,7 +119,7 @@ ui <- fluidPage(
                  br(),
                  fluidRow(
                    column(5,
-                          plotOutput("plot_his")
+                          plotlyOutput("plot_his")
                    ),
                    column(7,
                           fluidRow(
@@ -149,7 +150,7 @@ ui <- fluidPage(
                    column(6,
                           fluidRow(
                             column(9,
-                                   plotOutput("plot_edu")
+                                   plotlyOutput("plot_edu")
                                    ),
                             column(3,
                                    radioButtons("education", "Choose a Level:",
@@ -164,7 +165,7 @@ ui <- fluidPage(
                    column(6,
                           fluidRow(
                             column(9,
-                                   plotOutput("plot_mar")
+                                   plotlyOutput("plot_mar")
                                    ),
                             column(3,
                                    radioButtons("status", "Choose a Status:",
@@ -182,12 +183,12 @@ ui <- fluidPage(
                  br(),
                  fluidRow(
                    column(6,
-                          plotOutput("plot_sui"),
+                          plotlyOutput("plot_sui"),
                           # app link
                           h4(helpText(a("More information about Suicide.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
                    ),
                    column(6,
-                          plotOutput("plot_vet"),
+                          plotlyOutput("plot_vet"),
                           # app link
                           h4(helpText(a("More information about Veteran.", href="https://seigma.shinyapps.io/va_status/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'vet_app', 1)")))
                    ))
@@ -214,7 +215,7 @@ server <- function(input, output){
     muni_df
   })
   
-  output$plot_gen <- renderPlot({
+  output$plot_gen <- renderPlotly({
     dat <- gen_df() 
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
@@ -224,12 +225,15 @@ server <- function(input, output){
       labs(title = "Gender Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) + 
-      theme(axis.text=element_text(size=14)) + 
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=14)) + 
+      theme(axis.text=element_text(size=12)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 12))
-    print(p) 
+    
+    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Group: ", dat$variable, "\n", "Region: ", dat$Region, sep="")    
+    pp=plotly_build(p)   
+    style(pp, text=mytext, hoverinfo = "text" )
   })
   
   age_df <- reactive({
@@ -289,7 +293,7 @@ server <- function(input, output){
       theme(axis.title = element_text(face="bold", size=18)) + 
       theme(axis.text=element_text(size=14)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.title = element_blank(), legend.text = element_text(size = 12))
+      theme(legend.title = element_blank(), legend.text = element_text(size=12))
     print(p) 
   })
 
@@ -348,7 +352,7 @@ server <- function(input, output){
       theme(axis.title = element_text(face="bold", size=18)) + 
       theme(axis.text=element_text(size=14))+ 
       theme(plot.background = element_rect(fill = "light grey")) +
-      theme(legend.title = element_blank(), legend.text = element_text(size = 12))
+      theme(legend.title = element_blank(), legend.text = element_text(size=12))
     print(p) 
   })
     
@@ -367,7 +371,7 @@ server <- function(input, output){
     muni_df
   })
   
-  output$plot_his <- renderPlot({
+  output$plot_his <- renderPlotly({
     dat <- his_df() 
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
@@ -377,12 +381,14 @@ server <- function(input, output){
       labs(title = "Ethnicity Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) + 
-      theme(axis.text=element_text(size=14))+ 
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=14)) + 
+      theme(axis.text=element_text(size=12))+ 
       theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.text = element_text(size = 12))
-    print(p) 
+      theme(legend.text = element_text(size=12))
+    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Group: ", dat$variable, "\n", "Region: ", dat$Region, sep="")    
+    pp=plotly_build(p)   
+    style(pp, text=mytext, hoverinfo = "text" )
   })
   
   edu_df <- reactive({
@@ -400,7 +406,7 @@ server <- function(input, output){
     muni_df
   })
   
-  output$plot_edu <- renderPlot({
+  output$plot_edu <- renderPlotly({
     dat <- edu_df() 
     
     education <- switch(input$education,
@@ -417,12 +423,14 @@ server <- function(input, output){
       labs(title = "Educational Attainment", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) + 
-      theme(axis.text=element_text(size=14))+ 
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=14)) + 
+      theme(axis.text=element_text(size=12))+ 
       theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.text = element_text(size = 12))
-    print(p) 
+      theme(legend.text = element_text(size=12))
+    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Group: ", input$education, "\n", "Region: ", dat$Region, sep="")    
+    pp=plotly_build(p)   
+    style(pp, text=mytext, hoverinfo = "text" )
     })
   
   mar_df <- reactive({
@@ -439,7 +447,7 @@ server <- function(input, output){
     muni_df
   })
   
-  output$plot_mar <- renderPlot({
+  output$plot_mar <- renderPlotly({
     
     dat <- mar_df()
     
@@ -461,7 +469,7 @@ server <- function(input, output){
     #   labs(title = "Educational Attainment", 
     #        x = "Mid-Year of Five Year Range",
     #        y = "% Population")
-    # print(p)  
+    # ggplotly(p)  
 
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
@@ -471,13 +479,14 @@ server <- function(input, output){
       labs(title = paste("Marital Status (",status,")"), 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) + 
-      theme(axis.text=element_text(size=14))+ 
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=14)) + 
+      theme(axis.text=element_text(size=12))+ 
       theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.text = element_text(size = 12))
-    print(p) 
-  })
+      theme(legend.text = element_text(size=12))
+    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Group: ", input$status, "\n", "Region: ", dat$Region, sep="")    
+    pp=plotly_build(p)   
+    style(pp, text=mytext, hoverinfo = "text" )  })
   
   sui_df <- reactive({
     
@@ -497,21 +506,24 @@ server <- function(input, output){
     muni_df
   })
   
-  output$plot_sui <- renderPlot({
+  output$plot_sui <- renderPlotly({
     dat <- sui_df() 
     theme_set(theme_classic())
     p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = County, colour=County)) + 
       geom_line() + 
       geom_point() + 
-      labs(title = "Age-adjusted Suicide Rate (per 100,000 population)", 
+      labs(title = "Suicide Rate",
+           subtitle = "Age-adjusted Per 100,000 Population",
            x = "One Year Estimates",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) + 
-      theme(axis.text=element_text(size=14))+ 
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=14)) + 
+      theme(axis.text=element_text(size=12))+ 
       theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.text = element_text(size = 12))
-    print(p)  
+      theme(legend.text = element_text(size=12))
+    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$Age.Adjusted.Rate, "%" , "\n", "Region: ", dat$County, sep="")    
+    pp=plotly_build(p)   
+    style(pp, text=mytext, hoverinfo = "text" ) 
   })
   
   vet_df <- reactive({
@@ -527,7 +539,7 @@ server <- function(input, output){
     muni_df
   })
   
-  output$plot_vet <- renderPlot({
+  output$plot_vet <- renderPlotly({
     dat <- vet_df() 
     theme_set(theme_classic())
     p <- ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
@@ -536,13 +548,15 @@ server <- function(input, output){
       labs(title = "Civilian Veteran's Status", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) + 
-      theme(axis.text=element_text(size=14)) + 
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=14)) + 
+      theme(axis.text=element_text(size=12)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.text = element_text(size = 12))
-    print(p)  
-  })
+      theme(legend.text = element_text(size=10))
+    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")    
+    pp=plotly_build(p)   
+    style(pp, text=mytext, hoverinfo = "text" )
+    })
   
 }
 
