@@ -2,7 +2,7 @@
 ## Unified Municipal App   ##
 ## Author: Zhenning Kang   ##
 ## Date Created: 10/19/17  ##
-## Last Modified: 10/21/17 ##
+## Last Modified: 10/23/17 ##
 #############################
 
 ### SETTINGS ###
@@ -89,45 +89,60 @@ ui <- fluidPage(
                    column(4)
                  ),
                  fluidRow(
-                   column(6,
+                   column(5,
                           plotOutput("plot_gen")
                           ),
-                   column(6,
+                   column(7,
                           fluidRow(
+                            column(3,
+                                   h4("Age of Interest"),
+                                   checkboxInput("under20", "Age Under 20 ", TRUE),
+                                   checkboxInput("under34", "Age 20 to 34 ", FALSE),
+                                   checkboxInput("under54", "Age 35 to 54 ", FALSE),
+                                   checkboxInput("under64", "Age 55 to 64 ", FALSE),
+                                   checkboxInput("under74", "Age 65 to 74 ", FALSE),
+                                   checkboxInput("over75", "Age over 75 ", FALSE)
+                                   # radioButtons("age", "Select an Age:",
+                                   #              c("Under 20" = "under20",
+                                   #                "20 to 34" = "under34",
+                                   #                "35 to 54" = "under54",
+                                   #                "55 to 64" = "under64",
+                                   #                "65 to 74" = "under74",
+                                   #                "Over 75" = "over75"),
+                                   #              inline=F)
+                                   ),
                             column(9,
                                    plotOutput("plot_age")
-                            ),
-                            column(3,
-                                   radioButtons("age", "Select an Age:",
-                                                c("Under 20" = "under20",
-                                                  "20 to 34" = "under34",
-                                                  "35 to 54" = "under54",
-                                                  "55 to 64" = "under64",
-                                                  "65 to 74" = "under74",
-                                                  "Over 75" = "over75"),
-                                                inline=F)
-                                   ))
+                            ))
                    )),
                  br(),
                  fluidRow(
-                   column(6,
+                   column(5,
+                          plotOutput("plot_his")
+                   ),
+                   column(7,
                           fluidRow(
+                            column(3,
+                                   h4("Race of Interest"),
+                                   checkboxInput("white", "White", TRUE),
+                                   checkboxInput("black", "Black", FALSE),
+                                   checkboxInput("native", "American Indian and Alaska Native", FALSE),
+                                   checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE),
+                                   checkboxInput("asian", "Asian", FALSE),
+                                   checkboxInput("others", "Others", FALSE)
+                                   # radioButtons("race", "Select Race:",
+                                   #              c("White" = "white",
+                                   #                "Black" = "black",
+                                   #                "American Indian and Alaska Native" = "native",
+                                   #                "Hawaiian and Other Pacific Islander" = "hawaiian",
+                                   #                "Asian" = "asian",
+                                   #                "Others" = "other"),
+                                   #              inline=F)
+                            ),
                             column(9,
                                    plotOutput("plot_rac")
-                            ),
-                            column(3,
-                                   radioButtons("race", "Select Race:",
-                                                c("White" = "white",
-                                                  "Black" = "black",
-                                                  "American Indian and Alaska Native" = "native",
-                                                  "Hawaiian and Other Pacific Islander" = "hawaiian",
-                                                  "Asian" = "asian",
-                                                  "Others" = "other"),
-                                                inline=F)
-                            ))),
-                   column(6,
-                          plotOutput("plot_his"))
-                   )                 ),
+                            )))
+                   )),
         tabPanel("Social",
                  br(),
                  fluidRow(
@@ -195,6 +210,7 @@ server <- function(input, output){
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Male_Pct, Female_Pct, Year)
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
     muni_df <- melt(muni_df)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
@@ -234,28 +250,44 @@ server <- function(input, output){
   output$plot_age <- renderPlot({
     dat <- age_df()
     
-    age <- switch(input$age,
-                  under20 = "Age under 20 ",
-                  under34 = "Age 20 to 34 ",
-                  under54 = "Age 35 to 54 ",
-                  under64 = "Age 55 to 64 ",
-                  under74 = "Age 65 to 74 ",
-                  over75 = "Age over 75 ",
-                  "Age under 20 ")
+    age_var <- unique(dat$variable)
+    age <- c()
+    if(input$under20)
+      age <- append(age, age_var[1])
+    if(input$under34)
+      age <- append(age, age_var[2])
+    if(input$under54)
+      age <- append(age, age_var[3])
+    if(input$under64)
+      age <- append(age, age_var[4])
+    if(input$under74)
+      age <- append(age, age_var[5])
+    if(input$over75)
+      age <- append(age, age_var[6])
+    
+    # age <- switch(input$age,
+    #               under20 = "Age under 20 ",
+    #               under34 = "Age 20 to 34 ",
+    #               under54 = "Age 35 to 54 ",
+    #               under64 = "Age 55 to 64 ",
+    #               under74 = "Age 65 to 74 ",
+    #               over75 = "Age over 75 ",
+    #               "Age under 20 ")
 
-    dat <- filter(dat, variable == age)
+    dat <- filter(dat, variable %in% age)
     
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
+    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line() + 
       geom_point() + 
-      labs(title = paste(age,"Distribution"), 
+      labs(title = "Age Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) + 
-      theme(axis.text=element_text(size=14))+ 
-      theme(plot.background = element_rect(fill = "light grey"))
+      theme(axis.text=element_text(size=14)) + 
+      theme(plot.background = element_rect(fill = "light grey")) + 
+      theme(legend.title = element_blank(), legend.text = element_text(size = 12))
     print(p) 
   })
 
@@ -276,28 +308,44 @@ server <- function(input, output){
   output$plot_rac <- renderPlot({
     dat <- rac_df()
     
-    race <- switch(input$race,
-                  white = "White",
-                  black = "Black" ,
-                  native = "American Indian and Alaska Native",
-                  hawaiian = "Hawaiian and Other Pacific Islander",
-                  asian = "Asian",
-                  others = "Others",
-                  "White")
+    race_var <- unique(dat$variable)
+    race <- c()
+    if(input$white)
+      race <- append(race, race_var[1])
+    if(input$black)
+      race <- append(race, race_var[2])
+    if(input$native)
+      race <- append(race, race_var[3])
+    if(input$hawaiian)
+      race <- append(race, race_var[4])
+    if(input$asian)
+      race <- append(race, race_var[5])
+    if(input$others)
+      race <- append(race, race_var[6])
     
-    dat <- filter(dat, variable == race)
+    # race <- switch(input$race,
+    #               white = "White",
+    #               black = "Black" ,
+    #               native = "American Indian and Alaska Native",
+    #               hawaiian = "Hawaiian and Other Pacific Islander",
+    #               asian = "Asian",
+    #               others = "Others",
+    #               "White")
+    
+    dat <- filter(dat, variable %in% race)
     
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
+    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line() + 
       geom_point() + 
-      labs(title = paste(race,"Distribution"), 
+      labs(title = "Race Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) + 
       theme(axis.text=element_text(size=14))+ 
-      theme(plot.background = element_rect(fill = "light grey"))
+      theme(plot.background = element_rect(fill = "light grey")) +
+      theme(legend.title = element_blank(), legend.text = element_text(size = 12))
     print(p) 
   })
     
@@ -312,6 +360,7 @@ server <- function(input, output){
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
     colnames(muni_df) <- gsub("_", " ", colnames(muni_df))
     muni_df <- melt(muni_df)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
