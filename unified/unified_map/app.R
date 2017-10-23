@@ -67,13 +67,13 @@ ui <- fluidPage(
            ## put logo on the top
            div(a(img(src = "SEIGMA-Logo-crop.jpg", height=101, width=600), href="http://www.umass.edu/seigma/"), style="text-align: center;")),
     column(3,
-           helpText(a("Comments or Feedback", href="http://www.surveygizmo.com/s3/1832020/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
+           helpText(a("Comments or Feedback", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
            ## data source citation
            helpText(a("Data Source", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S2502&prodType=table",
                       target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dataAge', 1)")),
            ## GitHub link
            helpText(a("Codes on GitHub",
-                      href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/unified", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
+                      href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/unified/unified_map", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
            ## author line
            helpText("Created by Zhenning Kang")
            )),

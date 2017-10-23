@@ -34,7 +34,6 @@ mar_data$Year <- as.factor(as.numeric(substr(mar_data$Five_Year_Range, 1, 4))+2)
 MA_municipals <- as.character(na.omit(unique(dem_data$Municipal)))
 
 ##### UI #####
-
 header <- dashboardHeader(title = "SEIGMA Dashboard", disable = TRUE)
 
 sidebar <- dashboardSidebar(
@@ -64,7 +63,7 @@ sidebar <- dashboardSidebar(
     br(),
     br(),
     menuItem("Comments or Feedback", icon = icon("envelope-o"),
-             href="http://www.surveygizmo.com/s3/1832020/ShinyApp-Evaluation"),
+             href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation"),
     menuItem("Data Source", icon = icon("file-code-o"), 
              href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S2502&prodType=table"),
     menuItem("Codes on Github", icon = icon("code-fork"), 
@@ -195,7 +194,6 @@ body <- dashboardBody(
 )
 
 ##### SERVER #####
-
 server <- function(input, output, session){
   gen_df <- reactive({
     if(is.null(input$muni))
