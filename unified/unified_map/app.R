@@ -2,7 +2,7 @@
 ## Unified Municipal App   ##
 ## Author: Zhenning Kang   ##
 ## Date Created: 10/19/17  ##
-## Last Modified: 10/20/17 ##
+## Last Modified: 10/21/17 ##
 #############################
 
 ### SETTINGS ###
@@ -64,9 +64,8 @@ ui <- fluidPage(
                        multiple = T)
            ),
     column(8,
-           ## put in logo for title
-           a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/")
-           ),
+           ## put logo on the top
+           div(a(img(src = "SEIGMA-Logo-crop.jpg", height=101, width=600), href="http://www.umass.edu/seigma/"), style="text-align: center;")),
     column(2,
            helpText(a("Comments or Feedback", href="http://www.surveygizmo.com/s3/1832020/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
            ## data source citation
@@ -210,7 +209,9 @@ server <- function(input, output){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) + 
+      theme(axis.text=element_text(size=14))+ 
+      theme(plot.background = element_rect(fill = "light grey"))
     print(p) 
   })
   
@@ -252,7 +253,9 @@ server <- function(input, output){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) + 
+      theme(axis.text=element_text(size=14))+ 
+      theme(plot.background = element_rect(fill = "light grey"))
     print(p) 
   })
 
@@ -292,7 +295,9 @@ server <- function(input, output){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) + 
+      theme(axis.text=element_text(size=14))+ 
+      theme(plot.background = element_rect(fill = "light grey"))
     print(p) 
   })
     
@@ -321,7 +326,9 @@ server <- function(input, output){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) + 
+      theme(axis.text=element_text(size=14))+ 
+      theme(plot.background = element_rect(fill = "light grey"))
     print(p) 
   })
   
@@ -357,7 +364,9 @@ server <- function(input, output){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) + 
+      theme(axis.text=element_text(size=14))+ 
+      theme(plot.background = element_rect(fill = "light grey"))
     print(p) 
     })
   
@@ -407,7 +416,9 @@ server <- function(input, output){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) + 
+      theme(axis.text=element_text(size=14))+ 
+      theme(plot.background = element_rect(fill = "light grey"))
     print(p) 
   })
   
@@ -435,10 +446,12 @@ server <- function(input, output){
       geom_line() + 
       geom_point() + 
       labs(title = "Age-adjusted Suicide Rate (per 100,000 population)", 
-           x = "Mid-Year of Five Year Range",
+           x = "One Year Estimates",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) + 
+      theme(axis.text=element_text(size=14))+ 
+      theme(plot.background = element_rect(fill = "light grey"))
     print(p)  
   })
   
@@ -464,7 +477,9 @@ server <- function(input, output){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) + 
+      theme(axis.text=element_text(size=14)) + 
+      theme(plot.background = element_rect(fill = "light grey"))
     print(p)  
   })
   
