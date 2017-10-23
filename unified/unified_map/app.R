@@ -40,7 +40,6 @@ sui_data$County <- gsub("US", "United States", sui_data$County)
 ### REGIONS
 MA_municipals <- as.character(na.omit(unique(dem_data$Municipal)))
 muni_county <- data.frame(unique(na.omit(subset(dem_data, select = c("Municipal", "County")))))
-
 # MA_map_muni <- geojson_read("Muni_2010Census_DP1.geojson", what = "sp")
 # MA_municipals <- as.character(unique(MA_map_muni$NAMELSAD10))
 # MA_municipals <- gsub(MA_municipals, pattern = " [Tt]own| city", replacement = "")
@@ -52,7 +51,7 @@ muni_county <- data.frame(unique(na.omit(subset(dem_data, select = c("Municipal"
 #   MA_counties <- c(MA_counties, MA_map_county$features[[i]]$properties$County)
 # }
 
-### USER INTERFACE ###
+##### USER INTERFACE #####
 ui <- fluidPage(
   # blank title, but put in a special title for window tab
   titlePanel("", windowTitle = "SEIGMA Unified Shiny App"),
@@ -85,7 +84,7 @@ ui <- fluidPage(
                  fluidRow(
                    column(4),
                    column(4,
-                          helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)"))),
+                          h3(helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)")))),
                    column(4)
                  ),
                  fluidRow(
@@ -197,7 +196,7 @@ ui <- fluidPage(
   )
 
 
-### SERVER
+##### SERVER #####
 server <- function(input, output){
 
   gen_df <- reactive({
@@ -226,8 +225,9 @@ server <- function(input, output){
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) + 
-      theme(axis.text=element_text(size=14))+ 
-      theme(plot.background = element_rect(fill = "light grey"))
+      theme(axis.text=element_text(size=14)) + 
+      theme(plot.background = element_rect(fill = "light grey")) + 
+      theme(legend.text = element_text(size = 12))
     print(p) 
   })
   
@@ -377,7 +377,8 @@ server <- function(input, output){
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) + 
       theme(axis.text=element_text(size=14))+ 
-      theme(plot.background = element_rect(fill = "light grey"))
+      theme(plot.background = element_rect(fill = "light grey")) + 
+      theme(legend.text = element_text(size = 12))
     print(p) 
   })
   
@@ -415,7 +416,8 @@ server <- function(input, output){
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) + 
       theme(axis.text=element_text(size=14))+ 
-      theme(plot.background = element_rect(fill = "light grey"))
+      theme(plot.background = element_rect(fill = "light grey")) + 
+      theme(legend.text = element_text(size = 12))
     print(p) 
     })
   
@@ -467,7 +469,8 @@ server <- function(input, output){
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) + 
       theme(axis.text=element_text(size=14))+ 
-      theme(plot.background = element_rect(fill = "light grey"))
+      theme(plot.background = element_rect(fill = "light grey")) + 
+      theme(legend.text = element_text(size = 12))
     print(p) 
   })
   
@@ -500,7 +503,8 @@ server <- function(input, output){
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) + 
       theme(axis.text=element_text(size=14))+ 
-      theme(plot.background = element_rect(fill = "light grey"))
+      theme(plot.background = element_rect(fill = "light grey")) + 
+      theme(legend.text = element_text(size = 12))
     print(p)  
   })
   
@@ -528,7 +532,8 @@ server <- function(input, output){
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) + 
       theme(axis.text=element_text(size=14)) + 
-      theme(plot.background = element_rect(fill = "light grey"))
+      theme(plot.background = element_rect(fill = "light grey")) + 
+      theme(legend.text = element_text(size = 12))
     print(p)  
   })
   
