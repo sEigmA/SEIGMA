@@ -56,16 +56,17 @@ ui <- fluidPage(
   # blank title, but put in a special title for window tab
   titlePanel("", windowTitle = "SEIGMA Unified Shiny App"),
   fluidRow(
-    column(2,
-           selectInput("muni", "Select Municipality",
+    column(3,
+           h3("Please Select Municipalities"),
+           selectInput("muni", "",
                        choices = MA_municipals, 
                        selected = "Abington",
                        multiple = T)
            ),
-    column(8,
+    column(6,
            ## put logo on the top
            div(a(img(src = "SEIGMA-Logo-crop.jpg", height=101, width=600), href="http://www.umass.edu/seigma/"), style="text-align: center;")),
-    column(2,
+    column(3,
            helpText(a("Comments or Feedback", href="http://www.surveygizmo.com/s3/1832020/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
            ## data source citation
            helpText(a("Data Source", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S2502&prodType=table",
@@ -158,7 +159,7 @@ ui <- fluidPage(
                                                 inline=T)
                                    )),
                           # app link
-                          helpText(a("More information about Education.", href="https://seigma.shinyapps.io/educational_attainment/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'edu_app', 1)"))
+                          h4(helpText(a("More information about Education.", href="https://seigma.shinyapps.io/educational_attainment/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'edu_app', 1)")))
                           ),
                    column(6,
                           fluidRow(
@@ -175,20 +176,20 @@ ui <- fluidPage(
                                                 inline=T)
                                    )),
                           # app link
-                          helpText(a("More information about Marital.",
-                                     href="https://seigma.shinyapps.io/marital/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'mar_app', 1)"))
+                          h4(helpText(a("More information about Marital.",
+                                     href="https://seigma.shinyapps.io/marital/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'mar_app', 1)")))
                    )),
                  br(),
                  fluidRow(
                    column(6,
                           plotOutput("plot_sui"),
                           # app link
-                          helpText(a("More information about Suicide.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)"))
+                          h4(helpText(a("More information about Suicide.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
                    ),
                    column(6,
                           plotOutput("plot_vet"),
                           # app link
-                          helpText(a("More information about Veteran.", href="https://seigma.shinyapps.io/va_status/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'vet_app', 1)"))
+                          h4(helpText(a("More information about Veteran.", href="https://seigma.shinyapps.io/va_status/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'vet_app', 1)")))
                    ))
                  )
       )
@@ -244,6 +245,7 @@ server <- function(input, output){
     muni_df$variable[1:70] <- gsub("5_", "5 to ", muni_df$variable[1:70])
     muni_df$variable <- gsub("_", " ", muni_df$variable)
     muni_df$variable <- gsub("Pct plot", "", muni_df$variable)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
@@ -302,6 +304,7 @@ server <- function(input, output){
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("_Pct", "", muni_df$variable)
     muni_df$variable <- gsub("_", " ", muni_df$variable)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
@@ -393,6 +396,7 @@ server <- function(input, output){
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("_Pct", " %", muni_df$variable)
     muni_df$variable <- gsub("HS", "High School", muni_df$variable)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
@@ -428,10 +432,11 @@ server <- function(input, output){
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     
-    mar_df <- filter(mar_data, Region %in% my_place) %>% select(Region, Never_Married_pct, Now_Married_pct, Separated_pct, Widowed_pct, Divorced_pct, Gender, Year)
-    names(mar_df) <- gsub("_", " ", names(mar_df))
-    names(mar_df) <- gsub("pct", "%", names(mar_df))
-    mar_df
+    muni_df <- filter(mar_data, Region %in% my_place) %>% select(Region, Never_Married_pct, Now_Married_pct, Separated_pct, Widowed_pct, Divorced_pct, Gender, Year)
+    names(muni_df) <- gsub("_", " ", names(muni_df))
+    names(muni_df) <- gsub("pct", "%", names(muni_df))
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df
   })
   
   output$plot_mar <- renderPlot({
@@ -488,6 +493,7 @@ server <- function(input, output){
       my_place <- c(county, "MA", "United States")
     
     muni_df <- filter(sui_data, County %in% my_place) %>% select(County, Age.Adjusted.Rate, Year)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
@@ -517,6 +523,7 @@ server <- function(input, output){
     
     muni_df <- filter(vet_data, Region %in% my_place) %>% select(Region, Percent_Vet, Year)
     muni_df <- melt(muni_df)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   

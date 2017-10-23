@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Date Modified: 10/20/2017  ##
+## Date Modified: 10/23/2017  ##
 ################################
 
 ### SETTINGS ###
@@ -39,6 +39,7 @@ header <- dashboardHeader(title = "SEIGMA Dashboard", disable = TRUE)
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
+    h4("Select Your Interest"),
     menuItem("Municipality", icon = icon("address-book"),
              selectInput("muni", "Select Municipalities",
                          choices = MA_municipals,
@@ -49,14 +50,13 @@ sidebar <- dashboardSidebar(
              checkboxInput("MA_mean", "Compare to MA Average", TRUE),
              checkboxInput("US_mean", "Compare to US Average", TRUE)
     ),
+    br(),
+    br(),
+    h4("Select Plots to Display"),
     menuItem("Demographics", tabName = "demo", icon = icon("dashboard")
              ),
     menuItem("Social", tabName = "soci", icon = icon("th")
              ),
-    br(),
-    br(),
-    br(),
-    br(),
     br(),
     br(),
     br(),
@@ -86,8 +86,8 @@ body <- dashboardBody(
               ),
             fluidRow(
               box(width = 12,
-                  helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)"))
-              )),
+                  h4(helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)"))
+              ))),
             fluidRow(
               box(width = 6,
                 fluidRow(
@@ -154,8 +154,8 @@ body <- dashboardBody(
                                       "Never" = "never"),
                                     selected = "married",
                                     multiple = FALSE),
-                        helpText(a("More information about Marital.",
-                                   href="https://seigma.shinyapps.io/marital/"))
+                        h4(helpText(a("More information about Marital.",
+                                   href="https://seigma.shinyapps.io/marital/")))
                     )
                   ),
                   fluidRow(
@@ -173,19 +173,19 @@ body <- dashboardBody(
                               "Bachelor" = "bac",
                               "Graduate" = "grad"),
                             selected = "hs",
-                            multiple = FALSE),
-                          helpText(a("More information about Education.", href="https://seigma.shinyapps.io/educational_attainment/"))
+                            multiple = FALSE)
                           )
                     ),
                     fluidRow(
                       plotOutput("plot_edu")
-                      )
+                      ),
+                    h4(helpText(a("More information about Education.", href="https://seigma.shinyapps.io/educational_attainment/")))
                     ),
                 box(width = 6,
                     plotOutput("plot_vet"),
                     fluidRow(
                       box(width = 11,
-                          helpText(a("More information about Veteran.", href="https://seigma.shinyapps.io/va_status/"))
+                          h4(helpText(a("More information about Veteran.", href="https://seigma.shinyapps.io/va_status/")))
                       )
                     )
               )
@@ -218,6 +218,7 @@ server <- function(input, output, session){
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Male_Pct, Female_Pct, Year)
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
     muni_df <- melt(muni_df)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
@@ -232,7 +233,9 @@ server <- function(input, output, session){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
     print(p) 
   })
   
@@ -260,6 +263,7 @@ server <- function(input, output, session){
     muni_df$variable[1:70] <- gsub("5_", "5 to ", muni_df$variable[1:70])
     muni_df$variable <- gsub("_", " ", muni_df$variable)
     muni_df$variable <- gsub("Pct plot", "", muni_df$variable)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
@@ -285,7 +289,9 @@ server <- function(input, output, session){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
     print(p) 
   })
   
@@ -311,6 +317,7 @@ server <- function(input, output, session){
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("_Pct", "", muni_df$variable)
     muni_df$variable <- gsub("_", " ", muni_df$variable)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
@@ -336,7 +343,9 @@ server <- function(input, output, session){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
     print(p) 
   })
   
@@ -362,6 +371,7 @@ server <- function(input, output, session){
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
     colnames(muni_df) <- gsub("_", " ", colnames(muni_df))
     muni_df <- melt(muni_df)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
@@ -376,7 +386,9 @@ server <- function(input, output, session){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
     print(p) 
   })
   
@@ -402,6 +414,7 @@ server <- function(input, output, session){
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("_Pct", " %", muni_df$variable)
     muni_df$variable <- gsub("HS", "High School", muni_df$variable)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
@@ -423,7 +436,9 @@ server <- function(input, output, session){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
     print(p) 
   })
   
@@ -445,10 +460,11 @@ server <- function(input, output, session){
         }
       }
     }
-    mar_df <- filter(mar_data, Region %in% my_place) %>% select(Region, Never_Married_pct, Now_Married_pct, Separated_pct, Widowed_pct, Divorced_pct, Gender, Year)
-    names(mar_df) <- gsub("_", " ", names(mar_df))
-    names(mar_df) <- gsub("pct", "%", names(mar_df))
-    mar_df
+    muni_df <- filter(mar_data, Region %in% my_place) %>% select(Region, Never_Married_pct, Now_Married_pct, Separated_pct, Widowed_pct, Divorced_pct, Gender, Year)
+    names(muni_df) <- gsub("_", " ", names(muni_df))
+    names(muni_df) <- gsub("pct", "%", names(muni_df))
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df
   })
   
   output$plot_mar <- renderPlot({
@@ -475,7 +491,9 @@ server <- function(input, output, session){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
     print(p) 
   })
   
@@ -499,6 +517,7 @@ server <- function(input, output, session){
     }
     muni_df <- filter(vet_data, Region %in% my_place) %>% select(Region, Percent_Vet, Year)
     muni_df <- melt(muni_df)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
@@ -512,7 +531,9 @@ server <- function(input, output, session){
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) 
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
     print(p)  
   })
   
