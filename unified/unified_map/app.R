@@ -225,12 +225,12 @@ server <- function(input, output){
       labs(title = "Gender Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=14)) + 
-      theme(axis.text=element_text(size=12)) + 
-      theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.text = element_text(size = 12))
-    
+      theme(plot.title = element_text(face="bold", size=16, hjust=0, color = "white")) +
+      theme(axis.title = element_text(size=14, color = "white")) + 
+      theme(axis.text=element_text(size=10, color = "white")) + 
+      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(legend.text = element_text(size = 10)) +
+      theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")    
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" )
@@ -289,11 +289,12 @@ server <- function(input, output){
       labs(title = "Age Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) + 
-      theme(axis.text=element_text(size=14)) + 
-      theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.title = element_blank(), legend.text = element_text(size=12))
+      theme(plot.title = element_text(face="bold", size=20, hjust=0, color = "white")) +
+      theme(axis.title = element_text(size=18, color = "white")) + 
+      theme(axis.text=element_text(size=14, color = "white")) + 
+      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(legend.text = element_text(size = 12)) +
+      theme(legend.title = element_blank())
     print(p) 
   })
 
@@ -348,11 +349,12 @@ server <- function(input, output){
       labs(title = "Race Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) + 
-      theme(axis.text=element_text(size=14))+ 
-      theme(plot.background = element_rect(fill = "light grey")) +
-      theme(legend.title = element_blank(), legend.text = element_text(size=12))
+      theme(plot.title = element_text(face="bold", size=20, hjust=0, color = "white")) +
+      theme(axis.title = element_text(size=18, color = "white")) + 
+      theme(axis.text=element_text(size=14, color = "white")) + 
+      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(legend.text = element_text(size = 12)) +
+      theme(legend.title = element_blank())
     print(p) 
   })
     
@@ -381,11 +383,12 @@ server <- function(input, output){
       labs(title = "Ethnicity Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=14)) + 
-      theme(axis.text=element_text(size=12))+ 
-      theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.text = element_text(size=12))
+      theme(plot.title = element_text(face="bold", size=16, hjust=0, color = "white")) +
+      theme(axis.title = element_text(size=14, color = "white")) + 
+      theme(axis.text=element_text(size=10, color = "white")) + 
+      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(legend.text = element_text(size = 10)) +
+      theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" , "\n", "Region: ", dat$Region, sep="")    
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" )
@@ -423,11 +426,12 @@ server <- function(input, output){
       labs(title = "Educational Attainment", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=14)) + 
-      theme(axis.text=element_text(size=12))+ 
-      theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.text = element_text(size=12))
+      theme(plot.title = element_text(face="bold", size=16, hjust=0, color = "white")) +
+      theme(axis.title = element_text(size=14, color = "white")) + 
+      theme(axis.text=element_text(size=10, color = "white")) + 
+      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(legend.text = element_text(size = 10)) +
+      theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Group: ", input$education, "\n", "Region: ", dat$Region, sep="")    
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" )
@@ -479,11 +483,12 @@ server <- function(input, output){
       labs(title = paste("Marital Status (",status,")"), 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=14)) + 
-      theme(axis.text=element_text(size=12))+ 
-      theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.text = element_text(size=12))
+      theme(plot.title = element_text(face="bold", size=16, hjust=0, color = "white")) +
+      theme(axis.title = element_text(size=14, color = "white")) + 
+      theme(axis.text=element_text(size=10, color = "white")) + 
+      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(legend.text = element_text(size = 10)) +
+      theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Group: ", input$status, "\n", "Region: ", dat$Region, sep="")    
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" )  })
@@ -516,11 +521,12 @@ server <- function(input, output){
            subtitle = "Age-adjusted Per 100,000 Population",
            x = "One Year Estimates",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=14)) + 
-      theme(axis.text=element_text(size=12))+ 
-      theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.text = element_text(size=12))
+      theme(plot.title = element_text(face="bold", size=16, hjust=0, color = "white")) +
+      theme(axis.title = element_text(size=14, color = "white")) + 
+      theme(axis.text=element_text(size=10, color = "white")) + 
+      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(legend.text = element_text(size = 10)) +
+      theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$Age.Adjusted.Rate, "%" , "\n", "Region: ", dat$County, sep="")    
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" ) 
@@ -548,11 +554,12 @@ server <- function(input, output){
       labs(title = "Civilian Veteran's Status", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=14)) + 
-      theme(axis.text=element_text(size=12)) + 
-      theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.text = element_text(size=10))
+      theme(plot.title = element_text(face="bold", size=16, hjust=0, color = "white")) +
+      theme(axis.title = element_text(size=14, color = "white")) + 
+      theme(axis.text=element_text(size=10, color = "white")) + 
+      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(legend.text = element_text(size = 10)) +
+      theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")    
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" )
