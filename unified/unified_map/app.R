@@ -2,7 +2,7 @@
 ## Unified Municipal App   ##
 ## Author: Zhenning Kang   ##
 ## Date Created: 10/19/17  ##
-## Last Modified: 10/23/17 ##
+## Last Modified: 10/24/17 ##
 #############################
 
 ### SETTINGS ###
@@ -84,66 +84,96 @@ ui <- fluidPage(
         tabPanel("Demographics",
                  # app link
                  fluidRow(
-                   column(4),
-                   column(4,
-                          h3(helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)")))),
-                   column(4)
-                 ),
+                   column(2),
+                   column(10,
+                          h4(helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)")))
+                          )
+                   ),
                  fluidRow(
-                   column(5,
-                          plotlyOutput("plot_gen")
-                          ),
-                   column(7,
+                   column(6,
                           fluidRow(
+                            column(1),
+                            column(11,
+                                   h4("Age of Interest"))
+                          ),
+                          fluidRow(
+                            column(1),
                             column(3,
-                                   h4("Age of Interest"),
-                                   checkboxInput("under20", "Age Under 20 ", TRUE),
-                                   checkboxInput("under34", "Age 20 to 34 ", FALSE),
-                                   checkboxInput("under54", "Age 35 to 54 ", FALSE),
-                                   checkboxInput("under64", "Age 55 to 64 ", FALSE),
-                                   checkboxInput("under74", "Age 65 to 74 ", FALSE),
-                                   checkboxInput("over75", "Age over 75 ", FALSE)
-                                   # radioButtons("age", "Select an Age:",
-                                   #              c("Under 20" = "under20",
-                                   #                "20 to 34" = "under34",
-                                   #                "35 to 54" = "under54",
-                                   #                "55 to 64" = "under64",
-                                   #                "65 to 74" = "under74",
-                                   #                "Over 75" = "over75"),
-                                   #              inline=F)
+                                   checkboxInput("under20", "Age Under 20 ", TRUE)
                                    ),
-                            column(9,
-                                   plotOutput("plot_age")
-                            ))
-                   )),
+                            column(3,
+                                   checkboxInput("under34", "Age 20 to 34 ", FALSE)
+                                   ),
+                            column(3,
+                                   checkboxInput("under54", "Age 35 to 54 ", FALSE)
+                                   ),
+                            column(2)
+                            ),
+                          fluidRow(
+                            column(1),
+                            column(3,
+                                   checkboxInput("under64", "Age 55 to 64 ", FALSE)
+                                   ),
+                            column(3,
+                                   checkboxInput("under74", "Age 65 to 74 ", FALSE)
+                            ),
+                            column(3,
+                                   checkboxInput("over75", "Age over 75 ", FALSE)
+                                   ),
+                            column(2)
+                            )
+                   ),
+                   column(6,
+                          fluidRow(
+                            column(1),
+                            column(11,
+                                   h4("Race of Interest"))
+                          ),
+                          fluidRow(
+                            column(1),
+                            column(2,
+                                   checkboxInput("white", "White", TRUE)
+                            ),
+                            column(2,
+                                   checkboxInput("black", "Black", FALSE)
+                            ),
+                            column(5,
+                                   checkboxInput("native", "American Indian and Alaska Native", FALSE)
+                                   ),
+                            column(2)
+                          ),
+                          fluidRow(
+                            column(1),
+                            column(2,
+                                   checkboxInput("asian", "Asian", FALSE)
+                            ),
+                            column(5,
+                                   checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE)
+                            ),
+                            column(2,
+                                   checkboxInput("others", "Others", FALSE)
+                            ),
+                            column(2)
+                          )
+                   )
+                   ),
+                 fluidRow(
+                   column(6,
+                          plotlyOutput("plot_age")
+                   ),
+                   column(6,
+                          plotlyOutput("plot_rac"))
+                 ),
                  br(),
                  fluidRow(
-                   column(5,
+                   column(6,
+                          plotlyOutput("plot_gen")
+                          ),
+                   column(6,
                           plotlyOutput("plot_his")
-                   ),
-                   column(7,
-                          fluidRow(
-                            column(3,
-                                   h4("Race of Interest"),
-                                   checkboxInput("white", "White", TRUE),
-                                   checkboxInput("black", "Black", FALSE),
-                                   checkboxInput("native", "American Indian and Alaska Native", FALSE),
-                                   checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE),
-                                   checkboxInput("asian", "Asian", FALSE),
-                                   checkboxInput("others", "Others", FALSE)
-                                   # radioButtons("race", "Select Race:",
-                                   #              c("White" = "white",
-                                   #                "Black" = "black",
-                                   #                "American Indian and Alaska Native" = "native",
-                                   #                "Hawaiian and Other Pacific Islander" = "hawaiian",
-                                   #                "Asian" = "asian",
-                                   #                "Others" = "other"),
-                                   #              inline=F)
-                            ),
-                            column(9,
-                                   plotOutput("plot_rac")
-                            )))
-                   )),
+                          )
+                   )
+                 ),
         tabPanel("Social",
                  br(),
                  fluidRow(
@@ -225,13 +255,13 @@ server <- function(input, output){
       labs(title = "Gender Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0, color = "white")) +
-      theme(axis.title = element_text(size=14, color = "white")) + 
-      theme(axis.text=element_text(size=10, color = "white")) + 
-      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(size=14)) + 
+      theme(axis.text=element_text(size=10)) + 
+      theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
       theme(legend.title=element_blank())
-    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")    
+    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")   
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" )
   })
@@ -253,7 +283,7 @@ server <- function(input, output){
     muni_df
   })
   
-  output$plot_age <- renderPlot({
+  output$plot_age <- renderPlotly({
     dat <- age_df()
     
     age_var <- unique(dat$variable)
@@ -289,13 +319,13 @@ server <- function(input, output){
       labs(title = "Age Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0, color = "white")) +
-      theme(axis.title = element_text(size=18, color = "white")) + 
-      theme(axis.text=element_text(size=14, color = "white")) + 
-      theme(plot.background = element_rect(fill = "brown")) + 
-      theme(legend.text = element_text(size = 12)) +
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(size=14)) + 
+      theme(axis.text=element_text(size=10)) + 
+      theme(plot.background = element_rect(fill = "light grey")) + 
+      theme(legend.text = element_text(size = 10)) +
       theme(legend.title = element_blank())
-    print(p) 
+    ggplotly(p, tooltip = c("x", "y", "colour"))
   })
 
   rac_df <- reactive({
@@ -313,7 +343,7 @@ server <- function(input, output){
     muni_df
   })
   
-  output$plot_rac <- renderPlot({
+  output$plot_rac <- renderPlotly({
     dat <- rac_df()
     
     race_var <- unique(dat$variable)
@@ -324,9 +354,9 @@ server <- function(input, output){
       race <- append(race, race_var[2])
     if(input$native)
       race <- append(race, race_var[3])
-    if(input$hawaiian)
-      race <- append(race, race_var[4])
     if(input$asian)
+      race <- append(race, race_var[4])
+    if(input$hawaiian)
       race <- append(race, race_var[5])
     if(input$others)
       race <- append(race, race_var[6])
@@ -349,13 +379,13 @@ server <- function(input, output){
       labs(title = "Race Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0, color = "white")) +
-      theme(axis.title = element_text(size=18, color = "white")) + 
-      theme(axis.text=element_text(size=14, color = "white")) + 
-      theme(plot.background = element_rect(fill = "brown")) + 
-      theme(legend.text = element_text(size = 12)) +
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(size=14)) + 
+      theme(axis.text=element_text(size=10)) + 
+      theme(plot.background = element_rect(fill = "light grey")) + 
+      theme(legend.text = element_text(size = 10)) +
       theme(legend.title = element_blank())
-    print(p) 
+    ggplotly(p, tooltip = c("x", "y", "colour"))
   })
     
   his_df <- reactive({
@@ -383,10 +413,10 @@ server <- function(input, output){
       labs(title = "Ethnicity Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0, color = "white")) +
-      theme(axis.title = element_text(size=14, color = "white")) + 
-      theme(axis.text=element_text(size=10, color = "white")) + 
-      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(size=14)) + 
+      theme(axis.text=element_text(size=10)) + 
+      theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
       theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" , "\n", "Region: ", dat$Region, sep="")    
@@ -426,10 +456,10 @@ server <- function(input, output){
       labs(title = "Educational Attainment", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0, color = "white")) +
-      theme(axis.title = element_text(size=14, color = "white")) + 
-      theme(axis.text=element_text(size=10, color = "white")) + 
-      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(size=14)) + 
+      theme(axis.text=element_text(size=10)) + 
+      theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
       theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Group: ", input$education, "\n", "Region: ", dat$Region, sep="")    
@@ -483,10 +513,10 @@ server <- function(input, output){
       labs(title = paste("Marital Status (",status,")"), 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0, color = "white")) +
-      theme(axis.title = element_text(size=14, color = "white")) + 
-      theme(axis.text=element_text(size=10, color = "white")) + 
-      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(size=14)) + 
+      theme(axis.text=element_text(size=10)) + 
+      theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
       theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Group: ", input$status, "\n", "Region: ", dat$Region, sep="")    
@@ -508,6 +538,7 @@ server <- function(input, output){
     
     muni_df <- filter(sui_data, County %in% my_place) %>% select(County, Age.Adjusted.Rate, Year)
     muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df <- muni_df[muni_df$Year!="1999",]
     muni_df
   })
   
@@ -518,16 +549,15 @@ server <- function(input, output){
       geom_line() + 
       geom_point() + 
       labs(title = "Suicide Rate",
-           subtitle = "Age-adjusted Per 100,000 Population",
            x = "One Year Estimates",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0, color = "white")) +
-      theme(axis.title = element_text(size=14, color = "white")) + 
-      theme(axis.text=element_text(size=10, color = "white")) + 
-      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(size=14)) + 
+      theme(axis.text=element_text(size=10)) + 
+      theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
       theme(legend.title=element_blank())
-    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$Age.Adjusted.Rate, "%" , "\n", "Region: ", dat$County, sep="")    
+    mytext=paste("Year = ", dat$Year, "\n", "Value = ", dat$Age.Adjusted.Rate, "%" , "\n", "Region: ", dat$County, sep="")    
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" ) 
   })
@@ -554,10 +584,10 @@ server <- function(input, output){
       labs(title = "Civilian Veteran's Status", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0, color = "white")) +
-      theme(axis.title = element_text(size=14, color = "white")) + 
-      theme(axis.text=element_text(size=10, color = "white")) + 
-      theme(plot.background = element_rect(fill = "brown")) + 
+      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
+      theme(axis.title = element_text(size=14)) + 
+      theme(axis.text=element_text(size=10)) + 
+      theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
       theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")    
