@@ -112,7 +112,9 @@ body <- dashboardBody(
                       )
                 ),
                 fluidRow(
-                  plotOutput("plot_age")
+                  box(width = 11,
+                      plotOutput("plot_age")
+                      )
                 )
               ),
               box(width = 6,
@@ -130,7 +132,9 @@ body <- dashboardBody(
                   )
                 ),
                 fluidRow(
-                  plotOutput("plot_rac")
+                  box(width = 11,
+                      plotOutput("plot_rac")
+                  )
                 )
               )
             ),
