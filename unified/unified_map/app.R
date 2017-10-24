@@ -58,7 +58,7 @@ ui <- fluidPage(
   titlePanel("", windowTitle = "SEIGMA Unified Shiny App"),
   fluidRow(
     column(3,
-           h3("Please Select Municipalities"),
+           h4("Please Select Municipalities"),
            selectInput("muni", "",
                        choices = MA_municipals, 
                        selected = "Abington",
@@ -255,8 +255,8 @@ server <- function(input, output){
       labs(title = "Gender Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(size=14)) + 
+      theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+      theme(axis.title = element_text(size=12)) + 
       theme(axis.text=element_text(size=10)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
@@ -319,8 +319,8 @@ server <- function(input, output){
       labs(title = "Age Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(size=14)) + 
+      theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+      theme(axis.title = element_text(size=12)) + 
       theme(axis.text=element_text(size=10)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
@@ -379,8 +379,8 @@ server <- function(input, output){
       labs(title = "Race Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(size=14)) + 
+      theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+      theme(axis.title = element_text(size=12)) + 
       theme(axis.text=element_text(size=10)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
@@ -413,8 +413,8 @@ server <- function(input, output){
       labs(title = "Ethnicity Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(size=14)) + 
+      theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+      theme(axis.title = element_text(size=12)) + 
       theme(axis.text=element_text(size=10)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
@@ -456,8 +456,8 @@ server <- function(input, output){
       labs(title = "Educational Attainment", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(size=14)) + 
+      theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+      theme(axis.title = element_text(size=12)) + 
       theme(axis.text=element_text(size=10)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
@@ -513,8 +513,8 @@ server <- function(input, output){
       labs(title = paste("Marital Status (",status,")"), 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(size=14)) + 
+      theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+      theme(axis.title = element_text(size=12)) + 
       theme(axis.text=element_text(size=10)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
@@ -551,8 +551,8 @@ server <- function(input, output){
       labs(title = "Suicide Rate",
            x = "One Year Estimates",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(size=14)) + 
+      theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+      theme(axis.title = element_text(size=12)) + 
       theme(axis.text=element_text(size=10)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
@@ -584,8 +584,8 @@ server <- function(input, output){
       labs(title = "Civilian Veteran's Status", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=16, hjust=0)) +
-      theme(axis.title = element_text(size=14)) + 
+      theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+      theme(axis.title = element_text(size=12)) + 
       theme(axis.text=element_text(size=10)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +

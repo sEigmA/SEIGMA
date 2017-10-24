@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Date Modified: 10/23/2017  ##
+## Date Modified: 10/24/2017  ##
 ################################
 
 ### SETTINGS ###
@@ -30,8 +30,17 @@ vet_data$Year <- as.factor(as.numeric(substr(vet_data$Five_Year_Range, 1, 4))+2)
 mar_data <- read.csv(file="data/BA002_02_marriagedata.csv")
 mar_data$Year <- as.factor(as.numeric(substr(mar_data$Five_Year_Range, 1, 4))+2)
 
+# data for suicide plot
+sui_data <- read.csv(file="data/SASuicidedata_Updated2017.csv")[,-1]
+#If there is no age adjusted rate, get rid of the bounds and standard errors
+sui_data$Age.Adjusted.Rate.Lower.Bound[is.na(sui_data$Age.Adjusted.Rate)] <- NA
+sui_data$Age.Adjusted.Rate.Upper.Bound[is.na(sui_data$Age.Adjusted.Rate)] <- NA
+sui_data$Age.Adjusted.Rate.Standard.Error[is.na(sui_data$Age.Adjusted.Rate)] <- NA
+sui_data$County <- gsub("US", "United States", sui_data$County)
+
 ### REGIONS
 MA_municipals <- as.character(na.omit(unique(dem_data$Municipal)))
+muni_county <- data.frame(unique(na.omit(subset(dem_data, select = c("Municipal", "County")))))
 
 ##### UI #####
 header <- dashboardHeader(title = "SEIGMA Dashboard", disable = TRUE)
@@ -51,7 +60,7 @@ sidebar <- dashboardSidebar(
     ),
     br(),
     br(),
-    h4("Select Plots to Display"),
+    h4("Select Data to Visualize"),
     menuItem("Demographics", tabName = "demo", icon = icon("dashboard")
              ),
     menuItem("Social", tabName = "soci", icon = icon("th")
@@ -142,7 +151,7 @@ body <- dashboardBody(
               )
             ),
             fluidRow(
-              box(width = 12,
+              box(width = 6,
                   fluidRow(
                     box(width = 11,
                         selectInput("status", "Choose a Status of Interest:",
@@ -152,22 +161,22 @@ body <- dashboardBody(
                                       "Widowed" = "widowed",
                                       "Never" = "never"),
                                     selected = "married",
-                                    multiple = FALSE),
-                        h4(helpText(a("More information about Marital.",
-                                   href="https://seigma.shinyapps.io/marital/")))
+                                    multiple = FALSE)
                     )
                   ),
                   fluidRow(
-                    plotOutput("plot_mar")
-                    )
-                  )
+                    box(width = 11,
+                        plotOutput("plot_mar")
+                        )
+                    ),
+                  h4(helpText(a("More information about Marital.",
+                                href="https://seigma.shinyapps.io/marital/")))
               ),
-              fluidRow(
-                box(width = 6,
+              box(width = 6,
                     fluidRow(
                       box(width = 11,
                           selectInput(
-                            "education", "Choose a Level:",
+                            "education", "Choose a Level of Interest:",
                             c("High School" = "hs",
                               "Bachelor" = "bac",
                               "Graduate" = "grad"),
@@ -176,17 +185,29 @@ body <- dashboardBody(
                           )
                     ),
                     fluidRow(
-                      plotOutput("plot_edu")
+                      box(width = 11,
+                          plotOutput("plot_edu")
+                          )
                       ),
                     h4(helpText(a("More information about Education.", href="https://seigma.shinyapps.io/educational_attainment/")))
-                    ),
+                    )
+              ),
+            fluidRow(
                 box(width = 6,
-                    plotOutput("plot_vet"),
+                    plotOutput("plot_sui"),
                     fluidRow(
                       box(width = 11,
-                          h4(helpText(a("More information about Veteran.", href="https://seigma.shinyapps.io/va_status/")))
+                          h4(helpText(a("More information about Suicide.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
                       )
                     )
+              ),
+              box(width = 6,
+                  plotOutput("plot_vet"),
+                  fluidRow(
+                    box(width = 11,
+                        h4(helpText(a("More information about Veteran.", href="https://seigma.shinyapps.io/va_status/")))
+                    )
+                  )
               )
     )
   )
@@ -223,7 +244,7 @@ server <- function(input, output, session){
   output$plot_gen <- renderPlot({
     dat <- gen_df() 
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
+    p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) +
       geom_line() + 
       geom_point() + 
       facet_grid(. ~ variable) + 
@@ -233,7 +254,7 @@ server <- function(input, output, session){
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
-      theme(legend.text = element_text(size = 12))
+      theme(legend.text = element_text(size = 12)) 
     print(p) 
   })
   
@@ -527,6 +548,51 @@ server <- function(input, output, session){
       geom_point() + 
       labs(title = "Civilian Veteran's Status", 
            x = "Mid-Year of Five Year Range",
+           y = "% Population") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
+    print(p)  
+  })
+  
+  sui_df <- reactive({
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
+    if(!is.null(input$muni)){
+      county <- c()
+      for (m in 1:length(input$muni)){
+        county[m] <- as.character(muni_county$County[muni_county$Municipal==input$muni[m]])
+      }
+      county <- gsub(" County", "", county)
+      if(input$US_mean){
+        if(input$MA_mean){
+          my_place <-  c(county, "MA", "United States")
+        } else{
+          my_place <-  c(county, "United States")
+        }
+      } else{
+        if(input$MA_mean){
+          my_place <-  c(county, "MA")
+        } else{
+          my_place <-  c(county)
+        }
+      }
+    }
+    muni_df <- filter(sui_data, County %in% my_place) %>% select(County, Age.Adjusted.Rate, Year)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df <- muni_df[muni_df$Year!="1999",]
+    muni_df
+  })
+  
+  output$plot_sui <- renderPlot({
+    dat <- sui_df() 
+    theme_set(theme_classic())
+    p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = County, colour = County)) + 
+      geom_line() + 
+      geom_point() + 
+      labs(title = "Suicite Rate", 
+           x = "One Year Estimates",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
