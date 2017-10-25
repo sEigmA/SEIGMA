@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Date Modified: 10/24/2017  ##
+## Date Modified: 10/25/2017  ##
 ################################
 
 ### SETTINGS ###
@@ -91,11 +91,12 @@ body <- dashboardBody(
               box(width = 12,
                   a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/")
                   )
-              ),
+            ),
             fluidRow(
               box(width = 12,
-                  h4(helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)"))
-              ))),
+                  h4(helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)")))
+              )
+            ),
             fluidRow(
               box(width = 6,
                 fluidRow(
@@ -173,7 +174,7 @@ body <- dashboardBody(
                         plotOutput("plot_mar")
                         )
                     ),
-                  h4(helpText(a("More information about Marital.",
+                  h4(helpText(a("More information about Marital Status.",
                                 href="https://seigma.shinyapps.io/marital/")))
               ),
               box(width = 6,
@@ -193,7 +194,7 @@ body <- dashboardBody(
                           plotOutput("plot_edu")
                           )
                       ),
-                    h4(helpText(a("More information about Education.", href="https://seigma.shinyapps.io/educational_attainment/")))
+                    h4(helpText(a("More information about  Educational Attainment.", href="https://seigma.shinyapps.io/educational_attainment/")))
                     )
               ),
             fluidRow(
@@ -201,7 +202,7 @@ body <- dashboardBody(
                     plotOutput("plot_sui"),
                     fluidRow(
                       box(width = 11,
-                          h4(helpText(a("More information about Suicide.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
+                          h4(helpText(a("More information about Suicide Rate.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
                       )
                     )
               ),
@@ -209,7 +210,7 @@ body <- dashboardBody(
                   plotOutput("plot_vet"),
                   fluidRow(
                     box(width = 11,
-                        h4(helpText(a("More information about Veteran.", href="https://seigma.shinyapps.io/va_status/")))
+                        h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/")))
                     )
                   )
               )
@@ -595,7 +596,7 @@ server <- function(input, output, session){
     p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = County, colour = County)) + 
       geom_line() + 
       geom_point() + 
-      labs(title = "Suicite Rate", 
+      labs(title = "Suicide Rate ", 
            x = "One Year Estimates",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +

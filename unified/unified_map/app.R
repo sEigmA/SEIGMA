@@ -2,7 +2,7 @@
 ## Unified Municipal App   ##
 ## Author: Zhenning Kang   ##
 ## Date Created: 10/19/17  ##
-## Last Modified: 10/24/17 ##
+## Last Modified: 10/25/17 ##
 #############################
 
 ### SETTINGS ###
@@ -84,86 +84,40 @@ ui <- fluidPage(
         tabPanel("Demographics",
                  # app link
                  fluidRow(
-                   column(2),
-                   column(10,
-                          h4(helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)")))
+                   column(4),
+                   column(4,
+                          h3(helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)")))
                           )
                    ),
                  fluidRow(
                    column(6,
                           fluidRow(
-                            column(1),
-                            column(11,
-                                   h4("Age of Interest"))
-                          ),
-                          fluidRow(
-                            column(1),
-                            column(3,
-                                   checkboxInput("under20", "Age Under 20 ", TRUE)
-                                   ),
-                            column(3,
-                                   checkboxInput("under34", "Age 20 to 34 ", FALSE)
-                                   ),
-                            column(3,
-                                   checkboxInput("under54", "Age 35 to 54 ", FALSE)
-                                   ),
-                            column(2)
+                            column(8,
+                                   plotlyOutput("plot_age")
                             ),
-                          fluidRow(
-                            column(1),
-                            column(3,
-                                   checkboxInput("under64", "Age 55 to 64 ", FALSE)
-                                   ),
-                            column(3,
-                                   checkboxInput("under74", "Age 65 to 74 ", FALSE)
-                            ),
-                            column(3,
+                            column(4,
+                                   h4("Age of Interest"),
+                                   checkboxInput("under20", "Age Under 20 ", TRUE),                             checkboxInput("under34", "Age 20 to 34 ", FALSE),
+                                   checkboxInput("under54", "Age 35 to 54 ", FALSE),
+                                   checkboxInput("under64", "Age 55 to 64 ", FALSE),
+                                   checkboxInput("under74", "Age 65 to 74 ", FALSE),
                                    checkboxInput("over75", "Age over 75 ", FALSE)
-                                   ),
-                            column(2)
-                            )
-                   ),
+                          ))),
                    column(6,
                           fluidRow(
-                            column(1),
-                            column(11,
-                                   h4("Race of Interest"))
-                          ),
-                          fluidRow(
-                            column(1),
-                            column(2,
-                                   checkboxInput("white", "White", TRUE)
+                            column(8,
+                                   plotlyOutput("plot_rac")
                             ),
-                            column(2,
-                                   checkboxInput("black", "Black", FALSE)
-                            ),
-                            column(5,
-                                   checkboxInput("native", "American Indian and Alaska Native", FALSE)
-                                   ),
-                            column(2)
-                          ),
-                          fluidRow(
-                            column(1),
-                            column(2,
-                                   checkboxInput("asian", "Asian", FALSE)
-                            ),
-                            column(5,
-                                   checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE)
-                            ),
-                            column(2,
+                            column(4,
+                                   h4("Race of Interest"),
+                                   checkboxInput("white", "White", TRUE),
+                                   checkboxInput("black", "Black", FALSE),
+                                   checkboxInput("native", "American Indian and Alaska Native", FALSE),
+                                   checkboxInput("asian", "Asian", FALSE),
+                                   checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE),
                                    checkboxInput("others", "Others", FALSE)
-                            ),
-                            column(2)
-                          )
-                   )
-                   ),
-                 fluidRow(
-                   column(6,
-                          plotlyOutput("plot_age")
-                   ),
-                   column(6,
-                          plotlyOutput("plot_rac"))
-                 ),
+                            )
+                          ))),
                  br(),
                  fluidRow(
                    column(6,
@@ -190,7 +144,7 @@ ui <- fluidPage(
                                                 inline=T)
                                    )),
                           # app link
-                          h4(helpText(a("More information about Education.", href="https://seigma.shinyapps.io/educational_attainment/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'edu_app', 1)")))
+                          h4(helpText(a("More information about  Educational Attainment.", href="https://seigma.shinyapps.io/educational_attainment/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'edu_app', 1)")))
                           ),
                    column(6,
                           fluidRow(
@@ -207,7 +161,7 @@ ui <- fluidPage(
                                                 inline=T)
                                    )),
                           # app link
-                          h4(helpText(a("More information about Marital.",
+                          h4(helpText(a("More information about Marital Status.",
                                      href="https://seigma.shinyapps.io/marital/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'mar_app', 1)")))
                    )),
                  br(),
@@ -215,12 +169,12 @@ ui <- fluidPage(
                    column(6,
                           plotlyOutput("plot_sui"),
                           # app link
-                          h4(helpText(a("More information about Suicide.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
+                          h4(helpText(a("More information about Suicide Rate.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
                    ),
                    column(6,
                           plotlyOutput("plot_vet"),
                           # app link
-                          h4(helpText(a("More information about Veteran.", href="https://seigma.shinyapps.io/va_status/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'vet_app', 1)")))
+                          h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'vet_app', 1)")))
                    ))
                  )
       )
@@ -260,10 +214,10 @@ server <- function(input, output){
       theme(axis.text=element_text(size=10)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
-      theme(legend.title=element_blank())
+      theme(legend.title=element_blank()) 
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")   
     pp=plotly_build(p)   
-    style(pp, text=mytext, hoverinfo = "text" )
+    style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F)
   })
   
   age_df <- reactive({
@@ -322,10 +276,15 @@ server <- function(input, output){
       theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
       theme(axis.title = element_text(size=12)) + 
       theme(axis.text=element_text(size=10)) + 
-      theme(plot.background = element_rect(fill = "light grey")) + 
+      theme(plot.background = element_rect(fill = "light grey")) +
       theme(legend.text = element_text(size = 10)) +
-      theme(legend.title = element_blank())
-    ggplotly(p, tooltip = c("x", "y", "colour"))
+      theme(legend.title = element_blank()) + 
+      theme(legend.background = element_rect(fill=alpha('white', 0)))
+    #ggplotly(p, tooltip = c("x", "y", "colour")) %>% config(displayModeBar = F)
+    pp=plotly_build(p)   
+    style( pp ) %>% 
+      layout( legend = list(x = 0.01, y = 0.01) ) %>% 
+      config(displayModeBar = F)
   })
 
   rac_df <- reactive({
@@ -385,7 +344,7 @@ server <- function(input, output){
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
       theme(legend.title = element_blank())
-    ggplotly(p, tooltip = c("x", "y", "colour"))
+    ggplotly(p, tooltip = c("x", "y", "colour")) %>% config(displayModeBar = F)
   })
     
   his_df <- reactive({
@@ -421,7 +380,7 @@ server <- function(input, output){
       theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" , "\n", "Region: ", dat$Region, sep="")    
     pp=plotly_build(p)   
-    style(pp, text=mytext, hoverinfo = "text" )
+    style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F)
   })
   
   edu_df <- reactive({
@@ -464,7 +423,7 @@ server <- function(input, output){
       theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Group: ", input$education, "\n", "Region: ", dat$Region, sep="")    
     pp=plotly_build(p)   
-    style(pp, text=mytext, hoverinfo = "text" )
+    style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F)
     })
   
   mar_df <- reactive({
@@ -521,7 +480,8 @@ server <- function(input, output){
       theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Group: ", input$status, "\n", "Region: ", dat$Region, sep="")    
     pp=plotly_build(p)   
-    style(pp, text=mytext, hoverinfo = "text" )  })
+    style(pp, text=mytext, hoverinfo = "text" )  %>% config(displayModeBar = F)
+    })
   
   sui_df <- reactive({
     
@@ -559,7 +519,7 @@ server <- function(input, output){
       theme(legend.title=element_blank())
     mytext=paste("Year = ", dat$Year, "\n", "Value = ", dat$Age.Adjusted.Rate, "%" , "\n", "Region: ", dat$County, sep="")    
     pp=plotly_build(p)   
-    style(pp, text=mytext, hoverinfo = "text" ) 
+    style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F)
   })
   
   vet_df <- reactive({
@@ -592,7 +552,7 @@ server <- function(input, output){
       theme(legend.title=element_blank())
     mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")    
     pp=plotly_build(p)   
-    style(pp, text=mytext, hoverinfo = "text" )
+    style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F)
     })
   
 }
