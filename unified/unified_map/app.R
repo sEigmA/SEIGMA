@@ -107,7 +107,8 @@ ui <- fluidPage(
                                    checkboxInput("under74", "Age 65 to 74 ", FALSE),
                                    checkboxInput("over75", "Age over 75 ", FALSE),
                                    br(),
-                                   actionButton("dem_info", "Information")
+                                   actionButton("dem_info", "Information"),
+                                   downloadButton(outputId = "age_down", label = "Download the plot")
                                    )),
                  br(),
                  fluidRow(
@@ -123,47 +124,20 @@ ui <- fluidPage(
                           checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE),
                           checkboxInput("others", "Others", FALSE),
                           br(),
-                          actionButton("rac_info", "Information")
+                          actionButton("rac_info", "Information"),
+                          downloadButton(outputId = "rac_down", label = "Download the plot")
                    )),
-                 #   
-                 # fluidRow(
-                 #   column(6,
-                 #          fluidRow(
-                 #            column(8,
-                 #                   plotlyOutput("plot_age")
-                 #            ),
-                 #            column(4,
-                 #                   h4("Age of Interest"),
-                 #                   checkboxInput("under20", "Age Under 20 ", TRUE),                             checkboxInput("under34", "Age 20 to 34 ", FALSE),
-                 #                   checkboxInput("under54", "Age 35 to 54 ", FALSE),
-                 #                   checkboxInput("under64", "Age 55 to 64 ", FALSE),
-                 #                   checkboxInput("under74", "Age 65 to 74 ", FALSE),
-                 #                   checkboxInput("over75", "Age over 75 ", FALSE)
-                 #          ))),
-                 #   column(6,
-                 #          fluidRow(
-                 #            column(8,
-                 #                   plotlyOutput("plot_rac")
-                 #            ),
-                 #            column(4,
-                                   # h4("Race of Interest"),
-                                   # checkboxInput("white", "White", TRUE),
-                                   # checkboxInput("black", "Black", FALSE),
-                                   # checkboxInput("native", "American Indian and Alaska Native", FALSE),
-                                   # checkboxInput("asian", "Asian", FALSE),
-                                   # checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE),
-                                   # checkboxInput("others", "Others", FALSE)
-                 #            )
-                 #          ))),
                  br(),
                  fluidRow(
                    column(6,
                           plotlyOutput("plot_gen"),
-                          actionButton("gen_info", "Information")
+                          actionButton("gen_info", "Information"),
+                          downloadButton(outputId = "gen_down", label = "Download the plot")
                           ),
                    column(6,
                           plotlyOutput("plot_his"),
-                          actionButton("his_info", "Information")
+                          actionButton("his_info", "Information"),
+                          downloadButton(outputId = "his_down", label = "Download the plot")
                           )
                    )
                  ),
@@ -182,7 +156,8 @@ ui <- fluidPage(
                                                   "Graduate" = "grad"),
                                                 inline=T),
                                    br(),
-                                   actionButton("edu_info", "Information")
+                                   actionButton("edu_info", "Information"),
+                                   downloadButton(outputId = "edu_down", label = "Download the plot")
                                    )),
                           # app link
                           h4(helpText(a("More information about  Educational Attainment.", href="https://seigma.shinyapps.io/educational_attainment/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'edu_app', 1)")))
@@ -201,7 +176,8 @@ ui <- fluidPage(
                                                   "Never" = "never"),
                                                 inline=T),
                                    br(),
-                                   actionButton("mar_info", "Information")
+                                   actionButton("mar_info", "Information"),
+                                   downloadButton(outputId = "mar_down", label = "Download the plot")
                                    )),
                           # app link
                           h4(helpText(a("More information about Marital Status.",
@@ -213,6 +189,7 @@ ui <- fluidPage(
                           plotlyOutput("plot_sui"),
                           # app link                                   
                           actionButton("sui_info", "Information"),
+                          downloadButton(outputId = "sui_down", label = "Download the plot"),
                           br(),
                           h4(helpText(a("More information about Suicide Rate.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
                    ),
@@ -220,6 +197,7 @@ ui <- fluidPage(
                           plotlyOutput("plot_vet"),
                           # app link
                           actionButton("vet_info", "Information"),
+                          downloadButton(outputId = "vet_down", label = "Download the plot"),
                           br(),
                           h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'vet_app', 1)")))
                    ))
@@ -365,22 +343,53 @@ server <- function(input, output){
       theme(legend.title = element_blank()) +
       theme(legend.position = "top")
     ggplotly(p, tooltip = c("x", "y", "colour")) %>% config(displayModeBar = F)
-      
-    # theme_set(theme_classic())
-    # p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-    #   geom_line() + 
-    #   geom_point() + 
-    #   labs(title = "Age Distribution", 
-    #        x = "Mid-Year of Five Year Range",
-    #        y = "% Population") + 
-    #   theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
-    #   theme(axis.title = element_text(size=12)) + 
-    #   theme(axis.text=element_text(size=10)) + 
-    #   theme(plot.background = element_rect(fill = "light grey")) + 
-    #   theme(legend.text = element_text(size = 10)) +
-    #   theme(legend.title = element_blank())
-    # ggplotly(p, tooltip = c("x", "y", "colour")) %>% config(displayModeBar = F)
+    
   })
+  
+  output$age_down <- downloadHandler(
+    filename = function() {
+      "plot_age.png"
+    },
+    content = function(file) {
+      png(file)
+      
+      dat <- age_df()
+      
+      age_var <- unique(dat$variable)
+      age <- c()
+      if(input$under20)
+        age <- append(age, age_var[1])
+      if(input$under34)
+        age <- append(age, age_var[2])
+      if(input$under54)
+        age <- append(age, age_var[3])
+      if(input$under64)
+        age <- append(age, age_var[4])
+      if(input$under74)
+        age <- append(age, age_var[5])
+      if(input$over75)
+        age <- append(age, age_var[6])
+      
+      dat <- filter(dat, variable %in% age)
+      
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+        geom_line() + 
+        geom_point() + 
+        labs(title = "Age Distribution", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+        theme(axis.title = element_text(size=12)) + 
+        theme(axis.text=element_text(size=10)) + 
+        theme(plot.background = element_rect(fill = "light grey")) +
+        theme(legend.text = element_text(size = 10)) +
+        theme(legend.title = element_blank()) +
+        theme(legend.position = "top")
+      print(p)
+      dev.off()
+    }
+  )
 
   rac_df <- reactive({
     
@@ -473,6 +482,52 @@ server <- function(input, output){
     ggplotly(p, tooltip = c("x", "y", "colour")) %>% config(displayModeBar = F)
   })
   
+  output$rac_down <- downloadHandler(
+    filename = function() {
+      "plot_race.png"
+    },
+    content = function(file) {
+      png(file)
+      
+      dat <- rac_df()
+      
+      race_var <- unique(dat$variable)
+      race <- c()
+      if(input$white)
+        race <- append(race, race_var[1])
+      if(input$black)
+        race <- append(race, race_var[2])
+      if(input$native)
+        race <- append(race, race_var[3])
+      if(input$asian)
+        race <- append(race, race_var[4])
+      if(input$hawaiian)
+        race <- append(race, race_var[5])
+      if(input$others)
+        race <- append(race, race_var[6])
+      
+      dat <- filter(dat, variable %in% race)
+      
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+        geom_line() + 
+        geom_point() + 
+        labs(title = "Race Distribution", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+        theme(axis.title = element_text(size=12)) + 
+        theme(axis.text=element_text(size=10)) + 
+        theme(plot.background = element_rect(fill = "light grey")) + 
+        theme(legend.text = element_text(size = 10)) +
+        theme(legend.title = element_blank()) + 
+        theme(axis.title.x = element_text(margin = margin(r=10)))
+      print(p)
+      dev.off()
+    }
+  )
+  
+  
   gen_df <- reactive({
     
     county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
@@ -537,6 +592,33 @@ server <- function(input, output){
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F) 
   })
+  
+  output$gen_down <- downloadHandler(
+    filename = function() {
+      "plot_gender.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- gen_df() 
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
+        geom_line() + 
+        geom_point() + 
+        facet_grid(. ~ variable) + 
+        labs(title = "Gender Distribution", 
+             x = "\n Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+        theme(axis.title = element_text(size=12)) + 
+        theme(axis.text=element_text(size=10)) + 
+        theme(plot.background = element_rect(fill = "light grey")) + 
+        theme(legend.text = element_text(size = 10)) +
+        theme(legend.title=element_blank())
+      print(p)
+      dev.off()
+    }
+  )
+  
     
   his_df <- reactive({
     
@@ -603,6 +685,32 @@ server <- function(input, output){
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F)
   })
+  
+  output$his_down <- downloadHandler(
+    filename = function() {
+      "plot_ethnicity.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- his_df() 
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
+        geom_line() + 
+        geom_point() + 
+        facet_grid(. ~ variable) + 
+        labs(title = "Ethnicity Distribution", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+        theme(axis.title = element_text(size=12)) + 
+        theme(axis.text=element_text(size=10)) + 
+        theme(plot.background = element_rect(fill = "light grey")) + 
+        theme(legend.text = element_text(size = 10)) +
+        theme(legend.title=element_blank())
+      print(p)
+      dev.off()
+    }
+  )
   
   edu_df <- reactive({
     
@@ -676,6 +784,39 @@ server <- function(input, output){
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F)
     })
+  
+  output$edu_down <- downloadHandler(
+    filename = function() {
+      "plot_education.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- edu_df() 
+      
+      education <- switch(input$education,
+                          hc = "High School %",
+                          bac = "Bachelors %",
+                          grad = "Grad %",
+                          "High School %")
+      dat <- filter(dat, variable == education)
+      
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
+        geom_line() + 
+        geom_point() + 
+        labs(title = "Educational Attainment", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+        theme(axis.title = element_text(size=12)) + 
+        theme(axis.text=element_text(size=10)) + 
+        theme(plot.background = element_rect(fill = "light grey")) + 
+        theme(legend.text = element_text(size = 10)) +
+        theme(legend.title=element_blank())
+      print(p)
+      dev.off()
+    }
+  )
   
   mar_df <- reactive({
     
@@ -764,6 +905,43 @@ server <- function(input, output){
     style(pp, text=mytext, hoverinfo = "text" )  %>% config(displayModeBar = F)
     })
   
+  output$mar_down <- downloadHandler(
+    filename = function() {
+      "plot_marriage.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- mar_df()
+      
+      status <- switch(input$status,
+                       married = "Now Married %",
+                       separated = "Separated %",
+                       divorced = "Divorced %",
+                       widowed = "Widowed %",
+                       never = "Never Married %",
+                       "Now Married %")
+      
+      dat <- melt(dat)
+      dat <- subset(dat, variable == status)
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
+        geom_line() + 
+        geom_point() + 
+        facet_grid(. ~ Gender) + 
+        labs(title = paste("Marital Status (",status,")"), 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+        theme(axis.title = element_text(size=12)) + 
+        theme(axis.text=element_text(size=10)) + 
+        theme(plot.background = element_rect(fill = "light grey")) + 
+        theme(legend.text = element_text(size = 10)) +
+        theme(legend.title=element_blank())
+      print(p)
+      dev.off()
+    }
+  )
+  
   sui_df <- reactive({
     
     if(is.null(input$muni))
@@ -802,6 +980,31 @@ server <- function(input, output){
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F)
   })
+  
+  output$sui_down <- downloadHandler(
+    filename = function() {
+      "plot_suicide.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- sui_df() 
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = County, colour=County)) + 
+        geom_line() + 
+        geom_point() + 
+        labs(title = "Suicide Rate",
+             x = "One Year Estimates",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+        theme(axis.title = element_text(size=12)) + 
+        theme(axis.text=element_text(size=10)) + 
+        theme(plot.background = element_rect(fill = "light grey")) + 
+        theme(legend.text = element_text(size = 10)) +
+        theme(legend.title=element_blank())
+      print(p)
+      dev.off()
+    }
+  )
   
   vet_df <- reactive({
     
@@ -865,6 +1068,31 @@ server <- function(input, output){
     pp=plotly_build(p)   
     style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F)
     })
+  
+  output$vet_down <- downloadHandler(
+    filename = function() {
+      "plot_veteran.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- vet_df() 
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
+        geom_line() + 
+        geom_point() + 
+        labs(title = "Civilian Veteran's Status", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+        theme(axis.title = element_text(size=12)) + 
+        theme(axis.text=element_text(size=10)) + 
+        theme(plot.background = element_rect(fill = "light grey")) + 
+        theme(legend.text = element_text(size = 10)) +
+        theme(legend.title=element_blank())
+      print(p)
+      dev.off()
+    }
+  )
   
 }
 
