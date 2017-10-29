@@ -2,7 +2,7 @@
 ## Unified Municipal App   ##
 ## Author: Zhenning Kang   ##
 ## Date Created: 10/19/17  ##
-## Last Modified: 10/25/17 ##
+## Last Modified: 10/29/17 ##
 #############################
 
 ### SETTINGS ###
@@ -62,7 +62,13 @@ ui <- fluidPage(
            selectInput("muni", "",
                        choices = MA_municipals, 
                        selected = "Abington",
-                       multiple = T)
+                       multiple = T),
+           checkboxInput("CT_mean", "Compare to County Average", FALSE),
+           fluidRow(column(6,
+                           checkboxInput("MA_mean", "MA Average", TRUE)
+           ),
+           column(6,           checkboxInput("US_mean", "US Average", TRUE)
+))
            ),
     column(6,
            ## put logo on the top
@@ -70,7 +76,7 @@ ui <- fluidPage(
     column(3,
            helpText(a("Comments or Feedback", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
            ## data source citation
-           helpText(a("Data Source", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S2502&prodType=table",
+           helpText(a("Data Source", href="https://factfinder.census.gov/faces/nav/jsf/pages/index.xhtml",
                       target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dataAge', 1)")),
            ## GitHub link
            helpText(a("Codes on GitHub",
@@ -90,34 +96,61 @@ ui <- fluidPage(
                           )
                    ),
                  fluidRow(
-                   column(6,
-                          fluidRow(
-                            column(8,
+                            column(9,
                                    plotlyOutput("plot_age")
                             ),
-                            column(4,
+                            column(3,
                                    h4("Age of Interest"),
                                    checkboxInput("under20", "Age Under 20 ", TRUE),                             checkboxInput("under34", "Age 20 to 34 ", FALSE),
                                    checkboxInput("under54", "Age 35 to 54 ", FALSE),
                                    checkboxInput("under64", "Age 55 to 64 ", FALSE),
                                    checkboxInput("under74", "Age 65 to 74 ", FALSE),
                                    checkboxInput("over75", "Age over 75 ", FALSE)
-                          ))),
-                   column(6,
-                          fluidRow(
-                            column(8,
-                                   plotlyOutput("plot_rac")
-                            ),
-                            column(4,
-                                   h4("Race of Interest"),
-                                   checkboxInput("white", "White", TRUE),
-                                   checkboxInput("black", "Black", FALSE),
-                                   checkboxInput("native", "American Indian and Alaska Native", FALSE),
-                                   checkboxInput("asian", "Asian", FALSE),
-                                   checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE),
-                                   checkboxInput("others", "Others", FALSE)
-                            )
-                          ))),
+                            )),
+                 br(),
+                 fluidRow(
+                   column(9,
+                          plotlyOutput("plot_rac")
+                   ),
+                   column(3,
+                          h4("Race of Interest"),
+                          checkboxInput("white", "White", TRUE),
+                          checkboxInput("black", "Black", FALSE),
+                          checkboxInput("native", "American Indian and Alaska Native", FALSE),
+                          checkboxInput("asian", "Asian", FALSE),
+                          checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE),
+                          checkboxInput("others", "Others", FALSE)
+                   )),
+                 #   
+                 # fluidRow(
+                 #   column(6,
+                 #          fluidRow(
+                 #            column(8,
+                 #                   plotlyOutput("plot_age")
+                 #            ),
+                 #            column(4,
+                 #                   h4("Age of Interest"),
+                 #                   checkboxInput("under20", "Age Under 20 ", TRUE),                             checkboxInput("under34", "Age 20 to 34 ", FALSE),
+                 #                   checkboxInput("under54", "Age 35 to 54 ", FALSE),
+                 #                   checkboxInput("under64", "Age 55 to 64 ", FALSE),
+                 #                   checkboxInput("under74", "Age 65 to 74 ", FALSE),
+                 #                   checkboxInput("over75", "Age over 75 ", FALSE)
+                 #          ))),
+                 #   column(6,
+                 #          fluidRow(
+                 #            column(8,
+                 #                   plotlyOutput("plot_rac")
+                 #            ),
+                 #            column(4,
+                                   # h4("Race of Interest"),
+                                   # checkboxInput("white", "White", TRUE),
+                                   # checkboxInput("black", "Black", FALSE),
+                                   # checkboxInput("native", "American Indian and Alaska Native", FALSE),
+                                   # checkboxInput("asian", "Asian", FALSE),
+                                   # checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE),
+                                   # checkboxInput("others", "Others", FALSE)
+                 #            )
+                 #          ))),
                  br(),
                  fluidRow(
                    column(6,
@@ -187,11 +220,41 @@ server <- function(input, output){
 
   gen_df <- reactive({
     
-    if(!is.null(input$muni))
-      my_place <- c(input$muni, "MA", "United States") 
-    if(is.null(input$muni))
-      my_place <- c("MA", "United States") 
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
     
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
+    if(!is.null(input$muni)){
+      if(input$US_mean){
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
+        }
+      } else{
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
+        }
+      }
+    }
+
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Male_Pct, Female_Pct, Year)
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
     muni_df <- melt(muni_df)
@@ -207,25 +270,55 @@ server <- function(input, output){
       geom_point() + 
       facet_grid(. ~ variable) + 
       labs(title = "Gender Distribution", 
-           x = "Mid-Year of Five Year Range",
+           x = "\n Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
       theme(axis.title = element_text(size=12)) + 
       theme(axis.text=element_text(size=10)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
-      theme(legend.title=element_blank()) 
-    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")   
+      theme(legend.title=element_blank())
+    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")  
     pp=plotly_build(p)   
-    style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F)
+    style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F) 
   })
   
   age_df <- reactive({
     
-    if(!is.null(input$muni))
-      my_place <- c(input$muni, "MA", "United States") 
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
+    if(!is.null(input$muni)){
+      if(input$US_mean){
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
+        }
+      } else{
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
+        }
+      }
+    }
     
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Age_under_20_Pct_plot, Age_20_34_Pct_plot, Age_35_54_Pct_plot, Age_55_64_Pct_plot, Age_65_74_Pct_plot, Age_over_75_Pct_plot, Year)
     muni_df <- melt(muni_df)
@@ -278,21 +371,62 @@ server <- function(input, output){
       theme(axis.text=element_text(size=10)) + 
       theme(plot.background = element_rect(fill = "light grey")) +
       theme(legend.text = element_text(size = 10)) +
-      theme(legend.title = element_blank()) + 
-      theme(legend.background = element_rect(fill=alpha('white', 0)))
-    #ggplotly(p, tooltip = c("x", "y", "colour")) %>% config(displayModeBar = F)
-    pp=plotly_build(p)   
-    style( pp ) %>% 
-      layout( legend = list(x = 0.01, y = 0.01) ) %>% 
-      config(displayModeBar = F)
+      theme(legend.title = element_blank()) +
+      theme(legend.position = "top")
+    ggplotly(p, tooltip = c("x", "y", "colour")) %>% config(displayModeBar = F)
+      
+    # theme_set(theme_classic())
+    # p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+    #   geom_line() + 
+    #   geom_point() + 
+    #   labs(title = "Age Distribution", 
+    #        x = "Mid-Year of Five Year Range",
+    #        y = "% Population") + 
+    #   theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+    #   theme(axis.title = element_text(size=12)) + 
+    #   theme(axis.text=element_text(size=10)) + 
+    #   theme(plot.background = element_rect(fill = "light grey")) + 
+    #   theme(legend.text = element_text(size = 10)) +
+    #   theme(legend.title = element_blank())
+    # ggplotly(p, tooltip = c("x", "y", "colour")) %>% config(displayModeBar = F)
   })
 
   rac_df <- reactive({
     
-    if(!is.null(input$muni))
-      my_place <- c(input$muni, "MA", "United States") 
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
+    if(!is.null(input$muni)){
+      if(input$US_mean){
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
+        }
+      } else{
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
+        }
+      }
+    }
     
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, White_Pct, Black_Pct, American_Indian_and_Alaska_Native_Pct, Asian_Pct, Hawaiian_and_Other_Pacific_Islander_Pct, Others_Pct, Year)
     muni_df <- melt(muni_df)
@@ -343,16 +477,47 @@ server <- function(input, output){
       theme(axis.text=element_text(size=10)) + 
       theme(plot.background = element_rect(fill = "light grey")) + 
       theme(legend.text = element_text(size = 10)) +
-      theme(legend.title = element_blank())
+      theme(legend.title = element_blank()) + 
+      theme(axis.title.x = element_text(margin = margin(r=10)))
     ggplotly(p, tooltip = c("x", "y", "colour")) %>% config(displayModeBar = F)
   })
     
   his_df <- reactive({
     
-    if(!is.null(input$muni))
-      my_place <- c(input$muni, "MA", "United States") 
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
+    if(!is.null(input$muni)){
+      if(input$US_mean){
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
+        }
+      } else{
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
+        }
+      }
+    }
     
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Hispanic_Pct, Not_Hispanic_Pct, Year)
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
@@ -385,10 +550,40 @@ server <- function(input, output){
   
   edu_df <- reactive({
     
-    if(!is.null(input$muni))
-      my_place <- c(input$muni, "MA", "United States") 
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
+    if(!is.null(input$muni)){
+      if(input$US_mean){
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
+        }
+      } else{
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
+        }
+      }
+    }
     
     muni_df <- filter(edu_data, Region %in% my_place) %>% select(Region, HS_Pct, Bachelors_Pct, Grad_Pct, Year)
     muni_df <- melt(muni_df)
@@ -428,10 +623,40 @@ server <- function(input, output){
   
   mar_df <- reactive({
     
-    if(!is.null(input$muni))
-      my_place <- c(input$muni, "MA", "United States") 
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
+    if(!is.null(input$muni)){
+      if(input$US_mean){
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
+        }
+      } else{
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
+        }
+      }
+    }
     
     muni_df <- filter(mar_data, Region %in% my_place) %>% select(Region, Never_Married_pct, Now_Married_pct, Separated_pct, Widowed_pct, Divorced_pct, Gender, Year)
     names(muni_df) <- gsub("_", " ", names(muni_df))
@@ -524,10 +749,40 @@ server <- function(input, output){
   
   vet_df <- reactive({
     
-    if(!is.null(input$muni))
-      my_place <- c(input$muni, "MA", "United States") 
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
+    if(!is.null(input$muni)){
+      if(input$US_mean){
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
+        }
+      } else{
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
+        }
+      }
+    }
     
     muni_df <- filter(vet_data, Region %in% my_place) %>% select(Region, Percent_Vet, Year)
     muni_df <- melt(muni_df)
