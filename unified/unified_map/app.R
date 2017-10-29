@@ -105,8 +105,10 @@ ui <- fluidPage(
                                    checkboxInput("under54", "Age 35 to 54 ", FALSE),
                                    checkboxInput("under64", "Age 55 to 64 ", FALSE),
                                    checkboxInput("under74", "Age 65 to 74 ", FALSE),
-                                   checkboxInput("over75", "Age over 75 ", FALSE)
-                            )),
+                                   checkboxInput("over75", "Age over 75 ", FALSE),
+                                   br(),
+                                   actionButton("dem_info", "Information")
+                                   )),
                  br(),
                  fluidRow(
                    column(9,
@@ -119,7 +121,9 @@ ui <- fluidPage(
                           checkboxInput("native", "American Indian and Alaska Native", FALSE),
                           checkboxInput("asian", "Asian", FALSE),
                           checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE),
-                          checkboxInput("others", "Others", FALSE)
+                          checkboxInput("others", "Others", FALSE),
+                          br(),
+                          actionButton("rac_info", "Information")
                    )),
                  #   
                  # fluidRow(
@@ -154,10 +158,12 @@ ui <- fluidPage(
                  br(),
                  fluidRow(
                    column(6,
-                          plotlyOutput("plot_gen")
+                          plotlyOutput("plot_gen"),
+                          actionButton("gen_info", "Information")
                           ),
                    column(6,
-                          plotlyOutput("plot_his")
+                          plotlyOutput("plot_his"),
+                          actionButton("his_info", "Information")
                           )
                    )
                  ),
@@ -174,7 +180,9 @@ ui <- fluidPage(
                                                 c("High School" = "hs",
                                                   "Bachelor" = "bac",
                                                   "Graduate" = "grad"),
-                                                inline=T)
+                                                inline=T),
+                                   br(),
+                                   actionButton("edu_info", "Information")
                                    )),
                           # app link
                           h4(helpText(a("More information about  Educational Attainment.", href="https://seigma.shinyapps.io/educational_attainment/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'edu_app', 1)")))
@@ -191,7 +199,9 @@ ui <- fluidPage(
                                                   "Divorced" = "divorced",
                                                   "Widowed" = "widowed",
                                                   "Never" = "never"),
-                                                inline=T)
+                                                inline=T),
+                                   br(),
+                                   actionButton("mar_info", "Information")
                                    )),
                           # app link
                           h4(helpText(a("More information about Marital Status.",
@@ -201,12 +211,16 @@ ui <- fluidPage(
                  fluidRow(
                    column(6,
                           plotlyOutput("plot_sui"),
-                          # app link
+                          # app link                                   
+                          actionButton("sui_info", "Information"),
+                          br(),
                           h4(helpText(a("More information about Suicide Rate.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
                    ),
                    column(6,
                           plotlyOutput("plot_vet"),
                           # app link
+                          actionButton("vet_info", "Information"),
+                          br(),
                           h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'vet_app', 1)")))
                    ))
                  )
@@ -217,70 +231,47 @@ ui <- fluidPage(
 
 ##### SERVER #####
 server <- function(input, output){
-
-  gen_df <- reactive({
-    
-    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
-    
-    if(is.null(input$muni))
-      my_place <- c("MA", "United States")
-    if(!is.null(input$muni)){
-      if(input$US_mean){
-        if(input$MA_mean){
-          if(input$CT_mean){
-            my_place <- c("United States", "MA", input$muni, county) 
-          } else{
-            my_place <- c("United States", "MA", input$muni)
-          }
-        } else{
-          if(input$CT_mean){
-            my_place <- c("United States", input$muni, county)
-          }
-          my_place <- c("United States", input$muni)
-        }
-      } else{
-        if(input$MA_mean){
-          if(input$CT_mean){
-            my_place <- c("MA", input$muni, county)
-          } else{
-            my_place <- c("MA", input$muni)
-          }
-        } else{
-          if(input$CT_mean){
-            my_place <- c(input$muni, county)
-          } else{
-            my_place <- c(input$muni)
-          }
-        }
-      }
-    }
-
-    muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Male_Pct, Female_Pct, Year)
-    colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
-    muni_df <- melt(muni_df)
-    muni_df$Year <- gsub("20", "'", muni_df$Year)
-    muni_df
+  
+  observeEvent(input$dem_info, {
+    showNotification("AGE",
+                     "The number of people within each age group, for a region over a specified five year range. Age groups were specified as <5, 5-9, 10-14, 15-19, 20-24, 25-34, 35-44, 45-54, 55-59, 60-64, 65-74, 75-84, and 85+. Within the Plot, the number of categories for age has been collapsed to the following six groups; <20, 20-34, 35-54, 55-64, 65-74,75+. This is done in order to simplify the presentation of data."
+    )
   })
   
-  output$plot_gen <- renderPlotly({
-    dat <- gen_df() 
-    theme_set(theme_classic())
-    p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
-      geom_line() + 
-      geom_point() + 
-      facet_grid(. ~ variable) + 
-      labs(title = "Gender Distribution", 
-           x = "\n Mid-Year of Five Year Range",
-           y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
-      theme(axis.title = element_text(size=12)) + 
-      theme(axis.text=element_text(size=10)) + 
-      theme(plot.background = element_rect(fill = "light grey")) + 
-      theme(legend.text = element_text(size = 10)) +
-      theme(legend.title=element_blank())
-    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")  
-    pp=plotly_build(p)   
-    style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F) 
+  observeEvent(input$rac_info, {
+    showNotification("RACE",
+                     "The number of people within each race, for a region over a specified five year range. Races were listed as White, Black or African American, Asian, American Indian or Alaska Native, Native Hawaiian or Other Pacific Islander, or some other race. "
+    )
+  })
+  
+  observeEvent(input$gen_info, {
+    showNotification("GENDER",
+                     "The number of people within each gender, for a region over a specified five year range.")
+  })
+  
+  observeEvent(input$his_info, {
+    showNotification("ETHNICITY",
+                     "The number of people within each ethnicity, for a region over a specified five year range. Ethnicities were listed as hispanic or not hispanic.")
+  })
+  
+  observeEvent(input$edu_info, {
+    showNotification("Educational Attainment Rates ",
+                     "The number of people with each level of educational attainment for a specific region over a specific five-year period of time. All inidviduals represented in this measure were at least 25 years of age. Respondents were classified according to highest level of school completed. When a municipaility is missing data, this indicates that data cannot be displayed because the number of people is too small.")
+  })
+  
+  observeEvent(input$mar_info, {
+    showNotification("Marital Status Rates",
+                     "The number of people within each marital status category for a region over a specified five year range. When the number of people in a particular marital status category is too small, data cannot be displayed.")
+  })
+  
+  observeEvent(input$sui_info, {
+    showNotification("Age-adjusted Suicide Rate",
+                     "Age-adjusted suicide rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by: Age-adjusted Suicide Rate = Count / Population * 100,000")
+  })
+  
+  observeEvent(input$vet_info, {
+    showNotification("Veteran Status",
+                     "People with active duty military service and or service in the military Reserves or National Guard. All individuals were at least 18 years of age.")
   })
   
   age_df <- reactive({
@@ -480,6 +471,71 @@ server <- function(input, output){
       theme(legend.title = element_blank()) + 
       theme(axis.title.x = element_text(margin = margin(r=10)))
     ggplotly(p, tooltip = c("x", "y", "colour")) %>% config(displayModeBar = F)
+  })
+  
+  gen_df <- reactive({
+    
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
+    if(!is.null(input$muni)){
+      if(input$US_mean){
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
+        }
+      } else{
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
+        }
+      }
+    }
+    
+    muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Male_Pct, Female_Pct, Year)
+    colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
+    muni_df <- melt(muni_df)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df
+  })
+  
+  output$plot_gen <- renderPlotly({
+    dat <- gen_df() 
+    theme_set(theme_classic())
+    p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
+      geom_line() + 
+      geom_point() + 
+      facet_grid(. ~ variable) + 
+      labs(title = "Gender Distribution", 
+           x = "\n Mid-Year of Five Year Range",
+           y = "% Population") + 
+      theme(plot.title = element_text(face="bold", size=14, hjust=0)) +
+      theme(axis.title = element_text(size=12)) + 
+      theme(axis.text=element_text(size=10)) + 
+      theme(plot.background = element_rect(fill = "light grey")) + 
+      theme(legend.text = element_text(size = 10)) +
+      theme(legend.title=element_blank())
+    mytext=paste("Mid Year = ", dat$Year, "\n", "Value = ", dat$value, "%" ,"\n", "Region: ", dat$Region, sep="")  
+    pp=plotly_build(p)   
+    style(pp, text=mytext, hoverinfo = "text" ) %>% config(displayModeBar = F) 
   })
     
   his_df <- reactive({
