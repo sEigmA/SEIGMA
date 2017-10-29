@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Date Modified: 10/25/2017  ##
+## Date Modified: 10/26/2017  ##
 ################################
 
 ### SETTINGS ###
@@ -56,7 +56,8 @@ sidebar <- dashboardSidebar(
     ),
     menuItem("Comparison", icon = icon("check-square-o"),
              checkboxInput("MA_mean", "Compare to MA Average", TRUE),
-             checkboxInput("US_mean", "Compare to US Average", TRUE)
+             checkboxInput("US_mean", "Compare to US Average", TRUE),
+             checkboxInput("CT_mean", "Compare to County Average", FALSE)
     ),
     br(),
     br(),
@@ -74,7 +75,7 @@ sidebar <- dashboardSidebar(
     menuItem("Comments or Feedback", icon = icon("envelope-o"),
              href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation"),
     menuItem("Data Source", icon = icon("file-code-o"), 
-             href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S2502&prodType=table"),
+             href="https://factfinder.census.gov/faces/nav/jsf/pages/index.xhtml"),
     menuItem("Codes on Github", icon = icon("code-fork"), 
              href = "https://github.com/sEigmA/SEIGMA/tree/gh-pages/dashboard"),
     menuItem(
@@ -116,7 +117,9 @@ body <- dashboardBody(
                   box(width = 11,
                       plotOutput("plot_age")
                       )
-                )
+                ),
+                actionButton("age_info", "Information"),
+                downloadButton(outputId = "age_down", label = "Download the plot")
               ),
               box(width = 6,
                 fluidRow(
@@ -136,15 +139,21 @@ body <- dashboardBody(
                   box(width = 11,
                       plotOutput("plot_rac")
                   )
-                )
+                ),
+                actionButton("rac_info", "Information"),
+                downloadButton(outputId = "rac_down", label = "Download the plot")
               )
             ),
             fluidRow(
               box(width = 6,
-                plotOutput("plot_gen")
+                plotOutput("plot_gen"),
+                actionButton("gen_info", "Information"),
+                downloadButton(outputId = "gen_down", label = "Download the plot")
               ),
               box(width = 6,
-                plotOutput("plot_his")
+                plotOutput("plot_his"),
+                actionButton("his_info", "Information"),
+                downloadButton(outputId = "his_down", label = "Download the plot")
               )
             )
     ),
@@ -174,6 +183,8 @@ body <- dashboardBody(
                         plotOutput("plot_mar")
                         )
                     ),
+                  actionButton("mar_info", "Information"),
+                  downloadButton(outputId = "mar_down", label = "Download the plot"),
                   h4(helpText(a("More information about Marital Status.",
                                 href="https://seigma.shinyapps.io/marital/")))
               ),
@@ -194,90 +205,107 @@ body <- dashboardBody(
                           plotOutput("plot_edu")
                           )
                       ),
+                  actionButton("edu_info", "Information"),
+                  downloadButton(outputId = "edu_down", label = "Download the plot"),
                     h4(helpText(a("More information about  Educational Attainment.", href="https://seigma.shinyapps.io/educational_attainment/")))
                     )
               ),
             fluidRow(
                 box(width = 6,
                     plotOutput("plot_sui"),
-                    fluidRow(
-                      box(width = 11,
-                          h4(helpText(a("More information about Suicide Rate.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
-                      )
-                    )
-              ),
-              box(width = 6,
+                    actionButton("sui_info", "Information"),
+                    downloadButton(outputId = "sui_down", label = "Download the plot"),
+                    h4(helpText(a("More information about Suicide Rate.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
+                      ),
+                box(width = 6,
                   plotOutput("plot_vet"),
-                  fluidRow(
-                    box(width = 11,
-                        h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/")))
+                  actionButton("vet_info", "Information"),
+                  downloadButton(outputId = "vet_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/")))
                     )
-                  )
               )
     )
   )
 )
-)
+
 
 ##### SERVER #####
 server <- function(input, output, session){
-  gen_df <- reactive({
-    if(is.null(input$muni))
-      my_place <- c("MA", "United States")
-    if(!is.null(input$muni)){
-      if(input$US_mean){
-        if(input$MA_mean){
-          my_place <- c("United States", "MA", input$muni) ## US and MA  
-        } else{
-          my_place <- c("United States", input$muni) ## US only
-        }
-      } else{
-        if(input$MA_mean){
-          my_place <- c("MA", input$muni) ## US only ## MA only
-        } else{
-          my_place <- c(input$muni)
-        }
-      }
-    }
-    muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Male_Pct, Female_Pct, Year)
-    colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
-    muni_df <- melt(muni_df)
-    muni_df$Year <- gsub("20", "'", muni_df$Year)
-    muni_df
+  
+  observeEvent(input$age_info, {
+    showNotification("AGE",
+                     "The number of people within each age group, for a region over a specified five year range. Age groups were specified as <5, 5-9, 10-14, 15-19, 20-24, 25-34, 35-44, 45-54, 55-59, 60-64, 65-74, 75-84, and 85+. Within the Plot, the number of categories for age has been collapsed to the following six groups; <20, 20-34, 35-54, 55-64, 65-74,75+. This is done in order to simplify the presentation of data."
+    )
   })
   
-  output$plot_gen <- renderPlot({
-    dat <- gen_df() 
-    theme_set(theme_classic())
-    p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) +
-      geom_line() + 
-      geom_point() + 
-      facet_grid(. ~ variable) + 
-      labs(title = "Gender Distribution", 
-           x = "Mid-Year of Five Year Range",
-           y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) +
-      theme(axis.text=element_text(size=14)) + 
-      theme(legend.text = element_text(size = 12)) 
-    print(p) 
+  observeEvent(input$rac_info, {
+    showNotification("RACE",
+                     "The number of people within each race, for a region over a specified five year range. Races were listed as White, Black or African American, Asian, American Indian or Alaska Native, Native Hawaiian or Other Pacific Islander, or some other race. "
+    )
+  })
+  
+  observeEvent(input$gen_info, {
+    showNotification("GENDER",
+                     "The number of people within each gender, for a region over a specified five year range.")
+  })
+  
+  observeEvent(input$his_info, {
+    showNotification("ETHNICITY",
+                     "The number of people within each ethnicity, for a region over a specified five year range. Ethnicities were listed as hispanic or not hispanic.")
+  })
+  
+  observeEvent(input$edu_info, {
+    showNotification("Educational Attainment Rates ",
+                     "The number of people with each level of educational attainment for a specific region over a specific five-year period of time. All inidviduals represented in this measure were at least 25 years of age. Respondents were classified according to highest level of school completed. When a municipaility is missing data, this indicates that data cannot be displayed because the number of people is too small.")
+  })
+  
+  observeEvent(input$mar_info, {
+    showNotification("Marital Status Rates",
+                     "The number of people within each marital status category for a region over a specified five year range. When the number of people in a particular marital status category is too small, data cannot be displayed.")
+  })
+  
+  observeEvent(input$sui_info, {
+    showNotification("Age-adjusted Suicide Rate",
+                     "Age-adjusted suicide rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by: Age-adjusted Suicide Rate = Count / Population * 100,000")
+  })
+  
+  observeEvent(input$vet_info, {
+    showNotification("Veteran Status",
+                     "People with active duty military service and or service in the military Reserves or National Guard. All individuals were at least 18 years of age.")
   })
   
   age_df <- reactive({
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
-          my_place <- c("United States", "MA", input$muni) ## US and MA  
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
         } else{
-          my_place <- c("United States", input$muni) ## US only
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
         }
       } else{
         if(input$MA_mean){
-          my_place <- c("MA", input$muni) ## US only ## MA only
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
         } else{
-          my_place <- c(input$muni)
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
         }
       }
     }
@@ -319,21 +347,73 @@ server <- function(input, output, session){
     print(p) 
   })
   
+  output$age_down <- downloadHandler(
+    filename = function() {
+      "plot_age.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- age_df()
+      
+      age <- switch(input$age,
+                    under20 = "Age under 20 ",
+                    under34 = "Age 20 to 34 ",
+                    under54 = "Age 35 to 54 ",
+                    under64 = "Age 55 to 64 ",
+                    under74 = "Age 65 to 74 ",
+                    over75 = "Age over 75 ",
+                    "Age under 20 ")
+      
+      dat <- filter(dat, variable == age)
+      
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
+        geom_line() + 
+        geom_point() + 
+        labs(title = paste(age,"Distribution"), 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p) 
+      dev.off()
+    }
+  )
+  
   rac_df <- reactive({
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
-          my_place <- c("United States", "MA", input$muni) ## US and MA  
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
         } else{
-          my_place <- c("United States", input$muni) ## US only
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
         }
       } else{
         if(input$MA_mean){
-          my_place <- c("MA", input$muni) ## US only ## MA only
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
         } else{
-          my_place <- c(input$muni)
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
         }
       }
     }
@@ -373,21 +453,157 @@ server <- function(input, output, session){
     print(p) 
   })
   
-  his_df <- reactive({
+  output$rac_down <- downloadHandler(
+    filename = function() {
+      "plot_race.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- rac_df()
+      
+      race <- switch(input$race,
+                     white = "White",
+                     black = "Black" ,
+                     native = "American Indian and Alaska Native",
+                     hawaiian = "Hawaiian and Other Pacific Islander",
+                     asian = "Asian",
+                     others = "Others",
+                     "White")
+      
+      dat <- filter(dat, variable == race)
+      
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
+        geom_line() + 
+        geom_point() + 
+        labs(title = paste(race,"Distribution"), 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p) 
+      dev.off()
+    }
+  )
+  
+  gen_df <- reactive({
+    
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
-          my_place <- c("United States", "MA", input$muni) ## US and MA  
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
         } else{
-          my_place <- c("United States", input$muni) ## US only
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
         }
       } else{
         if(input$MA_mean){
-          my_place <- c("MA", input$muni) ## US only ## MA only
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
         } else{
-          my_place <- c(input$muni)
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
+        }
+      }
+    }
+    muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Male_Pct, Female_Pct, Year)
+    colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
+    muni_df <- melt(muni_df)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df
+  })
+  
+  output$plot_gen <- renderPlot({
+    dat <- gen_df() 
+    theme_set(theme_classic())
+    p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) +
+      geom_line() + 
+      geom_point() + 
+      facet_grid(. ~ variable) + 
+      labs(title = "Gender Distribution", 
+           x = "Mid-Year of Five Year Range",
+           y = "% Population") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12)) 
+    print(p) 
+  })
+  
+  output$gen_down <- downloadHandler(
+    filename = function() {
+      "plot_gender.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- gen_df() 
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) +
+        geom_line() + 
+        geom_point() + 
+        facet_grid(. ~ variable) + 
+        labs(title = "Gender Distribution", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12)) 
+      print(p) 
+      dev.off()
+    }
+  )
+  
+  his_df <- reactive({
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
+    if(!is.null(input$muni)){
+      if(input$US_mean){
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
+        }
+      } else{
+        if(input$MA_mean){
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
         }
       }
     }
@@ -416,21 +632,62 @@ server <- function(input, output, session){
     print(p) 
   })
   
+  output$his_down <- downloadHandler(
+    filename = function() {
+      "plot_ethnicity.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- his_df() 
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
+        geom_line() + 
+        geom_point() + 
+        facet_grid(. ~ variable) + 
+        labs(title = "Ethnicity Distribution", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p) 
+      dev.off()
+    }
+  )
+  
   edu_df <- reactive({
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
-          my_place <- c("United States", "MA", input$muni) ## US and MA  
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
         } else{
-          my_place <- c("United States", input$muni) ## US only
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
         }
       } else{
         if(input$MA_mean){
-          my_place <- c("MA", input$muni) ## US only ## MA only
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
         } else{
-          my_place <- c(input$muni)
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
         }
       }
     }
@@ -466,21 +723,69 @@ server <- function(input, output, session){
     print(p) 
   })
   
+  output$edu_down <- downloadHandler(
+    filename = function() {
+      "plot_education.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- edu_df() 
+      
+      education <- switch(input$education,
+                          hc = "High School %",
+                          bac = "Bachelors %",
+                          grad = "Grad %",
+                          "High School %")
+      dat <- filter(dat, variable == education)
+      
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
+        geom_line() + 
+        geom_point() + 
+        labs(title = "Educational Attainment", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p) 
+      dev.off()
+    }
+  )
+  
   mar_df <- reactive({
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
-          my_place <- c("United States", "MA", input$muni) ## US and MA  
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
         } else{
-          my_place <- c("United States", input$muni) ## US only
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
         }
       } else{
         if(input$MA_mean){
-          my_place <- c("MA", input$muni) ## US only ## MA only
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
         } else{
-          my_place <- c(input$muni)
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
         }
       }
     }
@@ -521,21 +826,74 @@ server <- function(input, output, session){
     print(p) 
   })
   
+  output$mar_down <- downloadHandler(
+    filename = function() {
+      "plot_marriage.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- mar_df()
+      
+      status <- switch(input$status,
+                       married = "Now Married %",
+                       separated = "Separated %",
+                       divorced = "Divorced %",
+                       widowed = "Widowed %",
+                       never = "Never Married %",
+                       "Now Married %")
+      
+      dat <- melt(dat)
+      dat <- subset(dat, variable == status)
+      
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
+        geom_line() + 
+        geom_point() + 
+        facet_grid(. ~ Gender) + 
+        labs(title = paste("Marital Status (",status,")"), 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p) 
+      dev.off()
+    }
+  )
+  
   vet_df <- reactive({
+    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
+    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
-          my_place <- c("United States", "MA", input$muni) ## US and MA  
+          if(input$CT_mean){
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
         } else{
-          my_place <- c("United States", input$muni) ## US only
+          if(input$CT_mean){
+            my_place <- c("United States", input$muni, county)
+          }
+          my_place <- c("United States", input$muni)
         }
       } else{
         if(input$MA_mean){
-          my_place <- c("MA", input$muni) ## US only ## MA only
+          if(input$CT_mean){
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
         } else{
-          my_place <- c(input$muni)
+          if(input$CT_mean){
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
         }
       }
     }
@@ -561,6 +919,28 @@ server <- function(input, output, session){
     print(p)  
   })
   
+  output$vet_down <- downloadHandler(
+    filename = function() {
+      "plot_veteran.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- vet_df() 
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
+        geom_line() + 
+        geom_point() + 
+        labs(title = "Civilian Veteran's Status", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p)  
+      dev.off()
+    }
+  )
   sui_df <- reactive({
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
@@ -605,6 +985,29 @@ server <- function(input, output, session){
       theme(legend.text = element_text(size = 12))
     print(p)  
   })
+  
+  output$sui_down <- downloadHandler(
+    filename = function() {
+      "plot_suicide.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- sui_df() 
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = County, colour = County)) + 
+        geom_line() + 
+        geom_point() + 
+        labs(title = "Suicide Rate ", 
+             x = "One Year Estimates",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p) 
+      dev.off()
+    }
+  )
   
 }
 

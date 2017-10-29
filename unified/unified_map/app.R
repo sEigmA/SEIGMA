@@ -107,7 +107,7 @@ ui <- fluidPage(
                                    checkboxInput("under74", "Age 65 to 74 ", FALSE),
                                    checkboxInput("over75", "Age over 75 ", FALSE),
                                    br(),
-                                   actionButton("dem_info", "Information"),
+                                   actionButton("age_info", "Information"),
                                    downloadButton(outputId = "age_down", label = "Download the plot")
                                    )),
                  br(),
@@ -210,7 +210,7 @@ ui <- fluidPage(
 ##### SERVER #####
 server <- function(input, output){
   
-  observeEvent(input$dem_info, {
+  observeEvent(input$age_info, {
     showNotification("AGE",
                      "The number of people within each age group, for a region over a specified five year range. Age groups were specified as <5, 5-9, 10-14, 15-19, 20-24, 25-34, 35-44, 45-54, 55-59, 60-64, 65-74, 75-84, and 85+. Within the Plot, the number of categories for age has been collapsed to the following six groups; <20, 20-34, 35-54, 55-64, 65-74,75+. This is done in order to simplify the presentation of data."
     )
@@ -527,7 +527,6 @@ server <- function(input, output){
     }
   )
   
-  
   gen_df <- reactive({
     
     county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
@@ -619,7 +618,6 @@ server <- function(input, output){
     }
   )
   
-    
   his_df <- reactive({
     
     county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
