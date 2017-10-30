@@ -2,7 +2,7 @@
 ## Unified Municipal App   ##
 ## Author: Zhenning Kang   ##
 ## Date Created: 10/19/17  ##
-## Last Modified: 10/29/17 ##
+## Last Modified: 10/30/17 ##
 #############################
 
 ### SETTINGS ###
@@ -253,34 +253,47 @@ server <- function(input, output){
   })
   
   age_df <- reactive({
-    
-    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
-    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", "MA", input$muni, county) 
           } else{
             my_place <- c("United States", "MA", input$muni)
           }
-        } else{
+        } else 
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", input$muni, county)
+          } else{
+            my_place <- c("United States", input$muni)
           }
-          my_place <- c("United States", input$muni)
-        }
       } else{
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("MA", input$muni, county)
           } else{
             my_place <- c("MA", input$muni)
           }
         } else{
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c(input$muni, county)
           } else{
             my_place <- c(input$muni)
@@ -288,7 +301,6 @@ server <- function(input, output){
         }
       }
     }
-    
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Age_under_20_Pct_plot, Age_20_34_Pct_plot, Age_35_54_Pct_plot, Age_55_64_Pct_plot, Age_65_74_Pct_plot, Age_over_75_Pct_plot, Year)
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("0_3", "0 to 3", muni_df$variable)
@@ -317,15 +329,6 @@ server <- function(input, output){
     if(input$over75)
       age <- append(age, age_var[6])
     
-    # age <- switch(input$age,
-    #               under20 = "Age under 20 ",
-    #               under34 = "Age 20 to 34 ",
-    #               under54 = "Age 35 to 54 ",
-    #               under64 = "Age 55 to 64 ",
-    #               under74 = "Age 65 to 74 ",
-    #               over75 = "Age over 75 ",
-    #               "Age under 20 ")
-
     dat <- filter(dat, variable %in% age)
     
     theme_set(theme_classic())
@@ -392,34 +395,47 @@ server <- function(input, output){
   )
 
   rac_df <- reactive({
-    
-    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
-    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", "MA", input$muni, county) 
           } else{
             my_place <- c("United States", "MA", input$muni)
           }
-        } else{
+        } else 
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", input$muni, county)
+          } else{
+            my_place <- c("United States", input$muni)
           }
-          my_place <- c("United States", input$muni)
-        }
       } else{
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("MA", input$muni, county)
           } else{
             my_place <- c("MA", input$muni)
           }
         } else{
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c(input$muni, county)
           } else{
             my_place <- c(input$muni)
@@ -427,7 +443,6 @@ server <- function(input, output){
         }
       }
     }
-    
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, White_Pct, Black_Pct, American_Indian_and_Alaska_Native_Pct, Asian_Pct, Hawaiian_and_Other_Pacific_Islander_Pct, Others_Pct, Year)
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("_Pct", "", muni_df$variable)
@@ -453,16 +468,7 @@ server <- function(input, output){
       race <- append(race, race_var[5])
     if(input$others)
       race <- append(race, race_var[6])
-    
-    # race <- switch(input$race,
-    #               white = "White",
-    #               black = "Black" ,
-    #               native = "American Indian and Alaska Native",
-    #               hawaiian = "Hawaiian and Other Pacific Islander",
-    #               asian = "Asian",
-    #               others = "Others",
-    #               "White")
-    
+
     dat <- filter(dat, variable %in% race)
     
     theme_set(theme_classic())
@@ -528,34 +534,47 @@ server <- function(input, output){
   )
   
   gen_df <- reactive({
-    
-    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
-    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", "MA", input$muni, county) 
           } else{
             my_place <- c("United States", "MA", input$muni)
           }
-        } else{
+        } else 
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", input$muni, county)
+          } else{
+            my_place <- c("United States", input$muni)
           }
-          my_place <- c("United States", input$muni)
-        }
       } else{
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("MA", input$muni, county)
           } else{
             my_place <- c("MA", input$muni)
           }
         } else{
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c(input$muni, county)
           } else{
             my_place <- c(input$muni)
@@ -563,7 +582,6 @@ server <- function(input, output){
         }
       }
     }
-    
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Male_Pct, Female_Pct, Year)
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
     muni_df <- melt(muni_df)
@@ -619,34 +637,47 @@ server <- function(input, output){
   )
   
   his_df <- reactive({
-    
-    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
-    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", "MA", input$muni, county) 
           } else{
             my_place <- c("United States", "MA", input$muni)
           }
-        } else{
+        } else 
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", input$muni, county)
+          } else{
+            my_place <- c("United States", input$muni)
           }
-          my_place <- c("United States", input$muni)
-        }
       } else{
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("MA", input$muni, county)
           } else{
             my_place <- c("MA", input$muni)
           }
         } else{
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c(input$muni, county)
           } else{
             my_place <- c(input$muni)
@@ -654,7 +685,6 @@ server <- function(input, output){
         }
       }
     }
-    
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Hispanic_Pct, Not_Hispanic_Pct, Year)
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
     colnames(muni_df) <- gsub("_", " ", colnames(muni_df))
@@ -711,34 +741,47 @@ server <- function(input, output){
   )
   
   edu_df <- reactive({
-    
-    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
-    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", "MA", input$muni, county) 
           } else{
             my_place <- c("United States", "MA", input$muni)
           }
-        } else{
+        } else 
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", input$muni, county)
+          } else{
+            my_place <- c("United States", input$muni)
           }
-          my_place <- c("United States", input$muni)
-        }
       } else{
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("MA", input$muni, county)
           } else{
             my_place <- c("MA", input$muni)
           }
         } else{
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c(input$muni, county)
           } else{
             my_place <- c(input$muni)
@@ -746,7 +789,6 @@ server <- function(input, output){
         }
       }
     }
-    
     muni_df <- filter(edu_data, Region %in% my_place) %>% select(Region, HS_Pct, Bachelors_Pct, Grad_Pct, Year)
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("_Pct", " %", muni_df$variable)
@@ -817,34 +859,47 @@ server <- function(input, output){
   )
   
   mar_df <- reactive({
-    
-    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
-    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", "MA", input$muni, county) 
           } else{
             my_place <- c("United States", "MA", input$muni)
           }
-        } else{
+        } else 
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", input$muni, county)
+          } else{
+            my_place <- c("United States", input$muni)
           }
-          my_place <- c("United States", input$muni)
-        }
       } else{
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("MA", input$muni, county)
           } else{
             my_place <- c("MA", input$muni)
           }
         } else{
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c(input$muni, county)
           } else{
             my_place <- c(input$muni)
@@ -852,7 +907,6 @@ server <- function(input, output){
         }
       }
     }
-    
     muni_df <- filter(mar_data, Region %in% my_place) %>% select(Region, Never_Married_pct, Now_Married_pct, Separated_pct, Widowed_pct, Divorced_pct, Gender, Year)
     names(muni_df) <- gsub("_", " ", names(muni_df))
     names(muni_df) <- gsub("pct", "%", names(muni_df))
@@ -874,16 +928,7 @@ server <- function(input, output){
     
     dat <- melt(dat)
     dat <- subset(dat, variable == status)
-
-    # theme_set(theme_classic())
-    # p<- ggplot(dat, aes(x=Year, y=value, fill=variable)) +
-    #   geom_bar(stat='density', position='dodge') +
-    #   facet_grid(. ~ Region) + 
-    #   labs(title = "Educational Attainment", 
-    #        x = "Mid-Year of Five Year Range",
-    #        y = "% Population")
-    # ggplotly(p)  
-
+    
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
       geom_line() + 
@@ -941,18 +986,28 @@ server <- function(input, output){
   )
   
   sui_df <- reactive({
-    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
-
-    if(!is.null(input$muni))
+    if(!is.null(input$muni)){
       county <- c()
       for (m in 1:length(input$muni)){
         county[m] <- as.character(muni_county$County[muni_county$Municipal==input$muni[m]])
       }
-    county <- gsub(" County", "", county)
-      my_place <- c(county, "MA", "United States")
-    
+      county <- gsub(" County", "", county)
+      if(input$US_mean){
+        if(input$MA_mean){
+          my_place <-  c(county, "MA", "United States")
+        } else{
+          my_place <-  c(county, "United States")
+        }
+      } else{
+        if(input$MA_mean){
+          my_place <-  c(county, "MA")
+        } else{
+          my_place <-  c(county)
+        }
+      }
+    }
     muni_df <- filter(sui_data, County %in% my_place) %>% select(County, Age.Adjusted.Rate, Year)
     muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df <- muni_df[muni_df$Year!="1999",]
@@ -1005,34 +1060,47 @@ server <- function(input, output){
   )
   
   vet_df <- reactive({
-    
-    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
-    
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
       if(input$US_mean){
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", "MA", input$muni, county) 
           } else{
             my_place <- c("United States", "MA", input$muni)
           }
-        } else{
+        } else 
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("United States", input$muni, county)
+          } else{
+            my_place <- c("United States", input$muni)
           }
-          my_place <- c("United States", input$muni)
-        }
       } else{
         if(input$MA_mean){
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c("MA", input$muni, county)
           } else{
             my_place <- c("MA", input$muni)
           }
         } else{
           if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
             my_place <- c(input$muni, county)
           } else{
             my_place <- c(input$muni)
@@ -1040,7 +1108,6 @@ server <- function(input, output){
         }
       }
     }
-    
     muni_df <- filter(vet_data, Region %in% my_place) %>% select(Region, Percent_Vet, Year)
     muni_df <- melt(muni_df)
     muni_df$Year <- gsub("20", "'", muni_df$Year)
