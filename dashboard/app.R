@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Date Modified: 10/30/2017  ##
+## Last Modified: 11/02/2017  ##
 ################################
 
 ### SETTINGS ###
@@ -54,20 +54,20 @@ sidebar <- dashboardSidebar(
                          selected = "Abington",
                          multiple = TRUE)
     ),
-    menuItem("Comparison", icon = icon("check-square-o"),
+    menuItem("County/MA/US Average", icon = icon("check-square-o"),
+             checkboxInput("CT_mean", "Compare to County Average", FALSE),
              checkboxInput("MA_mean", "Compare to MA Average", TRUE),
-             checkboxInput("US_mean", "Compare to US Average", TRUE),
-             checkboxInput("CT_mean", "Compare to County Average", FALSE)
-    ),
+             checkboxInput("US_mean", "Compare to US Average", TRUE)
+             ),
     br(),
     br(),
     h4("Select Data to Visualize"),
-    menuItem("Demographics", tabName = "demo", icon = icon("dashboard")
+    menuItem("Demographics", tabName = "demo", icon = icon("street-view")
              ),
-    menuItem("Social", tabName = "soci", icon = icon("th")
+    menuItem("Social", tabName = "soci", icon = icon("users")
              ),
-    br(),
-    br(),
+    menuItem("Economics", tabName = "econ", icon = icon("bank")
+    ),
     br(),
     br(),
     br(),
@@ -118,7 +118,7 @@ body <- dashboardBody(
                       plotOutput("plot_age")
                       )
                 ),
-                actionButton("age_info", "Information"),
+                actionButton("age_info", "What's in Age Group?"),
                 downloadButton(outputId = "age_down", label = "Download the plot")
               ),
               box(width = 6,
@@ -140,19 +140,19 @@ body <- dashboardBody(
                       plotOutput("plot_rac")
                   )
                 ),
-                actionButton("rac_info", "Information"),
+                actionButton("rac_info", "What's in Race?"),
                 downloadButton(outputId = "rac_down", label = "Download the plot")
               )
             ),
             fluidRow(
               box(width = 6,
                 plotOutput("plot_gen"),
-                actionButton("gen_info", "Information"),
+                actionButton("gen_info", "What is Gender?"),
                 downloadButton(outputId = "gen_down", label = "Download the plot")
               ),
               box(width = 6,
                 plotOutput("plot_his"),
-                actionButton("his_info", "Information"),
+                actionButton("his_info", "What is Ethnicity?"),
                 downloadButton(outputId = "his_down", label = "Download the plot")
               )
             )
@@ -183,7 +183,7 @@ body <- dashboardBody(
                         plotOutput("plot_mar")
                         )
                     ),
-                  actionButton("mar_info", "Information"),
+                  actionButton("mar_info", "What is marital status?"),
                   downloadButton(outputId = "mar_down", label = "Download the plot"),
                   h4(helpText(a("More information about Marital Status.",
                                 href="https://seigma.shinyapps.io/marital/")))
@@ -205,7 +205,7 @@ body <- dashboardBody(
                           plotOutput("plot_edu")
                           )
                       ),
-                  actionButton("edu_info", "Information"),
+                  actionButton("edu_info", "What is Educational Attainment Rates?"),
                   downloadButton(outputId = "edu_down", label = "Download the plot"),
                     h4(helpText(a("More information about  Educational Attainment.", href="https://seigma.shinyapps.io/educational_attainment/")))
                     )
@@ -213,18 +213,53 @@ body <- dashboardBody(
             fluidRow(
                 box(width = 6,
                     plotOutput("plot_sui"),
-                    actionButton("sui_info", "Information"),
+                    actionButton("sui_info", "What is Age-adjusted Suicide Rate?"),
                     downloadButton(outputId = "sui_down", label = "Download the plot"),
                     h4(helpText(a("More information about Suicide Rate.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
                       ),
                 box(width = 6,
                   plotOutput("plot_vet"),
-                  actionButton("vet_info", "Information"),
+                  actionButton("vet_info", "What is Veteran’s Status?"),
                   downloadButton(outputId = "vet_down", label = "Download the plot"),
                   h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/")))
                     )
               )
-    )
+    ),
+    tabItem(tabName = "econ",
+            fluidRow(
+              box(width = 12,
+                  a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/")
+              )
+            ),
+            fluidRow(
+              box(width = 6,
+                  plotOutput("plot_inc"),
+                  actionButton("inc_info", "What is Median Annual Household Income?"),
+                  downloadButton(outputId = "inc_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Household Income.", href="https://seigma.shinyapps.io/income/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'inc_app', 1)")))
+              ),
+              box(width = 6,
+                  plotOutput("plot_ren"),
+                  actionButton("ren_info", "What is Inflation-Adjusted Median Rent?"),
+                  downloadButton(outputId = "ren_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Rent.", href="https://seigma.shinyapps.io/rent/")))
+              )
+            ),
+            fluidRow(
+              box(width = 6,
+                  plotOutput("plot_pro"),
+                  actionButton("pro_info", "What is Total Assessed Property Values?"),
+                  downloadButton(outputId = "pro_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Property Value.", href="https://seigma.shinyapps.io/PropertyValue/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'inc_app', 1)")))
+              ),
+              box(width = 6,
+                  plotOutput("plot_pov"),
+                  actionButton("pov_info", "What is Poverty Status?"),
+                  downloadButton(outputId = "pov_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Poverty.", href="https://seigma.shinyapps.io/poverty/")))
+              )
+            )
+  )
   )
 )
 
@@ -274,6 +309,26 @@ server <- function(input, output, session){
                      "People with active duty military service and or service in the military Reserves or National Guard. All individuals were at least 18 years of age.")
   })
   
+  observeEvent(input$inc_info, {
+    showNotification("Median Annual Household Income", 
+                     "This includes the income of the household and all other individuals ages 15 and over. Median annual household income provides a clear trend to assess residents' household income overtime. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")
+  })
+
+  observeEvent(input$ren_info, {
+    showNotification("Inflation-Adjusted (2015 $) Median Contract Rent", 
+                     "Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2015 and adjusted for inlation to the 2015 dollar. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.")
+  })
+
+  observeEvent(input$pro_info, {
+    showNotification("Total Assessed Property Values",
+                     "Assessed values in Massachusetts are based on 'full and fair cash value'. Massachusetts General Laws defines 'full and fair cash value' as the price an owner willing, but not under compulsion, to sell, ought to receive from one willing but not under compulsion, to buy.")
+  })
+
+  observeEvent(input$pov_info, {
+    showNotification("Poverty Status", 
+                     "To determine a person's poverty status, one compares the person’s total family income in the last 12 months with the poverty threshold appropriate for that person's family size and composition. If the total income of that person's family is less than the threshold appropriate for that family, then the person is considered below the poverty level. Poverty is defined at the family level and not the household level, the poverty status of the household is determined by the poverty status of the householder.")
+  })
+
   age_df <- reactive({
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
