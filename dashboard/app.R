@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 11/02/2017  ##
+## Last Modified: 11/07/2017  ##
 ################################
 
 ### SETTINGS ###
@@ -21,15 +21,12 @@ dem_data$Year <- as.factor(as.numeric(substr(dem_data$Five_Year_Range, 1, 4))+2)
 # data for education plot
 edu_data <- read.csv(file="data/edudata.csv")[,-1]
 edu_data$Year <- as.factor(as.numeric(substr(edu_data$Five_Year_Range, 1, 4))+2)
-
 # data for vetaran plot
 vet_data <- read.csv(file="data/vetstatusdata.csv")[,-1]
 vet_data$Year <- as.factor(as.numeric(substr(vet_data$Five_Year_Range, 1, 4))+2)
-
 # data for married status plot
 mar_data <- read.csv(file="data/BA002_02_marriagedata.csv")
 mar_data$Year <- as.factor(as.numeric(substr(mar_data$Five_Year_Range, 1, 4))+2)
-
 # data for suicide plot
 sui_data <- read.csv(file="data/SASuicidedata_Updated2017.csv")[,-1]
 #If there is no age adjusted rate, get rid of the bounds and standard errors
@@ -37,6 +34,12 @@ sui_data$Age.Adjusted.Rate.Lower.Bound[is.na(sui_data$Age.Adjusted.Rate)] <- NA
 sui_data$Age.Adjusted.Rate.Upper.Bound[is.na(sui_data$Age.Adjusted.Rate)] <- NA
 sui_data$Age.Adjusted.Rate.Standard.Error[is.na(sui_data$Age.Adjusted.Rate)] <- NA
 sui_data$County <- gsub("US", "United States", sui_data$County)
+
+### ECONOMICS TAB
+## Load formatted Income status data
+inc_data <- read.csv(file="data/incomedata.csv")[,-1]
+## Load formatted Rent data
+rent <- read.csv(file="data/rent.csv")
 
 ### REGIONS
 MA_municipals <- as.character(na.omit(unique(dem_data$Municipal)))
@@ -159,6 +162,7 @@ body <- dashboardBody(
     ),
 
     tabItem(tabName = "soci",
+            # Educational Attainment, Marital Status, Schools, Suicide Rates, Veteran Status
             fluidRow(
               box(width = 12,
                   a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/")
@@ -224,8 +228,17 @@ body <- dashboardBody(
                   h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/")))
                     )
               )
+            # fluidRow(
+            #   box(width = 12,
+            #       plotOutput("plot_sch"),
+            #       actionButton("sch_info", "What is Interest Groups?"),
+            #       downloadButton(outputId = "sch_down", label = "Download the plot"),
+            #       h4(helpText(a("More information about Schools.", href="https://seigma.shinyapps.io/schools/")))
+            #   )
+            # )
     ),
     tabItem(tabName = "econ",
+            # Bankruptcy, Building Permits, Employment, Household Income, Poverty Rates, Property Tax, Property Value, Rent, Unemployment
             fluidRow(
               box(width = 12,
                   a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/")
@@ -236,36 +249,116 @@ body <- dashboardBody(
                   plotOutput("plot_inc"),
                   actionButton("inc_info", "What is Median Annual Household Income?"),
                   downloadButton(outputId = "inc_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Household Income.", href="https://seigma.shinyapps.io/income/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'inc_app', 1)")))
-              ),
-              box(width = 6,
-                  plotOutput("plot_ren"),
-                  actionButton("ren_info", "What is Inflation-Adjusted Median Rent?"),
-                  downloadButton(outputId = "ren_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Rent.", href="https://seigma.shinyapps.io/rent/")))
-              )
-            ),
-            fluidRow(
-              box(width = 6,
-                  plotOutput("plot_pro"),
-                  actionButton("pro_info", "What is Total Assessed Property Values?"),
-                  downloadButton(outputId = "pro_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Property Value.", href="https://seigma.shinyapps.io/PropertyValue/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'inc_app', 1)")))
-              ),
-              box(width = 6,
-                  plotOutput("plot_pov"),
-                  actionButton("pov_info", "What is Poverty Status?"),
-                  downloadButton(outputId = "pov_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Poverty.", href="https://seigma.shinyapps.io/poverty/")))
-              )
-            )
-  )
+                  h4(helpText(a("More information about Household Income.", href="https://seigma.shinyapps.io/income/")))
+              )))
+  #             box(width = 6,
+  #                 plotOutput("plot_ren"),
+  #                 actionButton("ren_info", "What is Inflation-Adjusted Median Rent?"),
+  #                 downloadButton(outputId = "ren_down", label = "Download the plot"),
+  #                 h4(helpText(a("More information about Rent.", href="https://seigma.shinyapps.io/rent/")))
+  #             )
+  #           ),
+  #           fluidRow(
+  #             box(width = 6,
+  #                 plotOutput("plot_pov"),
+  #                 actionButton("pov_info", "What is Poverty Status?"),
+  #                 downloadButton(outputId = "pov_down", label = "Download the plot"),
+  #                 h4(helpText(a("More information about Poverty.", href="https://seigma.shinyapps.io/poverty/")))
+  #             ),
+  #             box(width = 6,
+  #                 plotOutput("plot_ban"),
+  #                 actionButton("ban_info", "What is Bankruptcy?"),
+  #                 downloadButton(outputId = "pov_down", label = "Download the plot"),
+  #                 h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy")))
+  #             )
+  #           ),
+  #           fluidRow(
+  #             box(width = 6,
+  #                 plotOutput("plot_emp"),
+  #                 actionButton("emp_info", "What is Employment?"),
+  #                 downloadButton(outputId = "emp_down", label = "Download the plot"),
+  #                 h4(helpText(a("More information about Employment.", href="https://seigma.shinyapps.io/employment/")))
+  #             ),
+  #             box(width = 6,
+  #                 plotOutput("plot_bui"),
+  #                 actionButton("bui_info", "What is Building Permits?"),
+  #                 downloadButton(outputId = "bui_down", label = "Download the plot"),
+  #                 h4(helpText(a("More information about Building Permits.", href="https://seigma.shinyapps.io//BuildingPermits/")))
+  #             )
+  #           ),
+  #           fluidRow(
+  #             box(width = 6,
+  #                 plotOutput("plot_val"),
+  #                 actionButton("val_info", "What is Total Assessed Property Values?"),
+  #                 downloadButton(outputId = "pro_down", label = "Download the plot"),
+  #                 h4(helpText(a("More information about Property Value.", href="https://seigma.shinyapps.io/PropertyValue/")))
+  #             ),
+  #             box(width = 6,
+  #                 plotOutput("plot_tax"),
+  #                 actionButton("tax_info", "What is Poverty Tax?"),
+  #                 downloadButton(outputId = "tax_down", label = "Download the plot"),
+  #                 h4(helpText(a("More information about Property Tax.", href="https://seigma.shinyapps.io/PropertyValue/")))
+  #             )
+  #           )
+  # )
   )
 )
 
 
 ##### SERVER #####
 server <- function(input, output, session){
+  
+  place <- reactive({
+    if(is.null(input$muni))
+      my_place <- c("MA", "United States")
+    if(!is.null(input$muni)){
+      if(input$US_mean){
+        if(input$MA_mean){
+          if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
+            my_place <- c("United States", "MA", input$muni, county) 
+          } else{
+            my_place <- c("United States", "MA", input$muni)
+          }
+        } else 
+          if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
+            my_place <- c("United States", input$muni, county)
+          } else{
+            my_place <- c("United States", input$muni)
+          }
+      } else{
+        if(input$MA_mean){
+          if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
+            my_place <- c("MA", input$muni, county)
+          } else{
+            my_place <- c("MA", input$muni)
+          }
+        } else{
+          if(input$CT_mean){
+            county <- c()
+            for(i in 1:length(input$muni)){
+              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
+            }
+            my_place <- c(input$muni, county)
+          } else{
+            my_place <- c(input$muni)
+          }
+        }
+      }
+    }
+    my_place
+  })
   
   observeEvent(input$age_info, {
     showNotification("AGE",
@@ -330,54 +423,7 @@ server <- function(input, output, session){
   })
 
   age_df <- reactive({
-    if(is.null(input$muni))
-      my_place <- c("MA", "United States")
-    if(!is.null(input$muni)){
-      if(input$US_mean){
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", "MA", input$muni, county) 
-          } else{
-            my_place <- c("United States", "MA", input$muni)
-          }
-        } else 
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", input$muni, county)
-          } else{
-          my_place <- c("United States", input$muni)
-        }
-      } else{
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("MA", input$muni, county)
-          } else{
-            my_place <- c("MA", input$muni)
-          }
-        } else{
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c(input$muni, county)
-          } else{
-            my_place <- c(input$muni)
-          }
-        }
-      }
-    }
+    my_place <- place()
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Age_under_20_Pct_plot, Age_20_34_Pct_plot, Age_35_54_Pct_plot, Age_55_64_Pct_plot, Age_65_74_Pct_plot, Age_over_75_Pct_plot, Year)
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("0_3", "0 to 3", muni_df$variable)
@@ -390,7 +436,6 @@ server <- function(input, output, session){
   
   output$plot_age <- renderPlot({
     dat <- age_df()
-    
     age <- switch(input$age,
                   under20 = "Age under 20 ",
                   under34 = "Age 20 to 34 ",
@@ -401,7 +446,6 @@ server <- function(input, output, session){
                   "Age under 20 ")
     
     dat <- filter(dat, variable == age)
-    
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
       geom_line() + 
@@ -423,7 +467,6 @@ server <- function(input, output, session){
     content = function(file) {
       png(file)
       dat <- age_df()
-      
       age <- switch(input$age,
                     under20 = "Age under 20 ",
                     under34 = "Age 20 to 34 ",
@@ -434,7 +477,6 @@ server <- function(input, output, session){
                     "Age under 20 ")
       
       dat <- filter(dat, variable == age)
-      
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
         geom_line() + 
@@ -452,54 +494,7 @@ server <- function(input, output, session){
   )
   
   rac_df <- reactive({
-    if(is.null(input$muni))
-      my_place <- c("MA", "United States")
-    if(!is.null(input$muni)){
-      if(input$US_mean){
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", "MA", input$muni, county) 
-          } else{
-            my_place <- c("United States", "MA", input$muni)
-          }
-        } else 
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", input$muni, county)
-          } else{
-            my_place <- c("United States", input$muni)
-          }
-      } else{
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("MA", input$muni, county)
-          } else{
-            my_place <- c("MA", input$muni)
-          }
-        } else{
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c(input$muni, county)
-          } else{
-            my_place <- c(input$muni)
-          }
-        }
-      }
-    }
+    my_place <- place()
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, White_Pct, Black_Pct, American_Indian_and_Alaska_Native_Pct, Asian_Pct, Hawaiian_and_Other_Pacific_Islander_Pct, Others_Pct, Year)
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("_Pct", "", muni_df$variable)
@@ -510,7 +505,6 @@ server <- function(input, output, session){
   
   output$plot_rac <- renderPlot({
     dat <- rac_df()
-    
     race <- switch(input$race,
                    white = "White",
                    black = "Black" ,
@@ -521,7 +515,6 @@ server <- function(input, output, session){
                    "White")
     
     dat <- filter(dat, variable == race)
-    
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
       geom_line() + 
@@ -572,54 +565,7 @@ server <- function(input, output, session){
   )
   
   gen_df <- reactive({
-    if(is.null(input$muni))
-      my_place <- c("MA", "United States")
-    if(!is.null(input$muni)){
-      if(input$US_mean){
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", "MA", input$muni, county) 
-          } else{
-            my_place <- c("United States", "MA", input$muni)
-          }
-        } else 
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", input$muni, county)
-          } else{
-            my_place <- c("United States", input$muni)
-          }
-      } else{
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("MA", input$muni, county)
-          } else{
-            my_place <- c("MA", input$muni)
-          }
-        } else{
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c(input$muni, county)
-          } else{
-            my_place <- c(input$muni)
-          }
-        }
-      }
-    }
+    my_place <- place()
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Male_Pct, Female_Pct, Year)
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
     muni_df <- melt(muni_df)
@@ -669,54 +615,7 @@ server <- function(input, output, session){
   )
   
   his_df <- reactive({
-    if(is.null(input$muni))
-      my_place <- c("MA", "United States")
-    if(!is.null(input$muni)){
-      if(input$US_mean){
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", "MA", input$muni, county) 
-          } else{
-            my_place <- c("United States", "MA", input$muni)
-          }
-        } else 
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", input$muni, county)
-          } else{
-            my_place <- c("United States", input$muni)
-          }
-      } else{
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("MA", input$muni, county)
-          } else{
-            my_place <- c("MA", input$muni)
-          }
-        } else{
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c(input$muni, county)
-          } else{
-            my_place <- c(input$muni)
-          }
-        }
-      }
-    }
+    my_place <- place()
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Hispanic_Pct, Not_Hispanic_Pct, Year)
     colnames(muni_df) <- gsub("_Pct", "", colnames(muni_df))
     colnames(muni_df) <- gsub("_", " ", colnames(muni_df))
@@ -767,54 +666,7 @@ server <- function(input, output, session){
   )
   
   edu_df <- reactive({
-    if(is.null(input$muni))
-      my_place <- c("MA", "United States")
-    if(!is.null(input$muni)){
-      if(input$US_mean){
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", "MA", input$muni, county) 
-          } else{
-            my_place <- c("United States", "MA", input$muni)
-          }
-        } else 
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", input$muni, county)
-          } else{
-            my_place <- c("United States", input$muni)
-          }
-      } else{
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("MA", input$muni, county)
-          } else{
-            my_place <- c("MA", input$muni)
-          }
-        } else{
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c(input$muni, county)
-          } else{
-            my_place <- c(input$muni)
-          }
-        }
-      }
-    }
+    my_place <- place()
     muni_df <- filter(edu_data, Region %in% my_place) %>% select(Region, HS_Pct, Bachelors_Pct, Grad_Pct, Year)
     muni_df <- melt(muni_df)
     muni_df$variable <- gsub("_Pct", " %", muni_df$variable)
@@ -879,54 +731,7 @@ server <- function(input, output, session){
   )
   
   mar_df <- reactive({
-    if(is.null(input$muni))
-      my_place <- c("MA", "United States")
-    if(!is.null(input$muni)){
-      if(input$US_mean){
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", "MA", input$muni, county) 
-          } else{
-            my_place <- c("United States", "MA", input$muni)
-          }
-        } else 
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", input$muni, county)
-          } else{
-            my_place <- c("United States", input$muni)
-          }
-      } else{
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("MA", input$muni, county)
-          } else{
-            my_place <- c("MA", input$muni)
-          }
-        } else{
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c(input$muni, county)
-          } else{
-            my_place <- c(input$muni)
-          }
-        }
-      }
-    }
+    my_place <- place()
     muni_df <- filter(mar_data, Region %in% my_place) %>% select(Region, Never_Married_pct, Now_Married_pct, Separated_pct, Widowed_pct, Divorced_pct, Gender, Year)
     names(muni_df) <- gsub("_", " ", names(muni_df))
     names(muni_df) <- gsub("pct", "%", names(muni_df))
@@ -1001,58 +806,7 @@ server <- function(input, output, session){
   )
   
   vet_df <- reactive({
-    county <- as.character(muni_county[muni_county$Municipal == input$muni,]$County)
-    
-    if(is.null(input$muni))
-      my_place <- c("MA", "United States")
-    if(!is.null(input$muni))    if(is.null(input$muni))
-      my_place <- c("MA", "United States")
-    if(!is.null(input$muni)){
-      if(input$US_mean){
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", "MA", input$muni, county) 
-          } else{
-            my_place <- c("United States", "MA", input$muni)
-          }
-        } else 
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("United States", input$muni, county)
-          } else{
-            my_place <- c("United States", input$muni)
-          }
-      } else{
-        if(input$MA_mean){
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c("MA", input$muni, county)
-          } else{
-            my_place <- c("MA", input$muni)
-          }
-        } else{
-          if(input$CT_mean){
-            county <- c()
-            for(i in 1:length(input$muni)){
-              county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
-            }
-            my_place <- c(input$muni, county)
-          } else{
-            my_place <- c(input$muni)
-          }
-        }
-      }
-    }
+    my_place <- place()
     muni_df <- filter(vet_data, Region %in% my_place) %>% select(Region, Percent_Vet, Year)
     muni_df <- melt(muni_df)
     muni_df$Year <- gsub("20", "'", muni_df$Year)
@@ -1161,6 +915,52 @@ server <- function(input, output, session){
         theme(axis.text=element_text(size=14)) + 
         theme(legend.text = element_text(size = 12))
       print(p) 
+      dev.off()
+    }
+  )
+  
+  inc_df <- reactive({
+    my_place <- place()
+    muni_df <- filter(inc_data, Region %in% my_place) %>% select(Region, Median_Annual_Household_Income, Five_Year_Average)
+    muni_df$Year <- gsub("20", "'", muni_df$Five_Year_Average)
+    muni_df
+  })
+  
+  output$plot_inc <- renderPlot({
+    dat <- inc_df() 
+    theme_set(theme_classic())
+    p <- ggplot(dat, aes(x=Year, y=Median_Annual_Household_Income, group = Region, colour = Region)) + 
+      geom_line() + 
+      geom_point() + 
+      labs(title = "Median Annual Household Income", 
+           x = "Mid-Year of Five Year Range",
+           y = "Dollars") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
+    print(p)  
+  })
+  
+  output$inc_down <- downloadHandler(
+    filename = function() {
+      "plot_income.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- inc_df() 
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x=Year, y=Median_Annual_Household_Income, group = Region, colour = Region)) + 
+        geom_line() + 
+        geom_point() + 
+        labs(title = "Median Annual Household Income", 
+             x = "Mid-Year of Five Year Range",
+             y = "Dollars") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p)  
       dev.off()
     }
   )
