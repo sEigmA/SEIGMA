@@ -1,0 +1,83 @@
+###############################
+## Title: global.R           ##
+## App: SEIGMA dashboard     ##
+## Author: Zhenning Kang     ##
+## Date Created:  09/27/2017 ##
+## Last Modified: 11/07/2017 ##
+###############################
+
+##### SETTINGS #####
+library(shiny)
+library(shinydashboard)
+library(dplyr)
+library(reshape2)
+library(ggplot2)
+
+##### DATA #####
+### DEMOGRAPHIC TAB
+dem_data <- read.csv(file="data/demodata.csv")
+dem_data$Year <- as.factor(as.numeric(substr(dem_data$Five_Year_Range, 1, 4))+2)
+
+### SOCIAL TAB
+# data for education plot
+edu_data <- read.csv(file="data/edudata.csv")[,-1]
+edu_data$Year <- as.factor(as.numeric(substr(edu_data$Five_Year_Range, 1, 4))+2)
+# data for vetaran plot
+vet_data <- read.csv(file="data/vetstatusdata.csv")[,-1]
+vet_data$Year <- as.factor(as.numeric(substr(vet_data$Five_Year_Range, 1, 4))+2)
+# data for married status plot
+mar_data <- read.csv(file="data/BA002_02_marriagedata.csv")
+mar_data$Year <- as.factor(as.numeric(substr(mar_data$Five_Year_Range, 1, 4))+2)
+# data for suicide plot
+sui_data <- read.csv(file="data/SASuicidedata_Updated2017.csv")[,-1]
+#If there is no age adjusted rate, get rid of the bounds and standard errors
+sui_data$Age.Adjusted.Rate.Lower.Bound[is.na(sui_data$Age.Adjusted.Rate)] <- NA
+sui_data$Age.Adjusted.Rate.Upper.Bound[is.na(sui_data$Age.Adjusted.Rate)] <- NA
+sui_data$Age.Adjusted.Rate.Standard.Error[is.na(sui_data$Age.Adjusted.Rate)] <- NA
+sui_data$County <- gsub("US", "United States", sui_data$County)
+colnames(sui_data) <- gsub("County", "Region", colnames(sui_data))
+
+### ECONOMICS TAB
+## Load formatted Income status data
+inc_data <- read.csv(file="data/incomedata.csv")[,-1]
+## Load formatted Rent data
+ren_data <- read.csv(file="data/rent.csv")
+ren_data$Year <- as.factor(as.numeric(substr(ren_data$Five.Year.Range, 1, 4))+2)
+ren_data$Region <- ifelse(ren_data$Municipal=="Massachusetts", "MA", as.character(ren_data$Municipal))
+## Load formatted Poverty data
+pov_data <- read.csv(file="data/povratedata.csv")[,-1]
+pov_data$Year <- as.factor(as.numeric(substr(pov_data$Five_Year_Range, 1, 4))+2)
+## Load formatted Bankruptcy data
+ban_data <- read.csv(file="data/bankdata1.csv")
+
+### REGIONS
+MA_municipals <- as.character(na.omit(unique(dem_data$Municipal)))
+muni_county <- data.frame(unique(na.omit(subset(dem_data, select = c("Municipal", "County")))))
+
+###### INFORMATION #####
+### POP-UPS
+age_pop <- "The number of people within each age group, for a region over a specified five year range. Age groups were specified as <5, 5-9, 10-14, 15-19, 20-24, 25-34, 35-44, 45-54, 55-59, 60-64, 65-74, 75-84, and 85+. Within the Plot, the number of categories for age has been collapsed to the following six groups; <20, 20-34, 35-54, 55-64, 65-74,75+. This is done in order to simplify the presentation of data."
+
+rac_pop <- "The number of people within each race, for a region over a specified five year range. Races were listed as White, Black or African American, Asian, American Indian or Alaska Native, Native Hawaiian or Other Pacific Islander, or some other race. "
+
+gen_pop <- "The number of people within each gender, for a region over a specified five year range."
+
+his_pop <- "The number of people within each ethnicity, for a region over a specified five year range. Ethnicities were listed as hispanic or not hispanic."
+
+edu_pop <- "The number of people with each level of educational attainment for a specific region over a specific five-year period of time. All inidviduals represented in this measure were at least 25 years of age. Respondents were classified according to highest level of school completed. When a municipaility is missing data, this indicates that data cannot be displayed because the number of people is too small."
+
+mar_pop <- "The number of people within each marital status category for a region over a specified five year range. When the number of people in a particular marital status category is too small, data cannot be displayed."
+
+sui_pop <- "Age-adjusted suicide rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by: Age-adjusted Suicide Rate = Count / Population * 100,000"
+
+vet_pop <-  "People with active duty military service and or service in the military Reserves or National Guard. All individuals were at least 18 years of age."
+
+inc_pop <- "This includes the income of the household and all other individuals ages 15 and over. Median annual household income provides a clear trend to assess residents' household income overtime. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively."
+
+ren_pop <- "Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2015 and adjusted for inlation to the 2015 dollar. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level."
+
+pov_pop <- "To determine a person's poverty status, one compares the person’s total family income in the last 12 months with the poverty threshold appropriate for that person's family size and composition. If the total income of that person's family is less than the threshold appropriate for that family, then the person is considered below the poverty level. Poverty is defined at the family level and not the household level, the poverty status of the household is determined by the poverty status of the householder."
+
+ban_pop <- "Bankruptcy is a legal procedure that allows individuals and businesses to resolve debts to their creditors."
+
+val_pop <- "Assessed values in Massachusetts are based on 'full and fair cash value'. Massachusetts General Laws defines 'full and fair cash value' as the price an owner willing, but not under compulsion, to sell, ought to receive from one willing but not under compulsion, to buy."
