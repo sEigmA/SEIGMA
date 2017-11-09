@@ -5,6 +5,7 @@
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  11/05/2014         ##
 ## Date Modified: 04/22/2015 AR      ##
+## Date Updated:  11/09/2017 VE      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -38,9 +39,10 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'map'",
                    selectInput("map_year", "Select Five Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012"))
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012",
+                                              "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
+                                              "2011-2015" = "2011-2015"))
                  ),
-                 
                  
                  ## in summary, allow for municipal selection
                  conditionalPanel(
@@ -48,17 +50,17 @@ shinyUI(fluidPage(
                    ## Select input = List
                    selectInput("sum_year", "Select Five Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012",
+                                              "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
+                                              "2011-2015" = "2011-2015")),
                    selectInput("sum_muni", "Select Municipality", 
                                choices = MA_municipals,
                                ## Multiple allows for multi-county selection
                                multiple=TRUE),
                    
-                   
-                     ## In summary, show boxes that will compare to MA or US median
+                   ## In summary, show boxes that will compare to MA or US median
                    checkboxInput("MA_mean", "Compare to MA Median", FALSE),
                    checkboxInput("US_mean", "Compare to US Median", FALSE)
-                   
                  ),
                  
                  ## in plot, allow for municipal selection
@@ -67,13 +69,12 @@ shinyUI(fluidPage(
                    ## Select input = List
                    selectInput("plot_year", "Select Five Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012")),
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012",
+                                              "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
+                                              "2011-2015" = "2011-2015")),
                    selectInput("plot_muni", "Select Municipality", 
                                choices = MA_municipals)
-                   
-                 
                  ),
-                 
                  
                  tags$hr(),
                  
@@ -85,12 +86,12 @@ shinyUI(fluidPage(
                  helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
                  
                  ## data source citation
-                 helpText(a("Data Source: American Community Survey- Table B19013", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1903&prodType=table",
+                 helpText(a("Data Source: American Community Survey - Table B19013", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1903&prodType=table",
                             target="_blank")),
                  
                  ## GitHub link
                  helpText(a("View our data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/income", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/income/income", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -240,12 +241,7 @@ shinyUI(fluidPage(
                  ),
                  #tags$br(),
                  # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),
-                 
-                 
-                 
-                 
-                 
-                 
+
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
         id="tabs"   

@@ -1,5 +1,10 @@
 name: income
+title:
+username:
 account: seigma
-bundleId: 415556
-url: https://seigma.shinyapps.io/income/
 server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 23656
+bundleId: 1067456
+url: https://seigma.shinyapps.io/income/
+when: 1510254116.73283
