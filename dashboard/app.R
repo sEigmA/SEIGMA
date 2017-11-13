@@ -66,25 +66,23 @@ body <- dashboardBody(
               box(width = 6,
                 fluidRow(
                   box(width = 11,
-                      selectInput("age", "Select an Age:",
-                                  c("Under 20" = "under20",
-                                    "20 to 34" = "under34",
-                                    "35 to 54" = "under54",
-                                    "55 to 64" = "under64",
-                                    "65 to 74" = "under74",
-                                    "Over 75" = "over75"),
-                                  selected = "under20",
-                                  multiple = FALSE),
-                      fluidRow(
-                        column(width = 6,
-                            checkboxInput("under35", "Age Under 35", FALSE)
-                            ),
-                        column(width = 6,
-                            checkboxInput("under65", "Age Under 65", FALSE)
-                            )
+                      h4("Please Select Age of Interest"),
+                      column(width = 4,
+                             checkboxInput("under20", "Age Under 20 ", TRUE),
+                             checkboxInput("under35", "Age Under 35", FALSE),
+                             checkboxInput("under65", "Age Under 65", FALSE)
+                             ),
+                      column(width = 4,
+                             checkboxInput("under34", "Age 20 to 34 ", FALSE),
+                             checkboxInput("under54", "Age 35 to 54 ", FALSE),
+                             checkboxInput("under64", "Age 55 to 64 ", FALSE)
+                             ),
+                      column(width = 4,
+                             checkboxInput("under74", "Age 65 to 74 ", FALSE),
+                             checkboxInput("over75", "Age Over 75 ", FALSE)
+                             )
                       )
-                  )
-                ),
+                  ),
                 fluidRow(
                   box(width = 11,
                       plotOutput("plot_age")
@@ -96,15 +94,17 @@ body <- dashboardBody(
               box(width = 6,
                 fluidRow(
                   box(width = 11,
-                      selectInput("race", "Select a Race:",
-                                  c("White" = "white",
-                                    "Black" = "black",
-                                    "American Indian and Alaska Native" = "native",
-                                    "Hawaiian and Other Pacific Islander" = "hawaiian",
-                                    "Asian" = "asian",
-                                    "Others" = "other"),
-                                  selected = "white",
-                                  multiple = FALSE)
+                      h4("Please Select Race of Interest"),
+                      column(width = 8,
+                             checkboxInput("white", "White", TRUE),
+                             checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE),
+                             checkboxInput("native", "American Indian and Alaska Native", FALSE)
+                             ),
+                      column(width = 4,
+                             checkboxInput("black", "Black", FALSE),
+                             checkboxInput("asian", "Asian", FALSE),
+                             checkboxInput("others", "Others", FALSE)
+                      )
                   )
                 ),
                 fluidRow(
@@ -394,33 +394,43 @@ server <- function(input, output, session){
   
   age_df <- reactive({
     my_place <- place()
-    muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Age_under_20_Pct_plot, Age_20_34_Pct_plot, Age_35_54_Pct_plot, Age_55_64_Pct_plot, Age_65_74_Pct_plot, Age_over_75_Pct_plot, Year)
+    muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Age_under_20_Pct_plot, Under35, Under65, Age_20_34_Pct_plot, Age_35_54_Pct_plot, Age_55_64_Pct_plot, Age_65_74_Pct_plot, Age_over_75_Pct_plot, Year)
     muni_df <- melt(muni_df)
+    muni_df$variable <- gsub("_Pct_plot", "", muni_df$variable)
     muni_df$variable <- gsub("0_3", "0 to 3", muni_df$variable)
-    muni_df$variable[1:70] <- gsub("5_", "5 to ", muni_df$variable[1:70])
+    muni_df$variable <- gsub("5_", "5 to ", muni_df$variable)
     muni_df$variable <- gsub("_", " ", muni_df$variable)
-    muni_df$variable <- gsub("Pct plot", "", muni_df$variable)
+    muni_df$variable <- gsub("r", "r ", muni_df$variable)
     muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
   output$plot_age <- renderPlot({
     dat <- age_df()
-    age <- switch(input$age,
-                  under20 = "Age under 20 ",
-                  under34 = "Age 20 to 34 ",
-                  under54 = "Age 35 to 54 ",
-                  under64 = "Age 55 to 64 ",
-                  under74 = "Age 65 to 74 ",
-                  over75 = "Age over 75 ",
-                  "Age under 20 ")
-    
-    dat <- filter(dat, variable == age)
+    age_var <- unique(dat$variable)
+    age <- c()
+    if(input$under20)
+      age <- append(age, age_var[1])
+    if(input$under35)
+      age <- append(age, age_var[2])
+    if(input$under65)
+      age <- append(age, age_var[3])
+    if(input$under34)
+      age <- append(age, age_var[4])
+    if(input$under54)
+      age <- append(age, age_var[5])
+    if(input$under64)
+      age <- append(age, age_var[6])
+    if(input$under74)
+      age <- append(age, age_var[7])
+    if(input$over75)
+      age <- append(age, age_var[8])
+    dat <- filter(dat, variable %in% age)
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
+    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line() + 
       geom_point() + 
-      labs(title = paste(age,"Distribution"), 
+      labs(title = "Age Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -437,20 +447,30 @@ server <- function(input, output, session){
     content = function(file) {
       png(file)
       dat <- age_df()
-      age <- switch(input$age,
-                    under20 = "Age under 20 ",
-                    under34 = "Age 20 to 34 ",
-                    under54 = "Age 35 to 54 ",
-                    under64 = "Age 55 to 64 ",
-                    under74 = "Age 65 to 74 ",
-                    over75 = "Age over 75 ",
-                    "Age under 20 ")
-      dat <- filter(dat, variable == age)
+      age_var <- unique(dat$variable)
+      age <- c()
+      if(input$under20)
+        age <- append(age, age_var[1])
+      if(input$under35)
+        age <- append(age, age_var[2])
+      if(input$under65)
+        age <- append(age, age_var[3])
+      if(input$under34)
+        age <- append(age, age_var[4])
+      if(input$under54)
+        age <- append(age, age_var[5])
+      if(input$under64)
+        age <- append(age, age_var[6])
+      if(input$under74)
+        age <- append(age, age_var[7])
+      if(input$over75)
+        age <- append(age, age_var[8])
+      dat <- filter(dat, variable %in% age)
       theme_set(theme_classic())
-      p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
+      p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
         geom_line() + 
         geom_point() + 
-        labs(title = paste(age,"Distribution"), 
+        labs(title = "Age Distribution", 
              x = "Mid-Year of Five Year Range",
              y = "% Population") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -474,21 +494,26 @@ server <- function(input, output, session){
   
   output$plot_rac <- renderPlot({
     dat <- rac_df()
-    race <- switch(input$race,
-                   white = "White",
-                   black = "Black" ,
-                   native = "American Indian and Alaska Native",
-                   hawaiian = "Hawaiian and Other Pacific Islander",
-                   asian = "Asian",
-                   others = "Others",
-                   "White")
-    
-    dat <- filter(dat, variable == race)
+    race_var <- unique(dat$variable)
+    race <- c()
+    if(input$white)
+      race <- append(race, race_var[1])
+    if(input$black)
+      race <- append(race, race_var[2])
+    if(input$native)
+      race <- append(race, race_var[3])
+    if(input$asian)
+      race <- append(race, race_var[4])
+    if(input$hawaiian)
+      race <- append(race, race_var[5])
+    if(input$others)
+      race <- append(race, race_var[6])
+    dat <- filter(dat, variable %in% race)
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
+    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line() + 
       geom_point() + 
-      labs(title = paste(race,"Distribution"), 
+      labs(title = "Race Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -505,23 +530,26 @@ server <- function(input, output, session){
     content = function(file) {
       png(file)
       dat <- rac_df()
-      
-      race <- switch(input$race,
-                     white = "White",
-                     black = "Black" ,
-                     native = "American Indian and Alaska Native",
-                     hawaiian = "Hawaiian and Other Pacific Islander",
-                     asian = "Asian",
-                     others = "Others",
-                     "White")
-      
-      dat <- filter(dat, variable == race)
-      
+      race_var <- unique(dat$variable)
+      race <- c()
+      if(input$white)
+        race <- append(race, race_var[1])
+      if(input$black)
+        race <- append(race, race_var[2])
+      if(input$native)
+        race <- append(race, race_var[3])
+      if(input$asian)
+        race <- append(race, race_var[4])
+      if(input$hawaiian)
+        race <- append(race, race_var[5])
+      if(input$others)
+        race <- append(race, race_var[6])
+      dat <- filter(dat, variable %in% race)
       theme_set(theme_classic())
-      p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
+      p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
         geom_line() + 
         geom_point() + 
-        labs(title = paste(race,"Distribution"), 
+        labs(title = "Race Distribution", 
              x = "Mid-Year of Five Year Range",
              y = "% Population") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
