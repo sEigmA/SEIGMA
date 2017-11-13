@@ -3,7 +3,7 @@
 ## App: SEIGMA dashboard     ##
 ## Author: Zhenning Kang     ##
 ## Date Created:  09/27/2017 ##
-## Last Modified: 11/07/2017 ##
+## Last Modified: 11/12/2017 ##
 ###############################
 
 ##### SETTINGS #####
@@ -17,6 +17,8 @@ library(ggplot2)
 ### DEMOGRAPHIC TAB
 dem_data <- read.csv(file="data/demodata.csv")
 dem_data$Year <- as.factor(as.numeric(substr(dem_data$Five_Year_Range, 1, 4))+2)
+dem_data$Under35 <- dem_data$Age_under_20_Pct_plot+dem_data$Age_20_34_Pct_plot
+dem_data$Under65 <- dem_data$Under35 + dem_data$Age_35_54_Pct_plot + dem_data$Age_55_64_Pct_plot
 
 ### SOCIAL TAB
 # data for education plot
@@ -40,6 +42,7 @@ colnames(sui_data) <- gsub("County", "Region", colnames(sui_data))
 ### ECONOMICS TAB
 ## Load formatted Income status data
 inc_data <- read.csv(file="data/incomedata.csv")[,-1]
+inc_data$Year <- as.factor(as.numeric(substr(inc_data$Five_Year_Range, 1, 4))+2)
 ## Load formatted Rent data
 ren_data <- read.csv(file="data/rent.csv")
 ren_data$Year <- as.factor(as.numeric(substr(ren_data$Five.Year.Range, 1, 4))+2)

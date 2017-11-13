@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 11/07/2017  ##
+## Last Modified: 11/12/2017  ##
 ################################
 
 ##### SETTINGS #####
@@ -74,8 +74,16 @@ body <- dashboardBody(
                                     "65 to 74" = "under74",
                                     "Over 75" = "over75"),
                                   selected = "under20",
-                                  multiple = FALSE)
+                                  multiple = FALSE),
+                      fluidRow(
+                        column(width = 6,
+                            checkboxInput("under35", "Age Under 35", FALSE)
+                            ),
+                        column(width = 6,
+                            checkboxInput("under65", "Age Under 65", FALSE)
+                            )
                       )
+                  )
                 ),
                 fluidRow(
                   box(width = 11,
@@ -437,7 +445,6 @@ server <- function(input, output, session){
                     under74 = "Age 65 to 74 ",
                     over75 = "Age over 75 ",
                     "Age under 20 ")
-      
       dat <- filter(dat, variable == age)
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x = Year, y = value, group = Region, colour = Region)) +
@@ -454,7 +461,7 @@ server <- function(input, output, session){
       dev.off()
     }
   )
-  
+        
   rac_df <- reactive({
     my_place <- place()
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, White_Pct, Black_Pct, American_Indian_and_Alaska_Native_Pct, Asian_Pct, Hawaiian_and_Other_Pacific_Islander_Pct, Others_Pct, Year)
@@ -884,8 +891,7 @@ server <- function(input, output, session){
   
   inc_df <- reactive({
     my_place <- place()
-    muni_df <- filter(inc_data, Region %in% my_place) %>% select(Region, Median_Annual_Household_Income, Five_Year_Average)
-    muni_df$Year <- gsub("20", "'", muni_df$Five_Year_Average)
+    muni_df <- filter(inc_data, Region %in% my_place) %>% select(Region, Median_Annual_Household_Income, Year)
     muni_df
   })
   
