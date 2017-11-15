@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 11/12/2017  ##
+## Last Modified: 11/15/2017  ##
 ################################
 
 ##### SETTINGS #####
@@ -428,8 +428,8 @@ server <- function(input, output, session){
     dat <- filter(dat, variable %in% age)
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-      geom_line() + 
-      geom_point() + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
       labs(title = "Age Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
@@ -468,8 +468,8 @@ server <- function(input, output, session){
       dat <- filter(dat, variable %in% age)
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-        geom_line() + 
-        geom_point() + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
         labs(title = "Age Distribution", 
              x = "Mid-Year of Five Year Range",
              y = "% Population") + 
@@ -511,8 +511,8 @@ server <- function(input, output, session){
     dat <- filter(dat, variable %in% race)
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-      geom_line() + 
-      geom_point() + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
       labs(title = "Race Distribution", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
@@ -547,8 +547,8 @@ server <- function(input, output, session){
       dat <- filter(dat, variable %in% race)
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-        geom_line() + 
-        geom_point() + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
         labs(title = "Race Distribution", 
              x = "Mid-Year of Five Year Range",
              y = "% Population") + 
@@ -574,8 +574,8 @@ server <- function(input, output, session){
     dat <- gen_df() 
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) +
-      geom_line() + 
-      geom_point() + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
       facet_grid(. ~ variable) + 
       labs(title = "Gender Distribution", 
            x = "Mid-Year of Five Year Range",
@@ -596,8 +596,8 @@ server <- function(input, output, session){
       dat <- gen_df() 
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) +
-        geom_line() + 
-        geom_point() + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
         facet_grid(. ~ variable) + 
         labs(title = "Gender Distribution", 
              x = "Mid-Year of Five Year Range",
@@ -625,8 +625,8 @@ server <- function(input, output, session){
     dat <- his_df() 
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
-      geom_line() + 
-      geom_point() + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
       facet_grid(. ~ variable) + 
       labs(title = "Ethnicity Distribution", 
            x = "Mid-Year of Five Year Range",
@@ -647,8 +647,8 @@ server <- function(input, output, session){
       dat <- his_df() 
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
-        geom_line() + 
-        geom_point() + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
         facet_grid(. ~ variable) + 
         labs(title = "Ethnicity Distribution", 
              x = "Mid-Year of Five Year Range",
@@ -684,8 +684,8 @@ server <- function(input, output, session){
     
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
-      geom_line() + 
-      geom_point() + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
       labs(title = "Educational Attainment", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
@@ -713,8 +713,8 @@ server <- function(input, output, session){
       
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
-        geom_line() + 
-        geom_point() + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
         labs(title = "Educational Attainment", 
              x = "Mid-Year of Five Year Range",
              y = "% Population") + 
@@ -753,8 +753,8 @@ server <- function(input, output, session){
     
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
-      geom_line() + 
-      geom_point() + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
       facet_grid(. ~ Gender) + 
       labs(title = paste("Marital Status (",status,")"), 
            x = "Mid-Year of Five Year Range",
@@ -787,8 +787,8 @@ server <- function(input, output, session){
       
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
-        geom_line() + 
-        geom_point() + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
         facet_grid(. ~ Gender) + 
         labs(title = paste("Marital Status (",status,")"), 
              x = "Mid-Year of Five Year Range",
@@ -814,8 +814,8 @@ server <- function(input, output, session){
     dat <- vet_df() 
     theme_set(theme_classic())
     p <- ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
-      geom_line() + 
-      geom_point() + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
       labs(title = "Civilian Veteran's Status", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
@@ -835,8 +835,8 @@ server <- function(input, output, session){
       dat <- vet_df() 
       theme_set(theme_classic())
       p <- ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
-        geom_line() + 
-        geom_point() + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
         labs(title = "Civilian Veteran's Status", 
              x = "Mid-Year of Five Year Range",
              y = "% Population") + 
@@ -882,8 +882,8 @@ server <- function(input, output, session){
     dat <- sui_df() 
     theme_set(theme_classic())
     p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = Region, colour = Region)) + 
-      geom_line() + 
-      geom_point() + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
       labs(title = "Suicide Rate ", 
            x = "One Year Estimates",
            y = "% Population") + 
@@ -903,8 +903,8 @@ server <- function(input, output, session){
       dat <- sui_df() 
       theme_set(theme_classic())
       p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = Region, colour = Region)) + 
-        geom_line() + 
-        geom_point() + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
         labs(title = "Suicide Rate ", 
              x = "One Year Estimates",
              y = "% Population") + 
@@ -920,6 +920,7 @@ server <- function(input, output, session){
   inc_df <- reactive({
     my_place <- place()
     muni_df <- filter(inc_data, Region %in% my_place) %>% select(Region, Median_Annual_Household_Income, Year)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
@@ -927,8 +928,8 @@ server <- function(input, output, session){
     dat <- inc_df() 
     theme_set(theme_classic())
     p <- ggplot(dat, aes(x=Year, y=Median_Annual_Household_Income, group = Region, colour = Region)) + 
-      geom_line() + 
-      geom_point() + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
       labs(title = "Median Annual Household Income", 
            x = "Mid-Year of Five Year Range",
            y = "Dollars") + 
@@ -948,8 +949,8 @@ server <- function(input, output, session){
       dat <- inc_df() 
       theme_set(theme_classic())
       p <- ggplot(dat, aes(x=Year, y=Median_Annual_Household_Income, group = Region, colour = Region)) + 
-        geom_line() + 
-        geom_point() + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
         labs(title = "Median Annual Household Income", 
              x = "Mid-Year of Five Year Range",
              y = "Dollars") + 
@@ -973,8 +974,8 @@ server <- function(input, output, session){
     dat <- ren_df() 
     theme_set(theme_classic())
     p <- ggplot(dat, aes(x=Year, y=Median.Rent.2015.Dollar, group = Region, colour = Region)) + 
-      geom_line() + 
-      geom_point() + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
       labs(title = "Inflation-Adjusted (2015 $) Median Rent", 
            x = "Mid-Year of Five Year Range",
            y = "Dollars") + 
@@ -996,8 +997,8 @@ server <- function(input, output, session){
     dat <- pov_df() 
     theme_set(theme_classic())
     p <- ggplot(dat, aes(x=Year, y=Percent_Pov, group = Region, colour = Region)) + 
-      geom_line() + 
-      geom_point() + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
       labs(title = "Poverty Rate", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
@@ -1017,8 +1018,8 @@ server <- function(input, output, session){
       dat <- pov_df() 
       theme_set(theme_classic())
       p <- ggplot(dat, aes(x=Year, y=Percent_Pov, group = Region, colour = Region)) + 
-        geom_line() + 
-        geom_point() + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
         labs(title = "Poverty Rate", 
              x = "Mid-Year of Five Year Range",
              y = "% Population") + 
@@ -1065,8 +1066,8 @@ server <- function(input, output, session){
     dat <- ban_df() 
     theme_set(theme_classic())
     p <- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) + 
-      geom_line() + 
-      geom_point() + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
       facet_grid(. ~ variable) + 
       labs(title = "Bankruptcy Fillings", 
            x = "",
@@ -1087,8 +1088,8 @@ server <- function(input, output, session){
       dat <- ban_df() 
       theme_set(theme_classic())
       p <- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) + 
-        geom_line() + 
-        geom_point() + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
         facet_grid(. ~ variable) + 
         labs(title = "Bankruptcy Fillings", 
              x = "",
