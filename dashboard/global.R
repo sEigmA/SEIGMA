@@ -3,7 +3,7 @@
 ## App: SEIGMA dashboard     ##
 ## Author: Zhenning Kang     ##
 ## Date Created:  09/27/2017 ##
-## Last Modified: 11/12/2017 ##
+## Last Modified: 11/15/2017 ##
 ###############################
 
 ##### SETTINGS #####
@@ -21,15 +21,13 @@ dem_data$Under35 <- dem_data$Age_under_20_Pct_plot+dem_data$Age_20_34_Pct_plot
 dem_data$Under65 <- dem_data$Under35 + dem_data$Age_35_54_Pct_plot + dem_data$Age_55_64_Pct_plot
 
 ### SOCIAL TAB
-# data for education plot
-edu_data <- read.csv(file="data/edudata.csv")[,-1]
-edu_data$Year <- as.factor(as.numeric(substr(edu_data$Five_Year_Range, 1, 4))+2)
-# data for vetaran plot
-vet_data <- read.csv(file="data/vetstatusdata.csv")[,-1]
-vet_data$Year <- as.factor(as.numeric(substr(vet_data$Five_Year_Range, 1, 4))+2)
 # data for married status plot
 mar_data <- read.csv(file="data/BA002_02_marriagedata.csv")
 mar_data$Year <- as.factor(as.numeric(substr(mar_data$Five_Year_Range, 1, 4))+2)
+# data for education plot
+edu_data <- read.csv(file="data/edudata.csv")[,-1]
+edu_data$Year <- as.factor(as.numeric(substr(edu_data$Five_Year_Range, 1, 4))+2)
+edu_data$No_HS_Pct <- 100-edu_data$HS_Pct
 # data for suicide plot
 sui_data <- read.csv(file="data/SASuicidedata_Updated2017.csv")[,-1]
 #If there is no age adjusted rate, get rid of the bounds and standard errors
@@ -38,6 +36,9 @@ sui_data$Age.Adjusted.Rate.Upper.Bound[is.na(sui_data$Age.Adjusted.Rate)] <- NA
 sui_data$Age.Adjusted.Rate.Standard.Error[is.na(sui_data$Age.Adjusted.Rate)] <- NA
 sui_data$County <- gsub("US", "United States", sui_data$County)
 colnames(sui_data) <- gsub("County", "Region", colnames(sui_data))
+# data for vetaran plot
+vet_data <- read.csv(file="data/vetstatusdata.csv")[,-1]
+vet_data$Year <- as.factor(as.numeric(substr(vet_data$Five_Year_Range, 1, 4))+2)
 
 ### ECONOMICS TAB
 ## Load formatted Income status data

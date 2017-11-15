@@ -66,7 +66,7 @@ body <- dashboardBody(
               box(width = 6,
                 fluidRow(
                   box(width = 11,
-                      h4("Please Select Age of Interest"),
+                      h4("Please Select an Age of Interest"),
                       column(width = 4,
                              checkboxInput("under20", "Age Under 20 ", TRUE),
                              checkboxInput("under35", "Age Under 35", FALSE),
@@ -94,13 +94,13 @@ body <- dashboardBody(
               box(width = 6,
                 fluidRow(
                   box(width = 11,
-                      h4("Please Select Race of Interest"),
-                      column(width = 8,
+                      h4("Please Select a Race of Interest"),
+                      column(width = 9,
                              checkboxInput("white", "White", TRUE),
-                             checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander", FALSE),
-                             checkboxInput("native", "American Indian and Alaska Native", FALSE)
+                             checkboxInput("hawaiian", "Hawaiian and Other Pacific Islander (HOPI)", FALSE),
+                             checkboxInput("native", "American Indian and Alaska Native (AIAN)", FALSE)
                              ),
-                      column(width = 4,
+                      column(width = 3,
                              checkboxInput("black", "Black", FALSE),
                              checkboxInput("asian", "Asian", FALSE),
                              checkboxInput("others", "Others", FALSE)
@@ -141,14 +141,18 @@ body <- dashboardBody(
               box(width = 6,
                   fluidRow(
                     box(width = 11,
-                        selectInput("status", "Choose a Status of Interest:",
-                                    c("Married" = "married",
-                                      "Separated" = "separated",
-                                      "Divorced" = "divorced",
-                                      "Widowed" = "widowed",
-                                      "Never" = "never"),
-                                    selected = "married",
-                                    multiple = FALSE)
+                        h4("Please Select a Status of Interest"),
+                        column(width = 4,
+                               checkboxInput("married", "Now Married", FALSE),
+                               checkboxInput("widowed", "Widowed", FALSE)
+                        ),
+                        column(width = 4,
+                               checkboxInput("separated", "Seperated", FALSE),
+                               checkboxInput("never", "Never Married", FALSE)
+                               ),
+                        column(width = 4,
+                               checkboxInput("divorced", "Divorced", TRUE)
+                        )
                     )
                   ),
                   fluidRow(
@@ -164,14 +168,16 @@ body <- dashboardBody(
               box(width = 6,
                     fluidRow(
                       box(width = 11,
-                          selectInput(
-                            "education", "Choose a Level of Interest:",
-                            c("High School" = "hs",
-                              "Bachelor" = "bac",
-                              "Graduate" = "grad"),
-                            selected = "hs",
-                            multiple = FALSE)
+                          h4("Please Select a Level of Interest"),
+                          column(width = 6,
+                                 checkboxInput("nohs", "Less Than High School", FALSE),
+                                 checkboxInput("hs", "At Least High School", TRUE)
+                          ),
+                          column(width = 6,
+                                 checkboxInput("bac", "At Least Bachelor", FALSE),
+                                 checkboxInput("grad", "At Least Graduate", FALSE)
                           )
+                      )
                     ),
                     fluidRow(
                       box(width = 11,
@@ -276,6 +282,8 @@ body <- dashboardBody(
 ##### SERVER #####
 server <- function(input, output, session){
   
+  ##### GLOBAL FILTER BELOW #####
+  
   place <- reactive({
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
@@ -328,69 +336,7 @@ server <- function(input, output, session){
     my_place
   })
   
-  observeEvent(input$age_info, {
-    showNotification("AGE", age_pop)
-  })
-  
-  observeEvent(input$rac_info, {
-    showNotification("RACE", rac_pop)
-  })
-  
-  observeEvent(input$gen_info, {
-    showNotification("GENDER", gen_pop)
-  })
-  
-  observeEvent(input$his_info, {
-    showNotification("ETHNICITY", his_pop)
-  })
-  
-  observeEvent(input$edu_info, {
-    showNotification("Educational Attainment Rates ", edu_pop)
-  })
-  
-  observeEvent(input$mar_info, {
-    showNotification("Marital Status Rates", mar_pop)
-  })
-  
-  observeEvent(input$sui_info, {
-    showNotification("Age-adjusted Suicide Rate", sui_pop)
-  })
-  
-  observeEvent(input$vet_info, {
-    showNotification("Veteran Status", vet_pop)
-  })
-  
-  observeEvent(input$inc_info, {
-    showNotification("Median Annual Household Income", inc_pop)
-  })
-
-  observeEvent(input$ren_info, {
-    showNotification("Inflation-Adjusted (2015 $) Median Contract Rent", ren_pop)
-  })
-
-  observeEvent(input$pov_info, {
-    showNotification("Poverty Status", pov_pop)
-  })
-  
-  observeEvent(input$ban_info, {
-    showNotification("Bankruptcy", ban_pop)
-  })
-  
-  observeEvent(input$emp_info, {
-    showNotification("Employment", emp_pop)
-  })
-  
-  observeEvent(input$bui_info, {
-    showNotification("Building", bui_pop)
-  })
-  
-  observeEvent(input$val_info, {
-    showNotification("Total Assessed Property Values", val_pop)
-  })
-  
-  observeEvent(input$tax_info, {
-    showNotification("Poverty Tax", tax_pop)
-  })
+  ##### DEMOGRAPHICS TAB BELOW #####
   
   age_df <- reactive({
     my_place <- place()
@@ -440,6 +386,10 @@ server <- function(input, output, session){
     print(p) 
   })
   
+  observeEvent(input$age_info, {
+    showNotification("AGE", age_pop)
+  })
+  
   output$age_down <- downloadHandler(
     filename = function() {
       "plot_age.png"
@@ -485,16 +435,15 @@ server <- function(input, output, session){
   rac_df <- reactive({
     my_place <- place()
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, White_Pct, Black_Pct, American_Indian_and_Alaska_Native_Pct, Asian_Pct, Hawaiian_and_Other_Pacific_Islander_Pct, Others_Pct, Year)
-    muni_df <- melt(muni_df)
-    muni_df$variable <- gsub("_Pct", "", muni_df$variable)
-    muni_df$variable <- gsub("_", " ", muni_df$variable)
+    names(muni_df) <- c("Region", "White", "Black", "AIAN", "Asian", "HOPI", "Others", "Year")
     muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df <- melt(muni_df)
     muni_df
   })
   
   output$plot_rac <- renderPlot({
     dat <- rac_df()
-    race_var <- unique(dat$variable)
+    race_var <- as.character(unique(dat$variable))
     race <- c()
     if(input$white)
       race <- append(race, race_var[1])
@@ -521,6 +470,11 @@ server <- function(input, output, session){
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
     print(p) 
+  })
+  
+  
+  observeEvent(input$rac_info, {
+    showNotification("RACE", rac_pop)
   })
   
   output$rac_down <- downloadHandler(
@@ -587,6 +541,10 @@ server <- function(input, output, session){
     print(p) 
   })
   
+  observeEvent(input$gen_info, {
+    showNotification("GENDER", gen_pop)
+  })
+  
   output$gen_down <- downloadHandler(
     filename = function() {
       "plot_gender.png"
@@ -638,6 +596,10 @@ server <- function(input, output, session){
     print(p) 
   })
   
+  observeEvent(input$his_info, {
+    showNotification("ETHNICITY", his_pop)
+  })
+  
   output$his_down <- downloadHandler(
     filename = function() {
       "plot_ethnicity.png"
@@ -662,28 +624,113 @@ server <- function(input, output, session){
     }
   )
   
+  ##### SOCIAL TAB BELOW #####
+  
+  mar_df <- reactive({
+    my_place <- place()
+    muni_df <- filter(mar_data, Region %in% my_place) %>% select(Region, Never_Married_pct, Now_Married_pct, Separated_pct, Widowed_pct, Divorced_pct, Gender, Year)
+    names(muni_df) <- gsub("_", " ", names(muni_df))
+    names(muni_df) <- gsub(" pct", "", names(muni_df))
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df <- melt(muni_df)
+    muni_df
+  })
+  
+  output$plot_mar <- renderPlot({
+    dat <- mar_df()
+    status_var <- as.character(unique(dat$variable))
+    status <- c()
+    if(input$divorced)
+      status <- append(status, status_var[5])
+    if(input$married)
+      status <- append(status, status_var[2])
+    if(input$separated)
+      status <- append(status, status_var[3])
+    if(input$widowed)
+      status <- append(status, status_var[4])
+    if(input$never)
+      status <- append(status, status_var[1])
+    dat <- filter(dat, variable %in% status)
+    theme_set(theme_classic())
+    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
+      facet_grid(. ~ Gender) + 
+      labs(title = "Marital Status", 
+           x = "Mid-Year of Five Year Range",
+           y = "% Population") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
+    print(p) 
+  })
+  
+  observeEvent(input$mar_info, {
+    showNotification("Marital Status Rates", mar_pop)
+  })
+  
+  output$mar_down <- downloadHandler(
+    filename = function() {
+      "plot_marriage.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- mar_df()
+      status_var <- as.character(unique(dat$variable))
+      status <- c()
+      if(input$divorced)
+        status <- append(status, status_var[5])
+      if(input$married)
+        status <- append(status, status_var[2])
+      if(input$separated)
+        status <- append(status, status_var[3])
+      if(input$widowed)
+        status <- append(status, status_var[4])
+      if(input$never)
+        status <- append(status, status_var[1])
+      dat <- filter(dat, variable %in% status)
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
+        facet_grid(. ~ Gender) + 
+        labs(title = "Marital Status", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p) 
+      dev.off()
+    }
+  )
+  
   edu_df <- reactive({
     my_place <- place()
-    muni_df <- filter(edu_data, Region %in% my_place) %>% select(Region, HS_Pct, Bachelors_Pct, Grad_Pct, Year)
-    muni_df <- melt(muni_df)
-    muni_df$variable <- gsub("_Pct", " %", muni_df$variable)
-    muni_df$variable <- gsub("HS", "High School", muni_df$variable)
+    muni_df <- filter(edu_data, Region %in% my_place) %>% select(Region, No_HS_Pct, HS_Pct, Bachelors_Pct, Grad_Pct, Year)
+    names(muni_df) <- c("Region", "Less Than High School", "At Least High School", "At Least Bachelor", "At Least Graduate", "Year")
     muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df <- melt(muni_df)
     muni_df
   })
   
   output$plot_edu <- renderPlot({
     dat <- edu_df() 
-    
-    education <- switch(input$education,
-                        hc = "High School %",
-                        bac = "Bachelors %",
-                        grad = "Grad %",
-                        "High School %")
-    dat <- filter(dat, variable == education)
-    
+    edu_var <- as.character(unique(dat$variable))
+    edu <- c()
+    if(input$hs)
+      edu <- append(edu, edu_var[2])
+    if(input$nohs)
+      edu <- append(edu, edu_var[1])
+    if(input$bac)
+      edu <- append(edu, edu_var[3])
+    if(input$grad)
+      edu <- append(edu, edu_var[4])
+    dat <- filter(dat, variable %in% edu)
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
+    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
       labs(title = "Educational Attainment", 
@@ -694,6 +741,10 @@ server <- function(input, output, session){
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
     print(p) 
+  })
+  
+  observeEvent(input$edu_info, {
+    showNotification("Educational Attainment Rates ", edu_pop)
   })
   
   output$edu_down <- downloadHandler(
@@ -723,128 +774,6 @@ server <- function(input, output, session){
         theme(axis.text=element_text(size=14)) + 
         theme(legend.text = element_text(size = 12))
       print(p) 
-      dev.off()
-    }
-  )
-  
-  mar_df <- reactive({
-    my_place <- place()
-    muni_df <- filter(mar_data, Region %in% my_place) %>% select(Region, Never_Married_pct, Now_Married_pct, Separated_pct, Widowed_pct, Divorced_pct, Gender, Year)
-    names(muni_df) <- gsub("_", " ", names(muni_df))
-    names(muni_df) <- gsub("pct", "%", names(muni_df))
-    muni_df$Year <- gsub("20", "'", muni_df$Year)
-    muni_df
-  })
-  
-  output$plot_mar <- renderPlot({
-    
-    dat <- mar_df()
-    
-    status <- switch(input$status,
-                     married = "Now Married %",
-                     separated = "Separated %",
-                     divorced = "Divorced %",
-                     widowed = "Widowed %",
-                     never = "Never Married %",
-                     "Now Married %")
-    
-    dat <- melt(dat)
-    dat <- subset(dat, variable == status)
-    
-    theme_set(theme_classic())
-    p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
-      geom_line(aes(linetype=Region), size = 1.25) + 
-      geom_point(size = 3) + 
-      facet_grid(. ~ Gender) + 
-      labs(title = paste("Marital Status (",status,")"), 
-           x = "Mid-Year of Five Year Range",
-           y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) +
-      theme(axis.text=element_text(size=14)) + 
-      theme(legend.text = element_text(size = 12))
-    print(p) 
-  })
-  
-  output$mar_down <- downloadHandler(
-    filename = function() {
-      "plot_marriage.png"
-    },
-    content = function(file) {
-      png(file)
-      dat <- mar_df()
-      
-      status <- switch(input$status,
-                       married = "Now Married %",
-                       separated = "Separated %",
-                       divorced = "Divorced %",
-                       widowed = "Widowed %",
-                       never = "Never Married %",
-                       "Now Married %")
-      
-      dat <- melt(dat)
-      dat <- subset(dat, variable == status)
-      
-      theme_set(theme_classic())
-      p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
-        geom_line(aes(linetype=Region), size = 1.25) + 
-        geom_point(size = 3) + 
-        facet_grid(. ~ Gender) + 
-        labs(title = paste("Marital Status (",status,")"), 
-             x = "Mid-Year of Five Year Range",
-             y = "% Population") + 
-        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-        theme(axis.title = element_text(face="bold", size=18)) +
-        theme(axis.text=element_text(size=14)) + 
-        theme(legend.text = element_text(size = 12))
-      print(p) 
-      dev.off()
-    }
-  )
-  
-  vet_df <- reactive({
-    my_place <- place()
-    muni_df <- filter(vet_data, Region %in% my_place) %>% select(Region, Percent_Vet, Year)
-    muni_df <- melt(muni_df)
-    muni_df$Year <- gsub("20", "'", muni_df$Year)
-    muni_df
-  })
-  
-  output$plot_vet <- renderPlot({
-    dat <- vet_df() 
-    theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
-      geom_line(aes(linetype=Region), size = 1.25) + 
-      geom_point(size = 3) + 
-      labs(title = "Civilian Veteran's Status", 
-           x = "Mid-Year of Five Year Range",
-           y = "% Population") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) +
-      theme(axis.text=element_text(size=14)) + 
-      theme(legend.text = element_text(size = 12))
-    print(p)  
-  })
-  
-  output$vet_down <- downloadHandler(
-    filename = function() {
-      "plot_veteran.png"
-    },
-    content = function(file) {
-      png(file)
-      dat <- vet_df() 
-      theme_set(theme_classic())
-      p <- ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
-        geom_line(aes(linetype=Region), size = 1.25) + 
-        geom_point(size = 3) + 
-        labs(title = "Civilian Veteran's Status", 
-             x = "Mid-Year of Five Year Range",
-             y = "% Population") + 
-        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-        theme(axis.title = element_text(face="bold", size=18)) +
-        theme(axis.text=element_text(size=14)) + 
-        theme(legend.text = element_text(size = 12))
-      print(p)  
       dev.off()
     }
   )
@@ -894,6 +823,10 @@ server <- function(input, output, session){
     print(p)  
   })
   
+  observeEvent(input$sui_info, {
+    showNotification("Age-adjusted Suicide Rate", sui_pop)
+  })
+  
   output$sui_down <- downloadHandler(
     filename = function() {
       "plot_suicide.png"
@@ -917,6 +850,59 @@ server <- function(input, output, session){
     }
   )
   
+  vet_df <- reactive({
+    my_place <- place()
+    muni_df <- filter(vet_data, Region %in% my_place) %>% select(Region, Percent_Vet, Year)
+    muni_df <- melt(muni_df)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df
+  })
+  
+  output$plot_vet <- renderPlot({
+    dat <- vet_df() 
+    theme_set(theme_classic())
+    p <- ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
+      labs(title = "Civilian Veteran's Status", 
+           x = "Mid-Year of Five Year Range",
+           y = "% Population") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
+    print(p)  
+  })
+  
+  observeEvent(input$vet_info, {
+    showNotification("Veteran Status", vet_pop)
+  })
+  
+  output$vet_down <- downloadHandler(
+    filename = function() {
+      "plot_veteran.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- vet_df() 
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
+        labs(title = "Civilian Veteran's Status", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Population") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p)  
+      dev.off()
+    }
+  )
+  
+  ##### ECONOMICS TAB BELOW #####
+  
   inc_df <- reactive({
     my_place <- place()
     muni_df <- filter(inc_data, Region %in% my_place) %>% select(Region, Median_Annual_Household_Income, Year)
@@ -938,6 +924,10 @@ server <- function(input, output, session){
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
     print(p)  
+  })
+  
+  observeEvent(input$inc_info, {
+    showNotification("Median Annual Household Income", inc_pop)
   })
   
   output$inc_down <- downloadHandler(
@@ -986,6 +976,33 @@ server <- function(input, output, session){
     print(p)  
   })
   
+  observeEvent(input$ren_info, {
+    showNotification("Inflation-Adjusted (2015 $) Median Contract Rent", ren_pop)
+  })
+  
+  output$ren_down <- downloadHandler(
+    filename = function() {
+      "plot_rent.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- ren_df() 
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x=Year, y=Median.Rent.2015.Dollar, group = Region, colour = Region)) + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
+        labs(title = "Inflation-Adjusted (2015 $) Median Rent", 
+             x = "Mid-Year of Five Year Range",
+             y = "Dollars") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p)  
+      dev.off()
+    }
+  )
+  
   pov_df <- reactive({
     my_place <- place()
     muni_df <- filter(pov_data, Region %in% my_place) %>% select(Region, Percent_Pov, Year)
@@ -1007,6 +1024,10 @@ server <- function(input, output, session){
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
     print(p)  
+  })
+  
+  observeEvent(input$pov_info, {
+    showNotification("Poverty Status", pov_pop)
   })
   
   output$pov_down <- downloadHandler(
@@ -1078,7 +1099,11 @@ server <- function(input, output, session){
       theme(legend.text = element_text(size = 12))
     print(p)  
   })
- 
+  
+  observeEvent(input$ban_info, {
+    showNotification("Bankruptcy", ban_pop)
+  })
+  
   output$ban_down <- downloadHandler(
     filename = function() {
       "plot_bankruptcy.png"
@@ -1102,6 +1127,22 @@ server <- function(input, output, session){
       dev.off()
     }
   )
+  
+  # observeEvent(input$emp_info, {
+  #   showNotification("Employment", emp_pop)
+  # })
+  # 
+  # observeEvent(input$bui_info, {
+  #   showNotification("Building", bui_pop)
+  # })
+  # 
+  # observeEvent(input$val_info, {
+  #   showNotification("Total Assessed Property Values", val_pop)
+  # })
+  # 
+  # observeEvent(input$tax_info, {
+  #   showNotification("Poverty Tax", tax_pop)
+  # })
    
 }
 
