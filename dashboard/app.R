@@ -813,7 +813,7 @@ server <- function(input, output, session){
     p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = Region, colour = Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
-      labs(title = "Suicide Rate ", 
+      labs(title = "Suicide Rate (County Level) ", 
            x = "One Year Estimates",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1090,7 +1090,7 @@ server <- function(input, output, session){
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
       facet_grid(. ~ variable) + 
-      labs(title = "Bankruptcy Fillings", 
+      labs(title = "Bankruptcy Fillings (County Level)", 
            x = "",
            y = "Count") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
