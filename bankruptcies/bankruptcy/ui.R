@@ -4,6 +4,7 @@
 ##            Kiridly                ## 
 ## Date Created:  08/11/15           ##
 ## Date Modified: 08/15/15 XL        ##
+## Data Updated: 11/16/2017 VE       ##
 #######################################
 
 
@@ -35,7 +36,7 @@ shinyUI(fluidPage(
                    ## Select input = Drop down list of timespan (variable name on server side) 
                    
                    selectInput("sum_year", "Select Year",
-                               choices = list("2013" = "2013", "2014" = "2014"),
+                               choices = list("2013" = "2013", "2014" = "2014", "2015" = "2015", "2016" = "2016"),
                                selected="2013",
                                multiple=TRUE
                    ),
@@ -99,7 +100,7 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.tabs == 'map'",
                    selectInput("map_year", "Select Year",
-                               choices = list("2013" = "2013", "2014" = "2014")
+                               choices = list("2013" = "2013", "2014" = "2014", "2015" = "2015", "2016" = "2016")
                    ),
                    radioButtons("map_radio", "Select Variable of Interest",
                                 c("Business Filings" = "Business Filings", 
@@ -130,6 +131,7 @@ shinyUI(fluidPage(
                  ## author line
                  
                  helpText("Created by Xuelian Li and Jenna F. Kiridly"),
+                 helpText("Updated by Valerie Evans"),
                  
                  ## email feedback link
                  ## To develop a link in HTML
