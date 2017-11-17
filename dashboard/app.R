@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 11/15/2017  ##
+## Last Modified: 11/17/2017  ##
 ################################
 
 ##### SETTINGS #####
@@ -65,7 +65,7 @@ body <- dashboardBody(
             fluidRow(
               box(width = 6,
                 fluidRow(
-                  box(width = 11,
+                  box(width = 12,
                       h4("Please Select an Age of Interest"),
                       column(width = 4,
                              checkboxInput("under20", "Age Under 20 ", TRUE),
@@ -84,7 +84,7 @@ body <- dashboardBody(
                       )
                   ),
                 fluidRow(
-                  box(width = 11,
+                  box(width = 12,
                       plotOutput("plot_age")
                       )
                 ),
@@ -93,7 +93,7 @@ body <- dashboardBody(
               ),
               box(width = 6,
                 fluidRow(
-                  box(width = 11,
+                  box(width = 12,
                       h4("Please Select a Race of Interest"),
                       column(width = 9,
                              checkboxInput("white", "White", TRUE),
@@ -108,7 +108,7 @@ body <- dashboardBody(
                   )
                 ),
                 fluidRow(
-                  box(width = 11,
+                  box(width = 12,
                       plotOutput("plot_rac")
                   )
                 ),
@@ -140,7 +140,7 @@ body <- dashboardBody(
             fluidRow(
               box(width = 6,
                   fluidRow(
-                    box(width = 11,
+                    box(width = 12,
                         h4("Please Select a Status of Interest"),
                         column(width = 4,
                                checkboxInput("married", "Now Married", FALSE),
@@ -156,7 +156,7 @@ body <- dashboardBody(
                     )
                   ),
                   fluidRow(
-                    box(width = 11,
+                    box(width = 12,
                         plotOutput("plot_mar")
                         )
                     ),
@@ -167,7 +167,7 @@ body <- dashboardBody(
               ),
               box(width = 6,
                     fluidRow(
-                      box(width = 11,
+                      box(width = 12,
                           h4("Please Select a Level of Interest"),
                           column(width = 6,
                                  checkboxInput("nohs", "Less Than High School", FALSE),
@@ -180,7 +180,7 @@ body <- dashboardBody(
                       )
                     ),
                     fluidRow(
-                      box(width = 11,
+                      box(width = 12,
                           plotOutput("plot_edu")
                           )
                       ),
@@ -241,19 +241,62 @@ body <- dashboardBody(
                   h4(helpText(a("More information about Poverty.", href="https://seigma.shinyapps.io/poverty/")))
               ),
               box(width = 6,
-                  plotOutput("plot_ban"),
-                  actionButton("ban_info", "What is Bankruptcy?"),
-                  downloadButton(outputId = "ban_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy")))
+                  plotOutput("plot_emp"),
+                  actionButton("emp_info", "What is Employment?"),
+                  downloadButton(outputId = "emp_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Employment.", href="https://seigma.shinyapps.io/employment/")))
+              )
+            ),
+            fluidRow(
+              box(width = 6,
+                  box(width = 12,
+                      h4("Please Select a Chapter of Interest"),
+                      column(3,
+                             checkboxInput("buschp7", "Chapter 7", TRUE)
+                      ),
+                      column(3,
+                             checkboxInput("buschp11", "Chapter 11", FALSE)
+                      ),
+                      column(3,
+                             checkboxInput("buschp12", "Chapter 12", FALSE)
+                      ),
+                      column(3,
+                             checkboxInput("buschp13", "Chapter 13", FALSE)
+                      )
+                      ),
+                  fluidRow(
+                    box(width = 12,
+                        plotOutput("plot_bus"),
+                        actionButton("bus_info", "What is Business Bankruptcy?"),
+                        downloadButton(outputId = "bus_down", label = "Download the plot"),
+                        h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy")))
+                    ) 
+                  )
+                  ),
+              box(width = 6,
+                  box(width = 12,
+                      h4("Please Select a Chapter of Interest"),
+                      column(4,
+                             checkboxInput("perchp7", "Chapter 7", TRUE)
+                      ),
+                      column(4,
+                             checkboxInput("perchp11", "Chapter 11", FALSE)
+                      ),
+                      column(4,
+                             checkboxInput("perchp13", "Chapter 13", FALSE)
+                      )
+                      ),
+                  fluidRow(
+                    box(width = 12,
+                        plotOutput("plot_per"),
+                        actionButton("per_info", "What is Personal Bankruptcy?"),
+                        downloadButton(outputId = "per_down", label = "Download the plot"),
+                        h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy")))
+                    ) 
+                  )
               )
             )
   #           fluidRow(
-  #             box(width = 6,
-  #                 plotOutput("plot_emp"),
-  #                 actionButton("emp_info", "What is Employment?"),
-  #                 downloadButton(outputId = "emp_down", label = "Download the plot"),
-  #                 h4(helpText(a("More information about Employment.", href="https://seigma.shinyapps.io/employment/")))
-  #             ),
   #             box(width = 6,
   #                 plotOutput("plot_bui"),
   #                 actionButton("bui_info", "What is Building Permits?"),
@@ -471,7 +514,6 @@ server <- function(input, output, session){
       theme(legend.text = element_text(size = 12))
     print(p) 
   })
-  
   
   observeEvent(input$rac_info, {
     showNotification("RACE", rac_pop)
@@ -754,16 +796,19 @@ server <- function(input, output, session){
     content = function(file) {
       png(file)
       dat <- edu_df() 
-      
-      education <- switch(input$education,
-                          hc = "High School %",
-                          bac = "Bachelors %",
-                          grad = "Grad %",
-                          "High School %")
-      dat <- filter(dat, variable == education)
-      
+      edu_var <- as.character(unique(dat$variable))
+      edu <- c()
+      if(input$hs)
+        edu <- append(edu, edu_var[2])
+      if(input$nohs)
+        edu <- append(edu, edu_var[1])
+      if(input$bac)
+        edu <- append(edu, edu_var[3])
+      if(input$grad)
+        edu <- append(edu, edu_var[4])
+      dat <- filter(dat, variable %in% edu)
       theme_set(theme_classic())
-      p<- ggplot(dat, aes(x=Year, y=value, group = Region, colour = Region)) +
+      p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
         geom_line(aes(linetype=Region), size = 1.25) + 
         geom_point(size = 3) + 
         labs(title = "Educational Attainment", 
@@ -813,7 +858,7 @@ server <- function(input, output, session){
     p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = Region, colour = Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
-      labs(title = "Suicide Rate (County Level) ", 
+      labs(title = "Suicide Rate [County Level]", 
            x = "One Year Estimates",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -838,7 +883,7 @@ server <- function(input, output, session){
       p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = Region, colour = Region)) + 
         geom_line(aes(linetype=Region), size = 1.25) + 
         geom_point(size = 3) + 
-        labs(title = "Suicide Rate ", 
+        labs(title = "Suicide Rate [County Level]", 
              x = "One Year Estimates",
              y = "% Population") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -966,7 +1011,7 @@ server <- function(input, output, session){
     p <- ggplot(dat, aes(x=Year, y=Median.Rent.2015.Dollar, group = Region, colour = Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
-      labs(title = "Inflation-Adjusted (2015 $) Median Rent", 
+      labs(title = "Median Monthly Rent(2015-$ Adjusted)", 
            x = "Mid-Year of Five Year Range",
            y = "Dollars") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -977,7 +1022,7 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$ren_info, {
-    showNotification("Inflation-Adjusted (2015 $) Median Contract Rent", ren_pop)
+    showNotification("Median Monthly Rent(2015-$ Adjusted)", ren_pop)
   })
   
   output$ren_down <- downloadHandler(
@@ -991,7 +1036,7 @@ server <- function(input, output, session){
       p <- ggplot(dat, aes(x=Year, y=Median.Rent.2015.Dollar, group = Region, colour = Region)) + 
         geom_line(aes(linetype=Region), size = 1.25) + 
         geom_point(size = 3) + 
-        labs(title = "Inflation-Adjusted (2015 $) Median Rent", 
+        labs(title = "Median Monthly Rent(2015-$ Adjusted)", 
              x = "Mid-Year of Five Year Range",
              y = "Dollars") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1053,7 +1098,57 @@ server <- function(input, output, session){
     }
   )
   
-  ban_df <- reactive({
+  emp_df <- reactive({
+    my_place <- place()
+    muni_df <- filter(emp_data, Municipal %in% my_place) %>% select(Municipal, Inflation_Adjusted_Average_Weekly_Wage, Year)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df
+  })
+  
+  output$plot_emp <- renderPlot({
+    dat <- emp_df() 
+    theme_set(theme_classic())
+    p <- ggplot(dat, aes(x=Year, y=Inflation_Adjusted_Average_Weekly_Wage, group = Municipal, colour = Municipal)) + 
+      geom_line(aes(linetype=Municipal), size = 1.25) + 
+      geom_point(size = 3) + 
+      labs(title = "Weekly Wage(2012-$ Adjusted) [Municipal Only]", 
+           x = "Mid-Year of Five Year Range",
+           y = "Dollars") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
+    print(p)  
+  })
+  
+  observeEvent(input$emp_info, {
+    showNotification("Employment", emp_pop)
+  })
+  
+  output$pov_emp <- downloadHandler(
+    filename = function() {
+      "plot_employment.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- emp_df() 
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x=Year, y=Inflation_Adjusted_Average_Weekly_Wage, group = Municipal, colour = Municipal)) + 
+        geom_line(aes(linetype=Municipal), size = 1.25) + 
+        geom_point(size = 3) + 
+        labs(title = "Weekly Wage(2012-$ Adjusted) [Municipal Only]", 
+             x = "Mid-Year of Five Year Range",
+             y = "Dollars") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p)  
+      dev.off()
+    }
+  )
+  
+  ban_place <- reactive({
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
     if(!is.null(input$muni)){
@@ -1075,59 +1170,150 @@ server <- function(input, output, session){
         }
       }
     }
-    muni_df <- filter(ban_data, Region %in% my_place) %>% select(Region, Business_Filings_Total, Personal_Filings_Total, Year)
-    colnames(muni_df) <- gsub("_Filings_Total", "", colnames(muni_df))
+  })
+  
+  ban_df <- reactive({
+    my_place <- ban_place()
+    muni_df <- filter(ban_data, Region %in% my_place) %>% select(Region, Percentage_of_Chapter_7_in_Business_Filings, Percentage_of_Chapter_11_in_Business_Filings, Percentage_of_Chapter_12_in_Business_Filings, Percentage_of_Chapter_13_in_Business_Filings, Percentage_of_Chapter_7_in_Personal_Filings, Percentage_of_Chapter_11_in_Personal_Filings, Percentage_of_Chapter_13_in_Personal_Filings, Year)
+    colnames(muni_df) <- gsub("Percentage_of_", "", colnames(muni_df))
+    colnames(muni_df) <- gsub("_Filings", "", colnames(muni_df))
+    colnames(muni_df) <- gsub("Chapter_", "Chp.", colnames(muni_df))
     muni_df$Year <- as.factor(muni_df$Year)
     muni_df <- melt(muni_df)
     muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
-  output$plot_ban <- renderPlot({
-    dat <- ban_df() 
+  output$plot_bus <- renderPlot({
+    dat <- ban_df()
+    var <- c("Chp.7_in_Business", "Chp.11_in_Business", "Chp.12_in_Business", "Chp.13_in_Business")
+    bus <- c()
+    if(input$buschp7)
+      bus <- append(bus, var[1])
+    if(input$buschp11)
+      bus <- append(bus, var[2])
+    if(input$buschp12)
+      bus <- append(bus, var[3])
+    if(input$buschp13)
+      bus <- append(bus, var[4])
+    dat <- filter(dat, variable %in% bus)
+    dat$variable <- gsub("_in_Business", "", dat$variable)
     theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) + 
+    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
-      facet_grid(. ~ variable) + 
-      labs(title = "Bankruptcy Fillings (County Level)", 
-           x = "",
-           y = "Count") + 
+      labs(title = "Business Bankruptcy [County Level]", 
+           x = "Mid-Year of Five Year Range",
+           y = "% Total Business Fillings") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
-    print(p)  
+    print(p) 
   })
   
-  observeEvent(input$ban_info, {
-    showNotification("Bankruptcy", ban_pop)
+  observeEvent(input$bus_info, {
+    showNotification("Business Bankruptcy", bus_pop)
   })
   
-  output$ban_down <- downloadHandler(
+  output$bus_down <- downloadHandler(
     filename = function() {
-      "plot_bankruptcy.png"
+      "plot_business.png"
     },
     content = function(file) {
       png(file)
-      dat <- ban_df() 
+      dat <- ban_df()
+      var <- c("Chp.7_in_Business", "Chp.11_in_Business", "Chp.12_in_Business", "Chp.13_in_Business")
+      bus <- c()
+      if(input$buschp7)
+        bus <- append(bus, var[1])
+      if(input$buschp11)
+        bus <- append(bus, var[2])
+      if(input$buschp12)
+        bus <- append(bus, var[3])
+      if(input$buschp13)
+        bus <- append(bus, var[4])
+      dat <- filter(dat, variable %in% bus)
+      dat$variable <- gsub("_in_Business", "", dat$variable)
       theme_set(theme_classic())
-      p <- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) + 
+      p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
         geom_line(aes(linetype=Region), size = 1.25) + 
         geom_point(size = 3) + 
-        facet_grid(. ~ variable) + 
-        labs(title = "Bankruptcy Fillings", 
-             x = "",
-             y = "Count") + 
+        labs(title = "Business Bankruptcy [County Level]", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Total Business Fillings") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
         theme(axis.text=element_text(size=14)) + 
-        theme(legend.text = element_text(size = 12))
-      print(p)  
+        theme(legend.text = element_text(size = 12)) 
+      print(p) 
       dev.off()
     }
   )
   
+  output$plot_per <- renderPlot({
+    dat <- ban_df()
+    var <- c("Chp.7_in_Personal", "Chp.11_in_Personal", "Chp.13_in_Personal")
+    per <- c()
+    if(input$perchp7)
+      per <- append(per, var[1])
+    if(input$perchp11)
+      per <- append(per, var[2])
+    if(input$perchp13)
+      per <- append(per, var[3])
+    dat <- filter(dat, variable %in% per)
+    dat$variable <- gsub("_in_Personal", "", dat$variable)
+    theme_set(theme_classic())
+    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
+      labs(title = "Personal Bankruptcy [County Level]", 
+           x = "Mid-Year of Five Year Range",
+           y = "% Total Personal Fillings") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
+    print(p) 
+  })
+  
+  observeEvent(input$per_info, {
+    showNotification("Personal Bankruptcy", per_pop)
+  })
+  
+  output$per_down <- downloadHandler(
+    filename = function() {
+      "plot_personal.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- ban_df()
+      var <- c("Chp.7_in_Personal", "Chp.11_in_Personal", "Chp.13_in_Personal")
+      per <- c()
+      if(input$perchp7)
+        per <- append(per, var[1])
+      if(input$perchp11)
+        per <- append(per, var[2])
+      if(input$perchp13)
+        per <- append(per, var[3])
+      dat <- filter(dat, variable %in% per)
+      dat$variable <- gsub("_in_Personal", "", dat$variable)
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
+        labs(title = "Personal Bankruptcy [County Level]", 
+             x = "Mid-Year of Five Year Range",
+             y = "% Total Personal Fillings") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p) 
+      dev.off()
+    }
+  )
+  #
   # observeEvent(input$emp_info, {
   #   showNotification("Employment", emp_pop)
   # })
