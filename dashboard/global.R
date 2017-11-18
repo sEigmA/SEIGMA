@@ -51,10 +51,13 @@ ren_data$Region <- ifelse(ren_data$Municipal=="Massachusetts", "MA", as.characte
 ## Load formatted Poverty data
 pov_data <- read.csv(file="data/povratedata.csv")[,-1]
 pov_data$Year <- as.factor(as.numeric(substr(pov_data$Five_Year_Range, 1, 4))+2)
-## Load formatted Employment data
-emp_data <- read.csv(file="data/empdata3.csv")
+## Load formatted unemp data
+## -1 eliminates first column [rows,columns]
+une_data <- read.csv(file="data/unempdata2.csv")
 ## Load formatted Bankruptcy data
 ban_data <- read.csv(file="data/bankdata1.csv")
+# ## Load formatted Employment data
+# emp_data <- read.csv(file="data/empdata3.csv")
 
 ### REGIONS
 MA_municipals <- as.character(na.omit(unique(dem_data$Municipal)))
@@ -84,7 +87,9 @@ ren_pop <- "Contract rent is the dollar amount of the rental obligation specifie
 
 pov_pop <- "To determine a person's poverty status, one compares the person’s total family income in the last 12 months with the poverty threshold appropriate for that person's family size and composition. If the total income of that person's family is less than the threshold appropriate for that family, then the person is considered below the poverty level. Poverty is defined at the family level and not the household level, the poverty status of the household is determined by the poverty status of the householder."
 
-emp_pop <- "More than 8,000 employers participated in an annual survey administered by the Executive Office of Labor and Workforce Development, which assessed employment by industry in Massachusetts. All civilians aged 16+ who were working during this survey period were counted. This includes individuals who worked as paid employees, within their own business, within a farm or family business, and those who had a job but were absent due to illness, bad weather, vacation, or personal reasons. Individuals were excluded if they solely worked around the house or completed unpaid volunteer work for religious, charitable, or similar organizations."
+une_pop <- "The unemployment rate is produced by the Bureau of Labor Statistics (BLS), which uses state and national level information from the Current Population Survey (CPS). Municipality unemployment rates were gathered form a secition of the BLS and CPS called the Local Areas Unemployment Statistics Series. The unemployment rate represents the number of unemployed people as a proportion of the total labor force. For example, if the civilian labor force equals 100 people and 7 people are unemployed, then the unemployment rate would be 7 percent."
+
+# emp_pop <- "More than 8,000 employers participated in an annual survey administered by the Executive Office of Labor and Workforce Development, which assessed employment by industry in Massachusetts. All civilians aged 16+ who were working during this survey period were counted. This includes individuals who worked as paid employees, within their own business, within a farm or family business, and those who had a job but were absent due to illness, bad weather, vacation, or personal reasons. Individuals were excluded if they solely worked around the house or completed unpaid volunteer work for religious, charitable, or similar organizations."
 
 # ban_pop <- "Bankruptcy is a legal procedure that allows individuals and businesses to resolve debts to their creditors."
 
@@ -92,4 +97,5 @@ bus_pop <- "Any bankruptcy filed by a buisness, corporation, or professional par
 
 per_pop <- "Any bankruptcy filed by an individual for a personal, family, or household purpose."
 
-val_pop <- "Assessed values in Massachusetts are based on 'full and fair cash value'. Massachusetts General Laws defines 'full and fair cash value' as the price an owner willing, but not under compulsion, to sell, ought to receive from one willing but not under compulsion, to buy."
+# val_pop <- "Assessed values in Massachusetts are based on 'full and fair cash value'. Massachusetts General Laws defines 'full and fair cash value' as the price an owner willing, but not under compulsion, to sell, ought to receive from one willing but not under compulsion, to buy."
+

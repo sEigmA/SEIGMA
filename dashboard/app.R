@@ -241,10 +241,10 @@ body <- dashboardBody(
                   h4(helpText(a("More information about Poverty.", href="https://seigma.shinyapps.io/poverty/")))
               ),
               box(width = 6,
-                  plotOutput("plot_emp"),
-                  actionButton("emp_info", "What is Employment?"),
-                  downloadButton(outputId = "emp_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Employment.", href="https://seigma.shinyapps.io/employment/")))
+                  plotOutput("plot_une"),
+                  actionButton("une_info", "What is Unemployment Rate?"),
+                  downloadButton(outputId = "une_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Unemployment.", href="https://seigma.shinyapps.io/unemployment/")))
               )
             ),
             fluidRow(
@@ -1191,22 +1191,22 @@ server <- function(input, output, session){
     }
   )
   
-  emp_df <- reactive({
+  une_df <- reactive({
     my_place <- place()
-    muni_df <- filter(emp_data, Municipal %in% my_place) %>% select(Municipal, Inflation_Adjusted_Average_Weekly_Wage, Year)
+    muni_df <- filter(une_data, Region %in% my_place) %>% select(Region, Unemployment_Rate_Avg, Year)
     muni_df$Year <- gsub("20", "'", muni_df$Year)
     muni_df
   })
   
-  output$plot_emp <- renderPlot({
-    dat <- emp_df() 
+  output$plot_une <- renderPlot({
+    dat <- une_df() 
     theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=Inflation_Adjusted_Average_Weekly_Wage, group = Municipal, colour = Municipal)) + 
-      geom_line(aes(linetype=Municipal), size = 1.25) + 
+    p <- ggplot(dat, aes(x=Year, y=Unemployment_Rate_Avg, group = Region, colour = Region)) + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
-      labs(title = "Weekly Wage(2012-$ Adjusted) [Municipal Only]", 
+      labs(title = "Annual Average Unemployment Rate [No US Avg]", 
            x = "Mid-Year of Five Year Range",
-           y = "Dollars") + 
+           y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
@@ -1214,34 +1214,34 @@ server <- function(input, output, session){
     print(p)  
   })
   
-  observeEvent(input$emp_info, {
+  observeEvent(input$une_info, {
     showModal(modalDialog(
-      title = "What is 2012-$ Adjusted Weekly Income?",
-      emp_pop,
+      title = "What is Unemployment Rate?",
+      une_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
     ))
   })
   
-  output$emp_down <- downloadHandler(
+  output$une_down <- downloadHandler(
     filename = function() {
-      "plot_employment.png"
+      "plot_unemployment.png"
     },
     content = function(file) {
       png(file)
-      dat <- emp_df() 
+      dat <- une_df() 
       theme_set(theme_classic())
-      p <- ggplot(dat, aes(x=Year, y=Inflation_Adjusted_Average_Weekly_Wage, group = Municipal, colour = Municipal)) + 
-        geom_line(aes(linetype=Municipal), size = 1.25) + 
+      p <- ggplot(dat, aes(x=Year, y=Unemployment_Rate_Avg, group = Region, colour = Region)) + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
         geom_point(size = 3) + 
-        labs(title = "Weekly Wage(2012-$ Adjusted) [Municipal Only]", 
+        labs(title = "Annual Average Unemployment Rate [No US Avg]", 
              x = "Mid-Year of Five Year Range",
-             y = "Dollars") + 
+             y = "% Population") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
         theme(axis.text=element_text(size=14)) + 
         theme(legend.text = element_text(size = 12))
-      print(p)  
+      print(p) 
       dev.off()
     }
   )
