@@ -13,6 +13,8 @@ header <- dashboardHeader(title = "SEIGMA Dashboard", disable = TRUE)
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
+    actionButton("show", "How to Use the Dashboard"),
+    br(),
     h4("Select Your Interest"),
     menuItem("Municipality", icon = icon("address-book"),
              selectInput("muni", "Select Municipalities",
@@ -26,7 +28,6 @@ sidebar <- dashboardSidebar(
              checkboxInput("US_mean", "Compare to US Average", TRUE)
              ),
     br(),
-    br(),
     h4("Select Data to Visualize"),
     menuItem("Demographics", tabName = "demo", icon = icon("street-view")
              ),
@@ -34,7 +35,6 @@ sidebar <- dashboardSidebar(
              ),
     menuItem("Economics", tabName = "econ", icon = icon("bank")
     ),
-    br(),
     br(),
     br(),
     menuItem("Comments or Feedback", icon = icon("envelope-o"),
@@ -325,6 +325,32 @@ body <- dashboardBody(
 ##### SERVER #####
 server <- function(input, output, session){
   
+  observeEvent(input$show, {
+    showModal(modalDialog(
+      title = "How to use the dashboard:",
+      h4("1. Select Municipality of Interest"),
+      "Please select the municipality by spelling it or click it from the pull-up menu on the left sidebar.",
+      br(),
+      "-- The municipalities are listed in alphabetical order.",
+      br(),
+      "-- You can select multiple municipalities at the same time.",
+      br(),
+      "-- Use the 'backspace' on the keyboard to delete an existing municipality.",
+      h4("2. Choose the Comparison"),
+      "Please select the corresponding check box to compare the County, Massachusetts or United States average.",
+      h4("3. Select Data to Vitalize"),
+      "Please select the data of interest through tab respectively.",
+      br(),
+      "-- The Demographic tab contains Age, Race, Gender and Ethnicity data.", 
+      br(),
+      "-- The Social tab contains  Marital Status, Educational Attainment, Suicide Rate and Veteran’s Status data.",
+      br(),
+      "-- The Economic tab contains Household Income, Rent, Poverty, Wage and Bankruptcy data.",
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
+  })
+  
   ##### GLOBAL FILTER BELOW #####
   
   place <- reactive({
@@ -338,9 +364,9 @@ server <- function(input, output, session){
             for(i in 1:length(input$muni)){
               county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
             }
-            my_place <- c("United States", "MA", input$muni, county) 
+            my_place <- c(input$muni, county, "MA", "United States") 
           } else{
-            my_place <- c("United States", "MA", input$muni)
+            my_place <- c(input$muni, "MA", "United States")
           }
         } else 
           if(input$CT_mean){
@@ -348,9 +374,9 @@ server <- function(input, output, session){
             for(i in 1:length(input$muni)){
               county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
             }
-            my_place <- c("United States", input$muni, county)
+            my_place <- c(input$muni, county, "United States")
           } else{
-            my_place <- c("United States", input$muni)
+            my_place <- c(input$muni, "United States")
           }
       } else{
         if(input$MA_mean){
@@ -359,9 +385,9 @@ server <- function(input, output, session){
             for(i in 1:length(input$muni)){
               county[i] <- as.character(muni_county[muni_county$Municipal == input$muni[i],]$County)
             }
-            my_place <- c("MA", input$muni, county)
+            my_place <- c(input$muni, county, "MA")
           } else{
-            my_place <- c("MA", input$muni)
+            my_place <- c(input$muni,"MA")
           }
         } else{
           if(input$CT_mean){
@@ -417,7 +443,7 @@ server <- function(input, output, session){
     dat <- filter(dat, variable %in% age)
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Age Distribution", 
            x = "Mid-Year of Five Year Range",
@@ -425,12 +451,22 @@ server <- function(input, output, session){
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
-      theme(legend.text = element_text(size = 12))
+      theme(legend.text = element_text(size = 12)) + 
+      scale_color_discrete("Region")
     print(p) 
   })
   
+  # observeEvent(input$age_info, {
+  #   showNotification("AGE", age_pop)
+  # })
+  
   observeEvent(input$age_info, {
-    showNotification("AGE", age_pop)
+    showModal(modalDialog(
+      title = "What's in Age Group?",
+      age_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$age_down <- downloadHandler(
@@ -461,7 +497,7 @@ server <- function(input, output, session){
       dat <- filter(dat, variable %in% age)
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
         geom_point(size = 3) + 
         labs(title = "Age Distribution", 
              x = "Mid-Year of Five Year Range",
@@ -469,7 +505,8 @@ server <- function(input, output, session){
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
         theme(axis.text=element_text(size=14)) + 
-        theme(legend.text = element_text(size = 12))
+        theme(legend.text = element_text(size = 12))+ 
+        scale_color_discrete("Region")
       print(p) 
       dev.off()
     }
@@ -503,7 +540,7 @@ server <- function(input, output, session){
     dat <- filter(dat, variable %in% race)
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Race Distribution", 
            x = "Mid-Year of Five Year Range",
@@ -511,7 +548,8 @@ server <- function(input, output, session){
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
-      theme(legend.text = element_text(size = 12))
+      theme(legend.text = element_text(size = 12))+ 
+      scale_color_discrete("Region")
     print(p) 
   })
   
@@ -543,7 +581,7 @@ server <- function(input, output, session){
       dat <- filter(dat, variable %in% race)
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
         geom_point(size = 3) + 
         labs(title = "Race Distribution", 
              x = "Mid-Year of Five Year Range",
@@ -551,7 +589,8 @@ server <- function(input, output, session){
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
         theme(axis.text=element_text(size=14)) + 
-        theme(legend.text = element_text(size = 12))
+        theme(legend.text = element_text(size = 12))+ 
+        scale_color_discrete("Region")
       print(p) 
       dev.off()
     }
@@ -695,7 +734,7 @@ server <- function(input, output, session){
     dat <- filter(dat, variable %in% status)
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       facet_grid(. ~ Gender) + 
       labs(title = "Marital Status", 
@@ -704,7 +743,8 @@ server <- function(input, output, session){
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
-      theme(legend.text = element_text(size = 12))
+      theme(legend.text = element_text(size = 12))+ 
+      scale_color_discrete("Region")
     print(p) 
   })
   
@@ -734,7 +774,7 @@ server <- function(input, output, session){
       dat <- filter(dat, variable %in% status)
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
         geom_point(size = 3) + 
         facet_grid(. ~ Gender) + 
         labs(title = "Marital Status", 
@@ -743,7 +783,8 @@ server <- function(input, output, session){
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
         theme(axis.text=element_text(size=14)) + 
-        theme(legend.text = element_text(size = 12))
+        theme(legend.text = element_text(size = 12))+ 
+        scale_color_discrete("Region")
       print(p) 
       dev.off()
     }
@@ -773,7 +814,7 @@ server <- function(input, output, session){
     dat <- filter(dat, variable %in% edu)
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Educational Attainment", 
            x = "Mid-Year of Five Year Range",
@@ -781,7 +822,8 @@ server <- function(input, output, session){
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
-      theme(legend.text = element_text(size = 12))
+      theme(legend.text = element_text(size = 12))+ 
+      scale_color_discrete("Region")
     print(p) 
   })
   
@@ -809,7 +851,7 @@ server <- function(input, output, session){
       dat <- filter(dat, variable %in% edu)
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
         geom_point(size = 3) + 
         labs(title = "Educational Attainment", 
              x = "Mid-Year of Five Year Range",
@@ -817,7 +859,8 @@ server <- function(input, output, session){
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
         theme(axis.text=element_text(size=14)) + 
-        theme(legend.text = element_text(size = 12))
+        theme(legend.text = element_text(size = 12))+ 
+        scale_color_discrete("Region")
       print(p) 
       dev.off()
     }
@@ -1200,7 +1243,7 @@ server <- function(input, output, session){
     dat$variable <- gsub("_in_Business", "", dat$variable)
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Business Bankruptcy [County Level]", 
            x = "Mid-Year of Five Year Range",
@@ -1208,7 +1251,8 @@ server <- function(input, output, session){
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
-      theme(legend.text = element_text(size = 12))
+      theme(legend.text = element_text(size = 12)) + 
+      scale_color_discrete("Region")
     print(p) 
   })
   
@@ -1237,7 +1281,7 @@ server <- function(input, output, session){
       dat$variable <- gsub("_in_Business", "", dat$variable)
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
         geom_point(size = 3) + 
         labs(title = "Business Bankruptcy [County Level]", 
              x = "Mid-Year of Five Year Range",
@@ -1245,7 +1289,8 @@ server <- function(input, output, session){
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
         theme(axis.text=element_text(size=14)) + 
-        theme(legend.text = element_text(size = 12)) 
+        theme(legend.text = element_text(size = 12)) + 
+        scale_color_discrete("Region")
       print(p) 
       dev.off()
     }
@@ -1265,7 +1310,7 @@ server <- function(input, output, session){
     dat$variable <- gsub("_in_Personal", "", dat$variable)
     theme_set(theme_classic())
     p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Personal Bankruptcy [County Level]", 
            x = "Mid-Year of Five Year Range",
@@ -1273,7 +1318,8 @@ server <- function(input, output, session){
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
-      theme(legend.text = element_text(size = 12))
+      theme(legend.text = element_text(size = 12)) + 
+      scale_color_discrete("Region")
     print(p) 
   })
   
@@ -1300,7 +1346,7 @@ server <- function(input, output, session){
       dat$variable <- gsub("_in_Personal", "", dat$variable)
       theme_set(theme_classic())
       p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
-        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
         geom_point(size = 3) + 
         labs(title = "Personal Bankruptcy [County Level]", 
              x = "Mid-Year of Five Year Range",
@@ -1308,7 +1354,8 @@ server <- function(input, output, session){
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
         theme(axis.text=element_text(size=14)) + 
-        theme(legend.text = element_text(size = 12))
+        theme(legend.text = element_text(size = 12)) + 
+        scale_color_discrete("Region")
       print(p) 
       dev.off()
     }
