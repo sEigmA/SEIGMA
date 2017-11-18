@@ -58,11 +58,6 @@ body <- dashboardBody(
                   )
             ),
             fluidRow(
-              box(width = 12,
-                  h4(helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)")))
-              )
-            ),
-            fluidRow(
               box(width = 6,
                 fluidRow(
                   box(width = 12,
@@ -112,20 +107,25 @@ body <- dashboardBody(
                       plotOutput("plot_rac")
                   )
                 ),
-                actionButton("rac_info", "What's in Race?"),
+                actionButton("rac_info", "What's in Race Group?"),
                 downloadButton(outputId = "rac_down", label = "Download the plot")
               )
             ),
             fluidRow(
               box(width = 6,
                 plotOutput("plot_gen"),
-                actionButton("gen_info", "What is Gender?"),
+                actionButton("gen_info", "What's in Gender?"),
                 downloadButton(outputId = "gen_down", label = "Download the plot")
               ),
               box(width = 6,
                 plotOutput("plot_his"),
-                actionButton("his_info", "What is Ethnicity?"),
+                actionButton("his_info", "What's in Ethnicity?"),
                 downloadButton(outputId = "his_down", label = "Download the plot")
+              )
+            ),
+            fluidRow(
+              box(width = 12,
+                  h4(helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)")))
               )
             )
     ),
@@ -554,7 +554,12 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$rac_info, {
-    showNotification("RACE", rac_pop)
+    showModal(modalDialog(
+      title = "What's in Race Group?",
+      rac_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$rac_down <- downloadHandler(
@@ -623,7 +628,12 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$gen_info, {
-    showNotification("GENDER", gen_pop)
+    showModal(modalDialog(
+      title = "What is Gender?",
+      gen_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$gen_down <- downloadHandler(
@@ -678,7 +688,12 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$his_info, {
-    showNotification("ETHNICITY", his_pop)
+    showModal(modalDialog(
+      title = "What's in Ethnicity?",
+      his_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$his_down <- downloadHandler(
@@ -749,7 +764,12 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$mar_info, {
-    showNotification("Marital Status Rates", mar_pop)
+    showModal(modalDialog(
+      title = "What is Marital Status Rates?",
+      mar_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$mar_down <- downloadHandler(
@@ -828,7 +848,12 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$edu_info, {
-    showNotification("Educational Attainment Rates ", edu_pop)
+    showModal(modalDialog(
+      title = "What is Educational Attainment Rate?",
+      edu_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$edu_down <- downloadHandler(
@@ -912,7 +937,12 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$sui_info, {
-    showNotification("Age-adjusted Suicide Rate", sui_pop)
+    showModal(modalDialog(
+      title = "What is Age-adjusted Suicide Rate?",
+      sui_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$sui_down <- downloadHandler(
@@ -963,7 +993,12 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$vet_info, {
-    showNotification("Veteran Status", vet_pop)
+    showModal(modalDialog(
+      title = "What is Veteran Status?",
+      vet_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$vet_down <- downloadHandler(
@@ -1015,7 +1050,12 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$inc_info, {
-    showNotification("Median Annual Household Income", inc_pop)
+    showModal(modalDialog(
+      title = "What is Median Annual Household Income?",
+      inc_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$inc_down <- downloadHandler(
@@ -1065,7 +1105,12 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$ren_info, {
-    showNotification("Median Monthly Rent(2015-$ Adjusted)", ren_pop)
+    showModal(modalDialog(
+      title = "What is 2015-$ Adjusted Median Monthly Rent?",
+      ren_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$ren_down <- downloadHandler(
@@ -1115,7 +1160,12 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$pov_info, {
-    showNotification("Poverty Status", pov_pop)
+    showModal(modalDialog(
+      title = "What is Poverty Rate?",
+      pov_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$pov_down <- downloadHandler(
@@ -1165,10 +1215,15 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$emp_info, {
-    showNotification("Employment", emp_pop)
+    showModal(modalDialog(
+      title = "What is 2012-$ Adjusted Weekly Income?",
+      emp_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
-  output$pov_emp <- downloadHandler(
+  output$emp_down <- downloadHandler(
     filename = function() {
       "plot_employment.png"
     },
@@ -1257,7 +1312,12 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$bus_info, {
-    showNotification("Business Bankruptcy", bus_pop)
+    showModal(modalDialog(
+      title = "What is Business Bankruptcy?",
+      bus_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$bus_down <- downloadHandler(
@@ -1324,7 +1384,12 @@ server <- function(input, output, session){
   })
   
   observeEvent(input$per_info, {
-    showNotification("Personal Bankruptcy", per_pop)
+    showModal(modalDialog(
+      title = "What is Personal Bankruptcy?",
+      per_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
   })
   
   output$per_down <- downloadHandler(
