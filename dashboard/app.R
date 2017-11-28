@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 11/17/2017  ##
+## Last Modified: 11/28/2017  ##
 ################################
 
 ##### SETTINGS #####
@@ -51,7 +51,9 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
   tabItems(
-    tabItem(tabName = "demo",
+    tabItem(
+      ### Demographic Tab UI ###
+      tabName = "demo",
             fluidRow(
               box(width = 12,
                   a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/")
@@ -129,7 +131,7 @@ body <- dashboardBody(
               )
             )
     ),
-
+    ### Social Tab UI ###
     tabItem(tabName = "soci",
             # Educational Attainment, Marital Status, Schools, Suicide Rates, Veteran Status
             fluidRow(
@@ -203,15 +205,8 @@ body <- dashboardBody(
                   h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/")))
                     )
               )
-            # fluidRow(
-            #   box(width = 12,
-            #       plotOutput("plot_sch"),
-            #       actionButton("sch_info", "What is Interest Groups?"),
-            #       downloadButton(outputId = "sch_down", label = "Download the plot"),
-            #       h4(helpText(a("More information about Schools.", href="https://seigma.shinyapps.io/schools/")))
-            #   )
-            # )
     ),
+    ### Economics Tab UI ###
     tabItem(tabName = "econ",
             # Bankruptcy, Building Permits, Employment, Household Income, Poverty Rates, Property Tax, Property Value, Rent, Unemployment
             fluidRow(
@@ -227,18 +222,18 @@ body <- dashboardBody(
                   h4(helpText(a("More information about Household Income.", href="https://seigma.shinyapps.io/income/")))
               ),
               box(width = 6,
-                  plotOutput("plot_ren"),
-                  actionButton("ren_info", "What is Inflation-Adjusted Median Rent?"),
-                  downloadButton(outputId = "ren_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Rent.", href="https://seigma.shinyapps.io/rent/")))
-              )
-            ),
-            fluidRow(
-              box(width = 6,
                   plotOutput("plot_pov"),
                   actionButton("pov_info", "What is Poverty Status?"),
                   downloadButton(outputId = "pov_down", label = "Download the plot"),
                   h4(helpText(a("More information about Poverty.", href="https://seigma.shinyapps.io/poverty/")))
+              )
+            ),
+            fluidRow(
+              box(width = 6,
+                  plotOutput("plot_emp"),
+                  actionButton("emp_info", "What is Business Establishments?"),
+                  downloadButton(outputId = "emp_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Employment.", href="https://seigma.shinyapps.io/employment/")))
               ),
               box(width = 6,
                   plotOutput("plot_une"),
@@ -292,32 +287,77 @@ body <- dashboardBody(
                         actionButton("per_info", "What is Personal Bankruptcy?"),
                         downloadButton(outputId = "per_down", label = "Download the plot"),
                         h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy")))
-                    ) 
+                    )
+
+                    )
                   )
+              ),
+            fluidRow(
+              box(width = 6,
+                  plotOutput("plot_ren"),
+                  actionButton("ren_info", "What is Inflation-Adjusted Median Rent?"),
+                  downloadButton(outputId = "ren_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Rent.", href="https://seigma.shinyapps.io/rent/")))
+              ),
+              box(width = 6,
+                  plotOutput("plot_bui"),
+                  actionButton("bui_info", "What is Building Permits?"),
+                  downloadButton(outputId = "bui_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Building Permits.", href="https://seigma.shinyapps.io/BuildingPermits/")))
+              )
+            ),
+            fluidRow(
+              box(width = 6,
+                  box(width = 12,
+                      h4("Please Select a Class of Interest"),
+                      column(3,
+                             checkboxInput("resval", "Residenial", TRUE)
+                      ),
+                      column(3,
+                             checkboxInput("comval", "Commercial", FALSE)
+                      ),
+                      column(3,
+                             checkboxInput("indval", "Inducstrual", FALSE)
+                      ),
+                      column(3,
+                             checkboxInput("perval", "Personal", FALSE)
+                      )
+                  ),
+                  fluidRow(
+                    box(width = 12,
+                  plotOutput("plot_val"),
+                  actionButton("val_info", "What is Total Assessed Property Values?"),
+                  downloadButton(outputId = "pro_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Property Value.", href="https://seigma.shinyapps.io/PropertyValue/")))
+                    )
+              )
+              ),
+              box(width = 6,
+                  box(width = 12,
+                      h4("Please Select a Class of Interest"),
+                      column(3,
+                             checkboxInput("restax", "Residenial", TRUE)
+                      ),
+                      column(3,
+                             checkboxInput("comtax", "Commercial", FALSE)
+                      ),
+                      column(3,
+                             checkboxInput("indtax", "Inducstrual", FALSE)
+                      ),
+                      column(3,
+                             checkboxInput("pertax", "Personal", FALSE)
+                      )
+                  ),
+                  fluidRow(
+                    box(width = 12,
+                  plotOutput("plot_tax"),
+                  actionButton("tax_info", "What is Poverty Tax?"),
+                  downloadButton(outputId = "tax_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Property Tax.", href="https://seigma.shinyapps.io/PropertyValue/")))
               )
             )
-  #           fluidRow(
-  #             box(width = 6,
-  #                 plotOutput("plot_bui"),
-  #                 actionButton("bui_info", "What is Building Permits?"),
-  #                 downloadButton(outputId = "bui_down", label = "Download the plot"),
-  #                 h4(helpText(a("More information about Building Permits.", href="https://seigma.shinyapps.io//BuildingPermits/")))
-  #             )
-  #           ),
-  #           fluidRow(
-  #             box(width = 6,
-  #                 plotOutput("plot_val"),
-  #                 actionButton("val_info", "What is Total Assessed Property Values?"),
-  #                 downloadButton(outputId = "pro_down", label = "Download the plot"),
-  #                 h4(helpText(a("More information about Property Value.", href="https://seigma.shinyapps.io/PropertyValue/")))
-  #             ),
-  #             box(width = 6,
-  #                 plotOutput("plot_tax"),
-  #                 actionButton("tax_info", "What is Poverty Tax?"),
-  #                 downloadButton(outputId = "tax_down", label = "Download the plot"),
-  #                 h4(helpText(a("More information about Property Tax.", href="https://seigma.shinyapps.io/PropertyValue/")))
-  #             )
-  #           )
+              )
+            )
   )
   )
 )
@@ -325,6 +365,7 @@ body <- dashboardBody(
 ##### SERVER #####
 server <- function(input, output, session){
   
+  ##### Instruction Button #####
   observeEvent(input$show, {
     showModal(modalDialog(
       title = "How to use the dashboard:",
@@ -351,8 +392,7 @@ server <- function(input, output, session){
     ))
   })
   
-  ##### GLOBAL FILTER BELOW #####
-  
+  ##### GLOBAL FILTER #####
   place <- reactive({
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
@@ -405,8 +445,9 @@ server <- function(input, output, session){
     my_place
   })
   
-  ##### DEMOGRAPHICS TAB BELOW #####
+  ##### DEMOGRAPHICS TAB #####
   
+  #### Age ####
   age_df <- reactive({
     my_place <- place()
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Age_under_20_Pct_plot, Under35, Under65, Age_20_34_Pct_plot, Age_35_54_Pct_plot, Age_55_64_Pct_plot, Age_65_74_Pct_plot, Age_over_75_Pct_plot, Year)
@@ -512,6 +553,7 @@ server <- function(input, output, session){
     }
   )
         
+  #### Race ####
   rac_df <- reactive({
     my_place <- place()
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, White_Pct, Black_Pct, American_Indian_and_Alaska_Native_Pct, Asian_Pct, Hawaiian_and_Other_Pacific_Islander_Pct, Others_Pct, Year)
@@ -601,6 +643,7 @@ server <- function(input, output, session){
     }
   )
   
+  #### Gender ####
   gen_df <- reactive({
     my_place <- place()
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Male_Pct, Female_Pct, Year)
@@ -660,6 +703,7 @@ server <- function(input, output, session){
     }
   )
   
+  #### Ethnicity ####
   his_df <- reactive({
     my_place <- place()
     muni_df <- filter(dem_data, Region %in% my_place) %>% select(Region, Hispanic_Pct, Not_Hispanic_Pct, Year)
@@ -722,6 +766,7 @@ server <- function(input, output, session){
   
   ##### SOCIAL TAB BELOW #####
   
+  #### Marital App ####
   mar_df <- reactive({
     my_place <- place()
     muni_df <- filter(mar_data, Region %in% my_place) %>% select(Region, Never_Married_pct, Now_Married_pct, Separated_pct, Widowed_pct, Divorced_pct, Gender, Year)
@@ -810,6 +855,7 @@ server <- function(input, output, session){
     }
   )
   
+  #### Education App ####
   edu_df <- reactive({
     my_place <- place()
     muni_df <- filter(edu_data, Region %in% my_place) %>% select(Region, No_HS_Pct, HS_Pct, Bachelors_Pct, Grad_Pct, Year)
@@ -891,6 +937,7 @@ server <- function(input, output, session){
     }
   )
   
+  #### Suicide App ####
   sui_df <- reactive({
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
@@ -968,6 +1015,7 @@ server <- function(input, output, session){
     }
   )
   
+  #### Veteran App ####
   vet_df <- reactive({
     my_place <- place()
     muni_df <- filter(vet_data, Region %in% my_place) %>% select(Region, Percent_Vet, Year)
@@ -1025,7 +1073,7 @@ server <- function(input, output, session){
   )
   
   ##### ECONOMICS TAB BELOW #####
-  
+  #### Income App ####
   inc_df <- reactive({
     my_place <- place()
     muni_df <- filter(inc_data, Region %in% my_place) %>% select(Region, Median_Annual_Household_Income, Year)
@@ -1080,62 +1128,8 @@ server <- function(input, output, session){
       dev.off()
     }
   )
-  
-  ren_df <- reactive({
-    my_place <- place()
-    muni_df <- filter(ren_data, Region %in% my_place) %>% select(Region, Median.Rent.2015.Dollar, Year)
-    muni_df$Year <- gsub("20", "'", muni_df$Year)
-    muni_df   
-  })
-  
-  output$plot_ren <- renderPlot({
-    dat <- ren_df() 
-    theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=Median.Rent.2015.Dollar, group = Region, colour = Region)) + 
-      geom_line(aes(linetype=Region), size = 1.25) + 
-      geom_point(size = 3) + 
-      labs(title = "Median Monthly Rent(2015-$ Adjusted)", 
-           x = "Mid-Year of Five Year Range",
-           y = "Dollars") + 
-      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-      theme(axis.title = element_text(face="bold", size=18)) +
-      theme(axis.text=element_text(size=14)) + 
-      theme(legend.text = element_text(size = 12))
-    print(p)  
-  })
-  
-  observeEvent(input$ren_info, {
-    showModal(modalDialog(
-      title = "What is 2015-$ Adjusted Median Monthly Rent?",
-      ren_pop,
-      footer = modalButton("Close"),
-      easyClose = TRUE
-    ))
-  })
-  
-  output$ren_down <- downloadHandler(
-    filename = function() {
-      "plot_rent.png"
-    },
-    content = function(file) {
-      png(file)
-      dat <- ren_df() 
-      theme_set(theme_classic())
-      p <- ggplot(dat, aes(x=Year, y=Median.Rent.2015.Dollar, group = Region, colour = Region)) + 
-        geom_line(aes(linetype=Region), size = 1.25) + 
-        geom_point(size = 3) + 
-        labs(title = "Median Monthly Rent(2015-$ Adjusted)", 
-             x = "Mid-Year of Five Year Range",
-             y = "Dollars") + 
-        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
-        theme(axis.title = element_text(face="bold", size=18)) +
-        theme(axis.text=element_text(size=14)) + 
-        theme(legend.text = element_text(size = 12))
-      print(p)  
-      dev.off()
-    }
-  )
-  
+
+  #### Poverty App ####
   pov_df <- reactive({
     my_place <- place()
     muni_df <- filter(pov_data, Region %in% my_place) %>% select(Region, Percent_Pov, Year)
@@ -1190,7 +1184,64 @@ server <- function(input, output, session){
       dev.off()
     }
   )
+
+  #### Employment App ####
+  emp_df <- reactive({
+    my_place <- place()
+    muni_df <- filter(emp_data, Municipal %in% my_place) %>% select(Municipal, Average_Monthly_Employment, Year)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df
+  })
   
+  output$plot_emp <- renderPlot({
+    dat <- emp_df() 
+    theme_set(theme_classic())
+    p <- ggplot(dat, aes(x=Year, y=Average_Monthly_Employment, group = Municipal, colour = Municipal)) + 
+      geom_line(aes(linetype=Municipal), size = 1.25) + 
+      geom_point(size = 3) + 
+      labs(title = "Average Monthly Employment [Muni Only]", 
+           x = "Year",
+           y = "Count") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
+    print(p)  
+  })
+  
+  observeEvent(input$emp_info, {
+    showModal(modalDialog(
+      title = "What is Average Monthly Employment?",
+      emp_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
+  })
+  
+  output$emp_down <- downloadHandler(
+    filename = function() {
+      "plot_employment.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- emp_df() 
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x=Year, y=Average_Monthly_Employment, group = Municipal, colour = Municipal)) + 
+        geom_line(aes(linetype=Municipal), size = 1.25) + 
+        geom_point(size = 3) + 
+        labs(title = "Average Monthly Employment [Muni Only]", 
+             x = "Year",
+             y = "Count") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p)  
+      dev.off()
+    }
+  )
+    
+  #### Unemployment App ####
   une_df <- reactive({
     my_place <- place()
     muni_df <- filter(une_data, Region %in% my_place) %>% select(Region, Unemployment_Rate_Avg, Year)
@@ -1205,7 +1256,7 @@ server <- function(input, output, session){
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
       labs(title = "Annual Average Unemployment Rate [No US Avg]", 
-           x = "Mid-Year of Five Year Range",
+           x = "Year",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
@@ -1235,7 +1286,7 @@ server <- function(input, output, session){
         geom_line(aes(linetype=Region), size = 1.25) + 
         geom_point(size = 3) + 
         labs(title = "Annual Average Unemployment Rate [No US Avg]", 
-             x = "Mid-Year of Five Year Range",
+             x = "Year",
              y = "% Population") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
@@ -1246,6 +1297,7 @@ server <- function(input, output, session){
     }
   )
   
+  #### Bankruptcy App ####
   ban_place <- reactive({
     if(is.null(input$muni))
       my_place <- c("MA", "United States")
@@ -1425,23 +1477,283 @@ server <- function(input, output, session){
       dev.off()
     }
   )
-  #
-  # observeEvent(input$emp_info, {
-  #   showNotification("Employment", emp_pop)
-  # })
-  # 
-  # observeEvent(input$bui_info, {
-  #   showNotification("Building", bui_pop)
-  # })
-  # 
-  # observeEvent(input$val_info, {
-  #   showNotification("Total Assessed Property Values", val_pop)
-  # })
-  # 
-  # observeEvent(input$tax_info, {
-  #   showNotification("Poverty Tax", tax_pop)
-  # })
-   
+  
+  #### Rent App ####
+  ren_df <- reactive({
+    my_place <- place()
+    muni_df <- filter(ren_data, Region %in% my_place) %>% select(Region, Median.Rent.2015.Dollar, Year)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df   
+  })
+  
+  output$plot_ren <- renderPlot({
+    dat <- ren_df() 
+    theme_set(theme_classic())
+    p <- ggplot(dat, aes(x=Year, y=Median.Rent.2015.Dollar, group = Region, colour = Region)) + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
+      labs(title = "Median Monthly Rent(2015-$ Adjusted)", 
+           x = "Mid-Year of Five Year Range",
+           y = "Dollars") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
+    print(p)  
+  })
+  
+  observeEvent(input$ren_info, {
+    showModal(modalDialog(
+      title = "What is 2015-$ Adjusted Median Monthly Rent?",
+      ren_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
+  })
+  
+  output$ren_down <- downloadHandler(
+    filename = function() {
+      "plot_rent.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- ren_df() 
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x=Year, y=Median.Rent.2015.Dollar, group = Region, colour = Region)) + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
+        labs(title = "Median Monthly Rent(2015-$ Adjusted)", 
+             x = "Mid-Year of Five Year Range",
+             y = "Dollars") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p)  
+      dev.off()
+    }
+  )
+  
+  #### Building Permit App ####
+  bui_df <- reactive({
+    my_place <- place()
+    muni_df <- filter(bui_data, Region %in% my_place) %>% select(Region, Permits_Per_1000_Population, Year)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    muni_df   
+  })
+  
+  output$plot_bui <- renderPlot({
+    dat <- bui_df() 
+    theme_set(theme_classic())
+    p <- ggplot(dat, aes(x=Year, y=Permits_Per_1000_Population, group = Region, colour = Region)) + 
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
+      labs(title = "Annual Permits per 1000 Population [No US]", 
+           x = "Year",
+           y = "Permits per 1000 Population") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
+    print(p)  
+  })
+  
+  observeEvent(input$bui_info, {
+    showModal(modalDialog(
+      title = "What is Building Permit?",
+      bui_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
+  })
+  
+  output$bui_down <- downloadHandler(
+    filename = function() {
+      "plot_buiper.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- bui_df() 
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x=Year, y=Permits_Per_1000_Population, group = Region, colour = Region)) + 
+        geom_line(aes(linetype=Region), size = 1.25) + 
+        geom_point(size = 3) + 
+        labs(title = "Annual Permits per 1000 Population [No US]", 
+             x = "Year",
+             y = "Permits per 1000 Population") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p)  
+      dev.off()
+    }
+  )
+
+  #### Property Value App ####
+  val_df <- reactive({
+    my_place <- place()
+    muni_df <- filter(val_data, Municipal %in% my_place) %>% select(Municipal, Percentage_of_Residential, Percentage_of_Commercial, Percentage_of_Industrial, Percentage_of_Personal_Property, Year)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    names(muni_df) <- gsub("Percentage_of_", "", names(muni_df))
+    muni_df <- melt(muni_df)
+    muni_df   
+  })
+  
+  output$plot_val <- renderPlot({
+    dat <- val_df() 
+    val_var <- as.character(unique(dat$variable))
+    val <- c()
+    if(input$resval)
+      val <- append(val, val_var[1])
+    if(input$comval)
+      val <- append(val, val_var[2])
+    if(input$indval)
+      val <- append(val, val_var[3])
+    if(input$perval)
+      val <- append(val, val_var[4])
+    dat <- filter(dat, variable %in% val)
+    theme_set(theme_classic())
+    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
+      geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
+      geom_point(size = 3) + 
+      labs(title = "Assessed Property Values [Muni Only]", 
+           x = "Year",
+           y = "% Assessed Property Values") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))+ 
+      scale_color_discrete("Municipal")
+    print(p)  
+  })
+  
+  observeEvent(input$val_info, {
+    showModal(modalDialog(
+      title = "What is Assessed Property Values?",
+      val_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
+  })
+  
+  output$val_down <- downloadHandler(
+    filename = function() {
+      "plot_value.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- val_df() 
+      val_var <- as.character(unique(dat$variable))
+      val <- c()
+      if(input$resval)
+        val <- append(val, val_var[1])
+      if(input$comval)
+        val <- append(val, val_var[2])
+      if(input$indval)
+        val <- append(val, val_var[3])
+      if(input$perval)
+        val <- append(val, val_var[4])
+      dat <- filter(dat, variable %in% val)
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
+        geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
+        geom_point(size = 3) + 
+        labs(title = "Assessed Property Values [Muni Only]", 
+             x = "Year",
+             y = "% Assessed Property Values") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))+ 
+        scale_color_discrete("Municipal")
+      print(p)  
+      dev.off()
+    }
+  )
+  
+  #### Property Tax App ####
+  tax_df <- reactive({
+    my_place <- place()
+    muni_df <- filter(tax_data, Municipal %in% my_place) %>% select(Municipal, Percentage_of_Residential, Percentage_of_Commercial, Percentage_of_Industrial, Percentage_of_Personal_Property, Year)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    names(muni_df) <- gsub("Percentage_of_", "", names(muni_df))
+    muni_df <- melt(muni_df)
+    muni_df   
+  })
+  
+  output$plot_tax <- renderPlot({
+    dat <- tax_df() 
+    tax_var <- as.character(unique(dat$variable))
+    tax <- c()
+    if(input$restax)
+      tax <- append(tax, tax_var[1])
+    if(input$comtax)
+      tax <- append(tax, tax_var[2])
+    if(input$indtax)
+      tax <- append(tax, tax_var[3])
+    if(input$pertax)
+      tax <- append(tax, tax_var[4])
+    dat <- filter(dat, variable %in% tax)
+    theme_set(theme_classic())
+    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
+      geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
+      geom_point(size = 3) + 
+      labs(title = "Tax Levy by Class [Muni Only]", 
+           x = "Year",
+           y = "% Tax Levy") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))+ 
+      scale_color_discrete("Municipal")
+    print(p)  
+  })
+  
+  observeEvent(input$tax_info, {
+    showModal(modalDialog(
+      title = "What is Total Tax Levy?",
+      tax_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
+  })
+  
+  output$tax_down <- downloadHandler(
+    filename = function() {
+      "plot_tax.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- tax_df() 
+      tax_var <- as.character(unique(dat$variable))
+      tax <- c()
+      if(input$restax)
+        tax <- append(tax, tax_var[1])
+      if(input$comtax)
+        tax <- append(tax, tax_var[2])
+      if(input$indtax)
+        tax <- append(tax, tax_var[3])
+      if(input$pertax)
+        tax <- append(tax, tax_var[4])
+      dat <- filter(dat, variable %in% tax)
+      theme_set(theme_classic())
+      p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
+        geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
+        geom_point(size = 3) + 
+        labs(title = "Tax Levy by Class [Muni Only]", 
+             x = "Year",
+             y = "% Tax Levy") + 
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))+ 
+        scale_color_discrete("Municipal")
+      print(p)  
+      dev.off()
+    }
+  )
+  
 }
 
 ##### RUN APP #####

@@ -3,7 +3,7 @@
 ## App: SEIGMA dashboard     ##
 ## Author: Zhenning Kang     ##
 ## Date Created:  09/27/2017 ##
-## Last Modified: 11/17/2017 ##
+## Last Modified: 11/28/2017 ##
 ###############################
 
 ##### SETTINGS #####
@@ -56,8 +56,18 @@ pov_data$Year <- as.factor(as.numeric(substr(pov_data$Five_Year_Range, 1, 4))+2)
 une_data <- read.csv(file="data/unempdata2.csv")
 ## Load formatted Bankruptcy data
 ban_data <- read.csv(file="data/bankdata1.csv")
-# ## Load formatted Employment data
-# emp_data <- read.csv(file="data/empdata3.csv")
+## Load formatted Employment data
+emp_data <- read.csv(file="data/empdata3.csv")
+## Load formatted Building Permits data
+bui_data <- read.csv(file="data/buildingdata.csv")
+colnames(bui_data)[2:15]<-c("Year","Number_of_Months_Reported" ,"Single_Family_Buildings","Single_Family_Units","Single_Family_validation","I2_Family_Buildings","I2_Family_Units","I2_Family_validation","I3-4_Family_Buildings","I3-4_Family_Units","I3-4_Family_validation","I5_Family_Buildings","I5_Family_Units","I5_Family_validation")
+## Load formatted pValue data
+val_data <- read.csv(file="data/pValuedata3.csv")
+colnames(val_data)[4:10]<-c("Year","Residential","Open_Space", "Commercial", "Industrial", "Personal_Property", "Total_Assessed")
+## Load formatted Tax data
+tax_data <- read.csv(file="data/taxdata2.csv")
+colnames(tax_data)[2:3]<-c("Year", "Total_Budget")
+
 
 ### REGIONS
 MA_municipals <- as.character(na.omit(unique(dem_data$Municipal)))
@@ -89,7 +99,7 @@ pov_pop <- "To determine a person's poverty status, one compares the person’s 
 
 une_pop <- "The unemployment rate is produced by the Bureau of Labor Statistics (BLS), which uses state and national level information from the Current Population Survey (CPS). Municipality unemployment rates were gathered form a secition of the BLS and CPS called the Local Areas Unemployment Statistics Series. The unemployment rate represents the number of unemployed people as a proportion of the total labor force. For example, if the civilian labor force equals 100 people and 7 people are unemployed, then the unemployment rate would be 7 percent."
 
-# emp_pop <- "More than 8,000 employers participated in an annual survey administered by the Executive Office of Labor and Workforce Development, which assessed employment by industry in Massachusetts. All civilians aged 16+ who were working during this survey period were counted. This includes individuals who worked as paid employees, within their own business, within a farm or family business, and those who had a job but were absent due to illness, bad weather, vacation, or personal reasons. Individuals were excluded if they solely worked around the house or completed unpaid volunteer work for religious, charitable, or similar organizations."
+emp_pop <- "To estimate monthly employment, all employees who were paid at any point in the past year are counted (this includes full-time, part-time, seasonal, salaried, and hourly employees). The total number of employees is then divided by the number of pay periods per calander year at each business establishment."
 
 # ban_pop <- "Bankruptcy is a legal procedure that allows individuals and businesses to resolve debts to their creditors."
 
@@ -97,5 +107,8 @@ bus_pop <- "Any bankruptcy filed by a buisness, corporation, or professional par
 
 per_pop <- "Any bankruptcy filed by an individual for a personal, family, or household purpose."
 
-# val_pop <- "Assessed values in Massachusetts are based on 'full and fair cash value'. Massachusetts General Laws defines 'full and fair cash value' as the price an owner willing, but not under compulsion, to sell, ought to receive from one willing but not under compulsion, to buy."
+bui_pop <- "Annual residential building permits- Data are obtained from the U.S. Census Bureau's Survey of Construction. Building permits data are collected from individual permit offices, most of which are municipalities. The statistics are based on reports submitted by local building permit officials in response to a mail survey and imputed data."
 
+val_pop <- "Assessed values in Massachusetts are based on 'full and fair cash value'. Massachusetts General Laws defines 'full and fair cash value' as the price an owner willing, but not under compulsion, to sell, ought to receive from one willing but not under compulsion, to buy."
+
+tax_pop <- "A levy, or tax, on property that the owner is required to pay. The tax is given by the region in which the property is located."
