@@ -386,7 +386,7 @@ server <- function(input, output, session){
       br(),
       "-- The Social tab contains  Marital Status, Educational Attainment, Suicide Rate and Veteran’s Status data.",
       br(),
-      "-- The Economic tab contains Household Income, Rent, Poverty, Wage and Bankruptcy data.",
+      "-- The Economic tab contains Household Income, Poverty Rate, Monthly Employment, Unemployment Rate, Bankruptcy, Rent, Building Permits, Property Value and Property Tax data.",
       footer = modalButton("Close"),
       easyClose = TRUE
     ))
