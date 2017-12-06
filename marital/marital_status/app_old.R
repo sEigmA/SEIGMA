@@ -3,7 +3,6 @@
 ## Author(s): Valerie Evans          ##
 ## Date Created:  11/02/2017         ##
 ## Date Modified: 11/09/2017 VE      ##
-## Map Updated:   12/05/2017 ZK      ##
 #######################################
 
 ##### GLOBAL #####
@@ -244,7 +243,7 @@ about_main_text <- p(strong("The SEIGMA Marital Status App"), "Displays the five
                        tags$li(p(strong("Plot"), "compares a municipality's marital status estimate to county, state, and national estimates.")),
                        tags$li(p(strong("Map"), "visually displays marital status estimates by municipality.")),
                        tags$li(p(strong("More Info"), "describes marital status including formulas and calculations."))
-)
+                     )
 )
 
 font_size <- 14
@@ -517,10 +516,10 @@ ui <- shinyUI(fluidPage(
                                               "Separated" = "Separated_pct",
                                               "Widowed" = "Widowed_pct",
                                               "Divorced" = "Divorced_pct")),
-                   checkboxInput("lmap_cas", "Display Casinos", value=FALSE),
+                   checkboxInput("lmap_cas", "Display Casinos", value=TRUE),
                    actionButton("action2", "REDRAW MAP")
                  ),
-
+                 
                  ## In plot, allow for variable and municipality selection
                  conditionalPanel(
                    condition="input.tabs == 'plot'",
@@ -537,7 +536,7 @@ ui <- shinyUI(fluidPage(
                    selectInput("plotcombine", "Show Plots by Gender", choices = list("Separated" = "Separate", 
                                                                                      "Together" = "Together"))
                  ),
-
+                 
                  ## In summary, allow for year, gender, and municipality selection
                  conditionalPanel(
                    condition="input.tabs == 'summary'",
@@ -607,13 +606,13 @@ ui <- shinyUI(fluidPage(
                  ## Make chart title here (otherwise not centered)
                  conditionalPanel(
                    condition="input.plotcombine=='Separate'",
-                                  h4("Marital Status as a Percentage of the Population by Gender", align="center"),                 
+                   h4("Marital Status as a Percentage of the Population by Gender", align="center"),                 
                    ## Make a row to put two charts in
                    plotOutput("fplot"), 
                    plotOutput("mplot")),
                  conditionalPanel(
                    condition = "input.plotcombine=='Together'",
-                                  h4("Marital Status as a Percentage of the Population by Gender", align="center"),                 
+                   h4("Marital Status as a Percentage of the Population by Gender", align="center"),                 
                    plotOutput("fmplot")),
                  HTML("Horizontal bars indicate the span of five-year estimates, vertical bars with hinges indicate the standard errors. Population includes individuals aged 15 years and older."),
                  value="plot"),
@@ -638,106 +637,19 @@ ui <- shinyUI(fluidPage(
                    absolutePanel(right=400, top=300, class="floater", actionButton("action", "Generate Map")
                    )),
                  
-                 # ## Legend
-                 # conditionalPanel(
-                 #   condition="input.action != 0",
-                 #   absolutePanel(
-                 #     right = 10, top = 150, draggable=FALSE, style = "", 
-                 #     class = "floater",
-                 #     strong("Percentage"),
-                 #     plotOutput("legend1"),
-                 #     tags$table(
-                 #      tags$td(tags$div(
-                 #         style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                 #       )),
-                 #       tags$td("Data not available", align = "right")
-                 #     )
-                 #   )),
-                 
-                 ## Legend                 
-                 # Never Married
+                 ## Legend
                  conditionalPanel(
-                   condition="input.tabs == 'map' && input.var == 'Never_Married_pct' && input.action != 0",
+                   condition="input.action != 0",
                    absolutePanel(
-                     right = 10, top = 100, draggable=FALSE, style = "", 
+                     right = 10, top = 150, draggable=FALSE, style = "", 
                      class = "floater",
-                     strong("Never Married"),
+                     strong("Percentage"),
                      plotOutput("legend1"),
                      tags$table(
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not", br(), "available", align = "right")
-                       )
-                     )
-                   )),
-                 # Married
-                 conditionalPanel(
-                   condition="input.tabs == 'map' && input.var == 'Married_pct' && input.action != 0",
-                   absolutePanel(
-                     right = 10, top = 100, draggable=FALSE, style = "", 
-                     class = "floater",
-                     strong("Married"),
-                     plotOutput("legend2"),
-                     tags$table(
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not", br(), "available", align = "right")
-                       )
-                     )
-                   )),
-                 # Separated
-                 conditionalPanel(
-                   condition="input.tabs == 'map' && input.var == 'Separated_pct' && input.action != 0",
-                   absolutePanel(
-                     right = 10, top = 100, draggable=FALSE, style = "", 
-                     class = "floater",
-                     strong("Separated"),
-                     plotOutput("legend3"),
-                     tags$table(
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not", br(), "available", align = "right")
-                       )
-                     )
-                   )),
-                 # Widowed
-                 conditionalPanel(
-                   condition="input.tabs == 'map' && input.var == 'Widowed_pct' && input.action != 0",
-                   absolutePanel(
-                     right = 10, top = 100, draggable=FALSE, style = "", 
-                     class = "floater",
-                     strong("Widowed"),
-                     plotOutput("legend4"),
-                     tags$table(
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not", br(), "available", align = "right")
-                       )
-                     )
-                   )),
-                 # Divorced
-                 conditionalPanel(
-                   condition="input.tabs == 'map' && input.var == 'Divorced_pct' && input.action != 0",
-                   absolutePanel(
-                     right = 10, top = 100, draggable=FALSE, style = "", 
-                     class = "floater",
-                     strong("Divorced"),
-                     plotOutput("legend5"),
-                     tags$table(
-                       tags$tr(
-                         tags$td(tags$div(
-                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                         )),
-                         tags$td("Data not", br(), "available", align = "right")
-                       )
+                       tags$td(tags$div(
+                         style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                       )),
+                       tags$td("Data not available", align = "right")
                      )
                    )),
                  value="map"),
@@ -754,7 +666,7 @@ ui <- shinyUI(fluidPage(
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
         id="tabs"
                  )
-        ))
+    ))
 )
 ))
 
@@ -763,7 +675,7 @@ server <- shinyServer(function(input, output, session) {
   ## mar_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
   mar_df <- reactive({
     
-  ## Make year a vector based on input variable
+    ## Make year a vector based on input variable
     if(!is.null(input$sum_year))
       years <- input$sum_year
     ## If none selected, put all years in vector
@@ -780,7 +692,7 @@ server <- shinyServer(function(input, output, session) {
     ## Output reactive dataframe
     mar_df    
   })
-    
+  
   ## Create summary table
   output$summary <- renderDataTable({
     ## Make reactive dataframe into regular dataframe
@@ -971,9 +883,9 @@ server <- shinyServer(function(input, output, session) {
       ggtitle(paste("Percent of",gsub("_", " ", gsub("_pct", "", input$plotvar)),"Males (%)", sep=" "))
     p
   })
-
+  
   ## Create map
-
+  
   ## Set map colors
   map_dat <- reactive({
     op <- 0.8
@@ -982,475 +894,292 @@ server <- shinyServer(function(input, output, session) {
     
     ## Make reactive dataframe into regular dataframe
     mar_map_df <- mar_df()
-
+    
     ## Take US, MA, and counties out of map_dat
     map_dat <- mar_map_df %>%
       filter(Five_Year_Range == input$map_year) %>%
       filter(!is.na(Region), Gender == input$map_gender)
     
-    ## assign colors to each entry in the data frame
-    color <- as.integer(cut2(map_dat[,input$var],cuts=cuts))
-    map_dat <- cbind.data.frame(map_dat, color)
-    map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors), 
-                            map_dat$color)
-    map_dat$opacity <- op
-    ## find missing counties in data subset and assign NAs to all values
-    missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
-    missing_df <- data.frame(Municipal = NA, County = NA, State = NA, Region = missing_munis,
-                             Gender = NA, Five_Year_Range = NA, Population = NA, 
-                             Never_Married_pct = NA, Never_Married_pct_error = NA, Married_pct = NA,
-                             Married_pct_error = NA, Separated_pct = NA, Separated_pct_error = NA,
-                             Widowed_pct = NA, Widowed_pct_error = NA, Divorced_pct = NA, 
-                             Divorced_pct_error = NA,
-                             color=length(map_colors), opacity = 0)
-    # combine data subset with missing counties data
-    map_dat <- rbind.data.frame(map_dat, missing_df)
-    map_dat$color <- map_colors[map_dat$color]
-    return(map_dat)
-   
-    # ## For single year maps...
-    # if(input$var == "Married_pct"){
-    #   ## Subset the data by the var selected
-    #   marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Married_pct, Married_pct_error)
-    #   
-    #   ## Assign colors to each entry in the data frame
-    #   color <- as.integer(cut2(marmap_dat[,input$var],cuts=marcuts))
-    #   marmap_dat <- cbind.data.frame(marmap_dat, color)
-    #   marmap_dat$color <- ifelse(is.na(marmap_dat$color), length(map_colors), marmap_dat$color)
-    #   marmap_dat$opacity <- op
-    #   
-    #   ## Find missing counties in data subset and assign NAs to all values
-    #   missing_munis <- setdiff(leftover_munis_map, marmap_dat$Region)
-    #   missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
-    #                            Region = missing_munis, Gender = input$map_gender,
-    #                            Five_Year_Range = input$map_year, Population = NA,
-    #                            Married_pct = NA, Married_pct_error = NA, 
-    #                            color=length(map_colors), opacity = 0)
-    #   # Combine data subset with missing counties data
-    #   marmap_dat <- rbind.data.frame(marmap_dat, missing_df)
-    #   marmap_dat$color <- map_colors[marmap_dat$color]
-    #   return(marmap_dat)
-    # }
-    # 
-    # if(input$var == "Never_Married_pct"){
-    #   ## Subset the data by the var selected
-    #   nevmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Never_Married_pct, Never_Married_pct_error)
-    #   
-    #   ## Assign colors to each entry in the data frame
-    #   color <- as.integer(cut2(nevmap_dat[,input$var],cuts=nevcuts))
-    #   nevmap_dat <- cbind.data.frame(nevmap_dat, color)
-    #   nevmap_dat$color <- ifelse(is.na(nevmap_dat$color), length(map_colors), nevmap_dat$color)
-    #   nevmap_dat$opacity <- op
-    #   
-    #   ## Find missing counties in data subset and assign NAs to all values
-    #   missing_munis <- setdiff(leftover_munis_map, nevmap_dat$Region)
-    #   missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
-    #                            Region = missing_munis, Gender = input$map_gender,
-    #                            Five_Year_Range = input$map_year, Population = NA, 
-    #                            Never_Married_pct = NA, Never_Married_pct_error = NA,
-    #                            color=length(map_colors), opacity = 0)
-    #   # Combine data subset with missing counties data
-    #   nevmap_dat <- rbind.data.frame(nevmap_dat, missing_df)
-    #   nevmap_dat$color <- map_colors[nevmap_dat$color]
-    #   return(nevmap_dat)
-    # }
-    # 
-    # if(input$var == "Separated_pct"){
-    #   ## Subset the data by the var selected
-    #   sepmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Separated_pct,Separated_pct_error)
-    #   
-    #   ## Assign colors to each entry in the data frame
-    #   color <- as.integer(cut2(sepmap_dat[,input$var],cuts=sepcuts))
-    #   sepmap_dat <- cbind.data.frame(sepmap_dat, color)
-    #   sepmap_dat$color <- ifelse(is.na(sepmap_dat$color), length(map_colors), sepmap_dat$color)
-    #   sepmap_dat$opacity <- op
-    #   
-    #   ## Find missing counties in data subset and assign NAs to all values
-    #   missing_munis <- setdiff(leftover_munis_map, sepmap_dat$Region)
-    #   missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
-    #                            Region = missing_munis, Gender = input$map_gender,
-    #                            Five_Year_Range = input$map_year, Population = NA, 
-    #                            Separated_pct = NA, Separated_pct_error = NA, 
-    #                            color=length(map_colors), opacity = 0)
-    #   # Combine data subset with missing counties data
-    #   sepmap_dat <- rbind.data.frame(sepmap_dat, missing_df)
-    #   sepmap_dat$color <- map_colors[sepmap_dat$color]
-    #   return(sepmap_dat)
-    # }
-    # 
-    # if(input$var == "Widowed_pct"){
-    #   ## Subset the data by the year selected
-    #   widmap_dat <- select(map_dat,  Municipal, County, State, Region, Gender, Five_Year_Range, Population, Widowed_pct,Widowed_pct_error)
-    #   
-    #   ## Assign colors to each entry in the data frame
-    #   color <- as.integer(cut2(widmap_dat[,input$var],cuts=widcuts))
-    #   widmap_dat <- cbind.data.frame(widmap_dat, color)
-    #   widmap_dat$color <- ifelse(is.na(widmap_dat$color), length(map_colors), widmap_dat$color)
-    #   widmap_dat$opacity <- op
-    #   
-    #   ## Find missing counties in data subset and assign NAs to all values
-    #   missing_munis <- setdiff(leftover_munis_map, widmap_dat$Region)
-    #   missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
-    #                            Region = missing_munis, Gender = input$map_gender,
-    #                            Five_Year_Range = input$map_year, Population = NA, 
-    #                            Widowed_pct = NA, Widowed_pct_error = NA,
-    #                            color=length(map_colors), opacity = 0)
-    #   # Combine data subset with missing counties data
-    #   widmap_dat <- rbind.data.frame(widmap_dat, missing_df)
-    #   widmap_dat$color <- map_colors[widmap_dat$color]
-    #   return(widmap_dat)
-    # }
-    # 
-    # if(input$var == "Divorced_pct"){
-    #   ## Subset the data by the year selected
-    #   divmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Divorced_pct,Divorced_pct_error)
-    #   
-    #   ## Assign colors to each entry in the data frame
-    #   color <- as.integer(cut2(divmap_dat[,input$var],cuts=divcuts))
-    #   divmap_dat <- cbind.data.frame(divmap_dat, color)
-    #   divmap_dat$color <- ifelse(is.na(divmap_dat$color), length(map_colors), divmap_dat$color)
-    #   divmap_dat$opacity <- op
-    #   
-    #   ## Find missing counties in data subset and assign NAs to all values
-    #   missing_munis <- setdiff(leftover_munis_map, divmap_dat$Region)
-    #   missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
-    #                            Region = missing_munis, Gender = input$map_gender,
-    #                            Five_Year_Range = input$map_year, Population = NA,
-    #                            Divorced_pct = NA, Divorced_pct_error = NA, 
-    #                            color=length(map_colors), opacity = 0)
-    #   # Combine data subset with missing counties data
-    #   divmap_dat <- rbind.data.frame(divmap_dat, missing_df)
-    #   divmap_dat$color <- map_colors[divmap_dat$color]
-    #   return(divmap_dat)
-    # }
+    ## For single year maps...
+    if(input$var == "Married_pct"){
+      ## Subset the data by the var selected
+      marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Married_pct, Married_pct_error)
+      
+      ## Assign colors to each entry in the data frame
+      color <- as.integer(cut2(marmap_dat[,input$var],cuts=marcuts))
+      marmap_dat <- cbind.data.frame(marmap_dat, color)
+      marmap_dat$color <- ifelse(is.na(marmap_dat$color), length(map_colors), marmap_dat$color)
+      marmap_dat$opacity <- op
+      
+      ## Find missing counties in data subset and assign NAs to all values
+      missing_munis <- setdiff(leftover_munis_map, marmap_dat$Region)
+      missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
+                               Region = missing_munis, Gender = input$map_gender,
+                               Five_Year_Range = input$map_year, Population = NA,
+                               Married_pct = NA, Married_pct_error = NA, 
+                               color=length(map_colors), opacity = 0)
+      # Combine data subset with missing counties data
+      marmap_dat <- rbind.data.frame(marmap_dat, missing_df)
+      marmap_dat$color <- map_colors[marmap_dat$color]
+      return(marmap_dat)
+    }
+    
+    if(input$var == "Never_Married_pct"){
+      ## Subset the data by the var selected
+      nevmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Never_Married_pct, Never_Married_pct_error)
+      
+      ## Assign colors to each entry in the data frame
+      color <- as.integer(cut2(nevmap_dat[,input$var],cuts=nevcuts))
+      nevmap_dat <- cbind.data.frame(nevmap_dat, color)
+      nevmap_dat$color <- ifelse(is.na(nevmap_dat$color), length(map_colors), nevmap_dat$color)
+      nevmap_dat$opacity <- op
+      
+      ## Find missing counties in data subset and assign NAs to all values
+      missing_munis <- setdiff(leftover_munis_map, nevmap_dat$Region)
+      missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
+                               Region = missing_munis, Gender = input$map_gender,
+                               Five_Year_Range = input$map_year, Population = NA, 
+                               Never_Married_pct = NA, Never_Married_pct_error = NA,
+                               color=length(map_colors), opacity = 0)
+      # Combine data subset with missing counties data
+      nevmap_dat <- rbind.data.frame(nevmap_dat, missing_df)
+      nevmap_dat$color <- map_colors[nevmap_dat$color]
+      return(nevmap_dat)
+    }
+    
+    if(input$var == "Separated_pct"){
+      ## Subset the data by the var selected
+      sepmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Separated_pct,Separated_pct_error)
+      
+      ## Assign colors to each entry in the data frame
+      color <- as.integer(cut2(sepmap_dat[,input$var],cuts=sepcuts))
+      sepmap_dat <- cbind.data.frame(sepmap_dat, color)
+      sepmap_dat$color <- ifelse(is.na(sepmap_dat$color), length(map_colors), sepmap_dat$color)
+      sepmap_dat$opacity <- op
+      
+      ## Find missing counties in data subset and assign NAs to all values
+      missing_munis <- setdiff(leftover_munis_map, sepmap_dat$Region)
+      missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
+                               Region = missing_munis, Gender = input$map_gender,
+                               Five_Year_Range = input$map_year, Population = NA, 
+                               Separated_pct = NA, Separated_pct_error = NA, 
+                               color=length(map_colors), opacity = 0)
+      # Combine data subset with missing counties data
+      sepmap_dat <- rbind.data.frame(sepmap_dat, missing_df)
+      sepmap_dat$color <- map_colors[sepmap_dat$color]
+      return(sepmap_dat)
+    }
+    
+    if(input$var == "Widowed_pct"){
+      ## Subset the data by the year selected
+      widmap_dat <- select(map_dat,  Municipal, County, State, Region, Gender, Five_Year_Range, Population, Widowed_pct,Widowed_pct_error)
+      
+      ## Assign colors to each entry in the data frame
+      color <- as.integer(cut2(widmap_dat[,input$var],cuts=widcuts))
+      widmap_dat <- cbind.data.frame(widmap_dat, color)
+      widmap_dat$color <- ifelse(is.na(widmap_dat$color), length(map_colors), widmap_dat$color)
+      widmap_dat$opacity <- op
+      
+      ## Find missing counties in data subset and assign NAs to all values
+      missing_munis <- setdiff(leftover_munis_map, widmap_dat$Region)
+      missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
+                               Region = missing_munis, Gender = input$map_gender,
+                               Five_Year_Range = input$map_year, Population = NA, 
+                               Widowed_pct = NA, Widowed_pct_error = NA,
+                               color=length(map_colors), opacity = 0)
+      # Combine data subset with missing counties data
+      widmap_dat <- rbind.data.frame(widmap_dat, missing_df)
+      widmap_dat$color <- map_colors[widmap_dat$color]
+      return(widmap_dat)
+    }
+    
+    if(input$var == "Divorced_pct"){
+      ## Subset the data by the year selected
+      divmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Divorced_pct,Divorced_pct_error)
+      
+      ## Assign colors to each entry in the data frame
+      color <- as.integer(cut2(divmap_dat[,input$var],cuts=divcuts))
+      divmap_dat <- cbind.data.frame(divmap_dat, color)
+      divmap_dat$color <- ifelse(is.na(divmap_dat$color), length(map_colors), divmap_dat$color)
+      divmap_dat$opacity <- op
+      
+      ## Find missing counties in data subset and assign NAs to all values
+      missing_munis <- setdiff(leftover_munis_map, divmap_dat$Region)
+      missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
+                               Region = missing_munis, Gender = input$map_gender,
+                               Five_Year_Range = input$map_year, Population = NA,
+                               Divorced_pct = NA, Divorced_pct_error = NA, 
+                               color=length(map_colors), opacity = 0)
+      # Combine data subset with missing counties data
+      divmap_dat <- rbind.data.frame(divmap_dat, missing_df)
+      divmap_dat$color <- map_colors[divmap_dat$color]
+      return(divmap_dat)
+    }
   })
-
+  
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
   
   ## Draw leaflet map
   map <- createLeafletMap(session, "map")
-  ## Does nothing until called (done with action button)
+  
   observe({
     input$action
-    
-    ## load in relevant map data
     map_dat <- map_dat()
     
-    ## All functions which are isolated, will not run until the above observe function is activated
     isolate({
-      ## Duplicate MAmap to x
       x <- MA_map_muni
       
-      ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
-        ## Each feature is a county
-        x$features[[i]]$properties[input$var] <- 
-          map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), input$var]
-        ## Style properties
-        x$features[[i]]$properties$style <- list(
-          fill=TRUE, 
-          ## Fill color has to be equal to the map_dat color and is matched by county
-          fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
-          ## "#000000" = Black, "#999999"=Grey, 
-          weight=1, stroke=TRUE, 
-          opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)], 
-          color="#000000", 
-          fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)])
+        x$features[[i]]$properties["Married_pct"] <- map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Married_pct"]
+        x$features[[i]]$properties$style <- list(fill=TRUE, fillColor=map_dat$color[match(x$features[[i]]$properties, map_dat$Region)],
+                                                 weight=1, stroke=TRUE, opacity=map_dat$opacity[match(x$features[[i]]$properties, map_dat$Region)],
+                                                 color="#000000", fillOpacity=map_dat$opacity[match(x$features[[i]]$properties, map_dat$Region)])
       }
-      
-      map$addGeoJSON(x) # draw map
+      # Draw map
+      map$addGeoJSON(x)
     })
   })
   
-  # observe({
-  #   input$action
-  #   map_dat <- map_dat()
-  #   
-  #   isolate({
-  #     x <- MA_map_muni
-  #     
-  #     for(i in 1:length(x$features)){
-  #       x$features[[i]]$properties["Married_pct"] <- map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Married_pct"]
-  #       x$features[[i]]$properties$style <- list(fill=TRUE, fillColor=map_dat$color[match(x$features[[i]]$properties, map_dat$Region)],
-  #                                                weight=1, stroke=TRUE, opacity=map_dat$opacity[match(x$features[[i]]$properties, map_dat$Region)],
-  #                                                color="#000000", fillOpacity=map_dat$opacity[match(x$features[[i]]$properties, map_dat$Region)])
-  #     }
-  #     # Draw map
-  #     map$addGeoJSON(x)
-  #   })
-  # })
-      
-      observe({
-        ## EVT = Mouse Click
-        evt <- input$map_click
-        if(is.null(evt))
-          return()
-        isolate({
-          values$selectedFeature <- NULL
-        })
-      })
-      
-      observe({
-        evt <- input$map_geojson_click
-        if(is.null(evt))
-          return()
-        input$map_year
-        map_dat <- map_dat()
-        isolate({
-          values$selectedFeature <- evt$properties
-          region <- evt$properties$NAMELSAD10
-          values$selectedFeature[input$var] <- map_dat[match(region, map_dat$Region), input$var]
-        })
-      })
-      
-      # observe({
-      #   evt <- input$map_geojson_click
-      #   if(is.null(evt))
-      #     return()
-      #   map_dat <- map_dat()
-      #   isolate({
-      #     values$selectedFeature <- evt$properties
-      #     clickmuni <- evt$properties$NAMELSAD10
-      #     values$selectedFeature["Married_pct"] <- map_dat[match(clickmuni, map_dat$Region), "Married_pct"]
-      #     values$selectedFeature["Married_pct_error"] <- map_dat[match(clickmuni, map_dat$REgion), "Married_pct_error"]
-      #   })
-      # })
-      
-     ## This function creates the info box 
-      output$details <- renderText({
-        
-        ## Before a county is clicked, display a message
-        if(is.null(values$selectedFeature)){
-          return(as.character(tags$div(
-            tags$div(
-              h4("Click on a town or city"))
-          )))
-        }
-        
-        muni_name <- values$selectedFeature$NAMELSAD10
-        muni_value <- values$selectedFeature[input$var]
-        var_select <- gsub("_", " ", input$var)
-        var_select <- gsub("pct", "", var_select)
-        
-        #     browser()
-        # muni_name <- values$selectedFeature$NAMELSAD10
-        # muni_value <- prettyNum(values$selectedFeature["Married_pct"], big.mark = ",")
-        # muni_margin <- prettyNum(values$selectedFeature["Married_pct_error"], big.mark = ",")
-        
-        
-        ## If clicked county has no crude rate, display a message
-        if(is.null(values$selectedFeature[input$var])){
-          return(as.character(tags$div(
-            tags$h5(var_select, "% in ", muni_name, "is not available for this timespan"))))
-        }
-        ## For a single year when county is clicked, display a message
-        as.character(tags$div(
-          tags$h4(var_select, "% in ", muni_name, " for ", input$map_year),
-          tags$h5(muni_value, "%")
-          
-        # ## If clicked county has no crude rate, display a message
-        # if(muni_value == "NA"){
-        #   return(as.character(tags$div(
-        #     tags$h5("Marital status in", muni_name, "is not available for this timespan"))))
-        # }
-        # ## For a single year when county is clicked, display a message
-        # as.character(tags$div(
-        #   tags$h4("Percentage in", muni_name, " for ", input$map_year),
-        #   tags$h5(muni_value, "% +-", muni_margin)
-        ))
-      })
-      
-      output$legend1 <- renderPlot({  
-        paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-        cols <- paint.brush(101)
-        leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
-        
-        b <- ggplot(data = leg_dat) +
-          geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-          scale_fill_manual(values = leg_dat$col) + theme_bw() +
-          theme(axis.text.x = element_blank(),
-                axis.text.y = element_text(size = 12),
-                axis.title.x = element_blank(),
-                axis.title.y = element_blank(),
-                axis.ticks.x = element_blank(),
-                panel.border = element_blank(),
-                panel.grid.minor = element_blank(),
-                panel.grid.major = element_blank())
-        return(b)
-        
-      })
-      
-      output$legend2 <- renderPlot({  
-        paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-        cols <- paint.brush(101)
-        leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
-        
-        b <- ggplot(data = leg_dat) +
-          geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-          scale_fill_manual(values = leg_dat$col) + theme_bw() +
-          theme(axis.text.x = element_blank(),
-                axis.text.y = element_text(size = 12),
-                axis.title.x = element_blank(),
-                axis.title.y = element_blank(),
-                axis.ticks.x = element_blank(),
-                panel.border = element_blank(),
-                panel.grid.minor = element_blank(),
-                panel.grid.major = element_blank())
-        return(b)
-        
-      })
-      
-      output$legend3 <- renderPlot({  
-        paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-        cols <- paint.brush(101)
-        leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
-        
-        b <- ggplot(data = leg_dat) +
-          geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-          scale_fill_manual(values = leg_dat$col) + theme_bw() +
-          theme(axis.text.x = element_blank(),
-                axis.text.y = element_text(size = 12),
-                axis.title.x = element_blank(),
-                axis.title.y = element_blank(),
-                axis.ticks.x = element_blank(),
-                panel.border = element_blank(),
-                panel.grid.minor = element_blank(),
-                panel.grid.major = element_blank())
-        return(b)
-        
-      })
-      
-      output$legend4 <- renderPlot({  
-        paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-        cols <- paint.brush(101)
-        leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
-        
-        b <- ggplot(data = leg_dat) +
-          geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-          scale_fill_manual(values = leg_dat$col) + theme_bw() +
-          theme(axis.text.x = element_blank(),
-                axis.text.y = element_text(size = 12),
-                axis.title.x = element_blank(),
-                axis.title.y = element_blank(),
-                axis.ticks.x = element_blank(),
-                panel.border = element_blank(),
-                panel.grid.minor = element_blank(),
-                panel.grid.major = element_blank())
-        return(b)
-        
-      })
-      
-      output$legend5 <- renderPlot({  
-        paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-        cols <- paint.brush(101)
-        leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
-        
-        b <- ggplot(data = leg_dat) +
-          geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-          scale_fill_manual(values = leg_dat$col) + theme_bw() +
-          theme(axis.text.x = element_blank(),
-                axis.text.y = element_text(size = 12),
-                axis.title.x = element_blank(),
-                axis.title.y = element_blank(),
-                axis.ticks.x = element_blank(),
-                panel.border = element_blank(),
-                panel.grid.minor = element_blank(),
-                panel.grid.major = element_blank())
-        return(b)
-        
-      })
-
-      # ## Legend
-      # whichgender <- reactive({switch(input$map_gender,"Female"=1,  "Male"=2)})
-      # 
-      # output$legend1 <- renderPlot({  
-      #   paint.brush = colorRampPalette(colors=c("white", "deeppink"))
-      #   cols <- paint.brush(length(map_colors)-1)
-      #   if(input$var =='Married_pct'){
-      #     leg_dat<- data_frame(y = seq(marmin.val[whichgender()], marmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
-      #     q<- ggplot(data = leg_dat) +
-      #       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-      #       scale_y_continuous(limits = c(marmin.val[whichgender()], marmax.val[whichgender()]), breaks = round(seq(marmin.val[whichgender()], marmax.val[whichgender()], length.out = 5),1)) +
-      #       scale_fill_manual(values = leg_dat$col) + theme_bw() +
-      #       theme(axis.text.x = element_blank(),
-      #             axis.text.y = element_text(size = 12),
-      #             axis.title.x = element_blank(),
-      #             axis.title.y = element_blank(),
-      #             axis.ticks.x = element_blank(),
-      #             panel.border = element_blank(),
-      #             panel.grid.minor = element_blank(),
-      #             panel.grid.major = element_blank())
-      #   }
-      #   else if(input$var == 'Never_Married_pct'){
-      #     leg_dat<- data_frame(y = seq(nevmin.val[whichgender()], nevmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
-      #     q<- ggplot(data = leg_dat) +
-      #       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-      #       scale_y_continuous(limits = c(nevmin.val[whichgender()], nevmax.val[whichgender()]), breaks = round(seq(nevmin.val[whichgender()], nevmax.val[whichgender()], length.out = 5),1)) +
-      #       scale_fill_manual(values = leg_dat$col) + theme_bw() +
-      #       theme(axis.text.x = element_blank(),
-      #             axis.text.y = element_text(size = 12),
-      #             axis.title.x = element_blank(),
-      #             axis.title.y = element_blank(),
-      #             axis.ticks.x = element_blank(),
-      #             panel.border = element_blank(),
-      #             panel.grid.minor = element_blank(),
-      #             panel.grid.major = element_blank())
-      #   }
-      #   else if(input$var=='Separated_pct'){
-      #     leg_dat<- data_frame(y = seq(sepmin.val[whichgender()], sepmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
-      #     q<- ggplot(data = leg_dat) +
-      #       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-      #       scale_y_continuous(limits = c(sepmin.val[whichgender()], sepmax.val[whichgender()]), breaks = round(seq(sepmin.val[whichgender()], sepmax.val[whichgender()], length.out = 5),1)) +
-      #       scale_fill_manual(values = leg_dat$col) + theme_bw() +
-      #       theme(axis.text.x = element_blank(),
-      #             axis.text.y = element_text(size = 12),
-      #             axis.title.x = element_blank(),
-      #             axis.title.y = element_blank(),
-      #             axis.ticks.x = element_blank(),
-      #             panel.border = element_blank(),
-      #             panel.grid.minor = element_blank(),
-      #             panel.grid.major = element_blank())
-      #   }
-      #   else if(input$var == 'Widowed_pct'){
-      #     leg_dat<- data_frame(y = seq(widmin.val[whichgender()], widmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
-      #     q<- ggplot(data = leg_dat) +
-      #       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-      #       scale_y_continuous(limits = c(widmin.val[whichgender()], widmax.val[whichgender()]), breaks = round(seq(widmin.val[whichgender()], widmax.val[whichgender()], length.out = 5),1)) +
-      #       scale_fill_manual(values = leg_dat$col) + theme_bw() +
-      #       theme(axis.text.x = element_blank(),
-      #             axis.text.y = element_text(size = 12),
-      #             axis.title.x = element_blank(),
-      #             axis.title.y = element_blank(),
-      #             axis.ticks.x = element_blank(),
-      #             panel.border = element_blank(),
-      #             panel.grid.minor = element_blank(),
-      #             panel.grid.major = element_blank())
-      #   }
-      #   else {
-      #     leg_dat<- data_frame(y = seq(divmin.val[whichgender()], divmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
-      #     q<- ggplot(data = leg_dat) +
-      #       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-      #       scale_y_continuous(limits = c(divmin.val[whichgender()], divmax.val[whichgender()]), breaks = round(seq(divmin.val[whichgender()], divmax.val[whichgender()], length.out = 5),1)) +
-      #       scale_fill_manual(values = leg_dat$col) + theme_bw() +
-      #       theme(axis.text.x = element_blank(),
-      #             axis.text.y = element_text(size = 12),
-      #             axis.title.x = element_blank(),
-      #             axis.title.y = element_blank(),
-      #             axis.ticks.x = element_blank(),
-      #             panel.border = element_blank(),
-      #             panel.grid.minor = element_blank(),
-      #             panel.grid.major = element_blank())
-      #   }
-      #   
-      #   return(q)
-      #   
-      # })
-      # output$text1<-renderText({
-      #   var_s <- gsub("_pct", "", input$var)
-      #   return(as.character(
-      #     gsub("_"," ", var_s)
-      #   ))
-      # })
+  observe({
+    ## EVT = Mouse Click
+    evt <- input$map_click
+    if(is.null(evt))
+      return()
+    isolate({
+      values$selectedFeature <- NULL
+    })
+  })
+  
+  observe({
+    evt <- input$map_geojson_click
+    if(is.null(evt))
+      return()
+    map_dat <- map_dat()
+    isolate({
+      values$selectedFeature <- evt$properties
+      clickmuni <- evt$properties$NAMELSAD10
+      values$selectedFeature["Married_pct"] <- map_dat[match(clickmuni, map_dat$Region), "Married_pct"]
+      values$selectedFeature["Married_pct_error"] <- map_dat[match(clickmuni, map_dat$REgion), "Married_pct_error"]
+    })
+  })
+  ## This function creates the info box 
+  output$details <- renderText({
+    
+    ## Before a county is clicked, display a message
+    if(is.null(values$selectedFeature)){
+      return(as.character(tags$div(
+        tags$div(
+          h4("Click on a town or city"))
+      )))
+    }
+    #     browser()
+    muni_name <- values$selectedFeature$NAMELSAD10
+    muni_value <- prettyNum(values$selectedFeature["Married_pct"], big.mark = ",")
+    muni_margin <- prettyNum(values$selectedFeature["Married_pct_error"], big.mark = ",")
+    
+    ## If clicked county has no crude rate, display a message
+    if(muni_value == "NA"){
+      return(as.character(tags$div(
+        tags$h5("Marital status in", muni_name, "is not available for this timespan"))))
+    }
+    ## For a single year when county is clicked, display a message
+    as.character(tags$div(
+      tags$h4("Percentage in", muni_name, " for ", input$map_year),
+      tags$h5(muni_value, "% +-", muni_margin)
+    ))
+  })
+  
+  ## Legend
+  whichgender <- reactive({switch(input$map_gender,"Female"=1,  "Male"=2)})
+  
+  output$legend1 <- renderPlot({  
+    paint.brush = colorRampPalette(colors=c("white", "deeppink"))
+    cols <- paint.brush(length(map_colors)-1)
+    if(input$var =='Married_pct'){
+      leg_dat<- data_frame(y = seq(marmin.val[whichgender()], marmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(marmin.val[whichgender()], marmax.val[whichgender()]), breaks = round(seq(marmin.val[whichgender()], marmax.val[whichgender()], length.out = 5),1)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    else if(input$var == 'Never_Married_pct'){
+      leg_dat<- data_frame(y = seq(nevmin.val[whichgender()], nevmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(nevmin.val[whichgender()], nevmax.val[whichgender()]), breaks = round(seq(nevmin.val[whichgender()], nevmax.val[whichgender()], length.out = 5),1)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    else if(input$var=='Separated_pct'){
+      leg_dat<- data_frame(y = seq(sepmin.val[whichgender()], sepmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(sepmin.val[whichgender()], sepmax.val[whichgender()]), breaks = round(seq(sepmin.val[whichgender()], sepmax.val[whichgender()], length.out = 5),1)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    else if(input$var == 'Widowed_pct'){
+      leg_dat<- data_frame(y = seq(widmin.val[whichgender()], widmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(widmin.val[whichgender()], widmax.val[whichgender()]), breaks = round(seq(widmin.val[whichgender()], widmax.val[whichgender()], length.out = 5),1)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    else {
+      leg_dat<- data_frame(y = seq(divmin.val[whichgender()], divmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
+      q<- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_y_continuous(limits = c(divmin.val[whichgender()], divmax.val[whichgender()]), breaks = round(seq(divmin.val[whichgender()], divmax.val[whichgender()], length.out = 5),1)) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    }
+    
+    return(q)
+    
+  })
+  output$text1<-renderText({
+    var_s <- gsub("_pct", "", input$var)
+    return(as.character(
+      gsub("_"," ", var_s)
+    ))
+  })
 })
 
 ##### RUN APP #####
