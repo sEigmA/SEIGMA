@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 11/28/2017  ##
+## Last Modified: 12/05/2017  ##
 ################################
 
 ##### SETTINGS #####
@@ -37,10 +37,24 @@ sidebar <- dashboardSidebar(
     ),
     br(),
     br(),
+    menuItem("Data Source", icon = icon("file-code-o"), 
+             menuSubItem("American Community Survey",  
+                         href="https://factfinder.census.gov/faces/nav/jsf/pages/index.xhtml"),
+             menuSubItem("CDC Wonder",  
+                         href="https://wonder.cdc.gov/mortsql.html"),
+             menuSubItem("MA Labor and Workforce",  
+                         href="http://lmi2.detma.org/lmi/lmi_es_a.asp"),
+             menuSubItem("Bureau of Labor Statistics",  
+                         href="https://www.bls.gov/lau/data.htm"),
+             menuSubItem("United States Courts",  
+                         href="http://www.uscourts.gov/statistics-reports/caseload-statistics-data-tables"),
+             menuSubItem("MA State Data Center",  
+                         href="http://www.massbenchmarks.org/statedata/data.htm"),
+             menuSubItem("MA DOR",  
+                         href="https://dlsgateway.dor.state.ma.us/reports/rdPage.aspx?rdReport=PropertyTaxInformation.taxratesbyclass.taxratesbyclass_main")
+),
     menuItem("Comments or Feedback", icon = icon("envelope-o"),
              href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation"),
-    menuItem("Data Source", icon = icon("file-code-o"), 
-             href="https://factfinder.census.gov/faces/nav/jsf/pages/index.xhtml"),
     menuItem("Codes on Github", icon = icon("code-fork"), 
              href = "https://github.com/sEigmA/SEIGMA/tree/gh-pages/dashboard"),
     menuItem(
@@ -65,8 +79,8 @@ body <- dashboardBody(
                   box(width = 12,
                       h4("Please Select an Age of Interest"),
                       column(width = 4,
-                             checkboxInput("under20", "Age Under 20 ", TRUE),
-                             checkboxInput("under35", "Age Under 35", FALSE),
+                             checkboxInput("under20", "Age Under 20 ", FALSE),
+                             checkboxInput("under35", "Age Under 35", TRUE),
                              checkboxInput("under65", "Age Under 65", FALSE)
                              ),
                       column(width = 4,
@@ -204,7 +218,21 @@ body <- dashboardBody(
                   downloadButton(outputId = "vet_down", label = "Download the plot"),
                   h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/")))
                     )
+              ),
+            fluidRow(
+              box(width = 6,
+                  plotOutput("plot_eng"),
+                  actionButton("eng_info", "What is English Language Learners?"),
+                  downloadButton(outputId = "eng_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Schools.", href="https://seigma.shinyapps.io/schools/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
+              ),
+              box(width = 6,
+                  plotOutput("plot_dis"),
+                  actionButton("dis_info", "What is Students With Disabilities?"),
+                  downloadButton(outputId = "dis_down", label = "Download the plot"),
+                  h4(helpText(a("More information about Schools.", href="https://seigma.shinyapps.io/va_status/")))
               )
+            )
     ),
     ### Economics Tab UI ###
     tabItem(tabName = "econ",
@@ -1068,6 +1096,135 @@ server <- function(input, output, session){
         theme(axis.text=element_text(size=14)) + 
         theme(legend.text = element_text(size = 12))
       print(p)  
+      dev.off()
+    }
+  )
+  
+  #### English Language Learner App ####
+  eng_df <- reactive({
+    muni_df <- filter(sch_data, Municipal %in% input$muni) %>% select(Municipal, English.Language.Learner...enrolled..1, school.year)
+    names(muni_df) <- c("Municipal", "English_Language_Learner", "Year")
+    muni_df$Year <- as.factor(muni_df$Year)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    dat_mean <- c()
+    for (i in 1:length(input$muni)){
+      sub_eng <- filter(muni_df, Municipal == input$muni[i])
+      sub_mean <- aggregate(English_Language_Learner ~ Year, sub_eng, mean)
+      Municipal <- rep(input$muni[i],nrow(sub_mean))
+      muni_mean <- cbind(Municipal, sub_mean)
+      dat_mean <- rbind(dat_mean, muni_mean)
+    }
+    dat_mean
+  })  
+  
+  output$plot_eng <- renderPlot({
+    dat <- eng_df() 
+    theme_set(theme_classic())
+    p <- ggplot(dat, aes(x=Year, y=English_Language_Learner, group = Municipal, colour = Municipal)) + 
+      geom_line(aes(linetype=Municipal), size = 1.25) + 
+      geom_point(size = 3) + 
+      labs(title = "English Language Learner [Muni Only]", 
+           x = "Year",
+           y = "English Language Learner %") +  
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
+    print(p)  
+  })
+  
+  observeEvent(input$eng_info, {
+    showModal(modalDialog(
+      title = "What is English Language Learner?",
+      eng_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
+  })
+  
+  output$eng_down <- downloadHandler(
+    filename = function() {
+      "plot_english.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- eng_df() 
+      p <- ggplot(dat, aes(x=Year, y=English_Language_Learner, group = Municipal, colour = Municipal)) + 
+        geom_line(aes(linetype=Municipal), size = 1.25) + 
+        geom_point(size = 3) + 
+        labs(title = "English Language Learner [Muni Only]", 
+             x = "Year",
+             y = "English Language Learner %") +  
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p)
+      dev.off()
+    }
+  )
+  
+  #### Students with Disabilities App ####
+  dis_df <- reactive({
+    muni_df <- filter(sch_data, Municipal %in% input$muni) %>% select(Municipal, Students.With.Disabilities...enrolled..1, school.year)
+    names(muni_df) <- c("Municipal", "Students_with_Disabilities", "Year")
+    muni_df$Year <- as.factor(muni_df$Year)
+    muni_df$Year <- gsub("20", "'", muni_df$Year)
+    dat_mean <- c()
+    for (i in 1:length(input$muni)){
+      sub_eng <- filter(muni_df, Municipal == input$muni[i])
+      sub_mean <- aggregate(Students_with_Disabilities ~ Year, sub_eng, mean)
+      Municipal <- rep(input$muni[i],nrow(sub_mean))
+      muni_mean <- cbind(Municipal, sub_mean)
+      dat_mean <- rbind(dat_mean, muni_mean)
+    }
+    dat_mean
+  })  
+  
+  output$plot_dis <- renderPlot({
+    dat <- dis_df() 
+    theme_set(theme_classic())
+    p <- ggplot(dat, aes(x=Year, y=Students_with_Disabilities, group = Municipal, colour = Municipal)) + 
+      geom_line(aes(linetype=Municipal), size = 1.25) + 
+      geom_point(size = 3) + 
+      labs(title = "Students with Disabilities [Muni Only]", 
+           x = "Year",
+           y = "Students with Disabilities %") +  
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
+    print(p)  
+  })
+  
+  observeEvent(input$dis_info, {
+    showModal(modalDialog(
+      title = "What is Students with Disabilities?",
+      dis_pop,
+      footer = modalButton("Close"),
+      easyClose = TRUE
+    ))
+  })
+  
+  output$dis_down <- downloadHandler(
+    filename = function() {
+      "plot_disabilities.png"
+    },
+    content = function(file) {
+      png(file)
+      dat <- dis_df() 
+      theme_set(theme_classic())
+      p <- ggplot(dat, aes(x=Year, y=Students_with_Disabilities, group = Municipal, colour = Municipal)) + 
+        geom_line(aes(linetype=Municipal), size = 1.25) + 
+        geom_point(size = 3) + 
+        labs(title = "Students with Disabilities [Muni Only]", 
+             x = "Year",
+             y = "Students with Disabilities %") +  
+        theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+        theme(axis.title = element_text(face="bold", size=18)) +
+        theme(axis.text=element_text(size=14)) + 
+        theme(legend.text = element_text(size = 12))
+      print(p)
       dev.off()
     }
   )

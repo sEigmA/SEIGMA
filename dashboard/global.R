@@ -3,7 +3,7 @@
 ## App: SEIGMA dashboard     ##
 ## Author: Zhenning Kang     ##
 ## Date Created:  09/27/2017 ##
-## Last Modified: 11/28/2017 ##
+## Last Modified: 12/05/2017 ##
 ###############################
 
 ##### SETTINGS #####
@@ -39,6 +39,12 @@ colnames(sui_data) <- gsub("County", "Region", colnames(sui_data))
 # data for vetaran plot
 vet_data <- read.csv(file="data/vetstatusdata.csv")[,-1]
 vet_data$Year <- as.factor(as.numeric(substr(vet_data$Five_Year_Range, 1, 4))+2)
+# data for school plot
+sch_data <- read.csv(file="data/BF001_002.csv")
+names(sch_data)[58] <- "Churn.Enrollment.for.High.Needs.Students" 
+colnames(sch_data)[7:21]<-gsub(x=names(sch_data)[7:21],pattern=".", replacement=" ", fixed=T)
+sch_data$school.year<-as.numeric(substr(sch_data$school.year, 1, 4))
+names(sch_data)[c(75,74, 78)]<-c("Lng", "Lat", "loc")
 
 ### ECONOMICS TAB
 ## Load formatted Income status data
@@ -90,6 +96,10 @@ mar_pop <- "The number of people within each marital status category for a regio
 sui_pop <- "Age-adjusted suicide rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by: Age-adjusted Suicide Rate = Count / Population * 100,000"
 
 vet_pop <-  "People with active duty military service and or service in the military Reserves or National Guard. All individuals were at least 18 years of age."
+
+eng_pop <- "Students whose first language is a language other than English, and who are unable to perform ordinary classroom work in English."
+
+dis_pop <- "Students who have received Individualized Education Program (IEP)"
 
 inc_pop <- "This includes the income of the household and all other individuals ages 15 and over. Median annual household income provides a clear trend to assess residents' household income overtime. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively."
 
