@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 12/05/2017  ##
+## Last Modified: 12/12/2017  ##
 ################################
 
 ##### SETTINGS #####
@@ -412,7 +412,7 @@ server <- function(input, output, session){
       br(),
       "-- The Demographic tab contains Age, Race, Gender and Ethnicity data.", 
       br(),
-      "-- The Social tab contains  Marital Status, Educational Attainment, Suicide Rate and Veteran’s Status data.",
+      "-- The Social tab contains  Marital Status, Educational Attainment, Suicide Rate, Veteran’s Status and Schools data.",
       br(),
       "-- The Economic tab contains Household Income, Poverty Rate, Monthly Employment, Unemployment Rate, Bankruptcy, Rent, Building Permits, Property Value and Property Tax data.",
       footer = modalButton("Close"),
@@ -1705,7 +1705,7 @@ server <- function(input, output, session){
     p <- ggplot(dat, aes(x=Year, y=Permits_Per_1000_Population, group = Region, colour = Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
-      labs(title = "Annual Permits per 1000 Population [No US]", 
+      labs(title = "Building Permits per 1000 Population [No US]", 
            x = "Year",
            y = "Permits per 1000 Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1735,7 +1735,7 @@ server <- function(input, output, session){
       p <- ggplot(dat, aes(x=Year, y=Permits_Per_1000_Population, group = Region, colour = Region)) + 
         geom_line(aes(linetype=Region), size = 1.25) + 
         geom_point(size = 3) + 
-        labs(title = "Annual Permits per 1000 Population [No US]", 
+        labs(title = "Building Permits per 1000 Population [No US]", 
              x = "Year",
              y = "Permits per 1000 Population") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +

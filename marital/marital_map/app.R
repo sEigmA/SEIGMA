@@ -1,6 +1,6 @@
-####################
-# TEST MARITAL MAP #
-####################
+################
+# MAP TEMPLATE #
+################
 
 ##### GLOBAL #####
 ## load necessary libraries
@@ -18,8 +18,8 @@ require(tidyr)
 require(plotly)
 
 ## Load formatted marital status data
-edu_data <- read.csv(file="BA002_02_marriagedata.csv")
-names(edu_data)[10:12] <- gsub("Now_", "", names(edu_data)[10:12])
+map_data <- read.csv(file="BA002_02_marriagedata.csv")
+names(map_data)[10:12] <- gsub("Now_", "", names(map_data)[10:12])
 
 ## load map data
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
@@ -34,19 +34,19 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% edu_data$Municipal)
+idx_leftovers <- which(!MA_municipals_map %in% map_data$Municipal)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 
 MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
   MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
-idx_leftovers2 <- which(!MA_municipals %in% edu_data$Municipal)
+idx_leftovers2 <- which(!MA_municipals %in% map_data$Municipal)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 leftover_munis_map <- leftover_munis_map[leftover_munis_map=="County subdivisions not defined"]
 MA_municipals <- sort(MA_municipals[-which(MA_municipals=="County subdivisions not defined")])
 
-MA_municipals<-unique(edu_data$Municipal[-c(grep(edu_data$Municipal, pattern = "County"),which(edu_data$Municipal %in% c("MA", "USA")))])
+MA_municipals<-unique(map_data$Municipal[-c(grep(map_data$Municipal, pattern = "County"),which(map_data$Municipal %in% c("MA", "USA")))])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
@@ -125,6 +125,11 @@ map_side_text <- conditionalPanel(
     tags$li('Clicking on a municipality will display the marriage status for the five-year range that you selected.')
   ))
 
+## Add map casino icons
+MAcasinos <- data.frame("Name"=c("Wynn Boston Harbor", "Plainridge Park Casino", "MGM Springfield"),
+                        "Lat"=c(42.394964,42.0330381,42.1006063),
+                        "Lon"=c(-71.066760,-71.3039442,-72.5870506))
+
 ##############
 ##### UI #####
 ##############
@@ -136,7 +141,7 @@ ui <- shinyUI(fluidPage(
   gen_map_button,
   
   ## blank title, but put in a special title for window tab
-  titlePanel("", windowTitle = "SEIGMA: Marital Map"),
+  titlePanel("", windowTitle = "SEIGMA MAP TAMPLATE"),
   
   ## Create sidebar
   sidebarLayout(
@@ -157,8 +162,8 @@ ui <- shinyUI(fluidPage(
                                             "Separated" = "Separated_pct",
                                             "Widowed" = "Widowed_pct",
                                             "Divorced" = "Divorced_pct")),
-                 checkboxInput("lmap_cas", "Display Casinos", value=FALSE),
-                 actionButton("action2", "REDRAW MAP"),
+                 # checkboxInput("map_cas", "Display Casinos", value=FALSE),
+                 # actionButton("action2", "REDRAW MAP"),
                  tags$hr(),
                  
                  ## author line
@@ -298,26 +303,26 @@ ui <- shinyUI(fluidPage(
 ##### SERVER #####
 ##################
 server <- shinyServer(function(input, output, session) {
-  edu_df <- reactive({
+  map_df <- reactive({
     ## Filter the data by the chosen Five Year Range 
-    edu_df <- edu_data %>%
+    map_df <- map_data %>%
       arrange(Region)
     ## get column name and cuts based on input
     if (input$map_gender == "Female") {
-      edu_df <- filter(edu_df, Gender == "Female")
+      map_df <- filter(map_df, Gender == "Female")
     } else {
-      edu_df <- filter(edu_df, Gender == "Male")
+      map_df <- filter(map_df, Gender == "Male")
     }
     ## Output reactive dataframe
-    edu_df    
+    map_df    
   })
   
   map_dat <- reactive({
     ## make reactive dataframe into regular dataframe
-    edu_df <- edu_df()
+    map_df <- map_df()
     
     ## take US, MA, and counties out of map_dat
-    map_dat <- edu_df %>%
+    map_dat <- map_df %>%
       filter(Five_Year_Range == input$map_year)%>%
       filter(!is.na(Region))
     
@@ -347,7 +352,15 @@ server <- shinyServer(function(input, output, session) {
   
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
   
-  ## draw leaflet map
+  
+  ##
+  cas_dat <- reactive({
+    cas_dat <- MAcasinos
+    cas_dat
+    
+  })
+
+    ## draw leaflet map
   map <- createLeafletMap(session, "map")
   
   ## the functions within observe are called when any of the inputs are called
@@ -382,6 +395,7 @@ server <- shinyServer(function(input, output, session) {
       }
       
       map$addGeoJSON(x) # draw map
+      
     })
   })
   
@@ -536,7 +550,7 @@ server <- shinyServer(function(input, output, session) {
     return(b)
     
   })
-  
+
 })
 
 shinyApp(ui=ui, server=server)

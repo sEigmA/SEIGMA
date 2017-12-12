@@ -3,7 +3,7 @@
 ## Author(s): Valerie Evans          ##
 ## Date Created:  11/02/2017         ##
 ## Date Modified: 11/09/2017 VE      ##
-## Map Updated:   12/05/2017 ZK      ##
+## Map Updated:   12/12/2017 ZK      ##
 #######################################
 
 ##### GLOBAL #####
@@ -517,7 +517,7 @@ ui <- shinyUI(fluidPage(
                                               "Separated" = "Separated_pct",
                                               "Widowed" = "Widowed_pct",
                                               "Divorced" = "Divorced_pct")),
-                   checkboxInput("lmap_cas", "Display Casinos", value=FALSE),
+                   # checkboxInput("lmap_cas", "Display Casinos", value=FALSE),
                    actionButton("action2", "REDRAW MAP")
                  ),
 
