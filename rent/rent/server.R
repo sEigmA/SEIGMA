@@ -2,6 +2,7 @@
 ## Title: RENT   server.R            ##
 ## Author(s): JWB, BF                ## 
 ## Date Created:  12/01/2016         ##
+## Date Updated:  01/08/2018  ZK     ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -48,11 +49,13 @@ shinyServer(function(input, output, session) {
     ## create a dataframe consisting only of counties in vector
     rent_df <- rent_df %>%
       filter(Municipal %in% munis) %>%
-      select(c(2,1,3,4,5))
+      select(c(1,3,4,5))
+      # select(c(2,1,3,4,5))
     
     colnames(rent_df) <- gsub(".", " ", colnames(rent_df), fixed=T)
-    colnames(rent_df)[4] <- "Median Rent (2015$)"
-    colnames(rent_df)[5] <- "Median Margin of Error (2015$)"
+    colnames(rent_df)[1] <- "Region"
+    colnames(rent_df)[3] <- "Median Rent (2015$)"
+    colnames(rent_df)[4] <- "Median Margin of Error (2015$)"
     
     
 #     rent_df[,3] <- prettyNum(rent_df[,3], big.mark=",")
