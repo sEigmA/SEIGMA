@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 12/12/2017  ##
+## Last Modified: 01/08/2018  ##
 ################################
 
 ##### SETTINGS #####
@@ -73,6 +73,12 @@ body <- dashboardBody(
                   a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/")
                   )
             ),
+      fluidRow(
+        box(width = 12,
+            h4("Total Population in Selected Regions (at Mid Year of Five Year Range)"),
+            dataTableOutput("population")
+            )
+      ),
             fluidRow(
               box(width = 6,
                 fluidRow(
@@ -475,6 +481,22 @@ server <- function(input, output, session){
   
   ##### DEMOGRAPHICS TAB #####
   
+  # Population table #
+  output$population <- renderDataTable({
+    my_place <- place()
+    pop_df <- filter(dem_data, Region %in% my_place) %>% 
+      select(Region, Five_Year_Range, Total_Population) %>%
+      arrange(Region)
+    pop_show <- c()
+    for(i in 1:length(my_place)){
+      pop_muni <- filter(pop_df, Region == my_place[i])
+      pop_show <- rbind(pop_show, c(my_place[i], pop_muni$Total_Population))
+    }
+    pop_show <- as.data.frame(pop_show)
+    colnames(pop_show) <- c("Region", "2005-2009", "2006-2010", "2007-2011", "2008-2012", "2009-2013", "2010-2014", "2011-2015")
+    return(pop_show)
+  }, options = list(searching = FALSE, orderClasses = TRUE)) 
+    
   #### Age ####
   age_df <- reactive({
     my_place <- place()
