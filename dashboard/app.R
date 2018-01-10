@@ -105,7 +105,7 @@ body <- dashboardBody(
                       plotOutput("plot_age")
                       )
                 ),
-                actionButton("age_info", "What's in Age Group?"),
+                actionButton("age_info", "What is the Age variable?"),
                 downloadButton(outputId = "age_down", label = "Download the plot")
               ),
               box(width = 6,
@@ -129,19 +129,19 @@ body <- dashboardBody(
                       plotOutput("plot_rac")
                   )
                 ),
-                actionButton("rac_info", "What's in Race Group?"),
+                actionButton("rac_info", "What is the Race variable?"),
                 downloadButton(outputId = "rac_down", label = "Download the plot")
               )
             ),
             fluidRow(
               box(width = 6,
                 plotOutput("plot_gen"),
-                actionButton("gen_info", "What's in Gender?"),
+                actionButton("gen_info", "What is the Gender variable?"),
                 downloadButton(outputId = "gen_down", label = "Download the plot")
               ),
               box(width = 6,
                 plotOutput("plot_his"),
-                actionButton("his_info", "What's in Ethnicity?"),
+                actionButton("his_info", "What is the Ethnicity variable?"),
                 downloadButton(outputId = "his_down", label = "Download the plot")
               )
             ),
@@ -182,7 +182,7 @@ body <- dashboardBody(
                         plotOutput("plot_mar")
                         )
                     ),
-                  actionButton("mar_info", "What is marital status?"),
+                  actionButton("mar_info", "What is the Marital Status variable?"),
                   downloadButton(outputId = "mar_down", label = "Download the plot"),
                   h4(helpText(a("More information about Marital Status.",
                                 href="https://seigma.shinyapps.io/marital/")))
@@ -206,7 +206,7 @@ body <- dashboardBody(
                           plotOutput("plot_edu")
                           )
                       ),
-                  actionButton("edu_info", "What is Educational Attainment Rates?"),
+                  actionButton("edu_info", "What is the Educational Attainment variable?"),
                   downloadButton(outputId = "edu_down", label = "Download the plot"),
                     h4(helpText(a("More information about  Educational Attainment.", href="https://seigma.shinyapps.io/educational_attainment/")))
                     )
@@ -214,13 +214,13 @@ body <- dashboardBody(
             fluidRow(
                 box(width = 6,
                     plotOutput("plot_sui"),
-                    actionButton("sui_info", "What is Age-adjusted Suicide Rate?"),
+                    actionButton("sui_info", "What is the Age-adjusted Suicide Rate variable?"),
                     downloadButton(outputId = "sui_down", label = "Download the plot"),
                     h4(helpText(a("More information about Suicide Rate.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
                       ),
                 box(width = 6,
                   plotOutput("plot_vet"),
-                  actionButton("vet_info", "What is Veteran’s Status?"),
+                  actionButton("vet_info", "What is the Veteran’s Status variable?"),
                   downloadButton(outputId = "vet_down", label = "Download the plot"),
                   h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/")))
                     )
@@ -228,13 +228,13 @@ body <- dashboardBody(
             fluidRow(
               box(width = 6,
                   plotOutput("plot_eng"),
-                  actionButton("eng_info", "What is English Language Learners?"),
+                  actionButton("eng_info", "What is the English Language Learners variable?"),
                   downloadButton(outputId = "eng_down", label = "Download the plot"),
                   h4(helpText(a("More information about Schools.", href="https://seigma.shinyapps.io/schools/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
               ),
               box(width = 6,
                   plotOutput("plot_dis"),
-                  actionButton("dis_info", "What is Students With Disabilities?"),
+                  actionButton("dis_info", "What is the Students with Disabilities variable?"),
                   downloadButton(outputId = "dis_down", label = "Download the plot"),
                   h4(helpText(a("More information about Schools.", href="https://seigma.shinyapps.io/va_status/")))
               )
@@ -251,13 +251,13 @@ body <- dashboardBody(
             fluidRow(
               box(width = 6,
                   plotOutput("plot_inc"),
-                  actionButton("inc_info", "What is Median Annual Household Income?"),
+                  actionButton("inc_info", "What is the Median Annual Household Income variable?"),
                   downloadButton(outputId = "inc_down", label = "Download the plot"),
                   h4(helpText(a("More information about Household Income.", href="https://seigma.shinyapps.io/income/")))
               ),
               box(width = 6,
                   plotOutput("plot_pov"),
-                  actionButton("pov_info", "What is Poverty Status?"),
+                  actionButton("pov_info", "What is the Poverty Status variable?"),
                   downloadButton(outputId = "pov_down", label = "Download the plot"),
                   h4(helpText(a("More information about Poverty.", href="https://seigma.shinyapps.io/poverty/")))
               )
@@ -265,13 +265,13 @@ body <- dashboardBody(
             fluidRow(
               box(width = 6,
                   plotOutput("plot_emp"),
-                  actionButton("emp_info", "What is Business Establishments?"),
+                  actionButton("emp_info", "What is the Monthly Employment variable?"),
                   downloadButton(outputId = "emp_down", label = "Download the plot"),
                   h4(helpText(a("More information about Employment.", href="https://seigma.shinyapps.io/employment/")))
               ),
               box(width = 6,
                   plotOutput("plot_une"),
-                  actionButton("une_info", "What is Unemployment Rate?"),
+                  actionButton("une_info", "What is the Unemployment Rate variable?"),
                   downloadButton(outputId = "une_down", label = "Download the plot"),
                   h4(helpText(a("More information about Unemployment.", href="https://seigma.shinyapps.io/unemployment/")))
               )
@@ -296,7 +296,7 @@ body <- dashboardBody(
                   fluidRow(
                     box(width = 12,
                         plotOutput("plot_bus"),
-                        actionButton("bus_info", "What is Business Bankruptcy?"),
+                        actionButton("bus_info", "What is the Business Bankruptcy variable?"),
                         downloadButton(outputId = "bus_down", label = "Download the plot"),
                         h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy")))
                     ) 
@@ -318,7 +318,7 @@ body <- dashboardBody(
                   fluidRow(
                     box(width = 12,
                         plotOutput("plot_per"),
-                        actionButton("per_info", "What is Personal Bankruptcy?"),
+                        actionButton("per_info", "What is the Personal Bankruptcy variable?"),
                         downloadButton(outputId = "per_down", label = "Download the plot"),
                         h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy")))
                     )
@@ -329,13 +329,13 @@ body <- dashboardBody(
             fluidRow(
               box(width = 6,
                   plotOutput("plot_ren"),
-                  actionButton("ren_info", "What is Inflation-Adjusted Median Rent?"),
+                  actionButton("ren_info", "What is the Inflation-Adjusted Median Rent variable?"),
                   downloadButton(outputId = "ren_down", label = "Download the plot"),
                   h4(helpText(a("More information about Rent.", href="https://seigma.shinyapps.io/rent/")))
               ),
               box(width = 6,
                   plotOutput("plot_bui"),
-                  actionButton("bui_info", "What is Building Permits?"),
+                  actionButton("bui_info", "What is the Building Permits variable?"),
                   downloadButton(outputId = "bui_down", label = "Download the plot"),
                   h4(helpText(a("More information about Building Permits.", href="https://seigma.shinyapps.io/BuildingPermits/")))
               )
@@ -360,7 +360,7 @@ body <- dashboardBody(
                   fluidRow(
                     box(width = 12,
                   plotOutput("plot_val"),
-                  actionButton("val_info", "What is Total Assessed Property Values?"),
+                  actionButton("val_info", "What is the Total Assessed Property Values variable?"),
                   downloadButton(outputId = "pro_down", label = "Download the plot"),
                   h4(helpText(a("More information about Property Value.", href="https://seigma.shinyapps.io/PropertyValue/")))
                     )
@@ -404,23 +404,23 @@ server <- function(input, output, session){
     showModal(modalDialog(
       title = "How to use the dashboard:",
       h4("1. Select Municipality of Interest"),
-      "Please select the municipality by spelling it or click it from the pull-up menu on the left sidebar.",
+      "Please choose a  municipality by entering it in the text box or selecting it from the pull-down menu on the left sidebar.",
       br(),
-      "-- The municipalities are listed in alphabetical order.",
+      "-- Municipalities are listed in alphabetical order.",
       br(),
-      "-- You can select multiple municipalities at the same time.",
+      "-- Multiple municipalities can be selected at the same time.",
       br(),
-      "-- Use the 'backspace' on the keyboard to delete an existing municipality.",
-      h4("2. Choose the Comparison"),
+      "-- Use 'backspace' on the keyboard to delete an existing municipality.",
+      h4("2. Choose a Comparison"),
       "Please select the corresponding check box to compare the County, Massachusetts or United States average.",
-      h4("3. Select Data to Vitalize"),
-      "Please select the data of interest through tab respectively.",
+      h4("3. Select Data to Visualize"),
+      "Please select the data of interest by choosing a variable category on the left sidebar.",
       br(),
-      "-- The Demographic tab contains Age, Race, Gender and Ethnicity data.", 
+      "-- Demographic: Population, Age, Race, Gender and Ethnicity data.", 
       br(),
-      "-- The Social tab contains  Marital Status, Educational Attainment, Suicide Rate, Veteran’s Status and Schools data.",
+      "-- Social:Marital Status, Educational Attainment, Suicide Rate, Veteran’s Status and Schools data.",
       br(),
-      "-- The Economic tab contains Household Income, Poverty Rate, Monthly Employment, Unemployment Rate, Bankruptcy, Rent, Building Permits, Property Value and Property Tax data.",
+      "-- Economic:Household Income, Poverty Rate, Monthly Employment, Unemployment Rate, Business and Personal Bankruptcy, Montly Rent, Building Permits, Property Values, and Property Tax data.",
       footer = modalButton("Close"),
       easyClose = TRUE
     ))
@@ -553,7 +553,7 @@ server <- function(input, output, session){
   
   observeEvent(input$age_info, {
     showModal(modalDialog(
-      title = "What's in Age Group?",
+      title = "What is the Age variable?",
       age_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -647,7 +647,7 @@ server <- function(input, output, session){
   
   observeEvent(input$rac_info, {
     showModal(modalDialog(
-      title = "What's in Race Group?",
+      title = "What is the Race variable?",
       rac_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -722,7 +722,7 @@ server <- function(input, output, session){
   
   observeEvent(input$gen_info, {
     showModal(modalDialog(
-      title = "What is Gender?",
+      title = "What is the Gender variable?",
       gen_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -783,7 +783,7 @@ server <- function(input, output, session){
   
   observeEvent(input$his_info, {
     showModal(modalDialog(
-      title = "What's in Ethnicity?",
+      title = "What is the Ethnicity variable?",
       his_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -860,7 +860,7 @@ server <- function(input, output, session){
   
   observeEvent(input$mar_info, {
     showModal(modalDialog(
-      title = "What is Marital Status Rates?",
+      title = "What is the Marital Status variable?",
       mar_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -945,7 +945,7 @@ server <- function(input, output, session){
   
   observeEvent(input$edu_info, {
     showModal(modalDialog(
-      title = "What is Educational Attainment Rate?",
+      title = "What is the Educational Attainment variable?",
       edu_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1035,7 +1035,7 @@ server <- function(input, output, session){
   
   observeEvent(input$sui_info, {
     showModal(modalDialog(
-      title = "What is Age-adjusted Suicide Rate?",
+      title = "What is the Age-adjusted Suicide Rate variable?",
       sui_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1092,7 +1092,7 @@ server <- function(input, output, session){
   
   observeEvent(input$vet_info, {
     showModal(modalDialog(
-      title = "What is Veteran Status?",
+      title = "What is the Veteran's Status variable?",
       vet_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1157,7 +1157,7 @@ server <- function(input, output, session){
   
   observeEvent(input$eng_info, {
     showModal(modalDialog(
-      title = "What is English Language Learner?",
+      title = "What is the English Language Learner variable?",
       eng_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1221,7 +1221,7 @@ server <- function(input, output, session){
   
   observeEvent(input$dis_info, {
     showModal(modalDialog(
-      title = "What is Students with Disabilities?",
+      title = "What is the Students with Disabilities variable?",
       dis_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1278,7 +1278,7 @@ server <- function(input, output, session){
   
   observeEvent(input$inc_info, {
     showModal(modalDialog(
-      title = "What is Median Annual Household Income?",
+      title = "What is the Median Annual Household Income variable?",
       inc_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1334,7 +1334,7 @@ server <- function(input, output, session){
   
   observeEvent(input$pov_info, {
     showModal(modalDialog(
-      title = "What is Poverty Rate?",
+      title = "What is the Poverty Status variable?",
       pov_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1390,7 +1390,7 @@ server <- function(input, output, session){
   
   observeEvent(input$emp_info, {
     showModal(modalDialog(
-      title = "What is Average Monthly Employment?",
+      title = "What is the Monthly Employment variable?",
       emp_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1446,7 +1446,7 @@ server <- function(input, output, session){
   
   observeEvent(input$une_info, {
     showModal(modalDialog(
-      title = "What is Unemployment Rate?",
+      title = "What is the Unemployment Rate variable?",
       une_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1544,7 +1544,7 @@ server <- function(input, output, session){
   
   observeEvent(input$bus_info, {
     showModal(modalDialog(
-      title = "What is Business Bankruptcy?",
+      title = "What is the Business Bankruptcy variable?",
       bus_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1616,7 +1616,7 @@ server <- function(input, output, session){
   
   observeEvent(input$per_info, {
     showModal(modalDialog(
-      title = "What is Personal Bankruptcy?",
+      title = "What is the Personal Bankruptcy variable?",
       per_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1683,7 +1683,7 @@ server <- function(input, output, session){
   
   observeEvent(input$ren_info, {
     showModal(modalDialog(
-      title = "What is 2015-$ Adjusted Median Monthly Rent?",
+      title = "What is the Inflation-Adjusted Median Rent variable?",
       ren_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1739,7 +1739,7 @@ server <- function(input, output, session){
   
   observeEvent(input$bui_info, {
     showModal(modalDialog(
-      title = "What is Building Permit?",
+      title = "What is the Building Permit variable?",
       bui_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1809,7 +1809,7 @@ server <- function(input, output, session){
   
   observeEvent(input$val_info, {
     showModal(modalDialog(
-      title = "What is Assessed Property Values?",
+      title = "What is the Total Assessed Property Values variable?",
       val_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1891,7 +1891,7 @@ server <- function(input, output, session){
   
   observeEvent(input$tax_info, {
     showModal(modalDialog(
-      title = "What is Total Tax Levy?",
+      title = "What is the Property Tax variable?",
       tax_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
