@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 01/08/2018  ##
+## Last Modified: 01/12/2018  ##
 ################################
 
 ##### SETTINGS #####
@@ -74,10 +74,8 @@ body <- dashboardBody(
                   )
             ),
       fluidRow(
-        box(width = 12,
-            h4("Total Population in Selected Regions (at Mid Year of Five Year Range)"),
-            dataTableOutput("population")
-            )
+        box(width= 12,
+            h4("Please view the information abouth the population at the bottom."))
       ),
             fluidRow(
               box(width = 6,
@@ -145,6 +143,12 @@ body <- dashboardBody(
                 downloadButton(outputId = "his_down", label = "Download the plot")
               )
             ),
+      fluidRow(
+        box(width = 12,
+            h4("Total Population in Selected Regions (at Mid Year of Five Year Range)"),
+            dataTableOutput("population")
+        )
+      ),
             fluidRow(
               box(width = 12,
                   h4(helpText(a("More information about Demographics.", href="https://seigma.shinyapps.io/demographics/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dem_app', 1)")))
@@ -487,6 +491,7 @@ server <- function(input, output, session){
     pop_df <- filter(dem_data, Region %in% my_place) %>% 
       select(Region, Five_Year_Range, Total_Population) %>%
       arrange(Region)
+    pop_df$Total_Population <- format(pop_df$Total_Population, big.mark=",", scientific=FALSE)
     pop_show <- c()
     for(i in 1:length(my_place)){
       pop_muni <- filter(pop_df, Region == my_place[i])
