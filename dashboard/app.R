@@ -75,7 +75,7 @@ body <- dashboardBody(
             ),
       fluidRow(
         box(width= 12,
-            h4("Please view the information abouth the population at the bottom."))
+            h4("Please view the information about population at the bottom."))
       ),
             fluidRow(
               box(width = 6,
