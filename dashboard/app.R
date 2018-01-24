@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 01/12/2018  ##
+## Last Modified: 01/23/2018  ##
 ################################
 
 ##### SETTINGS #####
@@ -19,7 +19,7 @@ sidebar <- dashboardSidebar(
     menuItem("Municipality", icon = icon("address-book"),
              selectInput("muni", "Select Municipalities",
                          choices = MA_municipals,
-                         selected = "Abington",
+                         selected = "Plainville",
                          multiple = TRUE)
     ),
     menuItem("County/MA/US Average", icon = icon("check-square-o"),
@@ -75,7 +75,7 @@ body <- dashboardBody(
             ),
       fluidRow(
         box(width= 12,
-            h4("Please view the information about population at the bottom."))
+            h5("Population estimates can be found at the bottom of the page."))
       ),
             fluidRow(
               box(width = 6,
