@@ -2,7 +2,7 @@
 ## Title: RENT   server.R            ##
 ## Author(s): JWB, BF                ## 
 ## Date Created:  12/01/2016         ##
-## Date Updated:  01/08/2018  ZK     ##
+## Date Updated:  01/31/2018  ZK     ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -15,7 +15,7 @@ shinyServer(function(input, output, session) {
     rent_df <- rent %>%
       filter(Five.Year.Range %in% years) %>%
       select(c(1:5))
-
+    
     ## Output reactive dataframe
     rent_df    
   })
@@ -27,11 +27,13 @@ shinyServer(function(input, output, session) {
     rent_df <- rent_df()
     
     ## make municipals a vector based on input variable
-    if(!is.null(input$sum_muni))
+    if(is.null(input$sum_muni)){
       munis <- MA_municipals
-    ## if none selected, put all municipals in vector
-    if(is.null(input$sum_muni))
-      munis <- MA_municipals
+    } else {
+      munis <- input$sum_muni
+    }
+    # ## if none selected, put all municipals in vector
+    # if(is.null(input$sum_muni))
     
     ## if the user checks the meanUS box or the meanMA box, add those to counties vector
     if(input$US_mean){
@@ -50,7 +52,7 @@ shinyServer(function(input, output, session) {
     rent_df <- rent_df %>%
       filter(Municipal %in% munis) %>%
       select(c(1,3,4,5))
-      # select(c(2,1,3,4,5))
+    # select(c(2,1,3,4,5))
     
     colnames(rent_df) <- gsub(".", " ", colnames(rent_df), fixed=T)
     colnames(rent_df)[1] <- "Region"
@@ -58,68 +60,68 @@ shinyServer(function(input, output, session) {
     colnames(rent_df)[4] <- "Median Margin of Error (2015$)"
     
     
-#     rent_df[,3] <- prettyNum(rent_df[,3], big.mark=",")
-#     rent_df[,4] <- prettyNum(rent_df[,4], big.mark=",")
-#     
+    #     rent_df[,3] <- prettyNum(rent_df[,3], big.mark=",")
+    #     rent_df[,4] <- prettyNum(rent_df[,4], big.mark=",")
+    #     
     return(rent_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
   
-
+  
   ## create the plot of the data
-
-   
   
-    munis_p <- reactive({
-      
-      munis_p2 <- input$plot_muni
-      #MA
-      if(input$MA_mean_p==T && any(grepl(x=munis_p2, pattern = "Massachusetts"))==F){
-        return(c("Massachusetts", munis_p2[!(munis_p2 =="Massachusetts")])) ## US only ## MA only
-      }else if(input$MA_mean_p==T && any(grepl(x=munis_p2, pattern = "Massachusetts"))==T){
-        return(c("Massachusetts", munis_p2[!(munis_p2 =="Massachusetts")])) ## US only ## MA only
-      }
-      else if(input$MA_mean_p==F && any(grepl(x=munis_p2, pattern = "Massachusetts"))==T){
-        return(munis_p2[!(munis_p2 =="Massachusetts")]) ## remove MA
-      } else if(input$MA_mean_p==F && any(grepl(x=munis_p2, pattern = "Massachusetts"))==F){
-        return(munis_p2[!(munis_p2 =="Massachusetts")]) ## remove MA
-      }
+  
+  
+  munis_p <- reactive({
     
-   
-   })
+    munis_p2 <- input$plot_muni
+    #MA
+    if(input$MA_mean_p==T && any(grepl(x=munis_p2, pattern = "Massachusetts"))==F){
+      return(c("Massachusetts", munis_p2[!(munis_p2 =="Massachusetts")])) ## US only ## MA only
+    }else if(input$MA_mean_p==T && any(grepl(x=munis_p2, pattern = "Massachusetts"))==T){
+      return(c("Massachusetts", munis_p2[!(munis_p2 =="Massachusetts")])) ## US only ## MA only
+    }
+    else if(input$MA_mean_p==F && any(grepl(x=munis_p2, pattern = "Massachusetts"))==T){
+      return(munis_p2[!(munis_p2 =="Massachusetts")]) ## remove MA
+    } else if(input$MA_mean_p==F && any(grepl(x=munis_p2, pattern = "Massachusetts"))==F){
+      return(munis_p2[!(munis_p2 =="Massachusetts")]) ## remove MA
+    }
+    
+    
+  })
   
-    munis_pfinal <- reactive({
-     munis_p3 <- munis_p()
-     #AMERICA FWURST
-     if(input$US_mean_p==T && any(grepl(x=munis_p3, pattern = "United States"))==F){
-       return(c("United States", munis_p3[!(munis_p3 =="United States")])) ##  United States
-     }else if(input$US_mean_p==T && any(grepl(x=munis_p3, pattern = "United States"))==T){
-       return(c("United States", munis_p3[!(munis_p3 =="United States")])) ## US  United States
-     }
-     else if(input$US_mean_p==F && any(grepl(x=munis_p3, pattern = "United States"))==T){
-       return(munis_p3[!(munis_p3 =="United States")]) ## remove United States
-     } else if(input$US_mean_p==F && any(grepl(x=munis_p3, pattern = "United States"))==F){
-       return(munis_p3[!(munis_p3 =="United States")]) ## remove  United States
-     }
-     
-     
-   })
+  munis_pfinal <- reactive({
+    munis_p3 <- munis_p()
+    #AMERICA FWURST
+    if(input$US_mean_p==T && any(grepl(x=munis_p3, pattern = "United States"))==F){
+      return(c("United States", munis_p3[!(munis_p3 =="United States")])) ##  United States
+    }else if(input$US_mean_p==T && any(grepl(x=munis_p3, pattern = "United States"))==T){
+      return(c("United States", munis_p3[!(munis_p3 =="United States")])) ## US  United States
+    }
+    else if(input$US_mean_p==F && any(grepl(x=munis_p3, pattern = "United States"))==T){
+      return(munis_p3[!(munis_p3 =="United States")]) ## remove United States
+    } else if(input$US_mean_p==F && any(grepl(x=munis_p3, pattern = "United States"))==F){
+      return(munis_p3[!(munis_p3 =="United States")]) ## remove  United States
+    }
+    
+    
+  })
   
-    plot_rent_df <- reactive({
-      rent_for_plot <- rent  
-      rent_for_plot$Year <- as.numeric(sapply(strsplit(as.character(rent_for_plot$Five.Year.Range), split="-"), FUN=function(x){x[1]}))+2    
-     
-      selmun <- munis_pfinal()
-      rent_for_plot <- rent_for_plot %>%
-        filter(Municipal %in% selmun) %>%
-        select(c(1,6,4,5)) 
-      names(rent_for_plot)[c(3,4)] <- c("Var", "Error")
-      
-      ## Output reactive dataframe, sorted like selected munis
-      #order=unlist(lapply(match(munis_p, plot_mar_df$Region), FUN=function(x){x+0:((nrow(plot_mar_df))/(length(munis_p))-1)}))
-      return(rent_for_plot[order(match(rent_for_plot$Municipal, selmun)),])
-      
-    })
-      
+  plot_rent_df <- reactive({
+    rent_for_plot <- rent  
+    rent_for_plot$Year <- as.numeric(sapply(strsplit(as.character(rent_for_plot$Five.Year.Range), split="-"), FUN=function(x){x[1]}))+2    
+    
+    selmun <- munis_pfinal()
+    rent_for_plot <- rent_for_plot %>%
+      filter(Municipal %in% selmun) %>%
+      select(c(1,6,4,5)) 
+    names(rent_for_plot)[c(3,4)] <- c("Var", "Error")
+    
+    ## Output reactive dataframe, sorted like selected munis
+    #order=unlist(lapply(match(munis_p, plot_mar_df$Region), FUN=function(x){x+0:((nrow(plot_mar_df))/(length(munis_p))-1)}))
+    return(rent_for_plot[order(match(rent_for_plot$Municipal, selmun)),])
+    
+  })
+  
   ## for the Google charts plot
   output$plot <- renderPlot({
     ## make reactive dataframe into regular dataframe
@@ -151,9 +153,9 @@ shinyServer(function(input, output, session) {
             axis.text.y = element_text(size = 14))+
       theme(legend.title=element_text(size=16),
             legend.text=element_text(size=14))
-
-      #guides(colour = guide_legend(override.aes = list(colour = NA)))+
-      #guides(colour = guide_legend(override.aes = list(colour = cbbPalette[1:length(unique(pdf$Municipal))])))
+    
+    #guides(colour = guide_legend(override.aes = list(colour = NA)))+
+    #guides(colour = guide_legend(override.aes = list(colour = cbbPalette[1:length(unique(pdf$Municipal))])))
     p
     
     
@@ -165,71 +167,71 @@ shinyServer(function(input, output, session) {
   #   if (is.null(d)) "Hover on a point!" else d
   # })
   # 
-
+  
   #####################################MAP CREATION##############
-
+  
   map_rent_df <- reactive({
     ## Filter the data by the chosen Five Year Range
     map_rent_df <- rent %>%
       filter(Five.Year.Range == input$map_year) %>%
       select(1:4, Five.Year.Range, Median.Rent.2015.Dollar, Rent.Margin.of.Error.2015.Dollar)
-
+    
     ## Output reactive dataframe
     map_rent_df
   })
-
-
-
+  
+  
+  
   ## set map colors
   map_dat <- reactive({
-
+    
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
     map_rent_df <- map_rent_df()
-
+    
     ## take US, MA, and counties out of map_dat
     map_dat <- map_rent_df %>%
       filter(!is.na(Municipal))
-
+    
     ## assign colors to each entry in the data frame
     color <- as.integer(cut2(map_dat[,"Median.Rent.2015.Dollar"],cuts=cuts))
     map_dat <- cbind.data.frame(map_dat, color)
     map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors),
                             map_dat$color)
     map_dat$opacity <- 0.7
-
+    
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Municipal)
     missing_df <- data.frame(Municipal = missing_munis, County = NA, Five.Year.Range = input$map_year,
                              Median.Rent.2015.Dollar = NA, Rent.Margin.of.Error.2015.Dollar = NA,
                              color=length(map_colors), opacity = 0)
-
+    
     na_munis <- setdiff(MA_municipals_map, map_dat$Municipal)
     na_munis <- na_munis[na_munis!= "County subdivisions not defined"]
     # input$map_year <- "2005-2009" # Debug
     # County <- "Barnstable" # Debug
     # Median.Rent <- 200 # Debug
     # Rent.Margin.of.Error <- 2 # Debug
-
+    
     # na_df <- data.frame(Municipal = na_munis, County = NA, Five.Year.Range = input$map_year,
     #                     Median.Rent = NA, Rent.Margin.of.Error = NA,
     #                     color=length(map_colors), opacity = 0.7)
-
-
+    
+    
     # combine data subset with missing counties data
     map_dat <- rbind.data.frame(map_dat, missing_df)
     map_dat$color <- map_colors[map_dat$color]
     return(map_dat)
   })
-
+  
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
-
+  
   #############################################
   # observe({
   #   values$highlight <- input$map_shape_mouseover$id
   #   #browser()
   # })
-
+  
   # # Dynamically render the box in the upper-right
   # output$countyInfo <- renderUI({
   #
@@ -244,7 +246,7 @@ shinyServer(function(input, output, session) {
   #     ))
   #   }
   # })
-
+  
   # lastHighlighted <- c()
   # # When values$highlight changes, unhighlight the old state (if any) and
   # # highlight the new state
@@ -260,21 +262,21 @@ shinyServer(function(input, output, session) {
   #     drawStates(getStateName(values$highlight), TRUE)
   #   })
   # })
-
+  
   ###########################################
-
+  
   # draw leaflet map
   map <- createLeafletMap(session, "map")
-
+  
   ## the functions within observe are called when any of the inputs are called
-
+  
   ## Does nothing until called (done with action button)
   observe({
     input$action
-
+    
     ## load in relevant map data
     map_dat <- map_dat()
-
+    
     ## All functions which are isolated, will not run until the above observe function is activated
     isolate({
       ## Duplicate MAmap to x
@@ -296,22 +298,22 @@ shinyServer(function(input, output, session) {
           color="#000000",
           fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)])
       }
-
+      
       map$addGeoJSON(x) # draw map
     })
   })
-
+  
   observe({
     ## EVT = Mouse Click
     evt <- input$map_click
     if(is.null(evt))
       return()
-
+    
     isolate({
       values$selectedFeature <- NULL
     })
   })
-
+  
   observe({
     evt <- input$map_geojson_click
     if(is.null(evt))
@@ -326,7 +328,7 @@ shinyServer(function(input, output, session) {
   })
   ##  This function is what creates info box
   output$details <- renderText({
-
+    
     ## Before a county is clicked, display a message
     if(is.null(values$selectedFeature)){
       return(as.character(tags$div(
@@ -338,7 +340,7 @@ shinyServer(function(input, output, session) {
     muni_name <- values$selectedFeature$NAMELSAD10
     muni_value <- prettyNum(values$selectedFeature["Median.Rent.2015.Dollar"], big.mark = ",")
     muni_margin<- prettyNum(values$selectedFeature["Rent.Margin.of.Error.2015.Dollar"], big.mark = ",")
-
+    
     ## If clicked county has no crude rate, display a message
     if(muni_value == "NA"){
       return(as.character(tags$div(
@@ -350,12 +352,12 @@ shinyServer(function(input, output, session) {
       tags$h5("$",muni_value, "+-", muni_margin)
     ))
   })
-
+  
   output$legend1 <- renderPlot({
     paint.brush = colorRampPalette(colors=c("white", "#009E73"))
     cols <- paint.brush(length(map_colors)-1)
     leg_dat<- data_frame(y = seq(min_val, max_val, length.out = (length(map_colors)-1)), x = 1, col = cols)
-
+    
     q<- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
       scale_y_continuous(limits = c(min_val, max_val), breaks = round(seq(min_val, max_val, length.out = 5),0)) +
@@ -368,9 +370,9 @@ shinyServer(function(input, output, session) {
             panel.border = element_blank(),
             panel.grid.minor = element_blank(),
             panel.grid.major = element_blank())
-
+    
     return(q)
-
+    
   })
-
+  
 })
