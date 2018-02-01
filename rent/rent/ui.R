@@ -38,8 +38,8 @@ shinyUI(fluidPage(
                                               "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", "2009-2013" = "2009-2013",
                                               "2010-2014" = "2010-2014","2011-2015" = "2011-2015"))
                  ),
-
-
+                 
+                 
                  ## in summary, allow for municipal selection
                  conditionalPanel(
                    condition="input.tabs == 'summary'",
@@ -54,26 +54,26 @@ shinyUI(fluidPage(
                                ## Multiple allows for multi-county selection
                                multiple=TRUE),
                    
-                     ## In summary, show boxes that will compare to MA or US median
+                   ## In summary, show boxes that will compare to MA or US median
                    checkboxInput("MA_mean", "Compare to MA Median", FALSE),
                    checkboxInput("US_mean", "Compare to US Median", FALSE)
                    
                  ),
                  
-                  ## in plot, allow for municipal selection
-                  conditionalPanel(
-                    condition="input.tabs == 'plot'",
-                    ## Select input = List
-                    
-                    selectInput("plot_muni", "Select Municipality",
-                                choices = MA_municipals, multiple = T),
-                    checkboxInput("MA_mean_p", "Compare to MA Median", TRUE),
-                    checkboxInput("US_mean_p", "Compare to US Median", FALSE)
+                 ## in plot, allow for municipal selection
+                 conditionalPanel(
+                   condition="input.tabs == 'plot'",
+                   ## Select input = List
+                   
+                   selectInput("plot_muni", "Select Municipality",
+                               choices = MA_municipals, multiple = T),
+                   checkboxInput("MA_mean_p", "Compare to MA Median", TRUE),
+                   checkboxInput("US_mean_p", "Compare to US Median", FALSE)
+                   
+                   
+                 ),
                  
                  
-                  ),
-                 
-
                  tags$hr(),
                  
                  ## author line
@@ -118,7 +118,7 @@ shinyUI(fluidPage(
                  , value="summary", 
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
         
-#         ## plot tab with google chart options
+        #         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
                  h4("Inflation-Adjusted (2015 $) Median Annual Rent Over Selected Five Year Period", align="center"),
@@ -127,17 +127,17 @@ shinyUI(fluidPage(
                  plotOutput("plot"),
                  HTML("Horizontal grey bars indicate the span of five-year estimates, vertical grey bars with hinges indicate the standard errors"),
                  #verbatimTextOutput("event"),
-# 
-#lplot,
-                  #textOutput("plot_df")
-
+                 # 
+                 #lplot,
+                 #textOutput("plot_df")
+                 
                  ## add text about the variables
                  #                  plot_main_text,
                  value="plot"),
-#         
-#         ## plot map
+        #         
+        #         ## plot map
         tabPanel("Map",
-
+                 
                  ## Add a little CSS to make the map background pure white
                  tags$head(tags$style("
                                       #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
@@ -154,14 +154,14 @@ shinyUI(fluidPage(
                    condition="input.action != 0",
                    absolutePanel(left=100, top=450, width=300, class="floater",
                                  htmlOutput("details"))),
-
+                 
                  conditionalPanel(
                    condition="input.tabs == 'map' && input.action == 0",
                    ## within the map area, you can create an action button.  similar to initializing the legend but just putting a button instead.
                    absolutePanel(right = 400, top = 300, class = "floater",
                                  actionButton("action", "Generate Map")
                    )),
-
+                 
                  ## Legend
                  conditionalPanel(
                    condition="input.action != 0",
@@ -173,23 +173,23 @@ shinyUI(fluidPage(
                      strong("Contract", br(), "Rent 2015$"),
                      plotOutput("legend1"),
                      tags$table(
-
+                       
                        tags$td(tags$div(
                          style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
                        )),
                        tags$td("Data not", br(), "available", align = "right")
                      )
                    )),
-
+                 
                  #                plot_main_text,
                  value="map"),
-#         
+        #         
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
                    tags$li(p(strong("Inflation-Adjusted (2015 $) Median Contract Rent"), "-Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2015 and adjusted for inlation to the 2015 dollar. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.")),
-            
+                   
                    tags$br(),
                    tags$li(p(strong("Median"),"-The median divides the distribution of inflation-adjusted median contract rent into two equal parts; half that fall below the median for contract rent and half that fall above.")),
                    tags$br(),
