@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 01/23/2018  ##
+## Last Modified: 02/09/2018  ##
 ################################
 
 ##### SETTINGS #####
@@ -36,22 +36,46 @@ sidebar <- dashboardSidebar(
     menuItem("Economics", tabName = "econ", icon = icon("bank")
     ),
     br(),
+    h4("Have a Quick Glance"),
+    column(5,
+           actionButton("age_button", "Age Group")
+           ),
+    column(6,
+           actionButton("rac_button", "Race Group")
+           ),
+    column(5,
+           actionButton("gen_button", "Gender")
+           ),
+    column(6,
+           actionButton("eth_button", "Ethnicity")
+           ),
+    br(),
+    br(),
+    br(),
+    br(),
+    br(),
     br(),
     menuItem("Data Source", icon = icon("file-code-o"), 
              menuSubItem("American Community Survey",  
-                         href="https://factfinder.census.gov/faces/nav/jsf/pages/index.xhtml"),
+                         href="https://factfinder.census.gov/faces/nav/jsf/pages/index.xhtml", 
+                         newtab = TRUE),
              menuSubItem("CDC Wonder",  
-                         href="https://wonder.cdc.gov/mortsql.html"),
+                         href="https://wonder.cdc.gov/mortsql.html", 
+                         newtab = TRUE),
              menuSubItem("MA Labor and Workforce",  
-                         href="http://lmi2.detma.org/lmi/lmi_es_a.asp"),
+                         href="http://lmi2.detma.org/lmi/lmi_es_a.asp", 
+                         newtab = TRUE),
              menuSubItem("Bureau of Labor Statistics",  
-                         href="https://www.bls.gov/lau/data.htm"),
+                         href="https://www.bls.gov/lau/data.htm",
+                         newtab = TRUE),
              menuSubItem("United States Courts",  
                          href="http://www.uscourts.gov/statistics-reports/caseload-statistics-data-tables"),
              menuSubItem("MA State Data Center",  
-                         href="http://www.massbenchmarks.org/statedata/data.htm"),
+                         href="http://www.massbenchmarks.org/statedata/data.htm", 
+                         newtab = TRUE),
              menuSubItem("MA DOR",  
-                         href="https://dlsgateway.dor.state.ma.us/reports/rdPage.aspx?rdReport=PropertyTaxInformation.taxratesbyclass.taxratesbyclass_main")
+                         href="https://dlsgateway.dor.state.ma.us/reports/rdPage.aspx?rdReport=PropertyTaxInformation.taxratesbyclass.taxratesbyclass_main",
+                         newtab = TRUE)
 ),
     menuItem("Comments or Feedback", icon = icon("envelope-o"),
              href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation"),
@@ -64,13 +88,17 @@ sidebar <- dashboardSidebar(
 )
 
 body <- dashboardBody(
+  bsModal("modal1Example", "Age Distribution", "age_button", size = "large",plotOutput("age_show")),
+  bsModal("modal2Example", "Race Distribution", "rac_button", size = "large",plotOutput("rac_show")),
+  bsModal("modal3Example", "Gender Distribution", "gen_button", size = "large",plotOutput("gen_show")),
+  bsModal("modal4Example", "Ethnicity Distribution", "eth_button", size = "large",plotOutput("eth_show")),
   tabItems(
     tabItem(
       ### Demographic Tab UI ###
       tabName = "demo",
             fluidRow(
               box(width = 12,
-                  a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/")
+                  a(img(src = "logo.jpg", height=105, width=920), href="http://www.umass.edu/seigma/", target = "_blank")
                   )
             ),
       fluidRow(
@@ -100,7 +128,8 @@ body <- dashboardBody(
                   ),
                 fluidRow(
                   box(width = 12,
-                      plotOutput("plot_age")
+                      plotOutput("plot_age", click = "plot_click"),
+                      verbatimTextOutput("info")
                       )
                 ),
                 actionButton("age_info", "What is the Age variable?"),
@@ -189,7 +218,7 @@ body <- dashboardBody(
                   actionButton("mar_info", "What is the Marital Status variable?"),
                   downloadButton(outputId = "mar_down", label = "Download the plot"),
                   h4(helpText(a("More information about Marital Status.",
-                                href="https://seigma.shinyapps.io/marital/")))
+                                href="https://seigma.shinyapps.io/marital/", target="_blank")))
               ),
               box(width = 6,
                     fluidRow(
@@ -212,7 +241,7 @@ body <- dashboardBody(
                       ),
                   actionButton("edu_info", "What is the Educational Attainment variable?"),
                   downloadButton(outputId = "edu_down", label = "Download the plot"),
-                    h4(helpText(a("More information about  Educational Attainment.", href="https://seigma.shinyapps.io/educational_attainment/")))
+                    h4(helpText(a("More information about  Educational Attainment.", href="https://seigma.shinyapps.io/educational_attainment/", target="_blank")))
                     )
               ),
             fluidRow(
@@ -226,7 +255,7 @@ body <- dashboardBody(
                   plotOutput("plot_vet"),
                   actionButton("vet_info", "What is the Veteran’s Status variable?"),
                   downloadButton(outputId = "vet_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/")))
+                  h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/", target="_blank")))
                     )
               ),
             fluidRow(
@@ -240,7 +269,7 @@ body <- dashboardBody(
                   plotOutput("plot_dis"),
                   actionButton("dis_info", "What is the Students with Disabilities variable?"),
                   downloadButton(outputId = "dis_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Schools.", href="https://seigma.shinyapps.io/va_status/")))
+                  h4(helpText(a("More information about Schools.", href="https://seigma.shinyapps.io/va_status/"), target = "_blank"))
               )
             )
     ),
@@ -257,13 +286,13 @@ body <- dashboardBody(
                   plotOutput("plot_inc"),
                   actionButton("inc_info", "What is the Median Annual Household Income variable?"),
                   downloadButton(outputId = "inc_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Household Income.", href="https://seigma.shinyapps.io/income/")))
+                  h4(helpText(a("More information about Household Income.", href="https://seigma.shinyapps.io/income/", target="_blank")))
               ),
               box(width = 6,
                   plotOutput("plot_pov"),
                   actionButton("pov_info", "What is the Poverty Status variable?"),
                   downloadButton(outputId = "pov_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Poverty.", href="https://seigma.shinyapps.io/poverty/")))
+                  h4(helpText(a("More information about Poverty.", href="https://seigma.shinyapps.io/poverty/", target="_blank")))
               )
             ),
             fluidRow(
@@ -271,13 +300,13 @@ body <- dashboardBody(
                   plotOutput("plot_emp"),
                   actionButton("emp_info", "What is the Monthly Employment variable?"),
                   downloadButton(outputId = "emp_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Employment.", href="https://seigma.shinyapps.io/employment/")))
+                  h4(helpText(a("More information about Employment.", href="https://seigma.shinyapps.io/employment/", target="_blank")))
               ),
               box(width = 6,
                   plotOutput("plot_une"),
                   actionButton("une_info", "What is the Unemployment Rate variable?"),
                   downloadButton(outputId = "une_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Unemployment.", href="https://seigma.shinyapps.io/unemployment/")))
+                  h4(helpText(a("More information about Unemployment.", href="https://seigma.shinyapps.io/unemployment/", target="_blank")))
               )
             ),
             fluidRow(
@@ -302,7 +331,7 @@ body <- dashboardBody(
                         plotOutput("plot_bus"),
                         actionButton("bus_info", "What is the Business Bankruptcy variable?"),
                         downloadButton(outputId = "bus_down", label = "Download the plot"),
-                        h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy")))
+                        h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy", target="_blank")))
                     ) 
                   )
                   ),
@@ -324,7 +353,7 @@ body <- dashboardBody(
                         plotOutput("plot_per"),
                         actionButton("per_info", "What is the Personal Bankruptcy variable?"),
                         downloadButton(outputId = "per_down", label = "Download the plot"),
-                        h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy")))
+                        h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy", target="_blank")))
                     )
 
                     )
@@ -335,13 +364,13 @@ body <- dashboardBody(
                   plotOutput("plot_ren"),
                   actionButton("ren_info", "What is the Inflation-Adjusted Median Rent variable?"),
                   downloadButton(outputId = "ren_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Rent.", href="https://seigma.shinyapps.io/rent/")))
+                  h4(helpText(a("More information about Rent.", href="https://seigma.shinyapps.io/rent/", target="_blank")))
               ),
               box(width = 6,
                   plotOutput("plot_bui"),
                   actionButton("bui_info", "What is the Building Permits variable?"),
                   downloadButton(outputId = "bui_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Building Permits.", href="https://seigma.shinyapps.io/BuildingPermits/")))
+                  h4(helpText(a("More information about Building Permits.", href="https://seigma.shinyapps.io/BuildingPermits/", target="_blank")))
               )
             ),
             fluidRow(
@@ -366,7 +395,7 @@ body <- dashboardBody(
                   plotOutput("plot_val"),
                   actionButton("val_info", "What is the Total Assessed Property Values variable?"),
                   downloadButton(outputId = "pro_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Property Value.", href="https://seigma.shinyapps.io/PropertyValue/")))
+                  h4(helpText(a("More information about Property Value.", href="https://seigma.shinyapps.io/PropertyValue/", target="_blank")))
                     )
               )
               ),
@@ -391,7 +420,7 @@ body <- dashboardBody(
                   plotOutput("plot_tax"),
                   actionButton("tax_info", "What is Poverty Tax?"),
                   downloadButton(outputId = "tax_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Property Tax.", href="https://seigma.shinyapps.io/PropertyValue/")))
+                  h4(helpText(a("More information about Property Tax.", href="https://seigma.shinyapps.io/PropertyValue/", target="_blank")))
               )
             )
               )
@@ -538,6 +567,65 @@ server <- function(input, output, session){
       age <- append(age, age_var[8])
     dat <- filter(dat, variable %in% age)
     theme_set(theme_classic())
+    ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+      geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
+      geom_point(size = 3) + 
+      labs(title = "Age Distribution", 
+           x = "Mid-Year of Five Year Range",
+           y = "% Population") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12)) + 
+      scale_color_discrete("Region")
+  })
+  
+  output$info <- renderPrint({
+    dat <- age_df()
+    age_var <- unique(dat$variable)
+    age <- c()
+    if(input$under20)
+      age <- append(age, age_var[1])
+    if(input$under35)
+      age <- append(age, age_var[2])
+    if(input$under65)
+      age <- append(age, age_var[3])
+    if(input$under34)
+      age <- append(age, age_var[4])
+    if(input$under54)
+      age <- append(age, age_var[5])
+    if(input$under64)
+      age <- append(age, age_var[6])
+    if(input$under74)
+      age <- append(age, age_var[7])
+    if(input$over75)
+      age <- append(age, age_var[8])
+    dat <- filter(dat, variable %in% age)
+    nearPoints(dat, input$plot_click,threshold = 30, maxpoints = 1, addDist = FALSE)
+  })
+  
+  eventReactive(input$age_button, {
+    dat <- age_df()
+    age_var <- unique(dat$variable)
+    age <- c()
+    if(input$under20)
+      age <- append(age, age_var[1])
+    if(input$under35)
+      age <- append(age, age_var[2])
+    if(input$under65)
+      age <- append(age, age_var[3])
+    if(input$under34)
+      age <- append(age, age_var[4])
+    if(input$under54)
+      age <- append(age, age_var[5])
+    if(input$under64)
+      age <- append(age, age_var[6])
+    if(input$under74)
+      age <- append(age, age_var[7])
+    if(input$over75)
+      age <- append(age, age_var[8])
+    dat <- filter(dat, variable %in% age)
+    theme_set(theme_classic())
     p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
@@ -552,10 +640,45 @@ server <- function(input, output, session){
     print(p) 
   })
   
-  # observeEvent(input$age_info, {
-  #   showNotification("AGE", age_pop)
-  # })
-  
+  age_new <-     eventReactive(input$age_button, {
+    dat <- age_df()
+    age_var <- unique(dat$variable)
+    age <- c()
+    if(input$under20)
+      age <- append(age, age_var[1])
+    if(input$under35)
+      age <- append(age, age_var[2])
+    if(input$under65)
+      age <- append(age, age_var[3])
+    if(input$under34)
+      age <- append(age, age_var[4])
+    if(input$under54)
+      age <- append(age, age_var[5])
+    if(input$under64)
+      age <- append(age, age_var[6])
+    if(input$under74)
+      age <- append(age, age_var[7])
+    if(input$over75)
+      age <- append(age, age_var[8])
+    dat <- filter(dat, variable %in% age)
+    theme_set(theme_classic())
+    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+      geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
+      geom_point(size = 3) + 
+      labs(x = "Mid-Year of Five Year Range",
+           y = "% Population") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12)) + 
+      scale_color_discrete("Region")
+    print(p) 
+  })
+
+  output$age_show <- renderPlot({
+    age_new()
+  })
+
   observeEvent(input$age_info, {
     showModal(modalDialog(
       title = "What is the Age variable?",
@@ -650,6 +773,41 @@ server <- function(input, output, session){
     print(p) 
   })
   
+  rac_new <-     eventReactive(input$rac_button, {
+    dat <- rac_df()
+    race_var <- as.character(unique(dat$variable))
+    race <- c()
+    if(input$white)
+      race <- append(race, race_var[1])
+    if(input$black)
+      race <- append(race, race_var[2])
+    if(input$native)
+      race <- append(race, race_var[3])
+    if(input$asian)
+      race <- append(race, race_var[4])
+    if(input$hawaiian)
+      race <- append(race, race_var[5])
+    if(input$others)
+      race <- append(race, race_var[6])
+    dat <- filter(dat, variable %in% race)
+    theme_set(theme_classic())
+    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+      geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
+      geom_point(size = 3) + 
+      labs(x = "Mid-Year of Five Year Range",
+           y = "% Population") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))+ 
+      scale_color_discrete("Region")
+    print(p) 
+  })
+  
+  output$rac_show <- renderPlot({
+    rac_new()
+  })
+    
   observeEvent(input$rac_info, {
     showModal(modalDialog(
       title = "What is the Race variable?",

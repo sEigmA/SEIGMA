@@ -12,6 +12,7 @@ library(shinydashboard)
 library(dplyr)
 library(reshape2)
 library(ggplot2)
+library(shinyBS)
 
 ##### DATA #####
 ### DEMOGRAPHIC TAB
