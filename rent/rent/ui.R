@@ -1,7 +1,8 @@
 #######################################
 ## Title: RENT   ui.R                ##
-## Author(s): JWB, BF                ## 
+## Author(s): JWB, BF, ZK            ## 
 ## Date Created:  12/01/2016         ##
+## Date Updated:  01/31/2018  ZK     ##
 #######################################
 
 shinyUI(fluidPage(
@@ -77,7 +78,7 @@ shinyUI(fluidPage(
                  tags$hr(),
                  
                  ## author line
-                 helpText("Created by Justin Baldwin and Brook Frye"),
+                 helpText("Created by Justin Baldwin, Brook Frye and Zhenning Kang"),
                  
                  ## email feedback link
                  ## To develop a link in HTML

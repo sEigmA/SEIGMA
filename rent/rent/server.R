@@ -1,6 +1,6 @@
 #######################################
 ## Title: RENT   server.R            ##
-## Author(s): JWB, BF                ## 
+## Author(s): JWB, BF, ZK            ## 
 ## Date Created:  12/01/2016         ##
 ## Date Updated:  01/31/2018  ZK     ##
 #######################################
@@ -301,43 +301,50 @@ shinyServer(function(input, output, session) {
       
       map$addGeoJSON(x) # draw map
       
-      map$addMarker(
-        lat = 42.0042655,
-        lng = -71.332833
-      )
-
-      map$addMarker(
-        lat = 42.40843,
-        lng = -71.0536625
-      )
-      
-      map$addMarker(
-        lat = 42.1014831,
-        lng = -72.589811
-      )
-      
-      map$addMarker(
-        lat = 42.8142432,
-        lng = -73.9395687
-      )
-      
-      map$addMarker(
-        lat = 41.6259211,
-        lng = -71.2134231
-      )
-      
-      map$addMarker(
-        lat = 41.491392,
-        lng = -72.09054
-      )
-      
-      #           
-      # map$addMarkers(
-      #   lat = c(42.0042655, 42.40843, 42.1014831, 42.8142432, 41.6259211, 41.491392),
-      #   lng = c(-71.332833, -71.0536625, -72.589811, -73.9395687, -71.2134231, -72.09054),
-      #   group = c("MA", "MA", "MA", "NY", "RI", "CT"),
-      #   popup = c("Plainville", "Everett", "Springfield", "Schenectady", "Tiverton", "Mohegan Sun")
+      # map$addMarker(
+      #   lat = 42.0042655,
+      #   lng = -71.332833
       # )
+      # 
+      # map$addMarker(
+      #   lat = 42.40843,
+      #   lng = -71.0536625
+      # )
+      # 
+      # map$addMarker(
+      #   lat = 42.1014831,
+      #   lng = -72.589811
+      # )
+      # 
+      # map$addMarker(
+      #   lat = 42.8142432,
+      #   lng = -73.9395687
+      # )
+      # 
+      # map$addMarker(
+      #   lat = 41.6259211,
+      #   lng = -71.2134231
+      # )
+      # 
+      # map$addMarker(
+      #   lat = 41.491392,
+      #   lng = -72.09054
+      # )
+      
+#       map$addMarkers(
+#         lat = c(42.0042655, 42.40843, 42.1014831, 42.8142432, 41.6259211, 41.491392),
+#         lng = c(-71.332833, -71.0536625, -72.589811, -73.9395687, -71.2134231, -72.09054),
+# #        group = c("MA", "MA", "MA", "NY", "RI", "CT"),
+#         popup = c("Plainville", "Everett", "Springfield", "Schenectady", "Tiverton", "Mohegan Sun")
+#       )
+      
+      # map$addLabelOnlyMarkers(
+      #     lat = 42.0042655,
+      #     lng = -71.332833,
+      #     label =  "Plainville, MA", 
+      #     labelOptions = labelOptions(noHide = T, direction = 'top', textOnly = T)
+      # )
+            
     })
   })
   

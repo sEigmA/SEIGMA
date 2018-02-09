@@ -1,7 +1,8 @@
 #######################################
 ## Title: RENT   global.R            ##
-## Author(s): JWB, BF                ## 
+## Author(s): JWB, BF, ZK            ## 
 ## Date Created:  12/01/2016         ##
+## Date Updated:  01/13/2018  ZK     ##
 #######################################
 
 ##First file run - Environment Setup
