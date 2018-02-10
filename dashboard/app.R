@@ -128,8 +128,8 @@ body <- dashboardBody(
                   ),
                 fluidRow(
                   box(width = 12,
-                      plotOutput("plot_age", click = "plot_click"),
-                      verbatimTextOutput("info")
+                      plotOutput("plot_age", click = "age_click"),
+                      verbatimTextOutput("age_point")
                       )
                 ),
                 actionButton("age_info", "What is the Age variable?"),
@@ -153,7 +153,8 @@ body <- dashboardBody(
                 ),
                 fluidRow(
                   box(width = 12,
-                      plotOutput("plot_rac")
+                      plotOutput("plot_rac", click = "rac_click"),
+                      verbatimTextOutput("rac_point")
                   )
                 ),
                 actionButton("rac_info", "What is the Race variable?"),
@@ -162,12 +163,14 @@ body <- dashboardBody(
             ),
             fluidRow(
               box(width = 6,
-                plotOutput("plot_gen"),
+                  plotOutput("plot_gen", click = "gen_click"),
+                  verbatimTextOutput("gen_point"),
                 actionButton("gen_info", "What is the Gender variable?"),
                 downloadButton(outputId = "gen_down", label = "Download the plot")
               ),
               box(width = 6,
-                plotOutput("plot_his"),
+                  plotOutput("plot_his", click = "his_click"),
+                  verbatimTextOutput("his_point"),
                 actionButton("his_info", "What is the Ethnicity variable?"),
                 downloadButton(outputId = "his_down", label = "Download the plot")
               )
@@ -212,7 +215,8 @@ body <- dashboardBody(
                   ),
                   fluidRow(
                     box(width = 12,
-                        plotOutput("plot_mar")
+                        plotOutput("plot_mar", click = "mar_click"),
+                        verbatimTextOutput("mar_point")
                         )
                     ),
                   actionButton("mar_info", "What is the Marital Status variable?"),
@@ -236,7 +240,8 @@ body <- dashboardBody(
                     ),
                     fluidRow(
                       box(width = 12,
-                          plotOutput("plot_edu")
+                          plotOutput("plot_edu", click = "edu_click"),
+                          verbatimTextOutput("edu_point")
                           )
                       ),
                   actionButton("edu_info", "What is the Educational Attainment variable?"),
@@ -246,13 +251,15 @@ body <- dashboardBody(
               ),
             fluidRow(
                 box(width = 6,
-                    plotOutput("plot_sui"),
+                    plotOutput("plot_sui", click = "sui_click"),
+                    verbatimTextOutput("sui_point"),
                     actionButton("sui_info", "What is the Age-adjusted Suicide Rate variable?"),
                     downloadButton(outputId = "sui_down", label = "Download the plot"),
                     h4(helpText(a("More information about Suicide Rate.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
                       ),
                 box(width = 6,
-                  plotOutput("plot_vet"),
+                    plotOutput("plot_vet", click = "vet_click"),
+                    verbatimTextOutput("vet_point"),
                   actionButton("vet_info", "What is the Veteran’s Status variable?"),
                   downloadButton(outputId = "vet_down", label = "Download the plot"),
                   h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/", target="_blank")))
@@ -260,13 +267,15 @@ body <- dashboardBody(
               ),
             fluidRow(
               box(width = 6,
-                  plotOutput("plot_eng"),
+                  plotOutput("plot_eng", click = "eng_click"),
+                  verbatimTextOutput("eng_point"),
                   actionButton("eng_info", "What is the English Language Learners variable?"),
                   downloadButton(outputId = "eng_down", label = "Download the plot"),
                   h4(helpText(a("More information about Schools.", href="https://seigma.shinyapps.io/schools/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
               ),
               box(width = 6,
-                  plotOutput("plot_dis"),
+                  plotOutput("plot_dis", click = "dis_click"),
+                  verbatimTextOutput("dis_point"),
                   actionButton("dis_info", "What is the Students with Disabilities variable?"),
                   downloadButton(outputId = "dis_down", label = "Download the plot"),
                   h4(helpText(a("More information about Schools.", href="https://seigma.shinyapps.io/va_status/"), target = "_blank"))
@@ -283,13 +292,15 @@ body <- dashboardBody(
             ),
             fluidRow(
               box(width = 6,
-                  plotOutput("plot_inc"),
+                  plotOutput("plot_inc", click = "inc_click"),
+                  verbatimTextOutput("inc_point"),
                   actionButton("inc_info", "What is the Median Annual Household Income variable?"),
                   downloadButton(outputId = "inc_down", label = "Download the plot"),
                   h4(helpText(a("More information about Household Income.", href="https://seigma.shinyapps.io/income/", target="_blank")))
               ),
               box(width = 6,
-                  plotOutput("plot_pov"),
+                  plotOutput("plot_pov", click = "pov_click"),
+                  verbatimTextOutput("pov_point"),
                   actionButton("pov_info", "What is the Poverty Status variable?"),
                   downloadButton(outputId = "pov_down", label = "Download the plot"),
                   h4(helpText(a("More information about Poverty.", href="https://seigma.shinyapps.io/poverty/", target="_blank")))
@@ -297,13 +308,15 @@ body <- dashboardBody(
             ),
             fluidRow(
               box(width = 6,
-                  plotOutput("plot_emp"),
+                  plotOutput("plot_emp", click = "emp_click"),
+                  verbatimTextOutput("emp_point"),
                   actionButton("emp_info", "What is the Monthly Employment variable?"),
                   downloadButton(outputId = "emp_down", label = "Download the plot"),
                   h4(helpText(a("More information about Employment.", href="https://seigma.shinyapps.io/employment/", target="_blank")))
               ),
               box(width = 6,
-                  plotOutput("plot_une"),
+                  plotOutput("plot_une", click = "une_click"),
+                  verbatimTextOutput("une_point"),
                   actionButton("une_info", "What is the Unemployment Rate variable?"),
                   downloadButton(outputId = "une_down", label = "Download the plot"),
                   h4(helpText(a("More information about Unemployment.", href="https://seigma.shinyapps.io/unemployment/", target="_blank")))
@@ -328,7 +341,8 @@ body <- dashboardBody(
                       ),
                   fluidRow(
                     box(width = 12,
-                        plotOutput("plot_bus"),
+                        plotOutput("plot_bus", click = "bus_click"),
+                        verbatimTextOutput("bus_point"),
                         actionButton("bus_info", "What is the Business Bankruptcy variable?"),
                         downloadButton(outputId = "bus_down", label = "Download the plot"),
                         h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy", target="_blank")))
@@ -350,7 +364,8 @@ body <- dashboardBody(
                       ),
                   fluidRow(
                     box(width = 12,
-                        plotOutput("plot_per"),
+                        plotOutput("plot_per", click = "per_click"),
+                        verbatimTextOutput("per_point"),
                         actionButton("per_info", "What is the Personal Bankruptcy variable?"),
                         downloadButton(outputId = "per_down", label = "Download the plot"),
                         h4(helpText(a("More information about Bankruptcy.", href="https://seigma.shinyapps.io/bankruptcy", target="_blank")))
@@ -361,13 +376,15 @@ body <- dashboardBody(
               ),
             fluidRow(
               box(width = 6,
-                  plotOutput("plot_ren"),
+                  plotOutput("plot_ren", click = "ren_click"),
+                  verbatimTextOutput("ren_point"),
                   actionButton("ren_info", "What is the Inflation-Adjusted Median Rent variable?"),
                   downloadButton(outputId = "ren_down", label = "Download the plot"),
                   h4(helpText(a("More information about Rent.", href="https://seigma.shinyapps.io/rent/", target="_blank")))
               ),
               box(width = 6,
-                  plotOutput("plot_bui"),
+                  plotOutput("plot_bui", click = "bui_click"),
+                  verbatimTextOutput("bui_point"),
                   actionButton("bui_info", "What is the Building Permits variable?"),
                   downloadButton(outputId = "bui_down", label = "Download the plot"),
                   h4(helpText(a("More information about Building Permits.", href="https://seigma.shinyapps.io/BuildingPermits/", target="_blank")))
@@ -392,7 +409,8 @@ body <- dashboardBody(
                   ),
                   fluidRow(
                     box(width = 12,
-                  plotOutput("plot_val"),
+                        plotOutput("plot_val", click = "val_click"),
+                        verbatimTextOutput("val_point"),
                   actionButton("val_info", "What is the Total Assessed Property Values variable?"),
                   downloadButton(outputId = "pro_down", label = "Download the plot"),
                   h4(helpText(a("More information about Property Value.", href="https://seigma.shinyapps.io/PropertyValue/", target="_blank")))
@@ -417,7 +435,8 @@ body <- dashboardBody(
                   ),
                   fluidRow(
                     box(width = 12,
-                  plotOutput("plot_tax"),
+                        plotOutput("plot_tax", click = "tax_click"),
+                        verbatimTextOutput("tax_point"),
                   actionButton("tax_info", "What is Poverty Tax?"),
                   downloadButton(outputId = "tax_down", label = "Download the plot"),
                   h4(helpText(a("More information about Property Tax.", href="https://seigma.shinyapps.io/PropertyValue/", target="_blank")))
@@ -513,24 +532,7 @@ server <- function(input, output, session){
   })
   
   ##### DEMOGRAPHICS TAB #####
-  
-  # Population table #
-  output$population <- renderDataTable({
-    my_place <- place()
-    pop_df <- filter(dem_data, Region %in% my_place) %>% 
-      select(Region, Five_Year_Range, Total_Population) %>%
-      arrange(Region)
-    pop_df$Total_Population <- format(pop_df$Total_Population, big.mark=",", scientific=FALSE)
-    pop_show <- c()
-    for(i in 1:length(my_place)){
-      pop_muni <- filter(pop_df, Region == my_place[i])
-      pop_show <- rbind(pop_show, c(my_place[i], pop_muni$Total_Population))
-    }
-    pop_show <- as.data.frame(pop_show)
-    colnames(pop_show) <- c("Region", "2005-2009", "2006-2010", "2007-2011", "2008-2012", "2009-2013", "2010-2014", "2011-2015")
-    return(pop_show)
-  }, options = list(searching = FALSE, orderClasses = TRUE)) 
-    
+
   #### Age ####
   age_df <- reactive({
     my_place <- place()
@@ -580,7 +582,7 @@ server <- function(input, output, session){
       scale_color_discrete("Region")
   })
   
-  output$info <- renderPrint({
+  output$age_point <- renderPrint({
     dat <- age_df()
     age_var <- unique(dat$variable)
     age <- c()
@@ -601,7 +603,7 @@ server <- function(input, output, session){
     if(input$over75)
       age <- append(age, age_var[8])
     dat <- filter(dat, variable %in% age)
-    nearPoints(dat, input$plot_click,threshold = 30, maxpoints = 1, addDist = FALSE)
+    nearPoints(dat, input$age_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   eventReactive(input$age_button, {
@@ -640,7 +642,7 @@ server <- function(input, output, session){
     print(p) 
   })
   
-  age_new <-     eventReactive(input$age_button, {
+  age_new <- eventReactive(input$age_button, {
     dat <- age_df()
     age_var <- unique(dat$variable)
     age <- c()
@@ -759,7 +761,7 @@ server <- function(input, output, session){
       race <- append(race, race_var[6])
     dat <- filter(dat, variable %in% race)
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+    ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Race Distribution", 
@@ -770,7 +772,26 @@ server <- function(input, output, session){
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))+ 
       scale_color_discrete("Region")
-    print(p) 
+  })
+  
+  output$rac_point <- renderPrint({
+    dat <- rac_df()
+    race_var <- as.character(unique(dat$variable))
+    race <- c()
+    if(input$white)
+      race <- append(race, race_var[1])
+    if(input$black)
+      race <- append(race, race_var[2])
+    if(input$native)
+      race <- append(race, race_var[3])
+    if(input$asian)
+      race <- append(race, race_var[4])
+    if(input$hawaiian)
+      race <- append(race, race_var[5])
+    if(input$others)
+      race <- append(race, race_var[6])
+    dat <- filter(dat, variable %in% race)
+    nearPoints(dat, input$rac_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   rac_new <-     eventReactive(input$rac_button, {
@@ -869,7 +890,7 @@ server <- function(input, output, session){
   output$plot_gen <- renderPlot({
     dat <- gen_df() 
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) +
+    ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) +
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
       facet_grid(. ~ variable) + 
@@ -880,7 +901,11 @@ server <- function(input, output, session){
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12)) 
-    print(p) 
+  })
+  
+  output$gen_point <- renderPrint({
+    dat <- gen_df()
+    nearPoints(dat, input$gen_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   gen_new <-     eventReactive(input$gen_button, {
@@ -951,7 +976,7 @@ server <- function(input, output, session){
   output$plot_his <- renderPlot({
     dat <- his_df() 
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
+    ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
       facet_grid(. ~ variable) + 
@@ -962,7 +987,11 @@ server <- function(input, output, session){
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
-    print(p) 
+  })
+  
+  output$his_point <- renderPrint({
+    dat <- his_df()
+    nearPoints(dat, input$his_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   his_new <-     eventReactive(input$his_button, {
@@ -1019,6 +1048,23 @@ server <- function(input, output, session){
     }
   )
   
+  ### Population Table ###
+  output$population <- renderDataTable({
+    my_place <- place()
+    pop_df <- filter(dem_data, Region %in% my_place) %>% 
+      select(Region, Five_Year_Range, Total_Population) %>%
+      arrange(Region)
+    pop_df$Total_Population <- format(pop_df$Total_Population, big.mark=",", scientific=FALSE)
+    pop_show <- c()
+    for(i in 1:length(my_place)){
+      pop_muni <- filter(pop_df, Region == my_place[i])
+      pop_show <- rbind(pop_show, c(my_place[i], pop_muni$Total_Population))
+    }
+    pop_show <- as.data.frame(pop_show)
+    colnames(pop_show) <- c("Region", "2005-2009", "2006-2010", "2007-2011", "2008-2012", "2009-2013", "2010-2014", "2011-2015")
+    return(pop_show)
+  }, options = list(searching = FALSE, orderClasses = TRUE)) 
+  
   ##### SOCIAL TAB BELOW #####
   
   #### Marital App ####
@@ -1048,7 +1094,7 @@ server <- function(input, output, session){
       status <- append(status, status_var[1])
     dat <- filter(dat, variable %in% status)
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+    ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       facet_grid(. ~ Gender) + 
@@ -1060,7 +1106,24 @@ server <- function(input, output, session){
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))+ 
       scale_color_discrete("Region")
-    print(p) 
+  })
+  
+  output$mar_point <- renderPrint({
+    dat <- mar_df()
+    status_var <- as.character(unique(dat$variable))
+    status <- c()
+    if(input$divorced)
+      status <- append(status, status_var[5])
+    if(input$married)
+      status <- append(status, status_var[2])
+    if(input$separated)
+      status <- append(status, status_var[3])
+    if(input$widowed)
+      status <- append(status, status_var[4])
+    if(input$never)
+      status <- append(status, status_var[1])
+    dat <- filter(dat, variable %in% status)
+    nearPoints(dat, input$mar_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$mar_info, {
@@ -1134,7 +1197,7 @@ server <- function(input, output, session){
       edu <- append(edu, edu_var[4])
     dat <- filter(dat, variable %in% edu)
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+    ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Educational Attainment", 
@@ -1145,7 +1208,22 @@ server <- function(input, output, session){
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))+ 
       scale_color_discrete("Region")
-    print(p) 
+  })
+  
+  output$edu_point <- renderPrint({
+    dat <- edu_df() 
+    edu_var <- as.character(unique(dat$variable))
+    edu <- c()
+    if(input$hs)
+      edu <- append(edu, edu_var[2])
+    if(input$nohs)
+      edu <- append(edu, edu_var[1])
+    if(input$bac)
+      edu <- append(edu, edu_var[3])
+    if(input$grad)
+      edu <- append(edu, edu_var[4])
+    dat <- filter(dat, variable %in% edu)
+    nearPoints(dat, input$edu_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$edu_info, {
@@ -1225,7 +1303,7 @@ server <- function(input, output, session){
   output$plot_sui <- renderPlot({
     dat <- sui_df() 
     theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = Region, colour = Region)) + 
+    ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = Region, colour = Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
       labs(title = "Suicide Rate [County Level]", 
@@ -1235,7 +1313,11 @@ server <- function(input, output, session){
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
-    print(p)  
+  })
+  
+  output$sui_point <- renderPrint({
+    dat <- sui_df()
+    nearPoints(dat, input$sui_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$sui_info, {
@@ -1282,7 +1364,7 @@ server <- function(input, output, session){
   output$plot_vet <- renderPlot({
     dat <- vet_df() 
     theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
+    ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
       labs(title = "Civilian Veteran's Status", 
@@ -1292,7 +1374,11 @@ server <- function(input, output, session){
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
-    print(p)  
+  })
+  
+  output$vet_point <- renderPrint({
+    dat <- vet_df()
+    nearPoints(dat, input$vet_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$vet_info, {
@@ -1347,7 +1433,7 @@ server <- function(input, output, session){
   output$plot_eng <- renderPlot({
     dat <- eng_df() 
     theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=English_Language_Learner, group = Municipal, colour = Municipal)) + 
+    ggplot(dat, aes(x=Year, y=English_Language_Learner, group = Municipal, colour = Municipal)) + 
       geom_line(aes(linetype=Municipal), size = 1.25) + 
       geom_point(size = 3) + 
       labs(title = "English Language Learner [Muni Only]", 
@@ -1357,7 +1443,11 @@ server <- function(input, output, session){
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
-    print(p)  
+  })
+  
+  output$eng_point <- renderPrint({
+    dat <- eng_df()
+    nearPoints(dat, input$eng_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$eng_info, {
@@ -1411,7 +1501,7 @@ server <- function(input, output, session){
   output$plot_dis <- renderPlot({
     dat <- dis_df() 
     theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=Students_with_Disabilities, group = Municipal, colour = Municipal)) + 
+    ggplot(dat, aes(x=Year, y=Students_with_Disabilities, group = Municipal, colour = Municipal)) + 
       geom_line(aes(linetype=Municipal), size = 1.25) + 
       geom_point(size = 3) + 
       labs(title = "Students with Disabilities [Muni Only]", 
@@ -1421,7 +1511,11 @@ server <- function(input, output, session){
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
-    print(p)  
+  })
+  
+  output$dis_point <- renderPrint({
+    dat <- dis_df()
+    nearPoints(dat, input$dis_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$dis_info, {
@@ -1468,7 +1562,7 @@ server <- function(input, output, session){
   output$plot_inc <- renderPlot({
     dat <- inc_df() 
     theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=Median_Annual_Household_Income, group = Region, colour = Region)) + 
+    ggplot(dat, aes(x=Year, y=Median_Annual_Household_Income, group = Region, colour = Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
       labs(title = "Median Annual Household Income", 
@@ -1478,7 +1572,11 @@ server <- function(input, output, session){
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
-    print(p)  
+  })
+  
+  output$inc_point <- renderPrint({
+    dat <- inc_df()
+    nearPoints(dat, input$inc_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$inc_info, {
@@ -1524,7 +1622,7 @@ server <- function(input, output, session){
   output$plot_pov <- renderPlot({
     dat <- pov_df() 
     theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=Percent_Pov, group = Region, colour = Region)) + 
+    ggplot(dat, aes(x=Year, y=Percent_Pov, group = Region, colour = Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
       labs(title = "Poverty Rate", 
@@ -1534,7 +1632,11 @@ server <- function(input, output, session){
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
-    print(p)  
+  })
+  
+  output$pov_point <- renderPrint({
+    dat <- pov_df()
+    nearPoints(dat, input$pov_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$pov_info, {
@@ -1580,7 +1682,7 @@ server <- function(input, output, session){
   output$plot_emp <- renderPlot({
     dat <- emp_df() 
     theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=Average_Monthly_Employment, group = Municipal, colour = Municipal)) + 
+    ggplot(dat, aes(x=Year, y=Average_Monthly_Employment, group = Municipal, colour = Municipal)) + 
       geom_line(aes(linetype=Municipal), size = 1.25) + 
       geom_point(size = 3) + 
       labs(title = "Average Monthly Employment [Muni Only]", 
@@ -1590,7 +1692,11 @@ server <- function(input, output, session){
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
-    print(p)  
+  })
+  
+  output$emp_point <- renderPrint({
+    dat <- emp_df()
+    nearPoints(dat, input$emp_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$emp_info, {
@@ -1636,7 +1742,7 @@ server <- function(input, output, session){
   output$plot_une <- renderPlot({
     dat <- une_df() 
     theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=Unemployment_Rate_Avg, group = Region, colour = Region)) + 
+    ggplot(dat, aes(x=Year, y=Unemployment_Rate_Avg, group = Region, colour = Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
       labs(title = "Annual Average Unemployment Rate [No US Avg]", 
@@ -1646,7 +1752,11 @@ server <- function(input, output, session){
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
-    print(p)  
+  })
+  
+  output$une_point <- renderPrint({
+    dat <- une_df()
+    nearPoints(dat, input$une_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$une_info, {
@@ -1733,7 +1843,7 @@ server <- function(input, output, session){
     dat <- filter(dat, variable %in% bus)
     dat$variable <- gsub("_in_Business", "", dat$variable)
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+    ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Business Bankruptcy [County Level]", 
@@ -1744,7 +1854,22 @@ server <- function(input, output, session){
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12)) + 
       scale_color_discrete("Region")
-    print(p) 
+  })
+  
+  output$bus_point <- renderPrint({
+    dat <- ban_df()
+    var <- c("Chp.7_in_Business", "Chp.11_in_Business", "Chp.12_in_Business", "Chp.13_in_Business")
+    bus <- c()
+    if(input$buschp7)
+      bus <- append(bus, var[1])
+    if(input$buschp11)
+      bus <- append(bus, var[2])
+    if(input$buschp12)
+      bus <- append(bus, var[3])
+    if(input$buschp13)
+      bus <- append(bus, var[4])
+    dat <- filter(dat, variable %in% bus)
+    nearPoints(dat, input$bus_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$bus_info, {
@@ -1805,7 +1930,7 @@ server <- function(input, output, session){
     dat <- filter(dat, variable %in% per)
     dat$variable <- gsub("_in_Personal", "", dat$variable)
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+    ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Personal Bankruptcy [County Level]", 
@@ -1816,7 +1941,21 @@ server <- function(input, output, session){
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12)) + 
       scale_color_discrete("Region")
-    print(p) 
+  })
+  
+  output$per_point <- renderPrint({
+    dat <- ban_df()
+    var <- c("Chp.7_in_Personal", "Chp.11_in_Personal", "Chp.13_in_Personal")
+    per <- c()
+    if(input$perchp7)
+      per <- append(per, var[1])
+    if(input$perchp11)
+      per <- append(per, var[2])
+    if(input$perchp13)
+      per <- append(per, var[3])
+    dat <- filter(dat, variable %in% per)
+    dat$variable <- gsub("_in_Personal", "", dat$variable)
+    nearPoints(dat, input$per_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$per_info, {
@@ -1873,7 +2012,7 @@ server <- function(input, output, session){
   output$plot_ren <- renderPlot({
     dat <- ren_df() 
     theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=Median.Rent.2015.Dollar, group = Region, colour = Region)) + 
+    ggplot(dat, aes(x=Year, y=Median.Rent.2015.Dollar, group = Region, colour = Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
       labs(title = "Median Monthly Rent(2015-$ Adjusted)", 
@@ -1883,7 +2022,11 @@ server <- function(input, output, session){
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
-    print(p)  
+  })
+  
+  output$ren_point <- renderPrint({
+    dat <- ren_df()
+    nearPoints(dat, input$ren_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$ren_info, {
@@ -1929,7 +2072,7 @@ server <- function(input, output, session){
   output$plot_bui <- renderPlot({
     dat <- bui_df() 
     theme_set(theme_classic())
-    p <- ggplot(dat, aes(x=Year, y=Permits_Per_1000_Population, group = Region, colour = Region)) + 
+    ggplot(dat, aes(x=Year, y=Permits_Per_1000_Population, group = Region, colour = Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
       labs(title = "Building Permits per 1000 Population [No US]", 
@@ -1939,7 +2082,11 @@ server <- function(input, output, session){
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
-    print(p)  
+  })
+  
+  output$bui_point <- renderPrint({
+    dat <- bui_df()
+    nearPoints(dat, input$bui_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$bui_info, {
@@ -1998,7 +2145,7 @@ server <- function(input, output, session){
       val <- append(val, val_var[4])
     dat <- filter(dat, variable %in% val)
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
+    ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
       geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Assessed Property Values [Muni Only]", 
@@ -2009,7 +2156,22 @@ server <- function(input, output, session){
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))+ 
       scale_color_discrete("Municipal")
-    print(p)  
+  })
+  
+  output$val_point <- renderPrint({
+    dat <- val_df() 
+    val_var <- as.character(unique(dat$variable))
+    val <- c()
+    if(input$resval)
+      val <- append(val, val_var[1])
+    if(input$comval)
+      val <- append(val, val_var[2])
+    if(input$indval)
+      val <- append(val, val_var[3])
+    if(input$perval)
+      val <- append(val, val_var[4])
+    dat <- filter(dat, variable %in% val)
+    nearPoints(dat, input$val_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$val_info, {
@@ -2080,7 +2242,7 @@ server <- function(input, output, session){
       tax <- append(tax, tax_var[4])
     dat <- filter(dat, variable %in% tax)
     theme_set(theme_classic())
-    p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
+    ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
       geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Tax Levy by Class [Muni Only]", 
@@ -2091,7 +2253,22 @@ server <- function(input, output, session){
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))+ 
       scale_color_discrete("Municipal")
-    print(p)  
+  })
+  
+  output$tax_point <- renderPrint({
+    dat <- tax_df() 
+    tax_var <- as.character(unique(dat$variable))
+    tax <- c()
+    if(input$restax)
+      tax <- append(tax, tax_var[1])
+    if(input$comtax)
+      tax <- append(tax, tax_var[2])
+    if(input$indtax)
+      tax <- append(tax, tax_var[3])
+    if(input$pertax)
+      tax <- append(tax, tax_var[4])
+    dat <- filter(dat, variable %in% tax)
+    nearPoints(dat, input$tax_click,threshold = 30, maxpoints = 1, addDist = FALSE)
   })
   
   observeEvent(input$tax_info, {
