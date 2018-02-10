@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 02/09/2018  ##
+## Last Modified: 02/10/2018  ##
 ################################
 
 ##### SETTINGS #####
@@ -36,7 +36,7 @@ sidebar <- dashboardSidebar(
     menuItem("Economics", tabName = "econ", icon = icon("bank")
     ),
     br(),
-    h4("Have a Quick Glance"),
+    h4("Demo Data at a Glance"),
     column(5,
            actionButton("age_button", "Age Group")
            ),
@@ -47,7 +47,7 @@ sidebar <- dashboardSidebar(
            actionButton("gen_button", "Gender")
            ),
     column(6,
-           actionButton("eth_button", "Ethnicity")
+           actionButton("his_button", "Ethnicity")
            ),
     br(),
     br(),
@@ -91,7 +91,7 @@ body <- dashboardBody(
   bsModal("modal1Example", "Age Distribution", "age_button", size = "large",plotOutput("age_show")),
   bsModal("modal2Example", "Race Distribution", "rac_button", size = "large",plotOutput("rac_show")),
   bsModal("modal3Example", "Gender Distribution", "gen_button", size = "large",plotOutput("gen_show")),
-  bsModal("modal4Example", "Ethnicity Distribution", "eth_button", size = "large",plotOutput("eth_show")),
+  bsModal("modal4Example", "Ethnicity Distribution", "his_button", size = "large",plotOutput("his_show")),
   tabItems(
     tabItem(
       ### Demographic Tab UI ###
@@ -883,6 +883,27 @@ server <- function(input, output, session){
     print(p) 
   })
   
+  gen_new <-     eventReactive(input$gen_button, {
+    dat <- gen_df() 
+    theme_set(theme_classic())
+    p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region, label = value)) +
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
+      facet_grid(. ~ variable) + 
+      labs(title = "Gender Distribution", 
+           x = "Mid-Year of Five Year Range",
+           y = "% Population") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12)) 
+    print(p) 
+  })
+  
+  output$gen_show <- renderPlot({
+    gen_new()
+  })
+  
   observeEvent(input$gen_info, {
     showModal(modalDialog(
       title = "What is the Gender variable?",
@@ -942,6 +963,27 @@ server <- function(input, output, session){
       theme(axis.text=element_text(size=14)) + 
       theme(legend.text = element_text(size = 12))
     print(p) 
+  })
+  
+  his_new <-     eventReactive(input$his_button, {
+    dat <- his_df() 
+    theme_set(theme_classic())
+    p<- ggplot(dat, aes(x=Year, y=value, group = interaction(Region,variable), colour = Region)) +
+      geom_line(aes(linetype=Region), size = 1.25) + 
+      geom_point(size = 3) + 
+      facet_grid(. ~ variable) + 
+      labs(title = "Ethnicity Distribution", 
+           x = "Mid-Year of Five Year Range",
+           y = "% Population") + 
+      theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+      theme(axis.title = element_text(face="bold", size=18)) +
+      theme(axis.text=element_text(size=14)) + 
+      theme(legend.text = element_text(size = 12))
+    print(p) 
+  })
+  
+  output$his_show <- renderPlot({
+    his_new()
   })
   
   observeEvent(input$his_info, {
