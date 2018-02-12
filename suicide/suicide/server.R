@@ -3,10 +3,11 @@
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Xuelian Li    ##
-##            Steve Lauer and        ## 
-##         Justin Baldwin            ## 
+##            Steve Lauer, Justin    ##
+##            Baldwin and Zhenning   ## 
+##            Kang                   ## 
 ## Date Created:                     ##
-## Date Modified: 04/13/15 XL        ##
+## Date Modified: 02/11/18 ZK        ##
 #######################################
 
 ## load necessary libraries
@@ -79,7 +80,7 @@ shinyServer(function(input, output, session) {
                             "Age-adjusted suicide Rate Lower Bound", 
                             "Age-adjusted suicide Rate Upper Bound", 
                             "Age-adjusted suicide Rate Standard Error", "Crude Rate (per 100,000  )")
-    
+    colnames(df2)[1] <- "Region"
     return(df2)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, these make them pretty
   
