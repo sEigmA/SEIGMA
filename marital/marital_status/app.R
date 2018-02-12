@@ -3,7 +3,7 @@
 ## Author(s): Valerie Evans          ##
 ## Date Created:  11/02/2017         ##
 ## Date Modified: 11/09/2017 VE      ##
-## Map Updated:   12/12/2017 ZK      ##
+## Map Updated: 02/11/2018ZK         ##
 #######################################
 
 ##### GLOBAL #####
@@ -215,7 +215,8 @@ map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h3("SEIGMA: Marital Status Shiny App"),
   h4("How to use this app:"),
-  helpText(p(strong("Please select a variable of interest, a five-year range, and a gender. Click on 'Generate Map'."))),
+  helpText(p(strong("Please select a variable of interest, a five-year range, and a gender. Click on 'Generate Map' in the main page."))),
+  helpText(p(strong("If you would like to select another variable, please click the 'Redraw Map' below to re-generate the map after you made the change."))),
   tags$br(),
   tags$ul(
     tags$li('Clicking on a municipality will display the variable of interest for the five-year range and gender that you selected.')
@@ -1261,7 +1262,7 @@ server <- shinyServer(function(input, output, session) {
       })
       
       output$legend1 <- renderPlot({  
-        paint.brush = colorRampPalette(colors=c("white", "darkblue"))
+        paint.brush = colorRampPalette(colors=c("white", "deeppink"))
         cols <- paint.brush(101)
         leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
         
@@ -1281,7 +1282,7 @@ server <- shinyServer(function(input, output, session) {
       })
       
       output$legend2 <- renderPlot({  
-        paint.brush = colorRampPalette(colors=c("white", "darkblue"))
+        paint.brush = colorRampPalette(colors=c("white", "deeppink"))
         cols <- paint.brush(101)
         leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
         
@@ -1301,7 +1302,7 @@ server <- shinyServer(function(input, output, session) {
       })
       
       output$legend3 <- renderPlot({  
-        paint.brush = colorRampPalette(colors=c("white", "darkblue"))
+        paint.brush = colorRampPalette(colors=c("white", "deeppink"))
         cols <- paint.brush(101)
         leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
         
@@ -1321,7 +1322,7 @@ server <- shinyServer(function(input, output, session) {
       })
       
       output$legend4 <- renderPlot({  
-        paint.brush = colorRampPalette(colors=c("white", "darkblue"))
+        paint.brush = colorRampPalette(colors=c("white", "deeppink"))
         cols <- paint.brush(101)
         leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
         
@@ -1341,7 +1342,7 @@ server <- shinyServer(function(input, output, session) {
       })
       
       output$legend5 <- renderPlot({  
-        paint.brush = colorRampPalette(colors=c("white", "darkblue"))
+        paint.brush = colorRampPalette(colors=c("white", "deeppink"))
         cols <- paint.brush(101)
         leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
         
