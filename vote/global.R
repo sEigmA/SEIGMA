@@ -3,7 +3,7 @@
 ## App: SEIGMA VOTE          ##
 ## Author: Zhenning Kang     ##
 ## Date Created:  01/12/2018 ##
-## Last Modified: 01/13/2018 ##
+## Last Modified: 02/13/2018 ##
 ###############################
 
 library(sqldf)
@@ -11,7 +11,6 @@ library(sqldf)
 # 2014 vote results
 vote <- read.csv(file="data/ACS_14_1yr_BF002.csv")
 vote <- vote[-nrow(vote),-1]
-vote$yes <- vote$Yes/vote$Total.Votes.Cast*100
 colnames(vote)[1] <- "Town"
 
 # 2013 population 
@@ -49,24 +48,22 @@ from (select a.*, inc.inc as income
       join inc on a.muni = inc.muni) b
 join unemp on b.muni = unemp.muni
                   order by b.muni") 
-keyvar$yes <- vote$yes
+keyvar$yes <- vote$Yes
+keyvar$no <- vote$No
 
-# get MA city lat/long
-allzips <- readRDS("data/superzip.rds")
-allzips$latitude <- jitter(allzips$latitude)
-allzips$longitude <- jitter(allzips$longitude)
-mazips <- filter(allzips, state.x == "MA")
-colnames(mazips)[5] <- "city"
-addlatlong <- sqldf("select keyvar.*, mazips.latitude as lat, mazips.longitude as lon
-      from keyvar left join mazips
-      on keyvar.muni = mazips.city
-      order by keyvar.muni")
-cleantable <- addlatlong[!duplicated(addlatlong$muni),]
+# add MA city lat/long
 malonlat <- read.csv(file="data/malonlat.csv")[,-1]
-cleantable[,7] <- malonlat[,3]
-cleantable[,8] <- malonlat[,2]
+keyvar$lon <- malonlat[,2]
+keyvar$lat <- malonlat[,3]
 ma_muni <- malonlat$muni
-# DON'T RUN, DATA ALREADY SAVED IN CSV
+
+
+
+
+
+### DON'T RUN THE CODES BELOW
+### DATA ALREADY SAVED IN CSV
+
 # add missing lat/lon
 # library(ggmap)
 # nolatlong <- (subset(cleantable, is.na(lat))[,1])
@@ -80,4 +77,15 @@ ma_muni <- malonlat$muni
 # temp[,3] <- ifelse(is.na(temp[,3]), temp[,5], temp[,3])
 # colnames(temp)[2:3] <- c("lon", "lat")
 # write.csv(temp[,1:3], file = "data/malonlat.csv")
+
+
+# allzips <- readRDS("data/superzip.rds")
+# allzips$latitude <- jitter(allzips$latitude)
+# allzips$longitude <- jitter(allzips$longitude)
+# mazips <-subset(allzips, allzips$state.x == "MA")
+# colnames(mazips)[5] <- "city"
+# addlatlong <- sqldf("select keyvar.*, mazips.latitude as lat, mazips.longitude as lon
+#       from keyvar left join mazips
+#       on keyvar.muni = mazips.city
+#       order by keyvar.muni")
 

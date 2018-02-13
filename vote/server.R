@@ -3,7 +3,7 @@
 ## App: SEIGMA VOTE          ##
 ## Author: Zhenning Kang     ##
 ## Date Created:  01/12/2018 ##
-## Last Modified: 01/13/2018 ##
+## Last Modified: 02/13/2018 ##
 ###############################
 
 library(leaflet)
@@ -11,13 +11,6 @@ library(RColorBrewer)
 library(scales)
 library(lattice)
 library(dplyr)
-
-# Leaflet bindings are a bit slow; for now we'll just sample to compensate
-set.seed(100)
-votedata <- cleantable[sample.int(nrow(cleantable), 100),]
-# By ordering by centile, we ensure that the (comparatively rare) SuperZIPs
-# will be drawn last and thus be easier to see
-votedata <- votedata[order(votedata$yes),]
 
 function(input, output, session) {
   
@@ -37,18 +30,18 @@ function(input, output, session) {
   # in bounds right now
   zipsInBounds <- reactive({
     if (is.null(input$map_bounds))
-      return(votedata[FALSE,])
+      return(keyvar[FALSE,])
     bounds <- input$map_bounds
     latRng <- range(bounds$north, bounds$south)
     lngRng <- range(bounds$east, bounds$west)
     
-    subset(votedata,
+    subset(keyvar,
            lat >= latRng[1] & lat <= latRng[2] &
              lon >= lngRng[1] & lon <= lngRng[2])
   })
   
   # Precalculate the breaks we'll need for the two histograms
-  centileBreaks <- hist(plot = FALSE, cleantable$yes, breaks = 20)$breaks
+  centileBreaks <- hist(plot = FALSE, keyvar$yes, breaks = 150)$breaks
   
   output$histCentile <- renderPlot({
     # If no zipcodes are in view, don't plot
@@ -57,9 +50,9 @@ function(input, output, session) {
     
     hist(zipsInBounds()$yes,
          breaks = centileBreaks,
-         main = "Voted Yes in Visible Municipalities",
+         main = "# People Voted Yes in Visible Municipalities",
          xlab = "Percentile",
-         xlim = range(cleantable$yes),
+         xlim = range(zipsInBounds()$yes),
          col = '#00DD00',
          border = 'white')
   })
@@ -69,7 +62,7 @@ function(input, output, session) {
     if (nrow(zipsInBounds()) == 0)
       return(NULL)
     
-    print(xyplot(income ~ bachelor, data = zipsInBounds(), xlim = range(cleantable$bachelor), ylim = range(cleantable$income)))
+    print(xyplot(income ~ bachelor, data = zipsInBounds(), xlim = range(keyvar$bachelor), ylim = range(keyvar$income)))
   })
   
   # This observer is responsible for maintaining the circles and legend,
@@ -78,21 +71,34 @@ function(input, output, session) {
     colorBy <- input$color
     sizeBy <- input$size
     
-    colorData <- votedata[[colorBy]]
-    pal <- colorBin("viridis", colorData, 7, pretty = FALSE)
-    radius <- votedata[[sizeBy]] / max(votedata[[sizeBy]]) * 30000
+    if (colorBy == "vote") {
+      colorData <- ifelse(keyvar$yes > keyvar$no, "yes", "no")
+    pal <- colorFactor("viridis", colorData)
+    } else {
+      colorData <- keyvar[[colorBy]]
+    pal <- colorBin("viridis", range(colorData), 10, pretty = TRUE)
+    # pal <- colorQuantile("viridis", colorData, n = 4, probs = seq(0, 1, length.out = n + 1),na.color = "#808080", alpha = FALSE, reverse = FALSE)
+    }
     
-    leafletProxy("map", data = votedata) %>%
+    if (sizeBy == "vote") {
+    # Radius is treated specially in the "vote-yes" case.
+      sizeData <- ifelse(keyvar$yes > keyvar$no, "yes", "no")
+      radius <- ifelse(sizeData=="yes", 10000, 3000)
+    } else {
+    radius <- keyvar[[sizeBy]] / max(keyvar[[sizeBy]]) * 10000
+    }
+    
+    leafletProxy("map", data = keyvar) %>%
       clearShapes() %>%
       addCircles(~lon, ~lat, radius=radius, layerId=~muni,
-                 stroke=FALSE, fillOpacity=0.4, fillColor=pal(colorData)) %>%
+                 stroke=FALSE, fillOpacity=0.5, fillColor=pal(colorData)) %>%
       addLegend("bottomleft", pal=pal, values=colorData, title=colorBy,
-                layerId="colorLegend")
+                layerId="colorLegend") 
   })
   
   # # Show a popup at the given location
   # showMuniPopup <- function(muni, lat, lng) {
-  #   selectedMuni <- cleantable[cleantable$muni == muni,]
+  #   selectedMuni <- keyvar[keyvar$muni == muni,]
   #   content <- as.character(tagList(
   #     tags$h4("yes Rate:", as.integer(selectedMuni$yes)),
   #     tags$strong(HTML(sprintf("%s, %s",
@@ -122,7 +128,7 @@ function(input, output, session) {
   
   # observe({
   #   cities <- if (is.null(input$states)) character(0) else {
-  #     filter(cleantable, State %in% input$states) %>%
+  #     filter(keyvar, State %in% input$states) %>%
   #       `$`('City') %>%
   #       unique() %>%
   #       sort()
@@ -134,7 +140,7 @@ function(input, output, session) {
   # 
   # observe({
   #   zipcodes <- if (is.null(input$states)) character(0) else {
-  #     cleantable %>%
+  #     keyvar %>%
   #       filter(State %in% input$states,
   #              is.null(input$cities) | City %in% input$cities) %>%
   #       `$`('Zipcode') %>%
@@ -162,21 +168,17 @@ function(input, output, session) {
   # })
   
   output$votetable <- DT::renderDataTable({
-    df <- cleantable %>%
-      filter(
-        yes >= input$minRate,
-        yes <= input$maxRate,
-        muni %in% input$muni
+    df <- keyvar %>%
+      filter( muni %in% input$muni
       ) %>%
-      select(1:6)
+      select(1:7)
     df$population <- format(df$population, big.mark=",", scientific=FALSE)
     df$bachelor <- sapply(df$bachelor,function(x) paste0(x, "%"))
     df$income <- format(df$income, big.mark=",", scientific=FALSE)
     df$income <- sapply(df$income,function(x) paste0("$", x))
     df$unemployment <- sapply(df$unemployment, function(x) paste0(x, "%"))
-    df$yes <- round(df$yes, 1)
-    df$yes <- sapply(df$yes,function(x) paste0(x, "%"))
-    colnames(df) <- c("Municipal", "Total Population(2013)", "Percentage of Bachelors and Higher(2013)", "Median Income(2013)", "Unemplpyment Rate(2012)", "Percentage of Residents Voted Yes(2014)")
+    colnames(df) <- c("Municipal", "Total Population(2013)", "Percentage of Bachelors and Higher(2013)",
+                      "Median Income(2013)", "Unemployment Rate(2012)", "No. People Voted Yes(2014)", "No. People Voted No(2014)")
     
     action <- DT::dataTableAjax(session, df)
     

@@ -3,18 +3,18 @@
 ## App: SEIGMA VOTE          ##
 ## Author: Zhenning Kang     ##
 ## Date Created:  01/12/2018 ##
-## Last Modified: 01/13/2018 ##
+## Last Modified: 02/13/2018 ##
 ###############################
 
 library(leaflet)
 
 # Choices for drop-downs
 vars <- c(
-  "Percent of Residents Voted Yes" = "yes",
+  "Did this town voted Yes ?" = "vote",
+  "Municipal Population" = "population",
   "Percent of People w/ Bachelor Degree" = "bachelor",
   "Median Income" = "income",
-  "Unemployment Rate" = "unemployment",
-  "Municipal Population" = "population"
+  "Unemployment Rate" = "unemployment"
 )
 
 navbarPage("SEIGMA VOTE APP", id="nav",
@@ -39,7 +39,7 @@ navbarPage("SEIGMA VOTE APP", id="nav",
                                       h2("Select Your Interest"),
                                       
                                       selectInput("color", "Color", vars),
-                                      selectInput("size", "Size", vars, selected = "population"),
+                                      selectInput("size", "Size", vars, selected = "income"),
                                       plotOutput("histCentile", height = 200),
                                       plotOutput("scatterCollegeIncome", height = 250)
                         )
@@ -50,17 +50,17 @@ navbarPage("SEIGMA VOTE APP", id="nav",
                     fluidRow(
                       column(6,
                              selectInput("muni", "Select Municipality", 
-                                         ma_muni, multiple=TRUE)
+                                         ma_muni, multiple=TRUE, selected = "Plainville")
                     )
                     ),
-                    fluidRow(
-                      column(3,
-                             numericInput("minRate", "Min Yes Rate", min=0, max=100, value=0)
-                      ),
-                      column(3,
-                             numericInput("maxRate", "Max Yes Rate", min=0, max=100, value=100)
-                      )
-                    ),
+                    # fluidRow(
+                    #   column(3,
+                    #          numericInput("minRate", "Min Yes Rate", min=0, max=100, value=0)
+                    #   ),
+                    #   column(3,
+                    #          numericInput("maxRate", "Max Yes Rate", min=0, max=100, value=100)
+                    #   )
+                    # ),
                     hr(),
                     DT::dataTableOutput("votetable")
            ),
