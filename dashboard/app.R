@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 02/10/2018  ##
+## Last Modified: 02/16/2018  ##
 ################################
 
 ##### SETTINGS #####
@@ -15,7 +15,7 @@ sidebar <- dashboardSidebar(
   sidebarMenu(
     actionButton("show", "How to Use the Dashboard"),
     br(),
-    h4("Select Your Interest"),
+    h4("Select Municipality"),
     menuItem("Municipality", icon = icon("address-book"),
              selectInput("muni", "Select Municipalities",
                          choices = MA_municipals,
@@ -23,9 +23,9 @@ sidebar <- dashboardSidebar(
                          multiple = TRUE)
     ),
     menuItem("County/MA/US Average", icon = icon("check-square-o"),
-             checkboxInput("CT_mean", "Compare to County Average", FALSE),
+             checkboxInput("CT_mean", "Compare to County Average", TRUE),
              checkboxInput("MA_mean", "Compare to MA Average", TRUE),
-             checkboxInput("US_mean", "Compare to US Average", TRUE)
+             checkboxInput("US_mean", "Compare to US Average", FALSE)
              ),
     br(),
     h4("Select Data to Visualize"),
@@ -33,7 +33,7 @@ sidebar <- dashboardSidebar(
              ),
     menuItem("Social", tabName = "soci", icon = icon("users")
              ),
-    menuItem("Economics", tabName = "econ", icon = icon("bank")
+    menuItem("Economic", tabName = "econ", icon = icon("bank")
     ),
     br(),
     h4("Demo Data at a Glance"),
@@ -177,7 +177,7 @@ body <- dashboardBody(
             ),
       fluidRow(
         box(width = 12,
-            h4("Total Population in Selected Regions (at Mid Year of Five Year Range)"),
+            h4("Total Population in Selected Regions (Five Year Range)"),
             dataTableOutput("population")
         )
       ),
@@ -222,7 +222,7 @@ body <- dashboardBody(
                   actionButton("mar_info", "What is the Marital Status variable?"),
                   downloadButton(outputId = "mar_down", label = "Download the plot"),
                   h4(helpText(a("More information about Marital Status.",
-                                href="https://seigma.shinyapps.io/marital/", target="_blank")))
+                                href="https://seigma.shinyapps.io/marital_status/", target="_blank")))
               ),
               box(width = 6,
                     fluidRow(
@@ -251,19 +251,19 @@ body <- dashboardBody(
               ),
             fluidRow(
                 box(width = 6,
-                    plotOutput("plot_sui", click = "sui_click"),
-                    verbatimTextOutput("sui_point"),
-                    actionButton("sui_info", "What is the Age-adjusted Suicide Rate variable?"),
-                    downloadButton(outputId = "sui_down", label = "Download the plot"),
-                    h4(helpText(a("More information about Suicide Rate.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
-                      ),
-                box(width = 6,
                     plotOutput("plot_vet", click = "vet_click"),
                     verbatimTextOutput("vet_point"),
                   actionButton("vet_info", "What is the Veteran’s Status variable?"),
                   downloadButton(outputId = "vet_down", label = "Download the plot"),
                   h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/", target="_blank")))
-                    )
+                    ),
+                box(width = 6,
+                    plotOutput("plot_sui", click = "sui_click"),
+                    verbatimTextOutput("sui_point"),
+                    actionButton("sui_info", "What is the Age-adjusted Suicide Rate variable?"),
+                    downloadButton(outputId = "sui_down", label = "Download the plot"),
+                    h4(helpText(a("More information about Suicide Rate.", href="https://seigma.shinyapps.io/suicide/", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'sui_app', 1)")))
+                )
               ),
             fluidRow(
               box(width = 6,
@@ -468,11 +468,17 @@ server <- function(input, output, session){
       h4("3. Select Data to Visualize"),
       "Please select the data of interest by choosing a variable category on the left sidebar.",
       br(),
-      "-- Demographic: Population, Age, Race, Gender and Ethnicity data.", 
+      "-- Demographics: Population, Age, Race, Gender and Ethnicity data.", 
       br(),
       "-- Social:Marital Status, Educational Attainment, Suicide Rate, Veteran’s Status and Schools data.",
       br(),
       "-- Economic:Household Income, Poverty Rate, Monthly Employment, Unemployment Rate, Business and Personal Bankruptcy, Montly Rent, Building Permits, Property Values, and Property Tax data.",
+      br(),
+      br(),
+      "Data with various categories can be selected through check boxes located at the top of the plot.",
+      br(),
+      br(),
+      "Links to full applications for a particular dataset are indicated below each plot as “More information” button.",
       footer = modalButton("Close"),
       easyClose = TRUE
     ))
@@ -1436,7 +1442,7 @@ server <- function(input, output, session){
     ggplot(dat, aes(x=Year, y=English_Language_Learner, group = Municipal, colour = Municipal)) + 
       geom_line(aes(linetype=Municipal), size = 1.25) + 
       geom_point(size = 3) + 
-      labs(title = "English Language Learner [Muni Only]", 
+      labs(title = "English Language Learner [Municipal]", 
            x = "Year",
            y = "English Language Learner %") +  
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1469,7 +1475,7 @@ server <- function(input, output, session){
       p <- ggplot(dat, aes(x=Year, y=English_Language_Learner, group = Municipal, colour = Municipal)) + 
         geom_line(aes(linetype=Municipal), size = 1.25) + 
         geom_point(size = 3) + 
-        labs(title = "English Language Learner [Muni Only]", 
+        labs(title = "English Language Learner [Municipal]", 
              x = "Year",
              y = "English Language Learner %") +  
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1504,7 +1510,7 @@ server <- function(input, output, session){
     ggplot(dat, aes(x=Year, y=Students_with_Disabilities, group = Municipal, colour = Municipal)) + 
       geom_line(aes(linetype=Municipal), size = 1.25) + 
       geom_point(size = 3) + 
-      labs(title = "Students with Disabilities [Muni Only]", 
+      labs(title = "Students with Disabilities [Municipal]", 
            x = "Year",
            y = "Students with Disabilities %") +  
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1538,7 +1544,7 @@ server <- function(input, output, session){
       p <- ggplot(dat, aes(x=Year, y=Students_with_Disabilities, group = Municipal, colour = Municipal)) + 
         geom_line(aes(linetype=Municipal), size = 1.25) + 
         geom_point(size = 3) + 
-        labs(title = "Students with Disabilities [Muni Only]", 
+        labs(title = "Students with Disabilities [Municipal]", 
              x = "Year",
              y = "Students with Disabilities %") +  
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1685,7 +1691,7 @@ server <- function(input, output, session){
     ggplot(dat, aes(x=Year, y=Average_Monthly_Employment, group = Municipal, colour = Municipal)) + 
       geom_line(aes(linetype=Municipal), size = 1.25) + 
       geom_point(size = 3) + 
-      labs(title = "Average Monthly Employment [Muni Only]", 
+      labs(title = "Average Monthly Employment [Municipal]", 
            x = "Year",
            y = "Count") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1719,7 +1725,7 @@ server <- function(input, output, session){
       p <- ggplot(dat, aes(x=Year, y=Average_Monthly_Employment, group = Municipal, colour = Municipal)) + 
         geom_line(aes(linetype=Municipal), size = 1.25) + 
         geom_point(size = 3) + 
-        labs(title = "Average Monthly Employment [Muni Only]", 
+        labs(title = "Average Monthly Employment [Municipal]", 
              x = "Year",
              y = "Count") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1847,7 +1853,7 @@ server <- function(input, output, session){
       geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Business Bankruptcy [County Level]", 
-           x = "Mid-Year of Five Year Range",
+           x = "Year",
            y = "% Total Business Fillings") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
@@ -1905,7 +1911,7 @@ server <- function(input, output, session){
         geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
         geom_point(size = 3) + 
         labs(title = "Business Bankruptcy [County Level]", 
-             x = "Mid-Year of Five Year Range",
+             x = "Year",
              y = "% Total Business Fillings") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
@@ -1934,7 +1940,7 @@ server <- function(input, output, session){
       geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
       labs(title = "Personal Bankruptcy [County Level]", 
-           x = "Mid-Year of Five Year Range",
+           x = "Year",
            y = "% Total Personal Fillings") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
@@ -1989,7 +1995,7 @@ server <- function(input, output, session){
         geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
         geom_point(size = 3) + 
         labs(title = "Personal Bankruptcy [County Level]", 
-             x = "Mid-Year of Five Year Range",
+             x = "Year",
              y = "% Total Personal Fillings") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
@@ -2148,7 +2154,7 @@ server <- function(input, output, session){
     ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
       geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
-      labs(title = "Assessed Property Values [Muni Only]", 
+      labs(title = "Assessed Property Values [Municipal]", 
            x = "Year",
            y = "% Assessed Property Values") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -2205,7 +2211,7 @@ server <- function(input, output, session){
       p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
         geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
         geom_point(size = 3) + 
-        labs(title = "Assessed Property Values [Muni Only]", 
+        labs(title = "Assessed Property Values [Municipal]", 
              x = "Year",
              y = "% Assessed Property Values") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -2245,7 +2251,7 @@ server <- function(input, output, session){
     ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
       geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
-      labs(title = "Tax Levy by Class [Muni Only]", 
+      labs(title = "Tax Levy by Class [Municipal]", 
            x = "Year",
            y = "% Tax Levy") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -2302,7 +2308,7 @@ server <- function(input, output, session){
       p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
         geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
         geom_point(size = 3) + 
-        labs(title = "Tax Levy by Class [Muni Only]", 
+        labs(title = "Tax Levy by Class [Municipal]", 
              x = "Year",
              y = "% Tax Levy") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +

@@ -3,7 +3,7 @@
 ## App: SEIGMA dashboard     ##
 ## Author: Zhenning Kang     ##
 ## Date Created:  09/27/2017 ##
-## Last Modified: 01/09/2018 ##
+## Last Modified: 02/16/2018 ##
 ###############################
 
 ##### SETTINGS #####
@@ -25,6 +25,7 @@ dem_data$Under65 <- dem_data$Under35 + dem_data$Age_35_54_Pct_plot + dem_data$Ag
 # data for married status plot
 mar_data <- read.csv(file="data/BA002_02_marriagedata.csv")
 mar_data$Year <- as.factor(as.numeric(substr(mar_data$Five_Year_Range, 1, 4))+2)
+mar_data$Gender <- relevel(mar_data$Gender, "Male")
 # data for education plot
 edu_data <- read.csv(file="data/edudata.csv")[,-1]
 edu_data$Year <- as.factor(as.numeric(substr(edu_data$Five_Year_Range, 1, 4))+2)
@@ -71,6 +72,7 @@ colnames(bui_data)[2:15]<-c("Year","Number_of_Months_Reported" ,"Single_Family_B
 ## Load formatted pValue data
 val_data <- read.csv(file="data/pValuedata3.csv")
 colnames(val_data)[4:10]<-c("Year","Residential","Open_Space", "Commercial", "Industrial", "Personal_Property", "Total_Assessed")
+val_data <- filter(val_data, Year != 2017)
 ## Load formatted Tax data
 tax_data <- read.csv(file="data/taxdata2.csv")
 colnames(tax_data)[2:3]<-c("Year", "Total_Budget")
@@ -84,7 +86,7 @@ muni_county <- data.frame(unique(na.omit(subset(dem_data, select = c("Municipal"
 ### POP-UPS
 age_pop <- "The number of people within each age group, for a region over a specified five year range. Age groups were specified in the dataset as <5, 5-9, 10-14, 15-19, 20-24, 25-34, 35-44, 45-54, 55-59, 60-64, 65-74, 75-84, and 85+. For this app, the number of categories for age has been collapsed to the following six groups: <20, 20-34, 35-54, 55-64, 65-74, and 75+. This is done in order to simplify the presentation of data. Source: American Community Survey (ACS)."
 
-rac_pop <- "The number of people within each race, for a region over a specified five year range. Races were listed as White, Black or African American, Asian, American Indian or Alaska Native, Native Hawaiian or Other Pacific Islander, or some other race. Source: American Community Survey (ACS)."
+rac_pop <- "The number of people within each race for a region over a specified five year range. Data is available as ‘one race’ and ‘two or more races’. Only the ‘one race’ categories are presented here. One race categories are: White, Black or African American, Asian, American Indian or Alaska Native, Native Hawaiian or Other Pacific Islander, or Other (some other race). Source: American Community Survey (ACS)."
 
 gen_pop <- "The number of people within each gender, for a region over a specified five year range. Source: American Community Survey (ACS)."
 
@@ -102,7 +104,7 @@ eng_pop <- "The number of students whose first language is a language other than
 
 dis_pop <- "The number of students who have received an Individualized Education Program (IEP), which provides free services in public schools to children who need special education. Source: MA Department of Education."
 
-inc_pop <- "The income of the household which includes all individuals ages 15 and over. Median annual household income provides a clear trend to assess residents' household income over time. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for comparative analysis at municipal, state, and US levels. Source: American Community Survey (ACS). "
+inc_pop <- "The income of the household which includes all individuals ages 15 and over. Median annual household income provides a clear trend to assess residents' household income over time. Data was collected at multiple levels to allow for comparative analysis at municipal, state, and US levels. Source: American Community Survey (ACS). "
 
 ren_pop <- "Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year median rent estimates were collected between 2002 and 2015 and adjusted for inflation to the 2015 dollar. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national levels. Source: American Community Survey (ACS)."
 
