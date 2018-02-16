@@ -3,7 +3,7 @@
 ## Author(s): Valerie Evans          ##
 ## Date Created:  11/02/2017         ##
 ## Date Modified: 11/09/2017 VE      ##
-## Map Updated: 02/11/2018ZK         ##
+## Map Updated:   02/16/2018 ZK      ##
 #######################################
 
 ##### GLOBAL #####
@@ -216,7 +216,6 @@ map_side_text <- conditionalPanel(
   h3("SEIGMA: Marital Status Shiny App"),
   h4("How to use this app:"),
   helpText(p(strong("Please select a variable of interest, a five-year range, and a gender. Click on 'Generate Map' in the main page."))),
-  helpText(p(strong("If you would like to select another variable, please click the 'Redraw Map' below to re-generate the map after you made the change."))),
   tags$br(),
   tags$ul(
     tags$li('Clicking on a municipality will display the variable of interest for the five-year range and gender that you selected.')
@@ -517,9 +516,9 @@ ui <- shinyUI(fluidPage(
                                               "Married" = "Married_pct",
                                               "Separated" = "Separated_pct",
                                               "Widowed" = "Widowed_pct",
-                                              "Divorced" = "Divorced_pct")),
+                                              "Divorced" = "Divorced_pct"))
                    # checkboxInput("lmap_cas", "Display Casinos", value=FALSE),
-                   actionButton("action2", "REDRAW MAP")
+                   # actionButton("action2", "REDRAW MAP")
                  ),
 
                  ## In plot, allow for variable and municipality selection
