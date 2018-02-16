@@ -1312,8 +1312,8 @@ server <- function(input, output, session){
     ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = Region, colour = Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
-      labs(title = "Suicide Rate [County Level]", 
-           x = "One Year Estimates",
+      labs(title = "Suicide Rate [County]", 
+           x = "Year",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
@@ -1346,8 +1346,8 @@ server <- function(input, output, session){
       p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = Region, colour = Region)) + 
         geom_line(aes(linetype=Region), size = 1.25) + 
         geom_point(size = 3) + 
-        labs(title = "Suicide Rate [County Level]", 
-             x = "One Year Estimates",
+        labs(title = "Suicide Rate [County]", 
+             x = "Year",
              y = "% Population") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
@@ -1852,7 +1852,7 @@ server <- function(input, output, session){
     ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
-      labs(title = "Business Bankruptcy [County Level]", 
+      labs(title = "Business Bankruptcy [County]", 
            x = "Year",
            y = "% Total Business Fillings") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1910,7 +1910,7 @@ server <- function(input, output, session){
       p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
         geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
         geom_point(size = 3) + 
-        labs(title = "Business Bankruptcy [County Level]", 
+        labs(title = "Business Bankruptcy [County]", 
              x = "Year",
              y = "% Total Business Fillings") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1939,7 +1939,7 @@ server <- function(input, output, session){
     ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
       geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
-      labs(title = "Personal Bankruptcy [County Level]", 
+      labs(title = "Personal Bankruptcy [County]", 
            x = "Year",
            y = "% Total Personal Fillings") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1994,7 +1994,7 @@ server <- function(input, output, session){
       p<- ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
         geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
         geom_point(size = 3) + 
-        labs(title = "Personal Bankruptcy [County Level]", 
+        labs(title = "Personal Bankruptcy [County]", 
              x = "Year",
              y = "% Total Personal Fillings") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
