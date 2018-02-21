@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 02/16/2018  ##
+## Last Modified: 02/21/2018  ##
 ################################
 
 ##### SETTINGS #####
@@ -401,7 +401,7 @@ body <- dashboardBody(
                              checkboxInput("comval", "Commercial", FALSE)
                       ),
                       column(3,
-                             checkboxInput("indval", "Inducstrual", FALSE)
+                             checkboxInput("indval", "Industrial", FALSE)
                       ),
                       column(3,
                              checkboxInput("perval", "Personal", FALSE)
@@ -427,7 +427,7 @@ body <- dashboardBody(
                              checkboxInput("comtax", "Commercial", FALSE)
                       ),
                       column(3,
-                             checkboxInput("indtax", "Inducstrual", FALSE)
+                             checkboxInput("indtax", "Industrial", FALSE)
                       ),
                       column(3,
                              checkboxInput("pertax", "Personal", FALSE)
@@ -437,9 +437,9 @@ body <- dashboardBody(
                     box(width = 12,
                         plotOutput("plot_tax", click = "tax_click"),
                         verbatimTextOutput("tax_point"),
-                  actionButton("tax_info", "What is Poverty Tax?"),
+                  actionButton("tax_info", "What is Tax Levy?"),
                   downloadButton(outputId = "tax_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Property Tax.", href="https://seigma.shinyapps.io/PropertyValue/", target="_blank")))
+                  h4(helpText(a("More information about Tax Levy.", href="https://seigma.shinyapps.io/PropertyTax/", target="_blank")))
               )
             )
               )
@@ -463,16 +463,21 @@ server <- function(input, output, session){
       "-- Multiple municipalities can be selected at the same time.",
       br(),
       "-- Use 'backspace' on the keyboard to delete an existing municipality.",
+      br(),
       h4("2. Choose a Comparison"),
       "Please select the corresponding check box to compare the County, Massachusetts or United States average.",
+      br(),
       h4("3. Select Data to Visualize"),
       "Please select the data of interest by choosing a variable category on the left sidebar.",
       br(),
-      "-- Demographics: Population, Age, Race, Gender and Ethnicity data.", 
+      br(),
+      "-- Demographics: Age, Race, Gender, Ethnicity and Population data.", 
+      br(),
       br(),
       "-- Social:Marital Status, Educational Attainment, Suicide Rate, Veteran’s Status and Schools data.",
       br(),
-      "-- Economic:Household Income, Poverty Rate, Monthly Employment, Unemployment Rate, Business and Personal Bankruptcy, Montly Rent, Building Permits, Property Values, and Property Tax data.",
+      br(),
+      "-- Economic:Household Income, Poverty Rate, Monthly Employment, Unemployment Rate, Business and Personal Bankruptcy, Monthly Rent, Building Permits, Property Values, and Tax Levy data.",
       br(),
       br(),
       "Data with various categories can be selected through check boxes located at the top of the plot.",
@@ -1057,6 +1062,7 @@ server <- function(input, output, session){
   ### Population Table ###
   output$population <- renderDataTable({
     my_place <- place()
+    my_place <- unique(my_place)
     pop_df <- filter(dem_data, Region %in% my_place) %>% 
       select(Region, Five_Year_Range, Total_Population) %>%
       arrange(Region)
@@ -2130,9 +2136,11 @@ server <- function(input, output, session){
   #### Property Value App ####
   val_df <- reactive({
     my_place <- place()
-    muni_df <- filter(val_data, Municipal %in% my_place) %>% select(Municipal, Percentage_of_Residential, Percentage_of_Commercial, Percentage_of_Industrial, Percentage_of_Personal_Property, Year)
+    # muni_df <- filter(val_data, Municipal %in% my_place) %>% select(Municipal, Percentage_of_Residential, Percentage_of_Commercial, Percentage_of_Industrial, Percentage_of_Personal_Property, Year)
+    muni_df <- filter(val_data, Municipal %in% my_place) %>% select(Municipal, Residential_Million, Commercial_Million, Industrial_Million, Personal_Property_Million, Year)
     muni_df$Year <- gsub("20", "'", muni_df$Year)
-    names(muni_df) <- gsub("Percentage_of_", "", names(muni_df))
+    #names(muni_df) <- gsub("Percentage_of_", "", names(muni_df))
+    names(muni_df) <- c("Municipal", "Residential", "Commercial", "Industrial", "Personal Property", "Year")
     muni_df <- melt(muni_df)
     muni_df   
   })
@@ -2154,9 +2162,9 @@ server <- function(input, output, session){
     ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
       geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
       geom_point(size = 3) + 
-      labs(title = "Assessed Property Values [Municipal]", 
+      labs(title = "Assessed Property Values[Municipal]", 
            x = "Year",
-           y = "% Assessed Property Values") + 
+           y = "Dollars (million)") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
@@ -2213,7 +2221,7 @@ server <- function(input, output, session){
         geom_point(size = 3) + 
         labs(title = "Assessed Property Values [Municipal]", 
              x = "Year",
-             y = "% Assessed Property Values") + 
+             y = "Dollars (million)") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
         theme(axis.text=element_text(size=14)) + 
@@ -2227,9 +2235,11 @@ server <- function(input, output, session){
   #### Property Tax App ####
   tax_df <- reactive({
     my_place <- place()
-    muni_df <- filter(tax_data, Municipal %in% my_place) %>% select(Municipal, Percentage_of_Residential, Percentage_of_Commercial, Percentage_of_Industrial, Percentage_of_Personal_Property, Year)
+    # muni_df <- filter(tax_data, Municipal %in% my_place) %>% select(Municipal, Percentage_of_Residential, Percentage_of_Commercial, Percentage_of_Industrial, Percentage_of_Personal_Property, Year)
+    muni_df <- filter(tax_data, Municipal %in% my_place) %>% select(Municipal, Residential_Million, Commercial_Million, Industrial_Million, Personal_Property_Million, Year)
     muni_df$Year <- gsub("20", "'", muni_df$Year)
-    names(muni_df) <- gsub("Percentage_of_", "", names(muni_df))
+    #names(muni_df) <- gsub("Percentage_of_", "", names(muni_df))
+    names(muni_df) <- c("Municipal", "Residential", "Commercial", "Industrial", "Personal Property", "Year")
     muni_df <- melt(muni_df)
     muni_df   
   })
@@ -2253,7 +2263,7 @@ server <- function(input, output, session){
       geom_point(size = 3) + 
       labs(title = "Tax Levy by Class [Municipal]", 
            x = "Year",
-           y = "% Tax Levy") + 
+           y = "Dollars (million)") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
@@ -2310,7 +2320,7 @@ server <- function(input, output, session){
         geom_point(size = 3) + 
         labs(title = "Tax Levy by Class [Municipal]", 
              x = "Year",
-             y = "% Tax Levy") + 
+             y = "Dollars (million)") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
         theme(axis.text=element_text(size=14)) + 
