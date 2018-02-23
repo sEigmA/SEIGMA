@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 02/21/2018  ##
+## Last Modified: 02/23/2018  ##
 ################################
 
 ##### SETTINGS #####
@@ -437,7 +437,7 @@ body <- dashboardBody(
                     box(width = 12,
                         plotOutput("plot_tax", click = "tax_click"),
                         verbatimTextOutput("tax_point"),
-                  actionButton("tax_info", "What is Tax Levy?"),
+                  actionButton("tax_info", "What is the Tax Levy variable?"),
                   downloadButton(outputId = "tax_down", label = "Download the plot"),
                   h4(helpText(a("More information about Tax Levy.", href="https://seigma.shinyapps.io/PropertyTax/", target="_blank")))
               )
@@ -2289,7 +2289,7 @@ server <- function(input, output, session){
   
   observeEvent(input$tax_info, {
     showModal(modalDialog(
-      title = "What is the Property Tax variable?",
+      title = "What is the Tax Levy variable?",
       tax_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
