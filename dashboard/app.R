@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 02/23/2018  ##
+## Last Modified: 03/02/2018  ##
 ################################
 
 ##### SETTINGS #####
@@ -55,6 +55,38 @@ sidebar <- dashboardSidebar(
     br(),
     br(),
     br(),
+    menuItem("Full Individual Apps", icon = icon("search"),
+             menuSubItem("Bankruptcy",
+                         href="https://seigma.shinyapps.io/bankruptcy/"),
+             menuSubItem("Building Permits",
+                         href="https://seigma.shinyapps.io/BuildingPermits/"),
+             menuSubItem("Demographics",
+                         href="https://seigma.shinyapps.io/demographics/"),
+             menuSubItem("Educational Attainment",
+                         href="https://seigma.shinyapps.io/educational_attainment/"),
+             menuSubItem("Employment",
+                         href="https://seigma.shinyapps.io/employment/"),
+             menuSubItem("Household Income",
+                         href="https://seigma.shinyapps.io/income/"),
+             menuSubItem("Marital Status",
+                         href="https://seigma.shinyapps.io/marital_status/"),
+             menuSubItem("Poverty",
+                         href="https://seigma.shinyapps.io/poverty/"),
+             menuSubItem("Property Tax",
+                         href="https://seigma.shinyapps.io/PropertyTax/"),
+             menuSubItem("Property Value",
+                         href="https://seigma.shinyapps.io/PropertyValue/"),
+             menuSubItem("Rent",
+                         href="https://seigma.shinyapps.io/rent/"),
+             menuSubItem("School",
+                         href="https://seigma.shinyapps.io/schools/"),
+             menuSubItem("Suicide",
+                         href="https://seigma.shinyapps.io/suicide/"),
+             menuSubItem("Unemployment",
+                         href="https://seigma.shinyapps.io/unemployment/"),
+             menuSubItem("Vateran Status",
+                         href="https://seigma.shinyapps.io/va_status/")
+             ),
     menuItem("Data Source", icon = icon("file-code-o"), 
              menuSubItem("American Community Survey",  
                          href="https://factfinder.census.gov/faces/nav/jsf/pages/index.xhtml", 
@@ -1318,9 +1350,9 @@ server <- function(input, output, session){
     ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = Region, colour = Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
-      labs(title = "Suicide Rate [County]", 
+      labs(title = "Suicide Rate (Age Adjusted) [County]", 
            x = "Year",
-           y = "% Population") + 
+           y = "Per 100,000 Persons") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
       theme(axis.title = element_text(face="bold", size=18)) +
       theme(axis.text=element_text(size=14)) + 
@@ -1352,9 +1384,9 @@ server <- function(input, output, session){
       p <- ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = Region, colour = Region)) + 
         geom_line(aes(linetype=Region), size = 1.25) + 
         geom_point(size = 3) + 
-        labs(title = "Suicide Rate [County]", 
+        labs(title = "Suicide Rate (Age Adjusted) [County]", 
              x = "Year",
-             y = "% Population") + 
+             y = "Per 100,000 Persons") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
         theme(axis.title = element_text(face="bold", size=18)) +
         theme(axis.text=element_text(size=14)) + 
