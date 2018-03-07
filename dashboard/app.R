@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 03/02/2018  ##
+## Last Modified: 03/07/2018  ##
 ################################
 
 ##### SETTINGS #####
@@ -134,7 +134,14 @@ body <- dashboardBody(
                   )
             ),
       fluidRow(
-        box(width= 12,
+        box(width = 6,
+            column(6,
+                   radioButtons('format', 'Select a Document Format', c('PDF', 'HTML', 'Word'), inline = TRUE, selected = NA)
+                   ),
+            column(6,
+                   downloadButton('downloadReport', 'Generate Demo Report')
+                   )),
+        box(width = 6,
             h5("Population estimates can be found at the bottom of the page."))
       ),
             fluidRow(
@@ -575,7 +582,33 @@ server <- function(input, output, session){
   })
   
   ##### DEMOGRAPHICS TAB #####
-
+  output$downloadReport <- downloadHandler(
+    
+    filename = function() {
+      paste('demo_report', sep = '.', switch(
+        input$format, PDF = 'pdf', HTML = 'html', Word = 'docx'
+      ))
+    },
+    
+    content = function(file) {
+      src <- normalizePath('report.Rmd')
+      
+      # temporarily switch to the temp dir, in case you do not have write
+      # permission to the current working directory
+      owd <- setwd(tempdir())
+      on.exit(setwd(owd))
+      file.copy(src, 'report.Rmd', overwrite = TRUE)
+      
+      library(rmarkdown)
+      out <- render('report.Rmd', switch(
+        input$format,
+        PDF = pdf_document(), HTML = html_document(), Word = word_document()
+      ))
+      file.rename(out, file)
+    }
+  )
+  
+  
   #### Age ####
   age_df <- reactive({
     my_place <- place()
