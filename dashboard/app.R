@@ -2,18 +2,18 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 03/07/2018  ##
+## Last Modified: 04/14/2018  ##
 ################################
 
 ##### SETTINGS #####
 source("global.R")
 
 ##### UI #####
-header <- dashboardHeader(title = "SEIGMA Dashboard", disable = TRUE)
+header <- dashboardHeader(title = "MASS-AT-A-GLANCE", disable = TRUE)
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    actionButton("show", "How to Use the Dashboard"),
+    actionButton("show", "How to use this application?"),
     br(),
     h4("Select Municipality"),
     menuItem("Municipality", icon = icon("address-book"),
@@ -56,36 +56,36 @@ sidebar <- dashboardSidebar(
     br(),
     br(),
     menuItem("Full Individual Apps", icon = icon("search"),
-             menuSubItem("Bankruptcy",
-                         href="https://seigma.shinyapps.io/bankruptcy/"),
-             menuSubItem("Building Permits",
-                         href="https://seigma.shinyapps.io/BuildingPermits/"),
              menuSubItem("Demographics",
                          href="https://seigma.shinyapps.io/demographics/"),
-             menuSubItem("Educational Attainment",
-                         href="https://seigma.shinyapps.io/educational_attainment/"),
-             menuSubItem("Employment",
-                         href="https://seigma.shinyapps.io/employment/"),
-             menuSubItem("Household Income",
-                         href="https://seigma.shinyapps.io/income/"),
              menuSubItem("Marital Status",
                          href="https://seigma.shinyapps.io/marital_status/"),
-             menuSubItem("Poverty",
-                         href="https://seigma.shinyapps.io/poverty/"),
-             menuSubItem("Property Tax",
-                         href="https://seigma.shinyapps.io/PropertyTax/"),
-             menuSubItem("Property Value",
-                         href="https://seigma.shinyapps.io/PropertyValue/"),
-             menuSubItem("Rent",
-                         href="https://seigma.shinyapps.io/rent/"),
-             menuSubItem("School",
-                         href="https://seigma.shinyapps.io/schools/"),
+             menuSubItem("Educational Attainment",
+                         href="https://seigma.shinyapps.io/educational_attainment/"),
+             menuSubItem("Veterans Status",
+                         href="https://seigma.shinyapps.io/va_status/"),
              menuSubItem("Suicide",
                          href="https://seigma.shinyapps.io/suicide/"),
+             menuSubItem("School",
+                         href="https://seigma.shinyapps.io/schools/"),
+             menuSubItem("Household Income",
+                         href="https://seigma.shinyapps.io/income/"),
+             menuSubItem("Poverty",
+                         href="https://seigma.shinyapps.io/poverty/"),
+             menuSubItem("Employment",
+                         href="https://seigma.shinyapps.io/employment/"),
              menuSubItem("Unemployment",
                          href="https://seigma.shinyapps.io/unemployment/"),
-             menuSubItem("Vateran Status",
-                         href="https://seigma.shinyapps.io/va_status/")
+             menuSubItem("Bankruptcy",
+                         href="https://seigma.shinyapps.io/bankruptcy/"),
+             menuSubItem("Rent",
+                         href="https://seigma.shinyapps.io/rent/"),
+             menuSubItem("Building Permits",
+                         href="https://seigma.shinyapps.io/BuildingPermits/"),
+             menuSubItem("Property Value",
+                         href="https://seigma.shinyapps.io/PropertyValue/"),
+             menuSubItem("Property Tax",
+                         href="https://seigma.shinyapps.io/PropertyTax/")
              ),
     menuItem("Data Source", icon = icon("file-code-o"), 
              menuSubItem("American Community Survey",  
@@ -134,14 +134,14 @@ body <- dashboardBody(
                   )
             ),
       fluidRow(
-        box(width = 6,
-            column(6,
-                   radioButtons('format', 'Select a Document Format', c('PDF', 'HTML', 'Word'), inline = TRUE, selected = NA)
-                   ),
-            column(6,
-                   downloadButton('downloadReport', 'Generate Demo Report')
-                   )),
-        box(width = 6,
+        # box(width = 6,
+        #     column(6,
+        #            radioButtons('format', 'Select a Document Format', c('PDF', 'HTML', 'Word'), inline = TRUE, selected = NA)
+        #            ),
+        #     column(6,
+        #            downloadButton('downloadReport', 'Generate Demo Report')
+        #            )),
+        box(width = 12,
             h5("Population estimates can be found at the bottom of the page."))
       ),
             fluidRow(
@@ -292,9 +292,9 @@ body <- dashboardBody(
                 box(width = 6,
                     plotOutput("plot_vet", click = "vet_click"),
                     verbatimTextOutput("vet_point"),
-                  actionButton("vet_info", "What is the Veteran’s Status variable?"),
+                  actionButton("vet_info", "What is the Veterans Status variable?"),
                   downloadButton(outputId = "vet_down", label = "Download the plot"),
-                  h4(helpText(a("More information about Veteran’s Status.", href="https://seigma.shinyapps.io/va_status/", target="_blank")))
+                  h4(helpText(a("More information about Veterans Status.", href="https://seigma.shinyapps.io/va_status/", target="_blank")))
                     ),
                 box(width = 6,
                     plotOutput("plot_sui", click = "sui_click"),
@@ -497,11 +497,11 @@ server <- function(input, output, session){
       h4("1. Select Municipality of Interest"),
       "Please choose a  municipality by entering it in the text box or selecting it from the pull-down menu on the left sidebar.",
       br(),
-      "-- Municipalities are listed in alphabetical order.",
+      "- Municipalities are listed in alphabetical order.",
       br(),
-      "-- Multiple municipalities can be selected at the same time.",
+      "- Multiple municipalities can be selected at the same time.",
       br(),
-      "-- Use 'backspace' on the keyboard to delete an existing municipality.",
+      "- Use 'backspace' on the keyboard to delete an existing municipality.",
       br(),
       h4("2. Choose a Comparison"),
       "Please select the corresponding check box to compare the County, Massachusetts or United States average.",
@@ -510,13 +510,13 @@ server <- function(input, output, session){
       "Please select the data of interest by choosing a variable category on the left sidebar.",
       br(),
       br(),
-      "-- Demographics: Age, Race, Gender, Ethnicity and Population data.", 
+      "- Demographics: Age, Race, Gender, Ethnicity and Population data.", 
       br(),
       br(),
-      "-- Social:Marital Status, Educational Attainment, Suicide Rate, Veteran’s Status and Schools data.",
+      "- Social: Marital Status, Educational Attainment, Suicide Rate, Veteran’s Status and Schools data.",
       br(),
       br(),
-      "-- Economic:Household Income, Poverty Rate, Monthly Employment, Unemployment Rate, Business and Personal Bankruptcy, Monthly Rent, Building Permits, Property Values, and Tax Levy data.",
+      "- Economic: Household Income, Poverty Rate, Monthly Employment, Unemployment Rate, Business and Personal Bankruptcy, Monthly Rent, Building Permits, Property Values, and Tax Levy data.",
       br(),
       br(),
       "Data with various categories can be selected through check boxes located at the top of the plot.",
@@ -1444,7 +1444,7 @@ server <- function(input, output, session){
     ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
       geom_line(aes(linetype=Region), size = 1.25) + 
       geom_point(size = 3) + 
-      labs(title = "Civilian Veteran's Status", 
+      labs(title = "Civilian Veterans Status", 
            x = "Mid-Year of Five Year Range",
            y = "% Population") + 
       theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
@@ -1460,7 +1460,7 @@ server <- function(input, output, session){
   
   observeEvent(input$vet_info, {
     showModal(modalDialog(
-      title = "What is the Veteran's Status variable?",
+      title = "What is the Veterans Status variable?",
       vet_pop,
       footer = modalButton("Close"),
       easyClose = TRUE
@@ -1478,7 +1478,7 @@ server <- function(input, output, session){
       p <- ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
         geom_line(aes(linetype=Region), size = 1.25) + 
         geom_point(size = 3) + 
-        labs(title = "Civilian Veteran's Status", 
+        labs(title = "Civilian Veterans Status", 
              x = "Mid-Year of Five Year Range",
              y = "% Population") + 
         theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
