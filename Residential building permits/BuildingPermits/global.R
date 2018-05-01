@@ -1,8 +1,9 @@
 #######################################
 ## Title: Building Permits global.R  ##
-## Author(s): Xuelian Li             ## 
+## Author(s): Xuelian Li, Zhenning   ##
+##            Kang                   ## 
 ## Date Created:  08/05/16           ##
-## Date Modified: 08/12/16 XL        ##
+## Date Modified: 05/01/18 ZK        ##
 #######################################
 
 ##First file run - Environment Setup
@@ -20,10 +21,14 @@ require(tidyr)
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted pValue data
-bPermit_data1 <- read.csv(file="buildingdata.csv")
-colnames(bPermit_data1)[2:15]<-c("Year","Number_of_Months_Reported" ,"Single_Family_Buildings","Single_Family_Units","Single_Family_validation","I2_Family_Buildings","I2_Family_Units","I2_Family_validation","I3-4_Family_Buildings","I3-4_Family_Units","I3-4_Family_validation","I5_Family_Buildings","I5_Family_Units","I5_Family_validation")
-bPermit_data<-bPermit_data1%>%
-  select(1:5,20,7:8,21,10:11,22,13:14,23,16:17,24:33)
+bPermit_data1 <- read.csv(file="buildingdata.csv")[,-1]
+bPermit_data <- bPermit_data1 %>%
+  select(1:5,27,7,8,28,10,11,29,13,14,30,16,17,31,32,20:26,33)
+colnames(bPermit_data) <- c( "Region","Year","Number_of_Months_Reported","Single_Family_Buildings","Single_Family_Units","Inflation_Adjusted_1_Family_Valuation","I2_Family_Buildings","I2_Family_Units","Inflation_Adjusted_2_Family_Valuation","I3-4_Family_Buildings","I3-4_Family_Units","Inflation_Adjusted_3_4_Family_Valuation","I5_Family_Buildings","I5_Family_Units","Inflation_Adjusted_5_Family_Valuation","Total_Buildings_Reported_Imputed","Total_Units_Reported_Imputed","Inflation_Adjusted_Total_Valuation","Inflation_Adjusted_Average_Valuation","Total_Pct_Change","Change_from_previous","Pct_Change_from_previous","Percentage_of_1_Family" ,"Percentage_of_2_Family","Percentage_of_3_and_4_Family","Percentage_of_5_Family","Permits_Per_1000_Population"   )
+# colnames(bPermit_data1)[2:15]<-c("Year","Number_of_Months_Reported" ,"Single_Family_Buildings","Single_Family_Units","Single_Family_validation","I2_Family_Buildings","I2_Family_Units","I2_Family_validation","I3-4_Family_Buildings","I3-4_Family_Units","I3-4_Family_validation","I5_Family_Buildings","I5_Family_Units","I5_Family_validation")
+# bPermit_data<-bPermit_data1%>%
+#   select(1:5,20,7:8,21,10:11,22,13:14,23,16:17,24:33)
+
 
 ## Find order of municipals in geojson files
 ## Each municipal is a separate feature
@@ -128,8 +133,9 @@ PreChacuts<-unique(c(PreChacuts1, PreChacuts2))
 ##PreChacuts <- seq(PreChamin.val, PreChamax.val, length.out = length(map_colors1))
 
 ##Cuts for the Percent of Units by structure
-pctmax.val<-max(bPermit_data$Percentage_of_1_Family, na.rm=TRUE)
-pctmin.val<--0
+
+pctmax.val<- max(bPermit_data$Percentage_of_1_Family, na.rm=TRUE)
+pctmin.val<- 0
 pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
 
 
@@ -219,7 +225,7 @@ plot_side_text <- conditionalPanel(
     tags$br(),
     tags$li("To view the number of new housing units by structure size, select number of new housing units by structure size."),
     tags$br(),
-    tags$li("Select Actual Values from the Display Options to view the number of annual total number of new housing units authorized by building permits for the years 2000-2011."),
+    tags$li("Select Actual Values from the Display Options to view the number of annual total number of new housing units authorized by building permits for the years of interest."),
     tags$br(),
     tags$li("To view the annual total number of new housing units authorized by building permits change between the year you selected and the previous year select Change from the Previous Year."),
     tags$br(),

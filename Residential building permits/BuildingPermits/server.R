@@ -1,9 +1,9 @@
 #######################################
 ## Title:  Building Permits server.R ##
-## Author(s): Xuelian Li             ##
-##                                   ## 
+## Author(s): Xuelian Li, Zhenning   ##
+##            Kang                   ## 
 ## Date Created:  08/10/16           ##
-## Date Modified: 08/13/16 XL        ##
+## Date Modified: 05/01/18 ZK        ##
 #######################################
 
 shinyServer(function(input, output, session){
@@ -52,7 +52,7 @@ shinyServer(function(input, output, session){
       filter(Region %in% munis) %>%
       select(1:19)
       sum_df[,c(6,9,12,15,18,19)]<-apply(sum_df[,c(6,9,12,15,18,19)],2,function(x)prettyNum(x,big.mark = ","))
-    colnames(sum_df)[3:19] <- c("Number of Months Reported" ,"1-Family Buildings","1-Family Units","1-Family Validation (2011 dollars)","2-Family Buildings","2-Family Units","2-Family Validation (2011 dollars)","3-4-Family Buildings","3-4-Family Units","3-4-Family Validation (2011 dollars)","5+ Family Buildings","5+ Family Units","5+ Family Validation(2011 dollars)", "Total Buildings", "Total Units", "Total Validation (2011 dollars)", "Average Validation (2011 dollars)")
+    colnames(sum_df)[3:19] <- c("Number of Months Reported" ,"1-Family Buildings","1-Family Units","1-Family Validation (2016 dollars)","2-Family Buildings","2-Family Units","2-Family Validation (2016 dollars)","3-4-Family Buildings","3-4-Family Units","3-4-Family Validation (2016 dollars)","5+ Family Buildings","5+ Family Units","5+ Family Validation(2016 dollars)", "Total Buildings", "Total Units", "Total Validation (2016 dollars)", "Average Validation (2016 dollars)")
     sum_df1<-sum_df%>%
       select(1:3,16:19, 4:15)
     return(sum_df1)
@@ -161,7 +161,7 @@ shinyServer(function(input, output, session){
         ## set fonts
         fontName = "Source Sans Pro",
         fontSize = font_size,
-        title =paste("Number of New Housing Units by Structure Size for 2000-2011 ", 
+        title =paste("Number of New Housing Units by Structure Size for 2000-2016 ", 
                        "in ", input$plot_muni2),
           titleTextStyle = list(
             fontSize = font_size+8,
@@ -170,7 +170,7 @@ shinyServer(function(input, output, session){
         ## set axis titles, ticks, fonts, and ranges
         hAxis = list(
           title = "",
-          ticks = seq(2000,2011,1),
+          ticks = seq(2000,2016,1),
           format = "####",
           textStyle = list(
             fontSize = font_size),

@@ -2,9 +2,8 @@
 ## Update Building Permits Template ##
 ## Author: Zhenning Kang            ##
 ## Date Created:  04/06/2018        ##
-## Last Modified: 04/14/2018        ##
+## Last Modified: 05/01/2018        ##
 ######################################
-
 
 
 ### Settings ###
@@ -12,7 +11,6 @@
 # load libraries
 library(readxl)
 library(dplyr)
-
 
 
 ### Step One: Read in datasets ###
@@ -180,6 +178,11 @@ for (i in 1:length(unique(building2016$Region))){
     building2016[building2016$Region == region,]$Percentage_of_5_Family[r] <- building2016[building2016$Region == region,]$I5_Family_Units[r]/building2016[building2016$Region == region,]$Total_Units[r]*100
     }
 }
+
+# remove Inf values for future cuts
+building2016$Pct_Change_from_previous[is.infinite(building2016$Pct_Change_from_previous)] <- NA
+
+building2016$Percentage_of_1_Family[is.infinite(building2016$Percentage_of_1_Family)] <- NA
 
 # save dataset to folder
 # write.csv(building2016, "C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/updated_buildingdata.csv")

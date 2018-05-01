@@ -1,10 +1,11 @@
 #######################################
 ## Title: Building Permits ui.R      ##
-## Author(s): Xuelian Li             ##
-##                                   ## 
+## Author(s): Xuelian Li, Zhenning   ##
+##            Kang                   ## 
 ## Date Created:  08/10/16           ##
-## Date Modified: 08/12/16 XL        ##
+## Date Modified: 05/01/18 ZK        ##
 #######################################
+
 shinyUI(fluidPage(
   ## HTML to create generate map button
   gen_map_button,
@@ -39,15 +40,15 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'sing.yr'",
                      ## Initializing a single slider
                      sliderInput("sum_year", "Select Year",
-                                 min=2000, max=2011, value=2011,
+                                 min=2000, max=2016, value=2016,
                                  sep="")
                    ),
                    conditionalPanel(
                      ## Initializes a multi-year slider (range)
                      condition="input.sum_timespan == 'mult.yrs'",
-                     ## Slider starts from 2010-2011
+                     ## Slider starts from 2010-2016
                      sliderInput("sum_range", "Select Years",
-                                 min=2000, max=2011, value=c(2010,2011),
+                                 min=2000, max=2016, value=c(2010,2016),
                                  sep="")
                    ),
                    ## in summary, allow for municipal selection
@@ -93,7 +94,7 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'map'",
                    ## Initializing a single slider
                    sliderInput("map_year", "Select Year",
-                               min=2000, max=2011, value=2011,
+                               min=2000, max=2016, value=2016,
                                sep=""),
                    radioButtons("map_radio", "Select Variable of Interest",
                                 c("Total Number of New Housing Units" = "Total_Permits",
@@ -315,7 +316,7 @@ shinyUI(fluidPage(
                        )
                      )
                    ),
-                   p(strong("This is calculated by dividing the annual total number of new housing units for a specific year by the population for that year. For years 2000-2009, the estimated population by 2000 census was used. For years 2010-2011, the estimated population by 2010 census was used."))
+                   p(strong("This is calculated by dividing the annual total number of new housing units for a specific year by the population for that year. For years 2000-2009, the estimated population by 2000 census was used. For years 2010-2016, the estimated population by 2010 census was used."))
         ),
                  
                  ## Percent by structure Legend
@@ -362,12 +363,12 @@ shinyUI(fluidPage(
                    p(strong('Class - Multi-family units'),
                              "-is a classification of housing where multiple separate housing units for residents are contained within one building or several buildings within one complex. "),
                  tags$br(),
-                 p(strong('2011 Dollars'), 
-                          "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, we convert  them from current dollar values to constant dollar values. For this app we used the dollar values from 2011 to be our constant."),
+                 p(strong('2016 Dollars'), 
+                          "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, we convert  them from current dollar values to constant dollar values. For this app we used the dollar values from 2016 to be our constant."),
                  tags$br(),
                  
                  p(strong("Total number of new housing units per 1000 inhabitants-"),
-                 " is calculated by dividing the annual total number of new housing units for a specific year by the population for that year. For the years 2000-2009, we used the estimated population size from the 2000 census. For years 2010-2011, the estimated population size from the  2010 census was used."),
+                 " is calculated by dividing the annual total number of new housing units for a specific year by the population for that year. For the years 2000-2009, we used the estimated population size from the 2000 census. For years 2010-2016, the estimated population size from the  2010 census was used."),
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
