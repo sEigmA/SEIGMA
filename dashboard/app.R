@@ -2,7 +2,7 @@
 ## Title: SEIGMA dashboard    ##
 ## Author: Zhenning Kang      ##
 ## Date Created:  09/27/2017  ##
-## Last Modified: 04/14/2018  ##
+## Last Modified: 04/30/2018  ##
 ################################
 
 ##### SETTINGS #####
@@ -13,7 +13,7 @@ header <- dashboardHeader(title = "MASS-AT-A-GLANCE", disable = TRUE)
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    actionButton("show", "How to use this application?"),
+    actionButton("show", "How to use this application:"),
     br(),
     h4("Select Municipality"),
     menuItem("Municipality", icon = icon("address-book"),
@@ -493,7 +493,7 @@ server <- function(input, output, session){
   ##### Instruction Button #####
   observeEvent(input$show, {
     showModal(modalDialog(
-      title = "How to use the dashboard:",
+      title = "How to use this application:",
       h4("1. Select Municipality of Interest"),
       "Please choose a  municipality by entering it in the text box or selecting it from the pull-down menu on the left sidebar.",
       br(),
@@ -504,16 +504,16 @@ server <- function(input, output, session){
       "- Use 'backspace' on the keyboard to delete an existing municipality.",
       br(),
       h4("2. Choose a Comparison"),
-      "Please select the corresponding check box to compare the County, Massachusetts or United States average.",
+      "Please select the corresponding check box to compare the County, Massachusetts, or United States average.",
       br(),
       h4("3. Select Data to Visualize"),
       "Please select the data of interest by choosing a variable category on the left sidebar.",
       br(),
       br(),
-      "- Demographics: Age, Race, Gender, Ethnicity and Population data.", 
+      "- Demographics: Age, Race, Gender, Ethnicity, and Population data.", 
       br(),
       br(),
-      "- Social: Marital Status, Educational Attainment, Suicide Rate, Veteran’s Status and Schools data.",
+      "- Social: Marital Status, Educational Attainment, Suicide Rate, Veterans Status, and Schools data.",
       br(),
       br(),
       "- Economic: Household Income, Poverty Rate, Monthly Employment, Unemployment Rate, Business and Personal Bankruptcy, Monthly Rent, Building Permits, Property Values, and Tax Levy data.",
