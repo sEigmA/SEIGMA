@@ -1,9 +1,9 @@
 #######################################
 ## Title: Property Tax ui.R          ##
 ## Author(s): Xuelian Li, Jenna      ##
-##            Kiridly                ## 
+##            Kiridly, Zhenning Kang ## 
 ## Date Created:  01/07/16           ##
-## Date Modified: 01/07/16 XL        ##
+## Date Modified: 05/01/18 ZK        ##
 #######################################
 shinyUI(fluidPage(
   ## HTML to create generate map button
@@ -39,7 +39,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'sing.yr'",
                      ## Initializing a single slider
                      sliderInput("sum_year", "Select Year",
-                                 min=2003, max=2013, value=2013,
+                                 min=2003, max=2017, value=2017,
                                  sep="")
                    ),
                    conditionalPanel(
@@ -47,7 +47,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'mult.yrs'",
                      ## Slider starts from 2010-2012
                      sliderInput("sum_range", "Select Years",
-                                 min=2003, max=2013, value=c(2010,2013),
+                                 min=2003, max=2017, value=c(2010,2017),
                                  sep="")
                    ),
                    ## in summary, allow for municipal selection
@@ -92,7 +92,7 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'map'",
                    ## Initializing a single slider
                    sliderInput("map_year", "Select Year",
-                               min=2003, max=2013, value=2013,
+                               min=2003, max=2017, value=2017,
                                sep=""),
                    radioButtons("map_radio", "Select Variable of Interest",
                                 c("Total Tax Levy" = "Total_Levy",
@@ -269,8 +269,8 @@ shinyUI(fluidPage(
                    "-Property not permanently affixed to real estate. Personal property is movable and can be removed without serious damage either to the real estate or to the item being removed."),
                  
                  tags$br(),
-                 p(strong('2013 Dollars'), 
-                   "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2013 to be our constant."),
+                 p(strong('2017 Dollars'), 
+                   "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2017 to be our constant."),
                  tags$br(),
                  
                  #tags$br(),

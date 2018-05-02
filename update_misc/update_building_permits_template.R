@@ -16,7 +16,7 @@ library(dplyr)
 ### Step One: Read in datasets ###
 
 # data from year 2016
-Mass2016Annl <- read_excel("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/building_permits_2000-2016.xlsx", sheet = 2, col_names = F)
+Mass2016Annl <- read_excel("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/orig_data/building_permits_2000-2016.xlsx", sheet = 2, col_names = F)
 colnames(Mass2016Annl) <- unlist(c(Mass2016Annl[3,])) # extract column names
 table2016 <- Mass2016Annl[-c(1:4),-c(2:12)] # drop data not in use
 
@@ -24,7 +24,7 @@ table2016 <- Mass2016Annl[-c(1:4),-c(2:12)] # drop data not in use
 col_need <- colnames(table2016) # keep the same columns onward
 for (sheet_ind in 3:6){
     # load data per year from each sheet in xlsx file
-    pre_year <- read_excel("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/building_permits_2000-2016.xlsx", sheet = sheet_ind, col_names = F)
+    pre_year <- read_excel("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/orig_data/building_permits_2000-2016.xlsx", sheet = sheet_ind, col_names = F)
     colnames(pre_year) <- unlist(c(pre_year[3,])) # extract column names
     # drop data not in use
     if (sheet_ind == 3 | sheet_ind == 4 ){
@@ -39,7 +39,7 @@ for (sheet_ind in 3:6){
 }
 
 # load the dataset currently used in the individual app
-buildingdata <- read.csv("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/buildingdata.csv")
+buildingdata <- read.csv("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/old_data/buildingdata_backup.csv")
 
 # same name for columns in use to keep consistancy 
 colnames(buildingdata)[1:18] <- colnames(table2016)[c(3,1,2,4:15,28:30)] <- c("Region","Year","Number_of_Months_Reported" ,"Single_Family_Buildings","Single_Family_Units","Single_Family_Valuation","I2_Family_Buildings","I2_Family_Units","I2_Family_Valuation","I3-4_Family_Buildings","I3-4_Family_Units","I3-4_Family_Valuation","I5_Family_Buildings","I5_Family_Units","I5_Family_Valuation", "Total_Buildings", "Total_Units", "Total_Valuation") 
@@ -81,7 +81,7 @@ building2016$Region[5679:5683] <- "West Tisbury" # correct this town name
 ### Step Two: Update inflation adjusted values ###
 
 # get CPI values from documentation
-cpi <- read_excel("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/CPI-U_2000 to 2017.xlsx")
+cpi <- read_excel("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/orig_data/CPI-U_2000 to 2017.xlsx")
 colnames(cpi) <- unlist(c(cpi[11,])) # add column names
 cpi <- cpi[-c(1:11),] # drop columns not in use
 cpi$Year <- gsub(".0","", cpi$Year, fixed = T) # use four digits year value
@@ -111,12 +111,12 @@ for (i in 1:nrow(building2016)){
 ### Step Three: Update population counts ###
 
 # load population counts before 2010
-est_2010 <- read.csv("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/sub-est00int.csv")
+est_2010 <- read.csv("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/orig_data/sub-est00int.csv")
 est_2010 <- filter(est_2010, STNAME == "Massachusetts") # only MA data needed
 est_2010 <- est_2010[!duplicated(est_2010$NAME), c(6,9:18)] # unique values
 
 # load population counts after 2010
-est_2016 <- read.csv("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/sub-est2016_25.csv")
+est_2016 <- read.csv("C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/orig_data/sub-est2016_25.csv")
 est_2016 <- est_2016[!duplicated(est_2016$NAME), c(9,13:19)] # unique values
 
 # merge full population data
@@ -185,4 +185,4 @@ building2016$Pct_Change_from_previous[is.infinite(building2016$Pct_Change_from_p
 building2016$Percentage_of_1_Family[is.infinite(building2016$Percentage_of_1_Family)] <- NA
 
 # save dataset to folder
-# write.csv(building2016, "C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/updated_buildingdata.csv")
+# write.csv(building2016, "C:/Users/Zhenning Kang/Documents/UMass/SEIGMA/update_misc/new_data/updated_buildingdata.csv")
