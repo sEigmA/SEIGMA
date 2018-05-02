@@ -1,5 +1,12 @@
 name: employment
+title:
+username:
 account: seigma
-bundleId: 409738
-url: https://seigma.shinyapps.io/employment/
 server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 55892
+bundleId: 1351650
+url: https://seigma.shinyapps.io/employment/
+when: 1525273141.04537
+asMultiple: FALSE
+asStatic: FALSE

@@ -5,7 +5,7 @@
 ##            Jenna Kiridly              ## 
 ##            Zhenning Kang              ##
 ## Date Created:  02/04/2015             ##
-## Date Modified: 05/01/2018 ZK          ##
+## Date Modified: 05/02/2018 ZK          ##
 ###########################################
 
 
@@ -50,10 +50,10 @@ shinyUI(fluidPage(
                    ## if single year is selected, select year. if multiple years are selected, choose range.
                    conditionalPanel(
                      condition="input.sum_timespan == 'sing.yr'",
-                      ## Initializing a single slider
-                     sliderInput("sum_year", "Select Year",
-                                 min=2003, max=2016, value=2016,
-                                 sep="")
+                     selectInput("sum_year", "Select Year",
+                                 c(2003:2016),
+                                 selected = 2016,
+                                 multiple = F)
                    ),
                    conditionalPanel(
                      ## Initializes a multi-year slider (range)
@@ -82,9 +82,10 @@ shinyUI(fluidPage(
                    radioButtons("map_display_radio", "Display Options",
                                 c("Actual Values"="Actual Values", "Change Since 2003"="Change_Pct"),
                                 selected="Actual Values"),
-                   sliderInput("map_year", "Select Year",
-                                 min=2003, max=2016, value=2016,
-                                 sep="")
+                   selectInput("map_year", "Select Year",
+                               c(2003:2016),
+                               selected = 2016,
+                               multiple = F)
                    
                  ),
                  
