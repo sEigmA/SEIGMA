@@ -2,9 +2,10 @@
 ## Title: employment Data Cleaning       ##
 ## Author(s): Xuelian Li, Emily Ramos,   ## 
 ##            Arvind Ramakrishnan,       ##
-##            Jenna Kiridly, Steve Lauer ## 
+##            Jenna Kiridly, Steve Lauer ##
+##            Zhenning Kang              ##
 ## Date Created:  02/04/2015             ##
-## Date Modified: 07/13/2015             ##
+## Date Modified: 05/01/2018 ZK          ##
 ###########################################
 
 
@@ -62,7 +63,7 @@ shinyServer(function(input, output, session) {
       arrange(Municipal)%>%
       select(Municipal, Year, Average_Monthly_Employment, Inflation_Adjusted_Average_Weekly_Wage, Number_of_Employer_Establishments)
 
-    colnames(sum_df) <- c("Municipal","Year","Average Monthly Employment","Average Weekly Wage (2012 dollars)", "Number of Business Establishments")
+    colnames(sum_df) <- c("Municipal","Year","Average Monthly Employment","Average Weekly Wage (2016 dollars)", "Number of Business Establishments")
 
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE))
@@ -352,7 +353,7 @@ output$Est_pct_plot<-reactive({
     if(input$map_display_radio == "Actual Values"){
       if(input$map_radio =='Wages'){
     return(as.character(tags$div(
-      tags$h4("Average Weekly Wage (2012 dollars)", "in", muni_name, " for ", input$map_year),
+      tags$h4("Average Weekly Wage (2016 dollars)", "in", muni_name, " for ", input$map_year),
       tags$h5("$",muni_value)
     )))
     }

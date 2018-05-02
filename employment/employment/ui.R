@@ -3,8 +3,9 @@
 ## Author(s): Xuelian Li, Emily Ramos,   ## 
 ##            Arvind Ramakrishnan,       ##
 ##            Jenna Kiridly              ## 
+##            Zhenning Kang              ##
 ## Date Created:  02/04/2015             ##
-## Date Modified: 07/13/2015             ##
+## Date Modified: 05/01/2018 ZK          ##
 ###########################################
 
 
@@ -51,15 +52,15 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'sing.yr'",
                       ## Initializing a single slider
                      sliderInput("sum_year", "Select Year",
-                                 min=2003, max=2012, value=2012,
+                                 min=2003, max=2016, value=2016,
                                  sep="")
                    ),
                    conditionalPanel(
                      ## Initializes a multi-year slider (range)
                      condition="input.sum_timespan == 'mult.yrs'",
-                     ## Slider starts from 2010-2012
+                     ## Slider starts from 2003-2016
                      sliderInput("sum_range", "Select Years",
-                                 min=2003, max=2012, value=c(2010,2012),
+                                 min=2003, max=2016, value=c(2010,2016),
                                  sep="")
                    ),
                    
@@ -82,7 +83,7 @@ shinyUI(fluidPage(
                                 c("Actual Values"="Actual Values", "Change Since 2003"="Change_Pct"),
                                 selected="Actual Values"),
                    sliderInput("map_year", "Select Year",
-                                 min=2003, max=2012, value=2012,
+                                 min=2003, max=2016, value=2016,
                                  sep="")
                    
                  ),
@@ -284,7 +285,7 @@ shinyUI(fluidPage(
                      class = "floater",
                      strong("Average"),
                      br(),
-                     strong("Weekly",br(), "Wage", br(),"2012 dollars"),
+                     strong("Weekly",br(), "Wage", br(),"2016 dollars"),
                      plotOutput("legend3"),
                      tags$table(
                        tags$tr(
@@ -344,7 +345,7 @@ shinyUI(fluidPage(
                  tags$li((p(strong("Average Weekly Wage"), "- Average weekly wage is calculated by dividing quarterly
 total wages by the average employment level over three months.  This number is then divided by 13, which represents the 13 weeks wihtin the payment quarter.  Wage data can be affected by the ratio of full time to part time employees, the number of higher paid employees within an establishment, and by the number of pay periods within the quarter."))),
                  tags$br(),
-                 tags$li(p(strong("2012 Dollars"), "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2012 to be our constant.")),
+                 tags$li(p(strong("2016 Dollars"), "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2016 to be our constant.")),
                  tags$br(),
                  tags$li((p(strong("Business Establishments"), "- A business establishment is defined as an economic unit which produces goods or services at a single location and engages in predominantly one activity."))),
                  tags$br(),
