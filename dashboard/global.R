@@ -3,7 +3,7 @@
 ## App: SEIGMA dashboard     ##
 ## Author: Zhenning Kang     ##
 ## Date Created:  09/27/2017 ##
-## Last Modified: 02/16/2018 ##
+## Last Modified: 05/09/2018 ##
 ###############################
 
 ##### SETTINGS #####
@@ -67,8 +67,8 @@ ban_data <- read.csv(file="data/bankdata1.csv")
 ## Load formatted Employment data
 emp_data <- read.csv(file="data/empdata3.csv")
 ## Load formatted Building Permits data
-bui_data <- read.csv(file="data/buildingdata.csv")
-colnames(bui_data)[2:15]<-c("Year","Number_of_Months_Reported" ,"Single_Family_Buildings","Single_Family_Units","Single_Family_validation","I2_Family_Buildings","I2_Family_Units","I2_Family_validation","I3-4_Family_Buildings","I3-4_Family_Units","I3-4_Family_validation","I5_Family_Buildings","I5_Family_Units","I5_Family_validation")
+bui_data <- read.csv(file="data/buildingdata.csv")[,-1]
+#colnames(bui_data)[2:15]<-c("Year","Number_of_Months_Reported" ,"Single_Family_Buildings","Single_Family_Units","Single_Family_validation","I2_Family_Buildings","I2_Family_Units","I2_Family_validation","I3-4_Family_Buildings","I3-4_Family_Units","I3-4_Family_validation","I5_Family_Buildings","I5_Family_Units","I5_Family_validation")
 ## Load formatted pValue data
 val_data <- read.csv(file="data/pValuedata3.csv")
 colnames(val_data)[4:10]<-c("Year","Residential","Open_Space", "Commercial", "Industrial", "Personal_Property", "Total_Assessed")
