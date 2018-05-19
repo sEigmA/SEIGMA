@@ -120,6 +120,7 @@ sidebar <- dashboardSidebar(
 )
 
 body <- dashboardBody(
+  tags$head(includeScript("google-analytics.js")),
   bsModal("modal1Example", "Age Distribution", "age_button", size = "large",plotOutput("age_show")),
   bsModal("modal2Example", "Race Distribution", "rac_button", size = "large",plotOutput("rac_show")),
   bsModal("modal3Example", "Gender Distribution", "gen_button", size = "large",plotOutput("gen_show")),
