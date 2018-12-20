@@ -1,11 +1,12 @@
-#######################################
+########################################
 ## Title: Unemploy global.R           ##
 ## Author(s): Xuelian Li,Jenna Kiridly##
 ##            Emily Ramos, Arvind     ##
 ##            Ramakrishnan,           ##
 ## Date Created:  01/07/2015          ##
 ## Date Modified: 11/13/2015  XL      ##
-#######################################
+##                12/20/2018  VE      ##
+########################################
 
 ## First file run - Environment Setup
 ## load necessary libraries
@@ -201,9 +202,9 @@ plot_side_text <- conditionalPanel(
     tags$br(),
     tags$li("To view the average annual number of people within the labor force, select Labor force."),
     tags$br(),
-    tags$li("Select Actual Values from the Display Options to view average annual unemployment rates and the average annual number of people in the labor force for 2003-2012."),
+    tags$li("Select Actual Values from the Display Options to view average annual unemployment rates and the average annual number of people in the labor force for 2003-2016."),
     tags$br(),
-     tags$li("Select Change Since 2003 from the Display Options to view the percent change in the average annual number of people in the labor force each year for the years 2003-2012.")
+     tags$li("Select Change Since 2003 from the Display Options to view the percent change in the average annual number of people in the labor force each year for the years 2003-2016.")
   ))
 
 
@@ -256,7 +257,7 @@ une_plot_options <- googleLineChart("une_plot1", width="100%", height="475px", o
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2012, 2),
+    ticks = seq(2003, 2016, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -312,7 +313,7 @@ lab_plot_options <- googleLineChart("lab_plot1", width="100%", height="475px", o
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2012, 2),
+    ticks = seq(2003, 2016, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -368,7 +369,7 @@ lab_pct_plot_options <- googleLineChart("lab_pct_plot", width="100%", height="47
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2012, 2),
+    ticks = seq(2003, 2016, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),

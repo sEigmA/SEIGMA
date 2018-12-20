@@ -41,7 +41,7 @@ shinyUI(fluidPage(
           condition="input.sum_timespan == 'sing.yr'",
           ## Initializing a single slider
           sliderInput("sum_year", "Select Year",
-                      min=2003, max=2012, value=2012,
+                      min=2003, max=2016, value=2016,
                       sep="")
         ),
         conditionalPanel(
@@ -49,7 +49,7 @@ shinyUI(fluidPage(
           condition="input.sum_timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("sum_range", "Select Years",
-                      min=2003, max=2012, value=c(2010,2012),
+                      min=2003, max=2016, value=c(2010,2012),
                       sep="")
         ),
         ## in summary, allow for municipal selection
@@ -95,7 +95,7 @@ shinyUI(fluidPage(
         condition="input.tabs == 'map'",
         ## Initializing a single slider
           sliderInput("map_year", "Select Year",
-                      min=2003, max=2012, value=2012,
+                      min=2003, max=2016, value=2012,
         sep=""),
         radioButtons("map_radio", "Select Variable of Interest",
                      c("Unemployment Rate" = "Unemployment_Rate_Avg",
@@ -114,6 +114,7 @@ shinyUI(fluidPage(
       ## author line
 
       helpText("Created by Xuelian Li, Jenna F. Kiridly, Emily R. Ramos and Arvind Ramakrishnan"),
+      helpText("Updated by Valerie Evans"),
 
       
       ## email feedback link
