@@ -255,13 +255,13 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Residential Building Permits App"), "displays the total number of residential building permits, total number of new housing units authorized by building permits and number of housing units by structure size in Massachusetts' municipalities between 2000 and 2012.",
+about_main_text <- p(strong("The SEIGMA Residential Building Permits App"), "displays the total number of residential building permits, total number of new housing units authorized by building permits and number of housing units by structure size in Massachusetts' municipalities between 2000 and 2016.",
                      p(strong("Click on different tabs to see the data in different forms.")),
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
                        tags$li(p(strong("Plot"), "displays measuresfor each municipality over time: Choose between viewing the annual total number of new housing units authorized by building permits or the number of new housing units, grouped by structure size.")),
-                       tags$li(p(strong("Map"), "displays the geographic pattern in total number of new housing units authorized by building permits, total number of new housing units per 1000 inhabitants, and number of new housing units by structure size for each municipality for the years 2000-2012.")),
+                       tags$li(p(strong("Map"), "displays the geographic pattern in total number of new housing units authorized by building permits, total number of new housing units per 1000 inhabitants, and number of new housing units by structure size for each municipality for the years 2000-2016.")),
                        tags$li(p(strong("More Info"), "describes the annual total number of new housing units authorized by building permits, total number of new housing units per 1000 inhabitants, and number of new housing units by structure size, including formulas and calculations."))
                      ))
 
@@ -289,7 +289,7 @@ TotUni_plot_options <- googleLineChart("TotUni_plot1", width="100%", height="475
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2000, 2011, 1),
+    ticks = seq(2000, 2016, 1),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -300,7 +300,7 @@ TotUni_plot_options <- googleLineChart("TotUni_plot1", width="100%", height="475
   ),
   vAxis = list(
     title = "Total New Housing Units",
-    # viewWindow = ylim,
+    viewWindow = ylim,
     textStyle = list(
       fontSize = 14),
     titleTextStyle = list(
@@ -337,7 +337,7 @@ TotUni_plot_options <- googleLineChart("TotUni_plot1", width="100%", height="475
 
 
 
-##Chang from the previous year
+##Change from the previous year
 PreUniCha_plot_options<- googleLineChart("PreUniCha_plot", width="100%", height="475px",options = list(
   
   ## set fonts
@@ -348,7 +348,7 @@ PreUniCha_plot_options<- googleLineChart("PreUniCha_plot", width="100%", height=
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2001, 2011, 1),
+    ticks = seq(2001, 2016, 1),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
