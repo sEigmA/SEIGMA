@@ -5,6 +5,7 @@
 ##            Kiridly, Emily Ramos   ## 
 ## Date Created:  02/28/2015         ##
 ## Date Modified: 03/12/2015 XL      ##
+##                01/11/2019 VE      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -70,8 +71,9 @@ MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
 ## Set graph colors (special for colorblind people)
 ## In order: black, orange, light blue, green, yellow, dark blue, red, pink
-cbbPalette <- c("cyan","darkviolet","deeppink", "blue","green","yellow","darkorange","red",
-                "darksalmon","deepskyblue","lawngreen","magenta","brown") 
+##cbbPalette <- c("cyan","darkviolet","deeppink", "blue","green","yellow","darkorange","red",
+##                "darksalmon","deepskyblue","lawngreen","magenta","brown") 
+cbbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#999999")
 
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
@@ -184,7 +186,7 @@ summary_side_text <- conditionalPanel(
       tags$br(),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('For the five year ranges below, you can compare the demographic estimate in a municipality to national, state, and county estimate.'),
+      tags$li('For the five-year ranges below, you can compare the demographic estimate in a municipality to national, state, and county estimate.'),
       tags$br(),
       tags$li(p(strong('The estimate of age, gender, race, or ethinicity can be sorted in ascending and descending order by clicking the column or variable.'))),
       tags$br(),
@@ -201,7 +203,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select the municipality and five year range for which you are interested in viewing the estimate of age, gender, race, or ethinicity.')),
+p(strong('Please select the municipality and five-year range for which you are interested in viewing the estimate of age, gender, race, or ethinicity.')),
            tags$br(),
   tags$ul(
     tags$li('View the estimate for age, gender, race, or ethnicity by selecting the appropriate box below.'),
@@ -215,7 +217,7 @@ p(strong('Please select the municipality and five year range for which you are i
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong("Please select a five- year range and click on Generate Map to get started."))),
+  helpText(p(strong("Please select a five-year range and click on Generate Map to get started."))),
   tags$br(),
   tags$ul(
     tags$li('Select the variable of interest for age, gender, race, or ethnicity by selecting either an age range, gender, race, or ethnicity from the drop down list below.'),

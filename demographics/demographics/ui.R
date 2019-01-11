@@ -6,6 +6,7 @@
 ##            Kiridly, Emily Ramos   ##
 ## Date Created:  02/28/2015         ##
 ## Date Modified: 02/28/2015         ##
+##                01/11/2018 VE      ##
 #######################################
 
 shinyUI(
@@ -35,7 +36,7 @@ shinyUI(
                      selectInput("sum_year", "Select Five Year Range",
                                  choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                                 "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", "2010-2014" = "2010-2014",
-                                                "2011-2015" = "2011-2015")
+                                                "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")
                      ),
                      radioButtons("sum_radio", "Catigorical variables",
                                   c("Age" = "Age", "Gender" = "Gender",
@@ -58,7 +59,7 @@ shinyUI(
                      selectInput("plot_year", "Select Five Year Range",
                                  choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                                 "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", "2010-2014" = "2010-2014",
-                                                "2011-2015" = "2011-2015")
+                                                "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")
                      ),
                      radioButtons("plot_radio", "Catigorical variables",
                                   c("Age" = "Age", "Gender" = "Gender",
@@ -74,7 +75,7 @@ shinyUI(
                      selectInput("map_year", "Select Five Year Range",
                                  choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                                 "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", "2010-2014" = "2010-2014",
-                                                "2011-2015" = "2011-2015")
+                                                "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")
                      ),
                      radioButtons("map_radio", "Catigorical variables",
                                   c("Age" = "Age", "Gender" = "Gender",
@@ -120,6 +121,7 @@ shinyUI(
                    
                    ## author line
                    helpText("Created by Xuelian Li, Emily R. Ramos, Arvind Ramakrishnan, and Jenna F. Kiridly"),
+                   helpText("Updated by Valerie Evans"),
                    
                    ## email feedback link
                    ## To develop a link in HTML
