@@ -4,6 +4,7 @@
 ##            Kiridly, Zhenning Kang ## 
 ## Date Created:  01/07/16           ##
 ## Date Modified: 05/01/18 ZK        ##
+##                01/14/19 VE        ##
 #######################################
 
 shinyServer(function(input, output, session){
@@ -47,7 +48,7 @@ shinyServer(function(input, output, session){
       filter(Municipal %in% munis) %>%
       select(Municipal, Year, Inflation_Adjusted_Total_Levy, Inflation_Adjusted_Residential, Inflation_Adjusted_Open_Space, Inflation_Adjusted_Commercial, Inflation_Adjusted_Industrial, Inflation_Adjusted_Personal_Property)
       sum_df[3:8]<-apply(sum_df[3:8],2,function(x)prettyNum(x,big.mark = ","))
-    colnames(sum_df) <- c("Municipal","F-Year", "Total Levy (2017 dollars)", "Residential (2017 dollars)", "Open Space (2017 dollars) ", "Commercial (2017 dollars)", "Industrial (2017 dollars)", "Personal Property (2017 dollars)")
+    colnames(sum_df) <- c("Municipal","Fiscal Year", "Total Levy (2018 dollars)", "Residential (2018 dollars)", "Open Space (2018 dollars) ", "Commercial (2018 dollars)", "Industrial (2018 dollars)", "Personal Property (2018 dollars)")
     
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
@@ -125,12 +126,12 @@ shinyServer(function(input, output, session){
         ## set fonts
         fontName = "Source Sans Pro",
         fontSize = font_size,
-        title = paste("Total Tax Levy and Percent of Levy by Class FY2003-FY2017 (2017 dollars)", 
+        title = paste("Total Tax Levy and Percent of Levy by Class FY2003-FY2018 (2018 dollars)", 
                        "at ", input$plot_muni2),
         ## set axis titles, ticks, fonts, and ranges
         hAxis = list(
           title = "",
-          ticks = seq(2003,2017,1),
+          ticks = seq(2003,2018,1),
           format = "####",
           textStyle = list(
             fontSize = font_size),

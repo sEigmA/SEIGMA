@@ -1,0 +1,10 @@
+name: propertytax
+title:
+username:
+account: seigma
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 80048
+bundleId: 1814540
+url: https://seigma.shinyapps.io/PropertyTax/
+when: 1547518259.33406

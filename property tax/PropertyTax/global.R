@@ -4,6 +4,7 @@
 ##            Kiridly                ## 
 ## Date Created:  01/04/16           ##
 ## Date Modified: 01/06/16 XL        ##
+##                01/14/19 VE        ##
 #######################################
 
 ##First file run - Environment Setup
@@ -191,9 +192,9 @@ plot_side_text <- conditionalPanel(
     tags$br(),
     tags$li("To view the percent total tax levy by class, select Percent of Levy by Class."),
     tags$br(),
-    tags$li("Select Actual Values from the Display Options to view the annual total tax levy for the years 2003-2012."),
+    tags$li("Select Actual Values from the Display Options to view the annual total tax levy for the years 2003-2018."),
     tags$br(),
-    tags$li("Select Change Since 2003 from the Display Options to view the percent change in the the annual total tax levy each year for the years 2003-2012.")
+    tags$li("Select Change Since 2003 from the Display Options to view the percent change in the the annual total tax levy each year for the years 2003-2018.")
   ))
 
 
@@ -251,7 +252,7 @@ TotTax_plot_options <- googleLineChart("TotTax_plot1", width="100%", height="475
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2013, 2),
+    ticks = seq(2003, 2018, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -261,7 +262,7 @@ TotTax_plot_options <- googleLineChart("TotTax_plot1", width="100%", height="475
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Total Tax Levy (2013 dollars, Million)",
+    title = "Total Tax Levy (2018 dollars, Million)",
     viewWindow = ylim,
     textStyle = list(
       fontSize = 14),
@@ -307,7 +308,7 @@ TaxCha_plot_options<- googleLineChart("TotTax_plot2", width="100%", height="475p
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2013, 2),
+    ticks = seq(2003, 2017, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),

@@ -4,7 +4,9 @@
 ##            Kiridly, Zhenning Kang ## 
 ## Date Created:  01/07/16           ##
 ## Date Modified: 05/01/18 ZK        ##
+##                01/14/19 VE        ##
 #######################################
+
 shinyUI(fluidPage(
   ## HTML to create generate map button
   gen_map_button,
@@ -39,7 +41,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'sing.yr'",
                      ## Initializing a single slider
                      sliderInput("sum_year", "Select Year",
-                                 min=2003, max=2017, value=2017,
+                                 min=2003, max=2018, value=2018,
                                  sep="")
                    ),
                    conditionalPanel(
@@ -47,7 +49,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'mult.yrs'",
                      ## Slider starts from 2010-2012
                      sliderInput("sum_range", "Select Years",
-                                 min=2003, max=2017, value=c(2010,2017),
+                                 min=2003, max=2018, value=c(2010,2012),
                                  sep="")
                    ),
                    ## in summary, allow for municipal selection
@@ -92,7 +94,7 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'map'",
                    ## Initializing a single slider
                    sliderInput("map_year", "Select Year",
-                               min=2003, max=2017, value=2017,
+                               min=2003, max=2018, value=2018,
                                sep=""),
                    radioButtons("map_radio", "Select Variable of Interest",
                                 c("Total Tax Levy" = "Total_Levy",
@@ -118,7 +120,7 @@ shinyUI(fluidPage(
                  ## author line
                  
                  helpText("Created by Xuelian Li, Jenna F. Kiridly"),
-                 
+                 helpText("Updated by Zhenning Kang, Valerie Evans"),
                  
                  ## email feedback link
                  ## To develop a link in HTML
@@ -258,19 +260,19 @@ shinyUI(fluidPage(
                    p(strong('Class - Residential'),
                              "-All property including one or more homes.  It also includes accessory buildings and land such as pools, tennis, courts, sheds, etc.  "),
                  tags$br(),
-                 p(strong('Class- Commercial'), 
+                 p(strong('Class - Commercial'), 
                             "-Property for the purpose of conducting a business.  This includes office buildings, retail stores, etc. Personal Property is also considered in this category of Commercial Class."),
                  tags$br(),
-                 p(strong('Class- Industrial'), 
+                 p(strong('Class - Industrial'), 
                    "-Property involved in manufacturing or processing. This includes porperty used for storage, transmission, and the regulated generation of utilities."),
                  
                  tags$br(),
-                 p(strong('Class- Personal property'), 
+                 p(strong('Class - Personal property'), 
                    "-Property not permanently affixed to real estate. Personal property is movable and can be removed without serious damage either to the real estate or to the item being removed."),
                  
                  tags$br(),
-                 p(strong('2017 Dollars'), 
-                   "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2017 to be our constant."),
+                 p(strong('2018 Dollars'), 
+                   "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2018 to be our constant."),
                  tags$br(),
                  
                  #tags$br(),
