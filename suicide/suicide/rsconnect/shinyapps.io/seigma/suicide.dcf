@@ -1,8 +1,10 @@
 name: suicide
 title:
+username:
 account: seigma
 server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
 appId: 18077
-bundleId: 682365
+bundleId: 1875840
 url: https://seigma.shinyapps.io/suicide/
-when: 1484677840.06879
+when: 1550140505.81632

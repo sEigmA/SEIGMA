@@ -7,6 +7,7 @@
 ##              Justin Baldwin       ## 
 ## Date Created:                     ##
 ## Date Modified: 04/13/15 XL        ##
+## Date Updated: 02/14/19 VE         ##
 #######################################
 
 ## load necessary libraries
@@ -133,13 +134,13 @@ shinyUI(fluidPage(
           condition="input.sum_timespan == 'sing.yr'",
           ## Initializing a single slider
           sliderInput("sum_year", "Select Year",
-                      min=1999, max=2015, value=2015, sep="")),
+                      min=1999, max=2016, value=2016, sep="")),
         conditionalPanel(
           ## Initializes a multi-year slider (range)
           condition="input.sum_timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("sum_range", "Select Years",
-                      min=1999, max=2015, value=c(2010,2015), sep="")
+                      min=1999, max=2016, value=c(2012,2016), sep="")
         ),
         selectInput("sum_county", "Select County", 
                     names(table(suidata[,1]))[c(1:7, 9:12,14)], 
@@ -160,13 +161,13 @@ shinyUI(fluidPage(
           
           ## Initializing a single slider
           sliderInput("map_year", "Select Year",
-                      min=1999, max=2015, value=2015, sep="")),
+                      min=1999, max=2016, value=2016, sep="")),
         conditionalPanel(
           ## Initializes a multi-year slider (range)
           condition="input.map_timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("map_range", "Select Years",
-                      min=1999, max=2015, value=c(2010,2015), sep="")
+                      min=1999, max=2016, value=c(2012,2016), sep="")
         )
       ),
       
@@ -186,6 +187,7 @@ shinyUI(fluidPage(
       
       ## author line
       helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, Sophie E. O'Brien, Stephen A. Lauer and Justin Baldwin"),
+      helpText("Updated by Valerie Evans"),
       
       ## email feedback link
       ## To develop a link in HTML
@@ -214,7 +216,7 @@ shinyUI(fluidPage(
       tabsetPanel(
         tabPanel("About", 
                  ## strong=bold, p=paragraph, em=emboss/italicised or bold italicized, 
-                 p(strong("The SEIGMA Suicide App"), "displays the age-adjusted suicide rate for Massachusetts by county for a given year or multiple years from 1999-2015.",
+                 p(strong("The SEIGMA Suicide App"), "displays the age-adjusted suicide rate for Massachusetts by county for a given year or multiple years from 1999-2016.",
                    tags$br(),
                    p(strong("Click on different tabs to see the data in different formats.")),
                    ##tags$ul and tags$li are to create bullet points using HTML
@@ -222,7 +224,7 @@ shinyUI(fluidPage(
                      tags$li(p(strong("Summary"), "shows the source data in  table format.")),
                      tags$li(p(strong("Plot"), "compares the age-adjusted suicide rate over time per 100,000 to county, state, and national averages.")),
                      tags$li(p(strong("Map"), "visually displays age-adjusted suicide rate by county.")),
-                     tags$li(p(strong("More Info"), "describes the age- adjusted suicicde rate, including formulas and calculations.")
+                     tags$li(p(strong("More Info"), "describes the age-adjusted suicicde rate, including formulas and calculations.")
                      )))),
         
         ## summary tab
@@ -251,7 +253,7 @@ shinyUI(fluidPage(
                    hAxis = list(
                      title = "Year",
                      format = "####",
-                     ticks = seq(1999, 2015, 2),
+                     ticks = seq(1999, 2016, 2),
                      viewWindow = xlim,
                      textStyle = list(
                        fontSize = 14),
@@ -388,7 +390,7 @@ shinyUI(fluidPage(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  p(strong("Suicides"),
-                   " - Number of suicides for a region during a specified year.Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
+                   " - Number of suicides for a region during a specified year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10."), 
                  tags$br(),
                  p(strong("Age-adjusted Suicide Rate"), 
                    " - Age-adjusted suicide rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:"),

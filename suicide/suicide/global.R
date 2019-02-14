@@ -6,6 +6,7 @@
 ##            Justin Baldwin         ## 
 ## Date Created:                     ##
 ## Date Modified: 02/24/15 ER        ##
+## Date Updted: 02/14/219 VE         ##
 #######################################
 
 ##First file run - Environment Setup
@@ -27,7 +28,7 @@ for(i in 1:length(MAmap$features)){
 
 ## Load formatted suicide data
 ## -1 eliminates first column [rows,columns]
-suidata <- read.csv(file="SASuicidedata_Updated2017.csv")[,-1]
+suidata <- read.csv(file="SASuicidedata_Updated2018.csv")[,-1]
 
 #If there is no age adjusted rate, get rid of the bounds and standard errors
 suidata$Age.Adjusted.Rate.Lower.Bound[is.na(suidata$Age.Adjusted.Rate)] <- NA
