@@ -6,7 +6,7 @@
 ##            Steve Lauer            ##
 ## Date Created:  12/04/14           ##
 ## Date Modified: 04/04/15  XL       ##
-## Data Updated: 10/20/2017 VE       ##
+## Data Updated: 02/14/2019 VE       ##
 #######################################
 
 
@@ -39,7 +39,8 @@ shinyUI(fluidPage(
       selectInput("sum_year", "Select Five Year Range",
                   choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                  "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", 
-                                 "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
+                                 "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
+                                 "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")),
       selectInput("sum_muni", "Select Municipality", 
                   choices = MA_municipals,
                   ## Multiple allows for multi-county selection
@@ -56,7 +57,8 @@ shinyUI(fluidPage(
         selectInput("plot_year", "Select Five Year Range",
                     choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                    "2008-2012" = "2008-2012", "2009-2013" = "2009-2013",
-                                   "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
+                                   "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
+                                   "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")),
         ## Select input = List
         selectInput("plot_muni", "Select Municipality", 
                     choices = MA_municipals)),
@@ -67,7 +69,8 @@ shinyUI(fluidPage(
         selectInput("map_year", "Select Five Year Range",
                     choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                    "2008-2012" = "2008-2012", "2009-2013" = "2009-2013",
-                                   "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
+                                   "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
+                                   "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")),
         ## in map, allow for variable selection
         selectInput("var", "Select Variable of Interest",
                     choices = list("High School Diploma or Higher" = "HS_Pct", 
@@ -79,14 +82,14 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer", "Updated by Valerie Evans"),
-      
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
+      helpText("Updated by Valerie Evans"), 
       ## email feedback link
       ## To develop a link in HTML
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey- Table DP02", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1501&prodType=table",
+      helpText(a("Data Source: American Community Survey - Table DP02", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1501&prodType=table",
                  target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dataSource', 1)")),
       
       ## GitHub link
@@ -231,7 +234,7 @@ bootstrapPage(mainPanel(
                   tags$li(p(strong("Educational Attainment Rates"),
                  " - The number of people with each level of educational attainment for a specific region over a specific five-year period of time.  All inidviduals represented in this measure were at least 25 years of age. Respondents were classified according to highest level of school completed. When a municipaility is missing data, this indicates that data cannot be displayed because the number of people is too small.")), 
                  tags$br(),
-                 tags$li(p(strong("Five-Year Estimates"), "-Survey information is collected everyday of the year and then aggregated over a specific time period,in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible for larger municipalities.To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision." ))),
+                 tags$li(p(strong("Five-Year Estimates"), "- Survey information is collected everyday of the year and then aggregated over a specific time period,in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible for larger municipalities.To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision." ))),
                  
                 
                  
