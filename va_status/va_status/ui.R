@@ -6,6 +6,7 @@
 ##            Steve Lauer            ## 
 ## Date Created:  11/5/2014          ##
 ## Date Modified: 04/16/2015 XL      ##
+## Daee Updated: 02/14/2019 VE       ##
 #######################################
 
 shinyUI(fluidPage(
@@ -40,7 +41,8 @@ shinyUI(fluidPage(
       selectInput("sum_year", "Select Five Year Range",
                   choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                  "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", 
-                                 "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
+                                 "2010-2014" = "2010-2014", "2011-2015" = "2011-2015",
+                                 "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")),
       selectInput("sum_muni", "Select Municipality", 
                   choices = MA_municipals,
                   ## Multiple allows for multi-county selection
@@ -57,7 +59,8 @@ shinyUI(fluidPage(
         selectInput("map_year", "Select Five Year Range",
                     choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                    "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", 
-                                   "2010-2014" = "2010-2014", "2011-2015" = "2011-2015"))
+                                   "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
+                                   "2012-2016" = "2012-2016", "2013-2017" = "2013-2017"))
       ),
       
       ## in plot, allow for year and municipal selection
@@ -67,7 +70,8 @@ shinyUI(fluidPage(
         selectInput("plot_year", "Select Five Year Range",
                     choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                    "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", 
-                                   "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
+                                   "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
+                                   "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")),
         
         selectInput("plot_muni", "Select Municipality", 
                     choices = MA_municipals)),
@@ -77,14 +81,15 @@ shinyUI(fluidPage(
       tags$hr(),
       
       ## author line
-      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, and Stephen A. Lauer", "Updated by Valerie Evans"),
+      helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, and Stephen A. Lauer"),
+      helpText("Updated by Valerie Evans"),
       
       ## email feedback link
       ## To develop a link in HTML
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey- Table DP02", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S2101&prodType=table",
+      helpText(a("Data Source: American Community Survey - Table DP02", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S2101&prodType=table",
                  target="_blank", onclick="ga('send', 'event', 'click', 'link', 'dataSource', 1)")),
       
       ## GitHub link
@@ -116,7 +121,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Civilian Veteran's Status by Region Over Selected Five Year Period", align="center"),
+                 h4("Civilian Veteran's Status by Region Over Selected Five-Year Period", align="center"),
                  ## make a row to put two charts in
                  
                  googleColumnChart("plot", width="100%", height="475px", options = list(
@@ -227,11 +232,11 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Veteran Status"), "-People with active duty military service and or service in the military Reserves or National Guard. All individuals were at least 18 years of age.")),
+                   tags$li(p(strong("Veteran Status"), "- People with active duty military service and or service in the military Reserves or National Guard. All individuals were at least 18 years of age.")),
                    tags$br(),
-                 tags$li(p(strong("Civilian Veterans"), "-Men and women who have served for any period of time, but are no longer on active duty.  People who served in the National Guard or Reserves are classified as veterans only if they were called to active duty.")),
+                 tags$li(p(strong("Civilian Veterans"), "- Men and women who have served for any period of time, but are no longer on active duty.  People who served in the National Guard or Reserves are classified as veterans only if they were called to active duty.")),
                  tags$br(),
-                 tags$li(p(strong("Five-Year Estimates"), "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates, are possible for larger municipalities." ))),
+                 tags$li(p(strong("Five-Year Estimates"), "- Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates, are possible for larger municipalities." ))),
                  
                    #tags$br(),
                   # tags$li(p(strong("Median Household Income  (MHI)"),
