@@ -1,0 +1,10 @@
+name: poverty
+title:
+username:
+account: seigma
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 34185
+bundleId: 1876448
+url: https://seigma.shinyapps.io/poverty/
+when: 1550161881.87008

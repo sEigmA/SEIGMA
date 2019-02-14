@@ -153,7 +153,7 @@ summary_side_text <- conditionalPanel(
    #   tags$li('View rates by: male or female (or both by leaving this selection blank)'),
       tags$li('Select one or multiple municipalities.'),
       tags$br(),
-      tags$li('For the five year ranges below, you can compare the rate of poverty in a municipality to national, state, and county rates.'),
+      tags$li('For the five-year ranges below, you can compare the rate of poverty in a municipality to national, state, and county rates.'),
       tags$br(),
       tags$li('Poverty rates can be sorted in ascending and descending order by clicking the column or variable.'),
       tags$br(),
@@ -174,7 +174,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select the municipality for which you are interested in viewing the five year estimate of poverty rate.')),
+p(strong('Please select the municipality for which you are interested in viewing the five-year estimate of poverty rate.')),
            tags$br(),
   tags$ul(
     tags$li('For the five-year ranges below, you can compare the poverty rate in a municipality to the national, state, and county rates.')
@@ -186,7 +186,7 @@ p(strong('Please select the municipality for which you are interested in viewing
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please select a five- year range and click on Generate Map to get started.'))),
+  helpText(p(strong('Please select a five-year range and click on Generate Map to get started.'))),
   tags$br(),
   tags$ul(
     tags$li('Clicking on a municipality will display the poverty rate for the five-year range that you selected.')

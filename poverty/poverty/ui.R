@@ -34,8 +34,12 @@ shinyUI(fluidPage(
                  ## in summary, allow for year, municipal selection
                  conditionalPanel(
                    condition="input.tabs == 'summary'",
-                   selectInput("sum_year", "Select Five Year Range",
-                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
+                   selectInput("sum_year", "Select Five-Year Range",
+                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", 
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", 
+                                              "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
+                                              "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", 
+                                              "2013-2017" = "2013-2017")),
                    selectInput("sum_muni", "Select Municipality", 
                                choices = MA_municipals,
                                ## Multiple allows for multi-county selection
@@ -49,8 +53,12 @@ shinyUI(fluidPage(
                  ## in plot, allow for municipal selection
                  conditionalPanel(
                    condition="input.tabs == 'plot'",
-                   selectInput("plot_year", "Select Five Year Range",
-                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015")),
+                   selectInput("plot_year", "Select Five Year-Range",
+                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", 
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", 
+                                              "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
+                                              "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", 
+                                              "2013-2017" = "2013-2017")),
                    ## Select input = List
                    selectInput("plot_muni", "Select Municipality", 
                                choices = MA_municipals)),
@@ -58,22 +66,27 @@ shinyUI(fluidPage(
                  ## in map, allow for year selection
                  conditionalPanel(
                    condition="input.tabs == 'map'",
-                   selectInput("map_year", "Select Five Year Range",
-                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010","2007-2011" = "2007-2011", "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015"))
+                   selectInput("map_year", "Select Five-Year Range",
+                               choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", 
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", 
+                                              "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
+                                              "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", 
+                                              "2013-2017" = "2013-2017"))
                    ),
                  
                 
                  tags$hr(),
                  
                  ## author line
-                 helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly and Xeulian Li",  "Updated by Valerie Evans"),
+                 helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly and Xeulian Li"),  
+                 helpText("Updated by Valerie Evans"),
       
       ## email feedback link
       ## To develop a link in HTML
      helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1701&prodType=table",
+      helpText(a("Data Source: American Community Survey - Table S1701", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1701&prodType=table",
                  target="_blank", onclick="ga('send', 'event', 'click', 'link', 'dataSource', 1)")),
       
       ## GitHub link
@@ -105,7 +118,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Poverty Rate by Region Over Selected Five Year Period", align="center"),
+                 h4("Poverty Rate by Region Over Selected Five-Year Period", align="center"),
                  ## make a row to put two charts in
                  
                  googleColumnChart("plot", width="100%", height="475px", options = list(
@@ -215,12 +228,12 @@ bootstrapPage(mainPanel(
            p(strong("Variable Summary:")),
            tags$br(),
            tags$ul(
-             tags$li(p(strong("Poverty Status"), "-To determine a person's poverty status, one compares the person’s total family income in the last 12 months with the poverty threshold appropriate for that person's family size and composition. If the total income of that person's family is less than the threshold appropriate for that family, then the person is considered below the poverty level. Poverty is defined at the family level and not the household level, the poverty status of
+             tags$li(p(strong("Poverty Status"), "- To determine a person's poverty status, one compares the person’s total family income in the last 12 months with the poverty threshold appropriate for that person's family size and composition. If the total income of that person's family is less than the threshold appropriate for that family, then the person is considered below the poverty level. Poverty is defined at the family level and not the household level, the poverty status of
 the household is determined by the poverty status of the householder.")),
              tags$br(),
-             tags$li(p(strong("Poverty Threshold"), "-Poverty thresholds are determined by multiplying base year thresholds (set as yearly income in 1982) by the monthly inflation factor for the 12- months before the period of interest.  For example, if we want to determine if a family with three children with a total income of $14,000 (July 2012- June 2013) was at or below the poverty threshold we would do the following. First we would see what the base year threshold was in 1982 for a family of this size, $7,765. We then multiply this by the inflation rate for the 12 month period before June 2012- July 2013, 2.39719.  This would give us a threshold income of $18,614.  When we compare this to the income of the family above, $14,000 is well below the threshold we calculated, meaning this family woudl be considered to be in poverty.  In this app we calculate the poverty threshold as described in the example above as being $23,268." )),
+             tags$li(p(strong("Poverty Threshold"), "- Poverty thresholds are determined by multiplying base year thresholds (set as yearly income in 1982) by the monthly inflation factor for the 12 months before the period of interest.  For example, if we want to determine if a family with three children with a total income of $14,000 (July 2012 - June 2013) was at or below the poverty threshold we would do the following. First we would see what the base year threshold was in 1982 for a family of this size, $7,765. We then multiply this by the inflation rate for the 12-month period before June 2012 - July 2013, 2.39719.  This would give us a threshold income of $18,614.  When we compare this to the income of the family above, $14,000 is well below the threshold we calculated, meaning this family woudl be considered to be in poverty.  In this app we calculate the poverty threshold as described in the example above as being $23,268." )),
              tags$br(),
-             tags$li(p(strong("Five-Year Estimates"), "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates, are possible for larger municipalities. To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision." ))),
+             tags$li(p(strong("Five-Year Estimates"), "- Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates, are possible for larger municipalities. To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision." ))),
            
            #tags$br(),
            # tags$li(p(strong("Median Household Income  (MHI)"),
