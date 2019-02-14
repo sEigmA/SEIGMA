@@ -250,6 +250,7 @@ shinyServer(function(input, output, session) {
       values$selectedFeature["Median_Annual_Household_Income"] <- map_dat[match(region, map_dat$Region), "Median_Annual_Household_Income"]
     })
   })
+  
   ##  This function is what creates info box
   output$details <- renderText({
     

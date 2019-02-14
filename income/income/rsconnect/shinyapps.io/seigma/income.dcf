@@ -5,6 +5,6 @@ account: seigma
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 23656
-bundleId: 1067456
+bundleId: 1876138
 url: https://seigma.shinyapps.io/income/
-when: 1510254116.73283
+when: 1550152197.9625

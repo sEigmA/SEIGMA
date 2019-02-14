@@ -5,7 +5,7 @@
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  11/05/2014         ##
 ## Date Modified: 04/22/2015 AR      ##
-## Date Updated:  11/09/2017 VE      ##
+## Date Updated:  02/14/2019 VE      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -37,22 +37,24 @@ shinyUI(fluidPage(
                  ## Initializing a single slider
                  conditionalPanel(
                    condition="input.tabs == 'map'",
-                   selectInput("map_year", "Select Five Year Range",
+                   selectInput("map_year", "Select Five-Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
                                               "2007-2011" = "2007-2011", "2008-2012" = "2008-2012",
                                               "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
-                                              "2011-2015" = "2011-2015"))
+                                              "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", 
+                                              "2013-2017" = "2013-2017"))
                  ),
                  
                  ## in summary, allow for municipal selection
                  conditionalPanel(
                    condition="input.tabs == 'summary'",
                    ## Select input = List
-                   selectInput("sum_year", "Select Five Year Range",
+                   selectInput("sum_year", "Select Five-Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
                                               "2007-2011" = "2007-2011", "2008-2012" = "2008-2012",
                                               "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
-                                              "2011-2015" = "2011-2015")),
+                                              "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", 
+                                              "2013-2017"= "2013-2017")),
                    selectInput("sum_muni", "Select Municipality", 
                                choices = MA_municipals,
                                ## Multiple allows for multi-county selection
@@ -67,11 +69,12 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.tabs == 'plot'",
                    ## Select input = List
-                   selectInput("plot_year", "Select Five Year Range",
+                   selectInput("plot_year", "Select Five-Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
                                               "2007-2011" = "2007-2011", "2008-2012" = "2008-2012",
                                               "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
-                                              "2011-2015" = "2011-2015")),
+                                              "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", 
+                                              "2013-2017" = "2013-2017")),
                    selectInput("plot_muni", "Select Municipality", 
                                choices = MA_municipals)
                  ),
@@ -80,6 +83,7 @@ shinyUI(fluidPage(
                  
                  ## author line
                  helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, and Stephen A. Lauer"),
+                 helpText("Updated by Valerie Evans"),
                  
                  ## email feedback link
                  ## To develop a link in HTML
@@ -118,7 +122,7 @@ shinyUI(fluidPage(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Median Annual Household Income by Region Over Selected Five Year Period", align="center"),
+                 h4("Median Annual Household Income by Region Over Selected Five-Year Period", align="center"),
                  ## make a row to put two charts in
                  
                  googleColumnChart("plot", width="100%", height="475px", options = list(
@@ -231,12 +235,12 @@ shinyUI(fluidPage(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Median Annual Household Income"), "-This includes the income of the household and all other individuals ages 15 and over. Median annual household income is adjusted to the 2015 $ and provides a clear trend to assess residents' household income overtime. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
+                   tags$li(p(strong("Median Annual Household Income"), "- This includes the income of the household and all other individuals ages 15 and over. Median annual household income is adjusted to the 2015 $ and provides a clear trend to assess residents' household income overtime. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
             
                    tags$br(),
-                   tags$li(p(strong("Median"),"-The median divides the distribution of median annual household income into two equal parts; half that fall below the median for median annual household income and half that fall above the median annual household income.")),
+                   tags$li(p(strong("Median"),"- The median divides the distribution of median annual household income into two equal parts; half that fall below the median for median annual household income and half that fall above the median annual household income.")),
                    tags$br(),
-                   tags$li(p(strong("Five- Year Estimates"),"-Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.")
+                   tags$li(p(strong("Five-Year Estimates"),"- Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.")
                    )
                  ),
                  #tags$br(),

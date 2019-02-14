@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  11/05/2014         ##
-## Date Modified: 04/22/2015 AR      ##
+## Date Modified: 02/14/2019 VE      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -161,9 +161,9 @@ summary_side_text <- conditionalPanel(
     tags$br(),
     tags$li('To compare median data to the Massachusetts or US median, select the corresponding box.'),
     tags$br(),
-    tags$li(p(strong('Please note that all statistics are 5-year estimates.'))),
+    tags$li(p(strong('Please note that all statistics are five-year estimates.'))),
     tags$br(),
-    tags$li("For more information about how 5- year estimates are calculated, click on the 'More Info' tab.")
+    tags$li("For more information about how five-year estimates are calculated, click on the 'More Info' tab.")
     
   )
 )

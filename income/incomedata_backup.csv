@@ -1,4 +1,4 @@
-"","Municipal","County","State","Region","Five Year Average","Five_Year_Average","Estimate; Median household income in the past 12 months (inflation-adjusted dollars)","Margin of Error; Median household income in the past 12 months (inflation-adjusted dollars)"
+"","Municipal","County","State","Region","Five_Year_Range","Five_Year_Average","Median_Annual_Household_Income","Margin_Error_Median"
 "1","Abington","Plymouth County","MA","Abington","2005-2009",2009,73956,8952
 "2","Abington","Plymouth County","MA","Abington","2006-2010",2010,74589,7143
 "3","Abington","Plymouth County","MA","Abington","2007-2011",2011,81677,9830
@@ -79,14 +79,14 @@
 "78","Ayer","Middlesex County","MA","Ayer","2006-2010",2010,55863,8295
 "79","Ayer","Middlesex County","MA","Ayer","2007-2011",2011,54899,7818
 "80","Ayer","Middlesex County","MA","Ayer","2008-2012",2012,59144,8631
-"81",NA,"Barnstable County","MA","Barnstable County","2005-2009",2009,60096,1245
-"82",NA,"Barnstable County","MA","Barnstable County","2006-2010",2010,60317,1168
-"83",NA,"Barnstable County","MA","Barnstable County","2007-2011",2011,60525,1544
-"84",NA,"Barnstable County","MA","Barnstable County","2008-2012",2012,60424,1478
 "85","Barnstable","Barnstable County","MA","Barnstable","2005-2009",2009,62671,2899
 "86","Barnstable","Barnstable County","MA","Barnstable","2006-2010",2010,62264,2640
 "87","Barnstable","Barnstable County","MA","Barnstable","2007-2011",2011,62191,2931
 "88","Barnstable","Barnstable County","MA","Barnstable","2008-2012",2012,60745,2747
+"81",NA,"Barnstable County","MA","Barnstable County","2005-2009",2009,60096,1245
+"82",NA,"Barnstable County","MA","Barnstable County","2006-2010",2010,60317,1168
+"83",NA,"Barnstable County","MA","Barnstable County","2007-2011",2011,60525,1544
+"84",NA,"Barnstable County","MA","Barnstable County","2008-2012",2012,60424,1478
 "89","Barre","Worcester County","MA","Barre","2005-2009",2009,72539,7237
 "90","Barre","Worcester County","MA","Barre","2006-2010",2010,75423,8316
 "91","Barre","Worcester County","MA","Barre","2007-2011",2011,73687,8265
@@ -383,14 +383,14 @@
 "382","Erving","Franklin County","MA","Erving","2006-2010",2010,51458,4919
 "383","Erving","Franklin County","MA","Erving","2007-2011",2011,53661,6387
 "384","Erving","Franklin County","MA","Erving","2008-2012",2012,52875,8241
-"385",NA,"Essex County","MA","Essex County","2005-2009",2009,64280,812
-"386",NA,"Essex County","MA","Essex County","2006-2010",2010,64153,773
-"387",NA,"Essex County","MA","Essex County","2007-2011",2011,65785,866
-"388",NA,"Essex County","MA","Essex County","2008-2012",2012,66918,856
 "389","Essex","Essex County","MA","Essex","2005-2009",2009,76594,12299
 "390","Essex","Essex County","MA","Essex","2006-2010",2010,76989,10722
 "391","Essex","Essex County","MA","Essex","2007-2011",2011,79492,17642
 "392","Essex","Essex County","MA","Essex","2008-2012",2012,82009,14442
+"385",NA,"Essex County","MA","Essex County","2005-2009",2009,64280,812
+"386",NA,"Essex County","MA","Essex County","2006-2010",2010,64153,773
+"387",NA,"Essex County","MA","Essex County","2007-2011",2011,65785,866
+"388",NA,"Essex County","MA","Essex County","2008-2012",2012,66918,856
 "393","Everett","Middlesex County","MA","Everett","2005-2009",2009,49830,5579
 "394","Everett","Middlesex County","MA","Everett","2006-2010",2010,49737,3697
 "395","Everett","Middlesex County","MA","Everett","2007-2011",2011,48319,4217
@@ -423,14 +423,14 @@
 "422","Framingham","Middlesex County","MA","Framingham","2006-2010",2010,64061,2526
 "423","Framingham","Middlesex County","MA","Framingham","2007-2011",2011,66047,3120
 "424","Framingham","Middlesex County","MA","Framingham","2008-2012",2012,68906,3469
-"425",NA,"Franklin County","MA","Franklin County","2005-2009",2009,52185,1509
-"426",NA,"Franklin County","MA","Franklin County","2006-2010",2010,52002,1718
-"427",NA,"Franklin County","MA","Franklin County","2007-2011",2011,52246,1241
-"428",NA,"Franklin County","MA","Franklin County","2008-2012",2012,53298,1687
 "429","Franklin","Norfolk County","MA","Franklin","2006-2010",2010,89330,6169
 "430","Franklin","Norfolk County","MA","Franklin","2007-2011",2011,92066,4838
 "431","Franklin","Norfolk County","MA","Franklin","2008-2012",2012,97267,6585
 "432","Franklin","Norfolk County","MA","Franklin","2005-2009",2009,89115,6816
+"425",NA,"Franklin County","MA","Franklin County","2005-2009",2009,52185,1509
+"426",NA,"Franklin County","MA","Franklin County","2006-2010",2010,52002,1718
+"427",NA,"Franklin County","MA","Franklin County","2007-2011",2011,52246,1241
+"428",NA,"Franklin County","MA","Franklin County","2008-2012",2012,53298,1687
 "433","Freetown","Bristol County","MA","Freetown","2005-2009",2009,87700,14015
 "434","Freetown","Bristol County","MA","Freetown","2006-2010",2010,82308,11734
 "435","Freetown","Bristol County","MA","Freetown","2007-2011",2011,82208,10335
@@ -499,14 +499,14 @@
 "498","Hamilton","Essex County","MA","Hamilton","2006-2010",2010,99732,20831
 "499","Hamilton","Essex County","MA","Hamilton","2007-2011",2011,103774,17995
 "500","Hamilton","Essex County","MA","Hamilton","2008-2012",2012,105100,17878
-"501",NA,"Hampden County","MA","Hampden County","2005-2009",2009,47617,901
-"502",NA,"Hampden County","MA","Hampden County","2006-2010",2010,47724,852
-"503",NA,"Hampden County","MA","Hampden County","2007-2011",2011,48866,839
-"504",NA,"Hampden County","MA","Hampden County","2008-2012",2012,49729,934
 "505","Hampden","Hampden County","MA","Hampden","2005-2009",2009,78659,6536
 "506","Hampden","Hampden County","MA","Hampden","2006-2010",2010,78869,9873
 "507","Hampden","Hampden County","MA","Hampden","2007-2011",2011,79773,9669
 "508","Hampden","Hampden County","MA","Hampden","2008-2012",2012,80917,6587
+"501",NA,"Hampden County","MA","Hampden County","2005-2009",2009,47617,901
+"502",NA,"Hampden County","MA","Hampden County","2006-2010",2010,47724,852
+"503",NA,"Hampden County","MA","Hampden County","2007-2011",2011,48866,839
+"504",NA,"Hampden County","MA","Hampden County","2008-2012",2012,49729,934
 "509",NA,"Hampshire County","MA","Hampshire County","2005-2009",2009,57293,1680
 "510",NA,"Hampshire County","MA","Hampshire County","2006-2010",2010,59505,1652
 "511",NA,"Hampshire County","MA","Hampshire County","2007-2011",2011,60331,1693
@@ -683,10 +683,10 @@
 "682","Lynn","Essex County","MA","Lynn","2006-2010",2010,43200,1511
 "683","Lynn","Essex County","MA","Lynn","2007-2011",2011,44367,1854
 "684","Lynn","Essex County","MA","Lynn","2008-2012",2012,43741,1656
-"685","Lynnfield","Essex County","MA","Lynnfield","2005-2009",2009,87903,12707
-"686","Lynnfield","Essex County","MA","Lynnfield","2006-2010",2010,87590,5523
-"687","Lynnfield","Essex County","MA","Lynnfield","2007-2011",2011,101921,16631
-"688","Lynnfield","Essex County","MA","Lynnfield","2008-2012",2012,106860,11666
+"721",NA,"NA County","MA","MA","2005-2009",2009,64496,321
+"722",NA,"NA County","MA","MA","2006-2010",2010,64509,344
+"723",NA,"NA County","MA","MA","2007-2011",2011,65981,328
+"724",NA,"NA County","MA","MA","2008-2012",2012,66658,306
 "689","Malden","Middlesex County","MA","Malden","2005-2009",2009,55471,3012
 "690","Malden","Middlesex County","MA","Malden","2006-2010",2010,56347,3519
 "691","Malden","Middlesex County","MA","Malden","2007-2011",2011,52842,3402
@@ -719,10 +719,6 @@
 "718","Mashpee","Barnstable County","MA","Mashpee","2006-2010",2010,62645,4355
 "719","Mashpee","Barnstable County","MA","Mashpee","2007-2011",2011,62763,6128
 "720","Mashpee","Barnstable County","MA","Mashpee","2008-2012",2012,62547,5225
-"721",NA,"NA County","MA","MA","2005-2009",2009,64496,321
-"722",NA,"NA County","MA","MA","2006-2010",2010,64509,344
-"723",NA,"NA County","MA","MA","2007-2011",2011,65981,328
-"724",NA,"NA County","MA","MA","2008-2012",2012,66658,306
 "725","Mattapoisett","Plymouth County","MA","Mattapoisett","2005-2009",2009,80867,5583
 "726","Mattapoisett","Plymouth County","MA","Mattapoisett","2006-2010",2010,74877,12378
 "727","Mattapoisett","Plymouth County","MA","Mattapoisett","2007-2011",2011,82065,10085
@@ -823,14 +819,14 @@
 "822","Nahant","Essex County","MA","Nahant","2006-2010",2010,81831,16694
 "823","Nahant","Essex County","MA","Nahant","2007-2011",2011,77243,17267
 "824","Nahant","Essex County","MA","Nahant","2008-2012",2012,70750,12708
-"825",NA,"Nantucket County","MA","Nantucket County","2005-2009",2009,80020,8075
-"826",NA,"Nantucket County","MA","Nantucket County","2006-2010",2010,83347,7132
-"827",NA,"Nantucket County","MA","Nantucket County","2007-2011",2011,84979,5174
-"828",NA,"Nantucket County","MA","Nantucket County","2008-2012",2012,83546,5281
 "829","Nantucket","Nantucket County","MA","Nantucket","2005-2009",2009,80020,8075
 "830","Nantucket","Nantucket County","MA","Nantucket","2006-2010",2010,83347,7132
 "831","Nantucket","Nantucket County","MA","Nantucket","2007-2011",2011,84979,5174
 "832","Nantucket","Nantucket County","MA","Nantucket","2008-2012",2012,83546,5281
+"825",NA,"Nantucket County","MA","Nantucket County","2005-2009",2009,80020,8075
+"826",NA,"Nantucket County","MA","Nantucket County","2006-2010",2010,83347,7132
+"827",NA,"Nantucket County","MA","Nantucket County","2007-2011",2011,84979,5174
+"828",NA,"Nantucket County","MA","Nantucket County","2008-2012",2012,83546,5281
 "833","Natick","Middlesex County","MA","Natick","2005-2009",2009,86583,2959
 "834","Natick","Middlesex County","MA","Natick","2006-2010",2010,87568,3182
 "835","Natick","Middlesex County","MA","Natick","2007-2011",2011,90046,4110
@@ -871,14 +867,14 @@
 "870","Newton","Middlesex County","MA","Newton","2006-2010",2010,107696,4081
 "871","Newton","Middlesex County","MA","Newton","2007-2011",2011,109724,4249
 "872","Newton","Middlesex County","MA","Newton","2008-2012",2012,113416,6256
-"873",NA,"Norfolk County","MA","Norfolk County","2005-2009",2009,80127,1010
-"874",NA,"Norfolk County","MA","Norfolk County","2006-2010",2010,81027,1039
-"875",NA,"Norfolk County","MA","Norfolk County","2007-2011",2011,83733,1184
-"876",NA,"Norfolk County","MA","Norfolk County","2008-2012",2012,84087,1309
 "877","Norfolk","Norfolk County","MA","Norfolk","2005-2009",2009,119904,13531
 "878","Norfolk","Norfolk County","MA","Norfolk","2006-2010",2010,113266,12255
 "879","Norfolk","Norfolk County","MA","Norfolk","2007-2011",2011,118809,13781
 "880","Norfolk","Norfolk County","MA","Norfolk","2008-2012",2012,128224,15544
+"873",NA,"Norfolk County","MA","Norfolk County","2005-2009",2009,80127,1010
+"874",NA,"Norfolk County","MA","Norfolk County","2006-2010",2010,81027,1039
+"875",NA,"Norfolk County","MA","Norfolk County","2007-2011",2011,83733,1184
+"876",NA,"Norfolk County","MA","Norfolk County","2008-2012",2012,84087,1309
 "881","North Adams","Berkshire County","MA","North Adams","2005-2009",2009,35020,3558
 "882","North Adams","Berkshire County","MA","North Adams","2006-2010",2010,35401,3293
 "883","North Adams","Berkshire County","MA","North Adams","2007-2011",2011,36424,3216
@@ -999,14 +995,14 @@
 "998","Plainville","Norfolk County","MA","Plainville","2006-2010",2010,73645,4176
 "999","Plainville","Norfolk County","MA","Plainville","2007-2011",2011,81371,10709
 "1000","Plainville","Norfolk County","MA","Plainville","2008-2012",2012,83750,11769
-"1001",NA,"Plymouth County","MA","Plymouth County","2005-2009",2009,72904,884
-"1002",NA,"Plymouth County","MA","Plymouth County","2006-2010",2010,73131,895
-"1003",NA,"Plymouth County","MA","Plymouth County","2007-2011",2011,74698,1004
-"1004",NA,"Plymouth County","MA","Plymouth County","2008-2012",2012,74722,1182
 "1005","Plymouth","Plymouth County","MA","Plymouth","2005-2009",2009,74355,2938
 "1006","Plymouth","Plymouth County","MA","Plymouth","2006-2010",2010,74767,2507
 "1007","Plymouth","Plymouth County","MA","Plymouth","2007-2011",2011,76631,2807
 "1008","Plymouth","Plymouth County","MA","Plymouth","2008-2012",2012,77228,4241
+"1001",NA,"Plymouth County","MA","Plymouth County","2005-2009",2009,72904,884
+"1002",NA,"Plymouth County","MA","Plymouth County","2006-2010",2010,73131,895
+"1003",NA,"Plymouth County","MA","Plymouth County","2007-2011",2011,74698,1004
+"1004",NA,"Plymouth County","MA","Plymouth County","2008-2012",2012,74722,1182
 "1009","Plympton","Plymouth County","MA","Plympton","2005-2009",2009,85523,4580
 "1010","Plympton","Plymouth County","MA","Plympton","2006-2010",2010,87917,8113
 "1011","Plympton","Plymouth County","MA","Plympton","2007-2011",2011,93882,13085
@@ -1252,12 +1248,6 @@
 "1251","Townsend","Middlesex County","MA","Townsend","2007-2011",2011,76250,5790
 "1252","Townsend","Middlesex County","MA","Townsend","2008-2012",2012,79972,5521
 "1253","Truro","Barnstable County","MA","Truro","2005-2009",2009,57057,38798
-"1254","Truro","Barnstable County","MA","Truro","2006-2010",2010,80425,34351
-"1255","Truro","Barnstable County","MA","Truro","2007-2011",2011,71964,38247
-"1256","Truro","Barnstable County","MA","Truro","2008-2012",2012,81964,35577
-"1257","Tyngsborough","Middlesex County","MA","Tyngsborough","2005-2009",2009,98413,7210
-"1258","Tyngsborough","Middlesex County","MA","Tyngsborough","2006-2010",2010,95568,9797
-"1259","Tyngsborough","Middlesex County","MA","Tyngsborough","2007-2011",2011,101103,11117
 "1260","Tyngsborough","Middlesex County","MA","Tyngsborough","2008-2012",2012,104888,9069
 "1261","Tyringham","Berkshire County","MA","Tyringham","2005-2009",2009,90625,29273
 "1262","Tyringham","Berkshire County","MA","Tyringham","2006-2010",2010,93750,23866
@@ -1447,14 +1437,14 @@
 "1446","Woburn","Middlesex County","MA","Woburn","2006-2010",2010,71060,3095
 "1447","Woburn","Middlesex County","MA","Woburn","2007-2011",2011,72540,3987
 "1448","Woburn","Middlesex County","MA","Woburn","2008-2012",2012,72434,4282
-"1449",NA,"Worcester County","MA","Worcester County","2005-2009",2009,63720,768
-"1450",NA,"Worcester County","MA","Worcester County","2006-2010",2010,64152,768
-"1451",NA,"Worcester County","MA","Worcester County","2007-2011",2011,65772,757
-"1452",NA,"Worcester County","MA","Worcester County","2008-2012",2012,65968,893
 "1453","Worcester","Worcester County","MA","Worcester","2005-2009",2009,45944,1506
 "1454","Worcester","Worcester County","MA","Worcester","2006-2010",2010,45036,1473
 "1455","Worcester","Worcester County","MA","Worcester","2007-2011",2011,45846,1264
 "1456","Worcester","Worcester County","MA","Worcester","2008-2012",2012,45679,1305
+"1449",NA,"Worcester County","MA","Worcester County","2005-2009",2009,63720,768
+"1450",NA,"Worcester County","MA","Worcester County","2006-2010",2010,64152,768
+"1451",NA,"Worcester County","MA","Worcester County","2007-2011",2011,65772,757
+"1452",NA,"Worcester County","MA","Worcester County","2008-2012",2012,65968,893
 "1457","Worthington","Hampshire County","MA","Worthington","2005-2009",2009,60463,9363
 "1458","Worthington","Hampshire County","MA","Worthington","2006-2010",2010,61100,6945
 "1459","Worthington","Hampshire County","MA","Worthington","2007-2011",2011,64063,4913
@@ -1467,3 +1457,13 @@
 "1466","Yarmouth","Barnstable County","MA","Yarmouth","2006-2010",2010,48653,4191
 "1467","Yarmouth","Barnstable County","MA","Yarmouth","2007-2011",2011,50228,3781
 "1468","Yarmouth","Barnstable County","MA","Yarmouth","2008-2012",2012,51680,4603
+"685","Lynnfield","Essex County","MA","Lynnfield","2005-2009",2009,87903,12707
+"686","Lynnfield","Essex County","MA","Lynnfield","2006-2010",2010,87590,5523
+"687","Lynnfield","Essex County","MA","Lynnfield","2007-2011",2011,101921,16631
+"688","Lynnfield","Essex County","MA","Lynnfield","2008-2012",2012,106860,11666
+"1254","Truro","Barnstable County","MA","Truro","2006-2010",2010,80425,34351
+"1255","Truro","Barnstable County","MA","Truro","2007-2011",2011,71964,38247
+"1256","Truro","Barnstable County","MA","Truro","2008-2012",2012,81964,35577
+"1257","Tyngsborough","Middlesex County","MA","Tyngsborough","2005-2009",2009,98413,7210
+"1258","Tyngsborough","Middlesex County","MA","Tyngsborough","2006-2010",2010,95568,9797
+"1259","Tyngsborough","Middlesex County","MA","Tyngsborough","2007-2011",2011,101103,11117
