@@ -4,6 +4,7 @@
 ##            Kiridly                ## 
 ## Date Created:  08/11/15           ##
 ## Date Modified: 08/15/15 XL        ##
+## Date Updated: 02/18/2019 VE       ##
 #######################################
 
 ##First file run - Environment Setup
@@ -86,7 +87,7 @@ busmin.val <- round(min(bank_data1$Business_Filings_Total, na.rm=TRUE),0)
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
 # scuts <- seq(smin.val, smax.val, length.out = length(smap_colors))
-buscuts <- quantile(bank_data1$Business_Filings_Total, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+buscuts <- unique(quantile(bank_data1$Business_Filings_Total, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE))
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
@@ -101,7 +102,7 @@ buscolorRanges <- data.frame(
 ## Colors for Personal total legend
 nonbusmax.val <- round(max(bank_data1$Personal_Filings_Total, na.rm=TRUE),0)
 nonbusmin.val <- round(min(bank_data1$Personal_Filings_Total, na.rm=TRUE),0)
-nonbuscuts <- quantile(bank_data1$Personal_Filings_Total, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE)
+nonbuscuts <- unique(quantile(bank_data1$Personal_Filings_Total, probs = seq(0, 1, length.out = length(map_colors)), na.rm=TRUE))
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
@@ -201,7 +202,7 @@ plot_side_text <- conditionalPanel(
   tags$ul(
     tags$li("Once you have selected the counties for which you are interested in viewing the number of business and personal bankruptcies, select a Variable of Interest."),
     tags$br(),
-    tags$li("Select your preferred display option- total bankruptcies or look at bankruptcies by specific chapter."),
+    tags$li("Select your preferred display option - total bankruptcies or look at bankruptcies by specific chapter."),
     tags$br(),
     tags$li("To compare total business and personal bankruptcies within a specific chapter to Massachusetts or US totals please select 'Compare to MA' or 'Compare to US'."),
 p(strong("Please note this can only be done when looking at a specific chapter of business or personal bankruptcies."))
@@ -215,11 +216,9 @@ map_side_text <- conditionalPanel(
   helpText(p(strong("Please select a year, and click on 'Generate Map' to get started"))),
   tags$br(),
   tags$ul(
-    tags$li('Select your preferred display option- total bankruptcies or look at bankruptcies by specific chapter.'),
-    tags$br(),
-    tags$li("To compare total business and personal bankruptcies within a specific chapter to Massachusetts or US totals please select 'Compare to MA' or 'Compare to US'."),
-  p(strong("Please note this can only be done when looking at a specific chapter of business or personal bankruptcies."))
-  ))
+    tags$li('Select your preferred display option - total bankruptcies or look at bankruptcies by specific chapter.'),
+    tags$br()
+    ))
 
 info_side_text <- conditionalPanel(
   condition="input.tabs == 'info'",
@@ -256,7 +255,7 @@ Bus_plot_options <- googleLineChart("Bus_plot", width="100%", height="475px", op
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2012, 2017, 1),
+    ticks = seq(2013, 2018, 1),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -311,7 +310,7 @@ NonBus_plot_options <- googleLineChart("NonBus_plot", width="100%", height="475p
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2012, 2017, 1),
+    ticks = seq(2013, 2018, 1),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -367,7 +366,7 @@ Pro_Bus_plot_options <- googleLineChart("Pro_Bus_plot", width="100%", height="47
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2012, 2017, 1),
+    ticks = seq(2013, 2018, 1),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -422,7 +421,7 @@ Pro_NonBus_plot_options <- googleLineChart("Pro_NonBus_plot", width="100%", heig
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2012, 2017, 1),
+    ticks = seq(2013, 2018, 1),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
