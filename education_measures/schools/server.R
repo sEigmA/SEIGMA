@@ -496,7 +496,7 @@ return(sum_df)
                      hAxis = list(
                        title = "Start of School Year",
                        format = "####",
-                       ticks = seq(2003,2015,1),
+                       ticks = seq(2003,2018,1),
                        #  viewWindow = list(min=, max=),
                        textStyle = list(
                          fontSize = 14),
@@ -551,7 +551,7 @@ return(sum_df)
                      hAxis = list(
                        title = "Start of School Year",
                        format = "####",
-                       ticks = seq(2003,2015,1),
+                       ticks = seq(2003,2018,1),
                        #  viewWindow = list(min=, max=),
                        textStyle = list(
                          fontSize = 14),
@@ -627,7 +627,7 @@ return(sum_df)
                    ## set axis titles, ticks, fonts, and ranges
                    hAxis = list(
                      title = "Start of School Year",
-                     ticks = seq(2003,2015,1),
+                     ticks = seq(2003,2018,1),
                      format = "####",
                      textStyle = list(
                        fontSize = 14),
@@ -707,7 +707,7 @@ return(sum_df)
                   ## set axis titles, ticks, fonts, and ranges
                   hAxis = list(
                     title = "Start of School Year",
-                    ticks = seq(2003,2015,1),
+                    ticks = seq(2003,2018,1),
                     format = "####",
                     textStyle = list(
                       fontSize = 14),

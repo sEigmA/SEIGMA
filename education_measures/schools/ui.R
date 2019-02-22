@@ -5,7 +5,7 @@
 ##            Jenna Kiridly, Steve Lauer,##
 ##            Justin Baldwin             ##
 ## Date Created:  12/10/2015             ##
-## Date Modified: 12/10/2015             ##
+## Date Modified: 22/02/2019 VE          ##
 ###########################################
 
 
@@ -52,7 +52,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'sing.yr'",
                       ## Initializing a single slider
                      sliderInput("sum_year", "Select School Year beginning in",
-                                 min=2003, max=2015, value=2015,
+                                 min=2003, max=2018, value=2017,
                                  sep="")
                    ),
                    conditionalPanel(
@@ -60,7 +60,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'mult.yrs'",
                      ## Slider starts from 2010-2012
                      sliderInput("sum_range", "Select School Years beginning in",
-                                 min=2003, max=2015, value=c(2003,2015),
+                                 min=2003, max=2018, value=c(2003,2017),
                                  sep="")
                    )
                  ,
@@ -91,7 +91,7 @@ shinyUI(fluidPage(
            
 
            sliderInput("lmap_year", "Select School Year beginning in",
-                       min=2003, max=2015, value=2015,
+                       min=2003, max=2018, value=2017,
                        sep="")
            ,
            selectInput("map_profile", "Select Data", 
@@ -322,7 +322,8 @@ shinyUI(fluidPage(
                
                  ## author line
 
-                 helpText("Created by Justin Baldwin, Jenna F. Kiridly and Xuelian Li "),
+                 helpText("Created by Justin Baldwin, Jenna F. Kiridly and Xuelian Li"),
+                 helpText("Updated by Valerie Evans"),
                  
                  ## email feedback link
                  ## To develop a link in HTML
@@ -1052,7 +1053,7 @@ tabPanel("Map",
                  tags$ul(
                  tags$li((p(strong("Enrollment"), "- The number of students enrolled in a school."))),
                  tags$br(),
-                 tags$li(p(strong("English Language Learners"), "-Students whose first language is a language other than English, and who are unable to perform ordinary classroom work in English.")),
+                 tags$li(p(strong("English Language Learners"), "- Students whose first language is a language other than English, and who are unable to perform ordinary classroom work in English.")),
                  tags$br(),
                  tags$li((p(strong("First Language Not English"), "- Students whose first language is a language other than English, and who are able to perform ordinary classroom work in English."))),
                  tags$br(),
