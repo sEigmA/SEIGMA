@@ -1,10 +1,10 @@
 #######################################
 ## Title: Property Value ui.R        ##
 ## Author(s): Xuelian Li             ##
-##                                   ## 
 ## Date Created:  07/22/16           ##
-## Date Modified: 07/22/16 XL        ##
+## Date Modified: 02/26/19 VE        ##
 #######################################
+
 shinyUI(fluidPage(
   ## HTML to create generate map button
   gen_map_button,
@@ -39,7 +39,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'sing.yr'",
                      ## Initializing a single slider
                      sliderInput("sum_year", "Select Year",
-                                 min=2003, max=2016, value=2016,
+                                 min=2003, max=2018, value=2018,
                                  sep="")
                    ),
                    conditionalPanel(
@@ -47,7 +47,7 @@ shinyUI(fluidPage(
                      condition="input.sum_timespan == 'mult.yrs'",
                      ## Slider starts from 2010-2012
                      sliderInput("sum_range", "Select Years",
-                                 min=2003, max=2016, value=c(2010,2016),
+                                 min=2003, max=2018, value=c(2012,2018),
                                  sep="")
                    ),
                    ## in summary, allow for municipal selection
@@ -87,7 +87,7 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'map'",
                    ## Initializing a single slider
                    sliderInput("map_year", "Select Year",
-                               min=2003, max=2016, value=2016,
+                               min=2003, max=2018, value=2018,
                                sep=""),
                    radioButtons("map_radio", "Select Variable of Interest",
                                 c("Total Assessed Property Values" = "Total_Assessed",
@@ -113,7 +113,7 @@ shinyUI(fluidPage(
                  ## author line
                  
                  helpText("Created by Xuelian Li"),
-                 
+                 helpText("Updated by Valerie Evans"),
                  
                  ## email feedback link
                  ## To develop a link in HTML
@@ -164,7 +164,7 @@ shinyUI(fluidPage(
                      ## make chart title here (otherwise not centered)
                      h4("Change in Total Assessed Property Values since 2003", align="center"),
                      pValueCha_plot_options,
-                     p(strong("Change Since 2003"), "- This is calculated by the total annual Assessed Property Values to the year 2003.  We selected 2003 in order to provide a ten year baseline period.  The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
+                     p(strong("Change Since 2003"), "- This is calculated by the total annual Assessed Property Values to the year 2003. We selected 2003 in order to provide a ten year baseline period. The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003.")
                    )
                  ),
                  
@@ -250,24 +250,24 @@ shinyUI(fluidPage(
                 
                    
                    p(strong('Total Assessed Property Values'), 
-                             '-Assessed values in Massachusetts are based on "full and fair cash value". Massachusetts General Laws  defines “full and fair cash value” as the price an owner willing, but not under compulsion, to sell, ought to receive from one willing but not under compulsion, to buy.'),
+                             '- Assessed values in Massachusetts are based on "full and fair cash value". Massachusetts General Laws defines “full and fair cash value” as the price an owner willing, but not under compulsion, to sell, ought to receive from one willing but not under compulsion, to buy.'),
                    tags$br(),
                    p(strong('Class - Residential'),
-                             "-All property including one or more homes.  It also includes accessory buildings and land such as pools, tennis, courts, sheds, etc.  "),
+                             "- All property including one or more homes. It also includes accessory buildings and land such as pools, tennis, courts, sheds, etc."),
                  tags$br(),
-                 p(strong('Class- Commercial'), 
-                            "-Property for the purpose of conducting a business.  This includes office buildings, retail stores, etc. Personal Property is also considered in this category of Commercial Class."),
+                 p(strong('Class - Commercial'), 
+                            "- Property for the purpose of conducting a business. This includes office buildings, retail stores, etc. Personal Property is also considered in this category of Commercial Class."),
                  tags$br(),
-                 p(strong('Class- Industrial'), 
-                   "-Property involved in manufacturing or processing. This includes porperty used for storage, transmission, and the regulated generation of utilities."),
+                 p(strong('Class - Industrial'), 
+                   "- Property involved in manufacturing or processing. This includes porperty used for storage, transmission, and the regulated generation of utilities."),
                  
                  tags$br(),
-                 p(strong('Class- Personal property'), 
-                   "-Property not permanently affixed to real estate. Personal property is movable and can be removed without serious damage either to the real estate or to the item being removed."),
+                 p(strong('Class - Personal Property'), 
+                   "- Property not permanently affixed to real estate. Personal property is movable and can be removed without serious damage either to the real estate or to the item being removed."),
                  
                  tags$br(),
-                 p(strong('2016 Dollars'), 
-                          "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2013 to be our constant."),
+                 p(strong('2018 Dollars'), 
+                          "- Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2018 to be our constant."),
                  tags$br(),
                  #tags$br(),
                  # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),                  

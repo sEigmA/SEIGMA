@@ -2,7 +2,7 @@
 ## Title: Property Value global.R    ##
 ## Author(s): Xuelian Li             ## 
 ## Date Created:  07/11/16           ##
-## Date Modified: 07/12/16 XL        ##
+## Date Modified: 02/26/19 VE        ##
 #######################################
 
 ##First file run - Environment Setup
@@ -20,7 +20,7 @@ require(tidyr)
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted pValue data
-pValue_data <- read.csv(file="pValuedata3.csv")
+pValue_data <- read.csv(file="propertyvalue_update.csv")
 colnames(pValue_data)[4:10]<-c("Year","Residential","Open_Space", "Commercial", "Industrial", "Personal_Property", "Total_Assessed")
 
 ## Find order of municipals in geojson files
@@ -169,7 +169,7 @@ summary_side_text <- conditionalPanel(
     tags$br(),
     tags$li('To look at the annual total assessed property values and percent assessed property values by class for a single year, select single year from the drop down menu.'),
     tags$br(),
-    tags$li('To look at the annual total assessed property values and percent assessed property values by class over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
+    tags$li('To look at the annual total assessed property values and percent assessed property values by class over a specific time period select multiple years from the drop down menu. Then use the sliding bar to select a range.'),
     tags$br(),
     tags$li('Sort the annual total assessed property values and percent assessed property values by class in ascending and descending order by clicking on the column or variable title.')
     
@@ -189,9 +189,9 @@ plot_side_text <- conditionalPanel(
     tags$br(),
     tags$li("To view the percent assessed property values by class, select Percent of Assessed Property Values by Class."),
     tags$br(),
-    tags$li("Select Actual Values from the Display Options to view the annual total assessed property values for the years 2003-2017."),
+    tags$li("Select Actual Values from the Display Options to view the annual total assessed property values for the years 2003-2018."),
     tags$br(),
-    tags$li("Select Change Since 2003 from the Display Options to view the percent change in the the annual total assessed property values each year for the years 2003-2017.")
+    tags$li("Select Change Since 2003 from the Display Options to view the percent change in the the annual total assessed property values each year for the years 2003-2018.")
   ))
 
 
@@ -230,7 +230,7 @@ plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
                     strong("Annual Average Unemployment Rate-"),
-                    " Average annual unemployment rates account for workers who have lost their jobs and are looking for new ones.  This excludes people who are not looking for work.  The unemployment rate is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey.  Municipality unemployment rates were gathered form a secition of thr BLS and CPS called the Local Areas Unemployment Statistics Series.",
+                    " Average annual unemployment rates account for workers who have lost their jobs and are looking for new ones. This excludes people who are not looking for work. The unemployment rate is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey. Municipality unemployment rates were gathered from a section of thr BLS and CPS called the Local Areas Unemployment Statistics Series.",
                     tags$br(),
                     strong("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf", align="center"))
 
@@ -249,7 +249,7 @@ pValue_plot_options <- googleLineChart("pValue_plot1", width="100%", height="475
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2017, 2),
+    ticks = seq(2003, 2018, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -259,7 +259,7 @@ pValue_plot_options <- googleLineChart("pValue_plot1", width="100%", height="475
       italic = FALSE)
   ),
   vAxis = list(
-    title = "Total Assessed Property Values (2016 dollars, Million)",
+    title = "Total Assessed Property Values (2018 dollars, Million)",
     viewWindow = ylim,
     textStyle = list(
       fontSize = 14),
@@ -305,7 +305,7 @@ pValueCha_plot_options<- googleLineChart("pValue_plot2", width="100%", height="4
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2017, 2),
+    ticks = seq(2003, 2018, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),

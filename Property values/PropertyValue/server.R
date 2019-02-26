@@ -1,10 +1,9 @@
-#######################################
-## Title: Property pValue server.R      ##
-## Author(s): Xuelian Li, Jenna      ##
-##            Kiridly                ## 
-## Date Created:  01/07/16           ##
-## Date Modified: 01/07/16 XL        ##
-#######################################
+###########################################
+## Title: Property pValue server.R       ##
+## Author(s): Xuelian Li, Jenna Kiridly  ## 
+## Date Created:  01/07/16               ##
+## Date Modified: 02/26/19 VE            ##
+###########################################
 
 shinyServer(function(input, output, session){
   # pValue_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
@@ -47,7 +46,7 @@ shinyServer(function(input, output, session){
       filter(Municipal %in% munis) %>%
       select(Municipal, Year, Inflation_Adjusted_Total_Assessed, Inflation_Adjusted_Residential, Inflation_Adjusted_Open_Space, Inflation_Adjusted_Commercial, Inflation_Adjusted_Industrial, Inflation_Adjusted_Personal_Property)
       sum_df[3:8]<-apply(sum_df[3:8],2,function(x)prettyNum(x,big.mark = ","))
-    colnames(sum_df) <- c("Municipal","Fiscal Year", "Total Assessed Values (2016 dollars)", "Residential (2016 dollars)", "Open Space (2016 dollars) ", "Commercial (2016 dollars)", "Industrial (2016 dollars)", "Personal Property (2016 dollars)")
+    colnames(sum_df) <- c("Municipal","Fiscal Year", "Total Assessed Values (2018 dollars)", "Residential (2018 dollars)", "Open Space (2018 dollars) ", "Commercial (2018 dollars)", "Industrial (2018 dollars)", "Personal Property (2018 dollars)")
     
     return(sum_df)
   }, options = list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
@@ -125,12 +124,12 @@ shinyServer(function(input, output, session){
         ## set fonts
         fontName = "Source Sans Pro",
         fontSize = font_size,
-        title = paste("Total Assessed Property Values and Percent of Assessed Property Values by Class FY2003-FY2016 (2016 dollars)", 
-                       "at ", input$plot_muni2),
+        title = paste("Total Assessed Property Values and Percent of Assessed Property Values by Class FY2003-FY2018 (2018 dollars)", 
+                       "in ", input$plot_muni2),
         ## set axis titles, ticks, fonts, and ranges
         hAxis = list(
           title = "",
-          ticks = seq(2003,2017,1),
+          ticks = seq(2003,2018,1),
           format = "####",
           textStyle = list(
             fontSize = font_size),
@@ -318,7 +317,7 @@ shinyServer(function(input, output, session){
     if (input$map_radio == "Total_Assessed") {
       if(input$map_display_radio == "Inflation_Adjusted_Total_Assessed"){
       return(as.character(tags$div(
-        tags$h4("Annual Total Assessed Property Values (2016 dollars) in", muni_name, " for ", input$map_year),
+        tags$h4("Annual Total Assessed Property Values (2018 dollars) in", muni_name, " for ", input$map_year),
         tags$h5(muni_value)
       )))
     }
