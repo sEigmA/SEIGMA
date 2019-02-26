@@ -1,0 +1,10 @@
+name: unemployment
+title:
+username:
+account: seigma
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 69508
+bundleId: 1785533
+url: https://seigma.shinyapps.io/unemployment/
+when: 1545927764.46578
