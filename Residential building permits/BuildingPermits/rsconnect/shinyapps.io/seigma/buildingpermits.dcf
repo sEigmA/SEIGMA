@@ -1,0 +1,10 @@
+name: buildingpermits
+title:
+username:
+account: seigma
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 124349
+bundleId: 1900231
+url: https://seigma.shinyapps.io/BuildingPermits/
+when: 1551170200.53962

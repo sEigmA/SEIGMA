@@ -3,7 +3,7 @@
 ## Author(s): Xuelian Li, Zhenning   ##
 ##            Kang                   ## 
 ## Date Created:  08/05/16           ##
-## Date Modified: 05/01/18 ZK        ##
+## Date Modified: 02/25/19 VE        ##
 #######################################
 
 ##First file run - Environment Setup
@@ -24,7 +24,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 bPermit_data1 <- read.csv(file="buildingdata.csv")[,-1]
 bPermit_data <- bPermit_data1 %>%
   select(1:5,27,7,8,28,10,11,29,13,14,30,16,17,31,32,20:26,33)
-colnames(bPermit_data) <- c( "Region","Year","Number_of_Months_Reported","Single_Family_Buildings","Single_Family_Units","Inflation_Adjusted_1_Family_Valuation","I2_Family_Buildings","I2_Family_Units","Inflation_Adjusted_2_Family_Valuation","I3-4_Family_Buildings","I3-4_Family_Units","Inflation_Adjusted_3_4_Family_Valuation","I5_Family_Buildings","I5_Family_Units","Inflation_Adjusted_5_Family_Valuation","Total_Buildings_Reported_Imputed","Total_Units_Reported_Imputed","Inflation_Adjusted_Total_Valuation","Inflation_Adjusted_Average_Valuation","Total_Pct_Change","Change_from_previous","Pct_Change_from_previous","Percentage_of_1_Family" ,"Percentage_of_2_Family","Percentage_of_3_and_4_Family","Percentage_of_5_Family","Permits_Per_1000_Population"   )
+colnames(bPermit_data) <- c("Region","Year","Number_of_Months_Reported","Single_Family_Buildings","Single_Family_Units","Inflation_Adjusted_1_Family_Valuation","I2_Family_Buildings","I2_Family_Units","Inflation_Adjusted_2_Family_Valuation","I3-4_Family_Buildings","I3-4_Family_Units","Inflation_Adjusted_3_4_Family_Valuation","I5_Family_Buildings","I5_Family_Units","Inflation_Adjusted_5_Family_Valuation","Total_Buildings_Reported_Imputed","Total_Units_Reported_Imputed","Inflation_Adjusted_Total_Valuation","Inflation_Adjusted_Average_Valuation","Total_Pct_Change","Change_from_previous","Pct_Change_from_previous","Percentage_of_1_Family","Percentage_of_2_Family","Percentage_of_3_and_4_Family","Percentage_of_5_Family","Permits_Per_1000_Population")
 # colnames(bPermit_data1)[2:15]<-c("Year","Number_of_Months_Reported" ,"Single_Family_Buildings","Single_Family_Units","Single_Family_validation","I2_Family_Buildings","I2_Family_Units","I2_Family_validation","I3-4_Family_Buildings","I3-4_Family_Units","I3-4_Family_validation","I5_Family_Buildings","I5_Family_Units","I5_Family_validation")
 # bPermit_data<-bPermit_data1%>%
 #   select(1:5,20,7:8,21,10:11,22,13:14,23,16:17,24:33)
@@ -127,7 +127,7 @@ PreChamin.val<-min(bPermit_data$Pct_Change_from_previous, na.rm=TRUE)
 PreChamax1.val<-log(PreChamax.val)
 #PreChamin1.val<-PreChamin.val/100
 PreChacuts1 <- seq(PreChamin.val, 0, length.out = 5)
-PreChaLogcuts <- seq(0, PreChamax1.val, length.out = 5)
+PreChaLogcuts <- seq(0, PreChamax1.val, length.out = 1)
 PreChacuts2 <-exp(PreChaLogcuts)
 PreChacuts<-unique(c(PreChacuts1, PreChacuts2))
 ##PreChacuts <- seq(PreChamin.val, PreChamax.val, length.out = length(map_colors1))
@@ -255,13 +255,13 @@ info_side_text <- conditionalPanel(
   h4("How to use this app:"),
   helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))))
 
-about_main_text <- p(strong("The SEIGMA Residential Building Permits App"), "displays the total number of residential building permits, total number of new housing units authorized by building permits and number of housing units by structure size in Massachusetts' municipalities between 2000 and 2016.",
+about_main_text <- p(strong("The SEIGMA Residential Building Permits App"), "displays the total number of residential building permits, total number of new housing units authorized by building permits and number of housing units by structure size in Massachusetts' municipalities between 2000 and 2017.",
                      p(strong("Click on different tabs to see the data in different forms.")),
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
                        tags$li(p(strong("Plot"), "displays measuresfor each municipality over time: Choose between viewing the annual total number of new housing units authorized by building permits or the number of new housing units, grouped by structure size.")),
-                       tags$li(p(strong("Map"), "displays the geographic pattern in total number of new housing units authorized by building permits, total number of new housing units per 1000 inhabitants, and number of new housing units by structure size for each municipality for the years 2000-2016.")),
+                       tags$li(p(strong("Map"), "displays the geographic pattern in total number of new housing units authorized by building permits, total number of new housing units per 1000 inhabitants, and number of new housing units by structure size for each municipality for the years 2000-2017.")),
                        tags$li(p(strong("More Info"), "describes the annual total number of new housing units authorized by building permits, total number of new housing units per 1000 inhabitants, and number of new housing units by structure size, including formulas and calculations."))
                      ))
 
@@ -289,7 +289,7 @@ TotUni_plot_options <- googleLineChart("TotUni_plot1", width="100%", height="475
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2000, 2016, 1),
+    ticks = seq(2000, 2017, 1),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -348,7 +348,7 @@ PreUniCha_plot_options<- googleLineChart("PreUniCha_plot", width="100%", height=
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2001, 2016, 1),
+    ticks = seq(2001, 2017, 1),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
