@@ -1,8 +1,10 @@
 name: rent
 title:
+username:
 account: seigma
 server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
 appId: 139722
-bundleId: 784106
+bundleId: 1903233
 url: https://seigma.shinyapps.io/rent/
-when: 1491859290.62941
+when: 1551266332.71584

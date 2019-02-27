@@ -36,8 +36,10 @@ shinyUI(fluidPage(
                    condition="input.tabs == 'map'",
                    selectInput("map_year", "Select Five Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", "2009-2013" = "2009-2013",
-                                              "2010-2014" = "2010-2014","2011-2015" = "2011-2015"))
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", 
+                                              "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
+                                              "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", 
+                                              "2013-2017" = "2013-2017"))
                  ),
                  
                  
@@ -47,8 +49,10 @@ shinyUI(fluidPage(
                    ## Select input = List
                    selectInput("sum_year", "Select Five Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
-                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", "2009-2013" = "2009-2013",
-                                              "2010-2014" = "2010-2014","2011-2015" = "2011-2015"),
+                                              "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", 
+                                              "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
+                                              "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", 
+                                              "2013-2017" = "2013-2017"),
                                multiple=TRUE),
                    selectInput("sum_muni", "Select Municipality", 
                                choices = MA_municipals,
@@ -78,14 +82,15 @@ shinyUI(fluidPage(
                  tags$hr(),
                  
                  ## author line
-                 helpText("Created by Justin Baldwin, Brook Frye and Zhenning Kang"),
+                 helpText("Created by Justin Baldwin, Brook Frye and Zhenning Kang"), 
+                 helpText("Updated by Valerie Evans"), 
                  
                  ## email feedback link
                  ## To develop a link in HTML
                  helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
                  
                  ## data source citation
-                 helpText(a("Data Source: American Community Survey- Table B25058", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_B25058&prodType=table",
+                 helpText(a("Data Source: American Community Survey - Table B25058", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_B25058&prodType=table",
                             target="_blank")),
                  
                  ## GitHub link
@@ -112,19 +117,15 @@ shinyUI(fluidPage(
         ## summary tab
         tabPanel("Summary", 
                  
-                 dataTableOutput("summary")
-                 
-                 
-                 
-                 , value="summary", 
+                 dataTableOutput("summary"),
+                 value="summary", 
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
         
         #         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Inflation-Adjusted (2015 $) Median Annual Rent Over Selected Five Year Period", align="center"),
+                 h4("Inflation-Adjusted (2017$) Median Annual Rent Over Selected Five-Year Period", align="center"),
                  ## make a row to put two charts in
-                 
                  plotOutput("plot"),
                  HTML("Horizontal grey bars indicate the span of five-year estimates, vertical grey bars with hinges indicate the standard errors"),
                  #verbatimTextOutput("event"),
@@ -171,7 +172,7 @@ shinyUI(fluidPage(
                      class = "floater",
                      strong("Median"),
                      tags$br(),
-                     strong("Contract", br(), "Rent 2015$"),
+                     strong("Contract", br(), "Rent 2017$"),
                      plotOutput("legend1"),
                      tags$table(
                        
@@ -189,12 +190,12 @@ shinyUI(fluidPage(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Inflation-Adjusted (2015 $) Median Contract Rent"), "-Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2015 and adjusted for inlation to the 2015 dollar. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.")),
+                   tags$li(p(strong("Inflation-Adjusted (2017$) Median Contract Rent"), "- Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2017 and adjusted for inflation to the 2017 dollar. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.")),
                    
                    tags$br(),
-                   tags$li(p(strong("Median"),"-The median divides the distribution of inflation-adjusted median contract rent into two equal parts; half that fall below the median for contract rent and half that fall above.")),
+                   tags$li(p(strong("Median"),"- The median divides the distribution of inflation-adjusted median contract rent into two equal parts; half that fall below the median for contract rent and half that fall above.")),
                    tags$br(),
-                   tags$li(p(strong("Five-Year Estimates"),"-Survey information is collected every year and then aggregated over a specific time period, in this case, five years at the municipality level.  Yearly estimates of inflation-adjusted median contract rent are available only at the county level to acheive a representative sample. ")
+                   tags$li(p(strong("Five-Year Estimates"),"- Survey information is collected every year and then aggregated over a specific time period, in this case, five years at the municipality level. Yearly estimates of inflation-adjusted median contract rent are available only at the county level to acheive a representative sample.")
                    )
                  ),
                  #tags$br(),

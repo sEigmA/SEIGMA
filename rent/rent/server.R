@@ -2,7 +2,7 @@
 ## Title: RENT   server.R            ##
 ## Author(s): JWB, BF, ZK            ## 
 ## Date Created:  12/01/2016         ##
-## Date Updated:  01/31/2018  ZK     ##
+## Date Updated:  02/27/2019 VE      ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -56,8 +56,8 @@ shinyServer(function(input, output, session) {
     
     colnames(rent_df) <- gsub(".", " ", colnames(rent_df), fixed=T)
     colnames(rent_df)[1] <- "Region"
-    colnames(rent_df)[3] <- "Median Rent (2015$)"
-    colnames(rent_df)[4] <- "Median Margin of Error (2015$)"
+    colnames(rent_df)[3] <- "Median Rent (2017$)"
+    colnames(rent_df)[4] <- "Median Margin of Error (2017$)"
     
     
     #     rent_df[,3] <- prettyNum(rent_df[,3], big.mark=",")
@@ -132,27 +132,27 @@ shinyServer(function(input, output, session) {
     ap=0.5
     sz=1
     
-    p=ggplot(pdf, aes(x=Year, y=Var, colour=Municipal)) +
-      geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0,colour=Municipal),alpha=ap/2, size=sz/2)+
-      geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Municipal),alpha=ap,size=sz, width=0.125)+
-      ylab("Median Rent (2015 $)")+
-      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
+    p=ggplot(pdf, aes(x=Year, y=Var, colour=Municipal))+
+      geom_errorbarh(aes(xmax = Year + 2, xmin = Year - 2, height = 0, colour=Municipal), alpha=ap/2, size=sz/2)+
+      geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error, colour=Municipal), alpha=ap, size=sz, width=0.125)+
+      ylab("Median Rent (2017$)")+
+      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014, 2016, 2017))+
       scale_color_manual(values=cbbPalette, guide="legend")+
-      geom_point(aes(colour=Municipal),size=4,alpha=1)+
-      geom_line(aes(colour=Municipal),size=2,alpha=1)+
+      geom_point(aes(colour=Municipal),size=2,alpha=1)+
+      geom_line(aes(colour=Municipal),size=1,alpha=1)+
       theme_bw() +
-      theme(plot.background = element_blank(),
-            panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank() )+
-      theme(panel.border= element_blank())+
-      theme(axis.line.x = element_line(color="black", size = 0.5),
-            axis.line.y = element_line(color="black", size = 0.5))+
-      theme(axis.title.x = element_text(size = 16),
-            axis.title.y = element_text(size = 16),
-            axis.text.x = element_text(size = 14),
-            axis.text.y = element_text(size = 14))+
-      theme(legend.title=element_text(size=16),
-            legend.text=element_text(size=14))
+    #theme(plot.background = element_blank(),
+            #panel.grid.major = element_blank(),
+            #panel.grid.minor = element_blank() )+
+     theme(panel.border= element_blank())+
+      #theme(axis.line.x = element_line(color = "black", size = 0.5),
+       #     axis.line.y = element_line(color = "black", size = 0.5))+
+      #theme(axis.title.x = element_text(size = 16),
+     #       axis.title.y = element_text(size = 16),
+     #       axis.text.x = element_text(size = 14),
+     #       axis.text.y = element_text(size = 14))+
+      theme(legend.title = element_text(size = 16),
+            legend.text = element_text(size = 14))
     
     #guides(colour = guide_legend(override.aes = list(colour = NA)))+
     #guides(colour = guide_legend(override.aes = list(colour = cbbPalette[1:length(unique(pdf$Municipal))])))
@@ -174,7 +174,7 @@ shinyServer(function(input, output, session) {
     ## Filter the data by the chosen Five Year Range
     map_rent_df <- rent %>%
       filter(Five.Year.Range == input$map_year) %>%
-      select(1:4, Five.Year.Range, Median.Rent.2015.Dollar, Rent.Margin.of.Error.2015.Dollar)
+      select(1:4, Five.Year.Range, Median.Rent.2017.Dollar, Rent.Margin.of.Error.2017.Dollar)
     
     ## Output reactive dataframe
     map_rent_df
@@ -194,7 +194,7 @@ shinyServer(function(input, output, session) {
       filter(!is.na(Municipal))
     
     ## assign colors to each entry in the data frame
-    color <- as.integer(cut2(map_dat[,"Median.Rent.2015.Dollar"],cuts=cuts))
+    color <- as.integer(cut2(map_dat[,"Median.Rent.2017.Dollar"],cuts=cuts))
     map_dat <- cbind.data.frame(map_dat, color)
     map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors),
                             map_dat$color)
@@ -203,7 +203,7 @@ shinyServer(function(input, output, session) {
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Municipal)
     missing_df <- data.frame(Municipal = missing_munis, County = NA, Five.Year.Range = input$map_year,
-                             Median.Rent.2015.Dollar = NA, Rent.Margin.of.Error.2015.Dollar = NA,
+                             Median.Rent.2017.Dollar = NA, Rent.Margin.of.Error.2017.Dollar = NA,
                              color=length(map_colors), opacity = 0)
     
     na_munis <- setdiff(MA_municipals_map, map_dat$Municipal)
@@ -367,8 +367,8 @@ shinyServer(function(input, output, session) {
     isolate({
       values$selectedFeature <- evt$properties
       clickmuni <- evt$properties$NAMELSAD10
-      values$selectedFeature["Median.Rent.2015.Dollar"] <- map_dat[match(clickmuni, map_dat$Municipal), "Median.Rent.2015.Dollar"]
-      values$selectedFeature["Rent.Margin.of.Error.2015.Dollar"] <- map_dat[match(clickmuni, map_dat$Municipal), "Rent.Margin.of.Error.2015.Dollar"]
+      values$selectedFeature["Median.Rent.2017.Dollar"] <- map_dat[match(clickmuni, map_dat$Municipal), "Median.Rent.2017.Dollar"]
+      values$selectedFeature["Rent.Margin.of.Error.2017.Dollar"] <- map_dat[match(clickmuni, map_dat$Municipal), "Rent.Margin.of.Error.2017.Dollar"]
     })
   })
   ##  This function is what creates info box
@@ -383,8 +383,8 @@ shinyServer(function(input, output, session) {
     }
     #     browser()
     muni_name <- values$selectedFeature$NAMELSAD10
-    muni_value <- prettyNum(values$selectedFeature["Median.Rent.2015.Dollar"], big.mark = ",")
-    muni_margin<- prettyNum(values$selectedFeature["Rent.Margin.of.Error.2015.Dollar"], big.mark = ",")
+    muni_value <- prettyNum(values$selectedFeature["Median.Rent.2017.Dollar"], big.mark = ",")
+    muni_margin<- prettyNum(values$selectedFeature["Rent.Margin.of.Error.2017.Dollar"], big.mark = ",")
     
     ## If clicked county has no crude rate, display a message
     if(muni_value == "NA"){
@@ -401,9 +401,9 @@ shinyServer(function(input, output, session) {
   output$legend1 <- renderPlot({
     paint.brush = colorRampPalette(colors=c("white", "#009E73"))
     cols <- paint.brush(length(map_colors)-1)
-    leg_dat<- data_frame(y = seq(min_val, max_val, length.out = (length(map_colors)-1)), x = 1, col = cols)
+    leg_dat <- data_frame(y = seq(min_val, max_val, length.out = (length(map_colors)-1)), x = 1, col = cols)
     
-    q<- ggplot(data = leg_dat) +
+    q <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
       scale_y_continuous(limits = c(min_val, max_val), breaks = round(seq(min_val, max_val, length.out = 5),0)) +
       scale_fill_manual(values = leg_dat$col) + theme_bw() +
