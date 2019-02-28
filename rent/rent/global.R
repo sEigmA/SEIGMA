@@ -2,7 +2,7 @@
 ## Title: RENT   global.R            ##
 ## Author(s): JWB, BF, ZK            ## 
 ## Date Created:  12/01/2016         ##
-## Date Updated:  02/27/2019  VE     ##
+## Date Updated:  02/28/2019  VE     ##
 #######################################
 
 ##First file run - Environment Setup
@@ -170,7 +170,7 @@ summary_side_text <- conditionalPanel(
     tags$br(),
     tags$li('To compare median data to the Massachusetts or US median, select the corresponding box.'),
     tags$br(),
-    tags$li(p(strong('Please note that all statistics are fove-year estimates.'))),
+    tags$li(p(strong('Please note that all statistics are five-year estimates.'))),
     tags$br(),
     tags$li("For more information about how five-year estimates are calculated, click on the 'More Info' tab.")
     
