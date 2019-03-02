@@ -24,7 +24,7 @@ require(sp)
 MA_map_muni <- geojson_read("Muni_2010Census_DP1.geojson")
 
 ## Load formatted marital status data
-mar_data <- read.csv(file="BA002_02_marriagedata.csv")
+mar_data <- read.csv(file="marriagedata_update.csv")
 names(mar_data)[10:12] <- gsub("Now_", "", names(mar_data)[10:12])
 
 ## Find order of municipals in geojson files
@@ -460,24 +460,24 @@ muni_plot_options <- googleColumnChart("plot_muni", width="100%", height="475px"
 ))
 
 ## Add map casino icons
-MAcasinos <- data.frame("Name"=c("Wynn Boston Harbor", "Plainridge Park Casino", "MGM Springfield"),
-                        "Lat"=c(42.394964,42.0330381,42.1006063),
-                        "Lon"=c(-71.066760,-71.3039442,-72.5870506))
-star <- makeIcon( iconUrl = "www/star.png",
-                  iconWidth = 30, iconHeight = 30,
-                  iconAnchorX = 15, iconAnchorY = 15)
-casinosOPEN <- data.frame("Name"=c("Mohegan Sun", "Foxwoods"),
-                          "Lat"=c(41.491549,41.473775),
-                          "Lon"=c(-72.091842,-71.960177))
-gc2 <- makeIcon( iconUrl = "www/greencircle2.gif",
-                 iconWidth = 20, iconHeight = 20,
-                 iconAnchorX = 10, iconAnchorY = 10)
-casinosCLOSED <- data.frame("Name"=c("Tiverton", "River Casino"),
-                            "Lat"=c(41.660301,42.824163),
-                            "Lon"=c(-71.155845,-73.937884))
-gc1 <- makeIcon( iconUrl = "www/greencircle1.png",
-                 iconWidth = 20, iconHeight = 20,
-                 iconAnchorX = 10, iconAnchorY = 10)
+#MAcasinos <- data.frame("Name"=c("Wynn Boston Harbor", "Plainridge Park Casino", "MGM Springfield"),
+#                        "Lat"=c(42.394964,42.0330381,42.1006063),
+#                        "Lon"=c(-71.066760,-71.3039442,-72.5870506))
+#star <- makeIcon(iconUrl = "www/star.png",
+#                  iconWidth = 30, iconHeight = 30,
+#                  iconAnchorX = 15, iconAnchorY = 15)
+#casinosOPEN <- data.frame("Name"=c("Mohegan Sun", "Foxwoods"),
+#                          "Lat"=c(41.491549,41.473775),
+#                          "Lon"=c(-72.091842,-71.960177))
+#gc2 <- makeIcon(iconUrl = "www/greencircle2.gif",
+#                 iconWidth = 20, iconHeight = 20,
+#                 iconAnchorX = 10, iconAnchorY = 10)
+#casinosCLOSED <- data.frame("Name"=c("Tiverton", "River Casino"),
+#                            "Lat"=c(41.660301,42.824163),
+#                            "Lon"=c(-71.155845,-73.937884))
+#gc1 <- makeIcon(iconUrl = "www/greencircle1.png",
+#                 iconWidth = 20, iconHeight = 20,
+#                 iconAnchorX = 10, iconAnchorY = 10)
 
 
 ##### UI #####
@@ -485,7 +485,8 @@ ui <- shinyUI(fluidPage(
   ## embed the google analytics script in the app
   tags$head(includeScript("google-analytics.js")),
   ## HTML to create generate map button
-  gen_map_button,
+  gen_map_button, 
+  ## this starts the googleCharts engine
   googleChartsInit(),
   ## blank title, but put in a special title for window tab
   titlePanel("", windowTitle = "SEIGMA: Marital Status Shiny App"),
@@ -494,33 +495,31 @@ ui <- shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(width=4,
                  ## Conditional panel means if the condition is met show all text below otherwise Don't!
-                 summary_side_text,
-                 plot_side_text,
-                 map_side_text,
+                 summary_side_text, 
+                 
+                 plot_side_text, 
+                 
+                 map_side_text, 
+                 
                  info_side_text,
                  
-                 ## In map, allow for year, gender, and variable selection
+                 ## In summary, allow for year, gender, and municipality selection
                  conditionalPanel(
-                   condition="input.tabs == 'map'",
-                   selectInput("map_year", "Select Five Year Range",
-                               choices = list("2006-2010" = "2006-2010", 
-                                              "2007-2011" = "2007-2011", 
-                                              "2008-2012" = "2008-2012",
-                                              "2009-2013" = "2009-2013", 
-                                              "2010-2014" = "2010-2014", 
-                                              "2011-2015" = "2011-2015")),
-                   selectInput("map_gender", "Select Gender",
-                               choices = list("Female", "Male")),
-                   selectInput("var", "Select Variable of Interest",
-                               choices = list("Never Married" = "Never_Married_pct",
-                                              "Married" = "Married_pct",
-                                              "Separated" = "Separated_pct",
-                                              "Widowed" = "Widowed_pct",
-                                              "Divorced" = "Divorced_pct"))
-                   # checkboxInput("lmap_cas", "Display Casinos", value=FALSE),
-                   # actionButton("action2", "REDRAW MAP")
+                   condition="input.tabs == 'summary'",
+                   selectInput("sum_year", "Select Five Year Range",
+                               choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012",
+                                              "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
+                                              "2012-2016" = "2012-2016", "2013-2017" = "2013-2017"), 
+                               multiple = TRUE),
+                   selectInput("sum_gender", "Select Gender",
+                               choices = list("Female" = "Female", "Male" = "Male"), multiple=TRUE),
+                   selectInput("sum_muni", "Select Municipality", 
+                               choices = sort(MA_municipals), multiple=TRUE),
+                   ## False at the end means it starts off unchecked
+                   checkboxInput("MA_mean", "Compare to MA Average", FALSE),
+                   checkboxInput("US_mean", "Compare to US Average", FALSE)
                  ),
-
+                 
                  ## In plot, allow for variable and municipality selection
                  conditionalPanel(
                    condition="input.tabs == 'plot'",
@@ -537,27 +536,26 @@ ui <- shinyUI(fluidPage(
                    selectInput("plotcombine", "Show Plots by Gender", choices = list("Separated" = "Separate", 
                                                                                      "Together" = "Together"))
                  ),
-
-                 ## In summary, allow for year, gender, and municipality selection
-                 conditionalPanel(
-                   condition="input.tabs == 'summary'",
-                   selectInput("sum_year", "Select Five Year Range",
-                               choices = list("2006-2010" = "2006-2010", 
-                                              "2007-2011" = "2007-2011", 
-                                              "2008-2012" = "2008-2012",
-                                              "2009-2013" = "2009-2013", 
-                                              "2010-2014" = "2010-2014", 
-                                              "2011-2015" = "2011-2015"),
-                               multiple = TRUE),
-                   selectInput("sum_gender", "Select Gender",
-                               choices = list("Female" = "Female", "Male" = "Male"), multiple=TRUE),
-                   selectInput("sum_muni", "Select Municipality", 
-                               choices = sort(MA_municipals), multiple=TRUE),
-                   ## False at the end means it starts off unchecked
-                   checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-                   checkboxInput("US_mean", "Compare to US Average", FALSE)
-                 ),
                  
+                 ## In map, allow for year, gender, and variable selection
+                 conditionalPanel(
+                   condition="input.tabs == 'map'",
+                   selectInput("map_year", "Select Five Year Range",
+                               choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012",
+                                              "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
+                                              "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")),
+                   selectInput("map_gender", "Select Gender",
+                               choices = list("Female", "Male")),
+                   selectInput("var", "Select Variable of Interest",
+                               choices = list("Never Married" = "Never_Married_pct",
+                                              "Married" = "Married_pct",
+                                              "Separated" = "Separated_pct",
+                                              "Widowed" = "Widowed_pct",
+                                              "Divorced" = "Divorced_pct"))
+                   # checkboxInput("lmap_cas", "Display Casinos", value=FALSE),
+                   # actionButton("action2", "REDRAW MAP")
+                 ),
+
                  tags$hr(),
                  
                  ## Author line
@@ -595,6 +593,7 @@ ui <- shinyUI(fluidPage(
         
         ## Summary tab
         tabPanel("Summary", 
+                 
                  dataTableOutput("summary"),
                  tags$br(),
                  HTML("Population includes individuals aged 15 years and older."),
@@ -748,7 +747,7 @@ ui <- shinyUI(fluidPage(
                    " - The number of people within each marital status category for a region over a specified five year range. When the number of people in a particular marital status category is too small, data cannot be displayed."), 
                  tags$br(),
                  p(strong("Five-Year Estimate"),
-                   " - Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available for regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions.  To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision."),
+                   " - Survey information is collected everyday of the year and then aggregated over a specific time period, five years. Multiyear estimates are available for regions with populations less than 65,000. However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision."),
                  
                  ## Email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
@@ -762,13 +761,16 @@ ui <- shinyUI(fluidPage(
 server <- shinyServer(function(input, output, session) {
   ## mar_df is a reactive dataframe. Necessary for when summary/plot/map have common input (Multiple Variables). Not in this project
   mar_df <- reactive({
+   
+     ## Make year a vector based on input variable 
+    years <- input$sum_year
+    if(is.null(years)==TRUE){years <- paste(c(2006:2013), c(2006:2013)+4, sep="-")}
     
-  ## Make year a vector based on input variable
-    if(!is.null(input$sum_year))
-      years <- input$sum_year
+    #if(!is.null(input$sum_year))
+     # years <- input$sum_year
     ## If none selected, put all years in vector
-    if(is.null(input$sum_year))
-      years <- c("2006-2010","2007-2011", "2008-2012","2009-2013", "2010-2014", "2011-2015")
+    #if(is.null(input$sum_year))
+      #years <- c("2006-2010", "2007-2011", "2008-2012", "2009-2013", "2010-2014", "2011-2015", "2012-2016", "2013-2017")
     
     ## Filter the data by the chosen Five Year Range 
     mar_df <- mar_data %>%
@@ -919,7 +921,7 @@ server <- shinyServer(function(input, output, session) {
       geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
       ylab(paste("Percent of",gsub("_", " ", gsub("_pct", "", input$plotvar)),"Females (%)", sep=" "))+
       scale_color_manual(values=cbbPalette, guide="legend")+
-      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
+      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014, 2016))+
       geom_point(aes(colour=Region),size=4,alpha=1)+
       geom_line(aes(colour=Region),size=2,alpha=1)+
       theme_bw() + 
@@ -952,7 +954,7 @@ server <- shinyServer(function(input, output, session) {
       geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
       ylab(paste("Percent of",gsub("_", " ", gsub("_pct", "", input$plotvar)),"Males (%)", sep=" "))+
       scale_color_manual(values=cbbPalette, guide="legend")+
-      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
+      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014, 2016))+
       geom_point(aes(colour=Region),size=4,alpha=1)+
       geom_line(aes(colour=Region),size=2,alpha=1)+
       theme_bw() + 
@@ -985,7 +987,7 @@ server <- shinyServer(function(input, output, session) {
 
     ## Take US, MA, and counties out of map_dat
     map_dat <- mar_map_df %>%
-      filter(Five_Year_Range == input$map_year) %>%
+      #filter(Five_Year_Range == input$map_year) %>%
       filter(!is.na(Region), Gender == input$map_gender)
     
     ## assign colors to each entry in the data frame

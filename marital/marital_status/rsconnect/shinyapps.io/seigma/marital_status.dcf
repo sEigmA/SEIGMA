@@ -1,0 +1,10 @@
+name: marital_status
+title:
+username:
+account: seigma
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 244921
+bundleId: 1910662
+url: https://seigma.shinyapps.io/marital_status/
+when: 1551515258.90133
