@@ -6,7 +6,7 @@
 ##            Xuelian Li, Justin     ##
 ##            Baldwin                ##
 ## Date Created:  10/22/2014         ##
-## Date Modified: 01/31/2017  JB     ##
+## Date Modified: 02/14/2019  VE     ##
 #######################################
 
 shinyUI(fluidPage(
@@ -49,7 +49,9 @@ shinyUI(fluidPage(
                                   "2008-2012" = "2008-2012",
                                   "2009-2013" = "2009-2013",
                                   "2010-2014" = "2010-2014",
-                                  "2011-2015" = "2011-2015")),
+                                  "2011-2015" = "2011-2015", 
+                                  "2012-2016" = "2012-2016", 
+                                  "2013-2017" = "2013-2017")),
        selectInput("map_gender", "Select Gender",
                    choices = list("Female", "Male")),
        selectInput("var", "Select Variable of Interest",
@@ -69,7 +71,7 @@ shinyUI(fluidPage(
       ## Initializing a single slider
       conditionalPanel(
         condition="input.tabs == 'plot'",
-        selectInput("plotvar", "Select Variable of Interest",
+      selectInput("plotvar", "Select Variable of Interest",
                     choices = list("Never Married" = "Never_Married_pct", 
                                    "Married" = "Married_pct",
                                    "Separated" = "Separated_pct",
@@ -96,7 +98,9 @@ shinyUI(fluidPage(
                                   "2008-2012" = "2008-2012",
                                   "2009-2013" = "2009-2013",
                                   "2010-2014" = "2010-2014",
-                                  "2011-2015" = "2011-2015"),
+                                  "2011-2015" = "2011-2015", 
+                                  "2012-2016" = "2012-2016", 
+                                  "2013-2017" = "2013-2017"),
                    multiple = TRUE),
        selectInput("sum_gender", "Select Gender",
                    choices = list("Female" = "Female", "Male" = "Male"), multiple=TRUE),
@@ -353,12 +357,12 @@ shinyUI(fluidPage(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
 
-                  p(strong("Marital Status Rates"),
+                 p(strong("Marital Status Rates"),
                  " - The number of people within each marital status category for a region over a specified five year range. When the number of people in a particular marital status category is too small, data cannot be displayed."), 
                   tags$br(),
 
-                p(strong("Five-Year Estimate"),
-                  "-Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions.  To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision."),
+                 p(strong("Five-Year Estimate"),
+                 " - Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available for regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions.  To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision."),
                 
                  
                  ## email feedback link

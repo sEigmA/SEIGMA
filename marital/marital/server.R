@@ -6,7 +6,7 @@
 ##            Xuelian Li, Justin     ##
 ##            Baldwin                ##
 ## Date Created:  10/22/2014         ##
-## Date Modified: 01/31/2017  JB     ##
+## Date Modified: 02/14/2019  VE     ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -20,7 +20,7 @@ shinyServer(function(input, output, session) {
     ## if none selected, put all years in vector
     if(is.null(input$sum_year))
       years <- c("2006-2010","2007-2011", "2008-2012","2009-2013", "2010-2014",
-                 "2011-2015")
+                 "2011-2015", "2012-2016", "2013-2017")
     
     ## Filter the data by the chosen Five Year Range 
     mar_df <- mar_data %>%
@@ -159,7 +159,7 @@ shinyServer(function(input, output, session) {
     # 
     pdf <- plot_mar_df()
     row.names(pdf) <- 1:nrow(pdf)
-    pdf$Region <- factor(pdf$Region, levels = pdf$Region,ordered = TRUE)
+    pdf$Region <- factor(pdf$Region, levels = unique(pdf$Region,ordered = TRUE))
     # mess with the levels statement
     ##
 
@@ -171,7 +171,7 @@ shinyServer(function(input, output, session) {
       geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
       ylab(paste("Percent of",gsub("_", " ", gsub("_pct", "", input$plotvar)),"Population (%)", sep=" "))+
       scale_color_manual(values=cbbPalette, guide="legend")+
-      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
+      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014, 2016))+
       geom_point(aes(colour=Region),size=4,alpha=1)+
       geom_line(aes(colour=Region, linetype=Gender),size=2,alpha=1)+
       theme_bw() + 
@@ -207,7 +207,7 @@ shinyServer(function(input, output, session) {
     pdf <- plot_mar_df()
     #row.names(pdf) <- 1:nrow(pdf)
     pdff <- subset(pdf, pdf$Gender=="Female")
-    pdff$Region <- factor(pdff$Region, levels = pdff$Region, ordered = TRUE)
+    pdff$Region <- factor(pdff$Region, levels = unique(pdff$Region, ordered = TRUE))
     
     
     ap=0.5
@@ -218,7 +218,7 @@ shinyServer(function(input, output, session) {
       geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
       ylab(paste("Percent of",gsub("_", " ", gsub("_pct", "", input$plotvar)),"Females (%)", sep=" "))+
       scale_color_manual(values=cbbPalette, guide="legend")+
-      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
+      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014, 2016))+
       geom_point(aes(colour=Region),size=4,alpha=1)+
       geom_line(aes(colour=Region),size=2,alpha=1)+
       theme_bw() + 
@@ -252,7 +252,7 @@ shinyServer(function(input, output, session) {
     pdf <- plot_mar_df()
     #row.names(pdf) <- 1:nrow(pdf)
     pdfm <- subset(pdf, pdf$Gender=="Male")
-    pdfm$Region <- factor(pdfm$Region, levels = pdfm$Region,ordered = TRUE)
+    pdfm$Region <- factor(pdfm$Region, levels = unique(pdfm$Region,ordered = TRUE))
     
     
     ap=0.5
@@ -263,7 +263,7 @@ shinyServer(function(input, output, session) {
       geom_errorbar(aes(ymin = Var-Error, ymax = Var+Error,colour=Region),alpha=ap,size=sz, width=0.125)+
       ylab(paste("Percent of",gsub("_", " ", gsub("_pct", "", input$plotvar)),"Males (%)", sep=" "))+
       scale_color_manual(values=cbbPalette, guide="legend")+
-      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014))+
+      scale_x_continuous(breaks=c(2006, 2008, 2010, 2012, 2014, 2016))+
       geom_point(aes(colour=Region),size=4,alpha=1)+
       geom_line(aes(colour=Region),size=2,alpha=1)+
       theme_bw() + 

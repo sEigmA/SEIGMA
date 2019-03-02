@@ -19,9 +19,7 @@ require(reshape2)
 require(shiny)
 require(googleCharts)
 require(leaflet)
-require(geojsonio)
-# require(RJSONIO)
-
+require(RJSONIO)
 #library(maps)
 library(lubridate)
 #library(gbm)
@@ -30,10 +28,10 @@ library(markdown)
 
 
 ## load map data
-MA_map_muni <- geojson_read("Muni_2010Census_DP1.geojson", what = "sp")
+MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted marital status data
-mar_data <- read.csv(file="BA002_02_marriagedata.csv")
+mar_data <- read.csv(file="marriagedata.csv")
 
 names(mar_data)[10:12] <- gsub("Now_", "", names(mar_data)[10:12])
 
@@ -190,7 +188,7 @@ summary_side_text <- conditionalPanel(
   ## h4 created 4th largest header
   h4("How to use this app:"),
   ## Creates text
-  helpText(p(strong('Please select the five-year range for which you are interested in seeing marital status estimates.'))),
+  p(strong('Please select the five-year range for which you are interested in seeing marital status estimates.')),
   tags$br(),
   tags$ul(
       tags$li('View rates by selecting male or female. To veiw both leave this selection blank.'),
@@ -212,10 +210,10 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select the five- year range and municipality for which you are interested in viewing marital status.')),
+p(strong('Please select the variable and municipality for which you are interested in viewing marital status.')),
            tags$br(),
   tags$ul(
-    tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county averages for females and males.')
+    tags$li('For a given five-year period, you can compare the municipality of your choice to the state and national averages for females and males.')
     ))
           
   tags$hr()
@@ -256,17 +254,15 @@ about_main_text <- p(strong("The SEIGMA Marital Status App"), "Displays the five
 )
 )
 
-
-plot_main_text <- p(strong("Variable Summary:"),
-                    ## breaks between paragraphs
-                    tags$br(),
-                    strong("Suicides"),
-                    " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10.", 
-                    tags$br(),
-                    strong("Crude Rate"), 
-                    " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:",
-                    tags$br(),
-                    strong("Crude Rate = Count / Population * 100,000", align="center"))
+# plot_main_text <- p(strong("Variable Summary:"),
+#                     ## breaks between paragraphs
+#                     tags$br(),
+#                     strong("Marital Status Rates"),
+#                     " - The number of people within each marital status category for a region over a specified five year range. When the number of people in a particular marital status category is too small, data cannot be displayed.", 
+#                     tags$br(),
+#                     strong("Five-Year Estimates"), 
+#                     " - Survey information is collected everyday of the year and then aggregated over a specific time period, five years. Multiyear estimates are available for regions with populations less than 65,000. However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision."
+#                     )
 
 font_size <- 14
 
