@@ -3,7 +3,7 @@
 ## App: SEIGMA dashboard     ##
 ## Author: Zhenning Kang     ##
 ## Date Created:  09/27/2017 ##
-## Last Modified: 05/09/2018 ##
+## Last Modified: 03/23/2019 ##
 ###############################
 
 ##### SETTINGS #####
@@ -63,7 +63,7 @@ pov_data$Year <- as.factor(as.numeric(substr(pov_data$Five_Year_Range, 1, 4))+2)
 ## -1 eliminates first column [rows,columns]
 une_data <- read.csv(file="data/unempdata2.csv")
 ## Load formatted Bankruptcy data
-ban_data <- read.csv(file="data/bankdata1.csv")
+ban_data <- read.csv(file="data/bankdata.csv")
 ## Load formatted Employment data
 emp_data <- read.csv(file="data/empdata3.csv")
 ## Load formatted Building Permits data
