@@ -23,7 +23,7 @@ dem_data$Under65 <- dem_data$Under35 + dem_data$Age_35_54_Pct_plot + dem_data$Ag
 
 ### SOCIAL TAB
 # data for married status plot
-mar_data <- read.csv(file="data/BA002_02_marriagedata.csv")
+mar_data <- read.csv(file="data/marriagedata.csv")
 mar_data$Year <- as.factor(as.numeric(substr(mar_data$Five_Year_Range, 1, 4))+2)
 mar_data$Gender <- relevel(mar_data$Gender, "Male")
 # data for education plot
