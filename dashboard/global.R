@@ -53,7 +53,7 @@ names(sch_data)[c(75,74, 78)]<-c("Lng", "Lat", "loc")
 inc_data <- read.csv(file="data/incomedata.csv")[,-1]
 inc_data$Year <- as.factor(as.numeric(substr(inc_data$Five_Year_Range, 1, 4))+2)
 ## Load formatted Rent data
-ren_data <- read.csv(file="data/rent.csv")
+ren_data <- read.csv(file="data/rent_update.csv")
 ren_data$Year <- as.factor(as.numeric(substr(ren_data$Five.Year.Range, 1, 4))+2)
 ren_data$Region <- ifelse(ren_data$Municipal=="Massachusetts", "MA", as.character(ren_data$Municipal))
 ## Load formatted Poverty data
