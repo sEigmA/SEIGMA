@@ -4,7 +4,7 @@
 ##            Kiridly, Zhenning Kang ## 
 ## Date Created:  01/07/16           ##
 ## Date Modified: 05/01/18 ZK        ##
-##                01/14/19 VE        ##
+##                04/03/19 VE        ##
 #######################################
 
 shinyServer(function(input, output, session){
@@ -319,7 +319,7 @@ shinyServer(function(input, output, session){
     if (input$map_radio == "Total_Levy") {
       if(input$map_display_radio == "Inflation_Adjusted_Total_Levy"){
       return(as.character(tags$div(
-        tags$h4("Annual Total Tax Levy (2017 dollars) in", muni_name, " for ", input$map_year),
+        tags$h4("Annual Total Tax Levy (2018 dollars) in", muni_name, " for ", input$map_year),
         tags$h5(muni_value)
       )))
     }

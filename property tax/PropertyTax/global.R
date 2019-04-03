@@ -4,7 +4,7 @@
 ##            Kiridly                ## 
 ## Date Created:  01/04/16           ##
 ## Date Modified: 01/06/16 XL        ##
-##                01/14/19 VE        ##
+##                04/03/19 VE        ##
 #######################################
 
 ##First file run - Environment Setup
@@ -308,7 +308,7 @@ TaxCha_plot_options<- googleLineChart("TotTax_plot2", width="100%", height="475p
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2017, 2),
+    ticks = seq(2003, 2018, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -353,60 +353,3 @@ TaxCha_plot_options<- googleLineChart("TotTax_plot2", width="100%", height="475p
     )
   )
 ))
-
-# Pct_plot_options<- googleLineChart("pct_plot1", width="100%", height="475px", options = list(
-#   
-#   ## set fonts
-#   fontName = "Source Sans Pro",
-#   fontSize = 14,
-#   
-#   ## set axis titles, ticks, fonts, and ranges
-#   hAxis = list(
-#     title = "Year",
-#     format = "####",
-#     ticks = seq(2003, 2013, 2),
-#     viewWindow = xlim,
-#     textStyle = list(
-#       fontSize = 14),
-#     titleTextStyle = list(
-#       fontSize = 16,
-#       bold = TRUE,
-#       italic = FALSE)
-#   ),
-#   vAxis = list(
-#     title = "Percent of Tax Levy by Class (%)",
-#     viewWindow = ylim_pct,
-#     textStyle = list(
-#       fontSize = 14),
-#     titleTextStyle = list(
-#       fontSize = 16,
-#       bold = TRUE,
-#       italic = FALSE)
-#   ),
-#   
-#   ## set legend fonts
-#   legend = list(
-#     textStyle = list(
-#       fontSize=14)),
-#   
-#   ## set chart area padding
-#   chartArea = list(
-#     top = 50, left = 75,
-#     height = "75%", width = "70%"
-#   ),
-#   
-#   ## set colors
-#   colors = cbbPalette,
-#   
-#   ## set point size
-#   pointSize = 3,
-#   
-#   ## set tooltip font size
-#   ## Hover text font stuff
-#   tooltip = list(
-#     textStyle = list(
-#       fontSize = 14
-#     )
-#   )
-# ))
-
