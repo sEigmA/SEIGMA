@@ -13,9 +13,7 @@ header <- dashboardHeader(title = "MASS-AT-A-GLANCE", disable = TRUE)
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    fluidpage(
     downloadButton("report", "Generate Report"),
-      ),
     actionButton("show", "How to use this application:"),
     br(),
     h4("Select Municipality"),
