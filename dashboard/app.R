@@ -492,10 +492,10 @@ body <- dashboardBody(
 ##### SERVER #####
 server <- function(input, output, session){
   output$report <- downloadHandler(
-    filename="Report.pdf",
+    filename="report.pdf",
     content=function(file){
-      tempReport <- file.path(tempdir(), "Report.Rmd")
-      file.copy("Report.Rmd", tempReport, overwrite=TRUE)
+      tempReport <- file.path(tempdir(), "report.Rmd")
+      file.copy("report.Rmd", tempReport, overwrite=TRUE)
       
       params <- list(n = input$slider)
       
