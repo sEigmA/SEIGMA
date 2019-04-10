@@ -13,6 +13,7 @@ header <- dashboardHeader(title = "MASS-AT-A-GLANCE", disable = TRUE)
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
+    downloadButton("report", "Generate Report"),
     actionButton("show", "How to use this application:"),
     br(),
     h4("Select Municipality"),
@@ -490,6 +491,18 @@ body <- dashboardBody(
 
 ##### SERVER #####
 server <- function(input, output, session){
+  output$report <- downloadHandler(
+    filename="Report.pdf",
+    content=function(file){
+      tempReport <- file.path(tempdir(), "Report.Rmd")
+      file.copy("Report.Rmd", tempReport, overwrite=TRUE)
+      
+      params <- list(n = input$slider)
+      
+      rmarkdown::render(tempReport, output_file = file,
+                        params = params,
+                        envir = new.env(parent=globalenv())
+          )
   
   ##### Instruction Button #####
   observeEvent(input$show, {
