@@ -13,7 +13,6 @@ header <- dashboardHeader(title = "MASS-AT-A-GLANCE", disable = TRUE)
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    downloadButton("report", "Generate Report"),
     actionButton("show", "How to use this application:"),
     br(),
     h4("Select Municipality"),
@@ -136,13 +135,13 @@ body <- dashboardBody(
                   )
             ),
       fluidRow(
-        # box(width = 6,
-        #     column(6,
-        #            radioButtons('format', 'Select a Document Format', c('PDF', 'HTML', 'Word'), inline = TRUE, selected = NA)
-        #            ),
-        #     column(6,
-        #            downloadButton('downloadReport', 'Generate Demo Report')
-        #            )),
+         box(width = 6,
+             column(6,
+                    radioButtons('format', 'Select a Document Format', c('PDF', 'HTML', 'Word'), inline = TRUE, selected = NA)
+                    ),
+             column(6,
+                    downloadButton('downloadReport', 'Generate Demo Report')
+                    )),
         box(width = 12,
             h5("Population estimates can be found at the bottom of the page."))
       ),
