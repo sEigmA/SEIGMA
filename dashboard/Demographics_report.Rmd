@@ -1,5 +1,6 @@
 
 ---
+title: "Demographics Report"
 output:
   pdf_document: default
   html_document: default
@@ -8,9 +9,6 @@ params:
 ---
 
 ![](logo.jpg)
----
-"Demographics Report"
----
 
 ```{r}
 params$n
