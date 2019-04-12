@@ -7,6 +7,8 @@ params:
   n: NA
 ---
 
+![](logo.jpg)
+
 ```{r}
 params$n
 ```
