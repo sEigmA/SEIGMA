@@ -4,15 +4,10 @@ title: "Demographics Report"
 output:
   pdf_document: default
   html_document: default
-params:
-  n: NA
 ---
 
 ![](logo.jpg)
 
-```{r}
-params$n
-```
 
 ```{r, echo=FALSE}
     dat <- age_df()
