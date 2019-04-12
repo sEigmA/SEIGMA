@@ -5,7 +5,7 @@ output:
     df_print: paged
 ---
 
-
+![](logo.jpg)
 
 ```{r, echo=FALSE}
     dat <- age_df()
