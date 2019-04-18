@@ -5,8 +5,6 @@
 ## Date Created:  09/27/2017  ##
 ## Last Modified: 04/30/2018  ##
 ################################
-
-##### SETTINGS #####
 source("global.R")
 
 ##### UI #####
@@ -20,7 +18,7 @@ sidebar <- dashboardSidebar(
     menuItem("Municipality", icon = icon("address-book"),
              selectInput("muni", "Select Municipalities",
                          choices = MA_municipals,
-                         selected = "Plainville",
+                         selected = "Springfield",
                          multiple = TRUE)
     ),
     menuItem("County/MA/US Average", icon = icon("check-square-o"),
@@ -136,13 +134,13 @@ body <- dashboardBody(
         )
       ),
       fluidRow(
-        box(width = 12,
-            column(6,
-                    radioButtons('format', 'Select a Document Format', c('PDF', 'HTML'), inline = TRUE, selected = NA)
-                   ),
-             column(6,
-                    downloadButton('downloadReport', 'Generate Demographics Report')
-                    )),
+        #box(width = 12,
+            #column(6,
+                    #radioButtons('format', 'Select a Document Format', c('PDF', 'HTML'), inline = TRUE, selected = NA)
+                   #),
+             #column(6,
+                    #downloadButton('downloadReport', 'Generate Demographics Report')
+                    #)),
         box(width = 12,
             h5("Population estimates can be found at the bottom of the page."))
       ),
@@ -237,19 +235,12 @@ body <- dashboardBody(
               )
             ),
             fluidRow(
-              box(width = 12,
-                  column(6,
-                         radioButtons('format', 'Select a Document Format', c('PDF', 'HTML'), inline = TRUE, selected = NA)
-                  ),
-                  column(6,
-                         downloadButton('downloadReport', 'Generate Social Report')
-                  )),
               box(width = 6,
                   fluidRow(
                     box(width = 12,
                         h4("Please Select a Status of Interest"),
                         column(width = 4,
-                               checkboxInput("married", "Now Married", FALSE),
+                               checkboxInput("married", "Married", FALSE),
                                checkboxInput("widowed", "Widowed", FALSE)
                         ),
                         column(width = 4,
@@ -339,13 +330,13 @@ body <- dashboardBody(
               )
             ),
             fluidRow(
-              box(width = 12,
-                  column(6,
-                         radioButtons('format', 'Select a Document Format', c('PDF', 'HTML'), inline = TRUE, selected = NA)
-                  ),
-                  column(6,
-                         downloadButton('downloadReport', 'Generate Economic Report')
-                  )),
+              #box(width = 12,
+                  #column(6,
+                         #radioButtons('format', 'Select a Document Format', c('PDF', 'HTML'), inline = TRUE, selected = NA)
+                  #),
+                  #column(6,
+                         #downloadButton('downloadReport', 'Generate Economic Report')
+                  #)),
               box(width = 6,
                   plotOutput("plot_inc", click = "inc_click"),
                   verbatimTextOutput("inc_point"),
@@ -598,31 +589,31 @@ server <- function(input, output, session){
       })
       
       ##### DEMOGRAPHICS TAB #####
-      output$downloadReport <- downloadHandler(
+      #output$downloadReport <- downloadHandler(
         
-        filename = function() {
-          paste('demo_report', sep = '.', switch(
-            input$format, PDF = 'pdf', HTML = 'html', Word = 'docx'
-          ))
-        },
+        #filename = function() {
+          #paste('demo_report', sep = '.', switch(
+            #input$format, PDF = 'pdf', HTML = 'html', Word = 'docx'
+          #))
+        #},
         
-        content = function(file) {
-          src <- normalizePath('report.Rmd')
+        #content = function(file) {
+          #src <- normalizePath('report.Rmd')
           
           # temporarily switch to the temp dir, in case you do not have write
           # permission to the current working directory
-          owd <- setwd(tempdir())
-          on.exit(setwd(owd))
-          file.copy(src, 'report.Rmd', overwrite = TRUE)
+          #owd <- setwd(tempdir())
+          #on.exit(setwd(owd))
+          #file.copy(src, 'report.Rmd', overwrite = TRUE)
           
-          library(rmarkdown)
-          out <- render('report.Rmd', switch(
-            input$format,
-            PDF = pdf_document(), HTML = html_document(), Word = word_document()
-          ))
-          file.rename(out, file)
-        }
-      )
+          #library(rmarkdown)
+          #out <- render('report.Rmd', switch(
+            #input$format,
+            #PDF = pdf_document(), HTML = html_document(), Word = word_document()
+          #))
+          #file.rename(out, file)
+        #}
+      #)
       
       
       #### Age ####
@@ -667,9 +658,10 @@ server <- function(input, output, session){
           labs(title = "Age Distribution", 
                x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
+          theme(legend.position = "top") +
           theme(legend.text = element_text(size = 12)) + 
           scale_color_discrete("Region")
       })
@@ -726,9 +718,9 @@ server <- function(input, output, session){
           labs(title = "Age Distribution", 
                x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
-          theme(axis.text=element_text(size=14)) + 
+          theme(axis.text=element_text(size=14)) +
           theme(legend.text = element_text(size = 12)) + 
           scale_color_discrete("Region")
         print(p) 
@@ -761,9 +753,10 @@ server <- function(input, output, session){
           geom_point(size = 3) + 
           labs(x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
+          theme(legend.position = "top") +
           theme(legend.text = element_text(size = 12)) + 
           scale_color_discrete("Region")
         print(p) 
@@ -815,9 +808,10 @@ server <- function(input, output, session){
             labs(title = "Age Distribution", 
                  x = "Mid-Year of Five Year Range",
                  y = "% Population") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
+            theme(legend.position = "top") +
             theme(legend.text = element_text(size = 12))+ 
             scale_color_discrete("Region")
           print(p) 
@@ -859,7 +853,7 @@ server <- function(input, output, session){
           labs(title = "Race Distribution", 
                x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))+ 
@@ -909,7 +903,7 @@ server <- function(input, output, session){
           geom_point(size = 3) + 
           labs(x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))+ 
@@ -959,7 +953,7 @@ server <- function(input, output, session){
             labs(title = "Race Distribution", 
                  x = "Mid-Year of Five Year Range",
                  y = "% Population") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))+ 
@@ -989,7 +983,7 @@ server <- function(input, output, session){
           labs(title = "Gender Distribution", 
                x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12)) 
@@ -1010,7 +1004,7 @@ server <- function(input, output, session){
           labs(title = "Gender Distribution", 
                x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12)) 
@@ -1045,7 +1039,7 @@ server <- function(input, output, session){
             labs(title = "Gender Distribution", 
                  x = "Mid-Year of Five Year Range",
                  y = "% Population") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12)) 
@@ -1075,7 +1069,7 @@ server <- function(input, output, session){
           labs(title = "Ethnicity Distribution", 
                x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))
@@ -1096,7 +1090,7 @@ server <- function(input, output, session){
           labs(title = "Ethnicity Distribution", 
                x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))
@@ -1131,7 +1125,7 @@ server <- function(input, output, session){
             labs(title = "Ethnicity Distribution", 
                  x = "Mid-Year of Five Year Range",
                  y = "% Population") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))
@@ -1154,37 +1148,11 @@ server <- function(input, output, session){
           pop_show <- rbind(pop_show, c(my_place[i], pop_muni$Total_Population))
         }
         pop_show <- as.data.frame(pop_show)
-        colnames(pop_show) <- c("Region", "2005-2009", "2006-2010", "2007-2011", "2008-2012", "2009-2013", "2010-2014", "2011-2015")
+        colnames(pop_show) <- c("Region", "2005-2009", "2006-2010", "2007-2011", "2008-2012", "2009-2013", "2010-2014", "2011-2015", "2012-2016", "2013-2017")
         return(pop_show)
       }, options = list(searching = FALSE, orderClasses = TRUE)) 
       
       ##### SOCIAL TAB BELOW #####
-      output$downloadReport <- downloadHandler(
-        
-        filename = function() {
-          paste('social_report', sep = '.', switch(
-            input$format, PDF = 'pdf', HTML = 'html', Word = 'docx'
-          ))
-        },
-        
-        content = function(file) {
-          src <- normalizePath('Social_report.Rmd')
-          
-          # temporarily switch to the temp dir, in case you do not have write
-          # permission to the current working directory
-          owd <- setwd(tempdir())
-          on.exit(setwd(owd))
-          file.copy(src, 'Social_report.Rmd', overwrite = TRUE)
-          
-          library(rmarkdown)
-          out <- render('Social_report.Rmd', switch(
-            input$format,
-            PDF = pdf_document(), HTML = html_document(), Word = word_document()
-          ))
-          file.rename(out, file)
-        }
-      )
-      
       
       #### Marital App ####
       mar_df <- reactive({
@@ -1220,7 +1188,7 @@ server <- function(input, output, session){
           labs(title = "Marital Status", 
                x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))+ 
@@ -1282,7 +1250,7 @@ server <- function(input, output, session){
             labs(title = "Marital Status", 
                  x = "Mid-Year of Five Year Range",
                  y = "% Population") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))+ 
@@ -1322,7 +1290,7 @@ server <- function(input, output, session){
           labs(title = "Educational Attainment", 
                x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))+ 
@@ -1379,7 +1347,7 @@ server <- function(input, output, session){
             labs(title = "Educational Attainment", 
                  x = "Mid-Year of Five Year Range",
                  y = "% Population") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))+ 
@@ -1428,7 +1396,7 @@ server <- function(input, output, session){
           labs(title = "Suicide Rate (Age Adjusted) [County]", 
                x = "Year",
                y = "Per 100,000 Persons") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))
@@ -1462,7 +1430,7 @@ server <- function(input, output, session){
             labs(title = "Suicide Rate (Age Adjusted) [County]", 
                  x = "Year",
                  y = "Per 100,000 Persons") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))
@@ -1489,7 +1457,7 @@ server <- function(input, output, session){
           labs(title = "Civilian Veterans Status", 
                x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))
@@ -1523,7 +1491,7 @@ server <- function(input, output, session){
             labs(title = "Civilian Veterans Status", 
                  x = "Mid-Year of Five Year Range",
                  y = "% Population") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))
@@ -1558,7 +1526,7 @@ server <- function(input, output, session){
           labs(title = "English Language Learner [Municipal]", 
                x = "Year",
                y = "English Language Learner %") +  
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))
@@ -1591,7 +1559,7 @@ server <- function(input, output, session){
             labs(title = "English Language Learner [Municipal]", 
                  x = "Year",
                  y = "English Language Learner %") +  
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))
@@ -1626,7 +1594,7 @@ server <- function(input, output, session){
           labs(title = "Students with Disabilities [Municipal]", 
                x = "Year",
                y = "Students with Disabilities %") +  
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))
@@ -1660,7 +1628,7 @@ server <- function(input, output, session){
             labs(title = "Students with Disabilities [Municipal]", 
                  x = "Year",
                  y = "Students with Disabilities %") +  
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))
@@ -1687,7 +1655,7 @@ server <- function(input, output, session){
           labs(title = "Median Annual Household Income", 
                x = "Mid-Year of Five Year Range",
                y = "Dollars") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))
@@ -1721,7 +1689,7 @@ server <- function(input, output, session){
             labs(title = "Median Annual Household Income", 
                  x = "Mid-Year of Five Year Range",
                  y = "Dollars") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))
@@ -1747,7 +1715,7 @@ server <- function(input, output, session){
           labs(title = "Poverty Rate", 
                x = "Mid-Year of Five Year Range",
                y = "% Population") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))
@@ -1781,7 +1749,7 @@ server <- function(input, output, session){
             labs(title = "Poverty Rate", 
                  x = "Mid-Year of Five Year Range",
                  y = "% Population") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))
@@ -1807,7 +1775,7 @@ server <- function(input, output, session){
           labs(title = "Average Monthly Employment [Municipal]", 
                x = "Year",
                y = "Count") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))
@@ -1841,7 +1809,7 @@ server <- function(input, output, session){
             labs(title = "Average Monthly Employment [Municipal]", 
                  x = "Year",
                  y = "Count") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))
@@ -1968,7 +1936,7 @@ server <- function(input, output, session){
           labs(title = "Business Bankruptcy [County]", 
                x = "Year",
                y = "% Total Business Fillings") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12)) + 
@@ -2026,7 +1994,7 @@ server <- function(input, output, session){
             labs(title = "Business Bankruptcy [County]", 
                  x = "Year",
                  y = "% Total Business Fillings") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12)) + 
@@ -2055,7 +2023,7 @@ server <- function(input, output, session){
           labs(title = "Personal Bankruptcy [County]", 
                x = "Year",
                y = "% Total Personal Fillings") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12)) + 
@@ -2110,7 +2078,7 @@ server <- function(input, output, session){
             labs(title = "Personal Bankruptcy [County]", 
                  x = "Year",
                  y = "% Total Personal Fillings") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12)) + 
@@ -2123,7 +2091,7 @@ server <- function(input, output, session){
       #### Rent App ####
       ren_df <- reactive({
         my_place <- place()
-        muni_df <- filter(ren_data, Region %in% my_place) %>% select(Region, Median.Rent.2015.Dollar, Year)
+        muni_df <- filter(ren_data, Region %in% my_place) %>% select(Region, Median.Rent.2017.Dollar, Year)
         muni_df$Year <- gsub("20", "'", muni_df$Year)
         muni_df   
       })
@@ -2131,13 +2099,13 @@ server <- function(input, output, session){
       output$plot_ren <- renderPlot({
         dat <- ren_df() 
         theme_set(theme_classic())
-        ggplot(dat, aes(x=Year, y=Median.Rent.2015.Dollar, group = Region, colour = Region)) + 
+        ggplot(dat, aes(x=Year, y=Median.Rent.2017.Dollar, group = Region, colour = Region)) + 
           geom_line(aes(linetype=Region), size = 1.25) + 
           geom_point(size = 3) + 
-          labs(title = "Median Monthly Rent(2015-$ Adjusted)", 
+          labs(title = "Median Monthly Rent(2017-$ Adjusted)", 
                x = "Mid-Year of Five Year Range",
                y = "Dollars") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))
@@ -2165,13 +2133,13 @@ server <- function(input, output, session){
           png(file)
           dat <- ren_df() 
           theme_set(theme_classic())
-          p <- ggplot(dat, aes(x=Year, y=Median.Rent.2015.Dollar, group = Region, colour = Region)) + 
+          p <- ggplot(dat, aes(x=Year, y=Median.Rent.2017.Dollar, group = Region, colour = Region)) + 
             geom_line(aes(linetype=Region), size = 1.25) + 
             geom_point(size = 3) + 
-            labs(title = "Median Monthly Rent(2015-$ Adjusted)", 
+            labs(title = "Median Monthly Rent(2017-$ Adjusted)", 
                  x = "Mid-Year of Five Year Range",
                  y = "Dollars") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))
@@ -2272,7 +2240,7 @@ server <- function(input, output, session){
           labs(title = "Assessed Property Values[Municipal]", 
                x = "Year",
                y = "Dollars (million)") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))+ 
@@ -2329,7 +2297,7 @@ server <- function(input, output, session){
             labs(title = "Assessed Property Values [Municipal]", 
                  x = "Year",
                  y = "Dollars (million)") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))+ 
@@ -2343,7 +2311,7 @@ server <- function(input, output, session){
       tax_df <- reactive({
         my_place <- place()
         # muni_df <- filter(tax_data, Municipal %in% my_place) %>% select(Municipal, Percentage_of_Residential, Percentage_of_Commercial, Percentage_of_Industrial, Percentage_of_Personal_Property, Year)
-        muni_df <- filter(tax_data, Municipal %in% my_place) %>% select(Municipal, Residential_Million, Commercial_Million, Industrial_Million, Personal_Property_Million, Year)
+        muni_df <- filter(tax_data, Municipal %in% my_place) %>% select(Municipal, Residential, Commercial, Industrial, Personal_Property, Year)
         muni_df$Year <- gsub("20", "'", muni_df$Year)
         #names(muni_df) <- gsub("Percentage_of_", "", names(muni_df))
         names(muni_df) <- c("Municipal", "Residential", "Commercial", "Industrial", "Personal Property", "Year")
@@ -2371,7 +2339,7 @@ server <- function(input, output, session){
           labs(title = "Tax Levy by Class [Municipal]", 
                x = "Year",
                y = "Dollars (million)") + 
-          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
           theme(axis.title = element_text(face="bold", size=18)) +
           theme(axis.text=element_text(size=14)) + 
           theme(legend.text = element_text(size = 12))+ 
@@ -2428,7 +2396,7 @@ server <- function(input, output, session){
             labs(title = "Tax Levy by Class [Municipal]", 
                  x = "Year",
                  y = "Dollars (million)") + 
-            theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+            theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
             theme(axis.title = element_text(face="bold", size=18)) +
             theme(axis.text=element_text(size=14)) + 
             theme(legend.text = element_text(size = 12))+ 
