@@ -252,27 +252,24 @@ shinyUI(fluidPage(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                
-                   
-                   p(strong("Total Tax Levy"), 
-                             "-a levy, or tax, on property that the owner is required to pay. The tax is given by the region in which the property is located."),
-                   tags$br(),
-                   p(strong('Class - Residential'),
-                             "-All property including one or more homes.  It also includes accessory buildings and land such as pools, tennis, courts, sheds, etc.  "),
+                 
+                 p(strong("Total Tax Levy"), 
+                   "- A levy, or tax, on property that the owner is required to pay. The tax is given by the region in which the property is located."),
+                 tags$br(), 
+                 p(strong('Class - Residential'), 
+                   "- All property including one or more homes. It also includes accessory buildings and land such as pools, tennis, courts, sheds, etc.  "),
                  tags$br(),
                  p(strong('Class - Commercial'), 
-                            "-Property for the purpose of conducting a business.  This includes office buildings, retail stores, etc. Personal Property is also considered in this category of Commercial Class."),
+                   "- Property for the purpose of conducting a business. This includes office buildings, retail stores, etc. Personal Property is also considered in this category of Commercial Class."),
                  tags$br(),
                  p(strong('Class - Industrial'), 
-                   "-Property involved in manufacturing or processing. This includes porperty used for storage, transmission, and the regulated generation of utilities."),
-                 
+                   "- Property involved in manufacturing or processing. This includes porperty used for storage, transmission, and the regulated generation of utilities."),
                  tags$br(),
-                 p(strong('Class - Personal property'), 
-                   "-Property not permanently affixed to real estate. Personal property is movable and can be removed without serious damage either to the real estate or to the item being removed."),
-                 
+                 p(strong('Class - Personal Property'), 
+                   "- Property not permanently affixed to real estate. Personal property is movable and can be removed without serious damage either to the real estate or to the item being removed."),
                  tags$br(),
                  p(strong('2018 Dollars'), 
-                   "-Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2018 to be our constant."),
+                   "- Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2018 to be our constant."),
                  tags$br(),
                  
                  #tags$br(),

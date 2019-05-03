@@ -4,7 +4,7 @@
 ##            Kiridly                ## 
 ## Date Created:  01/04/16           ##
 ## Date Modified: 01/06/16 XL        ##
-##                04/03/19 VE        ##
+##                05/03/19 VE        ##
 #######################################
 
 ##First file run - Environment Setup
@@ -167,7 +167,6 @@ summary_side_text <- conditionalPanel(
   helpText(p(strong('Please select the years for which you are interested in viewing the annual total tax levy and percent tax levy by class.'))),
   tags$br(),
   tags$ul(
-    tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
     tags$li('To look at the annual total tax levy and percent tax levy by class for a single year, select single year from the drop down menu.'),
@@ -183,7 +182,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the municipality for which you are interested in viewing the annual total tax levy and percent of the total tax levy by class. Please do not select more than ten municipalities at a time.')),
+  helpText(p(strong('Please select the municipality for which you are interested in viewing the annual total tax levy and percent of the total tax levy by class. Please do not select more than ten municipalities at a time.'))),
   tags$br(),
   tags$ul(
     tags$li('Once you have selected the municipalities which you are interested in viewing the annual total tax levy and percent of the total tax levy by class, select a Variable of Interest.'),
