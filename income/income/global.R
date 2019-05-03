@@ -161,7 +161,7 @@ summary_side_text <- conditionalPanel(
     tags$br(),
     tags$li('To compare median data to the Massachusetts or US median, select the corresponding box.'),
     tags$br(),
-    tags$li(p(strong('Please note that all statistics are five-year estimates.'))),
+    tags$li('Please note that all statistics are five-year estimates.'),
     tags$br(),
     tags$li("For more information about how five-year estimates are calculated, click on the 'More Info' tab.")
     
@@ -177,7 +177,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the five- year range and municipality for which you are interested in viewing median annual household income.')),
+  helpText(p(strong('Please select the five-year range and municipality for which you are interested in viewing median annual household income.'))),
   tags$br(),
   tags$ul(
     tags$li("For a five-year period, you can compare a municipalitiy's median annual household income to the country, state, and national median.")
@@ -186,7 +186,7 @@ plot_side_text <- conditionalPanel(
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong("Please select a five- year range, and click on 'Generate Map' to get started. "))),
+  helpText(p(strong("Please select a five-year range, and click on 'Generate Map' to get started. "))),
   tags$br(),
   tags$ul(
     tags$li('Clicking on a municipality will display the median annual household income for the five-year range that you selected.')
@@ -216,6 +216,6 @@ plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
                     p(strong("Median Annual Household income"),
-                      " - Average median annual household income over a five year period for each municipality."))
+                      " - Average median annual household income over a five-year period for each municipality."))
 
 font_size <- 14

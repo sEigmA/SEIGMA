@@ -5,7 +5,7 @@
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  11/05/2014         ##
 ## Date Modified: 04/22/2015 AR      ##
-## Date Updated:  02/14/2019 VE      ##
+## Date Updated:  05/03/2019 VE      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -235,12 +235,11 @@ shinyUI(fluidPage(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Median Annual Household Income"), "- This includes the income of the household and all other individuals ages 15 and over. Median annual household income is adjusted to the 2015 $ and provides a clear trend to assess residents' household income overtime. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.")),
-            
+                   tags$li(p(strong("Median Annual Household Income"), "- This includes the income of the household and all other individuals ages 15 and over. Median annual household income is adjusted to the 2017$ and provides a clear trend to assess residents' household income over time. Data was collected at multiple levels to allow for analysis at municipality, state, and US level comparatively.")),
                    tags$br(),
                    tags$li(p(strong("Median"),"- The median divides the distribution of median annual household income into two equal parts; half that fall below the median for median annual household income and half that fall above the median annual household income.")),
                    tags$br(),
-                   tags$li(p(strong("Five-Year Estimates"),"- Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.")
+                   tags$li(p(strong("Five-Year Estimates"),"- Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years. Multiyear estimates are available to regions with populations less than 65,000. However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.")
                    )
                  ),
                  #tags$br(),
