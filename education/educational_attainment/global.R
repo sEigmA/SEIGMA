@@ -155,7 +155,6 @@ summary_side_text <- conditionalPanel(
   helpText(p(strong('Please select the five-year range for which you are interested in viewing the educational attainment estimate.'))),
   tags$br(),
   tags$ul(
-    tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
     tags$li('To compare educational attainment estimate to the Massachusetts or United States estimate, select the corresponding check box.'),
@@ -171,7 +170,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the five- year range and municipality for which you are interested in viewing educational attainment.')),
+  helpText(p(strong('Please select the five- year range and municipality for which you are interested in viewing educational attainment.'))),
   tags$br(),
   tags$ul(
     tags$li("For a given five-year period, you can compare a municipality's estimate of educational attainment to the county, state, and national estimate.")

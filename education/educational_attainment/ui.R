@@ -4,9 +4,9 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Xuelian Li    ## 
 ##            Steve Lauer            ##
-## Date Created:  12/04/14           ##
-## Date Modified: 04/04/15  XL       ##
-## Data Updated: 02/14/2019 VE       ##
+## Date Created:  12/04/2014         ##
+## Date Modified: 04/04/2015  XL     ##
+## Data Updated:  05/03/2019 VE      ##
 #######################################
 
 
@@ -231,10 +231,11 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                  tags$li(p(strong("Educational Attainment Rates"),
-                 " - The number of people with each level of educational attainment for a specific region over a specific five-year period of time.  All inidviduals represented in this measure were at least 25 years of age. Respondents were classified according to highest level of school completed. When a municipaility is missing data, this indicates that data cannot be displayed because the number of people is too small.")), 
+                   tags$li(p(strong("Educational Attainment Rates"), 
+                             " - The number of people with each level of educational attainment for a specific region over a specific five-year period of time.  All individuals represented in this measure were at least 25 years of age. Respondents were classified according to highest level of school completed. When a municipality is missing data, this indicates that data cannot be displayed because the number of people is too small.")), 
                  tags$br(),
-                 tags$li(p(strong("Five-Year Estimates"), "- Survey information is collected everyday of the year and then aggregated over a specific time period,in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible for larger municipalities.To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision." ))),
+                 tags$li(p(strong("Five-Year Estimates"), 
+                           "- Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible for larger municipalities.To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision." ))),
                  
                 
                  
