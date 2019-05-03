@@ -5,6 +5,6 @@ account: seigma
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 55892
-bundleId: 1901600
+bundleId: 2057218
 url: https://seigma.shinyapps.io/employment/
-when: 1551209736.55986
+when: 1556873634.44591

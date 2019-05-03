@@ -2,3 +2,4 @@ name: labor
 account: seigma
 bundleId: 168379
 url: http://seigma.shinyapps.io/labor
+server: shinyapps.io
