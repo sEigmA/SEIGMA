@@ -5,6 +5,6 @@ account: seigma
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 34972
-bundleId: 1809372
+bundleId: 2057351
 url: https://seigma.shinyapps.io/demographics/
-when: 1547229690.19821
+when: 1556880496.96547

@@ -5,7 +5,7 @@
 ##            Kiridly, Emily Ramos   ## 
 ## Date Created:  02/28/2015         ##
 ## Date Modified: 03/12/2015 XL      ##
-##                01/11/2019 VE      ##
+##                05/03/2019 VE      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -188,10 +188,9 @@ summary_side_text <- conditionalPanel(
       tags$br(),
       tags$li('For the five-year ranges below, you can compare the demographic estimate in a municipality to national, state, and county estimate.'),
       tags$br(),
-      tags$li(p(strong('The estimate of age, gender, race, or ethinicity can be sorted in ascending and descending order by clicking the column or variable.'))),
+      tags$li('The estimate of age, gender, race, or ethinicity can be sorted in ascending and descending order by clicking the column or variable.'),
       tags$br(),
       tags$li('Please note that all statistics are five-year estimates.')
-            
   )
   
   
@@ -202,15 +201,14 @@ summary_side_text <- conditionalPanel(
 ## Same concept
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
-  h4("How to use this app:"),
-p(strong('Please select the municipality and five-year range for which you are interested in viewing the estimate of age, gender, race, or ethinicity.')),
-           tags$br(),
+  h4("How to use this app:"), 
+  helpText(p(strong('Please select the municipality and five-year range for which you are interested in viewing the estimate of age, gender, race, or ethinicity.'))),
+  tags$br(),
   tags$ul(
     tags$li('View the estimate for age, gender, race, or ethnicity by selecting the appropriate box below.'),
     tags$br(),
     tags$li('For a given five-year period, you can compare the municipality of your choice to the national, state, and county estimate for age, gender, race, and ethnicity.')
     ))
-          
   tags$hr()
 
 
