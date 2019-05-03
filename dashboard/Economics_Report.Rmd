@@ -1,0 +1,383 @@
+---
+output:
+  pdf_document: default
+  html_document: 
+    df_print: paged
+---
+
+![](logo.jpg)\  
+ 
+
+#Economics Report  
+
+
+Downloaded: `r format(Sys.Date(), "%B %d, %Y")`
+
+
+```{r income, echo=FALSE, fig.height=3.75}
+dat <- inc_df() 
+        theme_set(theme_classic())
+        ggplot(dat, aes(x=Year, y=Median_Annual_Household_Income, group = Region, colour = Region)) + 
+          geom_line(aes(linetype=Region), size = 1.25) + 
+          geom_point(size = 3) + 
+          labs(title = "Median Annual Household Income", 
+               x = "Mid-Year of Five Year Range",
+               y = "Dollars") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))
+```
+
+<br><br>
+
+Please note that all plotted values are five-year estimates.
+
+$\bf{Median ~ Annual ~ Household ~ Income:}$ This includes the income of the household and all other individuals ages 15 and over. Median annual household income is adjusted to the 2015 $\$$ and provides a clear trend to assess residents' household income overtime. Annual data for median annual household income was collected for a ten-year time series, from 2002- 2012, the latest data available. Data was collected at multiple levels to allow for analysis at multiple levels; municipality, state, and US level comparatively.
+
+
+$\bf{Median:}$ The median divides the distribution of median annual household income into two equal parts; half that fall below the median for median annual household income and half that fall above the median annual household income.
+
+
+$\bf{Five-Year ~ Estimate:}$ Survey information is collected everyday of the year and then aggregated over a specific time period, five years. Multiyear estimates are available to regions with populations less than 65,000. However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.
+
+Data Source: American Community Survey (ACS)
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full income app: [https://seigma.shinyapps.io/income/](https://seigma.shinyapps.io/income/)
+
+<br><br>
+
+```{r poverty, echo=FALSE}
+dat <- pov_df() 
+        theme_set(theme_classic())
+        ggplot(dat, aes(x=Year, y=Percent_Pov, group = Region, colour = Region)) + 
+          geom_line(aes(linetype=Region), size = 1.25) + 
+          geom_point(size = 3) + 
+          labs(title = "Poverty Rate", 
+               x = "Mid-Year of Five Year Range",
+               y = "% Population") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))
+```
+
+<br><br>
+
+Please note that all plotted values are five-year estimates.
+
+$\bf{Poverty ~ Status:}$ To determine a person's poverty status, one compares the person's total family income in the last 12 months with the poverty threshold appropriate for that person's family size and composition. If the total income of that person's family is less than the threshold appropriate for that family, then the person is considered below the poverty level. Poverty is defined at the family level and not the household level, the poverty status of the household is determined by the poverty status of the householder.
+
+
+$\bf{Poverty ~ Threshold:}$ Poverty thresholds are determined by multiplying base year thresholds (set as yearly income in 1982) by the monthly inflation factor for the 12 months before the period of interest. For example, if we want to determine if a family with three children with a total income of $\$14,000$ (July 2012 - June 2013) was at or below the poverty threshold we would do the following. First we would see what the base year threshold was in 1982 for a family of this size, $\$7,765$. We then multiply this by the inflation rate for the 12-month period before June 2012 - July 2013, which is 2.39719. This would give us a threshold income of $\$18,614$. When we compare this to the income of the family above, $\$14,000$ is well below the threshold we calculated, meaning this family would be considered to be in poverty. In this graph, we calculate the poverty threshold as described in the example above as being $\$23,268$.
+
+
+$\bf{Five-Year ~ Estimate:}$ Survey information is collected everyday of the year and then aggregated over a specific time period, five years. Multiyear estimates are available to regions with populations less than 65,000. However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.
+
+Data Source: American Community Survey (ACS)
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full poverty app: [https://seigma.shinyapps.io/poverty/](https://seigma.shinyapps.io/poverty/)
+
+<br><br>
+
+
+```{r employment, echo=FALSE}
+dat <- emp_df() 
+        theme_set(theme_classic())
+        ggplot(dat, aes(x=Year, y=Average_Monthly_Employment, group = Municipal, colour = Municipal)) + 
+          geom_line(aes(linetype=Municipal), size = 1.25) + 
+          geom_point(size = 3) + 
+          labs(title = "Average Monthly Employment [Municipal]", 
+               x = "Year",
+               y = "Count") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))   
+```
+
+<br><br>
+
+$\bf{Average ~ Monthly ~ Employment:}$ To estimate monthly employment, all employees who were paid at any point in the past year are counted (this includes full-time, part-time, seasonal, salaried, and hourly employees). The total number of employees is then divided by the number of pay periods per calendar year at each business establishment.
+
+Data Source: MA Department of Unemployment Assistance
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full employment app: [https://seigma.shinyapps.io/employment/](https://seigma.shinyapps.io/employment/)
+
+<br><br>
+
+```{r unemployment, echo=FALSE}
+dat <- une_df() 
+        theme_set(theme_classic())
+        ggplot(dat, aes(x=Year, y=Unemployment_Rate_Avg, group = Region, colour = Region)) + 
+          geom_line(aes(linetype=Region), size = 1.25) + 
+          geom_point(size = 3) + 
+          labs(title = "Annual Average Unemployment \nRate [No US Avg]", 
+               x = "Year",
+               y = "% Population") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))    
+```
+
+<br><br>
+
+$\bf{Unemployment ~ Rate:}$ The unemployment rate is produced by the Bureau of Labor Statistics (BLS), which uses state and national level information from the Current Population Survey (CPS). Municipality unemployment rates were gathered form a section of the BLS and CPS called the Local Areas Unemployment Statistics Series. The unemployment rate represents the number of unemployed people as a proportion of the total labor force. For example, if the civilian labor force equals 100 people and 7 people are unemployed, then the unemployment rate would be 7 percent.
+
+Data Sources: Bureau of Labor Statistics (BLS)/Current Population Survey (CPS) Local Areas Unemployment Statistics Series
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full income app: [https://seigma.shinyapps.io/income/](https://seigma.shinyapps.io/income/)
+
+<br><br>
+
+
+```{r Business Bankruptcy, echo=FALSE}
+dat <- ban_df()
+        var <- c("Chp.7_in_Business", "Chp.11_in_Business", "Chp.12_in_Business", "Chp.13_in_Business")
+        bus <- c()
+        if(input$buschp7)
+          bus <- append(bus, var[1])
+        if(input$buschp11)
+          bus <- append(bus, var[2])
+        if(input$buschp12)
+          bus <- append(bus, var[3])
+        if(input$buschp13)
+          bus <- append(bus, var[4])
+        dat <- filter(dat, variable %in% bus)
+        dat$variable <- gsub("_in_Business", "", dat$variable)
+        theme_set(theme_classic())
+        ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+          geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
+          geom_point(size = 3) + 
+          labs(title = "Business Bankruptcy [County]", 
+               x = "Year",
+               y = "% Total Business Fillings") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12)) + 
+          scale_color_discrete("Region")   
+```
+
+<br><br>
+
+$\bf{Business ~ Bankruptcy:}$ Any bankruptcy filed by a business, corporation, or professional partnership.
+
+$\bf{Chapter ~ 7:}$ This chapter deals with liquidation, the sale of a debtor's nonexempt property and the distribution of the funds to the creditors. In order to file a chapter 7 bankruptcy a debtor must pass a 'means test' given by the court, which evaluates their income and expenses. Depending on the nature of the debt, both individuals and businesses may file for a Chapter 7 bankruptcy.
+
+
+$\bf{Chapter ~ 11:}$ This chapter deals with corporations or partnerships. In order to file a chapter 11 bankruptcy a corporation must propose a restructuring plan which keeps the business alive by repaying debt over time.
+
+
+$\bf{Chapter ~ 12:}$ This chapter deals with the debt of a family farmer or family fisherman. It allows them to create a payment plan to pay back their debt over the course of three to five years, if they can prove regular annual income.
+
+
+$\bf{Chapter ~ 13:}$ This chapter deals with the debt of an individual. It allows them to create a payment plan to pay back their debt over the course of three to five years, if they can prove regular annual income.
+
+Data Source: US Courts
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full bankruptcy app: [https://seigma.shinyapps.io/bankruptcy/](https://seigma.shinyapps.io/bankruptcy/)
+
+<br><br>
+
+```{r Personal Bankruptcy, echo=FALSE}
+dat <- ban_df()
+        var <- c("Chp.7_in_Personal", "Chp.11_in_Personal", "Chp.13_in_Personal")
+        per <- c()
+        if(input$perchp7)
+          per <- append(per, var[1])
+        if(input$perchp11)
+          per <- append(per, var[2])
+        if(input$perchp13)
+          per <- append(per, var[3])
+        dat <- filter(dat, variable %in% per)
+        dat$variable <- gsub("_in_Personal", "", dat$variable)
+        theme_set(theme_classic())
+        ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+          geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
+          geom_point(size = 3) + 
+          labs(title = "Personal Bankruptcy [County]", 
+               x = "Year",
+               y = "% Total Personal Fillings") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12)) + 
+          scale_color_discrete("Region")    
+```
+
+<br><br>
+
+$\bf{Personal ~ Bankruptcies:}$ Any bankruptcy filed by an individual for a personal, family, or household purpose.
+
+$\bf{Chapter ~ 7:}$ This chapter deals with liquidation, the sale of a debtor's nonexempt property and the distribution of the funds to the creditors. In order to file a chapter 7 bankruptcy a debtor must pass a 'means test' given by the court, which evaluates their income and expenses. Depending on the nature of the debt, both individuals and businesses may file for a Chapter 7 bankruptcy.
+
+$\bf{Chapter ~ 11:}$ This chapter deals with corporations or partnerships. In order to file a chapter 11 bankruptcy a corporation must propose a restructuring plan which keeps the business alive by repaying debt over time.
+
+$\bf{Chapter ~ 13:}$ This chapter deals with the debt of an individual. It allows them to create a payment plan to pay back their debt over the course of three to five years, if they can prove regular annual income.
+
+Data Source: US Courts
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full bankruptcy app: [https://seigma.shinyapps.io/bankruptcy/](https://seigma.shinyapps.io/bankruptcy/)
+
+<br><br>
+
+```{r rent, echo=FALSE}
+dat <- ren_df() 
+        theme_set(theme_classic())
+        ggplot(dat, aes(x=Year, y=Median.Rent.2017.Dollar, group = Region, colour = Region)) + 
+          geom_line(aes(linetype=Region), size = 1.25) + 
+          geom_point(size = 3) + 
+          labs(title = "Median Monthly Rent(2017-$ Adjusted)", 
+               x = "Mid-Year of Five Year Range",
+               y = "Dollars") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))
+```
+
+<br><br>
+
+Please note that all plotted values are five-year estimates.
+
+$\bf{Inflation-Adjusted ~ (2017\$) ~ Median ~ Contract ~ Rent:}$ Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2017 and adjusted for inflation to the 2017 dollar. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.
+
+
+$\bf{Median:}$ The median divides the distribution of inflation-adjusted median contract rent into two equal parts; half that fall below the median for contract rent and half that fall above.
+
+
+$\bf{Five-Year ~ Estimate:}$ Survey information is collected everyday of the year and then aggregated over a specific time period, five years. Multiyear estimates are available to regions with populations less than 65,000. However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.
+
+Data Source: American Community Survey (ACS)
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full rent app: [https://seigma.shinyapps.io/rent/](https://seigma.shinyapps.io/rent/)
+
+<br><br>
+
+```{r permits, echo=FALSE}
+dat <- bui_df() 
+        theme_set(theme_classic())
+        ggplot(dat, aes(x=Year, y=Permits_Per_1000_Population, group = Region, colour = Region)) + 
+          geom_line(aes(linetype=Region), size = 1.25) + 
+          geom_point(size = 3) + 
+          labs(title = "Building Permits per 1000 Population [No US]", 
+               x = "Year",
+               y = "Permits per 1000 Population") + 
+          theme(plot.title = element_text(face="bold", size=18, hjust=0)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))
+```
+
+<br><br>
+
+$\bf{Annual ~ residential ~ building ~ permits:}$ Data are obtained from the U.S. Census Bureau's Survey of Construction. Building permits data are collected from individual permit offices, most of which are municipalities. The statistics are based on reports submitted by local building permit officials in response to a mail survey and imputed data. 
+
+$\bf{2017 ~ Dollars:}$ Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, we convert them from current dollar values to constant dollar values (dollar values from 2017).
+
+Data Source: U.S. Census Bureau Survey of Construction
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full building permits app: [https://seigma.shinyapps.io/BuildingPermits/](https://seigma.shinyapps.io/BuildingPermits/)
+
+<br><br>
+
+
+```{r prop values, echo=FALSE}
+dat <- val_df() 
+        val_var <- as.character(unique(dat$variable))
+        val <- c()
+        if(input$resval)
+          val <- append(val, val_var[1])
+        if(input$comval)
+          val <- append(val, val_var[2])
+        if(input$indval)
+          val <- append(val, val_var[3])
+        if(input$perval)
+          val <- append(val, val_var[4])
+        dat <- filter(dat, variable %in% val)
+        theme_set(theme_classic())
+        ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
+          geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
+          geom_point(size = 3) + 
+          labs(title = "Assessed Property Values [Municipal]", 
+               x = "Year",
+               y = "Dollars (million)") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))+ 
+          scale_color_discrete("Municipal")
+```
+
+<br><br>
+
+$\bf{Total ~ Assessed ~ Property ~ Values:}$ Assessed values in Massachusetts are based on "full and fair cash value". Massachusetts General Laws defines "full and fair cash value" as the price an owner willing, but not under compulsion, to sell, ought to receive from one willing but not under compulsion, to buy.
+
+$\bf{2018 ~ Dollars:}$ Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, they must be converted from current dollar values to constant dollar values (the dollar values from 2018).
+
+Data Source: MA Department of Revenue Division of Local Services
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full property value app: [https://seigma.shinyapps.io/PropertyValue/](https://seigma.shinyapps.io/PropertyValue/)
+
+<br><br>
+
+```{r tax by class, echo=FALSE}
+dat <- tax_df() 
+        tax_var <- as.character(unique(dat$variable))
+        tax <- c()
+        if(input$restax)
+          tax <- append(tax, tax_var[1])
+        if(input$comtax)
+          tax <- append(tax, tax_var[2])
+        if(input$indtax)
+          tax <- append(tax, tax_var[3])
+        if(input$pertax)
+          tax <- append(tax, tax_var[4])
+        dat <- filter(dat, variable %in% tax)
+        theme_set(theme_classic())
+        ggplot(dat, aes(x = Year, y = value, group = interaction(Municipal, variable), colour = interaction(Municipal, variable))) +
+          geom_line(aes(linetype=Municipal), size = 1.25, show.legend = FALSE) + 
+          geom_point(size = 3) + 
+          labs(title = "Tax Levy by Class [Municipal]", 
+               x = "Year",
+               y = "Dollars (million)") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12)) + 
+          scale_color_discrete("Municipal")
+```
+
+<br><br>
+
+$\bf{Total ~ Tax ~ Levy:}$ a levy, or tax, on property that the owner is required to pay. The tax is given by the region in which the property is located.
+
+$\bf{2018 ~ Dollars:}$ Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, they must be converted from current dollar values to constant dollar values (the dollar values from 2018).
+
+Data Source: MA Department of Revenue
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full property tax app: [https://seigma.shinyapps.io/PropertyTax/](https://seigma.shinyapps.io/PropertyTax/)
+
+<br><br>

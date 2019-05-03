@@ -1,0 +1,224 @@
+---
+output:
+  pdf_document: default
+  html_document: 
+    df_print: paged
+---
+
+![](logo.jpg)\  
+ 
+
+#Social Report  
+  
+
+Downloaded: `r format(Sys.Date(), "%B %d, %Y")`
+
+
+
+```{r marital status, echo=FALSE}
+    dat <- mar_df()
+        status_var <- as.character(unique(dat$variable))
+        status <- c()
+        if(input$divorced)
+          status <- append(status, status_var[5])
+        if(input$married)
+          status <- append(status, status_var[2])
+        if(input$separated)
+          status <- append(status, status_var[3])
+        if(input$widowed)
+          status <- append(status, status_var[4])
+        if(input$never)
+          status <- append(status, status_var[1])
+        dat <- filter(dat, variable %in% status)
+        theme_set(theme_classic())
+        ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+          geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
+          geom_point(size = 3) + 
+          facet_grid(. ~ Gender) + 
+          labs(title = "Marital Status", 
+               x = "Mid-Year of Five Year Range",
+               y = "% Population") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0.5)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))+ 
+          scale_color_discrete("Region")
+```
+
+<br><br>
+
+Please note that all plotted values are five-year estimates.
+
+$\bf{Marital ~ Status ~ Rates:}$ The number of people within each marital status category for a region over a specified five year range. When the number of people in a particular marital status category is too small, data cannot be displayed.
+
+$\bf{Five-Year ~ Estimate:}$ Survey information is collected everyday of the year and then aggregated over a specific time period, five years. Multiyear estimates are available to regions with populations less than 65,000. However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.
+
+Data Source: American Community Survey (ACS)
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full marital status app: [https://seigma.shinyapps.io/marital_status/](https://seigma.shinyapps.io/marital_status/)
+
+<br><br>
+
+```{r educational attainment, echo=FALSE}
+    dat <- edu_df() 
+        edu_var <- as.character(unique(dat$variable))
+        edu <- c()
+        if(input$hs)
+          edu <- append(edu, edu_var[2])
+        if(input$nohs)
+          edu <- append(edu, edu_var[1])
+        if(input$bac)
+          edu <- append(edu, edu_var[3])
+        if(input$grad)
+          edu <- append(edu, edu_var[4])
+        dat <- filter(dat, variable %in% edu)
+        theme_set(theme_classic())
+        ggplot(dat, aes(x = Year, y = value, group = interaction(Region, variable), colour = interaction(Region, variable))) +
+          geom_line(aes(linetype=Region), size = 1.25, show.legend = FALSE) + 
+          geom_point(size = 3) + 
+          labs(title = "Educational Attainment", 
+               x = "Mid-Year of Five Year Range",
+               y = "% Population") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))+ 
+          scale_color_discrete("Region")
+```
+
+<br><br>
+
+Please note that all plotted values are five-year estimates.
+
+$\bf{Educational ~ Attainment ~ Rates:}$ The number of people with each level of educational attainment for a specific region over a specific five-year period of time. All individuals represented in this measure were at least 25 years of age. Respondents were classified according to highest level of school completed. When a municipality is missing data, this indicates that data cannot be displayed because the number of people is too small.
+
+$\bf{Five-Year ~ Estimate:}$ Survey information is collected everyday of the year and then aggregated over a specific time period, five years. Multiyear estimates are available to regions with populations less than 65,000. However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.
+
+Data Source: American Community Survey (ACS)
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full educational attainment app: [https://seigma.shinyapps.io/educational_attainment/](https://seigma.shinyapps.io/educational_attainment/)
+
+<br><br>
+
+```{r veterans, echo=FALSE}
+    dat <- vet_df() 
+        theme_set(theme_classic())
+        ggplot(dat, aes(x=Year, y=value, group = Region, colour=Region)) + 
+          geom_line(aes(linetype=Region), size = 1.25) + 
+          geom_point(size = 3) + 
+          labs(title = "Civilian Veterans Status", 
+               x = "Mid-Year of Five Year Range",
+               y = "% Population") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))
+```
+
+<br><br>
+
+Please note that all plotted values are five-year estimates.
+
+$\bf{Veteran ~ Status:}$ People with active duty military service and or service in the military Reserves or National Guard. All individuals were at least 18 years of age.
+
+
+$\bf{Civilian ~ Veterans:}$ Men and women who have served for any period of time, but are no longer on active duty. People who served in the National Guard or Reserves are classified as veterans only if they were called to active duty.
+
+$\bf{Five-Year ~ Estimate:}$ Survey information is collected everyday of the year and then aggregated over a specific time period, five years. Multiyear estimates are available to regions with populations less than 65,000. However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision.
+
+Data Source: American Community Survey (ACS)
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full veterans status app: [https://seigma.shinyapps.io/va_status/](https://seigma.shinyapps.io/va_status/)
+
+<br><br>
+
+```{r suicide, echo=FALSE}
+    dat <- sui_df() 
+        theme_set(theme_classic())
+        ggplot(dat, aes(x=Year, y=Age.Adjusted.Rate, group = Region, colour = Region)) + 
+          geom_line(aes(linetype=Region), size = 1.25) + 
+          geom_point(size = 3) + 
+          labs(title = "Suicide Rate (Age Adjusted) [County]", 
+               x = "Year",
+               y = "Per 100,000 Persons") + 
+          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))
+```
+
+<br><br>
+
+$\bf{Suicides:}$ Number of suicides for a region during a specified year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10.
+
+
+$\bf{Age-adjusted ~ Suicide ~ Rate:}$ Age-adjusted suicide rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:
+
+Data Source: Centers for Disease Control and Prevention (CDC) WONDER
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full suicide app: [https://seigma.shinyapps.io/suicide/](https://seigma.shinyapps.io/suicide/)
+
+<br><br>
+
+```{r english learner, echo=FALSE}
+   dat <- eng_df() 
+        theme_set(theme_classic())
+        ggplot(dat, aes(x=Year, y=English_Language_Learner, group = Municipal, colour = Municipal)) + 
+          geom_line(aes(linetype=Municipal), size = 1.25) + 
+          geom_point(size = 3) + 
+          labs(title = "English Language Learner [Municipal]", 
+               x = "Year",
+               y = "English Language Learner %") +  
+          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))
+```
+
+<br><br>
+
+$\bf{English ~ Language ~ Learners:}$ Students whose first language is a language other than English, and who are unable to perform ordinary classroom work in English.
+
+Data Source: MA Department of Education
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full schools app: [https://seigma.shinyapps.io/schools/](https://seigma.shinyapps.io/schools/)
+
+<br><br>
+
+```{r disabilities, echo=FALSE}
+    dat <- dis_df() 
+        theme_set(theme_classic())
+        ggplot(dat, aes(x=Year, y=Students_with_Disabilities, group = Municipal, colour = Municipal)) + 
+          geom_line(aes(linetype=Municipal), size = 1.25) + 
+          geom_point(size = 3) + 
+          labs(title = "Students with Disabilities [Municipal]", 
+               x = "Year",
+               y = "Students with Disabilities %") +  
+          theme(plot.title = element_text(face="bold", size=20, hjust=0)) +
+          theme(axis.title = element_text(face="bold", size=18)) +
+          theme(axis.text=element_text(size=14)) + 
+          theme(legend.text = element_text(size = 12))
+```
+
+<br><br>
+
+$\bf{Students ~ With ~ Disabilities:}$ Students who have received Individualized Education Program (IEP).
+
+Data Source: MA Department of Education
+
+Graphs from: [https://seigma.shinyapps.io/dashboard/](https://seigma.shinyapps.io/dashboard/)
+
+Full schools app: [https://seigma.shinyapps.io/schools/](https://seigma.shinyapps.io/schools/)
+
+
+<br><br>
