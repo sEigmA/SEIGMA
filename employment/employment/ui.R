@@ -5,7 +5,7 @@
 ##            Jenna Kiridly              ## 
 ##            Zhenning Kang              ##
 ## Date Created:  02/04/2015             ##
-## Date Modified: 02/26/2019 VE          ##
+## Date Modified: 05/03/2019 VE          ##
 ###########################################
 
 
@@ -342,16 +342,19 @@ shinyUI(fluidPage(
                            " - More than 8,000 employers participated in an annual survey administered by the Executive Office of Labor and Workforce Development, which assessed employment by industry in Massachusetts. All civilians aged 16+ who were working during this survey period were counted. This includes individuals who worked as paid employees, within their own business, within a farm or family business, and those who had a job but were absent due to illness, bad weather, vacation, or personal reasons. Individuals were excluded if they solely worked around the house or completed unpaid volunteer work for religious, charitable, or similar organizations.")),
                   tags$br(),
                  tags$li((p(strong("Average Monthly Employment"),
-                            "- To estimate monthly employment, all employees who were paid at any point in the past year are counted (this includes full-time, part-time, seasonal, salaried, and hourly employees). The total number of employees is then divided by the number of pay periods per calander year at each business establishment."))),
+                            "- To estimate monthly employment, all employees who were paid at any point in the past year are counted (this includes full-time, part-time, seasonal, salaried, and hourly employees). The total number of employees is then divided by the number of pay periods per calendar year at each business establishment."))),
                  tags$br(),
-                 tags$li((p(strong("Average Weekly Wage"), "- Average weekly wage is calculated by dividing quarterly
-total wages by the average employment level over three months. This number is then divided by 13, which represents the 13 weeks wihtin the payment quarter. Wage data can be affected by the ratio of full time to part time employees, the number of higher paid employees within an establishment, and by the number of pay periods within the quarter."))),
+                 tags$li((p(strong("Average Weekly Wage"), 
+                            "- Average weekly wage is calculated by dividing quarterly total wages by the average employment level over three months. This number is then divided by 13, which represents the 13 weeks within the payment quarter. Wage data can be affected by the ratio of full time to part time employees, the number of higher paid employees within an establishment, and by the number of pay periods within the quarter."))),
                  tags$br(),
-                 tags$li(p(strong("2017 Dollars"), "- Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2017 to be our constant.")),
+                 tags$li(p(strong("2017 Dollars"), 
+                           "- Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app, we used the dollar values from 2017 to be our constant.")),
                  tags$br(),
-                 tags$li((p(strong("Business Establishments"), "- A business establishment is defined as an economic unit which produces goods or services at a single location and engages in predominantly one activity."))),
+                 tags$li((p(strong("Business Establishments"), 
+                            "- A business establishment is defined as an economic unit which produces goods or services at a single location and engages in predominantly one activity."))),
                  tags$br(),
-                 tags$li(p(strong("Change Since 2003"), "- This is calculated by comparing average monthly employment and weekly wages for a specific year to the year 2003. We selected 2003 in order to provide a ten year baseline period. The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003."))
+                 tags$li(p(strong("Change Since 2003"), 
+                           "- This is calculated by comparing average monthly employment and weekly wages for a specific year to the year 2003. We selected 2003 in order to provide a ten year baseline period. The baseline year of 2003 is considered '0' for these calculations. A positive number indicates an increase from 2003 and a negative number indicates a decrease from 2003."))
                  ),
                  
                  

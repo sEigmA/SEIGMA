@@ -5,7 +5,7 @@
 ##            Jenna Kiridly, Steve Lauer ##
 ##            Zhenning Kang              ##
 ## Date Created:  02/04/2015             ##
-## Date Modified: 02/26/2019 VE          ##
+## Date Modified: 05/03/2019 VE          ##
 ###########################################
 
 
@@ -278,7 +278,7 @@ summary_side_text <- conditionalPanel(
     tags$br(),
     tags$li('To look at average monthly employment, weekly wage, and number of business establishments for a single year select single year from the drop down menu.'),
     tags$br(),
-    tags$li('To look at average monthly employment, weekly wage, and number of business establishments over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
+    tags$li('To look at average monthly employment, weekly wage, and number of business establishments over a specific time period select multiple years from the drop down menu. Then use the sliding bar to select a range.'),
     tags$br(),
     tags$li('Sort average monthly employment in ascending and descending order by clicking on the column or variable title.')
 
@@ -298,9 +298,9 @@ plot_side_text <- conditionalPanel(
   tags$br(),
   tags$li("To view average weekly wages, select Wages."),
   tags$br(),
-  tags$li("Select Actual Values from the Display Options to view average monthly employment, weekly wage, and number of business establishments for 2003-2016."),
+  tags$li("Select Actual Values from the Display Options to view average monthly employment, weekly wage, and number of business establishments for 2003-2017."),
   tags$br(),
-  tags$li("Select Change Since 2003 from the Display Options to view the percent change in average monthly employment, weekly wage, and number of business establishments each year for the years 2003-2016.")
+  tags$li("Select Change Since 2003 from the Display Options to view the percent change in average monthly employment, weekly wage, and number of business establishments each year for the years 2003-2017.")
   ))
 
 
@@ -356,7 +356,7 @@ Emp_plot_options1 <- googleLineChart("Emp_plot1", width="100%", height="475px", 
                                     hAxis = list(
                                       title = "Year",
                                       format = "####",
-                                      ticks = seq(2002, 2017, 2),
+                                      ticks = seq(2003, 2017, 2),
                                       viewWindow = xlim,
                                       textStyle = list(
                                         fontSize = 14),
@@ -412,7 +412,7 @@ Est_plot_options1 <- googleLineChart("Est_plot1", width="100%", height="475px", 
                       hAxis = list(
                         title = "Year",
                         format = "####",
-                        ticks = seq(2002, 2017, 2),
+                        ticks = seq(2003, 2017, 2),
                         viewWindow = xlim,
                         textStyle = list(
                           fontSize = 14),
@@ -468,7 +468,7 @@ Emp_pct_plot_options <- googleLineChart("Emp_pct_plot", width="100%", height="47
                                          hAxis = list(
                                            title = "Year",
                                            format = "####",
-                                           ticks = seq(2002, 2017, 2),
+                                           ticks = seq(2003, 2017, 2),
                                            viewWindow = xlim,
                                            textStyle = list(
                                              fontSize = 14),
@@ -524,7 +524,7 @@ Est_pct_plot_options <- googleLineChart("Est_pct_plot", width="100%", height="47
                                             hAxis = list(
                                               title = "Year",
                                               format = "####",
-                                              ticks = seq(2002, 2017, 2),
+                                              ticks = seq(2003, 2017, 2),
                                               viewWindow = xlim,
                                               textStyle = list(
                                                 fontSize = 14),
@@ -581,7 +581,7 @@ Wage_plot_options1 <- googleLineChart("Wage_plot1", width="100%", height="475px"
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2002, 2017, 2),
+    ticks = seq(2003, 2017, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -635,7 +635,7 @@ Wage_plot_options2 <- googleLineChart("Wage_plot2", width="100%", height="475px"
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2002, 2017, 2),
+    ticks = seq(2003, 2017, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -690,7 +690,7 @@ Wage_pct_plot_options <- googleLineChart("Wage_pct_plot", width="100%", height="
                                           hAxis = list(
                                             title = "Year",
                                             format = "####",
-                                            ticks = seq(2002, 2017, 2),
+                                            ticks = seq(2003, 2017, 2),
                                             viewWindow = xlim,
                                             textStyle = list(
                                               fontSize = 14),
