@@ -2,7 +2,7 @@
 ## Title: Property Value ui.R        ##
 ## Author(s): Xuelian Li             ##
 ## Date Created:  07/22/16           ##
-## Date Modified: 02/26/19 VE        ##
+## Date Modified: 03/05/19 VE        ##
 #######################################
 
 shinyUI(fluidPage(
@@ -247,12 +247,11 @@ shinyUI(fluidPage(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                
-                   
-                   p(strong('Total Assessed Property Values'), 
+                 
+                 p(strong('Total Assessed Property Values'), 
                              '- Assessed values in Massachusetts are based on "full and fair cash value". Massachusetts General Laws defines “full and fair cash value” as the price an owner willing, but not under compulsion, to sell, ought to receive from one willing but not under compulsion, to buy.'),
-                   tags$br(),
-                   p(strong('Class - Residential'),
+                 tags$br(), 
+                 p(strong('Class - Residential'),
                              "- All property including one or more homes. It also includes accessory buildings and land such as pools, tennis, courts, sheds, etc."),
                  tags$br(),
                  p(strong('Class - Commercial'), 
@@ -260,14 +259,12 @@ shinyUI(fluidPage(
                  tags$br(),
                  p(strong('Class - Industrial'), 
                    "- Property involved in manufacturing or processing. This includes porperty used for storage, transmission, and the regulated generation of utilities."),
-                 
                  tags$br(),
                  p(strong('Class - Personal Property'), 
                    "- Property not permanently affixed to real estate. Personal property is movable and can be removed without serious damage either to the real estate or to the item being removed."),
-                 
                  tags$br(),
                  p(strong('2018 Dollars'), 
-                          "- Due to inflation, the purchasing power of the dollar changes over time. In order to compare monitary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2018 to be our constant."),
+                   "- Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2018 to be our constant."),
                  tags$br(),
                  #tags$br(),
                  # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),                  
