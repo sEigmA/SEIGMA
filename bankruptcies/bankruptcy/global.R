@@ -1,11 +1,10 @@
-#######################################
-## Title: Bankruptices global.R      ##
-## Author(s): Xuelian Li, Jenna      ##
-##            Kiridly                ## 
-## Date Created:  08/11/15           ##
-## Date Modified: 08/15/15 XL        ##
-## Date Updated: 02/18/2019 VE       ##
-#######################################
+##########################################
+## Title: Bankruptcy global.R           ##
+## Author(s): Xuelian Li, Jenna Kiridly ## 
+## Date Created:  08/11/15              ##
+## Date Modified: 08/15/15 XL           ##
+## Date Updated:  05/03/19 VE           ##
+##########################################
 
 ##First file run - Environment Setup
 
@@ -179,7 +178,6 @@ summary_side_text <- conditionalPanel(
   helpText(p(strong('Please select the years for which you are interested in viewing the number of business and personal bankruptcies. By selecting a year, you may also view the number of business and personal bankruptcies by chapter.'))),
   tags$br(),
   tags$ul(
-    tags$br(),
     tags$li('Select one or multiple counties.'),
     tags$br(),
     tags$li('To look at the number of business and personal bankruptcies for a single year select a single year from the drop down menu.'),
@@ -197,7 +195,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the county for which you are interested in viewing the number of business and personal bankruptcies.')),
+  helpText(p(strong('Please select the county for which you are interested in viewing the number of business and personal bankruptcies.'))),
   tags$br(),
   tags$ul(
     tags$li("Once you have selected the counties for which you are interested in viewing the number of business and personal bankruptcies, select a Variable of Interest."),
@@ -205,7 +203,7 @@ plot_side_text <- conditionalPanel(
     tags$li("Select your preferred display option - total bankruptcies or look at bankruptcies by specific chapter."),
     tags$br(),
     tags$li("To compare total business and personal bankruptcies within a specific chapter to Massachusetts or US totals please select 'Compare to MA' or 'Compare to US'."),
-p(strong("Please note this can only be done when looking at a specific chapter of business or personal bankruptcies."))
+    p(strong("* Please note this can only be done when looking at a specific chapter of business or personal bankruptcies."))
     
   ))
 

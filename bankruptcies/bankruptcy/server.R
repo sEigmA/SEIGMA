@@ -1,10 +1,9 @@
-#######################################
-## Title: Bankruptices server.R      ##
-## Author(s): Xuelian Li, Jenna      ##
-##            Kiridly                ## 
-## Date Created:  08/15/15           ##
-## Date Modified: 08/16/15 XL        ##
-#######################################
+##########################################
+## Title: Bankruptcy server.R           ##
+## Author(s): Xuelian Li, Jenna Kiridly ## 
+## Date Created:  08/15/15              ##
+## Date Modified: 08/16/15 XL           ##
+##########################################
 
 
 shinyServer(function(input, output, session) {

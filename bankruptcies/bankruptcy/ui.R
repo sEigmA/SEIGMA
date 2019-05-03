@@ -1,11 +1,10 @@
-#######################################
-## Title: Bankruptices ui.R          ##
-## Author(s): Xuelian Li, Jenna      ##
-##            Kiridly                ## 
-## Date Created:  08/11/15           ##
-## Date Modified: 08/15/15 XL        ##
-## Data Updated: 02/18/2019 VE       ##
-#######################################
+##########################################
+## Title: Bankrupty ui.R                ##
+## Author(s): Xuelian Li, Jenna Kiridly ## 
+## Date Created:  08/11/15              ##
+## Date Modified: 08/15/15 XL           ##
+## Data Updated:  05/03/19 VE           ##
+##########################################
 
 
 shinyUI(fluidPage(
@@ -359,7 +358,7 @@ shinyUI(fluidPage(
                    " - Bankruptcy is a legal procedure that allows individuals and businesses to resolve debts to their creditors."), 
                  tags$br(),
                  p(strong("Business Bankruptcy"), 
-                   " - Any bankruptcy filed by a buisness, corporation, or professional partnership."),
+                   " - Any bankruptcy filed by a business, corporation, or professional partnership."),
                  tags$br(),
                  p(strong("Personal Bankruptcies"), 
                    " - Any bankruptcy filed by an individual for a personal, family, or household purpose."),
