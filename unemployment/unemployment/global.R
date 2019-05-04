@@ -1,11 +1,11 @@
 ########################################
-## Title: Unemploy global.R           ##
+## Title: Unemployment global.R       ##
 ## Author(s): Xuelian Li,Jenna Kiridly##
 ##            Emily Ramos, Arvind     ##
 ##            Ramakrishnan,           ##
 ## Date Created:  01/07/2015          ##
 ## Date Modified: 11/13/2015  XL      ##
-##                12/20/2018  VE      ##
+##                05/04/2018  VE      ##
 ########################################
 
 ## First file run - Environment Setup
@@ -27,7 +27,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted unemp data
 ## -1 eliminates first column [rows,columns]
-unemp_data <- read.csv(file="unempdata2.csv")
+unemp_data <- read.csv(file="unemployment.csv")
 
 
 ## Find order of municipals in geojson files
@@ -177,12 +177,11 @@ summary_side_text <- conditionalPanel(
   helpText(p(strong('Please select the years for which you are interested in viewing average annual unemployment rates and the average annual number of people within the labor force.'))),
   tags$br(),
   tags$ul(
-    tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
     tags$li('To look at average annual unemployment rates and the number of people within the labor force for a single year, select single year from the drop down menu.'),
     tags$br(),
-    tags$li('To look at average annual unemployment rates and the number of people within the labor force over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
+    tags$li('To look at average annual unemployment rates and the number of people within the labor force over a specific time period select multiple years from the drop down menu. Then use the sliding bar to select a range.'),
     tags$br(),
     tags$li('Sort average annual unemployment rates and the number of people within the labor force in ascending and descending order by clicking on the column or variable title.')
     
@@ -193,7 +192,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the municipality for which you are interested in viewing the average annual unemployment rate and average annual number of people within the labor force. Please do not select more than ten municipalities at a time.')),
+  helpText(p(strong('Please select the municipality for which you are interested in viewing the average annual unemployment rate and average annual number of people within the labor force. Please do not select more than ten municipalities at a time.'))),
   tags$br(),
   tags$ul(
     tags$li('Once you have selected the municipalities which you are interested in viewing, select a Variable of Interest.'),
@@ -202,9 +201,9 @@ plot_side_text <- conditionalPanel(
     tags$br(),
     tags$li("To view the average annual number of people within the labor force, select Labor force."),
     tags$br(),
-    tags$li("Select Actual Values from the Display Options to view average annual unemployment rates and the average annual number of people in the labor force for 2003-2016."),
+    tags$li("Select Actual Values from the Display Options to view average annual unemployment rates and the average annual number of people in the labor force for 2003-2018."),
     tags$br(),
-     tags$li("Select Change Since 2003 from the Display Options to view the percent change in the average annual number of people in the labor force each year for the years 2003-2016.")
+     tags$li("Select Change Since 2003 from the Display Options to view the percent change in the average annual number of people in the labor force each year for the years 2003-2018.")
   ))
 
 
@@ -214,7 +213,6 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please select a yearly range and click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
-    
     tags$li('To view average annual unemployment rate select Unemployment Rate, then click on a municipality for which you are interested in viewing average annual unemployment rate.'),
     tags$br(),
     tags$li("To view the number of people within the labor force select Labor Force, then click on a municipality for which you are interested in viewing the number of people witin the labor force."),
@@ -240,8 +238,8 @@ about_main_text <- p(strong("The SEIGMA Unemployment App"), "displays the averag
 plot_main_text <- p(strong("Variable Summary:"),
                     ## breaks between paragraphs
                     tags$br(),
-                    strong("Annual Average Unemployment Rate-"),
-                    " Average annual unemployment rates account for workers who have lost their jobs and are looking for new ones.  This excludes people who are not looking for work.  The unemployment rate is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey.  Municipality unemployment rates were gathered form a secition of thr BLS and CPS called the Local Areas Unemployment Statistics Series.",
+                    strong("Annual Average Unemployment Rate"),
+                    "- Average annual unemployment rates account for workers who have lost their jobs and are looking for new ones.  This excludes people who are not looking for work.  The unemployment rate is produced by the Bureau of Labor Statistics, which uses state and national level information from the Current Population Survey.  Municipality unemployment rates were gathered form a secition of thr BLS and CPS called the Local Areas Unemployment Statistics Series.",
                     tags$br(),
                     strong("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf", align="center"))
 
@@ -257,7 +255,7 @@ une_plot_options <- googleLineChart("une_plot1", width="100%", height="475px", o
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2016, 2),
+    ticks = seq(2003, 2018, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -313,7 +311,7 @@ lab_plot_options <- googleLineChart("lab_plot1", width="100%", height="475px", o
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2016, 2),
+    ticks = seq(2003, 2018, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -369,7 +367,7 @@ lab_pct_plot_options <- googleLineChart("lab_pct_plot", width="100%", height="47
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2003, 2016, 2),
+    ticks = seq(2003, 2018, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -414,9 +412,3 @@ lab_pct_plot_options <- googleLineChart("lab_pct_plot", width="100%", height="47
     )
   )
 ))
-
-
-
-
-
-

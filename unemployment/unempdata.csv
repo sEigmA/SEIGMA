@@ -1,4 +1,27 @@
-"Municipal","County","State","Region","C_year","Unemployment.Rate","Number.of.Unemployed","Number.of.Employed","Number.in.Labor.Force"
+"Municipal","County","State","Region","Year","Unemployment_Rate_Avg","No_Unemployed_Avg","No_Employed_Avg","No_Labor_Avg"
+NA,"NA County","MA","MA",1990,6.3,203975,3022393,3226368
+NA,"NA County","MA","MA",1991,8.8,282590,2916293,3198883
+NA,"NA County","MA","MA",1992,8.8,281022,2899718,3180740
+NA,"NA County","MA","MA",1993,7.3,232339,2940565,3172904
+NA,"NA County","MA","MA",1994,6.2,198690,2989123,3187813
+NA,"NA County","MA","MA",1995,5.5,175528,3029360,3204888
+NA,"NA County","MA","MA",1996,4.6,147721,3083332,3231053
+NA,"NA County","MA","MA",1997,4.1,134564,3158851,3293415
+NA,"NA County","MA","MA",1998,3.4,112674,3208988,3321662
+NA,"NA County","MA","MA",1999,3.3,109563,3245761,3355324
+NA,"NA County","MA","MA",2000,2.7,92292,3273281,3365573
+NA,"NA County","MA","MA",2001,3.7,125993,3275343,3401336
+NA,"NA County","MA","MA",2002,5.3,181003,3243409,3424412
+NA,"NA County","MA","MA",2003,5.8,197648,3209062,3406710
+NA,"NA County","MA","MA",2004,5.2,176839,3203810,3380649
+NA,"NA County","MA","MA",2005,4.8,163579,3219717,3383296
+NA,"NA County","MA","MA",2006,4.8,162495,3255504,3417999
+NA,"NA County","MA","MA",2007,4.5,154422,3276532,3430954
+NA,"NA County","MA","MA",2008,5.3,185177,3277934,3463111
+NA,"NA County","MA","MA",2009,8.2,283193,3187538,3470731
+NA,"NA County","MA","MA",2010,8.3,287549,3187622,3475171
+NA,"NA County","MA","MA",2011,7.3,253592,3216160,3469752
+NA,"NA County","MA","MA",2012,6.7,233684,3241762,3475446
 "Abington","Plymouth County","MA","Abington",1990,7.1,553,7229,7782
 "Abington","Plymouth County","MA","Abington",1991,10.5,818,6938,7756
 "Abington","Plymouth County","MA","Abington",1992,9.8,754,6935,7689
@@ -482,6 +505,29 @@
 "Barnstable","Barnstable County","MA","Barnstable",2010,8.1,2126,24215,26341
 "Barnstable","Barnstable County","MA","Barnstable",2011,7.3,1907,24174,26081
 "Barnstable","Barnstable County","MA","Barnstable",2012,6.6,1748,24579,26327
+NA,"Barnstable County","MA","Barnstable County",1990,7.4,7220,90285,97505
+NA,"Barnstable County","MA","Barnstable County",1991,10.3,10034,87680,97714
+NA,"Barnstable County","MA","Barnstable County",1992,10.8,10512,87131,97643
+NA,"Barnstable County","MA","Barnstable County",1993,9.5,9481,90495,99976
+NA,"Barnstable County","MA","Barnstable County",1994,8.6,8667,92498,101165
+NA,"Barnstable County","MA","Barnstable County",1995,7.2,7378,95070,102448
+NA,"Barnstable County","MA","Barnstable County",1996,6.2,6432,97295,103727
+NA,"Barnstable County","MA","Barnstable County",1997,5.9,6220,99207,105427
+NA,"Barnstable County","MA","Barnstable County",1998,5,5347,101312,106659
+NA,"Barnstable County","MA","Barnstable County",1999,4.3,4754,104664,109418
+NA,"Barnstable County","MA","Barnstable County",2000,3.5,3919,109564,113483
+NA,"Barnstable County","MA","Barnstable County",2001,3.9,4454,110854,115308
+NA,"Barnstable County","MA","Barnstable County",2002,4.7,5592,113093,118685
+NA,"Barnstable County","MA","Barnstable County",2003,5.3,6414,115428,121842
+NA,"Barnstable County","MA","Barnstable County",2004,5.1,6199,116532,122731
+NA,"Barnstable County","MA","Barnstable County",2005,4.9,6005,116107,122112
+NA,"Barnstable County","MA","Barnstable County",2006,5,6079,116354,122433
+NA,"Barnstable County","MA","Barnstable County",2007,4.8,5822,115658,121480
+NA,"Barnstable County","MA","Barnstable County",2008,5.8,7114,114928,122042
+NA,"Barnstable County","MA","Barnstable County",2009,8.4,10284,111792,122076
+NA,"Barnstable County","MA","Barnstable County",2010,9,10896,110726,121622
+NA,"Barnstable County","MA","Barnstable County",2011,8.2,9843,110543,120386
+NA,"Barnstable County","MA","Barnstable County",2012,7.4,8953,112398,121351
 "Barre","Worcester County","MA","Barre",1990,8.4,197,2137,2334
 "Barre","Worcester County","MA","Barre",1991,11.3,267,2086,2353
 "Barre","Worcester County","MA","Barre",1992,11.6,277,2121,2398
@@ -643,6 +689,29 @@
 "Berkley","Bristol County","MA","Berkley",2010,8.1,307,3494,3801
 "Berkley","Bristol County","MA","Berkley",2011,7.1,269,3530,3799
 "Berkley","Bristol County","MA","Berkley",2012,6.7,253,3519,3772
+NA,"Berkshire County","MA","Berkshire County",1990,7.1,4959,64944,69903
+NA,"Berkshire County","MA","Berkshire County",1991,10.9,7579,62120,69699
+NA,"Berkshire County","MA","Berkshire County",1992,10.7,7319,61249,68568
+NA,"Berkshire County","MA","Berkshire County",1993,8.6,5818,62126,67944
+NA,"Berkshire County","MA","Berkshire County",1994,7.7,5162,61842,67004
+NA,"Berkshire County","MA","Berkshire County",1995,6.3,4186,61898,66084
+NA,"Berkshire County","MA","Berkshire County",1996,5.2,3454,62717,66171
+NA,"Berkshire County","MA","Berkshire County",1997,4.9,3278,63296,66574
+NA,"Berkshire County","MA","Berkshire County",1998,4,2632,63487,66119
+NA,"Berkshire County","MA","Berkshire County",1999,3.8,2541,63818,66359
+NA,"Berkshire County","MA","Berkshire County",2000,2.9,2068,68092,70160
+NA,"Berkshire County","MA","Berkshire County",2001,3.5,2492,68590,71082
+NA,"Berkshire County","MA","Berkshire County",2002,4.6,3311,69395,72706
+NA,"Berkshire County","MA","Berkshire County",2003,5.1,3696,68958,72654
+NA,"Berkshire County","MA","Berkshire County",2004,4.7,3420,68705,72125
+NA,"Berkshire County","MA","Berkshire County",2005,4.4,3161,69485,72646
+NA,"Berkshire County","MA","Berkshire County",2006,4.3,3175,70292,73467
+NA,"Berkshire County","MA","Berkshire County",2007,4.4,3212,69717,72929
+NA,"Berkshire County","MA","Berkshire County",2008,5.2,3767,69288,73055
+NA,"Berkshire County","MA","Berkshire County",2009,7.8,5667,67425,73092
+NA,"Berkshire County","MA","Berkshire County",2010,8.1,5881,66909,72790
+NA,"Berkshire County","MA","Berkshire County",2011,7.2,5223,67309,72532
+NA,"Berkshire County","MA","Berkshire County",2012,6.7,4817,66814,71631
 "Berlin","Worcester County","MA","Berlin",1990,6.1,83,1286,1369
 "Berlin","Worcester County","MA","Berlin",1991,7.8,105,1239,1344
 "Berlin","Worcester County","MA","Berlin",1992,8.4,114,1250,1364
@@ -1011,6 +1080,29 @@
 "Brimfield","Hampden County","MA","Brimfield",2010,8.2,162,1809,1971
 "Brimfield","Hampden County","MA","Brimfield",2011,8.4,164,1791,1955
 "Brimfield","Hampden County","MA","Brimfield",2012,6.9,132,1792,1924
+NA,"Bristol County","MA","Bristol County",1990,9.2,24323,240931,265254
+NA,"Bristol County","MA","Bristol County",1991,12.5,33258,232353,265611
+NA,"Bristol County","MA","Bristol County",1992,12.1,31979,232860,264839
+NA,"Bristol County","MA","Bristol County",1993,10.4,27713,238197,265910
+NA,"Bristol County","MA","Bristol County",1994,9,24052,242955,267007
+NA,"Bristol County","MA","Bristol County",1995,8.3,21989,243960,265949
+NA,"Bristol County","MA","Bristol County",1996,7.4,19622,245280,264902
+NA,"Bristol County","MA","Bristol County",1997,6.4,17101,251177,268278
+NA,"Bristol County","MA","Bristol County",1998,5,13475,254513,267988
+NA,"Bristol County","MA","Bristol County",1999,4.6,12534,257366,269900
+NA,"Bristol County","MA","Bristol County",2000,3.8,10441,267626,278067
+NA,"Bristol County","MA","Bristol County",2001,4.7,13208,266374,279582
+NA,"Bristol County","MA","Bristol County",2002,6.1,17497,268084,285581
+NA,"Bristol County","MA","Bristol County",2003,6.6,18909,267471,286380
+NA,"Bristol County","MA","Bristol County",2004,6.2,17858,268272,286130
+NA,"Bristol County","MA","Bristol County",2005,6,17171,270583,287754
+NA,"Bristol County","MA","Bristol County",2006,6,17347,273260,290607
+NA,"Bristol County","MA","Bristol County",2007,5.8,16861,273636,290497
+NA,"Bristol County","MA","Bristol County",2008,7.1,20586,270811,291397
+NA,"Bristol County","MA","Bristol County",2009,10.7,31383,261345,292728
+NA,"Bristol County","MA","Bristol County",2010,10.9,31838,260053,291891
+NA,"Bristol County","MA","Bristol County",2011,10,29053,262273,291326
+NA,"Bristol County","MA","Bristol County",2012,9.3,27116,263376,290492
 "Brockton","Plymouth County","MA","Brockton",1990,9.5,4385,41953,46338
 "Brockton","Plymouth County","MA","Brockton",1991,13,5856,39354,45210
 "Brockton","Plymouth County","MA","Brockton",1992,12.7,5567,38229,43796
@@ -1862,6 +1954,29 @@
 "Dudley","Worcester County","MA","Dudley",2010,8.8,547,5644,6191
 "Dudley","Worcester County","MA","Dudley",2011,7.6,471,5692,6163
 "Dudley","Worcester County","MA","Dudley",2012,7.1,435,5690,6125
+NA,"Dukes County","MA","Dukes County",1990,5.1,382,7149,7531
+NA,"Dukes County","MA","Dukes County",1991,7.2,562,7292,7854
+NA,"Dukes County","MA","Dukes County",1992,7.9,596,6916,7512
+NA,"Dukes County","MA","Dukes County",1993,7.5,583,7180,7763
+NA,"Dukes County","MA","Dukes County",1994,6.8,565,7772,8337
+NA,"Dukes County","MA","Dukes County",1995,5.7,496,8217,8713
+NA,"Dukes County","MA","Dukes County",1996,5.4,486,8582,9068
+NA,"Dukes County","MA","Dukes County",1997,5,468,8815,9283
+NA,"Dukes County","MA","Dukes County",1998,4.1,382,9009,9391
+NA,"Dukes County","MA","Dukes County",1999,3.9,370,9164,9534
+NA,"Dukes County","MA","Dukes County",2000,2.8,281,9794,10075
+NA,"Dukes County","MA","Dukes County",2001,2.9,296,9855,10151
+NA,"Dukes County","MA","Dukes County",2002,3.8,407,10228,10635
+NA,"Dukes County","MA","Dukes County",2003,4.2,469,10607,11076
+NA,"Dukes County","MA","Dukes County",2004,4,450,10685,11135
+NA,"Dukes County","MA","Dukes County",2005,3.9,431,10543,10974
+NA,"Dukes County","MA","Dukes County",2006,3.9,430,10639,11069
+NA,"Dukes County","MA","Dukes County",2007,3.5,393,10752,11145
+NA,"Dukes County","MA","Dukes County",2008,4.2,466,10758,11224
+NA,"Dukes County","MA","Dukes County",2009,6.4,727,10604,11331
+NA,"Dukes County","MA","Dukes County",2010,7.6,877,10670,11547
+NA,"Dukes County","MA","Dukes County",2011,7.3,843,10752,11595
+NA,"Dukes County","MA","Dukes County",2012,6.9,805,10860,11665
 "Dunstable","Middlesex County","MA","Dunstable",1990,5.8,78,1272,1350
 "Dunstable","Middlesex County","MA","Dunstable",1991,7.8,108,1269,1377
 "Dunstable","Middlesex County","MA","Dunstable",1992,8.1,114,1298,1412
@@ -2138,6 +2253,29 @@
 "Essex","Essex County","MA","Essex",2010,7.6,147,1789,1936
 "Essex","Essex County","MA","Essex",2011,6.7,131,1812,1943
 "Essex","Essex County","MA","Essex",2012,5.9,115,1832,1947
+NA,"Essex County","MA","Essex County",1990,6.7,23368,326511,349879
+NA,"Essex County","MA","Essex County",1991,9,31376,317592,348968
+NA,"Essex County","MA","Essex County",1992,9.2,32281,317089,349370
+NA,"Essex County","MA","Essex County",1993,7.6,26357,321811,348168
+NA,"Essex County","MA","Essex County",1994,6.5,22915,327915,350830
+NA,"Essex County","MA","Essex County",1995,5.5,19475,333162,352637
+NA,"Essex County","MA","Essex County",1996,4.7,16741,341478,358219
+NA,"Essex County","MA","Essex County",1997,4.3,15774,349896,365670
+NA,"Essex County","MA","Essex County",1998,3.8,13968,358353,372321
+NA,"Essex County","MA","Essex County",1999,3.6,13495,364053,377548
+NA,"Essex County","MA","Essex County",2000,2.8,10407,362525,372932
+NA,"Essex County","MA","Essex County",2001,4,15305,363684,378989
+NA,"Essex County","MA","Essex County",2002,5.9,22565,358960,381525
+NA,"Essex County","MA","Essex County",2003,6.4,24247,354844,379091
+NA,"Essex County","MA","Essex County",2004,5.8,21693,353660,375353
+NA,"Essex County","MA","Essex County",2005,5.2,19700,355977,375677
+NA,"Essex County","MA","Essex County",2006,5.1,19133,355217,374350
+NA,"Essex County","MA","Essex County",2007,4.8,17838,356503,374341
+NA,"Essex County","MA","Essex County",2008,5.7,21418,356798,378216
+NA,"Essex County","MA","Essex County",2009,8.7,33230,347911,381141
+NA,"Essex County","MA","Essex County",2010,8.7,33384,349156,382540
+NA,"Essex County","MA","Essex County",2011,7.7,29642,353716,383358
+NA,"Essex County","MA","Essex County",2012,7.1,27467,357483,384950
 "Everett","Middlesex County","MA","Everett",1990,7,1339,17695,19034
 "Everett","Middlesex County","MA","Everett",1991,9.7,1811,16899,18710
 "Everett","Middlesex County","MA","Everett",1992,10,1850,16596,18446
@@ -2345,6 +2483,29 @@
 "Franklin","Norfolk County","MA","Franklin",2010,7.3,1238,15628,16866
 "Franklin","Norfolk County","MA","Franklin",2011,6.3,1059,15802,16861
 "Franklin","Norfolk County","MA","Franklin",2012,5.6,954,15975,16929
+NA,"Franklin County","MA","Franklin County",1990,5.2,1929,35274,37203
+NA,"Franklin County","MA","Franklin County",1991,7.9,2966,34752,37718
+NA,"Franklin County","MA","Franklin County",1992,8.1,2984,33983,36967
+NA,"Franklin County","MA","Franklin County",1993,6.4,2344,34192,36536
+NA,"Franklin County","MA","Franklin County",1994,5.4,1987,35047,37034
+NA,"Franklin County","MA","Franklin County",1995,4.8,1803,35621,37424
+NA,"Franklin County","MA","Franklin County",1996,4,1490,35764,37254
+NA,"Franklin County","MA","Franklin County",1997,3.9,1477,36499,37976
+NA,"Franklin County","MA","Franklin County",1998,3.3,1277,37076,38353
+NA,"Franklin County","MA","Franklin County",1999,3,1169,37644,38813
+NA,"Franklin County","MA","Franklin County",2000,2.5,972,38052,39024
+NA,"Franklin County","MA","Franklin County",2001,3.1,1205,38006,39211
+NA,"Franklin County","MA","Franklin County",2002,4,1596,38304,39900
+NA,"Franklin County","MA","Franklin County",2003,4.6,1828,38259,40087
+NA,"Franklin County","MA","Franklin County",2004,4.3,1702,37888,39590
+NA,"Franklin County","MA","Franklin County",2005,4.3,1696,37872,39568
+NA,"Franklin County","MA","Franklin County",2006,4.3,1713,37987,39700
+NA,"Franklin County","MA","Franklin County",2007,4.2,1634,37532,39166
+NA,"Franklin County","MA","Franklin County",2008,5,1956,37106,39062
+NA,"Franklin County","MA","Franklin County",2009,7.6,2973,35943,38916
+NA,"Franklin County","MA","Franklin County",2010,7.8,3018,35916,38934
+NA,"Franklin County","MA","Franklin County",2011,6.7,2582,35941,38523
+NA,"Franklin County","MA","Franklin County",2012,6.3,2411,36055,38466
 "Freetown","Bristol County","MA","Freetown",1990,7.2,332,4295,4627
 "Freetown","Bristol County","MA","Freetown",1991,10.7,494,4110,4604
 "Freetown","Bristol County","MA","Freetown",1992,11,510,4113,4623
@@ -2759,6 +2920,52 @@
 "Hampden","Hampden County","MA","Hampden",2010,7.8,218,2572,2790
 "Hampden","Hampden County","MA","Hampden",2011,6.7,184,2547,2731
 "Hampden","Hampden County","MA","Hampden",2012,6.3,172,2548,2720
+NA,"Hampden County","MA","Hampden County",1990,6.7,14857,208015,222872
+NA,"Hampden County","MA","Hampden County",1991,9.7,21582,200238,221820
+NA,"Hampden County","MA","Hampden County",1992,9.5,20835,199015,219850
+NA,"Hampden County","MA","Hampden County",1993,8.9,19341,198001,217342
+NA,"Hampden County","MA","Hampden County",1994,7.9,16961,197840,214801
+NA,"Hampden County","MA","Hampden County",1995,6.7,14143,197823,211966
+NA,"Hampden County","MA","Hampden County",1996,5.3,11172,199829,211001
+NA,"Hampden County","MA","Hampden County",1997,4.8,10382,204128,214510
+NA,"Hampden County","MA","Hampden County",1998,4.3,9270,204770,214040
+NA,"Hampden County","MA","Hampden County",1999,4.1,8783,205357,214140
+NA,"Hampden County","MA","Hampden County",2000,3.3,7318,211898,219216
+NA,"Hampden County","MA","Hampden County",2001,4.2,9304,212446,221750
+NA,"Hampden County","MA","Hampden County",2002,5.7,12856,211762,224618
+NA,"Hampden County","MA","Hampden County",2003,6.6,14732,210081,224813
+NA,"Hampden County","MA","Hampden County",2004,6.2,13901,210330,224231
+NA,"Hampden County","MA","Hampden County",2005,5.8,13029,211071,224100
+NA,"Hampden County","MA","Hampden County",2006,5.9,13201,212066,225267
+NA,"Hampden County","MA","Hampden County",2007,5.6,12489,211474,223963
+NA,"Hampden County","MA","Hampden County",2008,6.5,14579,210907,225486
+NA,"Hampden County","MA","Hampden County",2009,9.4,21263,205679,226942
+NA,"Hampden County","MA","Hampden County",2010,10,22466,202854,225320
+NA,"Hampden County","MA","Hampden County",2011,9.2,20404,200849,221253
+NA,"Hampden County","MA","Hampden County",2012,8.5,18729,200969,219698
+NA,"Hampshire County","MA","Hampshire County",1990,5.1,4111,76100,80211
+NA,"Hampshire County","MA","Hampshire County",1991,7.1,5589,73144,78733
+NA,"Hampshire County","MA","Hampshire County",1992,6.8,5398,73514,78912
+NA,"Hampshire County","MA","Hampshire County",1993,5.6,4368,74173,78541
+NA,"Hampshire County","MA","Hampshire County",1994,4.9,3906,75448,79354
+NA,"Hampshire County","MA","Hampshire County",1995,4.2,3308,75869,79177
+NA,"Hampshire County","MA","Hampshire County",1996,3.4,2699,77109,79808
+NA,"Hampshire County","MA","Hampshire County",1997,3,2402,78922,81324
+NA,"Hampshire County","MA","Hampshire County",1998,2.8,2287,80014,82301
+NA,"Hampshire County","MA","Hampshire County",1999,2.5,2094,81005,83099
+NA,"Hampshire County","MA","Hampshire County",2000,2.2,1899,84104,86003
+NA,"Hampshire County","MA","Hampshire County",2001,2.7,2334,84150,86484
+NA,"Hampshire County","MA","Hampshire County",2002,3.6,3113,84068,87181
+NA,"Hampshire County","MA","Hampshire County",2003,4.2,3718,84026,87744
+NA,"Hampshire County","MA","Hampshire County",2004,4.1,3627,84168,87795
+NA,"Hampshire County","MA","Hampshire County",2005,4,3547,84257,87804
+NA,"Hampshire County","MA","Hampshire County",2006,3.9,3489,85011,88500
+NA,"Hampshire County","MA","Hampshire County",2007,3.8,3345,85099,88444
+NA,"Hampshire County","MA","Hampshire County",2008,4.4,3896,84818,88714
+NA,"Hampshire County","MA","Hampshire County",2009,6.5,5672,81759,87431
+NA,"Hampshire County","MA","Hampshire County",2010,6.6,5855,82485,88340
+NA,"Hampshire County","MA","Hampshire County",2011,6,5186,81818,87004
+NA,"Hampshire County","MA","Hampshire County",2012,5.6,4874,82030,86904
 "Hancock","Berkshire County","MA","Hancock",1990,4.3,16,357,373
 "Hancock","Berkshire County","MA","Hancock",1991,4.7,17,348,365
 "Hancock","Berkshire County","MA","Hancock",1992,3.2,13,397,410
@@ -4208,6 +4415,29 @@
 "Middlefield","Hampshire County","MA","Middlefield",2010,6.3,19,284,303
 "Middlefield","Hampshire County","MA","Middlefield",2011,6.3,19,281,300
 "Middlefield","Hampshire County","MA","Middlefield",2012,5.1,15,281,296
+NA,"Middlesex County","MA","Middlesex County",1990,5.2,41332,760223,801555
+NA,"Middlesex County","MA","Middlesex County",1991,7.2,56563,733455,790018
+NA,"Middlesex County","MA","Middlesex County",1992,7.5,58947,727818,786765
+NA,"Middlesex County","MA","Middlesex County",1993,6.1,47421,733455,780876
+NA,"Middlesex County","MA","Middlesex County",1994,5.1,40160,744089,784249
+NA,"Middlesex County","MA","Middlesex County",1995,4.4,34657,752160,786817
+NA,"Middlesex County","MA","Middlesex County",1996,3.5,27516,769545,797061
+NA,"Middlesex County","MA","Middlesex County",1997,3.1,24947,792324,817271
+NA,"Middlesex County","MA","Middlesex County",1998,2.5,20679,805836,826515
+NA,"Middlesex County","MA","Middlesex County",1999,2.5,21279,816516,837795
+NA,"Middlesex County","MA","Middlesex County",2000,2.2,18181,803616,821797
+NA,"Middlesex County","MA","Middlesex County",2001,3.3,27298,803298,830596
+NA,"Middlesex County","MA","Middlesex County",2002,5,41306,786821,828127
+NA,"Middlesex County","MA","Middlesex County",2003,5.3,43489,773934,817423
+NA,"Middlesex County","MA","Middlesex County",2004,4.5,36384,771860,808244
+NA,"Middlesex County","MA","Middlesex County",2005,4.1,32895,777022,809917
+NA,"Middlesex County","MA","Middlesex County",2006,3.9,32051,780347,812398
+NA,"Middlesex County","MA","Middlesex County",2007,3.7,30027,788302,818329
+NA,"Middlesex County","MA","Middlesex County",2008,4.4,36189,791149,827338
+NA,"Middlesex County","MA","Middlesex County",2009,6.9,57234,769491,826725
+NA,"Middlesex County","MA","Middlesex County",2010,6.8,56430,776213,832643
+NA,"Middlesex County","MA","Middlesex County",2011,5.8,48531,786142,834673
+NA,"Middlesex County","MA","Middlesex County",2012,5.3,44620,794517,839137
 "Middleton","Essex County","MA","Middleton",1990,5.7,162,2698,2860
 "Middleton","Essex County","MA","Middleton",1991,6.8,194,2652,2846
 "Middleton","Essex County","MA","Middleton",1992,8.2,242,2700,2942
@@ -4484,1101 +4714,6 @@
 "Mount Washington","Berkshire County","MA","Mount Washington",2010,3.3,4,117,121
 "Mount Washington","Berkshire County","MA","Mount Washington",2011,3.3,4,117,121
 "Mount Washington","Berkshire County","MA","Mount Washington",2012,2.5,3,116,119
-NA,"NA County",NA,"United States",1990,4,906,21944,22850
-NA,"NA County",NA,"United States",1991,4.6,1000,20738,21738
-NA,"NA County",NA,"United States",1992,3.7,806,20825,21631
-NA,"NA County",NA,"United States",1993,3,660,21315,21975
-NA,"NA County",NA,"United States",1994,2.6,581,21644,22225
-NA,"NA County",NA,"United States",1995,2.3,523,21789,22312
-NA,"NA County",NA,"United States",1996,2,450,22109,22559
-NA,"NA County",NA,"United States",1997,1.8,417,22601,23018
-NA,"NA County",NA,"United States",1998,1.7,402,23320,23722
-NA,"NA County",NA,"United States",1999,1.6,381,23500,23881
-NA,"NA County",NA,"United States",2000,1.9,453,22884,23337
-NA,"NA County",NA,"United States",2001,2.2,513,22960,23473
-NA,"NA County",NA,"United States",2002,2.7,649,22971,23620
-NA,"NA County",NA,"United States",2003,3.3,795,23247,24042
-NA,"NA County",NA,"United States",2004,3.3,792,23358,24150
-NA,"NA County",NA,"United States",2005,3.4,817,23300,24117
-NA,"NA County",NA,"United States",2006,3.3,798,23563,24361
-NA,"NA County",NA,"United States",2007,3.1,760,23736,24496
-NA,"NA County",NA,"United States",2008,3.8,927,23582,24509
-NA,"NA County",NA,"United States",2009,5,1238,23303,24541
-NA,"NA County",NA,"United States",2010,5.4,1346,23360,24706
-NA,"NA County",NA,"United States",2011,4.8,1196,23516,24712
-NA,"NA County",NA,"United States",2012,4.5,1117,23727,24844
-NA,"NA County",NA,"United States",1990,9.2,937,9205,10142
-NA,"NA County",NA,"United States",1991,13.5,1360,8742,10102
-NA,"NA County",NA,"United States",1992,12.9,1284,8693,9977
-NA,"NA County",NA,"United States",1993,9.9,976,8874,9850
-NA,"NA County",NA,"United States",1994,8.5,813,8804,9617
-NA,"NA County",NA,"United States",1995,7.2,672,8647,9319
-NA,"NA County",NA,"United States",1996,6.3,573,8569,9142
-NA,"NA County",NA,"United States",1997,6.4,593,8701,9294
-NA,"NA County",NA,"United States",1998,5.3,492,8763,9255
-NA,"NA County",NA,"United States",1999,4.9,446,8731,9177
-NA,"NA County",NA,"United States",2000,3,321,10460,10781
-NA,"NA County",NA,"United States",2001,4.2,446,10261,10707
-NA,"NA County",NA,"United States",2002,5.4,583,10294,10877
-NA,"NA County",NA,"United States",2003,6.3,688,10178,10866
-NA,"NA County",NA,"United States",2004,6,643,10038,10681
-NA,"NA County",NA,"United States",2005,5.6,598,10002,10600
-NA,"NA County",NA,"United States",2006,5.6,589,9968,10557
-NA,"NA County",NA,"United States",2007,5.7,599,9896,10495
-NA,"NA County",NA,"United States",2008,6.7,715,9941,10656
-NA,"NA County",NA,"United States",2009,10.4,1120,9614,10734
-NA,"NA County",NA,"United States",2010,10.8,1139,9427,10566
-NA,"NA County",NA,"United States",2011,9.4,971,9410,10381
-NA,"NA County",NA,"United States",2012,8.7,903,9441,10344
-NA,"Barnstable County","MA","Barnstable County",1990,7.4,7220,90285,97505
-NA,"Barnstable County","MA","Barnstable County",1991,10.3,10034,87680,97714
-NA,"Barnstable County","MA","Barnstable County",1992,10.8,10512,87131,97643
-NA,"Barnstable County","MA","Barnstable County",1993,9.5,9481,90495,99976
-NA,"Barnstable County","MA","Barnstable County",1994,8.6,8667,92498,101165
-NA,"Barnstable County","MA","Barnstable County",1995,7.2,7378,95070,102448
-NA,"Barnstable County","MA","Barnstable County",1996,6.2,6432,97295,103727
-NA,"Barnstable County","MA","Barnstable County",1997,5.9,6220,99207,105427
-NA,"Barnstable County","MA","Barnstable County",1998,5,5347,101312,106659
-NA,"Barnstable County","MA","Barnstable County",1999,4.3,4754,104664,109418
-NA,"Barnstable County","MA","Barnstable County",2000,3.5,3919,109564,113483
-NA,"Barnstable County","MA","Barnstable County",2001,3.9,4454,110854,115308
-NA,"Barnstable County","MA","Barnstable County",2002,4.7,5592,113093,118685
-NA,"Barnstable County","MA","Barnstable County",2003,5.3,6414,115428,121842
-NA,"Barnstable County","MA","Barnstable County",2004,5.1,6199,116532,122731
-NA,"Barnstable County","MA","Barnstable County",2005,4.9,6005,116107,122112
-NA,"Barnstable County","MA","Barnstable County",2006,5,6079,116354,122433
-NA,"Barnstable County","MA","Barnstable County",2007,4.8,5822,115658,121480
-NA,"Barnstable County","MA","Barnstable County",2008,5.8,7114,114928,122042
-NA,"Barnstable County","MA","Barnstable County",2009,8.4,10284,111792,122076
-NA,"Barnstable County","MA","Barnstable County",2010,9,10896,110726,121622
-NA,"Barnstable County","MA","Barnstable County",2011,8.2,9843,110543,120386
-NA,"Barnstable County","MA","Barnstable County",2012,7.4,8953,112398,121351
-NA,"NA County",NA,"United States",1990,7.1,7526,98177,105703
-NA,"NA County",NA,"United States",1991,9.9,10516,95388,105904
-NA,"NA County",NA,"United States",1992,10.3,10853,94815,105668
-NA,"NA County",NA,"United States",1993,8.9,9550,98352,107902
-NA,"NA County",NA,"United States",1994,7.9,8615,100723,109338
-NA,"NA County",NA,"United States",1995,6.6,7330,102940,110270
-NA,"NA County",NA,"United States",1996,5.7,6373,105366,111739
-NA,"NA County",NA,"United States",1997,5.4,6126,107632,113758
-NA,"NA County",NA,"United States",1998,4.5,5205,109894,115099
-NA,"NA County",NA,"United States",1999,3.9,4650,113383,118033
-NA,"NA County",NA,"United States",2000,3.2,3988,121133,125121
-NA,"NA County",NA,"United States",2001,3.6,4628,122595,127223
-NA,"NA County",NA,"United States",2002,4.5,5934,125112,131046
-NA,"NA County",NA,"United States",2003,5.1,6836,127730,134566
-NA,"NA County",NA,"United States",2004,4.9,6592,129091,135683
-NA,"NA County",NA,"United States",2005,4.7,6371,128771,135142
-NA,"NA County",NA,"United States",2006,4.8,6457,129143,135600
-NA,"NA County",NA,"United States",2007,4.6,6252,128402,134654
-NA,"NA County",NA,"United States",2008,5.7,7717,127660,135377
-NA,"NA County",NA,"United States",2009,8.3,11204,124237,135441
-NA,"NA County",NA,"United States",2010,8.7,11796,123695,135491
-NA,"NA County",NA,"United States",2011,7.9,10595,123577,134172
-NA,"NA County",NA,"United States",2012,7.1,9645,125650,135295
-NA,"Berkshire County","MA","Berkshire County",1990,7.1,4959,64944,69903
-NA,"Berkshire County","MA","Berkshire County",1991,10.9,7579,62120,69699
-NA,"Berkshire County","MA","Berkshire County",1992,10.7,7319,61249,68568
-NA,"Berkshire County","MA","Berkshire County",1993,8.6,5818,62126,67944
-NA,"Berkshire County","MA","Berkshire County",1994,7.7,5162,61842,67004
-NA,"Berkshire County","MA","Berkshire County",1995,6.3,4186,61898,66084
-NA,"Berkshire County","MA","Berkshire County",1996,5.2,3454,62717,66171
-NA,"Berkshire County","MA","Berkshire County",1997,4.9,3278,63296,66574
-NA,"Berkshire County","MA","Berkshire County",1998,4,2632,63487,66119
-NA,"Berkshire County","MA","Berkshire County",1999,3.8,2541,63818,66359
-NA,"Berkshire County","MA","Berkshire County",2000,2.9,2068,68092,70160
-NA,"Berkshire County","MA","Berkshire County",2001,3.5,2492,68590,71082
-NA,"Berkshire County","MA","Berkshire County",2002,4.6,3311,69395,72706
-NA,"Berkshire County","MA","Berkshire County",2003,5.1,3696,68958,72654
-NA,"Berkshire County","MA","Berkshire County",2004,4.7,3420,68705,72125
-NA,"Berkshire County","MA","Berkshire County",2005,4.4,3161,69485,72646
-NA,"Berkshire County","MA","Berkshire County",2006,4.3,3175,70292,73467
-NA,"Berkshire County","MA","Berkshire County",2007,4.4,3212,69717,72929
-NA,"Berkshire County","MA","Berkshire County",2008,5.2,3767,69288,73055
-NA,"Berkshire County","MA","Berkshire County",2009,7.8,5667,67425,73092
-NA,"Berkshire County","MA","Berkshire County",2010,8.1,5881,66909,72790
-NA,"Berkshire County","MA","Berkshire County",2011,7.2,5223,67309,72532
-NA,"Berkshire County","MA","Berkshire County",2012,6.7,4817,66814,71631
-NA,"NA County",NA,"United States",1990,5.3,77622,1383193,1460815
-NA,"NA County",NA,"United States",1991,7.4,106130,1334082,1440212
-NA,"NA County",NA,"United States",1992,7.5,107991,1323256,1431247
-NA,"NA County",NA,"United States",1993,6.2,87901,1338468,1426369
-NA,"NA County",NA,"United States",1994,5.2,75206,1359901,1435107
-NA,"NA County",NA,"United States",1995,4.6,67337,1384396,1451733
-NA,"NA County",NA,"United States",1996,3.8,55671,1411124,1466795
-NA,"NA County",NA,"United States",1997,3.4,50450,1442867,1493317
-NA,"NA County",NA,"United States",1998,2.7,41372,1465073,1506445
-NA,"NA County",NA,"United States",1999,2.7,40765,1479464,1520229
-NA,"NA County",NA,"United States",2000,2.4,36669,1467251,1503920
-NA,"NA County",NA,"United States",2001,3.4,51299,1465870,1517169
-NA,"NA County",NA,"United States",2002,5,74993,1438923,1513916
-NA,"NA County",NA,"United States",2003,5.4,81151,1412958,1494109
-NA,"NA County",NA,"United States",2004,4.8,70241,1406190,1476431
-NA,"NA County",NA,"United States",2005,4.3,64003,1413553,1477556
-NA,"NA County",NA,"United States",2006,4.2,63500,1433097,1496597
-NA,"NA County",NA,"United States",2007,3.9,59509,1451617,1511126
-NA,"NA County",NA,"United States",2008,4.7,71612,1460175,1531787
-NA,"NA County",NA,"United States",2009,7.2,109995,1421519,1531514
-NA,"NA County",NA,"United States",2010,7.2,110343,1424563,1534906
-NA,"NA County",NA,"United States",2011,6.2,95180,1443769,1538949
-NA,"NA County",NA,"United States",2012,5.6,86859,1459579,1546438
-NA,"NA County",NA,"United States",1990,5.9,137570,2212947,2350517
-NA,"NA County",NA,"United States",1991,8,186312,2133160,2319472
-NA,"NA County",NA,"United States",1992,8.3,191622,2119559,2311181
-NA,"NA County",NA,"United States",1993,6.8,157199,2147283,2304482
-NA,"NA County",NA,"United States",1994,5.7,132675,2185249,2317924
-NA,"NA County",NA,"United States",1995,5,116263,2223571,2339834
-NA,"NA County",NA,"United States",1996,4.1,97804,2273234,2371038
-NA,"NA County",NA,"United States",1997,3.7,88674,2332775,2421449
-NA,"NA County",NA,"United States",1998,3.1,74741,2374683,2449424
-NA,"NA County",NA,"United States",1999,3,74114,2415208,2489322
-NA,"NA County",NA,"United States",2000,2.6,63073,2398503,2461576
-NA,"NA County",NA,"United States",2001,3.6,89508,2401266,2490774
-NA,"NA County",NA,"United States",2002,5.3,131516,2362303,2493819
-NA,"NA County",NA,"United States",2003,5.7,140199,2327684,2467883
-NA,"NA County",NA,"United States",2004,5,122039,2323266,2445305
-NA,"NA County",NA,"United States",2005,4.5,111080,2340282,2451362
-NA,"NA County",NA,"United States",2006,4.4,109357,2369185,2478542
-NA,"NA County",NA,"United States",2007,4.1,103296,2394508,2497804
-NA,"NA County",NA,"United States",2008,4.9,123525,2402597,2526122
-NA,"NA County",NA,"United States",2009,7.6,191132,2338517,2529649
-NA,"NA County",NA,"United States",2010,7.6,191585,2343974,2535559
-NA,"NA County",NA,"United States",2011,6.6,167089,2371219,2538308
-NA,"NA County",NA,"United States",2012,6.1,155041,2395537,2550578
-NA,"NA County",NA,"United States",1990,6,169482,2662698,2832180
-NA,"NA County",NA,"United States",1991,8.2,229633,2565113,2794746
-NA,"NA County",NA,"United States",1992,8.4,232555,2552531,2785086
-NA,"NA County",NA,"United States",1993,6.8,189356,2589582,2778938
-NA,"NA County",NA,"United States",1994,5.7,158890,2633914,2792804
-NA,"NA County",NA,"United States",1995,5,140102,2677357,2817459
-NA,"NA County",NA,"United States",1996,4.2,118695,2733530,2852225
-NA,"NA County",NA,"United States",1997,3.7,107627,2805429,2913056
-NA,"NA County",NA,"United States",1998,3.1,91008,2855530,2946538
-NA,"NA County",NA,"United States",1999,3,89871,2898956,2988827
-NA,"NA County",NA,"United States",2000,2.6,77009,2899702,2976711
-NA,"NA County",NA,"United States",2001,3.6,108673,2904697,3013370
-NA,"NA County",NA,"United States",2002,5.3,159145,2865234,3024379
-NA,"NA County",NA,"United States",2003,5.7,170616,2831883,3002499
-NA,"NA County",NA,"United States",2004,5,149360,2830463,2979823
-NA,"NA County",NA,"United States",2005,4.6,136925,2849548,2986473
-NA,"NA County",NA,"United States",2006,4.5,134816,2884309,3019125
-NA,"NA County",NA,"United States",2007,4.2,128263,2912019,3040282
-NA,"NA County",NA,"United States",2008,5,152819,2918342,3071161
-NA,"NA County",NA,"United States",2009,7.7,236333,2840706,3077039
-NA,"NA County",NA,"United States",2010,7.7,237692,2845407,3083099
-NA,"NA County",NA,"United States",2011,6.7,208064,2875698,3083762
-NA,"NA County",NA,"United States",2012,6.3,193884,2900493,3094377
-NA,"Bristol County","MA","Bristol County",1990,9.2,24323,240931,265254
-NA,"Bristol County","MA","Bristol County",1991,12.5,33258,232353,265611
-NA,"Bristol County","MA","Bristol County",1992,12.1,31979,232860,264839
-NA,"Bristol County","MA","Bristol County",1993,10.4,27713,238197,265910
-NA,"Bristol County","MA","Bristol County",1994,9,24052,242955,267007
-NA,"Bristol County","MA","Bristol County",1995,8.3,21989,243960,265949
-NA,"Bristol County","MA","Bristol County",1996,7.4,19622,245280,264902
-NA,"Bristol County","MA","Bristol County",1997,6.4,17101,251177,268278
-NA,"Bristol County","MA","Bristol County",1998,5,13475,254513,267988
-NA,"Bristol County","MA","Bristol County",1999,4.6,12534,257366,269900
-NA,"Bristol County","MA","Bristol County",2000,3.8,10441,267626,278067
-NA,"Bristol County","MA","Bristol County",2001,4.7,13208,266374,279582
-NA,"Bristol County","MA","Bristol County",2002,6.1,17497,268084,285581
-NA,"Bristol County","MA","Bristol County",2003,6.6,18909,267471,286380
-NA,"Bristol County","MA","Bristol County",2004,6.2,17858,268272,286130
-NA,"Bristol County","MA","Bristol County",2005,6,17171,270583,287754
-NA,"Bristol County","MA","Bristol County",2006,6,17347,273260,290607
-NA,"Bristol County","MA","Bristol County",2007,5.8,16861,273636,290497
-NA,"Bristol County","MA","Bristol County",2008,7.1,20586,270811,291397
-NA,"Bristol County","MA","Bristol County",2009,10.7,31383,261345,292728
-NA,"Bristol County","MA","Bristol County",2010,10.9,31838,260053,291891
-NA,"Bristol County","MA","Bristol County",2011,10,29053,262273,291326
-NA,"Bristol County","MA","Bristol County",2012,9.3,27116,263376,290492
-NA,"NA County",NA,"United States",1990,8,9261,105913,115174
-NA,"NA County",NA,"United States",1991,11.5,13136,100939,114075
-NA,"NA County",NA,"United States",1992,11.4,12752,99337,112089
-NA,"NA County",NA,"United States",1993,8.8,9958,102778,112736
-NA,"NA County",NA,"United States",1994,7.1,8245,108487,116732
-NA,"NA County",NA,"United States",1995,6.1,7297,111799,119096
-NA,"NA County",NA,"United States",1996,5.6,6653,112806,119459
-NA,"NA County",NA,"United States",1997,4.8,5866,116575,122441
-NA,"NA County",NA,"United States",1998,3.8,4666,117853,122519
-NA,"NA County",NA,"United States",1999,3.6,4499,119924,124423
-NA,"NA County",NA,"United States",2000,2.9,3517,119720,123237
-NA,"NA County",NA,"United States",2001,3.8,4682,119483,124165
-NA,"NA County",NA,"United States",2002,5.3,6594,118595,125189
-NA,"NA County",NA,"United States",2003,6,7498,116514,124012
-NA,"NA County",NA,"United States",2004,5.7,7043,116526,123569
-NA,"NA County",NA,"United States",2005,5.3,6545,116934,123479
-NA,"NA County",NA,"United States",2006,5.3,6592,118348,124940
-NA,"NA County",NA,"United States",2007,5.1,6388,119127,125515
-NA,"NA County",NA,"United States",2008,6,7621,118751,126372
-NA,"NA County",NA,"United States",2009,9.1,11586,115827,127413
-NA,"NA County",NA,"United States",2010,9.5,12219,116020,128239
-NA,"NA County",NA,"United States",2011,8.5,10823,117048,127871
-NA,"NA County",NA,"United States",2012,7.6,9752,118085,127837
-NA,"NA County","MA","United States",1990,7.1,69,907,976
-NA,"NA County","MA","United States",1991,8.7,84,884,968
-NA,"NA County","MA","United States",1992,9.9,97,881,978
-NA,"NA County","MA","United States",1993,9.3,90,879,969
-NA,"NA County","MA","United States",1994,8,77,885,962
-NA,"NA County","MA","United States",1995,5.8,57,927,984
-NA,"NA County","MA","United States",1996,5.5,54,929,983
-NA,"NA County","MA","United States",1997,5.4,54,948,1002
-NA,"NA County","MA","United States",1998,4.7,47,963,1010
-NA,"NA County","MA","United States",1999,4.3,44,980,1024
-NA,"NA County","MA","United States",2000,3,34,1106,1140
-NA,"NA County","MA","United States",2001,3.1,36,1113,1149
-NA,"NA County","MA","United States",2002,4.5,53,1126,1179
-NA,"NA County","MA","United States",2003,5.4,64,1129,1193
-NA,"NA County","MA","United States",2004,4.7,55,1115,1170
-NA,"NA County","MA","United States",2005,4.2,49,1108,1157
-NA,"NA County","MA","United States",2006,4.1,47,1109,1156
-NA,"NA County","MA","United States",2007,4.8,55,1092,1147
-NA,"NA County","MA","United States",2008,4.8,54,1081,1135
-NA,"NA County","MA","United States",2009,7.3,83,1054,1137
-NA,"NA County","MA","United States",2010,7.4,82,1030,1112
-NA,"NA County","MA","United States",2011,6.7,74,1034,1108
-NA,"NA County","MA","United States",2012,6.2,69,1036,1105
-NA,"Dukes County","MA","Dukes County",1990,5.1,382,7149,7531
-NA,"Dukes County","MA","Dukes County",1991,7.2,562,7292,7854
-NA,"Dukes County","MA","Dukes County",1992,7.9,596,6916,7512
-NA,"Dukes County","MA","Dukes County",1993,7.5,583,7180,7763
-NA,"Dukes County","MA","Dukes County",1994,6.8,565,7772,8337
-NA,"Dukes County","MA","Dukes County",1995,5.7,496,8217,8713
-NA,"Dukes County","MA","Dukes County",1996,5.4,486,8582,9068
-NA,"Dukes County","MA","Dukes County",1997,5,468,8815,9283
-NA,"Dukes County","MA","Dukes County",1998,4.1,382,9009,9391
-NA,"Dukes County","MA","Dukes County",1999,3.9,370,9164,9534
-NA,"Dukes County","MA","Dukes County",2000,2.8,281,9794,10075
-NA,"Dukes County","MA","Dukes County",2001,2.9,296,9855,10151
-NA,"Dukes County","MA","Dukes County",2002,3.8,407,10228,10635
-NA,"Dukes County","MA","Dukes County",2003,4.2,469,10607,11076
-NA,"Dukes County","MA","Dukes County",2004,4,450,10685,11135
-NA,"Dukes County","MA","Dukes County",2005,3.9,431,10543,10974
-NA,"Dukes County","MA","Dukes County",2006,3.9,430,10639,11069
-NA,"Dukes County","MA","Dukes County",2007,3.5,393,10752,11145
-NA,"Dukes County","MA","Dukes County",2008,4.2,466,10758,11224
-NA,"Dukes County","MA","Dukes County",2009,6.4,727,10604,11331
-NA,"Dukes County","MA","Dukes County",2010,7.6,877,10670,11547
-NA,"Dukes County","MA","Dukes County",2011,7.3,843,10752,11595
-NA,"Dukes County","MA","Dukes County",2012,6.9,805,10860,11665
-NA,"Essex County","MA","Essex County",1990,6.7,23368,326511,349879
-NA,"Essex County","MA","Essex County",1991,9,31376,317592,348968
-NA,"Essex County","MA","Essex County",1992,9.2,32281,317089,349370
-NA,"Essex County","MA","Essex County",1993,7.6,26357,321811,348168
-NA,"Essex County","MA","Essex County",1994,6.5,22915,327915,350830
-NA,"Essex County","MA","Essex County",1995,5.5,19475,333162,352637
-NA,"Essex County","MA","Essex County",1996,4.7,16741,341478,358219
-NA,"Essex County","MA","Essex County",1997,4.3,15774,349896,365670
-NA,"Essex County","MA","Essex County",1998,3.8,13968,358353,372321
-NA,"Essex County","MA","Essex County",1999,3.6,13495,364053,377548
-NA,"Essex County","MA","Essex County",2000,2.8,10407,362525,372932
-NA,"Essex County","MA","Essex County",2001,4,15305,363684,378989
-NA,"Essex County","MA","Essex County",2002,5.9,22565,358960,381525
-NA,"Essex County","MA","Essex County",2003,6.4,24247,354844,379091
-NA,"Essex County","MA","Essex County",2004,5.8,21693,353660,375353
-NA,"Essex County","MA","Essex County",2005,5.2,19700,355977,375677
-NA,"Essex County","MA","Essex County",2006,5.1,19133,355217,374350
-NA,"Essex County","MA","Essex County",2007,4.8,17838,356503,374341
-NA,"Essex County","MA","Essex County",2008,5.7,21418,356798,378216
-NA,"Essex County","MA","Essex County",2009,8.7,33230,347911,381141
-NA,"Essex County","MA","Essex County",2010,8.7,33384,349156,382540
-NA,"Essex County","MA","Essex County",2011,7.7,29642,353716,383358
-NA,"Essex County","MA","Essex County",2012,7.1,27467,357483,384950
-NA,"NA County",NA,"United States",1990,5.5,7320,126251,133571
-NA,"NA County",NA,"United States",1991,7.4,9843,122331,132174
-NA,"NA County",NA,"United States",1992,7.6,9975,121582,131557
-NA,"NA County",NA,"United States",1993,5.9,7807,123705,131512
-NA,"NA County",NA,"United States",1994,5,6720,126494,133214
-NA,"NA County",NA,"United States",1995,4.5,6074,127713,133787
-NA,"NA County",NA,"United States",1996,3.6,4847,130712,135559
-NA,"NA County",NA,"United States",1997,3.1,4318,134593,138911
-NA,"NA County",NA,"United States",1998,2.5,3539,137559,141098
-NA,"NA County",NA,"United States",1999,2.6,3716,139680,143396
-NA,"NA County",NA,"United States",2000,2.2,3159,139373,142532
-NA,"NA County",NA,"United States",2001,3.1,4510,140650,145160
-NA,"NA County",NA,"United States",2002,4.9,7103,137990,145093
-NA,"NA County",NA,"United States",2003,5.2,7409,135776,143185
-NA,"NA County",NA,"United States",2004,4.3,6163,136645,142808
-NA,"NA County",NA,"United States",2005,3.9,5549,138549,144098
-NA,"NA County",NA,"United States",2006,3.8,5543,139974,145517
-NA,"NA County",NA,"United States",2007,3.5,5208,141797,147005
-NA,"NA County",NA,"United States",2008,4.2,6294,143161,149455
-NA,"NA County",NA,"United States",2009,6.6,9853,138950,148803
-NA,"NA County",NA,"United States",2010,6.5,9689,138980,148669
-NA,"NA County",NA,"United States",2011,5.5,8216,140107,148323
-NA,"NA County",NA,"United States",2012,5.1,7648,141387,149035
-NA,"Franklin County","MA","Franklin County",1990,5.2,1929,35274,37203
-NA,"Franklin County","MA","Franklin County",1991,7.9,2966,34752,37718
-NA,"Franklin County","MA","Franklin County",1992,8.1,2984,33983,36967
-NA,"Franklin County","MA","Franklin County",1993,6.4,2344,34192,36536
-NA,"Franklin County","MA","Franklin County",1994,5.4,1987,35047,37034
-NA,"Franklin County","MA","Franklin County",1995,4.8,1803,35621,37424
-NA,"Franklin County","MA","Franklin County",1996,4,1490,35764,37254
-NA,"Franklin County","MA","Franklin County",1997,3.9,1477,36499,37976
-NA,"Franklin County","MA","Franklin County",1998,3.3,1277,37076,38353
-NA,"Franklin County","MA","Franklin County",1999,3,1169,37644,38813
-NA,"Franklin County","MA","Franklin County",2000,2.5,972,38052,39024
-NA,"Franklin County","MA","Franklin County",2001,3.1,1205,38006,39211
-NA,"Franklin County","MA","Franklin County",2002,4,1596,38304,39900
-NA,"Franklin County","MA","Franklin County",2003,4.6,1828,38259,40087
-NA,"Franklin County","MA","Franklin County",2004,4.3,1702,37888,39590
-NA,"Franklin County","MA","Franklin County",2005,4.3,1696,37872,39568
-NA,"Franklin County","MA","Franklin County",2006,4.3,1713,37987,39700
-NA,"Franklin County","MA","Franklin County",2007,4.2,1634,37532,39166
-NA,"Franklin County","MA","Franklin County",2008,5,1956,37106,39062
-NA,"Franklin County","MA","Franklin County",2009,7.6,2973,35943,38916
-NA,"Franklin County","MA","Franklin County",2010,7.8,3018,35916,38934
-NA,"Franklin County","MA","Franklin County",2011,6.7,2582,35941,38523
-NA,"Franklin County","MA","Franklin County",2012,6.3,2411,36055,38466
-NA,"NA County","MA","United States",1990,5.3,715,12843,13558
-NA,"NA County","MA","United States",1991,7.8,1047,12422,13469
-NA,"NA County","MA","United States",1992,8.4,1136,12371,13507
-NA,"NA County","MA","United States",1993,6.9,945,12758,13703
-NA,"NA County","MA","United States",1994,6,819,12789,13608
-NA,"NA County","MA","United States",1995,5.2,731,13278,14009
-NA,"NA County","MA","United States",1996,4.1,578,13549,14127
-NA,"NA County","MA","United States",1997,3.7,525,13792,14317
-NA,"NA County","MA","United States",1998,2.9,416,13762,14178
-NA,"NA County","MA","United States",1999,2.8,392,13733,14125
-NA,"NA County","MA","United States",2000,2.3,362,15094,15456
-NA,"NA County","MA","United States",2001,2.6,417,15617,16034
-NA,"NA County","MA","United States",2002,3.4,572,16065,16637
-NA,"NA County","MA","United States",2003,4,664,16082,16746
-NA,"NA County","MA","United States",2004,3.7,618,16003,16621
-NA,"NA County","MA","United States",2005,3.3,566,16349,16915
-NA,"NA County","MA","United States",2006,3.5,606,16481,17087
-NA,"NA County","MA","United States",2007,3.5,593,16128,16721
-NA,"NA County","MA","United States",2008,4.3,726,16100,16826
-NA,"NA County","MA","United States",2009,6.3,1054,15604,16658
-NA,"NA County","MA","United States",2010,6.4,1078,15639,16717
-NA,"NA County","MA","United States",2011,5.5,918,15727,16645
-NA,"NA County","MA","United States",2012,5.1,843,15597,16440
-NA,"NA County",NA,"United States",1990,5,1081,20464,21545
-NA,"NA County",NA,"United States",1991,7.8,1711,20292,22003
-NA,"NA County",NA,"United States",1992,8.1,1737,19690,21427
-NA,"NA County",NA,"United States",1993,6.4,1342,19685,21027
-NA,"NA County",NA,"United States",1994,5.2,1124,20299,21423
-NA,"NA County",NA,"United States",1995,5.1,1103,20724,21827
-NA,"NA County",NA,"United States",1996,4.2,903,20795,21698
-NA,"NA County",NA,"United States",1997,4,878,21231,22109
-NA,"NA County",NA,"United States",1998,3.4,769,21585,22354
-NA,"NA County",NA,"United States",1999,3.1,703,21956,22659
-NA,"NA County",NA,"United States",2000,2.6,580,21662,22242
-NA,"NA County",NA,"United States",2001,3.3,726,21577,22303
-NA,"NA County",NA,"United States",2002,4.2,964,21852,22816
-NA,"NA County",NA,"United States",2003,4.6,1066,21891,22957
-NA,"NA County",NA,"United States",2004,4.5,1007,21532,22539
-NA,"NA County",NA,"United States",2005,4.5,1021,21485,22506
-NA,"NA County",NA,"United States",2006,4.6,1028,21539,22567
-NA,"NA County",NA,"United States",2007,4.4,976,21187,22163
-NA,"NA County",NA,"United States",2008,5.3,1174,20960,22134
-NA,"NA County",NA,"United States",2009,8,1774,20334,22108
-NA,"NA County",NA,"United States",2010,8.1,1800,20430,22230
-NA,"NA County",NA,"United States",2011,7,1535,20461,21996
-NA,"NA County",NA,"United States",2012,6.5,1431,20517,21948
-NA,"Hampden County","MA","Hampden County",1990,6.7,14857,208015,222872
-NA,"Hampden County","MA","Hampden County",1991,9.7,21582,200238,221820
-NA,"Hampden County","MA","Hampden County",1992,9.5,20835,199015,219850
-NA,"Hampden County","MA","Hampden County",1993,8.9,19341,198001,217342
-NA,"Hampden County","MA","Hampden County",1994,7.9,16961,197840,214801
-NA,"Hampden County","MA","Hampden County",1995,6.7,14143,197823,211966
-NA,"Hampden County","MA","Hampden County",1996,5.3,11172,199829,211001
-NA,"Hampden County","MA","Hampden County",1997,4.8,10382,204128,214510
-NA,"Hampden County","MA","Hampden County",1998,4.3,9270,204770,214040
-NA,"Hampden County","MA","Hampden County",1999,4.1,8783,205357,214140
-NA,"Hampden County","MA","Hampden County",2000,3.3,7318,211898,219216
-NA,"Hampden County","MA","Hampden County",2001,4.2,9304,212446,221750
-NA,"Hampden County","MA","Hampden County",2002,5.7,12856,211762,224618
-NA,"Hampden County","MA","Hampden County",2003,6.6,14732,210081,224813
-NA,"Hampden County","MA","Hampden County",2004,6.2,13901,210330,224231
-NA,"Hampden County","MA","Hampden County",2005,5.8,13029,211071,224100
-NA,"Hampden County","MA","Hampden County",2006,5.9,13201,212066,225267
-NA,"Hampden County","MA","Hampden County",2007,5.6,12489,211474,223963
-NA,"Hampden County","MA","Hampden County",2008,6.5,14579,210907,225486
-NA,"Hampden County","MA","Hampden County",2009,9.4,21263,205679,226942
-NA,"Hampden County","MA","Hampden County",2010,10,22466,202854,225320
-NA,"Hampden County","MA","Hampden County",2011,9.2,20404,200849,221253
-NA,"Hampden County","MA","Hampden County",2012,8.5,18729,200969,219698
-NA,"Hampshire County","MA","Hampshire County",1990,5.1,4111,76100,80211
-NA,"Hampshire County","MA","Hampshire County",1991,7.1,5589,73144,78733
-NA,"Hampshire County","MA","Hampshire County",1992,6.8,5398,73514,78912
-NA,"Hampshire County","MA","Hampshire County",1993,5.6,4368,74173,78541
-NA,"Hampshire County","MA","Hampshire County",1994,4.9,3906,75448,79354
-NA,"Hampshire County","MA","Hampshire County",1995,4.2,3308,75869,79177
-NA,"Hampshire County","MA","Hampshire County",1996,3.4,2699,77109,79808
-NA,"Hampshire County","MA","Hampshire County",1997,3,2402,78922,81324
-NA,"Hampshire County","MA","Hampshire County",1998,2.8,2287,80014,82301
-NA,"Hampshire County","MA","Hampshire County",1999,2.5,2094,81005,83099
-NA,"Hampshire County","MA","Hampshire County",2000,2.2,1899,84104,86003
-NA,"Hampshire County","MA","Hampshire County",2001,2.7,2334,84150,86484
-NA,"Hampshire County","MA","Hampshire County",2002,3.6,3113,84068,87181
-NA,"Hampshire County","MA","Hampshire County",2003,4.2,3718,84026,87744
-NA,"Hampshire County","MA","Hampshire County",2004,4.1,3627,84168,87795
-NA,"Hampshire County","MA","Hampshire County",2005,4,3547,84257,87804
-NA,"Hampshire County","MA","Hampshire County",2006,3.9,3489,85011,88500
-NA,"Hampshire County","MA","Hampshire County",2007,3.8,3345,85099,88444
-NA,"Hampshire County","MA","Hampshire County",2008,4.4,3896,84818,88714
-NA,"Hampshire County","MA","Hampshire County",2009,6.5,5672,81759,87431
-NA,"Hampshire County","MA","Hampshire County",2010,6.6,5855,82485,88340
-NA,"Hampshire County","MA","Hampshire County",2011,6,5186,81818,87004
-NA,"Hampshire County","MA","Hampshire County",2012,5.6,4874,82030,86904
-NA,"NA County",NA,"United States",1990,6.9,7077,95707,102784
-NA,"NA County",NA,"United States",1991,8.9,9207,94018,103225
-NA,"NA County",NA,"United States",1992,9.1,9571,95315,104886
-NA,"NA County",NA,"United States",1993,7.9,8404,97859,106263
-NA,"NA County",NA,"United States",1994,6.4,6863,100387,107250
-NA,"NA County",NA,"United States",1995,5.4,5768,101152,106920
-NA,"NA County",NA,"United States",1996,4.7,5163,104898,110061
-NA,"NA County",NA,"United States",1997,4.4,4985,107697,112682
-NA,"NA County",NA,"United States",1998,3.8,4417,111568,115985
-NA,"NA County",NA,"United States",1999,3.5,4264,117063,121327
-NA,"NA County",NA,"United States",2000,2.7,3288,117462,120750
-NA,"NA County",NA,"United States",2001,3.9,4782,117411,122193
-NA,"NA County",NA,"United States",2002,5.8,7067,114905,121972
-NA,"NA County",NA,"United States",2003,5.9,7015,112648,119663
-NA,"NA County",NA,"United States",2004,5.3,6256,112332,118588
-NA,"NA County",NA,"United States",2005,4.7,5615,113604,119219
-NA,"NA County",NA,"United States",2006,4.4,5360,115277,120637
-NA,"NA County",NA,"United States",2007,4.3,5191,116075,121266
-NA,"NA County",NA,"United States",2008,5.2,6334,115628,121962
-NA,"NA County",NA,"United States",2009,7.9,9702,113225,122927
-NA,"NA County",NA,"United States",2010,7.7,9559,114572,124131
-NA,"NA County",NA,"United States",2011,6.8,8487,115962,124449
-NA,"NA County",NA,"United States",2012,6.5,8232,117486,125718
-NA,"NA County",NA,"United States",1990,6.5,3979,57550,61529
-NA,"NA County",NA,"United States",1991,8.8,5501,56717,62218
-NA,"NA County",NA,"United States",1992,8.5,5370,57536,62906
-NA,"NA County",NA,"United States",1993,7.5,4779,59041,63820
-NA,"NA County",NA,"United States",1994,6.4,4162,60762,64924
-NA,"NA County",NA,"United States",1995,5.4,3492,60956,64448
-NA,"NA County",NA,"United States",1996,4.4,2937,63185,66122
-NA,"NA County",NA,"United States",1997,4.4,2980,64538,67518
-NA,"NA County",NA,"United States",1998,3.6,2523,67213,69736
-NA,"NA County",NA,"United States",1999,3.4,2438,68898,71336
-NA,"NA County",NA,"United States",2000,2.5,1780,70309,72089
-NA,"NA County",NA,"United States",2001,3.7,2720,69978,72698
-NA,"NA County",NA,"United States",2002,5.7,4090,68087,72177
-NA,"NA County",NA,"United States",2003,5.9,4186,66911,71097
-NA,"NA County",NA,"United States",2004,5.2,3669,66452,70121
-NA,"NA County",NA,"United States",2005,4.8,3369,66985,70354
-NA,"NA County",NA,"United States",2006,4.6,3258,67737,70995
-NA,"NA County",NA,"United States",2007,4.3,3079,68002,71081
-NA,"NA County",NA,"United States",2008,5.3,3789,68052,71841
-NA,"NA County",NA,"United States",2009,8.3,5984,66523,72507
-NA,"NA County",NA,"United States",2010,8.3,6018,66749,72767
-NA,"NA County",NA,"United States",2011,7.1,5188,67604,72792
-NA,"NA County",NA,"United States",2012,6.4,4721,68492,73213
-NA,"NA County",NA,"United States",1990,9.6,6139,57718,63857
-NA,"NA County",NA,"United States",1991,12.2,7724,55604,63328
-NA,"NA County",NA,"United States",1992,12.6,7969,55364,63333
-NA,"NA County",NA,"United States",1993,12,7598,55614,63212
-NA,"NA County",NA,"United States",1994,10.4,6495,56085,62580
-NA,"NA County",NA,"United States",1995,8.5,5466,59073,64539
-NA,"NA County",NA,"United States",1996,7.9,5184,60696,65880
-NA,"NA County",NA,"United States",1997,7.1,4698,61507,66205
-NA,"NA County",NA,"United States",1998,6.7,4473,62618,67091
-NA,"NA County",NA,"United States",1999,6.1,4294,66051,70345
-NA,"NA County",NA,"United States",2000,4.4,2988,64454,67442
-NA,"NA County",NA,"United States",2001,6.5,4530,64649,69179
-NA,"NA County",NA,"United States",2002,9.4,6639,63918,70557
-NA,"NA County",NA,"United States",2003,9.5,6664,63674,70338
-NA,"NA County",NA,"United States",2004,8.5,5943,63895,69838
-NA,"NA County",NA,"United States",2005,7.6,5295,64245,69540
-NA,"NA County",NA,"United States",2006,7.2,4996,64768,69764
-NA,"NA County",NA,"United States",2007,6.8,4744,65285,70029
-NA,"NA County",NA,"United States",2008,8,5652,64951,70603
-NA,"NA County",NA,"United States",2009,12,8640,63132,71772
-NA,"NA County",NA,"United States",2010,12.2,8905,64116,73021
-NA,"NA County",NA,"United States",2011,11.5,8473,65353,73826
-NA,"NA County",NA,"United States",2012,11,8160,66251,74411
-NA,"NA County",NA,"United States",1990,10.1,4831,43173,48004
-NA,"NA County",NA,"United States",1991,13.1,6305,41772,48077
-NA,"NA County",NA,"United States",1992,13,6187,41354,47541
-NA,"NA County",NA,"United States",1993,12.2,5773,41372,47145
-NA,"NA County",NA,"United States",1994,11.1,5174,41433,46607
-NA,"NA County",NA,"United States",1995,9,4380,44176,48556
-NA,"NA County",NA,"United States",1996,8.4,4122,45222,49344
-NA,"NA County",NA,"United States",1997,7.7,3788,45722,49510
-NA,"NA County",NA,"United States",1998,7.1,3560,46502,50062
-NA,"NA County",NA,"United States",1999,6.8,3479,47642,51121
-NA,"NA County",NA,"United States",2000,4.6,2315,48532,50847
-NA,"NA County",NA,"United States",2001,7,3629,48550,52179
-NA,"NA County",NA,"United States",2002,10.1,5391,47851,53242
-NA,"NA County",NA,"United States",2003,10.2,5442,47741,53183
-NA,"NA County",NA,"United States",2004,9.2,4827,47714,52541
-NA,"NA County",NA,"United States",2005,8.3,4323,47830,52153
-NA,"NA County",NA,"United States",2006,7.9,4143,48046,52189
-NA,"NA County",NA,"United States",2007,7.4,3864,48276,52140
-NA,"NA County",NA,"United States",2008,8.9,4688,48069,52757
-NA,"NA County",NA,"United States",2009,13.4,7219,46760,53979
-NA,"NA County",NA,"United States",2010,13.4,7517,48568,56085
-NA,"NA County",NA,"United States",2011,12.7,7198,49524,56722
-NA,"NA County",NA,"United States",2012,11.8,6737,50204,56941
-NA,"NA County",NA,"United States",1990,8.3,5923,65491,71414
-NA,"NA County",NA,"United States",1991,10.8,7656,63184,70840
-NA,"NA County",NA,"United States",1992,9.5,6729,63812,70541
-NA,"NA County",NA,"United States",1993,7.5,5277,64688,69965
-NA,"NA County",NA,"United States",1994,6.9,4838,64819,69657
-NA,"NA County",NA,"United States",1995,6.4,4512,66003,70515
-NA,"NA County",NA,"United States",1996,5.7,4010,65950,69960
-NA,"NA County",NA,"United States",1997,5.1,3601,67580,71181
-NA,"NA County",NA,"United States",1998,4.1,2889,67510,70399
-NA,"NA County",NA,"United States",1999,4.2,2977,67559,70536
-NA,"NA County",NA,"United States",2000,3.2,2313,70426,72739
-NA,"NA County",NA,"United States",2001,4.4,3222,69703,72925
-NA,"NA County",NA,"United States",2002,6.5,4789,69316,74105
-NA,"NA County",NA,"United States",2003,7,5208,68871,74079
-NA,"NA County",NA,"United States",2004,6.5,4791,68529,73320
-NA,"NA County",NA,"United States",2005,6.4,4626,67974,72600
-NA,"NA County",NA,"United States",2006,6.1,4425,68560,72985
-NA,"NA County",NA,"United States",2007,5.7,4168,68441,72609
-NA,"NA County",NA,"United States",2008,6.8,4949,67727,72676
-NA,"NA County",NA,"United States",2009,10.4,7634,65728,73362
-NA,"NA County",NA,"United States",2010,10.7,7823,65240,73063
-NA,"NA County",NA,"United States",2011,9.8,7121,65212,72333
-NA,"NA County",NA,"United States",2012,9.1,6495,65165,71660
-NA,"NA County",NA,"United States",1990,7.1,10664,138800,149464
-NA,"NA County",NA,"United States",1991,9.9,14583,133433,148016
-NA,"NA County",NA,"United States",1992,10.6,15674,132468,148142
-NA,"NA County",NA,"United States",1993,8.8,12810,132403,145213
-NA,"NA County",NA,"United States",1994,7.1,10181,133382,143563
-NA,"NA County",NA,"United States",1995,5.8,8346,135976,144322
-NA,"NA County",NA,"United States",1996,4.4,6523,140914,147437
-NA,"NA County",NA,"United States",1997,4,6167,146928,153095
-NA,"NA County",NA,"United States",1998,3.5,5421,150855,156276
-NA,"NA County",NA,"United States",1999,3.4,5553,155548,161101
-NA,"NA County",NA,"United States",2000,2.7,4012,147079,151091
-NA,"NA County",NA,"United States",2001,4.1,6323,147843,154166
-NA,"NA County",NA,"United States",2002,6.4,9874,145211,155085
-NA,"NA County",NA,"United States",2003,6.7,10300,143064,153364
-NA,"NA County",NA,"United States",2004,5.7,8652,142438,151090
-NA,"NA County",NA,"United States",2005,5.1,7765,143367,151132
-NA,"NA County",NA,"United States",2006,4.8,7352,144703,152055
-NA,"NA County",NA,"United States",2007,4.6,7049,145909,152958
-NA,"NA County",NA,"United States",2008,5.5,8419,145866,154285
-NA,"NA County",NA,"United States",2009,8.7,13542,141736,155278
-NA,"NA County",NA,"United States",2010,8.6,13336,142187,155523
-NA,"NA County",NA,"United States",2011,7.5,11672,143658,155330
-NA,"NA County",NA,"United States",2012,7,10965,145242,156207
-NA,"NA County",NA,"United States",1990,7,10062,133377,143439
-NA,"NA County",NA,"United States",1991,9.8,13936,128318,142254
-NA,"NA County",NA,"United States",1992,10.5,14907,127379,142286
-NA,"NA County",NA,"United States",1993,8.7,12118,127268,139386
-NA,"NA County",NA,"United States",1994,7,9715,128164,137879
-NA,"NA County",NA,"United States",1995,5.7,7947,130464,138411
-NA,"NA County",NA,"United States",1996,4.4,6191,135141,141332
-NA,"NA County",NA,"United States",1997,4,5866,140815,146681
-NA,"NA County",NA,"United States",1998,3.4,5114,144491,149605
-NA,"NA County",NA,"United States",1999,3.4,5233,149044,154277
-NA,"NA County",NA,"United States",2000,2.6,3780,140988,144768
-NA,"NA County",NA,"United States",2001,4.1,6012,141534,147546
-NA,"NA County",NA,"United States",2002,6.3,9369,138843,148212
-NA,"NA County",NA,"United States",2003,6.7,9820,136686,146506
-NA,"NA County",NA,"United States",2004,5.7,8250,135919,144169
-NA,"NA County",NA,"United States",2005,5.1,7387,136708,144095
-NA,"NA County",NA,"United States",2006,4.8,7008,137996,145004
-NA,"NA County",NA,"United States",2007,4.6,6699,139157,145856
-NA,"NA County",NA,"United States",2008,5.5,8044,139091,147135
-NA,"NA County",NA,"United States",2009,8.7,12942,135039,147981
-NA,"NA County",NA,"United States",2010,8.6,12760,135340,148100
-NA,"NA County",NA,"United States",2011,7.5,11139,136771,147910
-NA,"NA County",NA,"United States",2012,7,10420,138280,148700
-NA,"NA County","MA","MA",1976,9.8,267633,2458306,2725939
-NA,"NA County","MA","MA",1977,7.9,218418,2541441,2759859
-NA,"NA County","MA","MA",1978,6.2,173402,2635115,2808517
-NA,"NA County","MA","MA",1979,5.5,156341,2706845,2863186
-NA,"NA County","MA","MA",1980,5.7,164064,2721430,2885494
-NA,"NA County","MA","MA",1981,6.4,189276,2749062,2938338
-NA,"NA County","MA","MA",1982,8,236372,2729293,2965665
-NA,"NA County","MA","MA",1983,7,208954,2763148,2972102
-NA,"NA County","MA","MA",1984,4.8,145657,2886782,3032439
-NA,"NA County","MA","MA",1985,4.1,124753,2924626,3049379
-NA,"NA County","MA","MA",1986,4,122686,2957321,3080007
-NA,"NA County","MA","MA",1987,3.4,104458,3009900,3114358
-NA,"NA County","MA","MA",1988,3.3,104345,3051355,3155700
-NA,"NA County","MA","MA",1989,4.2,132422,3057019,3189441
-NA,"NA County","MA","MA",1990,6.3,203975,3022393,3226368
-NA,"NA County","MA","MA",1991,8.8,282590,2916293,3198883
-NA,"NA County","MA","MA",1992,8.8,281022,2899718,3180740
-NA,"NA County","MA","MA",1993,7.3,232339,2940565,3172904
-NA,"NA County","MA","MA",1994,6.2,198690,2989123,3187813
-NA,"NA County","MA","MA",1995,5.5,175528,3029360,3204888
-NA,"NA County","MA","MA",1996,4.6,147721,3083332,3231053
-NA,"NA County","MA","MA",1997,4.1,134564,3158851,3293415
-NA,"NA County","MA","MA",1998,3.4,112674,3208988,3321662
-NA,"NA County","MA","MA",1999,3.3,109563,3245761,3355324
-NA,"NA County","MA","MA",2000,2.7,92292,3273281,3365573
-NA,"NA County","MA","MA",2001,3.7,125993,3275343,3401336
-NA,"NA County","MA","MA",2002,5.3,181003,3243409,3424412
-NA,"NA County","MA","MA",2003,5.8,197648,3209062,3406710
-NA,"NA County","MA","MA",2004,5.2,176839,3203810,3380649
-NA,"NA County","MA","MA",2005,4.8,163579,3219717,3383296
-NA,"NA County","MA","MA",2006,4.8,162495,3255504,3417999
-NA,"NA County","MA","MA",2007,4.5,154422,3276532,3430954
-NA,"NA County","MA","MA",2008,5.3,185177,3277934,3463111
-NA,"NA County","MA","MA",2009,8.2,283193,3187538,3470731
-NA,"NA County","MA","MA",2010,8.3,287549,3187622,3475171
-NA,"NA County","MA","MA",2011,7.3,253592,3216160,3469752
-NA,"NA County","MA","MA",2012,6.7,233684,3241762,3475446
-NA,"Middlesex County","MA","Middlesex County",1990,5.2,41332,760223,801555
-NA,"Middlesex County","MA","Middlesex County",1991,7.2,56563,733455,790018
-NA,"Middlesex County","MA","Middlesex County",1992,7.5,58947,727818,786765
-NA,"Middlesex County","MA","Middlesex County",1993,6.1,47421,733455,780876
-NA,"Middlesex County","MA","Middlesex County",1994,5.1,40160,744089,784249
-NA,"Middlesex County","MA","Middlesex County",1995,4.4,34657,752160,786817
-NA,"Middlesex County","MA","Middlesex County",1996,3.5,27516,769545,797061
-NA,"Middlesex County","MA","Middlesex County",1997,3.1,24947,792324,817271
-NA,"Middlesex County","MA","Middlesex County",1998,2.5,20679,805836,826515
-NA,"Middlesex County","MA","Middlesex County",1999,2.5,21279,816516,837795
-NA,"Middlesex County","MA","Middlesex County",2000,2.2,18181,803616,821797
-NA,"Middlesex County","MA","Middlesex County",2001,3.3,27298,803298,830596
-NA,"Middlesex County","MA","Middlesex County",2002,5,41306,786821,828127
-NA,"Middlesex County","MA","Middlesex County",2003,5.3,43489,773934,817423
-NA,"Middlesex County","MA","Middlesex County",2004,4.5,36384,771860,808244
-NA,"Middlesex County","MA","Middlesex County",2005,4.1,32895,777022,809917
-NA,"Middlesex County","MA","Middlesex County",2006,3.9,32051,780347,812398
-NA,"Middlesex County","MA","Middlesex County",2007,3.7,30027,788302,818329
-NA,"Middlesex County","MA","Middlesex County",2008,4.4,36189,791149,827338
-NA,"Middlesex County","MA","Middlesex County",2009,6.9,57234,769491,826725
-NA,"Middlesex County","MA","Middlesex County",2010,6.8,56430,776213,832643
-NA,"Middlesex County","MA","Middlesex County",2011,5.8,48531,786142,834673
-NA,"Middlesex County","MA","Middlesex County",2012,5.3,44620,794517,839137
-NA,"NA County",NA,"United States",1990,5.8,600,9780,10380
-NA,"NA County",NA,"United States",1991,8.1,832,9463,10295
-NA,"NA County",NA,"United States",1992,7.6,787,9588,10375
-NA,"NA County",NA,"United States",1993,6.6,685,9745,10430
-NA,"NA County",NA,"United States",1994,5.4,578,10046,10624
-NA,"NA County",NA,"United States",1995,5,515,9855,10370
-NA,"NA County",NA,"United States",1996,4,426,10212,10638
-NA,"NA County",NA,"United States",1997,3.4,370,10648,11018
-NA,"NA County",NA,"United States",1998,2.9,329,10978,11307
-NA,"NA County",NA,"United States",1999,3,350,11270,11620
-NA,"NA County",NA,"United States",2000,2.3,265,11108,11373
-NA,"NA County",NA,"United States",2001,3.4,395,11088,11483
-NA,"NA County",NA,"United States",2002,5.6,640,10832,11472
-NA,"NA County",NA,"United States",2003,5.6,657,11030,11687
-NA,"NA County",NA,"United States",2004,4.9,569,11129,11698
-NA,"NA County",NA,"United States",2005,4.2,493,11237,11730
-NA,"NA County",NA,"United States",2006,4,474,11261,11735
-NA,"NA County",NA,"United States",2007,3.8,449,11298,11747
-NA,"NA County",NA,"United States",2008,4.4,524,11252,11776
-NA,"NA County",NA,"United States",2009,7.3,859,10969,11828
-NA,"NA County",NA,"United States",2010,7.7,895,10745,11640
-NA,"NA County",NA,"United States",2011,6.4,732,10780,11512
-NA,"NA County",NA,"United States",2012,5.8,673,10872,11545
-NA,"NA County",NA,"United States",1990,10.3,8533,74145,82678
-NA,"NA County",NA,"United States",1991,13.9,11465,71289,82754
-NA,"NA County",NA,"United States",1992,13.2,10755,70722,81477
-NA,"NA County",NA,"United States",1993,11.4,9278,72251,81529
-NA,"NA County",NA,"United States",1994,10.8,8848,73207,82055
-NA,"NA County",NA,"United States",1995,10.2,8259,72809,81068
-NA,"NA County",NA,"United States",1996,9.2,7283,72235,79518
-NA,"NA County",NA,"United States",1997,7.9,6323,74011,80334
-NA,"NA County",NA,"United States",1998,6.8,5410,74525,79935
-NA,"NA County",NA,"United States",1999,6.1,4916,75134,80050
-NA,"NA County",NA,"United States",2000,4.4,3653,78925,82578
-NA,"NA County",NA,"United States",2001,5.4,4435,78032,82467
-NA,"NA County",NA,"United States",2002,6.9,5791,78673,84464
-NA,"NA County",NA,"United States",2003,7.7,6442,77159,83601
-NA,"NA County",NA,"United States",2004,7,5867,77694,83561
-NA,"NA County",NA,"United States",2005,6.8,5723,78621,84344
-NA,"NA County",NA,"United States",2006,6.5,5584,79778,85362
-NA,"NA County",NA,"United States",2007,6.4,5454,79402,84856
-NA,"NA County",NA,"United States",2008,7.8,6660,78413,85073
-NA,"NA County",NA,"United States",2009,11.4,9808,76418,86226
-NA,"NA County",NA,"United States",2010,11.9,10320,76251,86571
-NA,"NA County",NA,"United States",2011,10.8,9322,77064,86386
-NA,"NA County",NA,"United States",2012,10.3,8923,77972,86895
-NA,"Norfolk County","MA","Norfolk County",1990,5.1,17712,326817,344529
-NA,"Norfolk County","MA","Norfolk County",1991,7.3,24868,317154,342022
-NA,"Norfolk County","MA","Norfolk County",1992,7.4,25228,316698,341926
-NA,"Norfolk County","MA","Norfolk County",1993,6,20408,321416,341824
-NA,"Norfolk County","MA","Norfolk County",1994,5,17415,327949,345364
-NA,"Norfolk County","MA","Norfolk County",1995,4.4,15697,337160,352857
-NA,"Norfolk County","MA","Norfolk County",1996,3.6,12784,344369,357153
-NA,"Norfolk County","MA","Norfolk County",1997,3.2,11443,349054,360497
-NA,"Norfolk County","MA","Norfolk County",1998,2.5,9174,354608,363782
-NA,"Norfolk County","MA","Norfolk County",1999,2.4,8869,357802,366671
-NA,"Norfolk County","MA","Norfolk County",2000,2.3,8358,348783,357141
-NA,"Norfolk County","MA","Norfolk County",2001,3.2,11332,348311,359643
-NA,"Norfolk County","MA","Norfolk County",2002,4.6,16710,343231,359941
-NA,"Norfolk County","MA","Norfolk County",2003,5.1,18256,338109,356365
-NA,"Norfolk County","MA","Norfolk County",2004,4.6,16191,338057,354248
-NA,"Norfolk County","MA","Norfolk County",2005,4.1,14738,341067,355805
-NA,"Norfolk County","MA","Norfolk County",2006,4.2,14683,337854,352537
-NA,"Norfolk County","MA","Norfolk County",2007,3.9,13857,341241,355098
-NA,"Norfolk County","MA","Norfolk County",2008,4.7,16950,341866,358816
-NA,"Norfolk County","MA","Norfolk County",2009,7.4,26323,331719,358042
-NA,"Norfolk County","MA","Norfolk County",2010,7.3,26535,338840,365375
-NA,"Norfolk County","MA","Norfolk County",2011,6.2,22667,342649,365316
-NA,"Norfolk County","MA","Norfolk County",2012,5.6,20543,346268,366811
-NA,"NA County",NA,"United States",1990,9.3,1738,16904,18642
-NA,"NA County",NA,"United States",1991,12.9,2399,16210,18609
-NA,"NA County",NA,"United States",1992,11.9,2146,15869,18015
-NA,"NA County",NA,"United States",1993,9.4,1687,16293,17980
-NA,"NA County",NA,"United States",1994,8,1414,16216,17630
-NA,"NA County",NA,"United States",1995,6.5,1102,15982,17084
-NA,"NA County",NA,"United States",1996,5.9,1023,16173,17196
-NA,"NA County",NA,"United States",1997,5.4,921,16270,17191
-NA,"NA County",NA,"United States",1998,4.2,719,16421,17140
-NA,"NA County",NA,"United States",1999,4.1,702,16505,17207
-NA,"NA County",NA,"United States",2000,3.4,587,16761,17348
-NA,"NA County",NA,"United States",2001,4.3,749,16808,17557
-NA,"NA County",NA,"United States",2002,5.6,987,16704,17691
-NA,"NA County",NA,"United States",2003,6.3,1099,16477,17576
-NA,"NA County",NA,"United States",2004,5.9,1019,16335,17354
-NA,"NA County",NA,"United States",2005,5.4,926,16357,17283
-NA,"NA County",NA,"United States",2006,5.3,926,16458,17384
-NA,"NA County",NA,"United States",2007,5.6,968,16442,17410
-NA,"NA County",NA,"United States",2008,6.1,1073,16471,17544
-NA,"NA County",NA,"United States",2009,9,1592,16182,17774
-NA,"NA County",NA,"United States",2010,9.2,1617,15954,17571
-NA,"NA County",NA,"United States",2011,8.3,1446,15937,17383
-NA,"NA County",NA,"United States",2012,7.6,1296,15727,17023
-NA,"NA County",NA,"United States",1990,9.4,1715,16486,18201
-NA,"NA County",NA,"United States",1991,13.1,2378,15786,18164
-NA,"NA County",NA,"United States",1992,12,2112,15450,17562
-NA,"NA County",NA,"United States",1993,9.4,1652,15869,17521
-NA,"NA County",NA,"United States",1994,8.1,1397,15790,17187
-NA,"NA County",NA,"United States",1995,6.5,1082,15547,16629
-NA,"NA County",NA,"United States",1996,5.9,992,15730,16722
-NA,"NA County",NA,"United States",1997,5.4,901,15830,16731
-NA,"NA County",NA,"United States",1998,4.2,706,15973,16679
-NA,"NA County",NA,"United States",1999,4.1,683,16054,16737
-NA,"NA County",NA,"United States",2000,3.4,573,16347,16920
-NA,"NA County",NA,"United States",2001,4.3,728,16390,17118
-NA,"NA County",NA,"United States",2002,5.6,966,16282,17248
-NA,"NA County",NA,"United States",2003,6.2,1068,16060,17128
-NA,"NA County",NA,"United States",2004,5.9,994,15918,16912
-NA,"NA County",NA,"United States",2005,5.4,901,15937,16838
-NA,"NA County",NA,"United States",2006,5.3,899,16030,16929
-NA,"NA County",NA,"United States",2007,5.5,938,16016,16954
-NA,"NA County",NA,"United States",2008,6.1,1043,16046,17089
-NA,"NA County",NA,"United States",2009,8.9,1545,15763,17308
-NA,"NA County",NA,"United States",2010,9.2,1576,15519,17095
-NA,"NA County",NA,"United States",2011,8.4,1415,15503,16918
-NA,"NA County",NA,"United States",2012,7.6,1258,15300,16558
-NA,"NA County",NA,"United States",1990,6.3,7613,113904,121517
-NA,"NA County",NA,"United States",1991,8.6,10375,110059,120434
-NA,"NA County",NA,"United States",1992,9.1,10895,108719,119614
-NA,"NA County",NA,"United States",1993,6.8,8018,109681,117699
-NA,"NA County",NA,"United States",1994,5.9,6915,111149,118064
-NA,"NA County",NA,"United States",1995,5.1,6013,112802,118815
-NA,"NA County",NA,"United States",1996,4.2,5049,115027,120076
-NA,"NA County",NA,"United States",1997,3.8,4690,118302,122992
-NA,"NA County",NA,"United States",1998,3.3,4123,120431,124554
-NA,"NA County",NA,"United States",1999,3.2,4007,121500,125507
-NA,"NA County",NA,"United States",2000,2.6,3310,122413,125723
-NA,"NA County",NA,"United States",2001,3.7,4700,123088,127788
-NA,"NA County",NA,"United States",2002,5.3,6870,122402,129272
-NA,"NA County",NA,"United States",2003,6,7773,121068,128841
-NA,"NA County",NA,"United States",2004,5.5,7006,120301,127307
-NA,"NA County",NA,"United States",2005,5,6416,120747,127163
-NA,"NA County",NA,"United States",2006,4.9,6300,121636,127936
-NA,"NA County",NA,"United States",2007,4.5,5783,121596,127379
-NA,"NA County",NA,"United States",2008,5.3,6873,121738,128611
-NA,"NA County",NA,"United States",2009,8.2,10629,118984,129613
-NA,"NA County",NA,"United States",2010,8.1,10503,119486,129989
-NA,"NA County",NA,"United States",2011,7,9157,120863,130020
-NA,"NA County",NA,"United States",2012,6.7,8752,121793,130545
-NA,"NA County",NA,"United States",1990,6.6,2531,35681,38212
-NA,"NA County",NA,"United States",1991,10.9,4157,33980,38137
-NA,"NA County",NA,"United States",1992,10.9,4081,33496,37577
-NA,"NA County",NA,"United States",1993,8.8,3226,33559,36785
-NA,"NA County",NA,"United States",1994,8.1,2950,33312,36262
-NA,"NA County",NA,"United States",1995,6.7,2374,33141,35515
-NA,"NA County",NA,"United States",1996,5.3,1886,33505,35391
-NA,"NA County",NA,"United States",1997,5.2,1854,33742,35596
-NA,"NA County",NA,"United States",1998,4.3,1512,33822,35334
-NA,"NA County",NA,"United States",1999,4.1,1469,34103,35572
-NA,"NA County",NA,"United States",2000,3,1135,36673,37808
-NA,"NA County",NA,"United States",2001,3.6,1350,36606,37956
-NA,"NA County",NA,"United States",2002,4.6,1776,37071,38847
-NA,"NA County",NA,"United States",2003,5.1,1968,36838,38806
-NA,"NA County",NA,"United States",2004,4.7,1809,36808,38617
-NA,"NA County",NA,"United States",2005,4.4,1696,37223,38919
-NA,"NA County",NA,"United States",2006,4.2,1672,37806,39478
-NA,"NA County",NA,"United States",2007,4.3,1687,37596,39283
-NA,"NA County",NA,"United States",2008,5.1,2003,37169,39172
-NA,"NA County",NA,"United States",2009,7.8,3066,36081,39147
-NA,"NA County",NA,"United States",2010,8.3,3230,35778,39008
-NA,"NA County",NA,"United States",2011,7.4,2893,36108,39001
-NA,"NA County",NA,"United States",2012,7,2722,35945,38667
-NA,"NA County",NA,"United States",1990,7.5,4269,52585,56854
-NA,"NA County",NA,"United States",1991,11.6,6556,50190,56746
-NA,"NA County",NA,"United States",1992,11.2,6227,49365,55592
-NA,"NA County",NA,"United States",1993,9,4913,49852,54765
-NA,"NA County",NA,"United States",1994,8.1,4364,49528,53892
-NA,"NA County",NA,"United States",1995,6.6,3476,49123,52599
-NA,"NA County",NA,"United States",1996,5.5,2908,49678,52586
-NA,"NA County",NA,"United States",1997,5.3,2775,50012,52787
-NA,"NA County",NA,"United States",1998,4.3,2231,50243,52474
-NA,"NA County",NA,"United States",1999,4.1,2171,50608,52779
-NA,"NA County",NA,"United States",2000,3.1,1722,53434,55156
-NA,"NA County",NA,"United States",2001,3.8,2099,53414,55513
-NA,"NA County",NA,"United States",2002,4.9,2763,53775,56538
-NA,"NA County",NA,"United States",2003,5.4,3067,53315,56382
-NA,"NA County",NA,"United States",2004,5.1,2828,53143,55971
-NA,"NA County",NA,"United States",2005,4.7,2622,53580,56202
-NA,"NA County",NA,"United States",2006,4.6,2598,54264,56862
-NA,"NA County",NA,"United States",2007,4.7,2654,54038,56692
-NA,"NA County",NA,"United States",2008,5.4,3076,53639,56715
-NA,"NA County",NA,"United States",2009,8.2,4658,52263,56921
-NA,"NA County",NA,"United States",2010,8.6,4846,51732,56578
-NA,"NA County",NA,"United States",2011,7.7,4339,52045,56384
-NA,"NA County",NA,"United States",2012,7.2,4018,51672,55690
-NA,"Plymouth County","MA","Plymouth County",1990,7.2,16591,213304,229895
-NA,"Plymouth County","MA","Plymouth County",1991,10,23024,206112,229136
-NA,"Plymouth County","MA","Plymouth County",1992,10.1,23072,205069,228141
-NA,"Plymouth County","MA","Plymouth County",1993,8.1,18655,211148,229803
-NA,"Plymouth County","MA","Plymouth County",1994,6.5,15324,219713,235037
-NA,"Plymouth County","MA","Plymouth County",1995,5.9,13857,222783,236640
-NA,"Plymouth County","MA","Plymouth County",1996,5.2,12338,226755,239093
-NA,"Plymouth County","MA","Plymouth County",1997,4.5,10979,234614,245593
-NA,"Plymouth County","MA","Plymouth County",1998,3.6,8806,239095,247901
-NA,"Plymouth County","MA","Plymouth County",1999,3.3,8417,243802,252219
-NA,"Plymouth County","MA","Plymouth County",2000,2.7,6852,244511,251363
-NA,"Plymouth County","MA","Plymouth County",2001,3.5,8853,245526,254379
-NA,"Plymouth County","MA","Plymouth County",2002,4.9,12531,244480,257011
-NA,"Plymouth County","MA","Plymouth County",2003,5.6,14335,241944,256279
-NA,"Plymouth County","MA","Plymouth County",2004,5.3,13478,243072,256550
-NA,"Plymouth County","MA","Plymouth County",2005,4.9,12553,245802,258355
-NA,"Plymouth County","MA","Plymouth County",2006,4.9,12630,246134,258764
-NA,"Plymouth County","MA","Plymouth County",2007,4.8,12468,247825,260293
-NA,"Plymouth County","MA","Plymouth County",2008,5.7,14829,247395,262224
-NA,"Plymouth County","MA","Plymouth County",2009,8.5,22505,241335,263840
-NA,"Plymouth County","MA","Plymouth County",2010,8.8,23297,241283,264580
-NA,"Plymouth County","MA","Plymouth County",2011,7.7,20344,243563,263907
-NA,"Plymouth County","MA","Plymouth County",2012,6.9,18274,246026,264300
-NA,"NA County",NA,"United States",1990,9,12535,126860,139395
-NA,"NA County",NA,"United States",1991,12.8,17836,121902,139738
-NA,"NA County",NA,"United States",1992,12.2,17029,122471,139500
-NA,"NA County",NA,"United States",1993,10.8,15046,124830,139876
-NA,"NA County",NA,"United States",1994,8.7,12059,126829,138888
-NA,"NA County",NA,"United States",1995,8,11125,128164,139289
-NA,"NA County",NA,"United States",1996,7.2,10067,129123,139190
-NA,"NA County",NA,"United States",1997,6.2,8708,131879,140587
-NA,"NA County",NA,"United States",1998,4.6,6453,133789,140242
-NA,"NA County",NA,"United States",1999,4.3,6103,135188,141291
-NA,"NA County",NA,"United States",2000,3.8,5489,137552,143041
-NA,"NA County",NA,"United States",2001,4.9,7009,137025,144034
-NA,"NA County",NA,"United States",2002,6.2,9181,138368,147549
-NA,"NA County",NA,"United States",2003,6.4,9542,139566,149108
-NA,"NA County",NA,"United States",2004,6.2,9288,139876,149164
-NA,"NA County",NA,"United States",2005,6,8914,140601,149515
-NA,"NA County",NA,"United States",2006,6.1,9203,141879,151082
-NA,"NA County",NA,"United States",2007,5.9,8966,141889,150855
-NA,"NA County",NA,"United States",2008,7.3,10913,139475,150388
-NA,"NA County",NA,"United States",2009,11.4,17232,134250,151482
-NA,"NA County",NA,"United States",2010,11.4,17194,133117,150311
-NA,"NA County",NA,"United States",2011,10.7,16028,134181,150209
-NA,"NA County",NA,"United States",2012,10,14867,134394,149261
-NA,"NA County",NA,"United States",1990,6,20293,317603,337896
-NA,"NA County",NA,"United States",1991,8.8,29812,307508,337320
-NA,"NA County",NA,"United States",1992,8.8,29638,305588,335226
-NA,"NA County",NA,"United States",1993,8.1,26701,304261,330962
-NA,"NA County",NA,"United States",1994,7.2,23474,304756,328230
-NA,"NA County",NA,"United States",1995,6.1,19752,303366,323118
-NA,"NA County",NA,"United States",1996,4.9,15872,306171,322043
-NA,"NA County",NA,"United States",1997,4.5,14762,312005,326767
-NA,"NA County",NA,"United States",1998,3.9,12721,313108,325829
-NA,"NA County",NA,"United States",1999,3.6,11792,315066,326858
-NA,"NA County",NA,"United States",2000,3,9916,325430,335346
-NA,"NA County",NA,"United States",2001,3.7,12658,326721,339379
-NA,"NA County",NA,"United States",2002,5.1,17640,325844,343484
-NA,"NA County",NA,"United States",2003,6,20568,323712,344280
-NA,"NA County",NA,"United States",2004,5.6,19363,324271,343634
-NA,"NA County",NA,"United States",2005,5.3,18310,325593,343903
-NA,"NA County",NA,"United States",2006,5.3,18350,327858,346208
-NA,"NA County",NA,"United States",2007,5.1,17583,327423,345006
-NA,"NA County",NA,"United States",2008,5.9,20562,326653,347215
-NA,"NA County",NA,"United States",2009,8.7,30205,317825,348030
-NA,"NA County",NA,"United States",2010,9.2,32031,316078,348109
-NA,"NA County",NA,"United States",2011,8.5,29066,312390,341456
-NA,"NA County",NA,"United States",2012,7.9,26806,312100,338906
-NA,"NA County",NA,"United States",1990,6.4,18331,269615,287946
-NA,"NA County",NA,"United States",1991,9.3,26596,259938,286534
-NA,"NA County",NA,"United States",1992,9.1,25849,258987,284836
-NA,"NA County",NA,"United States",1993,8.3,23377,258290,281667
-NA,"NA County",NA,"United States",1994,7.4,20567,259251,279818
-NA,"NA County",NA,"United States",1995,6.2,17170,259609,276779
-NA,"NA County",NA,"United States",1996,4.9,13617,262606,276223
-NA,"NA County",NA,"United States",1997,4.5,12571,268412,280983
-NA,"NA County",NA,"United States",1998,4,11324,269584,280908
-NA,"NA County",NA,"United States",1999,3.8,10649,271157,281806
-NA,"NA County",NA,"United States",2000,3.1,8906,280715,289621
-NA,"NA County",NA,"United States",2001,3.9,11290,281361,292651
-NA,"NA County",NA,"United States",2002,5.2,15546,280573,296119
-NA,"NA County",NA,"United States",2003,6,17928,278565,296493
-NA,"NA County",NA,"United States",2004,5.7,16978,278918,295896
-NA,"NA County",NA,"United States",2005,5.4,16005,279804,295809
-NA,"NA County",NA,"United States",2006,5.4,16149,281319,297468
-NA,"NA County",NA,"United States",2007,5.2,15317,280579,295896
-NA,"NA County",NA,"United States",2008,6,17817,279734,297551
-NA,"NA County",NA,"United States",2009,8.8,26116,271535,297651
-NA,"NA County",NA,"United States",2010,9.2,27383,269339,296722
-NA,"NA County",NA,"United States",2011,8.5,24753,266510,291263
-NA,"NA County",NA,"United States",2012,7.9,22815,266670,289485
-NA,"NA County",NA,"United States",1990,5.8,22280,360011,382291
-NA,"NA County",NA,"United States",1991,8.5,32523,348538,381061
-NA,"NA County",NA,"United States",1992,8.5,32181,346103,378284
-NA,"NA County",NA,"United States",1993,7.7,28703,345261,373964
-NA,"NA County",NA,"United States",1994,6.8,25179,346699,371878
-NA,"NA County",NA,"United States",1995,5.8,21378,345879,367257
-NA,"NA County",NA,"United States",1996,4.7,17225,349074,366299
-NA,"NA County",NA,"United States",1997,4.3,16056,355837,371893
-NA,"NA County",NA,"United States",1998,3.7,13892,358013,371905
-NA,"NA County",NA,"United States",1999,3.4,12876,360522,373398
-NA,"NA County",NA,"United States",2000,2.9,10948,369976,380924
-NA,"NA County",NA,"United States",2001,3.6,13897,371258,385155
-NA,"NA County",NA,"United States",2002,4.9,19252,370667,389919
-NA,"NA County",NA,"United States",2003,5.7,22430,368849,391279
-NA,"NA County",NA,"United States",2004,5.4,21161,369160,390321
-NA,"NA County",NA,"United States",2005,5.2,20148,370377,390525
-NA,"NA County",NA,"United States",2006,5.1,20176,372959,393135
-NA,"NA County",NA,"United States",2007,4.9,19319,372345,391664
-NA,"NA County",NA,"United States",2008,5.8,22662,371195,393857
-NA,"NA County",NA,"United States",2009,8.4,33216,361462,394678
-NA,"NA County",NA,"United States",2010,8.9,35178,359869,395047
-NA,"NA County",NA,"United States",2011,8.2,31797,356367,388164
-NA,"NA County",NA,"United States",2012,7.6,29353,356344,385697
-NA,"Suffolk County","MA","Suffolk County",1990,6.1,21425,328598,350023
-NA,"Suffolk County","MA","Suffolk County",1991,8.6,29524,312148,341672
-NA,"Suffolk County","MA","Suffolk County",1992,8.6,28585,304876,333461
-NA,"Suffolk County","MA","Suffolk County",1993,7.2,23615,306629,330244
-NA,"Suffolk County","MA","Suffolk County",1994,6.2,20383,308484,328867
-NA,"Suffolk County","MA","Suffolk County",1995,5.6,18920,318455,337375
-NA,"Suffolk County","MA","Suffolk County",1996,4.8,16232,322348,338580
-NA,"Suffolk County","MA","Suffolk County",1997,4.3,14912,328401,343313
-NA,"Suffolk County","MA","Suffolk County",1998,3.6,12289,332037,344326
-NA,"Suffolk County","MA","Suffolk County",1999,3.5,12148,334447,346595
-NA,"Suffolk County","MA","Suffolk County",2000,3.1,10739,340347,351086
-NA,"Suffolk County","MA","Suffolk County",2001,4.1,14645,339407,354052
-NA,"Suffolk County","MA","Suffolk County",2002,5.9,20873,330953,351826
-NA,"Suffolk County","MA","Suffolk County",2003,6.6,22566,321685,344251
-NA,"Suffolk County","MA","Suffolk County",2004,5.8,19356,316149,335505
-NA,"Suffolk County","MA","Suffolk County",2005,5.3,17660,314335,331995
-NA,"Suffolk County","MA","Suffolk County",2006,5,17826,340610,358436
-NA,"Suffolk County","MA","Suffolk County",2007,4.5,16381,348430,364811
-NA,"Suffolk County","MA","Suffolk County",2008,5.3,19589,353405,372994
-NA,"Suffolk County","MA","Suffolk County",2009,7.8,29134,345421,374555
-NA,"Suffolk County","MA","Suffolk County",2010,8.1,29709,335890,365599
-NA,"Suffolk County","MA","Suffolk County",2011,7.1,26164,341489,367653
-NA,"Suffolk County","MA","Suffolk County",2012,6.6,24392,345228,369620
-NA,"NA County",NA,"United States",1990,7.6,3787,46315,50102
-NA,"NA County",NA,"United States",1991,9.9,4972,45312,50284
-NA,"NA County",NA,"United States",1992,10.1,5114,45634,50748
-NA,"NA County",NA,"United States",1993,8,4084,46910,50994
-NA,"NA County",NA,"United States",1994,7,3648,48663,52311
-NA,"NA County",NA,"United States",1995,6.2,3238,48679,51917
-NA,"NA County",NA,"United States",1996,5.3,2809,49713,52522
-NA,"NA County",NA,"United States",1997,4.7,2526,51305,53831
-NA,"NA County",NA,"United States",1998,3.6,1936,52388,54324
-NA,"NA County",NA,"United States",1999,3.4,1861,53374,55235
-NA,"NA County",NA,"United States",2000,2.7,1586,57329,58915
-NA,"NA County",NA,"United States",2001,3.6,2140,57663,59803
-NA,"NA County",NA,"United States",2002,5,3019,57879,60898
-NA,"NA County",NA,"United States",2003,5.5,3392,58077,61469
-NA,"NA County",NA,"United States",2004,5.2,3217,58234,61451
-NA,"NA County",NA,"United States",2005,4.9,3025,59266,62291
-NA,"NA County",NA,"United States",2006,5,3130,60077,63207
-NA,"NA County",NA,"United States",2007,4.7,3001,60432,63433
-NA,"NA County",NA,"United States",2008,5.8,3720,60212,63932
-NA,"NA County",NA,"United States",2009,8.9,5647,58153,63800
-NA,"NA County",NA,"United States",2010,9,5691,57801,63492
-NA,"NA County",NA,"United States",2011,7.8,4975,58422,63397
-NA,"NA County",NA,"United States",2012,7.2,4497,58247,62744
-NA,"NA County","MA","United States",1990,5.1,382,7060,7442
-NA,"NA County","MA","United States",1991,7.2,561,7205,7766
-NA,"NA County","MA","United States",1992,8,595,6842,7437
-NA,"NA County","MA","United States",1993,7.6,580,7097,7677
-NA,"NA County","MA","United States",1994,6.8,564,7684,8248
-NA,"NA County","MA","United States",1995,5.7,495,8128,8623
-NA,"NA County","MA","United States",1996,5.4,485,8493,8978
-NA,"NA County","MA","United States",1997,5.1,467,8726,9193
-NA,"NA County","MA","United States",1998,4.1,381,8918,9299
-NA,"NA County","MA","United States",1999,3.9,370,9075,9445
-NA,"NA County","MA","United States",2000,2.8,279,9759,10038
-NA,"NA County","MA","United States",2001,2.9,296,9820,10116
-NA,"NA County","MA","United States",2002,3.8,406,10193,10599
-NA,"NA County","MA","United States",2003,4.2,468,10573,11041
-NA,"NA County","MA","United States",2004,4,449,10652,11101
-NA,"NA County","MA","United States",2005,3.9,429,10509,10938
-NA,"NA County","MA","United States",2006,3.9,428,10604,11032
-NA,"NA County","MA","United States",2007,3.5,391,10718,11109
-NA,"NA County","MA","United States",2008,4.2,465,10724,11189
-NA,"NA County","MA","United States",2009,6.4,725,10571,11296
-NA,"NA County","MA","United States",2010,7.6,873,10641,11514
-NA,"NA County","MA","United States",2011,7.3,840,10723,11563
-NA,"NA County","MA","United States",2012,6.9,803,10830,11633
-NA,"Worcester County","MA","Worcester County",1990,7,25611,339639,365250
-NA,"Worcester County","MA","Worcester County",1991,9.7,35398,327667,363065
-NA,"Worcester County","MA","Worcester County",1992,9.1,33051,328778,361829
-NA,"Worcester County","MA","Worcester County",1993,7.2,26029,336648,362677
-NA,"Worcester County","MA","Worcester County",1994,5.8,21042,342166,363208
-NA,"Worcester County","MA","Worcester County",1995,5.4,19467,341643,361110
-NA,"Worcester County","MA","Worcester County",1996,4.6,16613,346581,363194
-NA,"Worcester County","MA","Worcester County",1997,4,15038,356561,371599
-NA,"Worcester County","MA","Worcester County",1998,3.5,12974,362521,375495
-NA,"Worcester County","MA","Worcester County",1999,3.5,12994,363635,376629
-NA,"Worcester County","MA","Worcester County",2000,2.8,10753,377187,387940
-NA,"Worcester County","MA","Worcester County",2001,3.9,15150,377842,392992
-NA,"Worcester County","MA","Worcester County",2002,5.6,22501,376708,399209
-NA,"Worcester County","MA","Worcester County",2003,6.2,24795,376222,401017
-NA,"Worcester County","MA","Worcester County",2004,5.6,22384,376786,399170
-NA,"Worcester County","MA","Worcester County",2005,5.2,20798,377659,398457
-NA,"Worcester County","MA","Worcester County",2006,5.1,20548,381515,402063
-NA,"Worcester County","MA","Worcester County",2007,4.9,19891,382018,401909
-NA,"Worcester County","MA","Worcester County",2008,5.8,23543,380550,404093
-NA,"Worcester County","MA","Worcester County",2009,8.9,36276,369837,406113
-NA,"Worcester County","MA","Worcester County",2010,9.1,36788,369399,406187
-NA,"Worcester County","MA","Worcester County",2011,8.1,32587,371812,404399
-NA,"Worcester County","MA","Worcester County",2012,7.5,30197,372043,402240
-NA,"NA County",NA,"United States",1990,6.7,17470,243503,260973
-NA,"NA County",NA,"United States",1991,9.5,24700,235193,259893
-NA,"NA County",NA,"United States",1992,9,23435,236100,259535
-NA,"NA County",NA,"United States",1993,7,18382,242383,260765
-NA,"NA County",NA,"United States",1994,5.5,14251,247044,261295
-NA,"NA County",NA,"United States",1995,5.1,13145,245578,258723
-NA,"NA County",NA,"United States",1996,4.3,11288,249807,261095
-NA,"NA County",NA,"United States",1997,3.8,10206,256426,266632
-NA,"NA County",NA,"United States",1998,3.3,8952,262026,270978
-NA,"NA County",NA,"United States",1999,3.2,8798,262408,271206
-NA,"NA County",NA,"United States",2000,2.7,7499,272178,279677
-NA,"NA County",NA,"United States",2001,3.7,10520,273235,283755
-NA,"NA County",NA,"United States",2002,5.4,15470,272646,288116
-NA,"NA County",NA,"United States",2003,6,17406,272836,290242
-NA,"NA County",NA,"United States",2004,5.4,15716,273601,289317
-NA,"NA County",NA,"United States",2005,5,14548,274465,289013
-NA,"NA County",NA,"United States",2006,4.9,14428,277641,292069
-NA,"NA County",NA,"United States",2007,4.8,14152,278201,292353
-NA,"NA County",NA,"United States",2008,5.7,16764,277224,293988
-NA,"NA County",NA,"United States",2009,8.7,25695,269631,295326
-NA,"NA County",NA,"United States",2010,8.9,26208,269465,295673
-NA,"NA County",NA,"United States",2011,7.8,23136,271632,294768
-NA,"NA County",NA,"United States",2012,7.4,21597,271396,292993
-NA,"NA County",NA,"United States",1990,6.7,16519,231807,248326
-NA,"NA County",NA,"United States",1991,9.5,23579,223510,247089
-NA,"NA County",NA,"United States",1992,9,22267,224204,246471
-NA,"NA County",NA,"United States",1993,7,17451,230579,248030
-NA,"NA County",NA,"United States",1994,5.4,13487,235036,248523
-NA,"NA County",NA,"United States",1995,5,12397,233229,245626
-NA,"NA County",NA,"United States",1996,4.2,10509,237379,247888
-NA,"NA County",NA,"United States",1997,3.7,9472,244206,253678
-NA,"NA County",NA,"United States",1998,3.3,8457,249548,258005
-NA,"NA County",NA,"United States",1999,3.3,8445,249710,258155
-NA,"NA County",NA,"United States",2000,2.7,7186,258708,265894
-NA,"NA County",NA,"United States",2001,3.7,10117,259722,269839
-NA,"NA County",NA,"United States",2002,5.4,14883,259115,273998
-NA,"NA County",NA,"United States",2003,6,16599,259211,275810
-NA,"NA County",NA,"United States",2004,5.5,15002,259779,274781
-NA,"NA County",NA,"United States",2005,5,13834,260504,274338
-NA,"NA County",NA,"United States",2006,5,13721,263415,277136
-NA,"NA County",NA,"United States",2007,4.8,13399,263873,277272
-NA,"NA County",NA,"United States",2008,5.7,15842,262838,278680
-NA,"NA County",NA,"United States",2009,8.7,24356,255449,279805
-NA,"NA County",NA,"United States",2010,8.8,24638,255291,279929
-NA,"NA County",NA,"United States",2011,7.8,21786,257534,279320
-NA,"NA County",NA,"United States",2012,7.3,20328,257448,277776
 "Nahant","Essex County","MA","Nahant",1990,4.4,92,2005,2097
 "Nahant","Essex County","MA","Nahant",1991,7.2,149,1921,2070
 "Nahant","Essex County","MA","Nahant",1992,7.1,144,1891,2035
@@ -5878,6 +5013,29 @@ NA,"NA County",NA,"United States",2012,7.3,20328,257448,277776
 "Norfolk","Norfolk County","MA","Norfolk",2010,7.7,385,4627,5012
 "Norfolk","Norfolk County","MA","Norfolk",2011,6.5,324,4674,4998
 "Norfolk","Norfolk County","MA","Norfolk",2012,5.8,289,4725,5014
+NA,"Norfolk County","MA","Norfolk County",1990,5.1,17712,326817,344529
+NA,"Norfolk County","MA","Norfolk County",1991,7.3,24868,317154,342022
+NA,"Norfolk County","MA","Norfolk County",1992,7.4,25228,316698,341926
+NA,"Norfolk County","MA","Norfolk County",1993,6,20408,321416,341824
+NA,"Norfolk County","MA","Norfolk County",1994,5,17415,327949,345364
+NA,"Norfolk County","MA","Norfolk County",1995,4.4,15697,337160,352857
+NA,"Norfolk County","MA","Norfolk County",1996,3.6,12784,344369,357153
+NA,"Norfolk County","MA","Norfolk County",1997,3.2,11443,349054,360497
+NA,"Norfolk County","MA","Norfolk County",1998,2.5,9174,354608,363782
+NA,"Norfolk County","MA","Norfolk County",1999,2.4,8869,357802,366671
+NA,"Norfolk County","MA","Norfolk County",2000,2.3,8358,348783,357141
+NA,"Norfolk County","MA","Norfolk County",2001,3.2,11332,348311,359643
+NA,"Norfolk County","MA","Norfolk County",2002,4.6,16710,343231,359941
+NA,"Norfolk County","MA","Norfolk County",2003,5.1,18256,338109,356365
+NA,"Norfolk County","MA","Norfolk County",2004,4.6,16191,338057,354248
+NA,"Norfolk County","MA","Norfolk County",2005,4.1,14738,341067,355805
+NA,"Norfolk County","MA","Norfolk County",2006,4.2,14683,337854,352537
+NA,"Norfolk County","MA","Norfolk County",2007,3.9,13857,341241,355098
+NA,"Norfolk County","MA","Norfolk County",2008,4.7,16950,341866,358816
+NA,"Norfolk County","MA","Norfolk County",2009,7.4,26323,331719,358042
+NA,"Norfolk County","MA","Norfolk County",2010,7.3,26535,338840,365375
+NA,"Norfolk County","MA","Norfolk County",2011,6.2,22667,342649,365316
+NA,"Norfolk County","MA","Norfolk County",2012,5.6,20543,346268,366811
 "North Adams","Berkshire County","MA","North Adams",1990,11.7,978,7356,8334
 "North Adams","Berkshire County","MA","North Adams",1991,14.8,1223,7044,8267
 "North Adams","Berkshire County","MA","North Adams",1992,13.9,1088,6766,7854
@@ -6591,6 +5749,29 @@ NA,"NA County",NA,"United States",2012,7.3,20328,257448,277776
 "Plymouth","Plymouth County","MA","Plymouth",2010,9,2730,27475,30205
 "Plymouth","Plymouth County","MA","Plymouth",2011,7.7,2310,27739,30049
 "Plymouth","Plymouth County","MA","Plymouth",2012,6.8,2037,28043,30080
+NA,"Plymouth County","MA","Plymouth County",1990,7.2,16591,213304,229895
+NA,"Plymouth County","MA","Plymouth County",1991,10,23024,206112,229136
+NA,"Plymouth County","MA","Plymouth County",1992,10.1,23072,205069,228141
+NA,"Plymouth County","MA","Plymouth County",1993,8.1,18655,211148,229803
+NA,"Plymouth County","MA","Plymouth County",1994,6.5,15324,219713,235037
+NA,"Plymouth County","MA","Plymouth County",1995,5.9,13857,222783,236640
+NA,"Plymouth County","MA","Plymouth County",1996,5.2,12338,226755,239093
+NA,"Plymouth County","MA","Plymouth County",1997,4.5,10979,234614,245593
+NA,"Plymouth County","MA","Plymouth County",1998,3.6,8806,239095,247901
+NA,"Plymouth County","MA","Plymouth County",1999,3.3,8417,243802,252219
+NA,"Plymouth County","MA","Plymouth County",2000,2.7,6852,244511,251363
+NA,"Plymouth County","MA","Plymouth County",2001,3.5,8853,245526,254379
+NA,"Plymouth County","MA","Plymouth County",2002,4.9,12531,244480,257011
+NA,"Plymouth County","MA","Plymouth County",2003,5.6,14335,241944,256279
+NA,"Plymouth County","MA","Plymouth County",2004,5.3,13478,243072,256550
+NA,"Plymouth County","MA","Plymouth County",2005,4.9,12553,245802,258355
+NA,"Plymouth County","MA","Plymouth County",2006,4.9,12630,246134,258764
+NA,"Plymouth County","MA","Plymouth County",2007,4.8,12468,247825,260293
+NA,"Plymouth County","MA","Plymouth County",2008,5.7,14829,247395,262224
+NA,"Plymouth County","MA","Plymouth County",2009,8.5,22505,241335,263840
+NA,"Plymouth County","MA","Plymouth County",2010,8.8,23297,241283,264580
+NA,"Plymouth County","MA","Plymouth County",2011,7.7,20344,243563,263907
+NA,"Plymouth County","MA","Plymouth County",2012,6.9,18274,246026,264300
 "Plympton","Plymouth County","MA","Plympton",1990,7,96,1271,1367
 "Plympton","Plymouth County","MA","Plympton",1991,9.3,130,1268,1398
 "Plympton","Plymouth County","MA","Plympton",1992,10.5,144,1231,1375
@@ -7718,6 +6899,29 @@ NA,"NA County",NA,"United States",2012,7.3,20328,257448,277776
 "Sudbury","Middlesex County","MA","Sudbury",2010,5.8,507,8180,8687
 "Sudbury","Middlesex County","MA","Sudbury",2011,5,436,8301,8737
 "Sudbury","Middlesex County","MA","Sudbury",2012,4.5,395,8392,8787
+NA,"Suffolk County","MA","Suffolk County",1990,6.1,21425,328598,350023
+NA,"Suffolk County","MA","Suffolk County",1991,8.6,29524,312148,341672
+NA,"Suffolk County","MA","Suffolk County",1992,8.6,28585,304876,333461
+NA,"Suffolk County","MA","Suffolk County",1993,7.2,23615,306629,330244
+NA,"Suffolk County","MA","Suffolk County",1994,6.2,20383,308484,328867
+NA,"Suffolk County","MA","Suffolk County",1995,5.6,18920,318455,337375
+NA,"Suffolk County","MA","Suffolk County",1996,4.8,16232,322348,338580
+NA,"Suffolk County","MA","Suffolk County",1997,4.3,14912,328401,343313
+NA,"Suffolk County","MA","Suffolk County",1998,3.6,12289,332037,344326
+NA,"Suffolk County","MA","Suffolk County",1999,3.5,12148,334447,346595
+NA,"Suffolk County","MA","Suffolk County",2000,3.1,10739,340347,351086
+NA,"Suffolk County","MA","Suffolk County",2001,4.1,14645,339407,354052
+NA,"Suffolk County","MA","Suffolk County",2002,5.9,20873,330953,351826
+NA,"Suffolk County","MA","Suffolk County",2003,6.6,22566,321685,344251
+NA,"Suffolk County","MA","Suffolk County",2004,5.8,19356,316149,335505
+NA,"Suffolk County","MA","Suffolk County",2005,5.3,17660,314335,331995
+NA,"Suffolk County","MA","Suffolk County",2006,5,17826,340610,358436
+NA,"Suffolk County","MA","Suffolk County",2007,4.5,16381,348430,364811
+NA,"Suffolk County","MA","Suffolk County",2008,5.3,19589,353405,372994
+NA,"Suffolk County","MA","Suffolk County",2009,7.8,29134,345421,374555
+NA,"Suffolk County","MA","Suffolk County",2010,8.1,29709,335890,365599
+NA,"Suffolk County","MA","Suffolk County",2011,7.1,26164,341489,367653
+NA,"Suffolk County","MA","Suffolk County",2012,6.6,24392,345228,369620
 "Sunderland","Franklin County","MA","Sunderland",1990,4,83,1989,2072
 "Sunderland","Franklin County","MA","Sunderland",1991,6,120,1884,2004
 "Sunderland","Franklin County","MA","Sunderland",1992,6.1,123,1897,2020
@@ -9098,6 +8302,29 @@ NA,"NA County",NA,"United States",2012,7.3,20328,257448,277776
 "Worcester","Worcester County","MA","Worcester",2010,9.7,8293,76921,85214
 "Worcester","Worcester County","MA","Worcester",2011,8.9,7561,77590,85151
 "Worcester","Worcester County","MA","Worcester",2012,8.4,7073,77564,84637
+NA,"Worcester County","MA","Worcester County",1990,7,25611,339639,365250
+NA,"Worcester County","MA","Worcester County",1991,9.7,35398,327667,363065
+NA,"Worcester County","MA","Worcester County",1992,9.1,33051,328778,361829
+NA,"Worcester County","MA","Worcester County",1993,7.2,26029,336648,362677
+NA,"Worcester County","MA","Worcester County",1994,5.8,21042,342166,363208
+NA,"Worcester County","MA","Worcester County",1995,5.4,19467,341643,361110
+NA,"Worcester County","MA","Worcester County",1996,4.6,16613,346581,363194
+NA,"Worcester County","MA","Worcester County",1997,4,15038,356561,371599
+NA,"Worcester County","MA","Worcester County",1998,3.5,12974,362521,375495
+NA,"Worcester County","MA","Worcester County",1999,3.5,12994,363635,376629
+NA,"Worcester County","MA","Worcester County",2000,2.8,10753,377187,387940
+NA,"Worcester County","MA","Worcester County",2001,3.9,15150,377842,392992
+NA,"Worcester County","MA","Worcester County",2002,5.6,22501,376708,399209
+NA,"Worcester County","MA","Worcester County",2003,6.2,24795,376222,401017
+NA,"Worcester County","MA","Worcester County",2004,5.6,22384,376786,399170
+NA,"Worcester County","MA","Worcester County",2005,5.2,20798,377659,398457
+NA,"Worcester County","MA","Worcester County",2006,5.1,20548,381515,402063
+NA,"Worcester County","MA","Worcester County",2007,4.9,19891,382018,401909
+NA,"Worcester County","MA","Worcester County",2008,5.8,23543,380550,404093
+NA,"Worcester County","MA","Worcester County",2009,8.9,36276,369837,406113
+NA,"Worcester County","MA","Worcester County",2010,9.1,36788,369399,406187
+NA,"Worcester County","MA","Worcester County",2011,8.1,32587,371812,404399
+NA,"Worcester County","MA","Worcester County",2012,7.5,30197,372043,402240
 "Worthington","Hampshire County","MA","Worthington",1990,4.1,24,562,586
 "Worthington","Hampshire County","MA","Worthington",1991,7.5,44,541,585
 "Worthington","Hampshire County","MA","Worthington",1992,7.7,51,609,660

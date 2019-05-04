@@ -1,11 +1,12 @@
-#######################################
-## Title: Unemployment uil.R          ##
+########################################
+## Title: Unemployment ui.R           ##
 ## Author(s): Xuelian Li,Jenna Kiridly##
 ##            Emily Ramos, Arvind     ##
 ##            Ramakrishnan,           ##
 ## Date Created:  01/07/2015          ##
 ## Date Modified: 11/13/2015  XL      ##
-#######################################
+##                05/03/2019  VE      ##
+########################################
 
 shinyUI(fluidPage(
   ## HTML to create generate map button
@@ -41,7 +42,7 @@ shinyUI(fluidPage(
           condition="input.sum_timespan == 'sing.yr'",
           ## Initializing a single slider
           sliderInput("sum_year", "Select Year",
-                      min=2003, max=2016, value=2016,
+                      min=2003, max=2018, value=2018,
                       sep="")
         ),
         conditionalPanel(
@@ -49,7 +50,7 @@ shinyUI(fluidPage(
           condition="input.sum_timespan == 'mult.yrs'",
           ## Slider starts from 2010-2012
           sliderInput("sum_range", "Select Years",
-                      min=2003, max=2016, value=c(2010,2012),
+                      min=2003, max=2018, value=c(2010,2018),
                       sep="")
         ),
         ## in summary, allow for municipal selection
@@ -67,7 +68,7 @@ shinyUI(fluidPage(
         condition="input.tabs == 'plot'",
         ## Select input = List
         selectInput("plot_muni", "Select Municipality", 
-                    choices = MA_municipals, selected="Amherst", multiple=TRUE),
+                    choices = MA_municipals, selected="Springfield", multiple=TRUE),
         radioButtons("plot_radio", "Select Variable of Interest",
                      c("Unemployment Rate" = "Unemployment_Rate_Avg",
                        "Labor Force" = "Labor Force"),
@@ -95,7 +96,7 @@ shinyUI(fluidPage(
         condition="input.tabs == 'map'",
         ## Initializing a single slider
           sliderInput("map_year", "Select Year",
-                      min=2003, max=2016, value=2012,
+                      min=2003, max=2018, value=2012,
         sep=""),
         radioButtons("map_radio", "Select Variable of Interest",
                      c("Unemployment Rate" = "Unemployment_Rate_Avg",
@@ -250,21 +251,17 @@ bootstrapPage(mainPanel(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                
-    
                  p(strong("Umemployed Persons"), 
-                            "-All people 16 years old and over are classified as unemployed if they were not at work during the survey period, but were actively seeking work during the last 4 weeks, and were available to start a job. Also included as unemployed are those who did not work at all during the reference week, those were waiting to be called back to a job from which they had been laid off, and those who were available for work except for temporary illness."),
-                  tags$br(),
-                  p(strong('Unemployment Rate'),
-                              "-The unemployment rate is produced by the Bureau of Labor Statistics (BLS), which uses state and national level information from the Current Population Survey (CPS).  Municipality unemployment rates were gathered form a secition of the BLS and CPS called the Local Areas Unemployment Statistics Series. The unemployment rate represents the number of unemployed people as a proportion of the total labor force. For example, if the civilian labor force equals 100 people and 7 people are unemployed, then the unemployment rate would be 7 percent."),
-                  tags$br(),
-  
-                p(strong('Average Number in Labor Force'), 
-                           "-The labor force includes all persons classified as employed or unemployed."),
-                tags$br(),
-              p(strong('Bureau of Labor Statistics'), 
-                           "-These data were collected from the Bureau of Labor Statistics (BLS). It's helpful to note that the BLS is subject to annual revision revised to reflect new population controls from the Census Bureau, updated input data, and re-estimation.  Links to the data source will be updated when new data are available."),
-                   
+                   "- All people 16 years old and over are classified as unemployed if they were not at work during the survey period, but were actively seeking work during the last 4 weeks, and were available to start a job. Also included as unemployed are those who did not work at all during the reference week, those were waiting to be called back to a job from which they had been laid off, and those who were available for work except for temporary illness."),
+                 tags$br(), 
+                 p(strong('Unemployment Rate'), 
+                   "- The unemployment rate is produced by the Bureau of Labor Statistics (BLS), which uses state and national level information from the Current Population Survey (CPS).  Municipality unemployment rates were gathered form a section of the BLS and CPS called the Local Areas Unemployment Statistics Series. The unemployment rate represents the number of unemployed people as a proportion of the total labor force. For example, if the civilian labor force equals 100 people and 7 people are unemployed, then the unemployment rate would be 7 percent."),
+                 tags$br(), 
+                 p(strong('Average Number in Labor Force'), 
+                   "- The labor force includes all persons classified as employed or unemployed."),
+                 tags$br(), 
+                 p(strong('Bureau of Labor Statistics'), 
+                   "- These data were collected from the Bureau of Labor Statistics (BLS). It's helpful to note that the BLS is subject to annual revision revised to reflect new population controls from the Census Bureau, updated input data, and re-estimation.  Links to the data source will be updated when new data are available."),
                  #tags$br(),
                 # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),                  
                  

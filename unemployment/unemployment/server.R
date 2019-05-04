@@ -1,5 +1,5 @@
 #######################################
-## Title: Unemploy server.R          ##
+## Title: Unemployment server.R      ##
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Xuelian Li,   ##
