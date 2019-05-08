@@ -3,7 +3,7 @@
 ## Author(s): Xuelian Li, Jenna Kiridly ## 
 ## Date Created:  08/11/15              ##
 ## Date Modified: 08/15/15 XL           ##
-## Data Updated:  05/03/19 VE           ##
+## Data Updated:  05/08/19 VE           ##
 ##########################################
 
 
@@ -144,7 +144,7 @@ shinyUI(fluidPage(
                  
                  ## GitHub link
                  helpText(a("View the data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/bankruptcies", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/bankruptcies/bankruptcy", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),

@@ -5,6 +5,6 @@ account: seigma
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 61291
-bundleId: 2057292
+bundleId: 2070351
 url: https://seigma.shinyapps.io/bankruptcy/
-when: 1556877639.38876
+when: 1557341944.67248

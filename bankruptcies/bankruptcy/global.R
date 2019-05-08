@@ -3,7 +3,7 @@
 ## Author(s): Xuelian Li, Jenna Kiridly ## 
 ## Date Created:  08/11/15              ##
 ## Date Modified: 08/15/15 XL           ##
-## Date Updated:  05/03/19 VE           ##
+## Date Updated:  05/08/19 VE           ##
 ##########################################
 
 ##First file run - Environment Setup
@@ -32,7 +32,7 @@ for(i in 1:length(MAmap$features)){
 
 ## Load formatted suicide data
 ## -1 eliminates first column [rows,columns]
-bankdata <- read.csv(file="bankdata1.csv")
+bankdata <- read.csv(file="bankruptcy.csv")
 MAcounties <- sort(MAcounties)
 
 bank_data1<-bankdata[which(bankdata$Region!="MA"&bankdata$Region!="United States"),]
@@ -203,7 +203,7 @@ plot_side_text <- conditionalPanel(
     tags$li("Select your preferred display option - total bankruptcies or look at bankruptcies by specific chapter."),
     tags$br(),
     tags$li("To compare total business and personal bankruptcies within a specific chapter to Massachusetts or US totals please select 'Compare to MA' or 'Compare to US'."),
-    p(strong("* Please note this can only be done when looking at a specific chapter of business or personal bankruptcies."))
+    p("* Please note this can only be done when looking at a specific chapter of business or personal bankruptcies.")
     
   ))
 
