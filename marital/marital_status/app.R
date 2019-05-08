@@ -2,7 +2,7 @@
 ## Title: Marital App.R              ##
 ## Author(s): Valerie Evans          ##
 ## Date Created:  11/02/2017         ##
-## Date Modified: 11/09/2017 VE      ##
+## Date Modified: 05/08/2019 VE      ##
 ## Map Updated:   02/16/2018 ZK      ##
 #######################################
 
@@ -24,7 +24,7 @@ require(sp)
 MA_map_muni <- geojson_read("Muni_2010Census_DP1.geojson")
 
 ## Load formatted marital status data
-mar_data <- read.csv(file="marriagedata_update.csv")
+mar_data <- read.csv(file="maritalstatus.csv")
 names(mar_data)[10:12] <- gsub("Now_", "", names(mar_data)[10:12])
 
 ## Find order of municipals in geojson files
@@ -188,13 +188,12 @@ summary_side_text <- conditionalPanel(
   helpText(p(strong('Please select the five-year range for which you are interested in seeing marital status estimates.'))),
   tags$br(),
   tags$ul(
-    tags$li('View rates by selecting male or female. To veiw both leave this selection blank.'),
+    tags$li('View rates by selecting male or female. To view both leave this selection blank.'),
     tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
     tags$li('To compare the data to the Massachusetts average or US average select the corresponding check box.'),
-    tags$br(),
-    tags$li(p(strong('Please note that all statistics are five-year estimates.')))
+    p('Please note that all statistics are five-year estimates.')
   )
 )
 
@@ -506,7 +505,7 @@ ui <- shinyUI(fluidPage(
                  ## In summary, allow for year, gender, and municipality selection
                  conditionalPanel(
                    condition="input.tabs == 'summary'",
-                   selectInput("sum_year", "Select Five Year Range",
+                   selectInput("sum_year", "Select Five-Year Range",
                                choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012",
                                               "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
                                               "2012-2016" = "2012-2016", "2013-2017" = "2013-2017"), 
@@ -540,7 +539,7 @@ ui <- shinyUI(fluidPage(
                  ## In map, allow for year, gender, and variable selection
                  conditionalPanel(
                    condition="input.tabs == 'map'",
-                   selectInput("map_year", "Select Five Year Range",
+                   selectInput("map_year", "Select Five-Year Range",
                                choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012",
                                               "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
                                               "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")),
@@ -560,19 +559,19 @@ ui <- shinyUI(fluidPage(
                  
                  ## Author line
                  helpText("Created by Emily R. Ramos, Arvind Ramakrishnan, Jenna F. Kiridly, Xuelian Li, Justin Baldwin and Stephen A. Lauer"),
-                 helpText("Recreated by Valerie Evans"),
+                 helpText("Recreated and Updated by Valerie Evans"),
                  
                  ## Email feedback link
                  ## To develop a link in HTML
                  helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
                  
                  ## Data source citation
-                 helpText(a("Data Source: American Community Survey - Table DP02", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S1201&prodType=table",
+                 helpText(a("Data Source: American Community Survey - Table S1201", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_14_5YR_S1201&prodType=table",
                             target="_blank")),
                  
                  ## GitHub link
                  helpText(a("View our data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/marital/marital", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/marital/marital_status", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -637,21 +636,6 @@ ui <- shinyUI(fluidPage(
                    absolutePanel(right=400, top=300, class="floater", actionButton("action", "Generate Map")
                    )),
                  
-                 # ## Legend
-                 # conditionalPanel(
-                 #   condition="input.action != 0",
-                 #   absolutePanel(
-                 #     right = 10, top = 150, draggable=FALSE, style = "", 
-                 #     class = "floater",
-                 #     strong("Percentage"),
-                 #     plotOutput("legend1"),
-                 #     tags$table(
-                 #      tags$td(tags$div(
-                 #         style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
-                 #       )),
-                 #       tags$td("Data not available", align = "right")
-                 #     )
-                 #   )),
                  
                  ## Legend                 
                  # Never Married
@@ -744,10 +728,10 @@ ui <- shinyUI(fluidPage(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  p(strong("Marital Status Rates"),
-                   " - The number of people within each marital status category for a region over a specified five year range. When the number of people in a particular marital status category is too small, data cannot be displayed."), 
+                   " - The number of people within each marital status category for a region over a specified five-year range. When the number of people in a particular marital status category is too small, data cannot be displayed."), 
                  tags$br(),
                  p(strong("Five-Year Estimate"),
-                   " - Survey information is collected everyday of the year and then aggregated over a specific time period, five years. Multiyear estimates are available for regions with populations less than 65,000. However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision."),
+                   " - Survey information is collected everyday of the year and then aggregated over a specific time period, five years. Multi-year estimates are available for regions with populations less than 65,000. However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision."),
                  
                  ## Email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
@@ -756,6 +740,7 @@ ui <- shinyUI(fluidPage(
         ))
 )
 ))
+
 
 ##### SERVER #####
 server <- shinyServer(function(input, output, session) {
@@ -766,13 +751,7 @@ server <- shinyServer(function(input, output, session) {
     years <- input$sum_year
     if(is.null(years)==TRUE){years <- paste(c(2006:2013), c(2006:2013)+4, sep="-")}
     
-    #if(!is.null(input$sum_year))
-     # years <- input$sum_year
-    ## If none selected, put all years in vector
-    #if(is.null(input$sum_year))
-      #years <- c("2006-2010", "2007-2011", "2008-2012", "2009-2013", "2010-2014", "2011-2015", "2012-2016", "2013-2017")
-    
-    ## Filter the data by the chosen Five Year Range 
+    ## Filter the data by the chosen Five-Year Range 
     mar_df <- mar_data %>%
       filter(Five_Year_Range %in% years) %>%
       select(1:4, Gender, Five_Year_Range, Population, Never_Married_pct, Never_Married_pct_error, 
@@ -1009,122 +988,6 @@ server <- shinyServer(function(input, output, session) {
     map_dat <- rbind.data.frame(map_dat, missing_df)
     map_dat$color <- map_colors[map_dat$color]
     return(map_dat)
-   
-    # ## For single year maps...
-    # if(input$var == "Married_pct"){
-    #   ## Subset the data by the var selected
-    #   marmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Married_pct, Married_pct_error)
-    #   
-    #   ## Assign colors to each entry in the data frame
-    #   color <- as.integer(cut2(marmap_dat[,input$var],cuts=marcuts))
-    #   marmap_dat <- cbind.data.frame(marmap_dat, color)
-    #   marmap_dat$color <- ifelse(is.na(marmap_dat$color), length(map_colors), marmap_dat$color)
-    #   marmap_dat$opacity <- op
-    #   
-    #   ## Find missing counties in data subset and assign NAs to all values
-    #   missing_munis <- setdiff(leftover_munis_map, marmap_dat$Region)
-    #   missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
-    #                            Region = missing_munis, Gender = input$map_gender,
-    #                            Five_Year_Range = input$map_year, Population = NA,
-    #                            Married_pct = NA, Married_pct_error = NA, 
-    #                            color=length(map_colors), opacity = 0)
-    #   # Combine data subset with missing counties data
-    #   marmap_dat <- rbind.data.frame(marmap_dat, missing_df)
-    #   marmap_dat$color <- map_colors[marmap_dat$color]
-    #   return(marmap_dat)
-    # }
-    # 
-    # if(input$var == "Never_Married_pct"){
-    #   ## Subset the data by the var selected
-    #   nevmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Never_Married_pct, Never_Married_pct_error)
-    #   
-    #   ## Assign colors to each entry in the data frame
-    #   color <- as.integer(cut2(nevmap_dat[,input$var],cuts=nevcuts))
-    #   nevmap_dat <- cbind.data.frame(nevmap_dat, color)
-    #   nevmap_dat$color <- ifelse(is.na(nevmap_dat$color), length(map_colors), nevmap_dat$color)
-    #   nevmap_dat$opacity <- op
-    #   
-    #   ## Find missing counties in data subset and assign NAs to all values
-    #   missing_munis <- setdiff(leftover_munis_map, nevmap_dat$Region)
-    #   missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
-    #                            Region = missing_munis, Gender = input$map_gender,
-    #                            Five_Year_Range = input$map_year, Population = NA, 
-    #                            Never_Married_pct = NA, Never_Married_pct_error = NA,
-    #                            color=length(map_colors), opacity = 0)
-    #   # Combine data subset with missing counties data
-    #   nevmap_dat <- rbind.data.frame(nevmap_dat, missing_df)
-    #   nevmap_dat$color <- map_colors[nevmap_dat$color]
-    #   return(nevmap_dat)
-    # }
-    # 
-    # if(input$var == "Separated_pct"){
-    #   ## Subset the data by the var selected
-    #   sepmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Separated_pct,Separated_pct_error)
-    #   
-    #   ## Assign colors to each entry in the data frame
-    #   color <- as.integer(cut2(sepmap_dat[,input$var],cuts=sepcuts))
-    #   sepmap_dat <- cbind.data.frame(sepmap_dat, color)
-    #   sepmap_dat$color <- ifelse(is.na(sepmap_dat$color), length(map_colors), sepmap_dat$color)
-    #   sepmap_dat$opacity <- op
-    #   
-    #   ## Find missing counties in data subset and assign NAs to all values
-    #   missing_munis <- setdiff(leftover_munis_map, sepmap_dat$Region)
-    #   missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
-    #                            Region = missing_munis, Gender = input$map_gender,
-    #                            Five_Year_Range = input$map_year, Population = NA, 
-    #                            Separated_pct = NA, Separated_pct_error = NA, 
-    #                            color=length(map_colors), opacity = 0)
-    #   # Combine data subset with missing counties data
-    #   sepmap_dat <- rbind.data.frame(sepmap_dat, missing_df)
-    #   sepmap_dat$color <- map_colors[sepmap_dat$color]
-    #   return(sepmap_dat)
-    # }
-    # 
-    # if(input$var == "Widowed_pct"){
-    #   ## Subset the data by the year selected
-    #   widmap_dat <- select(map_dat,  Municipal, County, State, Region, Gender, Five_Year_Range, Population, Widowed_pct,Widowed_pct_error)
-    #   
-    #   ## Assign colors to each entry in the data frame
-    #   color <- as.integer(cut2(widmap_dat[,input$var],cuts=widcuts))
-    #   widmap_dat <- cbind.data.frame(widmap_dat, color)
-    #   widmap_dat$color <- ifelse(is.na(widmap_dat$color), length(map_colors), widmap_dat$color)
-    #   widmap_dat$opacity <- op
-    #   
-    #   ## Find missing counties in data subset and assign NAs to all values
-    #   missing_munis <- setdiff(leftover_munis_map, widmap_dat$Region)
-    #   missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
-    #                            Region = missing_munis, Gender = input$map_gender,
-    #                            Five_Year_Range = input$map_year, Population = NA, 
-    #                            Widowed_pct = NA, Widowed_pct_error = NA,
-    #                            color=length(map_colors), opacity = 0)
-    #   # Combine data subset with missing counties data
-    #   widmap_dat <- rbind.data.frame(widmap_dat, missing_df)
-    #   widmap_dat$color <- map_colors[widmap_dat$color]
-    #   return(widmap_dat)
-    # }
-    # 
-    # if(input$var == "Divorced_pct"){
-    #   ## Subset the data by the year selected
-    #   divmap_dat <- select(map_dat, Municipal, County, State, Region, Gender, Five_Year_Range, Population, Divorced_pct,Divorced_pct_error)
-    #   
-    #   ## Assign colors to each entry in the data frame
-    #   color <- as.integer(cut2(divmap_dat[,input$var],cuts=divcuts))
-    #   divmap_dat <- cbind.data.frame(divmap_dat, color)
-    #   divmap_dat$color <- ifelse(is.na(divmap_dat$color), length(map_colors), divmap_dat$color)
-    #   divmap_dat$opacity <- op
-    #   
-    #   ## Find missing counties in data subset and assign NAs to all values
-    #   missing_munis <- setdiff(leftover_munis_map, divmap_dat$Region)
-    #   missing_df <- data.frame(Municipal = missing_munis, County = NA, State = "MA",
-    #                            Region = missing_munis, Gender = input$map_gender,
-    #                            Five_Year_Range = input$map_year, Population = NA,
-    #                            Divorced_pct = NA, Divorced_pct_error = NA, 
-    #                            color=length(map_colors), opacity = 0)
-    #   # Combine data subset with missing counties data
-    #   divmap_dat <- rbind.data.frame(divmap_dat, missing_df)
-    #   divmap_dat$color <- map_colors[divmap_dat$color]
-    #   return(divmap_dat)
-    # }
   })
 
   values <- reactiveValues(selectedFeature=NULL, highlight=c())
@@ -1163,25 +1026,7 @@ server <- shinyServer(function(input, output, session) {
       map$addGeoJSON(x) # draw map
     })
   })
-  
-  # observe({
-  #   input$action
-  #   map_dat <- map_dat()
-  #   
-  #   isolate({
-  #     x <- MA_map_muni
-  #     
-  #     for(i in 1:length(x$features)){
-  #       x$features[[i]]$properties["Married_pct"] <- map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), "Married_pct"]
-  #       x$features[[i]]$properties$style <- list(fill=TRUE, fillColor=map_dat$color[match(x$features[[i]]$properties, map_dat$Region)],
-  #                                                weight=1, stroke=TRUE, opacity=map_dat$opacity[match(x$features[[i]]$properties, map_dat$Region)],
-  #                                                color="#000000", fillOpacity=map_dat$opacity[match(x$features[[i]]$properties, map_dat$Region)])
-  #     }
-  #     # Draw map
-  #     map$addGeoJSON(x)
-  #   })
-  # })
-      
+
       observe({
         ## EVT = Mouse Click
         evt <- input$map_click
@@ -1204,20 +1049,7 @@ server <- shinyServer(function(input, output, session) {
           values$selectedFeature[input$var] <- map_dat[match(region, map_dat$Region), input$var]
         })
       })
-      
-      # observe({
-      #   evt <- input$map_geojson_click
-      #   if(is.null(evt))
-      #     return()
-      #   map_dat <- map_dat()
-      #   isolate({
-      #     values$selectedFeature <- evt$properties
-      #     clickmuni <- evt$properties$NAMELSAD10
-      #     values$selectedFeature["Married_pct"] <- map_dat[match(clickmuni, map_dat$Region), "Married_pct"]
-      #     values$selectedFeature["Married_pct_error"] <- map_dat[match(clickmuni, map_dat$REgion), "Married_pct_error"]
-      #   })
-      # })
-      
+
      ## This function creates the info box 
       output$details <- renderText({
         
@@ -1234,12 +1066,7 @@ server <- shinyServer(function(input, output, session) {
         var_select <- gsub("_", " ", input$var)
         var_select <- gsub("pct", "", var_select)
         
-        #     browser()
-        # muni_name <- values$selectedFeature$NAMELSAD10
-        # muni_value <- prettyNum(values$selectedFeature["Married_pct"], big.mark = ",")
-        # muni_margin <- prettyNum(values$selectedFeature["Married_pct_error"], big.mark = ",")
-        
-        
+
         ## If clicked county has no crude rate, display a message
         if(is.null(values$selectedFeature[input$var])){
           return(as.character(tags$div(
@@ -1249,16 +1076,6 @@ server <- shinyServer(function(input, output, session) {
         as.character(tags$div(
           tags$h4(var_select, "% in ", muni_name, " for ", input$map_year),
           tags$h5(muni_value, "%")
-          
-        # ## If clicked county has no crude rate, display a message
-        # if(muni_value == "NA"){
-        #   return(as.character(tags$div(
-        #     tags$h5("Marital status in", muni_name, "is not available for this timespan"))))
-        # }
-        # ## For a single year when county is clicked, display a message
-        # as.character(tags$div(
-        #   tags$h4("Percentage in", muni_name, " for ", input$map_year),
-        #   tags$h5(muni_value, "% +-", muni_margin)
         ))
       })
       
@@ -1362,98 +1179,8 @@ server <- shinyServer(function(input, output, session) {
         
       })
 
-      # ## Legend
-      # whichgender <- reactive({switch(input$map_gender,"Female"=1,  "Male"=2)})
-      # 
-      # output$legend1 <- renderPlot({  
-      #   paint.brush = colorRampPalette(colors=c("white", "deeppink"))
-      #   cols <- paint.brush(length(map_colors)-1)
-      #   if(input$var =='Married_pct'){
-      #     leg_dat<- data_frame(y = seq(marmin.val[whichgender()], marmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
-      #     q<- ggplot(data = leg_dat) +
-      #       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-      #       scale_y_continuous(limits = c(marmin.val[whichgender()], marmax.val[whichgender()]), breaks = round(seq(marmin.val[whichgender()], marmax.val[whichgender()], length.out = 5),1)) +
-      #       scale_fill_manual(values = leg_dat$col) + theme_bw() +
-      #       theme(axis.text.x = element_blank(),
-      #             axis.text.y = element_text(size = 12),
-      #             axis.title.x = element_blank(),
-      #             axis.title.y = element_blank(),
-      #             axis.ticks.x = element_blank(),
-      #             panel.border = element_blank(),
-      #             panel.grid.minor = element_blank(),
-      #             panel.grid.major = element_blank())
-      #   }
-      #   else if(input$var == 'Never_Married_pct'){
-      #     leg_dat<- data_frame(y = seq(nevmin.val[whichgender()], nevmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
-      #     q<- ggplot(data = leg_dat) +
-      #       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-      #       scale_y_continuous(limits = c(nevmin.val[whichgender()], nevmax.val[whichgender()]), breaks = round(seq(nevmin.val[whichgender()], nevmax.val[whichgender()], length.out = 5),1)) +
-      #       scale_fill_manual(values = leg_dat$col) + theme_bw() +
-      #       theme(axis.text.x = element_blank(),
-      #             axis.text.y = element_text(size = 12),
-      #             axis.title.x = element_blank(),
-      #             axis.title.y = element_blank(),
-      #             axis.ticks.x = element_blank(),
-      #             panel.border = element_blank(),
-      #             panel.grid.minor = element_blank(),
-      #             panel.grid.major = element_blank())
-      #   }
-      #   else if(input$var=='Separated_pct'){
-      #     leg_dat<- data_frame(y = seq(sepmin.val[whichgender()], sepmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
-      #     q<- ggplot(data = leg_dat) +
-      #       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-      #       scale_y_continuous(limits = c(sepmin.val[whichgender()], sepmax.val[whichgender()]), breaks = round(seq(sepmin.val[whichgender()], sepmax.val[whichgender()], length.out = 5),1)) +
-      #       scale_fill_manual(values = leg_dat$col) + theme_bw() +
-      #       theme(axis.text.x = element_blank(),
-      #             axis.text.y = element_text(size = 12),
-      #             axis.title.x = element_blank(),
-      #             axis.title.y = element_blank(),
-      #             axis.ticks.x = element_blank(),
-      #             panel.border = element_blank(),
-      #             panel.grid.minor = element_blank(),
-      #             panel.grid.major = element_blank())
-      #   }
-      #   else if(input$var == 'Widowed_pct'){
-      #     leg_dat<- data_frame(y = seq(widmin.val[whichgender()], widmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
-      #     q<- ggplot(data = leg_dat) +
-      #       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-      #       scale_y_continuous(limits = c(widmin.val[whichgender()], widmax.val[whichgender()]), breaks = round(seq(widmin.val[whichgender()], widmax.val[whichgender()], length.out = 5),1)) +
-      #       scale_fill_manual(values = leg_dat$col) + theme_bw() +
-      #       theme(axis.text.x = element_blank(),
-      #             axis.text.y = element_text(size = 12),
-      #             axis.title.x = element_blank(),
-      #             axis.title.y = element_blank(),
-      #             axis.ticks.x = element_blank(),
-      #             panel.border = element_blank(),
-      #             panel.grid.minor = element_blank(),
-      #             panel.grid.major = element_blank())
-      #   }
-      #   else {
-      #     leg_dat<- data_frame(y = seq(divmin.val[whichgender()], divmax.val[whichgender()],length.out=(length(map_colors)-1)), x = 1, col = cols)
-      #     q<- ggplot(data = leg_dat) +
-      #       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-      #       scale_y_continuous(limits = c(divmin.val[whichgender()], divmax.val[whichgender()]), breaks = round(seq(divmin.val[whichgender()], divmax.val[whichgender()], length.out = 5),1)) +
-      #       scale_fill_manual(values = leg_dat$col) + theme_bw() +
-      #       theme(axis.text.x = element_blank(),
-      #             axis.text.y = element_text(size = 12),
-      #             axis.title.x = element_blank(),
-      #             axis.title.y = element_blank(),
-      #             axis.ticks.x = element_blank(),
-      #             panel.border = element_blank(),
-      #             panel.grid.minor = element_blank(),
-      #             panel.grid.major = element_blank())
-      #   }
-      #   
-      #   return(q)
-      #   
-      # })
-      # output$text1<-renderText({
-      #   var_s <- gsub("_pct", "", input$var)
-      #   return(as.character(
-      #     gsub("_"," ", var_s)
-      #   ))
-      # })
 })
+
 
 ##### RUN APP #####
 shinyApp(ui=ui, server=server)
