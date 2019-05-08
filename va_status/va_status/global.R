@@ -5,6 +5,7 @@
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  11/20/2014         ##
 ## Date Modified: 02/24/2014 ER      ##
+##                05/08/2019 VE      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -26,7 +27,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted marital status data
 ## -1 eliminates first column [rows,columns]
-va_data <- read.csv(file="vetstatusdata.csv")[,-1]
+va_data <- read.csv(file="va_status.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
@@ -155,16 +156,9 @@ summary_side_text <- conditionalPanel(
       tags$li('To compare the data to the Massachusetts or US estimate select the corresponding check box below.'),
       tags$br(),
       tags$li('Civilian veteran status estimates can be sorted in ascending and descending order by clicking the column or variable.'),
-      tags$br(),
-      tags$li('Please note all statistics are five-year estimates.')
+      p('* Please note all statistics are five-year estimates.')
   )
-  
-    
-   #   tags$li(p(strong('Please note that all statistics are 5-year averages')))
-            
-  
-  
-  
+
   ## Creates horizontal line
   ##tags$hr()
 )
@@ -173,8 +167,8 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select the municipality for which you are interested in viewing the five year estimate of civilian veterans.')),
-           tags$br(),
+  helpText(p(strong('Please select the municipality for which you are interested in viewing the five-year estimate of civilian veterans.'))),
+  tags$br(),
   tags$ul(
     tags$li('For the five-year ranges below, you can compare the estimate of civilian veterans in a municipality to the national, state, and county estimates.')
     ))
@@ -185,12 +179,11 @@ p(strong('Please select the municipality for which you are interested in viewing
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please select a five- year range and click on Generate Map to get started.'))),
+  helpText(p(strong('Please select a five-year range and click on Generate Map to get started.'))),
   tags$br(),
   tags$ul(
     tags$li('Clicking on a municipality will display the civilian veteran status percentage for the five-year range that you selected.')
     ))
-
 
 
 info_side_text <- conditionalPanel(
@@ -201,10 +194,7 @@ info_side_text <- conditionalPanel(
   #tags$ul(
    # tags$li('formulae'),
     #tags$li('calculations to derive the five-year averages.')
-       )#)
-           
-#   tags$hr()
-
+       )
 
 about_main_text <- p(strong("The SEIGMA Civilian Veteran Status App"), "displays the percentage of veterans in Massachusetts' municipalities over a five-year period.",
   p(strong("Click on different tabs to see the data in different formats.")),
@@ -216,15 +206,3 @@ about_main_text <- p(strong("The SEIGMA Civilian Veteran Status App"), "displays
       tags$li(p(strong("More Info"), "describes civilian veteran status estimates."))
 )
 )
-
-
-plot_main_text <- p(strong("Variable Summary:"),
-                    ## breaks between paragraphs
-                    tags$br(),
-                    strong("Suicides"),
-                    " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10.", 
-                    tags$br(),
-                    strong("Crude Rate"), 
-                    " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:",
-                    tags$br(),
-                    strong("Crude Rate = Count / Population * 100,000", align="center"))

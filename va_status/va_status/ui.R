@@ -6,7 +6,7 @@
 ##            Steve Lauer            ## 
 ## Date Created:  11/5/2014          ##
 ## Date Modified: 04/16/2015 XL      ##
-## Daee Updated: 02/14/2019 VE       ##
+##                05/08/2019 VE      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -56,7 +56,7 @@ shinyUI(fluidPage(
       conditionalPanel(
         condition="input.tabs == 'map'",
         ## Select input = List
-        selectInput("map_year", "Select Five Year Range",
+        selectInput("map_year", "Select Five-Year Range",
                     choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                    "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", 
                                    "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
@@ -67,7 +67,7 @@ shinyUI(fluidPage(
       conditionalPanel(
         condition="input.tabs == 'plot'",
         ## Select input = List
-        selectInput("plot_year", "Select Five Year Range",
+        selectInput("plot_year", "Select Five-Year Range",
                     choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                    "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", 
                                    "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
@@ -89,12 +89,12 @@ shinyUI(fluidPage(
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey - Table DP02", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S2101&prodType=table",
+      helpText(a("Data Source: American Community Survey - Table S2101", href="https://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_17_5YR_S2101&prodType=table",
                  target="_blank", onclick="ga('send', 'event', 'click', 'link', 'dataSource', 1)")),
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/va_status", target="_blank", onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/va_status/va_status", target="_blank", onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -232,24 +232,11 @@ bootstrapPage(mainPanel(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                   tags$li(p(strong("Veteran Status"), "- People with active duty military service and or service in the military Reserves or National Guard. All individuals were at least 18 years of age.")),
+                   tags$li(p(strong("Veteran Status"), "- People with active duty military service and/or service in the military Reserves or National Guard. All individuals were at least 18 years of age.")),
                    tags$br(),
-                 tags$li(p(strong("Civilian Veterans"), "- Men and women who have served for any period of time, but are no longer on active duty.  People who served in the National Guard or Reserves are classified as veterans only if they were called to active duty.")),
+                 tags$li(p(strong("Civilian Veterans"), "- Men and women who have served for any period of time, but are no longer on active duty. People who served in the National Guard or Reserves are classified as veterans only if they were called to active duty.")),
                  tags$br(),
-                 tags$li(p(strong("Five-Year Estimates"), "- Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates, are possible for larger municipalities." ))),
-                 
-                   #tags$br(),
-                  # tags$li(p(strong("Median Household Income  (MHI)"),
-                  #           " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality")),
-                 #  tags$br(),
-                  # tags$li("When analyzing data sets per municipality five- year sets are used because estimates for smaller regions require a larger sample size than can be provided by single year data.")
-                   
-                 #tags$br(),
-                # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),
-                 
-                 
-                 
-              
+                 tags$li(p(strong("Five-Year Estimates"), "- Survey information is collected everyday of the year and then aggregated over a specific time period, five years. Multi-year estimates are available to regions with populations less than 65,000. However, more precise estimates, are possible for larger municipalities."))),
                   
                  
                  ## email feedback link

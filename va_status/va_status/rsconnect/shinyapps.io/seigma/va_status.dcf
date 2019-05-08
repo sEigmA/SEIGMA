@@ -5,6 +5,6 @@ account: seigma
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 26002
-bundleId: 1875862
+bundleId: 2070307
 url: https://seigma.shinyapps.io/va_status/
-when: 1550141450.00084
+when: 1557340952.38139
