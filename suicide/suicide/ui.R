@@ -5,9 +5,9 @@
 ##            Kiridly, Xuelian Li    ##
 ##            Steve Lauer,           ##
 ##              Justin Baldwin       ## 
-## Date Created:                     ##
-## Date Modified: 04/13/15 XL        ##
-## Date Updated: 02/14/19 VE         ##
+## Date Created:  04/13/2015         ##
+## Date Modified: 04/13/2015 XL      ##
+##                05/08/2019 VE      ##
 #######################################
 
 ## load necessary libraries
@@ -82,9 +82,9 @@ shinyUI(fluidPage(
           tags$li("If you are interested in comparing multiple years, select Multiple Years, adjust the slider, and select a range accordingly."),
           tags$br(),
           tags$li("If you are interested in a specific county or multiple counties select them by clicking on the box or typing them in."), 
-          p(strong('For data on all Massachusetts counties, leave this selection blank.')),
+          p('* For data on all Massachusetts counties, leave this selection blank.'),
           tags$li("To compare the data to the Massachusetts average or US average, select the corresponding check box."),
-          p(strong('Please note that only consecutive year ranges can be selected.'))
+          p('* Please note that only consecutive year ranges can be selected.')
         )),
       
       ## Same concept
@@ -117,8 +117,8 @@ shinyUI(fluidPage(
         helpText(p(strong('This tab contains more detailed information regarding the variables of interest.'))),
         tags$br(),
         tags$ul(
-          tags$li('formulae'),
-          tags$li('calculations to derive the age-adjusted suicide rate.')
+          tags$li('Formulae.'),
+          tags$li('Calculations to derive the age-adjusted suicide rate.')
         )
       ),
       
@@ -199,7 +199,7 @@ shinyUI(fluidPage(
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/suicide", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/suicide/suicide", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -222,9 +222,9 @@ shinyUI(fluidPage(
                    ##tags$ul and tags$li are to create bullet points using HTML
                    tags$ul(
                      tags$li(p(strong("Summary"), "shows the source data in  table format.")),
-                     tags$li(p(strong("Plot"), "compares the age-adjusted suicide rate over time per 100,000 to county, state, and national averages.")),
+                     tags$li(p(strong("Plot"), "compares the age-adjusted suicide rate over time per 100,000 persons to county, state, and national averages.")),
                      tags$li(p(strong("Map"), "visually displays age-adjusted suicide rate by county.")),
-                     tags$li(p(strong("More Info"), "describes the age-adjusted suicicde rate, including formulas and calculations.")
+                     tags$li(p(strong("More Info"), "describes the age-adjusted suicide rate, including formulas and calculations.")
                      )))),
         
         ## summary tab
@@ -303,10 +303,10 @@ shinyUI(fluidPage(
                
                  ## breaks between paragraphs
                  p(strong("Broken Lines"),
-                   " - Number of suicides for a region during a specified year. For some counties, data may not appear only for certain years, resulting in shortened or broken line.  This occurs when the number of deaths is less than 10 in order to maintian confidentiality."), 
+                   " - Number of suicides for a region during a specified year. For some counties, data may not appear only for certain years, resulting in a shortened or broken line. This occurs when the number of deaths is less than 10 in order to maintain confidentiality."), 
                  tags$br(),
                  p(strong("Missing data"),
-                   " - For some counties, data may not appear.  This occurs when there is no data available for this county. However, the county name will still appear on the side legend to notify that it has been selected."),
+                   " - For some counties, data may not appear. This occurs when there is no data available for this county. However, the county name will still appear on the side legend to show that it has been selected."),
                  value="plot"),
         
         ## plot map
@@ -404,7 +404,7 @@ shinyUI(fluidPage(
                    " - 95% confidence interval upper bound based upon the Age-adjusted Rate Standard Error (see below)."),
                  tags$br(),
                  p(strong("Age-adjusted Rate Standard Error"),
-                   " - The relative standard error for Age-adjusted Rate. The number of suicides represents the complete counts for each region and are not suject to sampling error.  However, they are subject to non-sampling errors. This is calculated by:"),
+                   " - The relative standard error for Age-adjusted Rate. The number of suicides represents the complete counts for each region and are not subject to sampling error.  However, they are subject to non-sampling errors. This is calculated by:"),
                  tags$br(),
                  p(strong("Age-adjusted Suicide Rate Standard Error = 100 / sqrt(Suicides)."), align="center"),
                  
