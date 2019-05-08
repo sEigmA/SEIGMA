@@ -5,6 +5,6 @@ account: seigma
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 69508
-bundleId: 2060466
+bundleId: 2068970
 url: https://seigma.shinyapps.io/unemployment/
-when: 1557005235.94907
+when: 1557304935.30087

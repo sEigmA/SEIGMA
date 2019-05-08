@@ -5,7 +5,7 @@
 ##            Ramakrishnan,           ##
 ## Date Created:  01/07/2015          ##
 ## Date Modified: 11/13/2015  XL      ##
-##                05/03/2019  VE      ##
+##                05/08/2019  VE      ##
 ########################################
 
 shinyUI(fluidPage(
@@ -128,7 +128,7 @@ shinyUI(fluidPage(
       
       ## GitHub link
       helpText(a("View the data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/unemployment", target="_blank")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/unemployment/unemployment", target="_blank")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -251,7 +251,7 @@ bootstrapPage(mainPanel(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                 p(strong("Umemployed Persons"), 
+                 p(strong("Unemployed Persons"), 
                    "- All people 16 years old and over are classified as unemployed if they were not at work during the survey period, but were actively seeking work during the last 4 weeks, and were available to start a job. Also included as unemployed are those who did not work at all during the reference week, those were waiting to be called back to a job from which they had been laid off, and those who were available for work except for temporary illness."),
                  tags$br(), 
                  p(strong('Unemployment Rate'), 
