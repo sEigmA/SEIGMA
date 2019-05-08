@@ -91,7 +91,7 @@ shinyUI(fluidPage(
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/poverty", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/poverty/poverty", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -228,22 +228,13 @@ bootstrapPage(mainPanel(
            p(strong("Variable Summary:")),
            tags$br(),
            tags$ul(
-             tags$li(p(strong("Poverty Status"), "- To determine a person's poverty status, one compares the person’s total family income in the last 12 months with the poverty threshold appropriate for that person's family size and composition. If the total income of that person's family is less than the threshold appropriate for that family, then the person is considered below the poverty level. Poverty is defined at the family level and not the household level, the poverty status of
-the household is determined by the poverty status of the householder.")),
+             tags$li(p(strong("Poverty Status"), "- To determine a person's poverty status, one compares the person’s total family income in the last 12 months with the poverty threshold appropriate for that person's family size and composition. If the total income of that person's family is less than the threshold appropriate for that family, then the person is considered below the poverty level. Poverty is defined at the family level and not the household level, the poverty status of the household is determined by the poverty status of the householder.")),
              tags$br(),
-             tags$li(p(strong("Poverty Threshold"), "- Poverty thresholds are determined by multiplying base year thresholds (set as yearly income in 1982) by the monthly inflation factor for the 12 months before the period of interest.  For example, if we want to determine if a family with three children with a total income of $14,000 (July 2012 - June 2013) was at or below the poverty threshold we would do the following. First we would see what the base year threshold was in 1982 for a family of this size, $7,765. We then multiply this by the inflation rate for the 12-month period before June 2012 - July 2013, 2.39719.  This would give us a threshold income of $18,614.  When we compare this to the income of the family above, $14,000 is well below the threshold we calculated, meaning this family woudl be considered to be in poverty.  In this app we calculate the poverty threshold as described in the example above as being $23,268." )),
+             tags$li(p(strong("Poverty Threshold"), "- Poverty thresholds are determined by multiplying base year thresholds (set as yearly income in 1982) by the monthly inflation factor for the 12 months before the period of interest. For example, if we want to determine if a family with three children with a total income of $14,000 (July 2012 - June 2013) was at or below the poverty threshold we would do the following. First we would see what the base year threshold was in 1982 for a family of this size, $7,765. We then multiply this by the inflation rate for the 12-month period before June 2012 - July 2013: 2.39719. This would give us a threshold income of $18,614. When we compare this to the income of the family above, $14,000 is well below the threshold we calculated, meaning this family would be considered to be in poverty. In this app we, calculate the poverty threshold as described in the example above as being $23,268." )),
              tags$br(),
-             tags$li(p(strong("Five-Year Estimates"), "- Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates, are possible for larger municipalities. To analyze change over time, users are dicouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision." ))),
+             tags$li(p(strong("Five-Year Estimates"), "- Survey information is collected everyday of the year and then aggregated over a specific time period, five years. Multi-year estimates are available to regions with populations less than 65,000. However, more precise estimates, are possible for larger municipalities. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision." ))),
            
-           #tags$br(),
-           # tags$li(p(strong("Median Household Income  (MHI)"),
-           #           " : Average annual median household income in inflation-adjusted dollars over a five-year period for each municipality")),
-           #  tags$br(),
-           # tags$li("When analyzing data sets per municipality five- year sets are used because estimates for smaller regions require a larger sample size than can be provided by single year data.")
-           
-           #tags$br(),
-           # p("SEIGMA. Social and Economic Impacts of Gambling in Massachusetts, University of Massachusetts School of Public Health and Health Sciences. (2014). Report on the Social and Economic Impact of Gambling in Massachusetts SEIGMA Gambling study. Report to the Massachusetts Gaming Commission & the Massachusetts department of Public Health. Retrieved from:"), a("http://www.umass.edu/seigma/sites/default/files/March%202014%20SEIGMA%20Report_6-19_for%20website.pdf"),       
-           
+
            ## email feedback link
            h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
   id="tabs"

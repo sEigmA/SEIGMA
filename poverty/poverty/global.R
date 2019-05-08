@@ -5,6 +5,7 @@
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  02/20/2015         ##
 ## Date Modified: 03/05/2014 ER      ##
+##                05/08/2019 VE      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -26,7 +27,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted marital status data
 ## -1 eliminates first column [rows,columns]
-labor <- read.csv(file="povratedata.csv")[,-1]
+labor <- read.csv(file="poverty.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
@@ -157,13 +158,8 @@ summary_side_text <- conditionalPanel(
       tags$br(),
       tags$li('Poverty rates can be sorted in ascending and descending order by clicking the column or variable.'),
       tags$br(),
-      tags$li('please note that all statistics are five-year estimates.')
+      tags$li('Please note that all statistics are five-year estimates.')
   )
-  
-    
-   #   tags$li(p(strong('Please note that all statistics are 5-year averages')))
-            
-  
   
   
   ## Creates horizontal line
@@ -174,14 +170,13 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-p(strong('Please select the municipality for which you are interested in viewing the five-year estimate of poverty rate.')),
-           tags$br(),
+  helpText(p(strong('Please select the municipality for which you are interested in viewing the five-year estimate of poverty rate.'))),
+  tags$br(),
   tags$ul(
-    tags$li('For the five-year ranges below, you can compare the poverty rate in a municipality to the national, state, and county rates.')
-    ))
+  tags$li('For the five-year ranges below, you can compare the poverty rate in a municipality to the national, state, and county rates.')
+    )
+  )
           
-
-
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
@@ -189,9 +184,9 @@ map_side_text <- conditionalPanel(
   helpText(p(strong('Please select a five-year range and click on Generate Map to get started.'))),
   tags$br(),
   tags$ul(
-    tags$li('Clicking on a municipality will display the poverty rate for the five-year range that you selected.')
-    ))
-
+  tags$li('Clicking on a municipality will display the poverty rate for the five-year range that you selected.')
+    )
+  )
 
 
 info_side_text <- conditionalPanel(
@@ -202,9 +197,8 @@ info_side_text <- conditionalPanel(
   #tags$ul(
    # tags$li('formulae'),
     #tags$li('calculations to derive the five-year averages.')
-       )#)
-           
-#   tags$hr()
+      
+  )
 
 
 about_main_text <- p(strong("The SEIGMA Poverty App"), "displays the poverty rate in Massachusetts' municipalities over a five-year period.",
@@ -217,15 +211,3 @@ about_main_text <- p(strong("The SEIGMA Poverty App"), "displays the poverty rat
       tags$li(p(strong("More Info"), "describes poverty rates including, formulas and calculations."))
 )
 )
-
-
-plot_main_text <- p(strong("Variable Summary:"),
-                    ## breaks between paragraphs
-                    tags$br(),
-                    strong("Suicides"),
-                    " - Number of suicides for a specified region in a specific year. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than 10.", 
-                    tags$br(),
-                    strong("Crude Rate"), 
-                    " - Crude rates are expressed as the number of suicides, per 100,000 persons, reported each calendar year for the region you select. Rates are considered 'unreliable' when the death count is less than 20 and thus are not displayed. This is calculated by:",
-                    tags$br(),
-                    strong("Crude Rate = Count / Population * 100,000", align="center"))
