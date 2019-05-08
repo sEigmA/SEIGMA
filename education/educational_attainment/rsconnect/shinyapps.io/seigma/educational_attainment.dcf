@@ -5,6 +5,6 @@ account: seigma
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 91187
-bundleId: 2057335
+bundleId: 2069268
 url: https://seigma.shinyapps.io/educational_attainment/
-when: 1556879814.86231
+when: 1557315920.61183

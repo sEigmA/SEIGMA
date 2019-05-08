@@ -5,8 +5,8 @@
 ##            Kiridly, Xuelian Li    ## 
 ##            Steve Lauer            ##
 ## Date Created:  12/04/2014         ##
-## Date Modified: 04/04/2015  XL     ##
-## Data Updated:  05/03/2019 VE      ##
+## Date Modified: 04/04/2015 XL      ##
+## Data Updated:  05/08/2019 VE      ##
 #######################################
 
 
@@ -36,7 +36,7 @@ shinyUI(fluidPage(
       ## in summary, allow for year, municipal selection 
       conditionalPanel(
         condition="input.tabs == 'summary'",
-      selectInput("sum_year", "Select Five Year Range",
+      selectInput("sum_year", "Select Five-Year Range",
                   choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                  "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", 
                                  "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
@@ -54,7 +54,7 @@ shinyUI(fluidPage(
       ## in plot, allow for year, municipal selection
       conditionalPanel(
         condition="input.tabs == 'plot'",
-        selectInput("plot_year", "Select Five Year Range",
+        selectInput("plot_year", "Select Five-Year Range",
                     choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                    "2008-2012" = "2008-2012", "2009-2013" = "2009-2013",
                                    "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
@@ -66,7 +66,7 @@ shinyUI(fluidPage(
       ## in map, allow for year, municipal selection
       conditionalPanel(
         condition="input.tabs == 'map'",
-        selectInput("map_year", "Select Five Year Range",
+        selectInput("map_year", "Select Five-Year Range",
                     choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
                                    "2008-2012" = "2008-2012", "2009-2013" = "2009-2013",
                                    "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
@@ -89,12 +89,12 @@ shinyUI(fluidPage(
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
       
       ## data source citation
-      helpText(a("Data Source: American Community Survey - Table DP02", href="http://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_13_1YR_S1501&prodType=table",
+      helpText(a("Data Source: American Community Survey - Table DP02", href="https://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_17_5YR_DP02&prodType=table",
                  target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dataSource', 1)")),
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/education/educational_attainment", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -121,7 +121,7 @@ bootstrapPage(mainPanel(
         ## plot tab with google chart options
         tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Educational Attainment by Region Over Selected Five Year Period", align="center"),
+                 h4("Educational Attainment by Region Over Selected Five-Year Period", align="center"),
                  plot_options,
                  ## add text about the variables
 #                  plot_main_text,
@@ -232,10 +232,10 @@ bootstrapPage(mainPanel(
                  tags$br(),
                  tags$ul(
                    tags$li(p(strong("Educational Attainment Rates"), 
-                             " - The number of people with each level of educational attainment for a specific region over a specific five-year period of time.  All individuals represented in this measure were at least 25 years of age. Respondents were classified according to highest level of school completed. When a municipality is missing data, this indicates that data cannot be displayed because the number of people is too small.")), 
+                             " - The number of people with each level of educational attainment for a specific region over a specific five-year period of time. All individuals represented in this measure were at least 25 years of age. Respondents were classified according to highest level of school completed. When a municipality is missing data, this indicates that data cannot be displayed because the number of people is too small.")), 
                  tags$br(),
                  tags$li(p(strong("Five-Year Estimates"), 
-                           "- Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years.  Multiyear estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible for larger municipalities.To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision." ))),
+                           "- Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years. Multi-year estimates are available to regions with populations less than 65,000. However, more precise estimates are possible for larger municipalities. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision." ))),
                  
                 
                  

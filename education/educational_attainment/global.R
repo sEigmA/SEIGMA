@@ -3,8 +3,9 @@
 ## Author(s): Emily Ramos, Arvind    ##
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
-## Date Created:  12/04/14           ##
-## Date Modified: 02/24/15  ER       ##
+## Date Created:  12/04/2014         ##
+## Date Modified: 02/24/2015 ER      ##
+##                05/08/2019 VE      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -27,7 +28,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted marital status data
 ## -1 eliminates first column [rows,columns]
-edu_data <- read.csv(file="edudata.csv")[,-1]
+edu_data <- read.csv(file="education.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
