@@ -2,9 +2,9 @@
 ## Title: Property Tax global.R      ##
 ## Author(s): Xuelian Li, Jenna      ##
 ##            Kiridly                ## 
-## Date Created:  01/04/16           ##
-## Date Modified: 01/06/16 XL        ##
-##                05/03/19 VE        ##
+## Date Created:  01/04/2016         ##
+## Date Modified: 01/06/2016 XL      ##
+##                05/08/2019 VE      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -22,7 +22,7 @@ require(tidyr)
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted tax data
-tax_data <- read.csv(file="taxdata2.csv")
+tax_data <- read.csv(file="propertytax.csv")
 colnames(tax_data)[2:3]<-c("Year", "Total_Budget")
 
 ## Find order of municipals in geojson files
@@ -169,9 +169,9 @@ summary_side_text <- conditionalPanel(
   tags$ul(
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To look at the annual total tax levy and percent tax levy by class for a single year, select single year from the drop down menu.'),
+    tags$li('To look at the annual total tax levy and percent tax levy by class for a single year, select Single Year from the drop down menu.'),
     tags$br(),
-    tags$li('To look at the annual total tax levy and percent tax levy by class over a specific time period select multiple years from the drop down menu.  Then use the sliding bar to select a range.'),
+    tags$li('To look at the annual total tax levy and percent tax levy by class over a specific time period select Multiple Years from the drop down menu. Then use the sliding bar to select a range.'),
     tags$br(),
     tags$li('Sort the annual total tax levy and percent tax levy by class in ascending and descending order by clicking on the column or variable title.')
     

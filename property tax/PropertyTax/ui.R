@@ -2,9 +2,9 @@
 ## Title: Property Tax ui.R          ##
 ## Author(s): Xuelian Li, Jenna      ##
 ##            Kiridly, Zhenning Kang ## 
-## Date Created:  01/07/16           ##
-## Date Modified: 05/01/18 ZK        ##
-##                01/14/19 VE        ##
+## Date Created:  01/07/2016         ##
+## Date Modified: 05/01/2018 ZK      ##
+##                05/08/2019 VE      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -132,7 +132,7 @@ shinyUI(fluidPage(
                  
                  ## GitHub link
                  helpText(a("View the data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/property%20tax", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/property%20tax/PropertyTax", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -263,13 +263,13 @@ shinyUI(fluidPage(
                    "- Property for the purpose of conducting a business. This includes office buildings, retail stores, etc. Personal Property is also considered in this category of Commercial Class."),
                  tags$br(),
                  p(strong('Class - Industrial'), 
-                   "- Property involved in manufacturing or processing. This includes porperty used for storage, transmission, and the regulated generation of utilities."),
+                   "- Property involved in manufacturing or processing. This includes property used for storage, transmission, and the regulated generation of utilities."),
                  tags$br(),
                  p(strong('Class - Personal Property'), 
                    "- Property not permanently affixed to real estate. Personal property is movable and can be removed without serious damage either to the real estate or to the item being removed."),
                  tags$br(),
                  p(strong('2018 Dollars'), 
-                   "- Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app we used the dollar values from 2018 to be our constant."),
+                   "- Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app, we used the dollar values from 2018 to be our constant."),
                  tags$br(),
                  
                  #tags$br(),

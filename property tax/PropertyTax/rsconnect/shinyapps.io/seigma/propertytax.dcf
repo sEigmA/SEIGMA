@@ -5,6 +5,6 @@ account: seigma
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 80048
-bundleId: 2057251
+bundleId: 2069175
 url: https://seigma.shinyapps.io/PropertyTax/
-when: 1556875437.25279
+when: 1557312760.37857
