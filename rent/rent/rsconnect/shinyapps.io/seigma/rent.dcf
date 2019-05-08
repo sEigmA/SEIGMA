@@ -5,6 +5,6 @@ account: seigma
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 139722
-bundleId: 1906320
+bundleId: 2069117
 url: https://seigma.shinyapps.io/rent/
-when: 1551365825.78476
+when: 1557310297.62489

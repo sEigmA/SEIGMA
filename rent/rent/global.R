@@ -1,8 +1,8 @@
 #######################################
-## Title: RENT   global.R            ##
+## Title: RENT global.R              ##
 ## Author(s): JWB, BF, ZK            ## 
 ## Date Created:  12/01/2016         ##
-## Date Updated:  02/28/2019  VE     ##
+## Date Updated:  05/08/2019  VE     ##
 #######################################
 
 ##First file run - Environment Setup
@@ -29,7 +29,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted Rent data
 ## -1 eliminates first column [rows,columns]
-rent <- read.csv(file="rent_update.csv")
+rent <- read.csv(file="rent.csv")
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
@@ -169,8 +169,7 @@ summary_side_text <- conditionalPanel(
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
     tags$li('To compare median data to the Massachusetts or US median, select the corresponding box.'),
-    tags$br(),
-    tags$li(p(strong('Please note that all statistics are five-year estimates.'))),
+    p('* Please note that all statistics are five-year estimates.'),
     tags$br(),
     tags$li("For more information about how five-year estimates are calculated, click on the 'More Info' tab.")
     
@@ -186,16 +185,16 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the five-year range and municipality for which you are interested in viewing inflation-adjusted (2017$) median contract rent')),
+  helpText(p(strong('Please select the five-year range and municipality for which you are interested in viewing inflation-adjusted (2017$) median contract rent'))),
   tags$br(),
   tags$ul(
-    tags$li("For a five-year period, you can compare a municipalitiy's inflation-adjusted (2017$) median contract rent to the country, state, and national median.")
+    tags$li("For a five-year period, you can compare a municipality's inflation-adjusted (2017$) median contract rent to the country, state, and national median.")
   ))
 
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong("Please select a five- year range, and click on 'Generate Map' to get started. "))),
+  helpText(p(strong("Please select a five-year range, and click on 'Generate Map' to get started. "))),
   tags$br(),
   tags$ul(
     tags$li('Clicking on a municipality will display the inflation-adjusted (2017$) median contract rent for the five-year range that you selected.')

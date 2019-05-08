@@ -34,7 +34,7 @@ shinyUI(fluidPage(
                  # Initializing a single slider
                  conditionalPanel(
                    condition="input.tabs == 'map'",
-                   selectInput("map_year", "Select Five Year Range",
+                   selectInput("map_year", "Select Five-Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
                                               "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", 
                                               "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
@@ -47,7 +47,7 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.tabs == 'summary'",
                    ## Select input = List
-                   selectInput("sum_year", "Select Five Year Range",
+                   selectInput("sum_year", "Select Five-Year Range",
                                choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010",
                                               "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", 
                                               "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", 
@@ -82,7 +82,7 @@ shinyUI(fluidPage(
                  tags$hr(),
                  
                  ## author line
-                 helpText("Created by Justin Baldwin, Brook Frye and Zhenning Kang"), 
+                 helpText("Created by Justin Baldwin, Brook Frye, and Zhenning Kang"), 
                  helpText("Updated by Valerie Evans"), 
                  
                  ## email feedback link
@@ -95,7 +95,7 @@ shinyUI(fluidPage(
                  
                  ## GitHub link
                  helpText(a("View our data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/rent", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/rent/rent,", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -193,9 +193,9 @@ shinyUI(fluidPage(
                    tags$li(p(strong("Inflation-Adjusted (2017$) Median Contract Rent"), "- Contract rent is the dollar amount of the rental obligation specified in the lease. Five-year estimates were collected between 2002 and 2017 and adjusted for inflation to the 2017 dollar. Data were collected at multiple levels to allow for analysis at multiple geographic scales; municipality, state, and national level.")),
                    
                    tags$br(),
-                   tags$li(p(strong("Median"),"- The median divides the distribution of inflation-adjusted median contract rent into two equal parts; half that fall below the median for contract rent and half that fall above.")),
+                   tags$li(p(strong("Median"),"- The median divides the distribution of inflation-adjusted median contract rent into two equal parts: half that fall below the median for contract rent and half that fall above.")),
                    tags$br(),
-                   tags$li(p(strong("Five-Year Estimates"),"- Survey information is collected every year and then aggregated over a specific time period, in this case, five years at the municipality level. Yearly estimates of inflation-adjusted median contract rent are available only at the county level to acheive a representative sample.")
+                   tags$li(p(strong("Five-Year Estimates"),"- Survey information is collected every year and then aggregated over a specific time period, in this case, five years at the municipality level. Yearly estimates of inflation-adjusted median contract rent are available only at the county level to achieve a representative sample.")
                    )
                  ),
                  #tags$br(),
