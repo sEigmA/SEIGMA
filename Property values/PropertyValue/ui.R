@@ -1,8 +1,8 @@
 #######################################
 ## Title: Property Value ui.R        ##
 ## Author(s): Xuelian Li             ##
-## Date Created:  07/22/16           ##
-## Date Modified: 03/05/19 VE        ##
+## Date Created:  07/22/2016         ##
+## Date Modified: 05/08/2019 VE      ##
 #######################################
 
 shinyUI(fluidPage(
@@ -120,12 +120,12 @@ shinyUI(fluidPage(
                  helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")),
                  
                  ## data source citation
-                 helpText(a("Data Source: Massachusetts Department of Revenue (MA DOR) Division of Local Services", href="https://dlsgateway.dor.state.ma.us/reports/rdPage.aspx?rdReport=PropertyTaxInformation.taxratesbyclass.taxratesbyclass_main",
+                 helpText(a("Data Source: Massachusetts Department of Revenue (MA DOR) Division of Local Services", href="https://dlsgateway.dor.state.ma.us/reports/rdPage.aspx?rdReport=PropertyTaxInformation.AssessedValuesbyClass.assessedvaluesbyclass",
                             target="_blank")),
                  
                  ## GitHub link
                  helpText(a("View the data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/Property%20values", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/Property%20values/PropertyValue", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -258,7 +258,7 @@ shinyUI(fluidPage(
                             "- Property for the purpose of conducting a business. This includes office buildings, retail stores, etc. Personal Property is also considered in this category of Commercial Class."),
                  tags$br(),
                  p(strong('Class - Industrial'), 
-                   "- Property involved in manufacturing or processing. This includes porperty used for storage, transmission, and the regulated generation of utilities."),
+                   "- Property involved in manufacturing or processing. This includes property used for storage, transmission, and the regulated generation of utilities."),
                  tags$br(),
                  p(strong('Class - Personal Property'), 
                    "- Property not permanently affixed to real estate. Personal property is movable and can be removed without serious damage either to the real estate or to the item being removed."),

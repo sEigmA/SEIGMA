@@ -1,8 +1,8 @@
 #######################################
 ## Title: Property Value global.R    ##
 ## Author(s): Xuelian Li             ## 
-## Date Created:  07/11/16           ##
-## Date Modified: 02/26/19 VE        ##
+## Date Created:  07/11/2016         ##
+## Date Modified: 05/08/2019 VE      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -20,7 +20,7 @@ require(tidyr)
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted pValue data
-pValue_data <- read.csv(file="propertyvalue_update.csv")
+pValue_data <- read.csv(file="propertyvalue.csv")
 colnames(pValue_data)[4:10]<-c("Year","Residential","Open_Space", "Commercial", "Industrial", "Personal_Property", "Total_Assessed")
 
 ## Find order of municipals in geojson files
@@ -164,7 +164,6 @@ summary_side_text <- conditionalPanel(
   helpText(p(strong('Please select the years for which you are interested in viewing the annual total assessed property values and percent assessed property values by class.'))),
   tags$br(),
   tags$ul(
-    tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
     tags$li('To look at the annual total assessed property values and percent assessed property values by class for a single year, select single year from the drop down menu.'),
@@ -180,7 +179,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the municipality for which you are interested in viewing the annual total assessed property values and percent of the total assessed property values by class. Please do not select more than ten municipalities at a time.')),
+  helpText(p(strong('Please select the municipality for which you are interested in viewing the annual total assessed property values and percent of the total assessed property values by class. Please do not select more than ten municipalities at a time.'))),
   tags$br(),
   tags$ul(
     tags$li('Once you have selected the municipalities which you are interested in viewing the annual total assessed property values and percent of the total assessed property values by class, select a Variable of Interest.'),
