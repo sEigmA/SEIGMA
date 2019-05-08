@@ -863,9 +863,9 @@ tabPanel("Map",
                            " - Measures the number of students that enroll in the state, a district, or school after the beginning of the school year.  Intake is calculated by dividing the number of students who enroll in school after the start of the school year by all students reported as enrolled in any School Infomartional Management System within that school.")),
                   tags$br(),
                  tags$li((p(strong("Churn Rate"),
-                            "-  measures the number students transferring into or out of a public school or district throughout the course of a school year. Churn represents the sum of all students who were transferring in or out, divided by all students reported as enrolled at any point in time during the school year."))),
+                            "- Measures the number students transferring into or out of a public school or district throughout the course of a school year. Churn represents the sum of all students who were transferring in or out, divided by all students reported as enrolled at any point in time during the school year."))),
                  tags$br(),
-                 tags$li((p(strong("Stability Rate"), "- measures how many students remain in a district or school throughout the school year."))),
+                 tags$li((p(strong("Stability Rate"), "- Measures how many students remain in a district or school throughout the school year."))),
                  tags$br(),
                  tags$li(p(strong("English Language Learners"), "- This focus group is defined as, a student whose first language is a language other than English who is unable to perform ordinary classroom work in English.")),
                  tags$br(),
@@ -875,7 +875,7 @@ tabPanel("Map",
                  tags$br(),
                  tags$li(p(strong("High Needs"), "- A student is high needs if he or she is either low income (prior to School Year 2015), economically disadvantaged (starting in School Year 2015), an enlgish language learner, or a student with disabilities.")),
                  tags$br(),
-                 tags$li(p(strong("Low Income"), "- A student of low income status if they meet any of thr following criteria; they are eligible for free or reduced price lunch, they receive Transitional Aid to Families benefits, or the student is eligible for food stamps,"))
+                 tags$li(p(strong("Low Income"), "- A student of low income status if they meet any of the following criteria; they are eligible for free or reduced price lunch, they receive Transitional Aid to Families benefits, or the student is eligible for food stamps,"))
                  ),
                  
                 

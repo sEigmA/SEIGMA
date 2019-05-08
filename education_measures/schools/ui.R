@@ -5,7 +5,7 @@
 ##            Jenna Kiridly, Steve Lauer,##
 ##            Justin Baldwin             ##
 ## Date Created:  12/10/2015             ##
-## Date Modified: 22/02/2019 VE          ##
+## Date Modified: 05/09/2019 VE          ##
 ###########################################
 
 
@@ -1061,17 +1061,17 @@ tabPanel("Map",
                  tags$br(),
                  tags$li(p(strong("High Needs"), "- A student is considered high needs if he or she is either low income (prior to School Year 2014-2015), economically disadvantaged (starting in School Year 2014-2015), an English language learner, or a student with disabilities. Data on High Needs students were not collected until 2011-2012.")),
                  tags$br(),
-                 tags$li(p(strong("Low Income"), "- A student is considered low income if he or she meets any of thr following criteria: they are eligible for free or reduced price lunch, they receive Transitional Aid to Families (TANF) benefits, or are eligible to receive food stamps.")),
+                 tags$li(p(strong("Low Income"), "- A student is considered low income if he or she meets any of the following criteria: they are eligible for free or reduced price lunch, they receive Transitional Aid to Families (TANF) benefits, or are eligible to receive food stamps.")),
                  tags$br(),
                  tags$li(p(strong("Economically Disadvantaged"), "- A student is considered economically disadvantaged if he or she participates in any of the following state programs: Supplemental Nutrition Assistance Program (SNAP), the Transitional Assistance for Families with Dependent Children (TAFDC), the Department of Children and Families' (DCF) foster care program and MassHealth (Medicaid).")),
                  tags$br(),
-                 tags$li(p(strong("Mobility Data"), "Mobility data were first reported for the 2007-2008 school year.")),
+                 tags$li(p(strong("Mobility Data"), "- Mobility data were first reported for the 2007-2008 school year.")),
                  tags$br(),
                  tags$li(p(strong("Intake Rate"),
-                           " - Measures the number of students that enroll in a school after the official start of the school year. Intake rate is calculated by dividing the number of students who enroll in a school after the official start of the school year by the total number of students that enrolled in that school.  Intake rates are collected from each school's School Information Management System.")),
+                           "- Measures the number of students that enroll in a school after the official start of the school year. Intake rate is calculated by dividing the number of students who enroll in a school after the official start of the school year by the total number of students that enrolled in that school.  Intake rates are collected from each school's School Information Management System.")),
                  tags$br(),
                  tags$li((p(strong("Churn Rate"),
-                            "-  Measures the number of students who transfer in or out of a school during the course of a single school year. Churn rate is calculated by dividing by the total number of students enrolled in that school."))),
+                            "- Measures the number of students who transfer in or out of a school during the course of a single school year. Churn rate is calculated by dividing by the total number of students enrolled in that school."))),
                  tags$br(),
                  tags$li((p(strong("Stability Rate"), "- Measures how many students remain in a district or school throughout the school year.")))
                  ),

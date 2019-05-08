@@ -152,7 +152,6 @@ summary_side_text <- conditionalPanel(
   helpText(p(strong('Please select the years for which you are interested in viewing Massachusetts school profiles and student mobility data.'))),
   tags$br(),
   tags$ul(
-    tags$br(),
     tags$li('Select a county then select one or multiple municipalities.'),
     tags$br(),
     tags$li('To look at the enrollment profile of a school by race/ethnicity, gender or grade levels, select "Race/Ethnicity", "Gender" or "Grade Level" from the "Variables" list.'),

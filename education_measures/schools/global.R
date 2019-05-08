@@ -6,6 +6,7 @@
 ##            Justin Baldwin             ##
 ## Date Created:  12/10/2015             ##
 ## Date Modified: 12/10/2015             ##
+##                05/08/2019 VE          ##
 ###########################################
 
 
@@ -239,30 +240,26 @@ summary_side_text <- conditionalPanel(
   ## Creates text
 
   helpText(p(strong('Please select the years for which you are interested in viewing Massachusetts school profiles and student mobility data.'))),
-  #tags$br(),
-  #tags$ul(
-    tags$br(),
+  tags$br(),
+  tags$ul(
     tags$li('Select a county then select one or multiple municipalities.'),
     tags$br(),
     tags$li('To look at the enrollment profile of a school by race/ethnicity, gender or grade levels, select "Race/Ethnicity", "Gender" or "Grade Level" from the "Variables" list.'),
     tags$br(),
     tags$li('To look at the student mobility of English language learning students, students with disabilities, low income students or students with high needs, select "English Language Learners", "Students with Disabilities", "Low Income", "Economically Disadvantaged" or "High Needs" from the "Variables" list.'),
     tags$br(),
-    tags$li('Sort columns in ascending or descending order by clicking on the column or variable title.'),
-    tags$br()
+    tags$li('Sort columns in ascending or descending order by clicking on the column or variable title.')
   
-
-  #)
+  )
 )
 
 ## Same concept
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please choose the school you are interested in')),
+  helpText(p(strong('Please choose the school you are interested in'))),
   tags$br(),
   tags$ul(
-    
     tags$li("First select the type of data which you are interested in viewing"),
     tags$br(),
     tags$li("To view school enrollment data such as the percentage of students by race/ethnicity, gender, grade level, or focus group, select 'Enrollment Profile' from the 'Data' drop down menu"),
@@ -306,9 +303,9 @@ info_side_text <- conditionalPanel(
 about_main_text <- p(strong("The SEIGMA Schools App"), "displays enrollment and mobility data for Massachusetts schools and includes:",
                       tags$br(),
                       tags$ul(
-                        tags$li("General information about students enrolled in Massachusetts schools including race/ ethnicity, gender, and grade level."),
+                        tags$li("General information about students enrolled in Massachusetts schools including race/ethnicity, gender, and grade level."),
                         tags$br(),
-                        tags$li("Enrollment information about english language learners, students whose first language is not english, students with disabilities, low income students, economically disadvantaged students and students classified as high needs."),
+                        tags$li("Enrollment information about English language learners, students whose first language is not English, students with disabilities, low income students, economically disadvantaged students and students classified as high needs."),
                         tags$br(),
                         tags$li("Information about student mobility, including intake (number of students entering schools), churn (number of new students entering into and transferring out of schools), and stability (the number of students that remian in a school over the course of a school year).")
                         
