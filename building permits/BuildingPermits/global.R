@@ -1,10 +1,9 @@
-#######################################
-## Title: Building Permits global.R  ##
-## Author(s): Xuelian Li, Zhenning   ##
-##            Kang                   ## 
-## Date Created:  08/05/16           ##
-## Date Modified: 02/25/19 VE        ##
-#######################################
+###########################################
+## Title: Building Permits global.R      ##
+## Author(s): Xuelian Li, Zhenning Kang  ## 
+## Date Created:  08/05/2016             ##
+## Date Modified: 05/10/2019 VE          ##
+###########################################
 
 ##First file run - Environment Setup
 ## load necessary libraries
@@ -21,7 +20,7 @@ require(tidyr)
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted pValue data
-bPermit_data1 <- read.csv(file="buildingdata.csv")[,-1]
+bPermit_data1 <- read.csv(file="buildingpermits.csv")[,-1]
 bPermit_data <- bPermit_data1 %>%
   select(1:5,27,7,8,28,10,11,29,13,14,30,16,17,31,32,20:26,33)
 colnames(bPermit_data) <- c("Region","Year","Number_of_Months_Reported","Single_Family_Buildings","Single_Family_Units","Inflation_Adjusted_1_Family_Valuation","I2_Family_Buildings","I2_Family_Units","Inflation_Adjusted_2_Family_Valuation","I3-4_Family_Buildings","I3-4_Family_Units","Inflation_Adjusted_3_4_Family_Valuation","I5_Family_Buildings","I5_Family_Units","Inflation_Adjusted_5_Family_Valuation","Total_Buildings_Reported_Imputed","Total_Units_Reported_Imputed","Inflation_Adjusted_Total_Valuation","Inflation_Adjusted_Average_Valuation","Total_Pct_Change","Change_from_previous","Pct_Change_from_previous","Percentage_of_1_Family","Percentage_of_2_Family","Percentage_of_3_and_4_Family","Percentage_of_5_Family","Permits_Per_1000_Population")
@@ -195,14 +194,13 @@ summary_side_text <- conditionalPanel(
   ## Creates text
   
   helpText(p(strong('Please select the years for which you are interested in viewing the annual total number of new housing units authorized by building permits and number of new housing units by structure size.'))),
-  tags$br(),
   tags$ul(
     tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
-    tags$li('To look at the number of residential building permits, number of new housing units authorized by building permits and number of new housing units by structure size for a single year, select single year from the drop down menu.'),
+    tags$li('To look at the number of residential building permits, number of new housing units authorized by building permits and number of new housing units by structure size for a single year, select Single Year from the drop down menu.'),
     tags$br(),
-    tags$li('To look at the data over a specific time period select multiple years from the drop down menu. Then use the sliding bar to select a range.'),
+    tags$li('To look at the data over a specific time period select Multiple Years from the drop down menu. Then use the sliding bar to select a range.'),
     tags$br(),
     tags$li('Sort the number of residential building permits, number of new housing units authorized by building permits and number of new housing units by structure size in ascending and descending order by clicking on the column or variable title.'),
     tags$br(),
@@ -216,14 +214,14 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the municipality for which you are interested in viewing the number of new housing units authorized by building permits and number of new housing units by structure size. Please do not select more than ten municipalities at a time.')),
+  helpText(p(strong('Please select the municipality for which you are interested in viewing the number of new housing units authorized by building permits and number of new housing units by structure size. Please do not select more than ten municipalities at a time.'))),
   tags$br(),
   tags$ul(
     tags$li('Once you have selected the municipalities which you are interested in viewing the annual total number of new housing units and number of new housing units by structure size, select a Variable of Interest.'),
     tags$br(),
-    tags$li("To view the annual total number of new housing units authorized by building permits, select total number of new housing units."),
+    tags$li("To view the annual total number of new housing units authorized by building permits, select Total Number of New Housing Units."),
     tags$br(),
-    tags$li("To view the number of new housing units by structure size, select number of new housing units by structure size."),
+    tags$li("To view the number of new housing units by structure size, select Number of New Housing Units by Structure Size."),
     tags$br(),
     tags$li("Select Actual Values from the Display Options to view the number of annual total number of new housing units authorized by building permits for the years of interest."),
     tags$br(),
@@ -240,9 +238,9 @@ map_side_text <- conditionalPanel(
   tags$br(),
   tags$ul(
     
-    tags$li('To view the annual total number of new housing units authorized by building permits select total number of new housing units, then click on a municipality for which you are interested in viewing the annual total number of new housing units.'),
+    tags$li('To view the annual total number of new housing units authorized by building permits select Total Number of New Housing Units, then click on a municipality for which you are interested in viewing the annual total number of new housing units.'),
     tags$br(),
-    tags$li("To view the number of new housing units by structure size select number of new housing units by structure size, then click on a municipality for which you are interested in viewing the number of new housing units by structure size."),
+    tags$li("To view the number of new housing units by structure size select Number of New Housing Units by Structure Size, then click on a municipality for which you are interested in viewing the number of new housing units by structure size."),
     tags$br(),
     tags$li("To view the annual total number of new housing units authorized by building permits change between the year you selected and the previous year select Change from the Previous Year."),
     tags$br(),
@@ -260,7 +258,7 @@ about_main_text <- p(strong("The SEIGMA Residential Building Permits App"), "dis
                      tags$br(),
                      tags$ul(
                        tags$li(p(strong("Summary"), "shows the data in table format.")),
-                       tags$li(p(strong("Plot"), "displays measuresfor each municipality over time: Choose between viewing the annual total number of new housing units authorized by building permits or the number of new housing units, grouped by structure size.")),
+                       tags$li(p(strong("Plot"), "displays measures for each municipality over time. Choose between viewing the annual total number of new housing units authorized by building permits or the number of new housing units, grouped by structure size.")),
                        tags$li(p(strong("Map"), "displays the geographic pattern in total number of new housing units authorized by building permits, total number of new housing units per 1000 inhabitants, and number of new housing units by structure size for each municipality for the years 2000-2017.")),
                        tags$li(p(strong("More Info"), "describes the annual total number of new housing units authorized by building permits, total number of new housing units per 1000 inhabitants, and number of new housing units by structure size, including formulas and calculations."))
                      ))

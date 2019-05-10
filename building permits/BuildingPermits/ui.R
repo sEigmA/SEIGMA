@@ -1,10 +1,9 @@
-#######################################
-## Title: Building Permits ui.R      ##
-## Author(s): Xuelian Li, Zhenning   ##
-##            Kang                   ## 
-## Date Created:  08/10/16           ##
-## Date Modified: 02/25/19 VE        ##
-#######################################
+###########################################
+## Title: Building Permits ui.R          ##
+## Author(s): Xuelian Li, Zhenning Kang  ##
+## Date Created:  08/10/2016             ##
+## Date Modified: 05/10/2019 VE          ##
+###########################################
 
 shinyUI(fluidPage(
   ## HTML to create generate map button
@@ -120,7 +119,7 @@ shinyUI(fluidPage(
                  
                  ## author line
                  
-                 helpText("Created by Xuelian Li"),
+                 helpText("Created by Xuelian Li and Zhenning Kang"),
                  helpText("Updated by Valerie Evans"),
                  
                  ## email feedback link
@@ -133,7 +132,7 @@ shinyUI(fluidPage(
                  
                  ## GitHub link
                  helpText(a("View the data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/Residential%20building%20permits", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/building%20permits/BuildingPermits", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -236,20 +235,6 @@ shinyUI(fluidPage(
                      )
                    )),
                  
-                 ## total number of new housing units authorized by building permits Change since 2000 Legend
-#                  conditionalPanel(
-#                    condition="input.map_radio == 'Total_Permits' && input.map_display_radio == 'Total_Pct_Change' && input.action != 0",
-#                    absolutePanel(
-#                      right = 5, top = 130, draggable=FALSE, style = "", 
-#                      class = "floater",
-#                      strong("Change in"),
-#                      br(),
-#                      strong("total number of new housing units authorized by building permits"),
-#                      br(),
-#                      strong("Since 2000"),
-#                      plotOutput("legend3")
-#                    )), 
-                 
                  ## total number of new housing units authorized by building permits Change from the Previous Year Legend
                  conditionalPanel(
                    condition="input.map_radio == 'Total_Permits' && input.map_display_radio == 'Pct_Change_from_previous' && input.action != 0",
@@ -349,26 +334,21 @@ shinyUI(fluidPage(
         tabPanel("More Info", 
                  p(strong("Variable Summary:")),
                  tags$br(),
-                
-                   
-                 strong("Annual residential building permits"),
-                 "- Data are obtained from the U.S. Census Bureau's Survey of Construction. Building permits data are collected from individual permit offices, most of which are municipalities. The statistics are based on reports submitted by local building permit officials in response to a mail survey and imputed data.",
-                 
+                 strong("Annual residential building permits"), 
+                  "- Data are obtained from the U.S. Census Bureau's Survey of Construction. Building permits data are collected from individual permit offices, most of which are municipalities. The statistics are based on reports submitted by local building permit officials in response to a mail survey and imputed data.",
                  tags$br(),
                  tags$br(),
-                 p(strong('Class - Single family unit'), 
+                 p(strong('Class - Single family unit'),  
                    "- The building is usually occupied by just one household or family, and consists of just one dwelling unit or suite."),
-                 
-                 tags$br(),
-                   p(strong('Class - Multi-family units'),
-                             "- A classification of housing where multiple separate housing units for residents are contained within one building or several buildings within one complex. "),
+                 tags$br(), 
+                 p(strong('Class - Multi-family units'), 
+                   "- A classification of housing where multiple separate housing units for residents are contained within one building or several buildings within one complex. "),
                  tags$br(),
                  p(strong('2017 Dollars'), 
-                          "- Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, we convert them from current dollar values to constant dollar values. For this app we used the dollar values from 2017 to be our constant."),
+                   "- Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, we convert them from current dollar values to constant dollar values. For this app we used the dollar values from 2017 to be our constant."),
                  tags$br(),
-                 
                  p(strong("Total number of new housing units per 1000 inhabitants"),
-                 "- Calculated by dividing the annual total number of new housing units for a specific year by the population for that year. For the years 2000-2009, we used the estimated population size from the 2000 census. For years 2010-2017, the estimated population size from the 2010 census was used."),
+                   "- Calculated by dividing the annual total number of new housing units for a specific year by the population for that year. For the years 2000-2009, we used the estimated population size from the 2000 census. For years 2010-2017, the estimated population size from the 2010 census was used."),
                  
                  ## email feedback link
                  h3(a("Please fill out our survey to help improve the site!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank")), value="info"),
