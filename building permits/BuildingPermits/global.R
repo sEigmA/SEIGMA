@@ -287,7 +287,7 @@ TotUni_plot_options <- googleLineChart("TotUni_plot1", width="100%", height="475
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2000, 2017, 1),
+    ticks = seq(2000, 2017, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -346,7 +346,7 @@ PreUniCha_plot_options<- googleLineChart("PreUniCha_plot", width="100%", height=
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2001, 2017, 1),
+    ticks = seq(2001, 2017, 2),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
