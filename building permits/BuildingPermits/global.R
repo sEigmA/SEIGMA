@@ -234,7 +234,7 @@ plot_side_text <- conditionalPanel(
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please select a yearly range and click on "Generate Map" to get started.'))),
+  helpText(p(strong('Please select a year and click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
     

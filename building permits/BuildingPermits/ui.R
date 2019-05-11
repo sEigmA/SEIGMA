@@ -6,6 +6,8 @@
 ###########################################
 
 shinyUI(fluidPage(
+  ## embed the google analytics script in the app
+  tags$head(includeScript("google-analytics.js")),
   ## HTML to create generate map button
   gen_map_button,
   ## this starts the googleCharts engine
@@ -74,7 +76,7 @@ shinyUI(fluidPage(
                                   selected="Total_Units_Reported_Imputed"),
                      ## Select input = List
                      selectInput("plot_muni", "Select Municipality", 
-                                 choices = MA_municipals, selected="Everett",multiple=TRUE),
+                                 choices = MA_municipals, selected="Springfield",multiple=TRUE),
                       conditionalPanel(
                         condition="input.plot_display_radio == 'Pct_Change_from_previous'",
                      ## In plot, show boxes that will compare to MA average
