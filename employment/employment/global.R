@@ -5,7 +5,7 @@
 ##            Jenna Kiridly, Steve Lauer ##
 ##            Zhenning Kang              ##
 ## Date Created:  02/04/2015             ##
-## Date Modified: 05/03/2019 VE          ##
+## Date Modified: 05/10/2019 VE          ##
 ###########################################
 
 
@@ -26,7 +26,7 @@ require(tidyr)
 ## load map data
 #MA_map_county <- fromJSON("County_2010Census_DP1.geojson")
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
-emp_data <- read.csv(file="new_empdata.csv")[,-1]
+emp_data <- read.csv(file="employment.csv")[,-1]
 
 
 ## Find order of municipals in geojson files
@@ -273,7 +273,6 @@ summary_side_text <- conditionalPanel(
   helpText(p(strong('Please select the years for which you are interested in viewing average monthly employment, weekly wage, and number of business establishments.'))),
   tags$br(),
   tags$ul(
-    tags$br(),
     tags$li('Select one or multiple municipalities.'),
     tags$br(),
     tags$li('To look at average monthly employment, weekly wage, and number of business establishments for a single year select single year from the drop down menu.'),
@@ -289,7 +288,7 @@ summary_side_text <- conditionalPanel(
 plot_side_text <- conditionalPanel(
   condition="input.tabs == 'plot'",
   h4("How to use this app:"),
-  p(strong('Please select the municipality for which you are interested in viewing average monthly employment, weekly wage, and number of business establishments. Please do not select more than ten municipalities at a time.')),
+  helpText(p(strong('Please select the municipality for which you are interested in viewing average monthly employment, weekly wage, and number of business establishments. Please do not select more than ten municipalities at a time.'))),
   tags$br(),
   tags$ul(
   tags$li("Once you have selected the municipalities which you are interested in viewing, select a Variable of Interest."),

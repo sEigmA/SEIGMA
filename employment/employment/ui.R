@@ -5,7 +5,7 @@
 ##            Jenna Kiridly              ## 
 ##            Zhenning Kang              ##
 ## Date Created:  02/04/2015             ##
-## Date Modified: 05/03/2019 VE          ##
+## Date Modified: 05/10/2019 VE          ##
 ###########################################
 
 
@@ -125,7 +125,7 @@ shinyUI(fluidPage(
                  
                  ## GitHub link
                  helpText(a("View the data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/employment", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/employment/employment", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -338,14 +338,14 @@ shinyUI(fluidPage(
                  p(strong("Variable Summary:")),
                  tags$br(),
                  tags$ul(
-                  tags$li(p(strong("Employment"),
+                 tags$li(p(strong("Employment"),
                            " - More than 8,000 employers participated in an annual survey administered by the Executive Office of Labor and Workforce Development, which assessed employment by industry in Massachusetts. All civilians aged 16+ who were working during this survey period were counted. This includes individuals who worked as paid employees, within their own business, within a farm or family business, and those who had a job but were absent due to illness, bad weather, vacation, or personal reasons. Individuals were excluded if they solely worked around the house or completed unpaid volunteer work for religious, charitable, or similar organizations.")),
-                  tags$br(),
+                 tags$br(),
                  tags$li((p(strong("Average Monthly Employment"),
                             "- To estimate monthly employment, all employees who were paid at any point in the past year are counted (this includes full-time, part-time, seasonal, salaried, and hourly employees). The total number of employees is then divided by the number of pay periods per calendar year at each business establishment."))),
                  tags$br(),
                  tags$li((p(strong("Average Weekly Wage"), 
-                            "- Average weekly wage is calculated by dividing quarterly total wages by the average employment level over three months. This number is then divided by 13, which represents the 13 weeks within the payment quarter. Wage data can be affected by the ratio of full time to part time employees, the number of higher paid employees within an establishment, and by the number of pay periods within the quarter."))),
+                            "- Average weekly wage is calculated by dividing quarterly total wages by the average employment level over three months. This number is then divided by 13, which represents the 13 weeks within the payment quarter. Wage data can be affected by the ratio of full-time to part-time employees, the number of higher paid employees within an establishment, and by the number of pay periods within the quarter."))),
                  tags$br(),
                  tags$li(p(strong("2017 Dollars"), 
                            "- Due to inflation, the purchasing power of the dollar changes over time. In order to compare monetary values from one year to another, they must be converted from current dollar values to constant dollar values. For this app, we used the dollar values from 2017 to be our constant.")),
