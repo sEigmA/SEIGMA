@@ -2,7 +2,7 @@
 ## Title: Property Value global.R    ##
 ## Author(s): Xuelian Li             ## 
 ## Date Created:  07/11/2016         ##
-## Date Modified: 05/08/2019 VE      ##
+## Date Modified: 05/10/2019 VE      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -197,7 +197,7 @@ plot_side_text <- conditionalPanel(
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please select a yearly range and click on "Generate Map" to get started.'))),
+  helpText(p(strong('Please select a year and click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
     
