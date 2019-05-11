@@ -5,13 +5,13 @@
 ##            Jenna Kiridly, Steve Lauer,##
 ##            Justin Baldwin             ##
 ## Date Created:  12/10/2015             ##
-## Date Modified: 05/09/2019 VE          ##
+## Date Modified: 05/10/2019 VE          ##
 ###########################################
 
 
 shinyUI(fluidPage(
   ## embed the google analytics script in the app
-#   tags$head(includeScript("google-analytics.js")),
+  tags$head(includeScript("google-analytics.js")),
 #   ## embed the googleCharts Init script to use version 43 (frozen version) to fixed the bug (2 charts in one page)
 #   tags$head(tags$script(src="https://www.google.com/jsapi")),
 #   tags$head(tags$script(src="https://www.gstatic.com/charts/loader.js")),
