@@ -5,6 +5,6 @@ account: seigma
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 116536
-bundleId: 2069229
+bundleId: 2076895
 url: https://seigma.shinyapps.io/PropertyValue/
-when: 1557314581.03149
+when: 1557571381.91496
