@@ -4,7 +4,7 @@
 ##            Ramakrishnan, Jenna    ##
 ##            Kiridly, Steve Lauer   ## 
 ## Date Created:  11/05/2014         ##
-## Date Modified: 02/14/2019 VE      ##
+## Date Modified: 05/10/2019 VE      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -28,7 +28,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted Income status data
 ## -1 eliminates first column [rows,columns]
-inc_data <- read.csv(file="incomedata.csv")[,-1]
+inc_data <- read.csv(file="income.csv")[,-1]
 
 ## Find order of counties in geojson files
 ## Each county is a separate feature
@@ -163,7 +163,7 @@ summary_side_text <- conditionalPanel(
     tags$br(),
     tags$li('Please note that all statistics are five-year estimates.'),
     tags$br(),
-    tags$li("For more information about how five-year estimates are calculated, click on the 'More Info' tab.")
+    tags$li("For more information about how five-year estimates are calculated, click on the More Info tab.")
     
   )
 )
