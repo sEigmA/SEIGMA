@@ -26,7 +26,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load formatted marital status data
 ## -1 eliminates first column [rows,columns]
-Dem_data <- read.csv(file="demodata.csv")
+Dem_data <- read.csv(file="demographics.csv")
 colnames(Dem_data)[12:37] <- c("Age_under_5_Pct","Margin_Error_under_5_Pct","Age_5-9_Pct", "Margin_Error_5-9_Pct",
                                "Age_10-14_Pct","Margin_Error_10-14_Pct","Age_15-19_Pct", "Margin_Error_15-19_Pct",
                                "Age_20-24_Pct","Margin_Error_20-24_Pct","Age_25-34_Pct", "Margin_Error_25-34_Pct",

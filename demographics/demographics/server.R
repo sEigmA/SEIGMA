@@ -5,6 +5,7 @@
 ##            Kiridly, Emily Ramos   ##
 ## Date Created:  02/28/2014         ##
 ## Date Modified: 03/01/2015  ER     ##
+##                05/10/2019  VE     ##
 #######################################
 
 shinyServer(function(input, output, session) {
@@ -103,12 +104,12 @@ shinyServer(function(input, output, session) {
     return(munis_df)
 })
     output$Plot_age<-reactive({list(
-      data = googleDataTable(munis_df()), options = list(title=paste(input$plot_radio, "as a Percentage of the Population by Region ", input$plot_muni,
+      data = googleDataTable(munis_df()), options = list(title=paste(input$plot_radio, "as a Percentage of the Population for ", input$plot_muni,
                                                                    "over selected five years ", input$plot_year)))
     
   })
 output$Plot_gender<-reactive({list(
-  data = googleDataTable(munis_df()), options = list(title=paste(input$plot_radio, "as a Percentage of the Population by Region ", input$plot_muni,
+  data = googleDataTable(munis_df()), options = list(title=paste(input$plot_radio, "as a Percentage of the Population for ", input$plot_muni,
                                                                  "over selected five years ", input$plot_year)))
   
 })
