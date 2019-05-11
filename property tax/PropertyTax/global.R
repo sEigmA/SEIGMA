@@ -4,7 +4,7 @@
 ##            Kiridly                ## 
 ## Date Created:  01/04/2016         ##
 ## Date Modified: 01/06/2016 XL      ##
-##                05/08/2019 VE      ##
+##                05/10/2019 VE      ##
 #######################################
 
 ##First file run - Environment Setup
@@ -200,7 +200,7 @@ plot_side_text <- conditionalPanel(
 map_side_text <- conditionalPanel(
   condition="input.tabs == 'map'",
   h4("How to use this app:"),
-  helpText(p(strong('Please select a yearly range and click on "Generate Map" to get started.'))),
+  helpText(p(strong('Please select a year and click on "Generate Map" to get started.'))),
   tags$br(),
   tags$ul(
     
