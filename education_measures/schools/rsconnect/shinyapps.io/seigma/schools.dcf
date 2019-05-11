@@ -5,6 +5,6 @@ account: seigma
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 90525
-bundleId: 2069033
+bundleId: 2076850
 url: https://seigma.shinyapps.io/schools/
-when: 1557307259.43122
+when: 1557568324.34131

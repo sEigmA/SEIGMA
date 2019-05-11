@@ -2,10 +2,12 @@
 ## Title: Property Value ui.R        ##
 ## Author(s): Xuelian Li             ##
 ## Date Created:  07/22/2016         ##
-## Date Modified: 05/08/2019 VE      ##
+## Date Modified: 05/10/2019 VE      ##
 #######################################
 
 shinyUI(fluidPage(
+  ## embed the google analytics script in the app
+  tags$head(includeScript("google-analytics.js")),
   ## HTML to create generate map button
   gen_map_button,
   ## this starts the googleCharts engine
@@ -125,7 +127,7 @@ shinyUI(fluidPage(
                  
                  ## GitHub link
                  helpText(a("View the data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/Property%20values/PropertyValue", target="_blank")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/property%20value/PropertyValue", target="_blank")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),
