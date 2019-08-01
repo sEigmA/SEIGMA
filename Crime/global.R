@@ -23,8 +23,9 @@ require(RJSONIO)
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 
 ## Load crime data
-crime_data <- read.csv("crime.csv")
-names(crime_data)[1]<-"Municipal" # for some reason the first column name reads in as ""ï..Municipal"
+crime_dat <- read.csv("crime_data.csv")
+crime_data <- crime_dat
+#names(crime_data)[1]<-"Municipal" # for some reason the first column name reads in as ""ï..Municipal"
 #View(crime_data)
 
 ## Find order of municipals in geojson files
@@ -38,7 +39,7 @@ for(i in 1:length(MA_map_muni$features)){
   MA_municipals_map <- c(MA_municipals_map, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
 
-idx_leftovers <- which(!MA_municipals_map %in% crime_data$Region)
+idx_leftovers <- which(!MA_municipals_map %in% crime_data$Municipal)
 leftover_munis <- MA_municipals_map[idx_leftovers]
 for(i in 1:length(leftover_munis)){
   MA_map_muni$features[[idx_leftovers[i]]]$properties$NAMELSAD10 <- 
@@ -49,7 +50,7 @@ MA_municipals <- c()
 for(i in 1:length(MA_map_muni$features)){
   MA_municipals <- c(MA_municipals, MA_map_muni$features[[i]]$properties$NAMELSAD10)
 }
-idx_leftovers2 <- which(!MA_municipals %in% crime_data$Region)
+idx_leftovers2 <- which(!MA_municipals %in% crime_data$Municipal)
 leftover_munis_map <- MA_municipals[idx_leftovers2]
 MA_municipals <- sort(MA_municipals[-idx_leftovers2])
 
@@ -157,14 +158,14 @@ summary_side_text <- conditionalPanel(
 )
 
 ## Same concept
-plot_side_text <- conditionalPanel(
-  condition="input.tabs == 'plot'",
-  h4("How to use this app:"),
-  p(strong('Please select the year and municipality for which you are interested in viewing crime rates.')),
-  tags$br(),
-  tags$ul(
-    tags$li("For a given year, you can compare a municipality's estimate of crime rate to the state and national estimate.")
-  ))
+#plot_side_text <- conditionalPanel(
+  #condition="input.tabs == 'plot'",
+  #h4("How to use this app:"),
+  #p(strong('Please select the year and municipality for which you are interested in viewing crime rates.')),
+  #tags$br(),
+  #tags$ul(
+    #tags$li("For a given year, you can compare a municipality's estimate of crime rate to the state and national estimate.")
+  #))
 
 
 map_side_text <- conditionalPanel(
@@ -193,68 +194,19 @@ about_main_text <- p(strong("The SEIGMA Crime App"), "displays the yearly estima
                        tags$li(p(strong("More Info"), "describes crime data and crime rates."))
                      ))
 
-plot_main_text <- p(strong("Variable Summary:"),
-                    tags$br(),
-                    strong("Placeholder-Var Summary"),
-                    " Placeholder Text", 
-                    tags$br(),
-                    strong("Place Holder"), 
-                    " - Place-holder Text :",
-                    tags$br(),
-                    strong("Crime Placeholder", align="center"))
+#plot_main_text <- p(strong("Variable Summary:"),
+                    #tags$br(),
+                    #strong("Placeholder-Var Summary"),
+                    #" Placeholder Text", 
+                    #tags$br(),
+                    #strong("Place Holder"), 
+                    #" - Place-holder Text :",
+                    #tags$br(),
+                    #strong("Crime Placeholder", align="center"))
 
-font_size <- 14
+#font_size <- 14
 
-plot_options <- googleColumnChart("plot", width="100%", height="475px", 
-                                  options = list(
-                                    ## set fonts
-                                    fontName = "Source Sans Pro",
-                                    fontSize = font_size,
-                                    title = "",
-                                    ## set axis titles, ticks, fonts, and ranges
-                                    hAxis = list(
-                                      title = "",
-                                      textStyle = list(
-                                        fontSize = font_size),
-                                      titleTextStyle = list(
-                                        fontSize = font_size+2,
-                                        bold = TRUE,
-                                        italic = FALSE)
-                                    ),
-                                    vAxis = list(
-                                      title = "% of Population",
-                                      viewWindow = ylim,
-                                      textStyle = list(
-                                        fontSize = font_size),
-                                      titleTextStyle = list(
-                                        fontSize = font_size+2,
-                                        bold = TRUE,
-                                        italic = FALSE)
-                                    ),
-                                    
-                                    ## set legend fonts
-                                    legend = list(
-                                      textStyle = list(
-                                        fontSize=font_size),
-                                      position = "right"),
-                                    
-                                    ## set chart area padding
-                                    chartArea = list(
-                                      top = 50, left = 100,
-                                      height = "75%", width = "65%"
-                                    ),
-                                    
-                                    ## set colors
-                                    colors = cbbPalette[c(2:8)],
-                                    
-                                    ## set point size
-                                    pointSize = 3,
-                                    
-                                    ## set tooltip font size
-                                    ## Hover text font stuff
-                                    tooltip = list(
-                                      textStyle = list(
-                                        fontSize = font_size
-                                      )
-                                    )
-                                  ))
+#plot_options <- googleColumnChart("plot", width="100%", height="475px", 
+                                  
+                                     # title = "Crime Rate",
+                                      

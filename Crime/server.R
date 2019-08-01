@@ -46,7 +46,7 @@ shinyServer(function(input, output, session) {
     crime_df <- crime_df %>%
       filter(Year == input$year) %>%
       filter(Region %in% munis) %>%
-      select(4:length(colnames(crime_df)))
+      select(2:length(colnames(crime_df)))
     
 
     return(crime_df)
@@ -64,7 +64,7 @@ shinyServer(function(input, output, session) {
     #county <- as.character(crime_df$County[match(input$plot_muni, crime_df$Municipal)])
     
     ## make counties a vector based on input variable
-    munis <- c(input$plot_muni, county, "MA", "United States")
+    munis <- c(input$plot_muni, "MA", "United States")
     
     muni_index <- c()
         for(i in 1:length(munis)){
@@ -77,13 +77,14 @@ shinyServer(function(input, output, session) {
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_munis_df <- melt(munis_df, id.vars = "Region", 
-                            measure.vars = c("Violent.crime.Rate", "Rape.Rate", "Robbery.Rate", 
-                                             "Aggravated.assault.Rate", "Property.crime.Rate", "Burglary.Rate",
-                                             "Larceny..theft.Rate", "Motor.vehicle.theft.Rate", "Arson.Rate"),
+                            measure.vars = c("Violent_crime_Rate", "Rape_Rate", "Robbery_Rate", 
+                                             "Aggravated_assault_Rate", "Property_crime_Rate", "Burglary_Rate",
+                                             "Larceny_theft_Rate", "Motor_vehicle_theft_Rate", "Arson_Rate"),
                             variable.name = "Crime_Rate",
                             value.name = "Rate")
   
-    levels(melted_munis_df$Region) <- munis
+    
+    levels(melted_munis_df$Region)[1:3] <- munis
     
     plot_df <- melted_munis_df %>%
       arrange(Region)
@@ -91,10 +92,10 @@ shinyServer(function(input, output, session) {
     g <- dcast(plot_df, Crime_Rate ~ Region, 
                value.var = "Rate")
     
-    g$Crime_Rate <- c("Violent_crime_Rate", 
-                      "Rape_Rate", "Robbery_Rate", "Aggravated_assault_Rate",
-                      "Property_crime_Rate", "Burglary_Rate",
-                      "Larceny_theft_Rate", "Motor_vehicle_theft_Rate", "Arson_Rate")
+    g$Crime_Rate <- c("Violent crime Rate", 
+                      "Rape Rate", "Robbery Rate", "Aggravated assault Rate",
+                      "Property crime Rate", "Burglary Rate",
+                      "Larceny-theft Rate", "Motor vehicle theft Rate", "Arson Rate")
     
     ## this outputs the google data to be used in the UI to create the dataframe
     list(

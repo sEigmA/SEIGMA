@@ -13,7 +13,7 @@ shinyUI(fluidPage(
   ## HTML to create generate map button
   gen_map_button,
   ## this starts the googleCharts engine
-  #gvisChartsInit(),
+  googleChartsInit(),
   
   ## blank title, but put in a special title for window tab
   titlePanel("", windowTitle = "SEIGMA: Crime Shiny App"),
@@ -21,10 +21,10 @@ shinyUI(fluidPage(
   ## Create sidebar
   sidebarLayout(
     sidebarPanel(width=4,
-      ## Conditional panel means if the condition is met show all text below otherwise Don't!
+      
       summary_side_text,
       
-      plot_side_text,
+      #plot_side_text,
       
       map_side_text,
       
@@ -38,6 +38,7 @@ shinyUI(fluidPage(
                                  "2012" = "2012", "2013" = "2013", 
                                  "2014" = "2014", "2015" = "2015", 
                                  "2016" = "2016", "2017" = "2017")),
+      
       selectInput("sum_muni", "Select Municipality", 
                   choices = MA_municipals,
                   ## Multiple allows for multi-county selection
@@ -49,16 +50,16 @@ shinyUI(fluidPage(
       
           
       ## in plot, allow for year, municipal selection
-      conditionalPanel(
-        condition="input.tabs == 'plot'",
-        selectInput("plot_year", "Select Year",
-                    choices = list("2010" = "2010", "2011" = "2011",
-                                   "2012" = "2012", "2013" = "2013", 
-                                   "2014" = "2014", "2015" = "2015", 
-                                   "2016" = "2016", "2017" = "2017")),
+      #conditionalPanel(
+        #condition="input.tabs == 'plot'",
+        #selectInput("plot_year", "Select Year",
+                    #choices = list("2010" = "2010", "2011" = "2011",
+                                   #"2012" = "2012", "2013" = "2013", 
+                                   #"2014" = "2014", "2015" = "2015", 
+                                   #"2016" = "2016", "2017" = "2017")),
         ## Select input = List
-        selectInput("plot_muni", "Select Municipality", 
-                    choices = MA_municipals)),
+        #selectInput("plot_muni", "Select Municipality", 
+                    #choices = MA_municipals)),
       
       ## in map, allow for year, municipal selection
       conditionalPanel(
@@ -69,16 +70,16 @@ shinyUI(fluidPage(
                                    "2014" = "2014", "2015" = "2015", 
                                    "2016" = "2016", "2017" = "2017")),
         ## in map, allow for variable selection
-        selectInput("var", "Select Crime(s) of Interest",
-                    choices = list("Violent Crime" = "Violent crime Rate", 
-                                   "Rape" = "Rape Rate",
-                                   "Robbery" = "Robbery Rate",
-                                   "Aggravated Assault" = "Aggravated assault Rate",
-                                   "Property Crime" = "Property crime Rate",
-                                   "Burglary" = "Burglary Rate",
-                                   "Larceny-theft" = "Larceny-theft Rate",
-                                   "Motor vehicle Theft" = "Motor vehicle theft Rate",
-                                   "Arson" = "Arson Rate"))
+        selectInput("var", "Select Crime Rate(s) of Interest",
+                    choices = list("Violent Crime" = "Violent_crime_Rate", 
+                                   "Rape" = "Rape_Rate",
+                                   "Robbery" = "Robbery_Rate",
+                                   "Aggravated Assault" = "Aggravated_assault_Rate",
+                                   "Property Crime" = "Property_crime_Rate",
+                                   "Burglary" = "Burglary_Rate",
+                                   "Larceny-theft" = "Larceny_theft_Rate",
+                                   "Motor vehicle Theft" = "Motor_vehicle_theft_Rate",
+                                   "Arson" = "Arson_Rate"))
         ),
       
       tags$hr(),
@@ -90,12 +91,12 @@ shinyUI(fluidPage(
       helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
       
       ## data source citation
-      helpText(a("Data Source: FBI - Estimated Crime Data", href="https://crime-data-explorer.fr.cloud.gov/",
+      helpText(a("Data Source: FBI - Estimated Crime Data", href="https://crime-data-explorer.fr.cloud.gov/downloads-and-docs",
                  target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dataSource', 1)")),
       
       ## GitHub link
       helpText(a("View our data and code on GitHub", 
-                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/crime", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
+                 href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/Crime", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
       
       helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -129,13 +130,13 @@ bootstrapPage(mainPanel(
                  tags$style(type="text/css", '#summary tfoot {display:none;}')),
         
         ## plot tab with google chart options
-        tabPanel("Plot",
+        #tabPanel("Plot",
                  ## make chart title here (otherwise not centered)
-                 h4("Crime by Region", align="center"),
-                 plot_options,
+                 #h4("Crime by Region", align="center"),
+                 #plot_options,
                  ## add text about the variables
 #                  plot_main_text,
-                 value="plot"),
+                 #value="plot"),
 # conditionalPanel(
 #   condition="input.tabs == 'plot' && input.action == 0",
 #   ## within the map area, you can create an action button.  similar to initializing the legend but just putting a button instead.
@@ -175,7 +176,7 @@ bootstrapPage(mainPanel(
                  ## Legend                 
                  #Violent crime
                  conditionalPanel(
-                   condition="input.var == 'Violent.crime.Rate' && input.action != 0",
+                   condition="input.var == 'Violent_crime_Rate' && input.action != 0",
                    absolutePanel(
                      right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
@@ -194,7 +195,7 @@ bootstrapPage(mainPanel(
                    )),
                  #Rape
                  conditionalPanel(
-                   condition="input.var == 'Rape.Rate' && input.action != 0",
+                   condition="input.var == 'Rape_Rate' && input.action != 0",
                    absolutePanel(
                      right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
@@ -213,7 +214,7 @@ bootstrapPage(mainPanel(
                    )),
                  #Robbery
                  conditionalPanel(
-                   condition="input.var == 'Robbery.Rate' && input.action != 0",
+                   condition="input.var == 'Robbery_Rate' && input.action != 0",
                    absolutePanel(
                      right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
@@ -232,7 +233,7 @@ bootstrapPage(mainPanel(
                    )),
                  #Aggravated Assault Rate
                  conditionalPanel(
-                   condition="input.var == 'Aggravated.assault.Rate' && input.action != 0",
+                   condition="input.var == 'Aggravated_assault_Rate' && input.action != 0",
                    absolutePanel(
                      right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
@@ -251,7 +252,7 @@ bootstrapPage(mainPanel(
                    )),
                  #Property crime Rate
                  conditionalPanel(
-                   condition="input.var == 'Property.crime.Rate' && input.action != 0",
+                   condition="input.var == 'Property_crime_Rate' && input.action != 0",
                    absolutePanel(
                      right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
@@ -270,7 +271,7 @@ bootstrapPage(mainPanel(
                    )),
                  #Burglary Rate
                  conditionalPanel(
-                   condition="input.var == 'Burglary.Rate' && input.action != 0",
+                   condition="input.var == 'Burglary_Rate' && input.action != 0",
                    absolutePanel(
                      right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
@@ -289,7 +290,7 @@ bootstrapPage(mainPanel(
                    )),
                  #Larceny-theft Rate
                  conditionalPanel(
-                   condition="input.var == 'Larceny.theft.Rate' && input.action != 0",
+                   condition="input.var == 'Larceny_theft_Rate' && input.action != 0",
                    absolutePanel(
                      right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
@@ -308,7 +309,7 @@ bootstrapPage(mainPanel(
                    )),
                  #Motor Vehicle theft Rate
                  conditionalPanel(
-                   condition="input.var == 'Motor.vehicle.theft.Rate' && input.action != 0",
+                   condition="input.var == 'Motor_vehicle_theft_Rate' && input.action != 0",
                    absolutePanel(
                      right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
@@ -327,7 +328,7 @@ bootstrapPage(mainPanel(
                    )),
                  #Arson
                  conditionalPanel(
-                   condition="input.var == 'Arson.Rate' && input.action != 0",
+                   condition="input.var == 'Arson_Rate' && input.action != 0",
                    absolutePanel(
                      right = 10, top = 100, draggable=FALSE, style = "", 
                      class = "floater",
@@ -358,19 +359,35 @@ bootstrapPage(mainPanel(
                   tags$li(p(strong("Crime Rates"),
                  " - The number of a specific crime per 100,000 people.")),
                  tags$br(),
-                 tags$li(p("If a blank is presented in the arson column for city level data for MA, it indicates that the FBI did not receive 12 complete months of arson data for that agency.")),
+                 tags$li(p(strong("Arson")," - If data is not available for Arson for city level data for MA, it may indicate that the FBI did not receive 12 complete months of arson data from that agency. No arson data is included for MA and the United States as there is not sufficient data available to estimate totals.")),
                  tags$br(),
-                 tags$li(p("The violent crime figures include the offenses of murder, rape (revised definition), robbery, and aggravated assault.")),
+                 tags$li(p(strong("Violent Crimes"),"- The values include the offenses of murder, rape (revised definition), robbery, and aggravated assault.")),
                  tags$br(),
-                 tags$li(p("No arson data is included for MA and the United States as there is not sufficient data available to estimate totals.")),
+                 tags$li(p("Because of changes in the state/local agency's reporting practices, values for the following regions are not comparable to previous years:")),
+                 tags$ul(
+                   tags$li(p(strong("2010:"),
+                             " Billerica, Hanson, North Brookfield, Plymouth, Shrewsbury, and Yarmouth")),
+                   tags$li(p(strong("2012:"),
+                             " Framingham, Milton, and Salem")))),
                  tags$br(),
-                 tags$li(p("Because of changes in the state/local agency's reporting practices, values from 2012 are not comparable to previous years' data.")),
-                 tags$br(),
-                 tags$li(p("The 2013 figures for the offense of rape were reported using the revised Uniform Crime Reporting (UCR) definition of rape for all MAtowns/cities except for Avon, Becket, Boston, Dighton, Egremont, Essex, Granville, Holbrook, Lawrence and Westhampton, which still used the legacy definition. See the Data Declaration on the FBI's website for further explanation.")),
-                 tags$br(),
-                 tags$li(p("The 2014 figures for the offense of rape were reported using the revised Uniform Crime Reporting (UCR) definition of rape for all MAtowns/cities except for Avon, Becket, Boston, Dighton, Egremont, Essex, and Lawrence, which still used the legacy definition. See the Data Declaration on the FBI's website for further explanation.")),
-                 tags$br(),
-                 tags$li(p("The 2015 through 2017 values for the offense of rape were reported using the revised Uniform Crime Reporting (UCR) definition of rape for all MAtowns/cities. See the Data Declaration on the FBI's website for further explanation."))),
+                 tags$ul(
+                   tags$li(p(" The FBI deemed that the data was overreported from the following agency's for the years specified below, so the data is not included.")),
+                   tags$ul(
+                     tags$li(p(strong("2014:"),
+                               "Cohasset")),
+                     tags$li(p(strong("2016:"),
+                               "Brookline,  Gardner, and  Yarmouth")))),
+      
+                tags$br(), 
+                tags$ul(
+                tags$li(p(strong("Rape")),
+                        tags$ul(
+                        tags$li(p("The 2013 figures for the offense of rape were reported using the revised Uniform Crime Reporting (UCR) definition of rape for all MA towns/cities except for Avon, Becket, Boston, Dighton, Egremont, Essex, Granville, Holbrook, Lawrence and Westhampton, which still used the legacy definition. See the Data Declaration on the FBI's website for further explanation.")),
+                        tags$br(),
+                        tags$li(p("The 2014 figures for the offense of rape were reported using the revised Uniform Crime Reporting (UCR) definition of rape for all MA towns/cities except for Avon, Becket, Boston, Dighton, Egremont, Essex, and Lawrence, which still used the legacy definition. See the Data Declaration on the FBI's website for further explanation.")),
+                        tags$br(),
+                        tags$li(p("The 2015 through 2017 values for the offense of rape were reported using the revised Uniform Crime Reporting (UCR) definition of rape for all MAtowns/cities. See the Data Declaration on the FBI's website for further explanation.")))
+                        )),
               
                  
                 ## email feedback link
