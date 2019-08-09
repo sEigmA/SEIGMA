@@ -72,6 +72,7 @@ shinyUI(fluidPage(
         ## in map, allow for variable selection
         selectInput("var", "Select Crime Rate(s) of Interest",
                     choices = list("Violent Crime" = "Violent_crime_Rate", 
+                                   "Murder and Nonnegligent Manslaughter Rate" = "Murder_and_nonnegligent_manslaughter_Rate",
                                    "Rape" = "Rape_Rate",
                                    "Robbery" = "Robbery_Rate",
                                    "Aggravated Assault" = "Aggravated_assault_Rate",
@@ -79,7 +80,7 @@ shinyUI(fluidPage(
                                    "Burglary" = "Burglary_Rate",
                                    "Larceny-theft" = "Larceny_theft_Rate",
                                    "Motor vehicle Theft" = "Motor_vehicle_theft_Rate",
-                                   "Arson" = "Arson_Rate"))
+                                   "Arson" = "Arson_Rate"), selected = "Violent_crime_Rate")
         ),
       
       tags$hr(),

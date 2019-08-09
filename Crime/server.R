@@ -44,9 +44,9 @@ shinyServer(function(input, output, session) {
     
     ## create a dataframe consisting only of counties in vector
     crime_df <- crime_df %>%
-      filter(Year == input$year) %>%
+      filter(Year == input$sum_year) %>%
       filter(Region %in% munis) %>%
-      select(2:length(colnames(crime_df)))
+      select(2,4,5,7,9,11,13,15,17,19,21,23,25)
     
 
     return(crime_df)
@@ -55,7 +55,7 @@ shinyServer(function(input, output, session) {
   ## create the plot of the data
   ## for the Google charts plot
   output$plot <- reactive({
-#     browser()
+    #browser()
     ## make reactive dataframe into regular dataframe
     crime_df <- crime_df()%>%
     filter(Year == input$plot_year) 
@@ -77,7 +77,7 @@ shinyServer(function(input, output, session) {
     
     ## put data into form that googleCharts understands (this unmelts the dataframe)
     melted_munis_df <- melt(munis_df, id.vars = "Region", 
-                            measure.vars = c("Violent_crime_Rate", "Rape_Rate", "Robbery_Rate", 
+                            measure.vars = c("Violent_crime_Rate","Murder_and_nonnegligent_manslaughter_Rate", "Rape_Rate", "Robbery_Rate", 
                                              "Aggravated_assault_Rate", "Property_crime_Rate", "Burglary_Rate",
                                              "Larceny_theft_Rate", "Motor_vehicle_theft_Rate", "Arson_Rate"),
                             variable.name = "Crime_Rate",
@@ -92,7 +92,7 @@ shinyServer(function(input, output, session) {
     g <- dcast(plot_df, Crime_Rate ~ Region, 
                value.var = "Rate")
     
-    g$Crime_Rate <- c("Violent crime Rate", 
+    g$Crime_Rate <- c("Violent crime Rate", "Murder and Nonnegligent Manslaughter Rate",
                       "Rape Rate", "Robbery Rate", "Aggravated assault Rate",
                       "Property crime Rate", "Burglary Rate",
                       "Larceny-theft Rate", "Motor vehicle theft Rate", "Arson Rate")
@@ -107,7 +107,7 @@ shinyServer(function(input, output, session) {
   ## set map colors
   map_dat <- reactive({
     
-    #     browser()
+        #browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
     crime_df <- crime_df()
@@ -115,7 +115,7 @@ shinyServer(function(input, output, session) {
     ## take US, MA, and counties out of map_dat
     map_dat <- crime_df %>%
       filter(Year == input$map_year)%>%
-      filter(!is.na(Region))
+      filter(!is.na(Municipal))
     
     ## assign colors to each entry in the data frame
     color <- as.integer(cut2(map_dat[,input$var],cuts=cuts))
@@ -123,18 +123,23 @@ shinyServer(function(input, output, session) {
     map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors), 
                             map_dat$color)
     map_dat$opacity <- 0.7
+    
+    map_dat <- map_dat %>%
+      select(2,4,5,7,9,11,13,15,17,19,21,23,25:length(colnames(map_dat)))
+    
     ## find missing counties in data subset and assign NAs to all values
     missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
-    missing_df <- data.frame(Municipal = NA, Region = missing_munis,
+    missing_df <- data.frame(Region = missing_munis,
                              Year = input$map_year, Population = NA, 
-                             Violent_crime_Rate = NA, Rape_Rate = NA, Robbery_Rate = NA, 
+                             Violent_crime_Rate = NA, Murder_and_nonnegligent_manslaughter_Rate = NA,
+                             Rape_Rate = NA, Robbery_Rate = NA, 
                              Aggravated_assault_Rate = NA, Property_crime_Rate = NA, Burglary_Rate = NA,
                              Larceny_theft_Rate = NA, Motor_vehicle_theft_Rate = NA, Arson_Rate = NA,
                              color=length(map_colors), 
                              opacity = 0)
     
     # combine data subset with missing counties data
-    map_dat <- rbind.data.frame(map_dat, missing_df)
+    #map_dat <- rbind.data.frame(map_dat, missing_df)
     map_dat$color <- map_colors[map_dat$color]
     return(map_dat)
   })
@@ -223,19 +228,18 @@ shinyServer(function(input, output, session) {
     ## If clicked county has no crude rate, display a message
     if(is.null(values$selectedFeature[input$var])){
       return(as.character(tags$div(
-        tags$h5("% ",var_select, " in ", muni_name, "is not available for this year"))))
+        tags$h5(" ",var_select, " in ", muni_name, "is not available for this year"))))
     }
     ## For a single year when county is clicked, display a message
     as.character(tags$div(
-      tags$h4("% ",var_select, " estimate in ", muni_name, " for ", input$map_year),
-      tags$h5(muni_value, "%")
+      tags$h4(var_select, " rate estimate in ", muni_name, " for ", input$map_year, " is ", muni_value, "per 100,000 people")
     ))
   })
   
   output$legend1 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <- paint.brush(101)
-    leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+    cols <- paint.brush(68)
+    leg_dat<- data_frame(y = seq(0, 6700,100), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -252,10 +256,11 @@ shinyServer(function(input, output, session) {
     
   })
   
+  
   output$legend2 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <- paint.brush(101)
-    leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+    cols <-  paint.brush(68)
+    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -274,8 +279,8 @@ shinyServer(function(input, output, session) {
   
   output$legend3 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <- paint.brush(101)
-    leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+    cols <-  paint.brush(68)
+    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -294,8 +299,8 @@ shinyServer(function(input, output, session) {
   
   output$legend4 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <- paint.brush(101)
-    leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+    cols <-  paint.brush(68)
+    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -314,8 +319,8 @@ shinyServer(function(input, output, session) {
   
   output$legend5 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <- paint.brush(101)
-    leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+    cols <-  paint.brush(68)
+    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -334,8 +339,8 @@ shinyServer(function(input, output, session) {
   
   output$legend6 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <- paint.brush(101)
-    leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+    cols <-  paint.brush(68)
+    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -354,8 +359,8 @@ shinyServer(function(input, output, session) {
   
   output$legend7 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <- paint.brush(101)
-    leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+    cols <-  paint.brush(68)
+    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -374,8 +379,8 @@ shinyServer(function(input, output, session) {
   
   output$legend8 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <- paint.brush(101)
-    leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+    cols <-  paint.brush(68)
+    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -394,8 +399,8 @@ shinyServer(function(input, output, session) {
   
   output$legend9 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <- paint.brush(101)
-    leg_dat <- data_frame(y = seq(0, 100), x = 1, col = cols)
+    cols <-  paint.brush(68)
+    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +

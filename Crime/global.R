@@ -6,8 +6,9 @@
 ## Date Modified:                    ##
 #######################################
 
+
 ##First file run - Environment Setup
-## load necessary libraries
+##load necessary libraries
 require(dplyr)
 require(sp)
 require(maptools)
@@ -25,7 +26,7 @@ MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
 ## Load crime data
 crime_dat <- read.csv("crime_data.csv")
 crime_data <- crime_dat
-#names(crime_data)[1]<-"Municipal" # for some reason the first column name reads in as ""ï..Municipal"
+#names(crime_data)[1]<-"Municipal" # for some reason the first column name reads in as ""Ã¯..Municipal"
 #View(crime_data)
 
 ## Find order of municipals in geojson files
@@ -62,8 +63,9 @@ cbbPalette <- c("black", "red", "orange", "yellow", "darkgreen",
 ## Create maxs and mins for googleCharts/Plot tab
 ylim <- list(
   min = 0,
-  max = 105
+  max = max(crime_data$Property_crime_Rate, na.rm=T)+50
 )
+
 
 ## Colors for a single-year legend
 paint_brush <- colorRampPalette(colors=c("white", "darkblue"))
@@ -72,7 +74,7 @@ map_colors <- c(paint_brush(n=25), "#999999")
 ## For a single year data, we have a series of percentages (split into quintiles).  Cuts are quintiles of the total data percentages
 ## Cuts based on entire dataset - not year specific - This keeps colors consistent for maps year-to-year
 
-max_val <- 100
+max_val <- max(crime_data$Property_crime_Rate, na.rm=T)+50
 min_val <- 0
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
