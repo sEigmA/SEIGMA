@@ -139,7 +139,7 @@ shinyServer(function(input, output, session) {
                              opacity = 0)
     
     # combine data subset with missing counties data
-    #map_dat <- rbind.data.frame(map_dat, missing_df)
+    map_dat <- rbind.data.frame(map_dat, missing_df)
     map_dat$color <- map_colors[map_dat$color]
     return(map_dat)
   })
@@ -151,7 +151,7 @@ shinyServer(function(input, output, session) {
   ## draw leaflet map
   map <- createLeafletMap(session, "map")
   
-  ## the functions within observe are called when any of the inputs are called
+  
   
   ## Does nothing until called (done with action button)
   observe({
@@ -238,8 +238,12 @@ shinyServer(function(input, output, session) {
   
   output$legend1 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <- paint.brush(68)
-    leg_dat<- data_frame(y = seq(0, 6700,100), x = 1, col = cols)
+    ## Cuts based on entire dataset so that the legends are the same for all years
+    pctmax.val<- max(crime_data$Violent_crime_Rate, na.rm=TRUE)
+    pctmin.val<- 0
+    pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
+    cols <- paint.brush(length(map_colors)-1)
+    leg_dat<- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -258,29 +262,37 @@ shinyServer(function(input, output, session) {
   
   
   output$legend2 <- renderPlot({  
-    paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <-  paint.brush(68)
-    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
+      paint.brush = colorRampPalette(colors=c("white", "darkblue"))
+      pctmax.val<- max(crime_data$Murder_and_nonnegligent_manslaughter_Rate, na.rm=TRUE)
+      pctmin.val<- 0
+      pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
+      cols <- paint.brush(length(map_colors)-1)
+      leg_dat<- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
     
-    b <- ggplot(data = leg_dat) +
-      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
-      scale_fill_manual(values = leg_dat$col) + theme_bw() +
-      theme(axis.text.x = element_blank(),
-            axis.text.y = element_text(size = 12),
-            axis.title.x = element_blank(),
-            axis.title.y = element_blank(),
-            axis.ticks.x = element_blank(),
-            panel.border = element_blank(),
-            panel.grid.minor = element_blank(),
-            panel.grid.major = element_blank())
+      b <- ggplot(data = leg_dat) +
+        geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+        scale_fill_manual(values = leg_dat$col) + theme_bw() +
+        theme(axis.text.x = element_blank(),
+              axis.text.y = element_text(size = 12),
+              axis.title.x = element_blank(),
+              axis.title.y = element_blank(),
+              axis.ticks.x = element_blank(),
+              panel.border = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major = element_blank())
+    
     return(b)
     
   })
   
   output$legend3 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <-  paint.brush(68)
-    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
+    pctmax.val<- max(crime_data$Rape_Rate, na.rm=TRUE)
+    pctmin.val<- 0
+    pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
+    cols <- paint.brush(length(map_colors)-1)
+    leg_dat<- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+    
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -299,8 +311,12 @@ shinyServer(function(input, output, session) {
   
   output$legend4 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <-  paint.brush(68)
-    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
+    pctmax.val<- max(crime_data$Robbery_Rate, na.rm=TRUE)
+    pctmin.val<- 0
+    pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
+    cols <- paint.brush(length(map_colors)-1)
+    leg_dat<- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+    
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -319,8 +335,12 @@ shinyServer(function(input, output, session) {
   
   output$legend5 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <-  paint.brush(68)
-    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
+    pctmax.val<- max(crime_data$Aggravated_assault_Rate, na.rm=TRUE)
+    pctmin.val<- 0
+    pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
+    cols <- paint.brush(length(map_colors)-1)
+    leg_dat<- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+    
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -339,8 +359,12 @@ shinyServer(function(input, output, session) {
   
   output$legend6 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <-  paint.brush(68)
-    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
+    pctmax.val<- max(crime_data$Property_crime_Rate, na.rm=TRUE)
+    pctmin.val<- 0
+    pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
+    cols <- paint.brush(length(map_colors)-1)
+    leg_dat<- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+    
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -359,8 +383,12 @@ shinyServer(function(input, output, session) {
   
   output$legend7 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <-  paint.brush(68)
-    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
+    pctmax.val<- max(crime_data$Burglary_Rate, na.rm=TRUE)
+    pctmin.val<- 0
+    pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
+    cols <- paint.brush(length(map_colors)-1)
+    leg_dat<- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+    
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -379,8 +407,12 @@ shinyServer(function(input, output, session) {
   
   output$legend8 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <-  paint.brush(68)
-    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
+    pctmax.val<- max(crime_data$Larceny_theft_Rate, na.rm=TRUE)
+    pctmin.val<- 0
+    pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
+    cols <- paint.brush(length(map_colors)-1)
+    leg_dat<- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+    
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
@@ -399,8 +431,34 @@ shinyServer(function(input, output, session) {
   
   output$legend9 <- renderPlot({  
     paint.brush = colorRampPalette(colors=c("white", "darkblue"))
-    cols <-  paint.brush(68)
-    leg_dat <- data_frame(y = seq( 0, 6700, 100), x = 1, col = cols)
+    pctmax.val<- max(crime_data$Motor_vehicle_theft_Rate, na.rm=TRUE)
+    pctmin.val<- 0
+    pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
+    cols <- paint.brush(length(map_colors)-1)
+    leg_dat<- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
+    
+    b <- ggplot(data = leg_dat) +
+      geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +
+      scale_fill_manual(values = leg_dat$col) + theme_bw() +
+      theme(axis.text.x = element_blank(),
+            axis.text.y = element_text(size = 12),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.ticks.x = element_blank(),
+            panel.border = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.grid.major = element_blank())
+    return(b)
+    
+  })
+  
+  output$legend10 <- renderPlot({  
+    paint.brush = colorRampPalette(colors=c("white", "darkblue"))
+    pctmax.val<- max(crime_data$Arson_Rate, na.rm=TRUE)
+    pctmin.val<- 0
+    pctcuts <- seq(pctmin.val, pctmax.val, length.out = length(map_colors))
+    cols <- paint.brush(length(map_colors)-1)
+    leg_dat<- data_frame(y = seq(pctmin.val, pctmax.val,length.out=(length(map_colors)-1)), x = 1, col = cols)
     
     b <- ggplot(data = leg_dat) +
       geom_tile(aes(y = y, fill = reorder(col, y), x = x), show.legend = FALSE) +

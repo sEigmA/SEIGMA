@@ -44,8 +44,8 @@ shinyUI(fluidPage(
                   ## Multiple allows for multi-county selection
                   multiple=TRUE),
       ## In summary, show boxes that will compare to MA or US average
-      checkboxInput("MA_mean", "Compare to MA Average", FALSE),
-      checkboxInput("US_mean", "Compare to US Average", FALSE)
+      checkboxInput("MA_mean", "Compare to MA Average", TRUE),
+      checkboxInput("US_mean", "Compare to US Average", TRUE)
       ),
       
           
@@ -72,7 +72,7 @@ shinyUI(fluidPage(
         ## in map, allow for variable selection
         selectInput("var", "Select Crime Rate(s) of Interest",
                     choices = list("Violent Crime" = "Violent_crime_Rate", 
-                                   "Murder and Nonnegligent Manslaughter Rate" = "Murder_and_nonnegligent_manslaughter_Rate",
+                                   "Murder and Nonnegligent Manslaughter" = "Murder_and_nonnegligent_manslaughter_Rate",
                                    "Rape" = "Rape_Rate",
                                    "Robbery" = "Robbery_Rate",
                                    "Aggravated Assault" = "Aggravated_assault_Rate",
@@ -194,6 +194,27 @@ bootstrapPage(mainPanel(
                        )
                      )
                    )),
+                 #Murder_and_nonnegligent_manslaughter_Rate
+                 conditionalPanel(
+                   condition="input.var == 'Murder_and_nonnegligent_manslaughter_Rate' && input.action != 0",
+                   absolutePanel(
+                     right = 10, top = 100, draggable=FALSE, style = "", 
+                     class = "floater",
+                     strong("Murder and Nonnegligent"),
+                     br(),
+                     strong("Manslaughter Rate"),
+                     br(),
+                     plotOutput("legend2"),
+                     tags$table(
+                       
+                       tags$tr(
+                         tags$td(tags$div(
+                           style = sprintf("width: 16px; height: 16px; background-color: %s;", "#999999")
+                         )),
+                         tags$td("Data not available", align = "right")
+                       )
+                     )
+                   )),
                  #Rape
                  conditionalPanel(
                    condition="input.var == 'Rape_Rate' && input.action != 0",
@@ -202,7 +223,7 @@ bootstrapPage(mainPanel(
                      class = "floater",
                      strong("Rape"),
                      br(),
-                     plotOutput("legend2"),
+                     plotOutput("legend3"),
                      tags$table(
                        
                        tags$tr(
@@ -221,7 +242,7 @@ bootstrapPage(mainPanel(
                      class = "floater",
                      strong("Robbery Rate"),
                      br(),
-                     plotOutput("legend3"),
+                     plotOutput("legend4"),
                      tags$table(
                        
                        tags$tr(
@@ -240,7 +261,7 @@ bootstrapPage(mainPanel(
                      class = "floater",
                      strong("Aggravated Assault Rate"),
                      br(),
-                     plotOutput("legend4"),
+                     plotOutput("legend5"),
                      tags$table(
                        
                        tags$tr(
@@ -259,7 +280,7 @@ bootstrapPage(mainPanel(
                      class = "floater",
                      strong("Property Crime Rate"),
                      br(),
-                     plotOutput("legend5"),
+                     plotOutput("legend6"),
                      tags$table(
                        
                        tags$tr(
@@ -278,7 +299,7 @@ bootstrapPage(mainPanel(
                      class = "floater",
                      strong("Burglary Rate"),
                      br(),
-                     plotOutput("legend6"),
+                     plotOutput("legend7"),
                      tags$table(
                        
                        tags$tr(
@@ -297,7 +318,7 @@ bootstrapPage(mainPanel(
                      class = "floater",
                      strong("Larceny-theft Rate"),
                      br(),
-                     plotOutput("legend7"),
+                     plotOutput("legend8"),
                      tags$table(
                        
                        tags$tr(
@@ -316,7 +337,7 @@ bootstrapPage(mainPanel(
                      class = "floater",
                      strong("Motor Vehicle Theft Rate"),
                      br(),
-                     plotOutput("legend8"),
+                     plotOutput("legend9"),
                      tags$table(
                        
                        tags$tr(
@@ -335,7 +356,7 @@ bootstrapPage(mainPanel(
                      class = "floater",
                      strong("Arson"),
                      br(),
-                     plotOutput("legend9"),
+                     plotOutput("legend10"),
                      tags$table(
                        
                        tags$tr(
