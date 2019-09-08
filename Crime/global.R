@@ -79,7 +79,57 @@ min_val <- 0
 
 ## Puts each county year in between the cuts (n colors, n+1 cuts)
 ## length.out will make that many cuts
-cuts <- seq(min_val, max_val, length.out = length(map_colors))
+#cuts <- seq(min_val, max_val, length.out = length(map_colors))
+
+##Colors for violent crime rates map 
+violentmax.val <- max(crime_data$Violent_crime_Rate, na.rm=TRUE)
+violentmin.val <- min(crime_data$Violent_crime_Rate, na.rm=TRUE)
+violentcuts <- seq(0, violentmax.val, length.out = length(map_colors))
+
+##Colors for murder and nonnegligent manslaughter crime rates map 
+murdermax.val <- max(crime_data$Murder_and_nonnegligent_manslaughter_Rate, na.rm=TRUE)
+murdermin.val <- min(crime_data$Murder_and_nonnegligent_manslaughter_Rate, na.rm=TRUE)
+murdercuts <- seq(0, murdermax.val, length.out = length(map_colors))
+
+##Colors for rape crime rates map 
+rapemax.val <- max(crime_data$Rape_Rate, na.rm=TRUE)
+rapemin.val <- min(crime_data$Rape_Rate, na.rm=TRUE)
+rapecuts <- seq(0, rapemax.val, length.out = length(map_colors))
+
+##Colors for robbery crime rates map 
+robberymax.val <- max(crime_data$Robbery_Rate, na.rm=TRUE)
+robberymin.val <- min(crime_data$Robbery_Rate, na.rm=TRUE)
+robberycuts <- seq(0, rapemax.val, length.out = length(map_colors))
+
+##Colors for aggreavated assault crime rates map 
+assaultmax.val <- max(crime_data$Aggravated_assault_Rate, na.rm=TRUE)
+assaultmin.val <- min(crime_data$Aggravated_assault_Rate, na.rm=TRUE)
+assaultcuts <- seq(0, assaultmax.val, length.out = length(map_colors))
+
+##Colors for property crime rates map 
+propertymax.val <- max(crime_data$Property_crime_Rate, na.rm=TRUE)
+propertymin.val <- min(crime_data$Property_crime_Rate, na.rm=TRUE)
+propertycuts <- seq(0, propertymax.val, length.out = length(map_colors))
+
+##Colors for burglary rates map 
+burglarymax.val <- max(crime_data$Burglary_Rate, na.rm=TRUE)
+burglarymin.val <- min(crime_data$Burglary_Rate, na.rm=TRUE)
+burglarycuts <- seq(0, burglarymax.val, length.out = length(map_colors))
+
+##Colors for larceny-theft crime rates map 
+larcenymax.val <- max(crime_data$Larceny_theft_Rate, na.rm=TRUE)
+larcenymin.val <- min(crime_data$Larceny_theft_Rate, na.rm=TRUE)
+larcenycuts <- seq(0, larcenymax.val, length.out = length(map_colors))
+
+##Colors for motor vehicle theft crime rates map 
+motormax.val <- max(crime_data$Motor_vehicle_theft_Rate, na.rm=TRUE)
+motormin.val <- min(crime_data$Motor_vehicle_theft_Rate, na.rm=TRUE)
+motorcuts <- seq(0, motormax.val, length.out = length(map_colors))
+
+##Colors for arson crime rates map 
+arsonmax.val <- max(crime_data$Arson_Rate, na.rm=TRUE)
+arsonmin.val <- min(crime_data$Arson_Rate, na.rm=TRUE)
+arsoncuts <- seq(0, arsonmax.val, length.out = length(map_colors))
 
 ## Construct break ranges for displaying in the legend
 ## Creates a data frame
