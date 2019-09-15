@@ -113,20 +113,20 @@ shinyServer(function(input, output, session) {
   ## set map colors
   map_dat <- reactive({
     
-        #browser()
+       #browser()
     ## Browser command - Stops the app right when it's about to break
     ## make reactive dataframe into regular dataframe
     crime_df <- crime_df()
     
     ## take US, MA, and counties out of map_dat
-    map_dat <- crime_df %>%
+    crime_df <- crime_df %>%
       filter(Year == input$map_year)%>%
       filter(!is.na(Municipal))
     
     #Select only the crime rates, region, year and population columns
     
-    map_dat <- map_dat %>%
-      select(2,4,5,7,9,11,13,15,17,19,21,23,25:length(colnames(map_dat)))
+    crime_df <- crime_df %>%
+      select(2,4,5,7,9,11,13,15,17,19,21,23,25:length(colnames(crime_df)))
     
     #Have map change color range based on selected variable
     ## get column name and cuts based on input
@@ -172,13 +172,13 @@ shinyServer(function(input, output, session) {
       }
       
     
-    col_sel_num1<-which(colnames(map_dat)==col)
-    map_dat <- select(map_dat,c(1:3,col_sel_num1))
-    color <- as.integer(cut2(map_dat[,col],cuts=cuts))
-    map_dat <- cbind.data.frame(map_dat, color)
-    map_dat$color <- ifelse(is.na(map_dat$color), length(map_colors),
-                            map_dat$color)
-    map_dat$opacity <- 0.7
+    col_sel_num1<-which(colnames(crime_df)==col)
+    crime_df <- select(crime_df,c(1:3,col_sel_num1))
+    color <- as.integer(cut2(crime_df[,col],cuts=cuts))
+    crime_df <- cbind.data.frame(crime_df, color)
+    crime_df$color <- ifelse(is.na(crime_df$color), length(map_colors),
+                             crime_df$color)
+    crime_df$opacity <- 0.7
     
     ## assign colors to each entry in the data frame
     #color <- as.integer(cut2(map_dat[,col],cuts=cuts))
@@ -188,14 +188,14 @@ shinyServer(function(input, output, session) {
     #map_dat$opacity <- 0.7
     
     ## find missing counties in data subset and assign NAs to all values
-    missing_munis <- setdiff(leftover_munis_map, map_dat$Region)
+    missing_munis <- setdiff(leftover_munis_map, crime_df$Region)
     missing_df <-data.frame(Region=missing_munis, Year=input$map_year, Population=NA, Map_var=NA,
                             color=length(map_colors), opacity = 0)
     colnames(missing_df)[4]<-col
     
     
     # combine data subset with missing counties data
-    map_dat <- rbind.data.frame(map_dat, missing_df)
+    map_dat <- rbind.data.frame(crime_df, missing_df)
     map_dat$color <- map_colors[map_dat$color]
     return(map_dat)
   })
@@ -225,18 +225,18 @@ shinyServer(function(input, output, session) {
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a Municipal
-        x$features[[i]]$properties[col_name] <- map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal), col_name]
+        x$features[[i]]$properties[col_name] <- map_dat[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region), col_name]
         ## Style properties
         x$features[[i]]$properties$style <- list(
           fill=TRUE,
           
           ## Fill color has to be equal to the map_dat color and is matched by county
-          fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)],
+          fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)],
           ## "#000000" = Black, "#999999"=Grey,
           weight=1, stroke=TRUE,
-          opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)],
+          opacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)],
           color="#000000",
-          fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Municipal)])
+          fillOpacity=map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)])
       }
       
       map$addGeoJSON(x) # draw map
