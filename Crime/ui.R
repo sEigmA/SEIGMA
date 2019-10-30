@@ -3,7 +3,7 @@
 ## Author(s): Heather Weaver,        ##
 ##            Valerie Evans          ##
 ## Date Created:  06/26/2019         ##
-## Date Modified: 09/19/2019 VE      ##
+## Date Modified: 10/30/2019 VE      ##
 #######################################
 
 
@@ -99,7 +99,8 @@ shinyUI(fluidPage(
                    conditionalPanel(
                      condition = "input.plot_var == 'Arson_Rate'",
                      checkboxInput("MA_arson", "Compare to MA", FALSE),
-                     checkboxInput("US_arson", "Compare to US", FALSE))
+                     checkboxInput("US_arson", "Compare to US", FALSE), 
+                     textOutput('text'))
                  ),
                  
                  ## in map, allow for year, municipal selection

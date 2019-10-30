@@ -3,7 +3,7 @@
 ## Author(s): Heather Weaver,        ##
 ##            Valerie Evans          ##
 ## Date Created:  06/27/2019         ##
-## Date Modified: 09/17/2019 VE      ##
+## Date Modified: 10/30/2019 VE      ##
 #######################################
 
 
@@ -130,7 +130,7 @@ shinyServer(function(input, output, session) {
           munis <- c(munis, "United States")
         }
       }  
-      else if (input$plot_var == "Motor_vehicle_crime_Rate"){
+      else if (input$plot_var == "Motor_vehicle_theft_Rate"){
         if(input$MA_motor){
           munis <- c(munis, "MA")  
         }
@@ -140,12 +140,12 @@ shinyServer(function(input, output, session) {
       } 
       else if (input$plot_var == "Arson_Rate"){
         if(input$MA_arson){
-          munis <- c(munis, "MA")  
+          munis <- c(munis, "MA")
         }
         if(input$US_arson){
           munis <- c(munis, "United States")
         }
-      }  
+      }
     }
     
     ##Choose column according input
@@ -262,48 +262,12 @@ shinyServer(function(input, output, session) {
       data = googleDataTable(arson_df))
   })
   
-  # output$plot <- reactive({
-  #   #browser()
-  #   ## make reactive dataframe into regular dataframe
-  #   crime_df <- crime_df()%>%
-  #   filter(Year == input$plot_year)
-  # 
-  #   ## make municipals a vector based on input variable
-  #   munis <- c(input$plot_muni, "MA", "United States")
-  #   
-  #   muni_index <- c()
-  #       for(i in 1:length(munis)){
-  #     muni_index[i] <- match(munis[i], crime_df$Region)
-  #   }
-  #   
-  #   crime_df$Region <- factor(crime_df$Region, levels = c(munis, as.character(crime_df$Region)[-muni_index]))
-  #   munis_df <- crime_df[muni_index,]
-  #   
-  #   ## put data into form that googleCharts understands (this unmelts the dataframe)
-  #   melted_munis_df <- melt(munis_df, id.vars = "Region", 
-  #                           measure.vars = c("Violent_crime_Rate","Murder_and_nonnegligent_manslaughter_Rate", 
-  #                                            "Rape_Rate", "Robbery_Rate", "Aggravated_assault_Rate", 
-  #                                            "Property_crime_Rate", "Burglary_Rate", "Larceny_theft_Rate", 
-  #                                            "Motor_vehicle_theft_Rate", "Arson_Rate"),
-  #                           variable.name = "Crime_Rate",
-  #                           value.name = "Rate")
-  # 
-  #   levels(melted_munis_df$Region)[1:3] <- munis
-  #   
-  #   plot_df <- melted_munis_df %>%
-  #     arrange(Region)
-  #   
-  #   g <- dcast(plot_df, Crime_Rate ~ Region, value.var = "Rate")
-  #   
-  #   g$Crime_Rate <- c("Violent crime Rate", "Murder and Nonnegligent Manslaughter Rate", "Rape Rate", 
-  #                     "Robbery Rate", "Aggravated assault Rate", "Property crime Rate", "Burglary Rate", 
-  #                     "Larceny-theft Rate", "Motor vehicle theft Rate", "Arson Rate")
-  #   
-  #   ## this outputs the google data to be used in the UI to create the dataframe
-  #   list(
-  #     data = googleDataTable(g))
-  # })
-  
+  output$text <- renderText({
+    input$MA_arson
+    paste0('Arson Rates are not available for MA or the US.')
+  })
+    
+
   ###########################################################
   
   ## set map colors
