@@ -126,6 +126,15 @@ shinyUI(fluidPage(
                  ),
                  
                  tags$hr(),
+                 tags$hr(),
+                 tags$hr(),
+                 
+                 tags$blockquote(tags$b(tags$span(style = "color:red", "NOTE:")), 
+                 helpText(tags$div(style = "font-size:15px;", "Please interpret crime rates with caution. FBI-UCR crime data is voluntary reported by participating law enforcement agencies therefore drawing conclusions based on direct comparisons between cities/regions should be avoided."))), 
+                 
+                 tags$hr(),
+                 tags$hr(),
+                 tags$hr(),
                  
                  ## author line
                  helpText("Created by Heather Weaver and Valerie Evans"), 
@@ -135,12 +144,12 @@ shinyUI(fluidPage(
                  helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
                  
                  ## data source citation
-                 helpText(a("Data Source: FBI - Estimated Crime Data", href="https://crime-data-explorer.fr.cloud.gov/downloads-and-docs",
+                 helpText(a("Data Source: FBI - Uniform Crime Reporting (UCR) Program Estimated Crime Data", href="https://crime-data-explorer.fr.cloud.gov/downloads-and-docs",
                             target="_blank",onclick="ga('send', 'event', 'click', 'link', 'dataSource', 1)")),
                  
                  ## GitHub link
                  helpText(a("View our data and code on GitHub", 
-                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/Crime", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
+                            href="https://github.com/sEigmA/SEIGMA/tree/gh-pages/crime/crime", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'code', 1)")),
                  
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),
@@ -440,13 +449,15 @@ shinyUI(fluidPage(
                      tags$p("Because of changes in the state/local agency's reporting practices, values for the following regions are not comparable to previous years:")), 
                    tags$ul(
                      tags$li(p(strong("2010:"), "Billerica, Hanson, North Brookfield, Plymouth, Shrewsbury, and Yarmouth")), 
-                     tags$li(p(strong("2012:"), "Framingham, Milton, and Salem"))), 
+                     tags$li(p(strong("2012:"), "Framingham, Milton, and Salem")))
+                   # , 
                    # tags$br(), 
-                   tags$div(
-                     tags$p("The FBI deemed that the data was overreported from the following agency's for the years specified below, so the data is not included.")),
-                   tags$ul(
-                     tags$li(p(strong("2014:"), "Cohasset")),
-                     tags$li(p(strong("2016:"), "Brookline, Gardner, and Yarmouth")))),
+                   # tags$div(
+                   #   tags$p("The FBI deemed that the data was overreported from the following agency's for the years specified below, so the data is not included.")),
+                   # tags$ul(
+                   #   tags$li(p(strong("2014:"), "Cohasset")),
+                   #   tags$li(p(strong("2016:"), "Brookline, Gardner, and Yarmouth")))
+                   ),
                  tags$br(), 
                  tags$ul(
                    tags$li(p(strong("Rape - Revised Definition")),

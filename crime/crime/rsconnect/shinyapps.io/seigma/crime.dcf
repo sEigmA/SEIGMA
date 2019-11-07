@@ -1,0 +1,10 @@
+name: crime
+title:
+username:
+account: seigma
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1400138
+bundleId: 2571150
+url: https://seigma.shinyapps.io/crime/
+when: 1573131025.62426
