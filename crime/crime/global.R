@@ -18,6 +18,7 @@ require(shiny)
 require(googleCharts)
 require(leaflet)
 require(RJSONIO)
+require(DT)
 
 ## load map data
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")
@@ -285,7 +286,7 @@ plot_main_text <- p(strong("Variable Summary:"),
 violent_plot_options <- googleLineChart("plot_violent", width = "100%", height = "475px", options = list(
   ## set fonts
   fontName = "Source Sans Pro",
-  fontSize = 14, 
+  fontSize = 14,
   ## set axis titles, ticks, fonts, and ranges
   hAxis = list(
     title = "Year",

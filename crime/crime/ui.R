@@ -38,7 +38,7 @@ shinyUI(fluidPage(
                                ## Multiple allows for multi-county selection
                                multiple = TRUE),
                    ##show boxes that will compare to MA or US average,False at the end means it starts off unchecked
-                   checkboxInput("MA_mean", "Compare to MA", FALSE),
+                   checkboxInput("MA_mean", "Compare to Massachusetts", FALSE),
                    checkboxInput("US_mean", "Compare to US", FALSE)
                  ),
                  
@@ -62,43 +62,43 @@ shinyUI(fluidPage(
                                               "Arson" = "Arson_Rate")),
                    conditionalPanel(
                      condition = "input.plot_var == 'Violent_crime_Rate'",
-                     checkboxInput("MA_violent", "Compare to MA", FALSE),
+                     checkboxInput("MA_violent", "Compare to Massachusetts", FALSE),
                      checkboxInput("US_violent", "Compare to US", FALSE)),
                    conditionalPanel(
                      condition = "input.plot_var == 'Murder_and_nonnegligent_manslaughter_Rate'",
-                     checkboxInput("MA_murder", "Compare to MA", FALSE),
+                     checkboxInput("MA_murder", "Compare to Massachusetts", FALSE),
                      checkboxInput("US_murder", "Compare to US", FALSE)),
                    conditionalPanel(
                      condition = "input.plot_var == 'Rape_Rate'",
-                     checkboxInput("MA_rape", "Compare to MA", FALSE),
+                     checkboxInput("MA_rape", "Compare to Massachusetts", FALSE),
                      checkboxInput("US_rape", "Compare to US", FALSE)),
                    conditionalPanel(
                      condition = "input.plot_var == 'Robbery_Rate'",
-                     checkboxInput("MA_robbery", "Compare to MA", FALSE),
+                     checkboxInput("MA_robbery", "Compare to Massachusetts", FALSE),
                      checkboxInput("US_robbery", "Compare to US", FALSE)),
                    conditionalPanel(
                      condition = "input.plot_var == 'Aggravated_assault_Rate'",
-                     checkboxInput("MA_assault", "Compare to MA", FALSE),
+                     checkboxInput("MA_assault", "Compare to Massachusetts", FALSE),
                      checkboxInput("US_assault", "Compare to US", FALSE)),
                    conditionalPanel(
                      condition = "input.plot_var == 'Property_crime_Rate'",
-                     checkboxInput("MA_property", "Compare to MA", FALSE),
+                     checkboxInput("MA_property", "Compare to Massachusetts", FALSE),
                      checkboxInput("US_property", "Compare to US", FALSE)),
                    conditionalPanel(
                      condition = "input.plot_var == 'Burglary_Rate'",
-                     checkboxInput("MA_burglary", "Compare to MA", FALSE),
+                     checkboxInput("MA_burglary", "Compare to Massachusetts", FALSE),
                      checkboxInput("US_burglary", "Compare to US", FALSE)),
                    conditionalPanel(
                      condition = "input.plot_var == 'Larceny_theft_Rate'",
-                     checkboxInput("MA_larceny", "Compare to MA", FALSE),
+                     checkboxInput("MA_larceny", "Compare to Massachusetts", FALSE),
                      checkboxInput("US_larceny", "Compare to US", FALSE)),
                    conditionalPanel(
                      condition = "input.plot_var == 'Motor_vehicle_theft_Rate'",
-                     checkboxInput("MA_motor", "Compare to MA", FALSE),
+                     checkboxInput("MA_motor", "Compare to Massachusetts", FALSE),
                      checkboxInput("US_motor", "Compare to US", FALSE)),
                    conditionalPanel(
                      condition = "input.plot_var == 'Arson_Rate'",
-                     checkboxInput("MA_arson", "Compare to MA", FALSE),
+                     checkboxInput("MA_arson", "Compare to Massachusetts", FALSE),
                      checkboxInput("US_arson", "Compare to US", FALSE), 
                      textOutput('text'))
                  ),
@@ -164,16 +164,25 @@ shinyUI(fluidPage(
       
       ## create tabs
       tabsetPanel(
-        tabPanel("About", 
+        tabPanel("About",
                  about_main_text, value = "about"),
         
         ## summary tab
-        tabPanel("Summary", 
+        tabPanel("Summary",
+                 tags$hr(),
+                 tags$blockquote(helpText(tags$div(style = "color:red",
+                                                   "Comparisons between cities/regions should be avoided because of variations in data collection and reporting."))),
+                 tags$hr(),
                  dataTableOutput("summary"), value = "summary", 
-                 tags$style(type="text/css", '#summary tfoot {display:none;}')),
+                 tags$style(type="text/css", '#summary tfoot {display:none;}'),
+                 plot_main_text),
         
         ## plot tab with google chart options
         tabPanel("Plot",
+                 tags$hr(),
+                 tags$blockquote(helpText(tags$div(style = "color:red",
+                                                   "Comparisons between cities/regions should be avoided because of variations in data collection and reporting."))),
+                 tags$hr(),
                  ## make chart title here (otherwise not centered)
                  # h4("Crime Rate by Municipality", align = "center"),
                  ## add text about the variables
@@ -222,6 +231,10 @@ shinyUI(fluidPage(
         
         ## plot map
         tabPanel("Map",
+                 tags$hr(),
+                 tags$blockquote(helpText(tags$div(style = "color:red",
+                                                   "Comparisons between cities/regions should be avoided because of variations in data collection and reporting."))),
+                 tags$hr(),
                  ## Add a little CSS to make the map background pure white
                  tags$head(tags$style("
                  #showcase-code-position-toggle, #showcase-sxs-code { display: none; }
@@ -246,7 +259,7 @@ shinyUI(fluidPage(
                    )),
                  
                  ## Legend                 
-                 #Violent crime
+                 #Violent Crime
                  conditionalPanel(
                    condition = "input.var == 'Violent_crime_Rate' && input.action != 0",
                    absolutePanel(
@@ -430,7 +443,7 @@ shinyUI(fluidPage(
                        )
                      )
                    )), 
-                 #plot_main_text,
+                 plot_main_text,
                  value = "map"),
         
         tabPanel("More Info", 
