@@ -210,7 +210,7 @@ maritalupdate_dp02$Five_Year_Range <- gsub("2014", "2010-2014", maritalupdate_dp
 maritalupdate_dp02$Five_Year_Range <- gsub("2015", "2011-2015", maritalupdate_dp02$Five_Year_Range)
 maritalupdate_dp02$Five_Year_Range <- gsub("2016", "2012-2016", maritalupdate_dp02$Five_Year_Range)
 maritalupdate_dp02$Five_Year_Range <- gsub("2017", "2013-2017", maritalupdate_dp02$Five_Year_Range)
-maritalupdate_dp02$Five_Year_Range <- gsub("2018", "2013-2018", maritalupdate_dp02$Five_Year_Range)
+maritalupdate_dp02$Five_Year_Range <- gsub("2018", "2014-2018", maritalupdate_dp02$Five_Year_Range)
 
 
 ## Final column names/order: Municipal, County, State, Region, Five_Year_Range, Population, Never_Married, 
