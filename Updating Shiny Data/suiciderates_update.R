@@ -2,7 +2,7 @@
 ##  Title: Suicide Rates Update          ##
 ##  Author(s): Valerie Evans             ## 
 ##  Date Created:  01/15/2019            ##
-##  Date Modified: 12/06/2019            ##
+##  Date Modified: 01/22/2020            ##
 ###########################################
 # Data can be obtained via this link: 
 # https://wonder.cdc.gov/ucd-icd10.html
@@ -16,7 +16,7 @@ library(readxl)
 ## Load column names, geography 
 colnames <- read_excel("Shiny App Variables.xlsx", sheet = "Suicide Rates")
 
-## Load downloaded excel files and save relevant columns/observations
+## Load downloaded excel files via document "Updating Suicide Rates Data.docx" and save relevant columns/observations
 suiciderates_us <- read_tsv("Compressed Mortality, 1999-2016_us.txt", col_names = TRUE)
 suiciderates_us <- suiciderates_us[c(1:18),c(2,4:8)]
 suiciderates_ma <- read_tsv("Compressed Mortality, 1999-2016_ma.txt", col_names = TRUE)
