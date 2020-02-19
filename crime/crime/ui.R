@@ -3,7 +3,7 @@
 ## Author(s): Heather Weaver,        ##
 ##            Valerie Evans          ##
 ## Date Created:  06/26/2019         ##
-## Date Modified: 10/30/2019 VE      ##
+## Date Modified: 02/19/2020 VE      ##
 #######################################
 
 
@@ -170,7 +170,7 @@ shinyUI(fluidPage(
         ## summary tab
         tabPanel("Summary",
                  tags$hr(),
-                 tags$blockquote(helpText(tags$div(style = "color:red",
+                 tags$blockquote(helpText(tags$div(style = "color:red; font-size:15px",
                                                    "Comparisons between cities/regions should be avoided because of variations in data collection and reporting."))),
                  tags$hr(),
                  dataTableOutput("summary"), value = "summary", 
