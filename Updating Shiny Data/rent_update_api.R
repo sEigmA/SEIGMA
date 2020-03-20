@@ -2,14 +2,15 @@
 ## Title: Median Rent Update - API  ##
 ## Author(s): Valerie Evans         ##
 ## Date Created:  11/11/2019        ##
-## Date Modified: 12/20/2019        ##
+## Date Modified: 03/02/2020        ##
 ######################################
-# based on https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html
+# Based on https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html
 # Census API: https://api.census.gov/data/2010/acs/acs5/profile.html
 
 setwd("~/Documents/R/SEIGMA/Updating Shiny Data")
 
 ####  SETTINGS  ####
+setwd("~/SEIGMA/Updating Shiny Data")
 library(censusapi)
 library(tidyverse)
 library(readxl)
@@ -152,6 +153,7 @@ rentupdate_b25058$Five_Year_Range <- gsub("2014", "2010-2014", rentupdate_b25058
 rentupdate_b25058$Five_Year_Range <- gsub("2015", "2011-2015", rentupdate_b25058$Five_Year_Range)
 rentupdate_b25058$Five_Year_Range <- gsub("2016", "2012-2016", rentupdate_b25058$Five_Year_Range)
 rentupdate_b25058$Five_Year_Range <- gsub("2017", "2013-2017", rentupdate_b25058$Five_Year_Range)
+rentupdate_b25058$Five_Year_Range <- gsub("2018", "2014-2018", rentupdate_b25058$Five_Year_Range)
 
 ## Final column order and names (keep new inflation adjusted columns)
 rentupdate_b25058 <- rentupdate_b25058[,c(5:7,1,4,8:9)]

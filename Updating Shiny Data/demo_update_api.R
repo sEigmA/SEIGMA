@@ -2,14 +2,15 @@
 ## Title: Demographics Update - API    ##
 ## Author(s): Valerie Evans            ##
 ## Date Created:  11/04/2019           ##
-## Date Modified: 12/20/2019           ##
+## Date Modified: 03/02/2020           ##
 #########################################
-# based on https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html
+# Based on https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html
 # Census API: https://api.census.gov/data/2010/acs/acs5/profile.html
 
 setwd("~/Documents/R/SEIGMA/Updating Shiny Data")
 
 ####  SETTINGS  ####
+setwd("~/SEIGMA/Updating Shiny Data")
 library(censusapi)
 library(tidyverse)
 library(readxl)
