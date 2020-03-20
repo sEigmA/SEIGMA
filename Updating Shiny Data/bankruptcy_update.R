@@ -7,6 +7,7 @@
 # Data can be downloaded through a search for tables F-5A ending December 31st via this link: 
 # http://www.uscourts.gov/statistics-reports/caseload-statistics-data-tables/
 
+setwd("~/Documents/R/SEIGMA/Updating Shiny Data")
 
 ####  SETTINGS  ####
 library(tidyverse)

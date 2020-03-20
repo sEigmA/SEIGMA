@@ -8,6 +8,7 @@
 # http://www.donahue.umassp.edu/business-groups/economic-public-policy-research/massachusetts-state-data-center 
 # Population data can be downloaded from: https://www2.census.gov/programs-surveys/popest/datasets 
 
+setwd("~/Documents/R/SEIGMA/Updating Shiny Data")
 
 ####  SETTINGS  ####
 library(plyr)
@@ -276,4 +277,6 @@ buildingpermits[buildingpermits == "NaN"] <- NA
 
 
 # save dataset to folder
-# write.csv(buildingpermits, "buildingdata_updated_2018.csv")
+ write.csv(buildingpermits, "buildingdata_updated_2018.csv")
+
+ 

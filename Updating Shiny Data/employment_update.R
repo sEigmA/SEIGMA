@@ -37,7 +37,7 @@ CPI$inflation_rate <- 251.1070/CPI$average #use current year as numerator
 #Average_Weekly_Wage_Change_Pct, Employment_difference, Establishment_difference, Average_Weekly_Wage_difference
 
 ## Download excel files from website (add most recent file to end of list)
-setwd("./Employment")
+setwd("../employment")
 list <- c("http://lmi2.detma.org/lmi/data/2003towntotalEMPwagesbytownallown.xlsx", 
           "http://lmi2.detma.org/lmi/data/2004towntotalEMPwagesbytownallown.xlsx", 
           "http://lmi2.detma.org/lmi/data/2005towntotalEMPwagesbytownallown.xlsx", 

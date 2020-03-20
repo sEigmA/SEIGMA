@@ -1,8 +1,12 @@
 name: marital
 title:
+username:
 account: seigma
 server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
 appId: 22638
-bundleId: 758406
+bundleId: 2733275
 url: https://seigma.shinyapps.io/marital/
-when: 1490210857.66388
+when: 1579186187.06295
+asMultiple: FALSE
+asStatic: FALSE

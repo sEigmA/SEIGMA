@@ -7,6 +7,7 @@
 # based on https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html
 # Census API: https://api.census.gov/data/2010/acs/acs5/profile.html
 
+setwd("~/Documents/R/SEIGMA/Updating Shiny Data")
 
 ####  SETTINGS  ####
 library(censusapi)
@@ -133,4 +134,5 @@ discrep <- mapply(setdiff, vetupdate_dp02, vetstatus)
 discrep
 num.discrep <- sapply(discrep, length)
 num.discrep
+write.csv(num.discrep, "va_status_numdiscrep.csv")
 
