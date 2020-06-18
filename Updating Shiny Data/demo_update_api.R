@@ -10,7 +10,7 @@
 setwd("~/Documents/R/SEIGMA/Updating Shiny Data")
 
 ####  SETTINGS  ####
-setwd("~/SEIGMA/Updating Shiny Data")
+#setwd("~/SEIGMA/Updating Shiny Data")
 library(censusapi)
 library(tidyverse)
 library(readxl)
@@ -246,4 +246,4 @@ num.discrep
 
 write.csv(num.discrep, "demoupdate_numdiscrep.csv")
 
-
+  
