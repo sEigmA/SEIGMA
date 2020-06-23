@@ -10,6 +10,7 @@
 
 ##First file run - Environment Setup
 ## load necessary libraries
+require(DT)
 require(dplyr)
 require(maptools)
 ##require(rgeos)

@@ -7,6 +7,7 @@
 # based on https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html
 # Census API: https://api.census.gov/data/2010/acs/acs5/profile.html
 
+setwd("~/Documents/R/SEIGMA/Updating Shiny Data")
 
 ####  SETTINGS  ####
 library(censusapi)
@@ -188,4 +189,5 @@ discrep #discrepancies found with MOE but were rounding errors in original datas
 num.discrep <- sapply(discrep, length)
 num.discrep
 compare <- right_join(povupdate_s1701_dp03, poverty)
+write.csv(num.discrep, "poverty_numdiscrep.csv")
 

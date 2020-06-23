@@ -27,7 +27,7 @@ seriesid <- seriesid[,-3]
 ## 2018 data file does not contains state annual average values so will pull those separately with API (see below)
 
 # Read in text file downloaded from ftp server
-setwd("./Unemployment")
+setwd("../Unemployment")
 url <- "https://download.bls.gov/pub/time.series/la/la.data.28.Massachusetts"
 download.file(url, "unemployment.txt" )
 unemp <- read.delim("unemployment.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)

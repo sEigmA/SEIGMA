@@ -7,6 +7,7 @@
 # based on https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html
 # Census API: https://api.census.gov/data/2010/acs/acs5/profile.html
 
+setwd("~/Documents/R/SEIGMA/Updating Shiny Data")
 
 ####  SETTINGS  ####
 library(censusapi)
@@ -152,4 +153,7 @@ discrep <- mapply(setdiff, incomeupdate_dp03, income)
 discrep #Five_Year_Average is not accurate in original dataset, 
 num.discrep <- sapply(discrep, length)
 num.discrep
+write.csv(num.discrep, "income_numdiscrep.csv")
 #which(grepl(38750, incomeupdate_dp03$Median_Annual_Household_Income))
+
+

@@ -20,12 +20,11 @@ require(shiny)
 require(googleCharts)
 require(leaflet)
 require(RJSONIO)
+require(DT)
 #library(maps)
 library(lubridate)
 #library(gbm)
 library(markdown)
-
-
 
 ## load map data
 MA_map_muni <- fromJSON("Muni_2010Census_DP1.geojson")

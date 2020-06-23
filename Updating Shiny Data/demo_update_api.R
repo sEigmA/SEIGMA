@@ -7,9 +7,10 @@
 # Based on https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html
 # Census API: https://api.census.gov/data/2010/acs/acs5/profile.html
 
+setwd("~/Documents/R/SEIGMA/Updating Shiny Data")
 
 ####  SETTINGS  ####
-setwd("~/SEIGMA/Updating Shiny Data")
+#setwd("~/SEIGMA/Updating Shiny Data")
 library(censusapi)
 library(tidyverse)
 library(readxl)
@@ -234,7 +235,7 @@ demoupdate_dp05$Age_over_75_Pct_plot <- demoupdate_dp05$Age_75_84_Pct + demoupda
 write_csv(demoupdate_dp05, "demoupdate_dp05.csv")
 
 ## Compare to original dataset 
-setwd("..")
+#setwd("..")
 demographics <- read.csv("original datasets/demographics.csv", stringsAsFactors = FALSE)
 demographics_2010_2017 <- demographics %>% filter(Five_Year_Range != "2005-2009")
 discrep <- mapply(setdiff, demoupdate_dp05, demographics_2010_2017)
@@ -243,4 +244,6 @@ num.discrep <- sapply(discrep, length)
 num.discrep
 #which(grepl(xxxx, demoupdate_dp05))
 
+write.csv(num.discrep, "demoupdate_numdiscrep.csv")
 
+  

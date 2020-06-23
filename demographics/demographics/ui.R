@@ -33,9 +33,9 @@ shinyUI(
                    conditionalPanel(
                      condition="input.tabs == 'summary'",
                      selectInput("sum_year", "Select Five Year Range",
-                                 choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                                "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", "2010-2014" = "2010-2014",
-                                                "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")
+                                 choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", 
+                                                "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
+                                                "2012-2016" = "2012-2016", "2013-2017" = "2013-2017", "2014-2018" = "2014-2018")
                      ),
                      radioButtons("sum_radio", "Categorical variables",
                                   c("Age" = "Age", "Gender" = "Gender",
@@ -56,9 +56,9 @@ shinyUI(
                      condition="input.tabs == 'plot'",
                      ## Select input = List
                      selectInput("plot_year", "Select Five Year Range",
-                                 choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                                "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", "2010-2014" = "2010-2014",
-                                                "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")
+                                 choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", 
+                                                "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
+                                                "2012-2016" = "2012-2016", "2013-2017" = "2013-2017", "2014-2018" = "2014-2018")
                      ),
                      radioButtons("plot_radio", "Catigorical variables",
                                   c("Age" = "Age", "Gender" = "Gender",
@@ -72,9 +72,9 @@ shinyUI(
                    conditionalPanel(
                      condition="input.tabs == 'map'",
                      selectInput("map_year", "Select Five Year Range",
-                                 choices = list("2005-2009" = "2005-2009", "2006-2010" = "2006-2010", "2007-2011" = "2007-2011",
-                                                "2008-2012" = "2008-2012", "2009-2013" = "2009-2013", "2010-2014" = "2010-2014",
-                                                "2011-2015" = "2011-2015", "2012-2016" = "2012-2016", "2013-2017" = "2013-2017")
+                                 choices = list("2006-2010" = "2006-2010", "2007-2011" = "2007-2011", "2008-2012" = "2008-2012", 
+                                                "2009-2013" = "2009-2013", "2010-2014" = "2010-2014", "2011-2015" = "2011-2015", 
+                                                "2012-2016" = "2012-2016", "2013-2017" = "2013-2017", "2014-2018" = "2014-2018")
                      ),
                      radioButtons("map_radio", "Catigorical variables",
                                   c("Age" = "Age", "Gender" = "Gender",
@@ -293,7 +293,7 @@ shinyUI(
                    " - The number of people within each age group for a region over a specified five-year range. Age groups were specified as <5, 5-9, 10-14, 15-19, 20-24, 25-34, 35-44, 45-54, 55-59, 60-54, 65-74, 75-84, and 85+. Within the Plot and Map tab the number of categories for age has been collapsed to the following six groups: <20, 20-34, 35-54, 55-64, 65-74, 75+. This is done in order to simplify the presentation of data. To see all age groups please go to the Summary tab."),
                  tags$br(),
                  p(strong("Five-Year Estimate"), 
-                   " - Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multi-year estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2005-2009, 2006-2010) due to the inability to isolate change with precision."),
+                   " - Survey information is collected everyday of the year and then aggregated over a specific time period, five years.  Multi-year estimates are available to regions with populations less than 65,000.  However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2006-2010, 2007-2011) due to the inability to isolate change with precision."),
                  
                  
                  ## email feedback link
