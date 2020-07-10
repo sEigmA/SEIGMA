@@ -17,9 +17,12 @@ require(maptools)
 require(Hmisc)
 require(reshape2)
 require(shiny)
+require(devtools)
 require(googleCharts)
 require(leaflet)
 require(RJSONIO)
+
+googleChartsInit()
 
 ## load map data
 MA_map_county <- fromJSON("County_2010Census_DP1.geojson")

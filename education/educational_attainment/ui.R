@@ -180,7 +180,7 @@ bootstrapPage(mainPanel(
                        )
                      )
                    )),
-                 #Colledge
+                 #College
                  conditionalPanel(
                    condition="input.var == 'Bachelors_Pct' && input.action != 0",
                    absolutePanel(
