@@ -119,6 +119,10 @@ shinyServer(function(input, output, session) {
       filter(Five_Year_Range == input$map_year)%>%
       filter(!is.na(Region))
     
+    ## add municipalities
+    Municipal <- Dem_data$Municipal
+    map_dat <- cbind.data.frame(map_dat, Municipal)
+    
     ## assign colors to each entry in the data frame
     color <- as.integer(cut2(map_dat[,input$var],cuts=cuts))
     map_dat <- cbind.data.frame(map_dat, color)
