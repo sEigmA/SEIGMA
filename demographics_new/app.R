@@ -342,7 +342,7 @@ ui <- shinyUI(fluidPage(
                  
                  ## GitHub link
                  helpText(a("View our data and code on GitHub",
-                            href = "https://github.com/sEigmA/SEIGMA/tree/gh-pages/demographics/demographics", 
+                            href = "https://github.com/sEigmA/SEIGMA/tree/gh-pages/demographics_new", 
                             target = "_blank", onclick = "ga('send', 'event', 'click', 'link', 'code', 1)")),
                  helpText("If using Internet Explorer, application only visible in version 10.")
     ),
