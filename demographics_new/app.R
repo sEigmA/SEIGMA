@@ -334,11 +334,11 @@ ui <- shinyUI(fluidPage(
                  
                  ## email feedback link
                  ## To develop a link in HTML
-                 helpText(a("Send us your comments or feedback!", href="http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target="_blank",onclick="ga('send', 'event', 'click', 'link', 'feedback', 1)")),
+                 helpText(a("Send us your comments or feedback!", href = "http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target = "_blank", onclick = "ga('send', 'event', 'click', 'link', 'feedback', 1)")),
                  
                  ## data source citation
                  helpText(a("Data Source: American Community Survey: Table S2502", href = "https://data.census.gov/cedsci/table?q=Table%20S2502&tid=ACSST5Y2018.S2502",
-                            target = "_blank", onclick="ga('send', 'event', 'click', 'link', 'dataAge', 1)")),
+                            target = "_blank", onclick = "ga('send', 'event', 'click', 'link', 'dataAge', 1)")),
                  
                  ## GitHub link
                  helpText(a("View our data and code on GitHub",
@@ -358,7 +358,7 @@ ui <- shinyUI(fluidPage(
         tabsetPanel(
           tabPanel("About",
                    ## strong=bold, p=paragraph, em=emboss/italicised or bold italicized,
-                   about_main_text, value="about"),
+                   about_main_text, value = "about"),
           
           ## summary tab
           tabPanel("Summary",
@@ -462,8 +462,7 @@ ui <- shinyUI(fluidPage(
                      " - Survey information is collected everyday of the year and then aggregated over a specific time period, in this case, five years. Multi-year estimates are available for regions with populations less than 65,000. However, more precise estimates are possible with larger geographic regions. To analyze change over time, users are discouraged from utilizing overlapping multi-year estimates (e.g. 2006-2010, 2007-2011) due to the inability to isolate change with precision."),
                    
                    ## email feedback link
-                   h3(a("Please fill out our survey to help improve the site!", href = "http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", 
-                        target = "_blank")),
+                   h3(a("Please fill out our survey to help improve the site!", href = "http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target = "_blank")),
                    value = "info"
           ),
           id = "tabs"
@@ -530,11 +529,9 @@ server <- shinyServer(function(input, output, session) {
     
     return(Dem_df)
   }, options=list(searching = FALSE, orderClasses = TRUE)) # there are a bunch of options to edit the appearance of datatables, this removes one of the ugly features
+
   ## create the plot of the data
-  ## for the Google charts plot
-  
   munis_df <- reactive({
-    #     browser()
     ## make reactive dataframe into regular dataframe
     Dem_df <- Dem_df()%>%
       filter(Five_Year_Range == input$plot_year) 
@@ -542,7 +539,6 @@ server <- shinyServer(function(input, output, session) {
     county <- as.character(Dem_df$County[match(input$plot_muni, Dem_df$Municipal)])
     
     ## make counties a vector based on input variable
-    #munis <- c(input$plot_muni, county, "MA", "United States")
     munis <- input$plot_muni
     
     muni_index <- c()
@@ -571,7 +567,6 @@ server <- shinyServer(function(input, output, session) {
     muni_df$variable <- gsub("under ", "<", muni_df$variable)
     muni_df$variable <- gsub("_", " ", muni_df$variable)
     muni_df
-
   })
     
     output$Plot_age <- renderPlotly({
@@ -679,7 +674,6 @@ server <- shinyServer(function(input, output, session) {
     isolate({
       ## Duplicate MAmap to x
       x <- MA_map_muni
-      
       ## for each county in the map, attach the Crude Rate and colors associated
       for(i in 1:length(x$features)){
         ## Each feature is a county
@@ -690,13 +684,12 @@ server <- shinyServer(function(input, output, session) {
           fill = TRUE,
           ## Fill color has to be equal to the map_dat color and is matched by county
           fillColor = map_dat$color[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)],
-          ## "#000000" = Black, "#999999"=Grey,
+          ## "#000000" = Black, "#999999" = Grey,
           weight = 1, stroke = TRUE,
           opacity = map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)],
           color = "#000000",
           fillOpacity = map_dat$opacity[match(x$features[[i]]$properties$NAMELSAD10, map_dat$Region)])
       }
-      
       map$addGeoJSON(x) # draw map
     })
   })
