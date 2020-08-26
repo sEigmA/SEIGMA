@@ -1,0 +1,10 @@
+name: demographics_new
+title:
+username:
+account: seigma
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2709338
+bundleId: 3559280
+url: https://seigma.shinyapps.io/demographics_new/
+when: 1598434236.8722

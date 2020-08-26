@@ -337,7 +337,7 @@ ui <- shinyUI(fluidPage(
                  helpText(a("Send us your comments or feedback!", href = "http://www.surveygizmo.com/s3/1832220/ShinyApp-Evaluation", target = "_blank", onclick = "ga('send', 'event', 'click', 'link', 'feedback', 1)")),
                  
                  ## data source citation
-                 helpText(a("Data Source: American Community Survey: Table S2502", href = "https://data.census.gov/cedsci/table?q=Table%20S2502&tid=ACSST5Y2018.S2502",
+                 helpText(a("Data Source: American Community Survey - Table S2502", href = "https://data.census.gov/cedsci/table?q=Table%20S2502&tid=ACSST5Y2018.S2502",
                             target = "_blank", onclick = "ga('send', 'event', 'click', 'link', 'dataAge', 1)")),
                  
                  ## GitHub link
