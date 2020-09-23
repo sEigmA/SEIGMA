@@ -35,9 +35,9 @@ shinyUI(fluidPage(
                    ## Select input = Drop down list of timespan (variable name on server side) 
                    
                    selectInput("sum_year", "Select Year",
-                               choices = list("2013" = "2013", "2014" = "2014", "2015" = "2015", 
-                                              "2016" = "2016", "2017" = "2017", "2018" = "2018"),
-                               selected="2013",
+                               choices = list("2014" = "2014", "2015" = "2015", "2016" = "2016", 
+                                              "2017" = "2017", "2018" = "2018", "2019" = "2019", ),
+                               selected="2014",
                                multiple=TRUE
                    ),
                    
@@ -100,8 +100,8 @@ shinyUI(fluidPage(
                  conditionalPanel(
                    condition="input.tabs == 'map'",
                    selectInput("map_year", "Select Year",
-                               choices = list("2013" = "2013", "2014" = "2014", "2015" = "2015", 
-                                              "2016" = "2016", "2017" = "2017", "2018" = "2018")
+                               choices = list("2014" = "2014", "2015" = "2015", "2016" = "2016", 
+                                              "2017" = "2017", "2018" = "2018", "2019" = "2019", )
                    ),
                    radioButtons("map_radio", "Select Variable of Interest",
                                 c("Business Filings" = "Business Filings", 
