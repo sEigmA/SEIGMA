@@ -6,6 +6,8 @@
 ## Last Modified: 03/23/2019 ##
 ###############################
 
+setwd("~/Documents/R/SEIGMA/dashboard")
+
 ##### SETTINGS #####
 library(shiny)
 library(shinydashboard)
@@ -13,6 +15,7 @@ library(dplyr)
 library(reshape2)
 library(ggplot2)
 library(shinyBS)
+library(DT)
 
 ##### DATA #####
 ### DEMOGRAPHIC TAB
@@ -125,3 +128,5 @@ bui_pop <- "Annual residential building permits data are collected from people p
 val_pop <- "Assessed property values in Massachusetts are based on 'full and fair cash value'. Massachusetts General Laws defines 'full and fair cash value' as the price an owner willing, but not under compulsion, to sell, ought to receive from one willing, but not under compulsion, to buy. Source: MA Department of Revenue Division of Local Services. "
 
 tax_pop <- "A levy, or tax, on property that the owner is required to pay. The tax is given by the region in which the property is located. Source: MA Department of Revenue."
+
+

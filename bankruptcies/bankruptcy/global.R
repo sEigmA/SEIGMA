@@ -6,6 +6,8 @@
 ## Date Updated:  05/08/19 VE           ##
 ##########################################
 
+setwd("~/Documents/R/SEIGMA/bankruptcies/bankruptcy")
+
 ##First file run - Environment Setup
 
 require(RJSONIO)
@@ -18,6 +20,7 @@ require(tidyr)
 require(maptools)
 require(Hmisc)
 require(ggplot2)
+require(DT)
 
 ## load map data
 MAmap <- fromJSON("County_2010Census_DP1.geojson")
@@ -253,7 +256,7 @@ Bus_plot_options <- googleLineChart("Bus_plot", width="100%", height="475px", op
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2013, 2018, 1),
+    ticks = seq(2014, 2019, 1),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -308,7 +311,7 @@ NonBus_plot_options <- googleLineChart("NonBus_plot", width="100%", height="475p
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2013, 2018, 1),
+    ticks = seq(2014, 2019, 1),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -364,7 +367,7 @@ Pro_Bus_plot_options <- googleLineChart("Pro_Bus_plot", width="100%", height="47
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2013, 2018, 1),
+    ticks = seq(2014, 2019, 1),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),
@@ -419,7 +422,7 @@ Pro_NonBus_plot_options <- googleLineChart("Pro_NonBus_plot", width="100%", heig
   hAxis = list(
     title = "Year",
     format = "####",
-    ticks = seq(2013, 2018, 1),
+    ticks = seq(2014, 2019, 1),
     viewWindow = xlim,
     textStyle = list(
       fontSize = 14),

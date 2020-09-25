@@ -1172,7 +1172,7 @@ server <- function(input, output, session){
           pop_show <- rbind(pop_show, c(my_place[i], pop_muni$Total_Population))
         }
         pop_show <- as.data.frame(pop_show)
-        colnames(pop_show) <- c("Region", "2005-2009", "2006-2010", "2007-2011", "2008-2012", "2009-2013", "2010-2014", "2011-2015", "2012-2016", "2013-2017")
+        colnames(pop_show) <- c("Region", "2006-2010", "2007-2011", "2008-2012", "2009-2013", "2010-2014", "2011-2015", "2012-2016", "2013-2017", "2014-2018")
         return(pop_show)
       }, options = list(searching = FALSE, orderClasses = TRUE)) 
       
@@ -2492,3 +2492,4 @@ server <- function(input, output, session){
       ui = dashboardPage(header, sidebar, body, skin="red"),
       server = server
     )
+
